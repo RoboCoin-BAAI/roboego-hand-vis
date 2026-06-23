@@ -1,9 +1,12 @@
 import pytest
 
 from roboegopipe.egohand.temporal_tracking import (
+    apply_recovered_depth_overrides,
     build_side_tracks,
+    build_recovered_depth_overrides_from_frames,
     filter_unstable_recovered_candidates,
     interpolate_short_gaps,
+    process_tracks,
     smooth_track_translations,
 )
 
@@ -119,3 +122,45 @@ def test_keeps_low_area_recovered_candidate_when_temporally_continuous():
 
     assert filtered[1] is not None
     assert filtered[1]["status"] == "recovered"
+
+
+def hand_frame(frame_idx, side, z, is_recovered=False):
+    source_anchor = [0.0, 0.0, 10.0]
+    target_anchor = [0.0, 0.0, z]
+    return {
+        "frame_idx": frame_idx,
+        "hands": [
+            {
+                "canonical_status": side,
+                "is_recovered": is_recovered,
+                "bbox_xyxy": [0, 0, 20, 20],
+                "mesh_obj": f"{side}_{frame_idx}.obj",
+                "shape_preserved_fit_transform": {
+                    "source_anchor": source_anchor,
+                    "target_anchor": target_anchor,
+                    "target_z_median": z,
+                    "translation": [0.0, 0.0, z - source_anchor[2]],
+                },
+                "shape_preserved_mesh_to_depth_error": {"median_m": 0.01},
+            }
+        ],
+    }
+
+
+def test_recovered_depth_overrides_use_neighboring_normal_z_before_smoothing():
+    frames = [
+        hand_frame(0, "ego_right", 0.50),
+        hand_frame(1, "ego_right", 0.80, is_recovered=True),
+        hand_frame(2, "ego_right", 0.60),
+    ]
+
+    overrides = build_recovered_depth_overrides_from_frames(frames)
+    corrected = apply_recovered_depth_overrides(frames, overrides)
+    tracks = process_tracks(corrected, start=0, num_frames=3, smooth_alpha=1.0)
+
+    recovered = tracks["ego_right"][1]
+    assert overrides[(1, "ego_right")]["target_z_m"] == pytest.approx(0.55)
+    assert recovered["status"] == "recovered"
+    assert recovered["target_anchor"][2] == pytest.approx(0.55)
+    assert recovered["translation"][2] == pytest.approx(-9.45)
+    assert recovered["smoothed_target_anchor"][2] == pytest.approx(0.55)

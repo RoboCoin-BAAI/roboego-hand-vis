@@ -1,8 +1,14 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import cv2
 import numpy as np
 import rerun as rr
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+OLD_ROBOEGO_ROOT = Path("/home/liuyou/Documents/RoboEgoPipe")
 
 
 def depth_to_vis(depth_m: np.ndarray, min_m: float, max_m: float) -> np.ndarray:
@@ -24,3 +30,17 @@ def log_pinhole(entity: str, intrinsics: dict, width: int, height: int) -> None:
         dtype=np.float32,
     )
     rr.log(entity, rr.Pinhole(image_from_camera=k, resolution=[width, height], image_plane_distance=0.08))
+
+
+def resolve_existing_artifact_path(path: str | Path) -> Path:
+    original = Path(path).expanduser()
+    if original.exists():
+        return original
+    try:
+        relative = original.relative_to(OLD_ROBOEGO_ROOT)
+    except ValueError:
+        return original
+    moved = PROJECT_ROOT / relative
+    if moved.exists():
+        return moved
+    return original

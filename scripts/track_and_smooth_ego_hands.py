@@ -26,11 +26,13 @@ from roboegopipe.egohand.depth_mesh import (  # noqa: E402
 )
 from roboegopipe.egohand.temporal_tracking import (  # noqa: E402
     SIDES,
+    apply_recovered_depth_overrides,
+    build_recovered_depth_overrides_from_frames,
     process_tracks,
     track_summary,
 )
 from scripts.export_depth_pointcloud import ROPEDIA_K, depth_to_pointcloud, read_rgb_frame  # noqa: E402
-from scripts.rerun_utils import depth_to_vis, log_pinhole  # noqa: E402
+from scripts.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path  # noqa: E402
 
 
 def resolve_path(path: str | Path, base_dir: Path) -> Path:
@@ -74,7 +76,7 @@ def load_depth(depth_dir: Path, frame_idx: int) -> np.ndarray:
 
 
 def fitted_mesh_from_observation(obs: Dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
-    mesh_path = Path(str(obs["mesh_obj"]))
+    mesh_path = resolve_existing_artifact_path(obs["mesh_obj"])
     vertices_obj, faces, _ = parse_obj_mesh(mesh_path)
     vertices_camera = hamer_rendered_obj_to_camera_opencv(vertices_obj)
     fitted = translate_points(vertices_camera, obs["smoothed_translation"])
@@ -139,6 +141,7 @@ def write_tracks_json(
             "drop_unstable_recovered": args.drop_unstable_recovered,
             "unstable_recovered_jump_threshold_m": args.unstable_recovered_jump_threshold_m,
             "unstable_recovered_max_area_ratio": args.unstable_recovered_max_area_ratio,
+            "apply_recovered_depth_overrides": args.apply_recovered_depth_overrides,
         },
         "summary": summary,
         "tracks": jsonable(tracks),
@@ -386,6 +389,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mesh_error_threshold_m", type=float, default=0.05)
     parser.add_argument("--min_valid_depth_ratio", type=float, default=0.5)
     parser.add_argument(
+        "--apply_recovered_depth_overrides",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Before interpolation/smoothing, replace recovered hand z with z interpolated from neighboring normal hands.",
+    )
+    parser.add_argument(
         "--drop_unstable_recovered",
         action=argparse.BooleanOptionalAction,
         default=False,
@@ -419,8 +428,13 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     report = json.loads(alignment_report.read_text())
+    report_frames = report["frames"]
+    recovered_depth_overrides = {}
+    if args.apply_recovered_depth_overrides:
+        recovered_depth_overrides = build_recovered_depth_overrides_from_frames(report_frames)
+        report_frames = apply_recovered_depth_overrides(report_frames, recovered_depth_overrides)
     tracks = process_tracks(
-        report["frames"],
+        report_frames,
         start=args.start,
         num_frames=args.num_frames,
         max_interp_gap=args.max_interp_gap,
@@ -435,6 +449,10 @@ def main() -> None:
         ),
     )
     summary = track_summary(tracks)
+    summary["recovered_depth_overrides"] = {
+        "enabled": bool(args.apply_recovered_depth_overrides),
+        "count": len(recovered_depth_overrides),
+    }
     write_tracks_json(tracks, summary, output_dir / "ego_hand_tracks.json", args)
     write_tracks_csv(tracks, output_dir / "ego_hand_tracks.csv", start=args.start)
     export_debug_contact_sheet(tracks, video_path, output_dir, args.start, args.max_debug_frames)

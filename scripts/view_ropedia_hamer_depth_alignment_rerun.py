@@ -41,8 +41,11 @@ from roboegopipe.egohand.depth_mesh import (  # noqa: E402
     smooth_translation,
     translate_points,
 )
+from roboegopipe.egohand.temporal_tracking import (  # noqa: E402
+    build_recovered_depth_overrides_from_frames,
+)
 from scripts.export_depth_pointcloud import ROPEDIA_K, depth_to_pointcloud, read_rgb_frame  # noqa: E402
-from scripts.rerun_utils import depth_to_vis, log_pinhole  # noqa: E402
+from scripts.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path  # noqa: E402
 
 
 def resolve_path(path: str, base_dir: Path) -> Path:
@@ -125,63 +128,7 @@ def build_recovered_depth_overrides(path: Path | None) -> Dict[tuple[int, str], 
         return {}
     with path.open("r", encoding="utf-8") as f:
         report = json.load(f)
-
-    normal_z_by_side: Dict[str, list[tuple[int, float]]] = {"ego_left": [], "ego_right": []}
-    recovered_frames: list[tuple[int, str, float]] = []
-    for frame in report.get("frames", []):
-        frame_idx = int(frame["frame_idx"])
-        for hand in frame.get("hands", []):
-            side = hand.get("canonical_status") or canonical_hand_status(hand.get("status", ""))
-            if side not in normal_z_by_side:
-                continue
-            transform = hand.get("shape_preserved_fit_transform") or {}
-            target_z = transform.get("target_z_median")
-            if target_z is None:
-                continue
-            if hand.get("is_recovered"):
-                recovered_frames.append((frame_idx, side, float(target_z)))
-            else:
-                normal_z_by_side[side].append((frame_idx, float(target_z)))
-
-    overrides: Dict[tuple[int, str], Dict[str, Any]] = {}
-    for frame_idx, side, observed_z in recovered_frames:
-        normal = normal_z_by_side.get(side, [])
-        if not normal:
-            continue
-        prev_item = None
-        next_item = None
-        for item in normal:
-            if item[0] < frame_idx:
-                prev_item = item
-            elif item[0] > frame_idx:
-                next_item = item
-                break
-        if prev_item is not None and next_item is not None:
-            prev_frame, prev_z = prev_item
-            next_frame, next_z = next_item
-            ratio = (frame_idx - prev_frame) / float(next_frame - prev_frame)
-            z = prev_z * (1.0 - ratio) + next_z * ratio
-            source = {
-                "mode": "interpolated_between_normal_hands",
-                "prev_frame_idx": int(prev_frame),
-                "next_frame_idx": int(next_frame),
-                "ratio": float(ratio),
-            }
-        elif prev_item is not None:
-            prev_frame, z = prev_item
-            source = {"mode": "previous_normal_hand", "prev_frame_idx": int(prev_frame)}
-        else:
-            next_frame, z = next_item
-            source = {"mode": "next_normal_hand", "next_frame_idx": int(next_frame)}
-        overrides[(frame_idx, side)] = {
-            "frame_idx": int(frame_idx),
-            "side": side,
-            "observed_target_z_m": float(observed_z),
-            "target_z_m": float(z),
-            "delta_from_observed_m": float(z - observed_z),
-            **source,
-        }
-    return overrides
+    return build_recovered_depth_overrides_from_frames(report.get("frames", []))
 
 
 def write_recovered_depth_overrides(output_dir: Path, overrides: Dict[tuple[int, str], Dict[str, Any]]) -> None:
@@ -210,7 +157,7 @@ def write_recovered_depth_overrides(output_dir: Path, overrides: Dict[tuple[int,
 
 
 def tracked_mesh_from_observation(obs: Dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
-    mesh_vertices_obj, mesh_faces, _ = parse_obj_mesh(Path(obs["mesh_obj"]))
+    mesh_vertices_obj, mesh_faces, _ = parse_obj_mesh(resolve_existing_artifact_path(obs["mesh_obj"]))
     vertices_camera = hamer_rendered_obj_to_camera_opencv(mesh_vertices_obj)
     vertices_smoothed = translate_points(vertices_camera, obs["smoothed_translation"])
     return vertices_smoothed, mesh_faces
@@ -629,7 +576,7 @@ def main() -> None:
                         show_labels=True,
                     ),
                 )
-            mesh_path = Path(candidate["mesh_obj"])
+            mesh_path = resolve_existing_artifact_path(candidate["mesh_obj"])
             if not mesh_path.exists():
                 frame_report["hands"].append(
                     {

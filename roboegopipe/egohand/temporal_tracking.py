@@ -14,6 +14,113 @@ def as_float_list(values: Iterable[float], length: int) -> List[float]:
     return arr.astype(float).tolist()
 
 
+def build_recovered_depth_overrides_from_frames(
+    report_frames: List[Dict[str, Any]],
+) -> Dict[tuple[int, str], Dict[str, Any]]:
+    normal_z_by_side: Dict[str, List[tuple[int, float]]] = {side: [] for side in SIDES}
+    recovered_frames: List[tuple[int, str, float]] = []
+    for frame in report_frames:
+        frame_idx = int(frame["frame_idx"])
+        for hand in frame.get("hands", []):
+            side = hand.get("canonical_status") or hand.get("status")
+            if side not in normal_z_by_side:
+                continue
+            transform = hand.get("shape_preserved_fit_transform") or {}
+            target_z = transform.get("target_z_median")
+            if target_z is None:
+                target_anchor = transform.get("target_anchor")
+                if target_anchor is not None:
+                    target_z = np.asarray(target_anchor, dtype=np.float32).reshape(3)[2]
+            if target_z is None:
+                continue
+            if hand.get("is_recovered"):
+                recovered_frames.append((frame_idx, side, float(target_z)))
+            else:
+                normal_z_by_side[side].append((frame_idx, float(target_z)))
+
+    overrides: Dict[tuple[int, str], Dict[str, Any]] = {}
+    for frame_idx, side, observed_z in recovered_frames:
+        normal = normal_z_by_side.get(side, [])
+        if not normal:
+            continue
+        prev_item = None
+        next_item = None
+        for item in normal:
+            if item[0] < frame_idx:
+                prev_item = item
+            elif item[0] > frame_idx:
+                next_item = item
+                break
+        if prev_item is not None and next_item is not None:
+            prev_frame, prev_z = prev_item
+            next_frame, next_z = next_item
+            ratio = (frame_idx - prev_frame) / float(next_frame - prev_frame)
+            target_z = prev_z * (1.0 - ratio) + next_z * ratio
+            source = {
+                "mode": "interpolated_between_normal_hands",
+                "prev_frame_idx": int(prev_frame),
+                "next_frame_idx": int(next_frame),
+                "ratio": float(ratio),
+            }
+        elif prev_item is not None:
+            prev_frame, target_z = prev_item
+            source = {"mode": "previous_normal_hand", "prev_frame_idx": int(prev_frame)}
+        else:
+            next_frame, target_z = next_item
+            source = {"mode": "next_normal_hand", "next_frame_idx": int(next_frame)}
+        overrides[(frame_idx, side)] = {
+            "frame_idx": int(frame_idx),
+            "side": side,
+            "observed_target_z_m": float(observed_z),
+            "target_z_m": float(target_z),
+            "delta_from_observed_m": float(target_z - observed_z),
+            **source,
+        }
+    return overrides
+
+
+def apply_recovered_depth_overrides(
+    report_frames: List[Dict[str, Any]],
+    overrides: Dict[tuple[int, str], Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    out = deepcopy(report_frames)
+    if not overrides:
+        return out
+    for frame in out:
+        frame_idx = int(frame["frame_idx"])
+        for hand in frame.get("hands", []):
+            side = hand.get("canonical_status") or hand.get("status")
+            if not hand.get("is_recovered") or side not in SIDES:
+                continue
+            override = overrides.get((frame_idx, side))
+            if override is None:
+                continue
+            transform = hand.setdefault("shape_preserved_fit_transform", {})
+            target_z = float(override["target_z_m"])
+            target_anchor = transform.get("target_anchor")
+            if target_anchor is None:
+                source_anchor = transform.get("source_anchor") or [0.0, 0.0, 0.0]
+                translation = transform.get("translation") or [0.0, 0.0, 0.0]
+                target_anchor = (
+                    np.asarray(source_anchor, dtype=np.float32).reshape(3)
+                    + np.asarray(translation, dtype=np.float32).reshape(3)
+                ).astype(float).tolist()
+            target_anchor = as_float_list(target_anchor, 3)
+            observed_z = float(target_anchor[2])
+            target_anchor[2] = target_z
+            transform["target_anchor"] = target_anchor
+            transform["target_z_observed_median"] = transform.get("target_z_median", observed_z)
+            transform["target_z_median"] = target_z
+            transform["target_z_source"] = "recovered_depth_override"
+            transform["recovered_depth_override"] = override
+            source_anchor = transform.get("source_anchor")
+            if source_anchor is not None:
+                source_arr = np.asarray(source_anchor, dtype=np.float32).reshape(3)
+                target_arr = np.asarray(target_anchor, dtype=np.float32).reshape(3)
+                transform["translation"] = (target_arr - source_arr).astype(float).tolist()
+    return out
+
+
 def hand_translation(hand: Dict[str, Any]) -> Optional[List[float]]:
     transform = hand.get("shape_preserved_fit_transform") or hand.get("smooth_fit_transform")
     if not transform:
