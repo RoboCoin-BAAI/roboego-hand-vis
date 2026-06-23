@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+
+# Local data and generated outputs
+data/
+tmp/
+models/
+output/
+demo_output/
+
+# Large visualization artifacts
+*.rrd
+*.ply
+*.mp4
+*.mcap
+*.zip
+
