@@ -1,42 +1,77 @@
 # RoboEgo Hand Vis
 
-Rerun visualization and diagnostics for Ropedia ego-hand reconstruction.
+Rerun visualization and diagnostics for ego-hand reconstruction from stereo
+video. The standard flow is:
 
-This repository is a slimmed hand-visualization pipeline extracted from
-`RoboEgoPipe`. It keeps only the code needed to inspect HaMeR/MANO hand meshes,
-FoundationStereo depth, recovered hand candidates, temporal tracking, and
-layered Rerun output.
+1. Resolve a dataset into `dataset_manifest.json`.
+2. Check stereo video quality.
+3. Estimate depth with FoundationStereo.
+4. Run HaMeR ego-hand candidates.
+5. Align MANO mesh to depth with a shape-preserved placement.
+6. Track, recover short gaps, and smooth the final hand trajectory.
+7. Export a clean Rerun file with RGB, depth point cloud, and final meshes.
 
-## Main Output
-
-Open the layered 300-frame Rerun file after generating local `tmp/` outputs:
-
-```bash
-rerun tmp/ropedia_hamer_new_method_shape_preserved_000000_000299_area0007_recovered_z_interp_layered/ropedia_hamer_new_method_shape_preserved_area0007_recovered_z_interp_layered.rrd
-```
-
-## Main Pipeline
+## Wuxi Pipeline
 
 ```bash
-bash scripts/run_ropedia_shape_preserved_recovered_z_interp_layered_rrd.sh
+bash scripts/run_wuxi_pipeline.sh
+rerun tmp/wuxi_hand_vis_000000_000299/wuxi_hand_vis.rrd
 ```
 
-The layered Rerun output contains:
+Common overrides:
+
+```bash
+NUM_FRAMES=600 \
+RRD_NUM_FRAMES=600 \
+bash scripts/run_wuxi_pipeline.sh
+```
+
+## Ropedia Pipeline
+
+```bash
+bash scripts/run_ropedia_pipeline.sh
+rerun tmp/ropedia_hand_vis_000000_000299/ropedia_hand_vis.rrd
+```
+
+The final Rerun export keeps the viewer simple:
 
 ```text
-camera_display/hands/ego_left/layers/normal_mesh
-camera_display/hands/ego_left/layers/recovered_mesh
-camera_display/hands/ego_left/layers/smooth_mesh
-camera_display/hands/ego_left/layers/current_mesh
-
-camera_display/hands/ego_right/layers/normal_mesh
-camera_display/hands/ego_right/layers/recovered_mesh
-camera_display/hands/ego_right/layers/smooth_mesh
-camera_display/hands/ego_right/layers/current_mesh
+camera_opencv/camera/left/rgb
+camera_opencv/camera/left/depth_vis
+camera_opencv/depth/full_scene_points
+camera_opencv/hands/ego_left/final
+camera_opencv/hands/ego_right/final
+camera_opencv/camera/left/rgb/overlay/final/ego_left/mesh_projected_points
+camera_opencv/camera/left/rgb/overlay/final/ego_right/mesh_projected_points
 ```
-
-See `docs/current_script_commands.md` for the full command history and
-parameter notes.
 
 Generated data, videos, model outputs, and `.rrd` files are intentionally not
 tracked by git. Keep them under `tmp/` or external data directories.
+
+## Code Layout
+
+```text
+scripts/datasets/resolve_dataset.py
+  Dataset-specific loaders -> standard dataset_manifest.json.
+
+scripts/run_foundation_stereo_video.py
+  Manifest-driven FoundationStereo depth estimation.
+
+scripts/hand/run_hamer_ego_filter.py
+  HaMeR candidates and ego-hand filtering.
+
+scripts/hand/align_mesh_depth.py
+  Standard mesh-depth alignment entrypoint.
+
+scripts/hand/track_fill_smooth.py
+  Tracking, recovered-depth override, gap fill, and smoothing entrypoint.
+
+scripts/hand/export_final_rerun.py
+  Clean final Rerun export.
+
+roboego_hand_vis/egohand/alignment_*.py
+  Alignment CLI, IO, geometry, and Rerun helper modules.
+
+roboego_hand_vis/egohand/track_*.py
+  Tracking report, debug image, and Rerun helper modules.
+```

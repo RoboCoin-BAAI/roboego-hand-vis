@@ -2,11 +2,10 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 import cv2
 import numpy as np
@@ -16,12 +15,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from roboegopipe.egohand.depth_mesh import (  # noqa: E402
+from roboego_hand_vis.egohand.depth_mesh import (  # noqa: E402
     core_mask_from_mask,
     crop_depth_to_pointcloud,
     depth_mask_to_pointcloud,
     filter_points_by_depth_band,
-    fit_mesh_to_pixel_depth_anchor,
     fit_mesh_to_points_similarity,
     fit_mesh_to_points_translation,
     fit_mesh_z_to_points,
@@ -41,366 +39,42 @@ from roboegopipe.egohand.depth_mesh import (  # noqa: E402
     smooth_translation,
     translate_points,
 )
-from roboegopipe.egohand.temporal_tracking import (  # noqa: E402
-    build_recovered_depth_overrides_from_frames,
+from roboego_hand_vis.egohand.depth_anchor import (  # noqa: E402
+    choose_finger_anchor,
+    choose_shape_preserved_depth_anchor,
+    choose_z_anchor,
 )
-from scripts.export_depth_pointcloud import ROPEDIA_K, depth_to_pointcloud, read_rgb_frame  # noqa: E402
+from roboego_hand_vis.egohand.mesh_placement import place_shape_preserved_mesh  # noqa: E402
+from roboego_hand_vis.egohand.orientation import (  # noqa: E402
+    apply_orientation_compensation,
+    load_mano_regressors,
+)
+from roboego_hand_vis.egohand.alignment_geometry import (  # noqa: E402
+    display_vertices,
+    draw_mask_overlay_rgb,
+    draw_points_rgb,
+    sample_points,
+)
+from roboego_hand_vis.egohand.alignment_io import (  # noqa: E402
+    build_recovered_depth_overrides,
+    canonical_hand_status,
+    jsonable,
+    load_depth,
+    load_tracks_by_frame,
+    resolve_path,
+    selected_candidates,
+    tracked_mesh_from_observation,
+    write_recovered_depth_overrides,
+)
+from roboego_hand_vis.egohand.alignment_rerun import clear_hand_entities, log_mesh_layer  # noqa: E402
+from roboego_hand_vis.egohand.alignment_cli import parse_args  # noqa: E402
+from scripts.export_depth_pointcloud import (  # noqa: E402
+    ROPEDIA_K,
+    depth_to_pointcloud,
+    load_camera_intrinsics,
+    read_rgb_frame,
+)
 from scripts.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path  # noqa: E402
-
-
-def resolve_path(path: str, base_dir: Path) -> Path:
-    out = Path(path).expanduser()
-    if not out.is_absolute():
-        out = base_dir / out
-    return out.resolve()
-
-
-def jsonable(value: Any) -> Any:
-    if isinstance(value, np.ndarray):
-        return value.tolist()
-    if isinstance(value, (np.integer,)):
-        return int(value)
-    if isinstance(value, (np.floating,)):
-        return float(value)
-    if isinstance(value, dict):
-        return {str(k): jsonable(v) for k, v in value.items()}
-    if isinstance(value, (list, tuple)):
-        return [jsonable(v) for v in value]
-    return value
-
-
-def selected_candidates(frame: Dict[str, Any]) -> List[Dict[str, Any]]:
-    selected = []
-    for candidate in frame["candidates"]:
-        if candidate.get("status") in {
-            "ego_left",
-            "ego_right",
-            "ego_left_recovered",
-            "ego_right_recovered",
-        }:
-            selected.append(candidate)
-    selected.sort(key=lambda c: c.get("status", "").replace("_recovered", ""))
-    return selected
-
-
-def canonical_hand_status(status: str) -> str:
-    if status == "ego_left_recovered":
-        return "ego_left"
-    if status == "ego_right_recovered":
-        return "ego_right"
-    return status
-
-
-def load_depth(depth_dir: Path, frame_idx: int) -> np.ndarray:
-    path = depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-    if not path.exists():
-        raise FileNotFoundError(path)
-    return np.load(path).astype(np.float32)
-
-
-def sample_points(points: np.ndarray, max_points: int) -> np.ndarray:
-    if max_points <= 0 or len(points) <= max_points:
-        return points
-    idx = np.linspace(0, len(points) - 1, max_points).astype(np.int64)
-    return points[idx]
-
-
-def load_tracks_by_frame(path: Path | None) -> Dict[int, Dict[str, Dict[str, Any]]]:
-    if path is None:
-        return {}
-    with path.open("r", encoding="utf-8") as f:
-        data = json.load(f)
-    tracks = data.get("tracks", {})
-    params = data.get("parameters", {})
-    start = int(params.get("start", 0))
-    out: Dict[int, Dict[str, Dict[str, Any]]] = {}
-    for side, side_track in tracks.items():
-        for offset, obs in enumerate(side_track):
-            if obs is None:
-                continue
-            frame_idx = int(obs.get("frame_idx", start + offset))
-            out.setdefault(frame_idx, {})[side] = obs
-    return out
-
-
-def build_recovered_depth_overrides(path: Path | None) -> Dict[tuple[int, str], Dict[str, Any]]:
-    if path is None:
-        return {}
-    with path.open("r", encoding="utf-8") as f:
-        report = json.load(f)
-    return build_recovered_depth_overrides_from_frames(report.get("frames", []))
-
-
-def write_recovered_depth_overrides(output_dir: Path, overrides: Dict[tuple[int, str], Dict[str, Any]]) -> None:
-    if not overrides:
-        return
-    rows = [overrides[key] for key in sorted(overrides)]
-    json_path = output_dir / "recovered_depth_overrides.json"
-    csv_path = output_dir / "recovered_depth_overrides.csv"
-    json_path.write_text(json.dumps(rows, indent=2), encoding="utf-8")
-    fieldnames = [
-        "frame_idx",
-        "side",
-        "observed_target_z_m",
-        "target_z_m",
-        "delta_from_observed_m",
-        "mode",
-        "prev_frame_idx",
-        "next_frame_idx",
-        "ratio",
-    ]
-    with csv_path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for row in rows:
-            writer.writerow({name: row.get(name, "") for name in fieldnames})
-
-
-def tracked_mesh_from_observation(obs: Dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
-    mesh_vertices_obj, mesh_faces, _ = parse_obj_mesh(resolve_existing_artifact_path(obs["mesh_obj"]))
-    vertices_camera = hamer_rendered_obj_to_camera_opencv(mesh_vertices_obj)
-    vertices_smoothed = translate_points(vertices_camera, obs["smoothed_translation"])
-    return vertices_smoothed, mesh_faces
-
-
-def display_vertices(points_camera: np.ndarray, args: argparse.Namespace) -> np.ndarray:
-    points_display = opencv_to_rerun_display(points_camera)
-    rotate_center = None
-    if args.display_mesh_rotate_about == "centroid":
-        rotate_center = np.median(points_display, axis=0)
-    points_display = rotate_points_axis_angle(
-        points_display,
-        axis=args.display_mesh_rotate_axis,
-        degrees=args.display_mesh_rotate_degrees,
-        center=rotate_center,
-    )
-    return translate_points(points_display, args.display_mesh_translate)
-
-
-def draw_points_rgb(image: np.ndarray, pixels: np.ndarray, color: tuple[int, int, int], radius: int) -> None:
-    if len(pixels) == 0:
-        return
-    h, w = image.shape[:2]
-    for u, v in np.round(pixels).astype(np.int32):
-        if 0 <= u < w and 0 <= v < h:
-            cv2.circle(image, (int(u), int(v)), radius, color, thickness=-1, lineType=cv2.LINE_AA)
-
-
-LAYER_COLORS_RGBA = {
-    "normal": [255, 180, 60, 185],
-    "recovered": [255, 80, 220, 190],
-    "smooth": [80, 180, 255, 195],
-    "current": [60, 255, 120, 210],
-}
-
-LAYER_COLORS_RGB = {
-    "normal": (255, 180, 60),
-    "recovered": (255, 80, 220),
-    "smooth": (80, 180, 255),
-    "current": (60, 255, 120),
-}
-
-
-def log_mesh_layer(
-    *,
-    side: str,
-    layer: str,
-    vertices_camera: np.ndarray,
-    vertices_display: np.ndarray,
-    faces: np.ndarray,
-    rgb_layer_images: Dict[str, np.ndarray],
-    width: int,
-    height: int,
-    point_radius: float,
-) -> None:
-    color_rgba = LAYER_COLORS_RGBA[layer]
-    color_rgb = LAYER_COLORS_RGB[layer]
-    rr.log(
-        f"camera_display/hands/{side}/layers/{layer}_mesh",
-        rr.Mesh3D(
-            vertex_positions=vertices_display,
-            triangle_indices=faces,
-            albedo_factor=color_rgba,
-        ),
-    )
-    rr.log(
-        f"camera_opencv/hands/{side}/layers/{layer}_mesh",
-        rr.Mesh3D(
-            vertex_positions=vertices_camera,
-            triangle_indices=faces,
-            albedo_factor=color_rgba,
-        ),
-    )
-    projected_pixels, _ = project_points_to_image(vertices_camera, ROPEDIA_K, width, height)
-    image = rgb_layer_images[layer]
-    draw_points_rgb(image, projected_pixels, color_rgb, radius=max(1, int(round(point_radius * 0.6))))
-
-
-def draw_mask_overlay_rgb(
-    image: np.ndarray,
-    mask: np.ndarray,
-    color: tuple[int, int, int],
-    alpha: float = 0.28,
-) -> None:
-    if mask.size == 0 or not mask.any():
-        return
-    if mask.shape[:2] != image.shape[:2]:
-        mask = cv2.resize(mask.astype(np.uint8), (image.shape[1], image.shape[0]), interpolation=cv2.INTER_NEAREST)
-        mask = mask.astype(bool)
-    overlay = image.copy()
-    overlay[mask] = color
-    image[:] = np.where(mask[:, :, None], image * (1.0 - alpha) + overlay * alpha, image).astype(np.uint8)
-    contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    if contours:
-        cv2.drawContours(image, contours, -1, color, thickness=2, lineType=cv2.LINE_AA)
-
-
-def clear_hand_entities(status: str) -> None:
-    rr.log(f"camera_display/hands/{status}", rr.Clear(recursive=True))
-    rr.log(f"camera_opencv/hands/{status}", rr.Clear(recursive=True))
-    rr.log(f"camera_display/camera/left/rgb/overlay/{status}", rr.Clear(recursive=True))
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Visualize Ropedia HaMeR ego hands against FoundationStereo hand depth crops."
-    )
-    parser.add_argument(
-        "--candidates_json",
-        default="tmp/ropedia_hamer_ego_filter_000000_000007_tuned/ego_hand_candidates.json",
-    )
-    parser.add_argument(
-        "--tracks_json",
-        default="",
-        help="Optional ego_hand_tracks.json. If set, current_best_mesh uses tracked/smoothed translation.",
-    )
-    parser.add_argument(
-        "--recovered_depth_reference_report",
-        default="",
-        help=(
-            "Optional previous alignment report. When set, recovered hands use target_z_median "
-            "interpolated from neighboring non-recovered hands of the same side."
-        ),
-    )
-    parser.add_argument(
-        "--tracks_current_best_mode",
-        choices=["replace", "fill_missing", "log_only"],
-        default="replace",
-        help=(
-            "How tracks_json affects current_best_mesh: replace uses smoothed tracks for all tracked hands; "
-            "fill_missing keeps per-frame depth-aligned mesh and only uses tracks for missing hands; "
-            "log_only logs tracking diagnostics without changing current_best_mesh."
-        ),
-    )
-    parser.add_argument(
-        "--depth_dir",
-        default="tmp/ropedia_foundation_depth_continuous_000000_000029",
-    )
-    parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
-    parser.add_argument("--hamer_overlay_dir", default="")
-    parser.add_argument("--output_dir", default="tmp/ropedia_hamer_depth_alignment_000000_000007")
-    parser.add_argument("--save_rrd", default="")
-    parser.add_argument("--spawn", action="store_true")
-    parser.add_argument("--point_stride", type=int, default=1)
-    parser.add_argument("--bbox_margin_px", type=int, default=14)
-    parser.add_argument("--min_depth_m", type=float, default=0.15)
-    parser.add_argument("--max_depth_m", type=float, default=2.5)
-    parser.add_argument("--max_points_per_hand", type=int, default=12000)
-    parser.add_argument("--max_mesh_vertices_for_error", type=int, default=778)
-    parser.add_argument("--point_radius", type=float, default=0.004)
-    parser.add_argument("--rgb_overlay_point_radius", type=float, default=2.0)
-    parser.add_argument("--max_projected_mesh_points", type=int, default=778)
-    parser.add_argument("--max_projected_depth_points", type=int, default=2000)
-    parser.add_argument("--log_raw_mesh", action="store_true")
-    parser.add_argument("--log_raw_depth_crop", action="store_true")
-    parser.add_argument("--log_full_scene", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument(
-        "--clean_final_view",
-        action="store_true",
-        help="Only log RGB/HaMeR overlay, depth points, final_candidate, and z_only diagnostics.",
-    )
-    parser.add_argument(
-        "--current_best_only",
-        action="store_true",
-        help="Only log RGB, HaMeR overlay, RGB mesh overlay, full scene, hand_pointcloud_final, and current_best_mesh.",
-    )
-    parser.add_argument(
-        "--new_method_only",
-        action="store_true",
-        help="Only log the new method chain: RGB, HaMeR overlay, full scene, hand_pointcloud_final, and current_best_mesh.",
-    )
-    parser.add_argument("--scene_point_stride", type=int, default=4)
-    parser.add_argument("--max_scene_points", type=int, default=90000)
-    parser.add_argument("--display_mesh_rotate_axis", choices=["none", "x", "y", "z"], default="none")
-    parser.add_argument("--display_mesh_rotate_degrees", type=float, default=0.0)
-    parser.add_argument(
-        "--display_mesh_rotate_about",
-        choices=["camera", "centroid"],
-        default="camera",
-        help="camera rotates around camera_display/camera/left origin; centroid rotates only mesh orientation.",
-    )
-    parser.add_argument(
-        "--display_mesh_translate",
-        type=float,
-        nargs=3,
-        default=[0.0, 0.0, 0.0],
-        metavar=("X", "Y", "Z"),
-        help="Extra translation in camera_display coordinates, after rotation. Units are meters.",
-    )
-    parser.add_argument("--depth_band_half_width_m", type=float, default=0.16)
-    parser.add_argument(
-        "--mesh_mask_source",
-        choices=["coarse_fit", "raw_hamer", "hamer_renderer", "hamer_overlay_diff"],
-        default="coarse_fit",
-        help="Which mesh coordinates generate the 2D mask used for mask-anchor depth points.",
-    )
-    parser.add_argument("--mesh_mask_padding_px", type=int, default=10)
-    parser.add_argument("--overlay_diff_threshold", type=float, default=8.0)
-    parser.add_argument("--overlay_diff_search_margin_px", type=int, default=24)
-    parser.add_argument("--mask_depth_band_half_width_m", type=float, default=0.12)
-    parser.add_argument(
-        "--z_anchor_source",
-        choices=["mask", "core_mask"],
-        default="core_mask",
-        help="Depth points used to set mesh_fit_z_only. core_mask ignores mask edges before taking depth.",
-    )
-    parser.add_argument("--core_mask_keep_x_ratio", type=float, default=0.6)
-    parser.add_argument("--core_mask_keep_y_ratio", type=float, default=0.6)
-    parser.add_argument("--core_mask_min_pixels", type=int, default=20)
-    parser.add_argument(
-        "--finger_anchor_keep_top_ratio",
-        type=float,
-        default=0.65,
-        help="Keep this top fraction of the hand mask as a finger/palm-side depth anchor.",
-    )
-    parser.add_argument("--finger_anchor_min_pixels", type=int, default=20)
-    parser.add_argument(
-        "--depth_lift_window_radius_px",
-        type=int,
-        default=2,
-        help="Median depth sampling radius for lifting HaMeR renderer-projected vertices into left-camera meters.",
-    )
-    parser.add_argument(
-        "--depth_lift_max_delta_m",
-        type=float,
-        default=0.12,
-        help="Reject lifted vertex depths farther than this from the hand mask median depth. <=0 disables.",
-    )
-    parser.add_argument("--hamer_base_focal_length", type=float, default=5000.0)
-    parser.add_argument("--hamer_model_image_size", type=float, default=256.0)
-    parser.add_argument(
-        "--smooth_translation_alpha",
-        type=float,
-        default=0.35,
-        help="Temporal smoothing alpha for per-hand global translation. 1 disables smoothing; 0 freezes after first value.",
-    )
-    parser.add_argument(
-        "--fit_mode",
-        choices=["translation", "similarity"],
-        default="translation",
-        help="translation keeps HaMeR hand size; similarity independently scales each hand for diagnostics.",
-    )
-    return parser.parse_args()
 
 
 def main() -> None:
@@ -423,8 +97,20 @@ def main() -> None:
     hamer_overlay_dir = resolve_path(args.hamer_overlay_dir, original_cwd) if args.hamer_overlay_dir else None
     output_dir = resolve_path(args.output_dir, original_cwd)
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_rrd = resolve_path(args.save_rrd, original_cwd) if args.save_rrd else (
-        output_dir / "ropedia_hamer_depth_alignment.rrd"
+    if args.intrinsics_json:
+        intrinsics_path = resolve_path(args.intrinsics_json, original_cwd)
+        intrinsics = load_camera_intrinsics(
+            intrinsics_path,
+            resize_scale=args.intrinsics_resize_scale,
+            camera=args.intrinsics_camera,
+        )
+    else:
+        intrinsics_path = None
+        intrinsics = dict(ROPEDIA_K)
+    mano_model_dir = resolve_path(args.mano_model_dir, original_cwd)
+    regressor_by_side = load_mano_regressors(mano_model_dir) if args.orientation_aware_compensation else {}
+    save_rrd = None if args.no_save_rrd else (
+        resolve_path(args.save_rrd, original_cwd) if args.save_rrd else output_dir / "ropedia_hamer_depth_alignment.rrd"
     )
 
     with candidates_json.open("r", encoding="utf-8") as f:
@@ -442,6 +128,18 @@ def main() -> None:
         "depth_dir": str(depth_dir),
         "video": str(video_path),
         "hamer_overlay_dir": str(hamer_overlay_dir) if hamer_overlay_dir else None,
+        "intrinsics_json": str(intrinsics_path) if intrinsics_path else None,
+        "intrinsics_camera": args.intrinsics_camera,
+        "intrinsics": intrinsics,
+        "shape_preserved_depth_source": args.shape_preserved_depth_source,
+        "orientation_aware_compensation": {
+            "enabled": bool(args.orientation_aware_compensation),
+            "mano_model_dir": str(mano_model_dir) if args.orientation_aware_compensation else None,
+            "depth_bias_m": args.orientation_depth_bias_m,
+            "surface_min_m": args.orientation_surface_min_m,
+            "surface_max_m": args.orientation_surface_max_m,
+            "ray_blend": args.orientation_ray_blend,
+        },
         "output_dir": str(output_dir),
         "save_rrd": str(save_rrd),
         "note": (
@@ -482,7 +180,7 @@ def main() -> None:
             clear_hand_entities("ego_left_recovered")
             clear_hand_entities("ego_right_recovered")
         rr.log("camera_display/camera/left", rr.Transform3D(translation=[0, 0, 0]))
-        log_pinhole("camera_display/camera/left", ROPEDIA_K, rgb.shape[1], rgb.shape[0])
+        log_pinhole("camera_display/camera/left", intrinsics, rgb.shape[1], rgb.shape[0])
         rr.log("camera_display/camera/left/rgb", rr.Image(rgb))
         hamer_overlay_path = hamer_overlay_path_for_frame(candidates_json, frame_idx, hamer_overlay_dir)
         hamer_overlay_rgb = None
@@ -500,7 +198,7 @@ def main() -> None:
         )
         if not args.new_method_only:
             rr.log("camera_opencv/camera/left", rr.Transform3D(translation=[0, 0, 0]))
-            log_pinhole("camera_opencv/camera/left", ROPEDIA_K, rgb.shape[1], rgb.shape[0])
+            log_pinhole("camera_opencv/camera/left", intrinsics, rgb.shape[1], rgb.shape[0])
             rr.log("camera_opencv/camera/left/rgb", rr.Image(rgb))
             rr.log(
                 "camera_opencv/camera/left/depth_vis",
@@ -511,7 +209,7 @@ def main() -> None:
             scene_points, scene_colors = depth_to_pointcloud(
                 depth_m=depth_m,
                 rgb=rgb,
-                intrinsics=ROPEDIA_K,
+                intrinsics=intrinsics,
                 stride=max(1, args.scene_point_stride),
                 min_depth_m=args.min_depth_m,
                 max_depth_m=args.max_depth_m,
@@ -591,7 +289,7 @@ def main() -> None:
                 depth_m=depth_m,
                 rgb=rgb,
                 bbox_xyxy=candidate["bbox_xyxy"],
-                intrinsics=ROPEDIA_K,
+                intrinsics=intrinsics,
                 stride=max(1, args.point_stride),
                 min_depth_m=args.min_depth_m,
                 max_depth_m=args.max_depth_m,
@@ -668,7 +366,7 @@ def main() -> None:
             projected_vertices = sample_points(fitted_vertices, args.max_projected_mesh_points)
             projected_pixels, projected_valid = project_points_to_image(
                 projected_vertices,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -691,7 +389,7 @@ def main() -> None:
             depth_projected_points = sample_points(hand_points, args.max_projected_depth_points)
             depth_projected_pixels, depth_projected_valid = project_points_to_image(
                 depth_projected_points,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -757,7 +455,7 @@ def main() -> None:
                 )
                 mask_source_pixels, _ = project_points_to_image(
                     mask_source_vertices,
-                    ROPEDIA_K,
+                    intrinsics,
                     width=rgb.shape[1],
                     height=rgb.shape[0],
                 )
@@ -771,7 +469,7 @@ def main() -> None:
                 depth_m=depth_m,
                 rgb=rgb,
                 mask=mesh_mask,
-                intrinsics=ROPEDIA_K,
+                intrinsics=intrinsics,
                 stride=max(1, args.point_stride),
                 min_depth_m=args.min_depth_m,
                 max_depth_m=args.max_depth_m,
@@ -793,7 +491,7 @@ def main() -> None:
                 lifted_valid_vertices, lifted_depth_valid, depth_lift_stats = lift_pixels_to_depth_points(
                     hamer_lift_pixels,
                     depth_m,
-                    ROPEDIA_K,
+                    intrinsics,
                     min_depth_m=args.min_depth_m,
                     max_depth_m=args.max_depth_m,
                     window_radius_px=args.depth_lift_window_radius_px,
@@ -826,7 +524,7 @@ def main() -> None:
             lifted_projected_vertices = sample_points(depth_lifted_vertices, args.max_projected_mesh_points)
             lifted_projected_pixels, _ = project_points_to_image(
                 lifted_projected_vertices,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -834,7 +532,7 @@ def main() -> None:
                 lifted_pixels_all = np.full((len(depth_lifted_vertices), 2), np.nan, dtype=np.float32)
                 lifted_pixels_all_valid, lifted_pixels_all_mask = project_points_to_image(
                     depth_lifted_vertices,
-                    ROPEDIA_K,
+                    intrinsics,
                     width=rgb.shape[1],
                     height=rgb.shape[0],
                 )
@@ -877,7 +575,7 @@ def main() -> None:
                 depth_m=depth_m,
                 rgb=rgb,
                 mask=core_mesh_mask,
-                intrinsics=ROPEDIA_K,
+                intrinsics=intrinsics,
                 stride=max(1, args.point_stride),
                 min_depth_m=args.min_depth_m,
                 max_depth_m=args.max_depth_m,
@@ -903,7 +601,7 @@ def main() -> None:
                 depth_m=depth_m,
                 rgb=rgb,
                 mask=finger_mesh_mask,
-                intrinsics=ROPEDIA_K,
+                intrinsics=intrinsics,
                 stride=max(1, args.point_stride),
                 min_depth_m=args.min_depth_m,
                 max_depth_m=args.max_depth_m,
@@ -934,7 +632,7 @@ def main() -> None:
             mask_projected_vertices = sample_points(mask_fitted_vertices, args.max_projected_mesh_points)
             mask_projected_pixels, _ = project_points_to_image(
                 mask_projected_vertices,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -942,7 +640,7 @@ def main() -> None:
                 mask_fitted_pixels_all = np.full((len(mask_fitted_vertices), 2), np.nan, dtype=np.float32)
                 mask_fitted_pixels, mask_fitted_valid = project_points_to_image(
                     mask_fitted_vertices,
-                    ROPEDIA_K,
+                    intrinsics,
                     width=rgb.shape[1],
                     height=rgb.shape[0],
                 )
@@ -985,18 +683,18 @@ def main() -> None:
                         ),
                     )
 
-            if args.z_anchor_source == "core_mask" and len(core_hand_points) > 0:
-                z_anchor_points = core_hand_points
-                z_anchor_colors = core_hand_colors
-                z_anchor_source = "core_mask_points"
-            elif len(mask_hand_points) > 0:
-                z_anchor_points = mask_hand_points
-                z_anchor_colors = mask_hand_colors
-                z_anchor_source = "mask_hand_points"
-            else:
-                z_anchor_points = hand_points
-                z_anchor_colors = hand_colors
-                z_anchor_source = "bbox_hand_points"
+            z_anchor = choose_z_anchor(
+                z_anchor_source=args.z_anchor_source,
+                core_points=core_hand_points,
+                core_colors=core_hand_colors,
+                mask_points=mask_hand_points,
+                mask_colors=mask_hand_colors,
+                bbox_points=hand_points,
+                bbox_colors=hand_colors,
+            )
+            z_anchor_points = z_anchor.points
+            z_anchor_colors = z_anchor.colors
+            z_anchor_source = z_anchor.source
             z_only_vertices, z_only_transform = fit_mesh_z_to_points(
                 mesh_vertices_camera,
                 z_anchor_points,
@@ -1004,7 +702,7 @@ def main() -> None:
             z_only_projected_vertices = sample_points(z_only_vertices, args.max_projected_mesh_points)
             z_only_projected_pixels, _ = project_points_to_image(
                 z_only_projected_vertices,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -1025,29 +723,45 @@ def main() -> None:
                     radius=max(1, int(round(args.rgb_overlay_point_radius * 0.6))),
                 )
 
-            finger_z_anchor_points = finger_hand_points if len(finger_hand_points) > 0 else z_anchor_points
-            finger_z_anchor_colors = finger_hand_colors if len(finger_hand_points) > 0 else z_anchor_colors
-            finger_z_anchor_source = (
-                "finger_upper_mask_points" if len(finger_hand_points) > 0 else z_anchor_source
+            finger_anchor = choose_finger_anchor(
+                finger_points=finger_hand_points,
+                finger_colors=finger_hand_colors,
+                z_anchor=z_anchor,
             )
+            finger_z_anchor_points = finger_anchor.points
+            finger_z_anchor_colors = finger_anchor.colors
+            finger_z_anchor_source = finger_anchor.source
             z_finger_vertices, z_finger_transform = fit_mesh_z_to_points(
                 mesh_vertices_camera,
                 finger_z_anchor_points,
             )
+            shape_preserved_anchor = choose_shape_preserved_depth_anchor(
+                shape_preserved_depth_source=args.shape_preserved_depth_source,
+                finger_points=finger_hand_points,
+                finger_colors=finger_hand_colors,
+                z_anchor=z_anchor,
+                mask_points=mask_hand_points,
+                bbox_points=hand_points,
+            )
+            shape_preserved_target_points = shape_preserved_anchor.points
+            shape_preserved_depth_source = shape_preserved_anchor.source
             recovered_depth_override = recovered_depth_overrides.get((frame_idx, canonical_status))
-            shape_preserved_vertices, shape_preserved_transform = fit_mesh_to_pixel_depth_anchor(
-                mesh_vertices_camera,
-                hamer_lift_pixels_all,
-                mask_hand_points if len(mask_hand_points) > 0 else hand_points,
-                ROPEDIA_K,
-                target_z_override_m=(
-                    recovered_depth_override["target_z_m"]
-                    if is_recovered and recovered_depth_override is not None
-                    else None
+            shape_preserved_vertices, shape_preserved_transform = place_shape_preserved_mesh(
+                mesh_vertices_camera=mesh_vertices_camera,
+                projected_pixels=hamer_lift_pixels_all,
+                depth_anchor=shape_preserved_anchor,
+                intrinsics=intrinsics,
+                recovered_depth_override=(
+                    recovered_depth_override if is_recovered and recovered_depth_override is not None else None
                 ),
             )
-            if is_recovered and recovered_depth_override is not None:
-                shape_preserved_transform["recovered_depth_override"] = recovered_depth_override
+            shape_preserved_vertices_uncompensated = shape_preserved_vertices
+            shape_preserved_vertices, orientation_compensation_info = apply_orientation_compensation(
+                shape_preserved_vertices,
+                canonical_status,
+                regressor_by_side,
+                args,
+            )
             track_obs = tracks_by_frame.get(frame_idx, {}).get(canonical_status)
             tracked_vertices = None
             tracked_vertices_display = None
@@ -1056,6 +770,13 @@ def main() -> None:
             if track_obs is not None:
                 try:
                     tracked_vertices, tracked_faces = tracked_mesh_from_observation(track_obs)
+                    tracked_vertices_uncompensated = tracked_vertices
+                    tracked_vertices, tracked_orientation_info = apply_orientation_compensation(
+                        tracked_vertices,
+                        canonical_status,
+                        regressor_by_side,
+                        args,
+                    )
                     tracked_vertices_display = display_vertices(tracked_vertices, args)
                     tracking_info = {
                         "status": track_obs.get("status"),
@@ -1064,6 +785,8 @@ def main() -> None:
                         "smoothed_translation": track_obs.get("smoothed_translation"),
                         "smoothed_target_anchor": track_obs.get("smoothed_target_anchor"),
                         "anomaly_flags": track_obs.get("anomaly_flags", []),
+                        "orientation_aware_compensation": tracked_orientation_info,
+                        "uncompensated_median_z": float(np.median(tracked_vertices_uncompensated[:, 2])),
                     }
                 except FileNotFoundError:
                     tracked_vertices = None
@@ -1071,7 +794,7 @@ def main() -> None:
             z_finger_projected_vertices = sample_points(z_finger_vertices, args.max_projected_mesh_points)
             z_finger_projected_pixels, _ = project_points_to_image(
                 z_finger_projected_vertices,
-                ROPEDIA_K,
+                intrinsics,
                 width=rgb.shape[1],
                 height=rgb.shape[0],
             )
@@ -1235,6 +958,7 @@ def main() -> None:
                 width=rgb.shape[1],
                 height=rgb.shape[0],
                 point_radius=args.rgb_overlay_point_radius,
+                intrinsics=intrinsics,
             )
             if current_layer == "smooth":
                 log_mesh_layer(
@@ -1247,6 +971,7 @@ def main() -> None:
                     width=rgb.shape[1],
                     height=rgb.shape[0],
                     point_radius=args.rgb_overlay_point_radius,
+                    intrinsics=intrinsics,
                 )
             log_mesh_layer(
                 side=canonical_status,
@@ -1258,6 +983,7 @@ def main() -> None:
                 width=rgb.shape[1],
                 height=rgb.shape[0],
                 point_radius=args.rgb_overlay_point_radius,
+                intrinsics=intrinsics,
             )
             if args.log_raw_depth_crop:
                 rr.log(
@@ -1570,6 +1296,18 @@ def main() -> None:
                 "z_finger_fit_transform": z_finger_transform,
                 "z_finger_anchor_source": finger_z_anchor_source,
                 "shape_preserved_fit_transform": shape_preserved_transform,
+                "shape_preserved_depth_source": shape_preserved_depth_source,
+                "depth_anchor": {
+                    "z_anchor": z_anchor.report(),
+                    "finger_anchor": finger_anchor.report(),
+                    "shape_preserved_anchor": shape_preserved_anchor.report(),
+                    "shape_preserved_depth_source_arg": args.shape_preserved_depth_source,
+                },
+                "orientation_aware_compensation": orientation_compensation_info,
+                "shape_preserved_uncompensated_median_z": float(
+                    np.median(shape_preserved_vertices_uncompensated[:, 2])
+                ),
+                "shape_preserved_compensated_median_z": float(np.median(shape_preserved_vertices[:, 2])),
                 "current_best_mesh_source": current_best_source,
                 "layer": observation_layer,
                 "current_layer": current_layer,
@@ -1653,6 +1391,13 @@ def main() -> None:
                     }
                 )
                 continue
+            tracked_vertices_uncompensated = tracked_vertices
+            tracked_vertices, tracked_orientation_info = apply_orientation_compensation(
+                tracked_vertices,
+                side,
+                regressor_by_side,
+                args,
+            )
             tracked_vertices_display = display_vertices(tracked_vertices, args)
             entity = f"camera_display/hands/{side}"
             log_mesh_layer(
@@ -1665,6 +1410,7 @@ def main() -> None:
                 width=rgb.shape[1],
                 height=rgb.shape[0],
                 point_radius=args.rgb_overlay_point_radius,
+                intrinsics=intrinsics,
             )
             log_mesh_layer(
                 side=side,
@@ -1676,6 +1422,7 @@ def main() -> None:
                 width=rgb.shape[1],
                 height=rgb.shape[0],
                 point_radius=args.rgb_overlay_point_radius,
+                intrinsics=intrinsics,
             )
             rr.log(
                 f"{entity}/current_best_mesh",
@@ -1728,6 +1475,9 @@ def main() -> None:
                         "smoothed_target_anchor": track_obs.get("smoothed_target_anchor"),
                         "anomaly_flags": track_obs.get("anomaly_flags", []),
                         "interpolation": track_obs.get("interpolation"),
+                        "orientation_aware_compensation": tracked_orientation_info,
+                        "uncompensated_median_z": float(np.median(tracked_vertices_uncompensated[:, 2])),
+                        "compensated_median_z": float(np.median(tracked_vertices[:, 2])),
                     },
                 }
             )
@@ -1758,7 +1508,10 @@ def main() -> None:
         json.dump(jsonable(report), f, ensure_ascii=False, indent=2)
 
     print(f"Report: {report_path}")
-    print(f"Rerun: {save_rrd}")
+    if save_rrd:
+        print(f"Rerun: {save_rrd}")
+    else:
+        print("Rerun: disabled")
 
 
 if __name__ == "__main__":

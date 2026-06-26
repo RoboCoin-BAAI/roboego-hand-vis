@@ -14,6 +14,7 @@ tmp/
 models/
 output/
 demo_output/
+backups/
 
 # Large visualization artifacts
 *.rrd
@@ -21,4 +22,3 @@ demo_output/
 *.mp4
 *.mcap
 *.zip
-

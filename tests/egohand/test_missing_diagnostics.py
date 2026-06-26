@@ -1,4 +1,4 @@
-from roboegopipe.egohand.missing_diagnostics import (
+from roboego_hand_vis.egohand.missing_diagnostics import (
     candidate_label,
     missing_sides_from_frame,
 )

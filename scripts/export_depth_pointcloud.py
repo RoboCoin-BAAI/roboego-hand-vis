@@ -36,16 +36,20 @@ def read_rgb_frame(video_path: Path, frame_idx: int, resize_scale: float) -> np.
     return frame_rgb
 
 
-def load_wuxi_intrinsics(calibration_path: Path, resize_scale: float) -> dict:
+def load_camera_intrinsics(calibration_path: Path, resize_scale: float = 1.0, camera: str = "left") -> dict:
     with calibration_path.open("r", encoding="utf-8") as f:
         calib = json.load(f)
-    left = calib["left"]
+    left = calib[camera]
     return {
         "fx": float(left["fx"]) * resize_scale,
         "fy": float(left["fy"]) * resize_scale,
         "cx": float(left["cx"]) * resize_scale,
         "cy": float(left["cy"]) * resize_scale,
     }
+
+
+def load_wuxi_intrinsics(calibration_path: Path, resize_scale: float) -> dict:
+    return load_camera_intrinsics(calibration_path, resize_scale=resize_scale, camera="left")
 
 
 def depth_to_pointcloud(

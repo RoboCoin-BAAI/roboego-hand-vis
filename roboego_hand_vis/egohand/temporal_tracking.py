@@ -250,10 +250,18 @@ def interpolate_short_gaps(
                 "ratio": float(ratio),
                 "shape_source_frame_idx": int(shape_source["frame_idx"]),
             }
-            obs["translation"] = lerp(prev_obs["translation"], next_obs["translation"], ratio)
-            obs["smoothed_translation"] = list(obs["translation"])
-            obs["source_anchor"] = lerp(prev_obs["source_anchor"], next_obs["source_anchor"], ratio)
             obs["target_anchor"] = lerp(prev_obs["target_anchor"], next_obs["target_anchor"], ratio)
+            # The target pose is temporal, but the MANO mesh comes from a
+            # concrete neighboring frame. Keep that mesh's own anchor as the
+            # translation reference instead of interpolating anchors from two
+            # different meshes.
+            obs["source_anchor"] = list(shape_source["source_anchor"])
+            translation = (
+                np.asarray(obs["target_anchor"], dtype=np.float32)
+                - np.asarray(obs["source_anchor"], dtype=np.float32)
+            )
+            obs["translation"] = translation.astype(float).tolist()
+            obs["smoothed_translation"] = list(obs["translation"])
             obs["smoothed_target_anchor"] = list(obs["target_anchor"])
             obs["bbox_xyxy"] = lerp(prev_obs["bbox_xyxy"], next_obs["bbox_xyxy"], ratio)
             obs["anomaly_flags"] = ["interpolated"]
@@ -358,8 +366,7 @@ def smooth_track_translations(
 ) -> List[Optional[Dict[str, Any]]]:
     out = [deepcopy(item) if item is not None else None for item in track]
     previous_obs: Optional[Dict[str, Any]] = None
-    previous_smoothed_anchor: Optional[np.ndarray] = None
-    alpha_clamped = float(np.clip(alpha, 0.0, 1.0))
+    previous_anchor: Optional[np.ndarray] = None
     for obs in out:
         if obs is None:
             continue
@@ -371,19 +378,15 @@ def smooth_track_translations(
             min_valid_depth_ratio=min_valid_depth_ratio,
         )
         current_anchor = np.asarray(obs["target_anchor"], dtype=np.float32)
-        if previous_smoothed_anchor is None:
-            smoothed_anchor = current_anchor
-        else:
-            smoothed_anchor = previous_smoothed_anchor * (1.0 - alpha_clamped) + current_anchor * alpha_clamped
         source_anchor = np.asarray(obs["source_anchor"], dtype=np.float32)
-        smoothed_translation = smoothed_anchor - source_anchor
-        obs["smoothed_target_anchor"] = smoothed_anchor.astype(float).tolist()
+        smoothed_translation = current_anchor - source_anchor
+        obs["smoothed_target_anchor"] = current_anchor.astype(float).tolist()
         obs["smoothed_translation"] = smoothed_translation.astype(float).tolist()
-        if previous_smoothed_anchor is not None:
-            obs["smoothed_translation_jump_m"] = float(np.linalg.norm(smoothed_anchor - previous_smoothed_anchor))
+        if previous_anchor is not None:
+            obs["smoothed_translation_jump_m"] = float(np.linalg.norm(current_anchor - previous_anchor))
         else:
             obs["smoothed_translation_jump_m"] = None
-        previous_smoothed_anchor = smoothed_anchor
+        previous_anchor = current_anchor
         previous_obs = obs
     return out
 

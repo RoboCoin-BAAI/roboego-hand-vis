@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from roboegopipe.egohand.missing_diagnostics import (  # noqa: E402
+from roboego_hand_vis.egohand.missing_diagnostics import (  # noqa: E402
     candidate_label,
     missing_sides_from_frame,
     summarize_missing_frames,

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from roboegopipe.egohand.filtering import (
+from roboego_hand_vis.egohand.filtering import (
     EgoHandFilterConfig,
     bbox_median_depth,
     select_ego_hands,

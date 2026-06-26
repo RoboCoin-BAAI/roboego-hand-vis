@@ -1,6 +1,6 @@
 import pytest
 
-from roboegopipe.egohand.temporal_tracking import (
+from roboego_hand_vis.egohand.temporal_tracking import (
     apply_recovered_depth_overrides,
     build_side_tracks,
     build_recovered_depth_overrides_from_frames,
@@ -8,6 +8,11 @@ from roboegopipe.egohand.temporal_tracking import (
     interpolate_short_gaps,
     process_tracks,
     smooth_track_translations,
+)
+from roboego_hand_vis.egohand.trajectory_smoothing import (
+    clamp_rotation,
+    kabsch_rotation,
+    smooth_centers_weighted,
 )
 
 
@@ -39,6 +44,31 @@ def test_interpolates_short_gap_and_marks_source():
     assert filled[1]["bbox_xyxy"] == pytest.approx([10.0, 10.0, 15.0, 20.0])
 
 
+def test_interpolated_gap_keeps_source_anchor_from_selected_mesh():
+    previous = {
+        **obs(0, "ego_left", 0.0),
+        "mesh_obj": "previous.obj",
+        "source_anchor": [10.0, 0.0, 0.0],
+        "target_anchor": [20.0, 0.0, 0.5],
+        "translation": [10.0, 0.0, 0.5],
+    }
+    following = {
+        **obs(2, "ego_left", 2.0),
+        "mesh_obj": "following.obj",
+        "source_anchor": [30.0, 0.0, 0.0],
+        "target_anchor": [40.0, 0.0, 0.5],
+        "translation": [10.0, 0.0, 0.5],
+    }
+
+    filled = interpolate_short_gaps([previous, None, following], max_gap=2)
+
+    assert filled[1]["mesh_obj"] == "previous.obj"
+    assert filled[1]["interpolation"]["shape_source_frame_idx"] == 0
+    assert filled[1]["target_anchor"] == pytest.approx([30.0, 0.0, 0.5])
+    assert filled[1]["source_anchor"] == pytest.approx([10.0, 0.0, 0.0])
+    assert filled[1]["translation"] == pytest.approx([20.0, 0.0, 0.5])
+
+
 def test_does_not_interpolate_long_gap():
     track = [obs(0, "ego_left", 0.0), None, None, None, obs(4, "ego_left", 4.0)]
 
@@ -49,14 +79,29 @@ def test_does_not_interpolate_long_gap():
     assert filled[3] is None
 
 
-def test_smooth_track_translations_flags_large_raw_jump():
+def test_smooth_track_translations_flags_large_raw_jump_without_moving_anchor():
     track = [obs(0, "ego_right", 0.0), obs(1, "ego_right", 1.0)]
 
     smoothed = smooth_track_translations(track, alpha=0.5, jump_threshold_m=0.5)
 
     assert smoothed[0]["smoothed_translation"] == pytest.approx([0.0, 0.0, 0.5])
-    assert smoothed[1]["smoothed_translation"] == pytest.approx([0.5, 0.0, 0.5])
+    assert smoothed[1]["smoothed_translation"] == pytest.approx([1.0, 0.0, 0.5])
+    assert smoothed[1]["smoothed_target_anchor"] == pytest.approx([1.0, 0.0, 0.5])
     assert "large_translation_jump" in smoothed[1]["anomaly_flags"]
+
+
+def test_smooth_track_translations_keeps_interpolated_gap_fill_at_raw_interpolation():
+    filled = interpolate_short_gaps(
+        [obs(0, "ego_right", 0.0), None, obs(2, "ego_right", 2.0)],
+        max_gap=2,
+    )
+
+    smoothed = smooth_track_translations(filled, alpha=0.1, jump_threshold_m=0.5)
+
+    assert smoothed[1]["status"] == "interpolated"
+    assert smoothed[1]["target_anchor"] == pytest.approx([1.0, 0.0, 0.5])
+    assert smoothed[1]["smoothed_target_anchor"] == pytest.approx([1.0, 0.0, 0.5])
+    assert smoothed[1]["smoothed_translation"] == pytest.approx([1.0, 0.0, 0.5])
 
 
 def test_build_side_tracks_keeps_recovered_as_observation():
@@ -164,3 +209,48 @@ def test_recovered_depth_overrides_use_neighboring_normal_z_before_smoothing():
     assert recovered["target_anchor"][2] == pytest.approx(0.55)
     assert recovered["translation"][2] == pytest.approx(-9.45)
     assert recovered["smoothed_target_anchor"][2] == pytest.approx(0.55)
+
+
+def test_weighted_center_smoothing_trusts_normal_more_than_recovered():
+    centers = [
+        [0.0, 0.0, 0.5],
+        [1.0, 0.0, 0.5],
+        [2.0, 0.0, 0.5],
+    ]
+
+    smoothed = smooth_centers_weighted(
+        centers,
+        statuses=["normal", "recovered", "normal"],
+        window=3,
+        weights={"normal": 1.0, "recovered": 0.1},
+        max_corrections_m={"normal": 0.015, "recovered": 0.05},
+    )
+
+    assert smoothed[0]["center"] == pytest.approx([0.015, 0.0, 0.5])
+    assert smoothed[1]["center"][0] == pytest.approx(1.0)
+    assert smoothed[2]["center"] == pytest.approx([1.985, 0.0, 0.5])
+    assert smoothed[0]["correction_norm_m"] == pytest.approx(0.015)
+
+
+def test_kabsch_rotation_and_clamp_limit_orientation_change():
+    source = [
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [-1.0, 0.0, 0.0],
+        [0.0, -1.0, 0.0],
+    ]
+    target = [
+        [0.0, 1.0, 0.0],
+        [-1.0, 0.0, 0.0],
+        [0.0, -1.0, 0.0],
+        [1.0, 0.0, 0.0],
+    ]
+
+    rotation, angle = kabsch_rotation(source, target)
+    clamped, clamped_angle = clamp_rotation(rotation, max_degrees=10.0)
+
+    assert angle == pytest.approx(90.0)
+    assert clamped_angle == pytest.approx(10.0)
+    rotated = source[0] @ clamped.T
+    assert rotated[0] == pytest.approx(0.9848077)
+    assert rotated[1] == pytest.approx(0.1736482)

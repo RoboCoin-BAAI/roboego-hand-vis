@@ -21,4 +21,4 @@ dev = ["pytest"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["roboegopipe*", "scripts*"]
+include = ["roboego_hand_vis*", "scripts*"]

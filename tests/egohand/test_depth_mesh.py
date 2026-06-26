@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from roboegopipe.egohand.depth_mesh import (
+from roboego_hand_vis.egohand.depth_mesh import (
     crop_depth_to_pointcloud,
     core_mask_from_mask,
     depth_mask_to_pointcloud,

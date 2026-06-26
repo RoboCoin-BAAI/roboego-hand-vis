@@ -16,7 +16,13 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from roboegopipe.egohand.filtering import EgoHandFilterConfig, select_ego_hands
+from roboego_hand_vis.egohand.filtering import EgoHandFilterConfig, select_ego_hands
+from roboego_hand_vis.egohand.hamer_filter import (
+    build_report_metadata,
+    depth_quality_warnings_for_frame,
+    load_depth_quality_warnings,
+    load_hamer_filter_inputs_from_manifest,
+)
 
 
 LIGHT_BLUE = (0.65098039, 0.74117647, 0.85882353)
@@ -405,10 +411,12 @@ def strip_private_candidate_fields(candidate: Dict[str, Any]) -> Dict[str, Any]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run HaMeR on Ropedia frames and filter ego-hand candidates."
+        description="Run HaMeR on ego-stereo left/RGB frames and filter ego-hand candidates."
     )
+    parser.add_argument("--manifest", default="", help="Optional dataset_manifest.json. Overrides --video.")
     parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
     parser.add_argument("--depth_dir", default=None)
+    parser.add_argument("--depth_quality_report", default="")
     parser.add_argument("--output_dir", default="tmp/ropedia_hamer_ego_filter")
     parser.add_argument("--hamer_root", default="/home/liuyou/Documents/hamer")
     parser.add_argument("--checkpoint", default=None)
@@ -446,7 +454,15 @@ def main() -> None:
     args.output_dir = resolve_path(args.output_dir, original_cwd)
     args.hamer_root = resolve_path(args.hamer_root, original_cwd)
     args.depth_dir = resolve_path(args.depth_dir, original_cwd) if args.depth_dir else None
+    args.manifest = resolve_path(args.manifest, original_cwd) if args.manifest else None
+    args.depth_quality_report = (
+        resolve_path(args.depth_quality_report, original_cwd) if args.depth_quality_report else None
+    )
     args.checkpoint = resolve_path(args.checkpoint, original_cwd) if args.checkpoint else None
+    manifest_inputs = load_hamer_filter_inputs_from_manifest(args.manifest) if args.manifest else None
+    if manifest_inputs is not None:
+        args.video = manifest_inputs.video_path
+    depth_quality_warnings = load_depth_quality_warnings(args.depth_quality_report)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     frames_dir = args.output_dir / "frames"
@@ -460,18 +476,32 @@ def main() -> None:
     filter_config = build_filter_config(args)
     estimator = HamerHandEstimator(args)
 
-    report: Dict[str, Any] = {
-        "video": str(args.video),
-        "depth_dir": str(args.depth_dir) if args.depth_dir else None,
-        "output_dir": str(args.output_dir),
-        "frame_range": {
-            "start": args.start,
-            "num_frames": args.num_frames,
-            "stride": args.stride,
-        },
-        "filter_config": filter_config.__dict__,
-        "frames": [],
+    hamer_config = {
+        "hamer_root": str(args.hamer_root),
+        "checkpoint": str(args.checkpoint) if args.checkpoint else None,
+        "body_detector": args.body_detector,
+        "person_score_threshold": args.person_score_threshold,
+        "person_nms_threshold": args.person_nms_threshold,
+        "keypoint_threshold": args.keypoint_threshold,
+        "batch_size": args.batch_size,
+        "rescale_factor": args.rescale_factor,
+        "save_mesh": args.save_mesh,
     }
+    frame_range = {
+        "start": args.start,
+        "num_frames": args.num_frames,
+        "stride": args.stride,
+    }
+    report: Dict[str, Any] = build_report_metadata(
+        inputs=manifest_inputs,
+        depth_dir=args.depth_dir,
+        depth_quality_report=args.depth_quality_report,
+        output_dir=args.output_dir,
+        frame_range=frame_range,
+        filter_config=filter_config.__dict__,
+        hamer_config=hamer_config,
+        fallback_video=args.video,
+    )
 
     annotated_paths: List[Path] = []
     hamer_overlay_paths: List[Path] = []
@@ -516,8 +546,12 @@ def main() -> None:
         report["frames"].append(
             {
                 "frame_idx": frame_idx,
+                "time_s": frame_idx / float(manifest_inputs.video_info.get("fps", 0.0))
+                if manifest_inputs is not None and float(manifest_inputs.video_info.get("fps", 0.0) or 0.0) > 0
+                else None,
                 "image": str(frame_path),
                 "depth": depth_path,
+                "depth_quality_warnings": depth_quality_warnings_for_frame(frame_idx, depth_quality_warnings),
                 "annotated_image": str(annotated_path),
                 "hamer_overlay_image": str(hamer_overlay_path) if hamer_overlay_path else None,
                 "selected": selection.selected,

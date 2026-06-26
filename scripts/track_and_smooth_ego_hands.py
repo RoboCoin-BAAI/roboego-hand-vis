@@ -2,37 +2,39 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import json
-import shutil
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Dict
 
-import cv2
 import numpy as np
-import rerun as rr
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from roboegopipe.egohand.depth_mesh import (  # noqa: E402
-    hamer_rendered_obj_to_camera_opencv,
-    opencv_to_rerun_display,
-    parse_obj_mesh,
-    project_points_to_image,
-    translate_points,
-)
-from roboegopipe.egohand.temporal_tracking import (  # noqa: E402
-    SIDES,
+from roboego_hand_vis.egohand.orientation import load_mano_regressors  # noqa: E402
+from roboego_hand_vis.egohand.temporal_tracking import (  # noqa: E402
     apply_recovered_depth_overrides,
     build_recovered_depth_overrides_from_frames,
     process_tracks,
     track_summary,
 )
-from scripts.export_depth_pointcloud import ROPEDIA_K, depth_to_pointcloud, read_rgb_frame  # noqa: E402
-from scripts.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path  # noqa: E402
+from roboego_hand_vis.egohand.track_debug import export_debug_contact_sheet  # noqa: E402
+from roboego_hand_vis.egohand.track_report import write_tracks_csv, write_tracks_json  # noqa: E402
+from roboego_hand_vis.egohand.track_rerun import (  # noqa: E402
+    apply_alignment_orientation_compensation,
+    build_final_smoothed_meshes,
+    fitted_mesh_from_observation,
+    hand_mesh_entity_paths,
+    hand_rgb_overlay_layers,
+    hand_rgb_projected_points_paths,
+    iter_rerun_offsets,
+    log_rerun,
+    project_points_to_image,
+)
+from roboego_hand_vis.egohand.tracking_interface import load_tracking_inputs_from_manifest  # noqa: E402
+from scripts.export_depth_pointcloud import ROPEDIA_K  # noqa: E402
 
 
 def resolve_path(path: str | Path, base_dir: Path) -> Path:
@@ -42,341 +44,9 @@ def resolve_path(path: str | Path, base_dir: Path) -> Path:
     return out.resolve()
 
 
-def jsonable(value: Any) -> Any:
-    if isinstance(value, np.ndarray):
-        return value.tolist()
-    if isinstance(value, (np.integer,)):
-        return int(value)
-    if isinstance(value, (np.floating,)):
-        return float(value)
-    if isinstance(value, dict):
-        return {str(k): jsonable(v) for k, v in value.items() if k != "source_hand"}
-    if isinstance(value, (list, tuple)):
-        return [jsonable(v) for v in value]
-    return value
-
-
-def status_color_rgba(side: str, status: str, has_anomaly: bool) -> List[int]:
-    if has_anomaly:
-        return [255, 60, 60, 205]
-    if status == "interpolated":
-        return [80, 150, 255, 180]
-    if status == "recovered":
-        return [255, 220, 60, 190]
-    if side == "ego_left":
-        return [40, 230, 90, 200]
-    return [255, 150, 40, 200]
-
-
-def load_depth(depth_dir: Path, frame_idx: int) -> np.ndarray:
-    path = depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-    if not path.exists():
-        raise FileNotFoundError(path)
-    return np.load(path).astype(np.float32)
-
-
-def fitted_mesh_from_observation(obs: Dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
-    mesh_path = resolve_existing_artifact_path(obs["mesh_obj"])
-    vertices_obj, faces, _ = parse_obj_mesh(mesh_path)
-    vertices_camera = hamer_rendered_obj_to_camera_opencv(vertices_obj)
-    fitted = translate_points(vertices_camera, obs["smoothed_translation"])
-    return fitted, faces
-
-
-def draw_mesh_on_rgb(
-    image_rgb: np.ndarray,
-    vertices_camera: np.ndarray,
-    faces: np.ndarray,
-    color_rgb: List[int],
-    radius: int = 1,
-) -> np.ndarray:
-    out = image_rgb.copy()
-    pixels, valid = project_points_to_image(
-        vertices_camera,
-        ROPEDIA_K,
-        width=image_rgb.shape[1],
-        height=image_rgb.shape[0],
-    )
-    color_bgr = (int(color_rgb[2]), int(color_rgb[1]), int(color_rgb[0]))
-    for u, v in np.round(pixels).astype(np.int32):
-        cv2.circle(out, (int(u), int(v)), radius, color_bgr, thickness=-1, lineType=cv2.LINE_AA)
-    return out
-
-
-def draw_bbox_and_label(
-    image_rgb: np.ndarray,
-    obs: Dict[str, Any],
-    side: str,
-    color_rgb: List[int],
-) -> None:
-    x1, y1, x2, y2 = [int(round(v)) for v in obs.get("bbox_xyxy", [0, 0, 0, 0])]
-    color_bgr = (int(color_rgb[2]), int(color_rgb[1]), int(color_rgb[0]))
-    cv2.rectangle(image_rgb, (x1, y1), (x2, y2), color_bgr, 2)
-    flags = ",".join(obs.get("anomaly_flags", [])) or "ok"
-    label = f"{side} {obs.get('status')} {flags}"
-    y = max(18, y1 - 6)
-    cv2.putText(image_rgb, label[:80], (max(0, x1), y), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color_bgr, 1, cv2.LINE_AA)
-
-
-def write_tracks_json(
-    tracks: Dict[str, List[Optional[Dict[str, Any]]]],
-    summary: Dict[str, Any],
-    output_path: Path,
-    args: argparse.Namespace,
-) -> None:
-    payload = {
-        "inputs": {
-            "alignment_report": str(Path(args.alignment_report).expanduser().resolve()),
-            "depth_dir": str(Path(args.depth_dir).expanduser().resolve()),
-            "video": str(Path(args.video).expanduser().resolve()),
-        },
-        "parameters": {
-            "start": args.start,
-            "num_frames": args.num_frames,
-            "max_interp_gap": args.max_interp_gap,
-            "smooth_alpha": args.smooth_alpha,
-            "jump_threshold_m": args.jump_threshold_m,
-            "mesh_error_threshold_m": args.mesh_error_threshold_m,
-            "min_valid_depth_ratio": args.min_valid_depth_ratio,
-            "drop_unstable_recovered": args.drop_unstable_recovered,
-            "unstable_recovered_jump_threshold_m": args.unstable_recovered_jump_threshold_m,
-            "unstable_recovered_max_area_ratio": args.unstable_recovered_max_area_ratio,
-            "apply_recovered_depth_overrides": args.apply_recovered_depth_overrides,
-        },
-        "summary": summary,
-        "tracks": jsonable(tracks),
-    }
-    output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
-
-
-def write_tracks_csv(tracks: Dict[str, List[Optional[Dict[str, Any]]]], output_path: Path, start: int) -> None:
-    fieldnames = [
-        "frame_idx",
-        "side",
-        "status",
-        "candidate_id",
-        "mesh_obj",
-        "translation_x",
-        "translation_y",
-        "translation_z",
-        "smoothed_translation_x",
-        "smoothed_translation_y",
-        "smoothed_translation_z",
-        "raw_translation_jump_m",
-        "smoothed_translation_jump_m",
-        "mesh_to_depth_median_m",
-        "depth_to_mesh_median_m",
-        "anomaly_flags",
-    ]
-    with output_path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for side, track in tracks.items():
-            for offset, obs in enumerate(track):
-                frame_idx = start + offset
-                if obs is None:
-                    writer.writerow({"frame_idx": frame_idx, "side": side, "status": "missing"})
-                    continue
-                tr = obs["translation"]
-                sm = obs["smoothed_translation"]
-                writer.writerow(
-                    {
-                        "frame_idx": frame_idx,
-                        "side": side,
-                        "status": obs.get("status"),
-                        "candidate_id": obs.get("candidate_id"),
-                        "mesh_obj": obs.get("mesh_obj"),
-                        "translation_x": tr[0],
-                        "translation_y": tr[1],
-                        "translation_z": tr[2],
-                        "smoothed_translation_x": sm[0],
-                        "smoothed_translation_y": sm[1],
-                        "smoothed_translation_z": sm[2],
-                        "raw_translation_jump_m": obs.get("raw_translation_jump_m"),
-                        "smoothed_translation_jump_m": obs.get("smoothed_translation_jump_m"),
-                        "mesh_to_depth_median_m": obs.get("mesh_to_depth_median_m"),
-                        "depth_to_mesh_median_m": obs.get("depth_to_mesh_median_m"),
-                        "anomaly_flags": ",".join(obs.get("anomaly_flags", [])),
-                    }
-                )
-
-
-def draw_debug_frame(rgb: np.ndarray, frame_idx: int, observations: Dict[str, Optional[Dict[str, Any]]]) -> np.ndarray:
-    out = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
-    y = 22
-    cv2.putText(out, f"frame {frame_idx}", (8, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-    y += 24
-    for side in SIDES:
-        obs = observations.get(side)
-        if obs is None:
-            label = f"{side}: missing"
-            color = (0, 0, 255)
-        else:
-            x1, y1, x2, y2 = [int(round(v)) for v in obs.get("bbox_xyxy", [0, 0, 0, 0])]
-            has_anomaly = bool([f for f in obs.get("anomaly_flags", []) if f != "interpolated"])
-            rgba = status_color_rgba(side, obs.get("status", ""), has_anomaly)
-            color = (rgba[2], rgba[1], rgba[0])
-            cv2.rectangle(out, (x1, y1), (x2, y2), color, 2)
-            label = (
-                f"{side}: {obs.get('status')} "
-                f"jump={obs.get('smoothed_translation_jump_m')} "
-                f"flags={','.join(obs.get('anomaly_flags', [])) or 'ok'}"
-            )
-        cv2.putText(out, label[:95], (8, y), cv2.FONT_HERSHEY_SIMPLEX, 0.48, color, 1, cv2.LINE_AA)
-        y += 20
-    return out
-
-
-def make_contact_sheet(image_paths: List[Path], output_path: Path, columns: int, thumb_width: int) -> None:
-    if not image_paths:
-        return
-    thumbs = []
-    for path in image_paths:
-        image = cv2.imread(str(path))
-        if image is None:
-            continue
-        scale = thumb_width / float(image.shape[1])
-        thumbs.append(cv2.resize(image, (thumb_width, int(round(image.shape[0] * scale))), interpolation=cv2.INTER_AREA))
-    if not thumbs:
-        return
-    rows = int(np.ceil(len(thumbs) / columns))
-    thumb_h = max(t.shape[0] for t in thumbs)
-    sheet = np.full((rows * thumb_h, columns * thumb_width, 3), 255, dtype=np.uint8)
-    for i, thumb in enumerate(thumbs):
-        r = i // columns
-        c = i % columns
-        y = r * thumb_h
-        x = c * thumb_width
-        sheet[y : y + thumb.shape[0], x : x + thumb.shape[1]] = thumb
-    cv2.imwrite(str(output_path), sheet)
-
-
-def export_debug_contact_sheet(
-    tracks: Dict[str, List[Optional[Dict[str, Any]]]],
-    video_path: Path,
-    output_dir: Path,
-    start: int,
-    max_debug_frames: int,
-) -> None:
-    debug_dir = output_dir / "debug_frames"
-    if debug_dir.exists():
-        shutil.rmtree(debug_dir)
-    debug_dir.mkdir(parents=True, exist_ok=True)
-    selected_offsets = []
-    for offset in range(len(next(iter(tracks.values())))):
-        observations = {side: tracks[side][offset] for side in SIDES}
-        important = any(obs is None for obs in observations.values())
-        important = important or any(
-            obs is not None and (obs.get("status") == "interpolated" or obs.get("anomaly_flags"))
-            for obs in observations.values()
-        )
-        if important or offset % 30 == 0:
-            selected_offsets.append(offset)
-    selected_offsets = selected_offsets[:max_debug_frames]
-
-    paths = []
-    for offset in selected_offsets:
-        frame_idx = start + offset
-        rgb = read_rgb_frame(video_path, frame_idx, resize_scale=1.0)
-        panel = draw_debug_frame(rgb, frame_idx, {side: tracks[side][offset] for side in SIDES})
-        out_path = debug_dir / f"frame_{frame_idx:06d}_tracking_debug.jpg"
-        cv2.imwrite(str(out_path), panel)
-        paths.append(out_path)
-    make_contact_sheet(paths, output_dir / "contact_sheet_tracking_debug.jpg", columns=4, thumb_width=360)
-
-
-def log_rerun(
-    tracks: Dict[str, List[Optional[Dict[str, Any]]]],
-    video_path: Path,
-    depth_dir: Path,
-    save_rrd: Path,
-    args: argparse.Namespace,
-) -> None:
-    rr.init("Ropedia Ego Hand Tracking Smoothed", spawn=False)
-    rr.save(str(save_rrd))
-    rr.log("camera_display", rr.ViewCoordinates.RIGHT_HAND_Z_UP, static=True)
-    rr.log("camera_opencv", rr.ViewCoordinates.RDF, static=True)
-    for offset in range(args.num_frames):
-        frame_idx = args.start + offset
-        rgb = read_rgb_frame(video_path, frame_idx, resize_scale=1.0)
-        depth_m = load_depth(depth_dir, frame_idx)
-        rr.set_time("frame", sequence=frame_idx)
-        rr.log("camera_display/hands", rr.Clear(recursive=True))
-        rr.log("camera_display/camera/left", rr.Transform3D(translation=[0, 0, 0]))
-        log_pinhole("camera_display/camera/left", ROPEDIA_K, rgb.shape[1], rgb.shape[0])
-        rr.log("camera_display/camera/left/rgb", rr.Image(rgb))
-        rr.log("camera_display/camera/left/depth_vis", rr.Image(depth_to_vis(depth_m, args.min_depth_m, args.max_depth_m)))
-        rr.log("camera_opencv/hands", rr.Clear(recursive=True))
-        rr.log("camera_opencv/camera/left", rr.Transform3D(translation=[0, 0, 0]))
-        log_pinhole("camera_opencv/camera/left", ROPEDIA_K, rgb.shape[1], rgb.shape[0])
-        rr.log("camera_opencv/camera/left/rgb", rr.Image(rgb))
-        rr.log("camera_opencv/camera/left/depth_vis", rr.Image(depth_to_vis(depth_m, args.min_depth_m, args.max_depth_m)))
-        rgb_mesh_overlay = rgb.copy()
-        if args.log_full_scene:
-            points, colors = depth_to_pointcloud(
-                depth_m=depth_m,
-                rgb=rgb,
-                intrinsics=ROPEDIA_K,
-                stride=max(1, args.scene_point_stride),
-                min_depth_m=args.min_depth_m,
-                max_depth_m=args.max_depth_m,
-                max_points=args.max_scene_points,
-            )
-            rr.log(
-                "camera_display/depth/full_scene_points",
-                rr.Points3D(opencv_to_rerun_display(points), colors=colors, radii=args.point_radius),
-            )
-            rr.log(
-                "camera_opencv/depth/full_scene_points",
-                rr.Points3D(points, colors=colors, radii=args.point_radius),
-            )
-        for side in SIDES:
-            obs = tracks[side][offset]
-            if obs is None:
-                continue
-            vertices_camera, faces = fitted_mesh_from_observation(obs)
-            vertices_display = opencv_to_rerun_display(vertices_camera)
-            non_interp_anomaly = bool([f for f in obs.get("anomaly_flags", []) if f != "interpolated"])
-            color = status_color_rgba(side, obs.get("status", ""), non_interp_anomaly)
-            rgb_mesh_overlay = draw_mesh_on_rgb(
-                rgb_mesh_overlay,
-                vertices_camera,
-                faces,
-                color_rgb=color[:3],
-                radius=max(1, int(round(args.rgb_overlay_point_radius))),
-            )
-            draw_bbox_and_label(rgb_mesh_overlay, obs, side, color_rgb=color[:3])
-            rr.log(
-                f"camera_display/hands/{side}/current_best_mesh_smoothed",
-                rr.Mesh3D(
-                    vertex_positions=vertices_display,
-                    triangle_indices=faces,
-                    albedo_factor=color,
-                ),
-            )
-            rr.log(
-                f"camera_opencv/hands/{side}/current_best_mesh_smoothed",
-                rr.Mesh3D(
-                    vertex_positions=vertices_camera,
-                    triangle_indices=faces,
-                    albedo_factor=color,
-                ),
-            )
-            centroid = np.median(vertices_display, axis=0)
-            rr.log(
-                f"camera_display/hands/{side}/status",
-                rr.Points3D(
-                    centroid.reshape(1, 3),
-                    colors=np.array([status_color_rgba(side, obs.get("status", ""), non_interp_anomaly)[:3]], dtype=np.uint8),
-                    radii=args.point_radius * 3.0,
-                ),
-            )
-        rr.log("camera_display/camera/left/rgb_mesh_overlay", rr.Image(rgb_mesh_overlay))
-        rr.log("camera_opencv/camera/left/rgb_mesh_overlay", rr.Image(rgb_mesh_overlay))
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Track, interpolate, smooth, and flag ego hand trajectories.")
+    parser.add_argument("--manifest", default="", help="Optional dataset_manifest.json. Overrides --video.")
     parser.add_argument("--alignment_report", required=True)
     parser.add_argument("--depth_dir", required=True)
     parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
@@ -392,7 +62,7 @@ def parse_args() -> argparse.Namespace:
         "--apply_recovered_depth_overrides",
         action=argparse.BooleanOptionalAction,
         default=False,
-        help="Before interpolation/smoothing, replace recovered hand z with z interpolated from neighboring normal hands.",
+        help="Replace recovered hand z with z interpolated from neighboring normal hands.",
     )
     parser.add_argument(
         "--drop_unstable_recovered",
@@ -415,6 +85,28 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--point_radius", type=float, default=0.004)
     parser.add_argument("--rgb_overlay_point_radius", type=float, default=1.0)
     parser.add_argument("--max_debug_frames", type=int, default=80)
+    parser.add_argument("--mano_model_dir", default="", help="Optional override for MANO model dir used by orientation compensation.")
+    parser.add_argument(
+        "--final_smoothing_window",
+        type=int,
+        default=5,
+        help="Window for final weighted trajectory smoothing. <=0 disables final layer.",
+    )
+    parser.add_argument("--save_rrd", default="", help="Optional RRD output path.")
+    parser.add_argument("--no_save_rrd", action="store_true", help="Only write JSON/CSV/debug images, skip RRD.")
+    parser.add_argument("--rrd_start", type=int, default=None, help="First absolute frame index to write to RRD.")
+    parser.add_argument(
+        "--rrd_num_frames",
+        type=int,
+        default=0,
+        help="Number of frames to write to RRD. <=0 means all processed frames from --rrd_start.",
+    )
+    parser.add_argument(
+        "--log_layered_meshes",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Log current plus normal/recovered/smooth mesh layers under camera_opencv/hands.",
+    )
     return parser.parse_args()
 
 
@@ -423,11 +115,26 @@ def main() -> None:
     cwd = Path.cwd()
     alignment_report = resolve_path(args.alignment_report, cwd)
     depth_dir = resolve_path(args.depth_dir, cwd)
-    video_path = resolve_path(args.video, cwd)
+    manifest_path = resolve_path(args.manifest, cwd) if args.manifest else None
+    manifest_inputs = load_tracking_inputs_from_manifest(manifest_path) if manifest_path else None
+    video_path = manifest_inputs.video_path if manifest_inputs is not None else resolve_path(args.video, cwd)
     output_dir = resolve_path(args.output_dir, cwd)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     report = json.loads(alignment_report.read_text())
+    intrinsics = report.get("intrinsics") or dict(ROPEDIA_K)
+    orientation_config = report.get("orientation_aware_compensation") or {"enabled": False}
+    candidates_json = resolve_path(report["candidates_json"], cwd) if report.get("candidates_json") else None
+    hamer_overlay_dir = resolve_path(report["hamer_overlay_dir"], cwd) if report.get("hamer_overlay_dir") else None
+    mano_model_dir = (
+        resolve_path(args.mano_model_dir, cwd)
+        if args.mano_model_dir
+        else Path(orientation_config.get("mano_model_dir") or "").expanduser()
+    )
+    regressor_by_side: Dict[str, np.ndarray] = {}
+    if orientation_config.get("enabled") and str(mano_model_dir):
+        regressor_by_side = load_mano_regressors(mano_model_dir)
+
     report_frames = report["frames"]
     recovered_depth_overrides = {}
     if args.apply_recovered_depth_overrides:
@@ -453,16 +160,44 @@ def main() -> None:
         "enabled": bool(args.apply_recovered_depth_overrides),
         "count": len(recovered_depth_overrides),
     }
-    write_tracks_json(tracks, summary, output_dir / "ego_hand_tracks.json", args)
+    summary["final_smoothing"] = {
+        "enabled": args.final_smoothing_window > 0,
+        "window": args.final_smoothing_window,
+    }
+    write_tracks_json(
+        tracks,
+        summary,
+        output_dir / "ego_hand_tracks.json",
+        args,
+        manifest_inputs=manifest_inputs,
+        video_path=video_path,
+        alignment_report=alignment_report,
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+    )
     write_tracks_csv(tracks, output_dir / "ego_hand_tracks.csv", start=args.start)
     export_debug_contact_sheet(tracks, video_path, output_dir, args.start, args.max_debug_frames)
-    log_rerun(
-        tracks,
-        video_path=video_path,
-        depth_dir=depth_dir,
-        save_rrd=output_dir / "ropedia_ego_hands_tracked_smoothed.rrd",
-        args=args,
-    )
+    if not args.no_save_rrd:
+        save_rrd = resolve_path(args.save_rrd, cwd) if args.save_rrd else output_dir / "ropedia_ego_hands_tracked_smoothed.rrd"
+        final_tracks = build_final_smoothed_meshes(
+            tracks,
+            window=args.final_smoothing_window,
+            regressor_by_side=regressor_by_side,
+            orientation_config=orientation_config,
+        )
+        log_rerun(
+            tracks,
+            final_tracks,
+            video_path=video_path,
+            depth_dir=depth_dir,
+            save_rrd=save_rrd,
+            args=args,
+            intrinsics=intrinsics,
+            orientation_config=orientation_config,
+            regressor_by_side=regressor_by_side,
+            candidates_json=candidates_json,
+            hamer_overlay_dir=hamer_overlay_dir,
+        )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"Output: {output_dir}")
 

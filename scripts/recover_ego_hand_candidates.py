@@ -15,7 +15,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from roboegopipe.egohand.filtering import EgoHandFilterConfig, recover_missing_ego_hands  # noqa: E402
+from roboego_hand_vis.egohand.filtering import EgoHandFilterConfig, recover_missing_ego_hands  # noqa: E402
 from scripts.run_ropedia_hamer_ego_filter import draw_candidates, make_contact_sheet  # noqa: E402
 
 
