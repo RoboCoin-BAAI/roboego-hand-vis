@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from roboego_hand_vis.objects.contact import (
     FINGERTIP_NAMES,
@@ -24,5 +25,5 @@ def test_compute_fingertip_contact_marks_close_tip():
     }
     result = compute_fingertip_contact(fingertips, object_points, threshold_m=0.025)
     assert result.contact is True
-    assert result.min_distance_m == 0.01
+    assert result.min_distance_m == pytest.approx(0.01)
     assert result.contact_points == ["thumb_tip"]

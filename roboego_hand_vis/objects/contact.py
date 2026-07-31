@@ -39,7 +39,7 @@ def compute_fingertip_contact(
     min_distance: float | None = None
     for name, tip in fingertips.items():
         dist, _ = tree.query(np.asarray(tip, dtype=np.float32), k=1)
-        dist = round(float(dist), 8)
+        dist = float(dist)
         min_distance = dist if min_distance is None else min(min_distance, dist)
         if dist <= threshold_m:
             contact_points.append(name)
