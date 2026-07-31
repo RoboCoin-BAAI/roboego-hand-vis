@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import base64
 import json
+import math
 import os
-import re
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -15,21 +15,44 @@ DEFAULT_QWEN_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/
 REQUIRED_FIELDS = ["category", "color", "shape", "material", "visual_description", "confidence"]
 
 
+def _validated_semantic_object(data: Any) -> dict[str, Any] | None:
+    if not isinstance(data, dict) or any(field not in data for field in REQUIRED_FIELDS):
+        return None
+    try:
+        confidence = float(data["confidence"])
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not math.isfinite(confidence):
+        return None
+    out = {field: data[field] for field in REQUIRED_FIELDS}
+    out["confidence"] = confidence
+    out["status"] = "ok"
+    return out
+
+
+def _scan_for_semantic_object(text: str) -> dict[str, Any] | None:
+    decoder = json.JSONDecoder()
+    for index, character in enumerate(text):
+        if character != "{":
+            continue
+        try:
+            data, _ = decoder.raw_decode(text, index)
+        except json.JSONDecodeError:
+            continue
+        parsed = _validated_semantic_object(data)
+        if parsed is not None:
+            return parsed
+    return None
+
+
 def parse_semantic_response(text: str) -> dict[str, Any]:
     try:
         data = json.loads(text)
     except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", text, flags=re.DOTALL)
-        if match is None:
-            return {"status": "parse_failed", "raw_response": text}
-        try:
-            data = json.loads(match.group(0))
-        except json.JSONDecodeError:
-            return {"status": "parse_failed", "raw_response": text}
-    out = {field: data.get(field) for field in REQUIRED_FIELDS}
-    out["confidence"] = float(out["confidence"] or 0.0)
-    out["status"] = "ok"
-    return out
+        parsed = _scan_for_semantic_object(text)
+        return parsed or {"status": "parse_failed", "raw_response": text}
+    parsed = _validated_semantic_object(data)
+    return parsed or {"status": "parse_failed", "raw_response": text}
 
 
 def select_key_frames(observations: list[ObjectObservation], max_frames: int) -> list[int]:
@@ -46,6 +69,15 @@ def select_key_frames(observations: list[ObjectObservation], max_frames: int) ->
     if max_frames > len(selected):
         step = max(1, (len(valid) - 1) // max(1, max_frames - len(selected)))
         for obs in valid[::step]:
+            if obs.frame_idx in selected:
+                continue
+            selected.add(obs.frame_idx)
+            if len(selected) >= max_frames:
+                break
+    if len(selected) < max_frames:
+        for obs in valid:
+            if obs.frame_idx in selected:
+                continue
             selected.add(obs.frame_idx)
             if len(selected) >= max_frames:
                 break
