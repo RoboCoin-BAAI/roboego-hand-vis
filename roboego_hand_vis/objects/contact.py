@@ -32,15 +32,18 @@ def compute_fingertip_contact(
     threshold_m: float,
 ) -> ContactResult:
     points = np.asarray(object_points, dtype=np.float32)
+    if points.ndim != 2 or points.shape[1] != 3:
+        raise ValueError(f"Expected object_points shape (N, 3), got {points.shape}")
     if len(points) == 0 or not fingertips:
         return ContactResult(False, None, [])
     tree = cKDTree(points)
+    threshold = float(np.asarray(threshold_m, dtype=np.float32))
     contact_points: list[str] = []
     min_distance: float | None = None
     for name, tip in fingertips.items():
         dist, _ = tree.query(np.asarray(tip, dtype=np.float32), k=1)
         dist = float(dist)
         min_distance = dist if min_distance is None else min(min_distance, dist)
-        if dist <= threshold_m:
+        if dist <= threshold:
             contact_points.append(name)
     return ContactResult(bool(contact_points), min_distance, contact_points)
