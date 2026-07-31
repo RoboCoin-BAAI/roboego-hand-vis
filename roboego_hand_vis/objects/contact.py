@@ -10,6 +10,8 @@ from scipy.spatial import cKDTree
 
 FINGERTIP_INDICES = [4, 8, 12, 16, 20]
 FINGERTIP_NAMES = ["thumb_tip", "index_tip", "middle_tip", "ring_tip", "little_tip"]
+_JOINTS_KEYS = ("left_joints_21_camera_opencv", "right_joints_21_camera_opencv")
+_VALID_KEYS = ("left_valid", "right_valid")
 
 
 @dataclass
@@ -55,11 +57,15 @@ def _side_contact_row(
     side_name: str,
     joints: np.ndarray | None,
     valid: bool,
-    object_points: np.ndarray,
+    object_points: np.ndarray | None,
     threshold_m: float,
 ) -> tuple[bool, float | None, list[str], str]:
     if joints is None or not valid:
         return False, None, [], f"{side_name}_hand_missing"
+    if not np.isfinite(joints).all():
+        return False, None, [], f"{side_name}_invalid_geometry"
+    if object_points is None:
+        return False, None, [], "ok"
     tips = extract_fingertips_from_joints21(joints)
     result = compute_fingertip_contact(tips, object_points, threshold_m=threshold_m)
     return (
@@ -70,6 +76,55 @@ def _side_contact_row(
     )
 
 
+def _validated_hand_joints_npz(
+    hand_joints_npz: Path,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    required_keys = _JOINTS_KEYS + _VALID_KEYS
+    with np.load(hand_joints_npz) as data:
+        for key in required_keys:
+            if key not in data.files:
+                raise ValueError(f"{hand_joints_npz}: missing required key {key}")
+        arrays = {key: data[key] for key in required_keys}
+
+    for key in _JOINTS_KEYS:
+        shape = arrays[key].shape
+        if len(shape) != 3 or shape[1:] != (21, 3):
+            raise ValueError(
+                f"{hand_joints_npz}: {key} expected shape (T, 21, 3), got {shape}"
+            )
+    for key in _VALID_KEYS:
+        shape = arrays[key].shape
+        if len(shape) != 1:
+            raise ValueError(f"{hand_joints_npz}: {key} expected shape (T,), got {shape}")
+
+    frame_count = arrays[_JOINTS_KEYS[0]].shape[0]
+    for key in required_keys[1:]:
+        length = arrays[key].shape[0]
+        if length != frame_count:
+            raise ValueError(
+                f"{hand_joints_npz}: {key} length {length} does not match "
+                f"{_JOINTS_KEYS[0]} length {frame_count}"
+            )
+    return (
+        arrays["left_joints_21_camera_opencv"].astype(np.float32),
+        arrays["right_joints_21_camera_opencv"].astype(np.float32),
+        arrays["left_valid"].astype(bool),
+        arrays["right_valid"].astype(bool),
+    )
+
+
+def _object_points_for_frame(points: object) -> tuple[np.ndarray | None, str]:
+    try:
+        array = np.asarray(points, dtype=np.float32)
+    except (TypeError, ValueError):
+        return None, "object_points_invalid"
+    if array.ndim != 2 or array.shape[1] != 3 or not np.isfinite(array).all():
+        return None, "object_points_invalid"
+    if len(array) == 0:
+        return None, "object_points_missing"
+    return array, "ok"
+
+
 def contact_payload_from_joints_npz_and_object_points(
     *,
     object_id: str,
@@ -77,15 +132,13 @@ def contact_payload_from_joints_npz_and_object_points(
     object_points_by_frame: dict[int, np.ndarray],
     threshold_m: float,
 ) -> dict:
-    data = np.load(hand_joints_npz)
-    left = data["left_joints_21_camera_opencv"].astype(np.float32)
-    right = data["right_joints_21_camera_opencv"].astype(np.float32)
-    left_valid = data["left_valid"].astype(bool)
-    right_valid = data["right_valid"].astype(bool)
+    left, right, left_valid, right_valid = _validated_hand_joints_npz(hand_joints_npz)
     n = max(len(left), len(right), max(object_points_by_frame.keys(), default=-1) + 1)
     frames = []
     for frame_idx in range(n):
-        points = object_points_by_frame.get(frame_idx, np.zeros((0, 3), dtype=np.float32))
+        points, object_status = _object_points_for_frame(
+            object_points_by_frame.get(frame_idx, np.zeros((0, 3), dtype=np.float32))
+        )
         left_contact, left_min, left_points, left_status = _side_contact_row(
             side_name="left",
             joints=left[frame_idx] if frame_idx < len(left) else None,
@@ -107,9 +160,12 @@ def contact_payload_from_joints_npz_and_object_points(
             "left_min_distance_m": left_min,
             "right_min_distance_m": right_min,
             "contact_points": left_points + right_points,
-            "status": "ok"
-            if left_status == "ok" and right_status == "ok"
-            else ",".join(status for status in [left_status, right_status] if status != "ok"),
+            "status": ",".join(
+                status
+                for status in [object_status, left_status, right_status]
+                if status != "ok"
+            )
+            or "ok",
         }
         frames.append(row)
     return {
