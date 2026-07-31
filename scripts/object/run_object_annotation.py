@@ -16,6 +16,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from roboego_hand_vis.objects.annotation_io import write_json_payload, write_object_tracks_csv, write_object_tracks_json
+from roboego_hand_vis.objects.contact import contact_payload_from_joints_npz_and_object_points
 from roboego_hand_vis.objects.color_yellow import YellowSegmentationConfig, detect_yellow_object, fill_missing_observations, save_mask_and_crop
 from roboego_hand_vis.objects.depth_geometry import load_depth_frame, mask_depth_to_points
 from roboego_hand_vis.objects.rerun_export import draw_object_bbox_overlay, log_object_overlay
@@ -60,6 +61,7 @@ def run_annotation(
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     observations = []
+    object_points_by_frame: dict[int, np.ndarray] = {}
     warnings: list[dict[str, Any]] = []
     config = YellowSegmentationConfig()
     if backend != "color_yellow":
@@ -76,7 +78,7 @@ def run_annotation(
             except FileNotFoundError:
                 warnings.append({"frame_idx": frame_idx, "status": "depth_file_missing"})
             else:
-                _points, stats = mask_depth_to_points(
+                points, stats = mask_depth_to_points(
                     depth,
                     mask,
                     intrinsics=intrinsics,
@@ -84,6 +86,7 @@ def run_annotation(
                     max_depth_m=2.5,
                     stride=4,
                 )
+                object_points_by_frame[frame_idx] = points
                 obs.depth_median_m = stats.depth_median_m
                 obs.depth_valid_ratio = stats.depth_valid_ratio
         observations.append(obs)
@@ -138,26 +141,34 @@ def run_annotation(
                 semantic.update({"schema_version": "1.0", "object_id": object_id, "evidence_frames": key_frames})
     write_json_payload(semantic, output_dir / "semantic_annotations.json")
 
-    contact_payload = {
-        "schema_version": "1.0",
-        "object_id": object_id,
-        "distance_threshold_m": contact_threshold_m,
-        "hand_tracks": str(hand_tracks_path) if hand_tracks_path else None,
-        "hand_joints_npz": str(hand_joints_npz) if hand_joints_npz else None,
-        "status": "hand_joints_npz_missing" if hand_joints_npz is None else "disabled_until_task_8",
-        "frames": [
-            {
-                "frame_idx": obs.frame_idx,
-                "left_contact": False,
-                "right_contact": False,
-                "left_min_distance_m": None,
-                "right_min_distance_m": None,
-                "contact_points": [],
-                "status": "hand_joints_npz_missing" if hand_joints_npz is None else "contact_disabled_until_task_8",
-            }
-            for obs in observations
-        ],
-    }
+    if hand_joints_npz is not None and hand_joints_npz.exists():
+        contact_payload = contact_payload_from_joints_npz_and_object_points(
+            object_id=object_id,
+            hand_joints_npz=hand_joints_npz,
+            object_points_by_frame=object_points_by_frame,
+            threshold_m=contact_threshold_m,
+        )
+    else:
+        contact_payload = {
+            "schema_version": "1.0",
+            "object_id": object_id,
+            "distance_threshold_m": contact_threshold_m,
+            "hand_tracks": str(hand_tracks_path) if hand_tracks_path else None,
+            "hand_joints_npz": str(hand_joints_npz) if hand_joints_npz else None,
+            "status": "hand_joints_npz_missing",
+            "frames": [
+                {
+                    "frame_idx": obs.frame_idx,
+                    "left_contact": False,
+                    "right_contact": False,
+                    "left_min_distance_m": None,
+                    "right_min_distance_m": None,
+                    "contact_points": [],
+                    "status": "hand_joints_npz_missing",
+                }
+                for obs in observations
+            ],
+        }
     write_json_payload(contact_payload, output_dir / "contact_annotations.json")
 
     return {"object_id": object_id, "frame_count": num_frames, "output_dir": str(output_dir)}
