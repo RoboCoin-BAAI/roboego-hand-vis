@@ -33,9 +33,13 @@ def parse_semantic_response(text: str) -> dict[str, Any]:
 
 
 def select_key_frames(observations: list[ObjectObservation], max_frames: int) -> list[int]:
+    if max_frames <= 0:
+        return []
     valid = [obs for obs in observations if obs.bbox_xywh is not None and obs.crop_path is not None]
     if not valid:
         return []
+    if max_frames == 1:
+        return [valid[0].frame_idx]
     selected = {valid[0].frame_idx}
     largest = max(valid, key=lambda obs: obs.mask_area_px)
     selected.add(largest.frame_idx)

@@ -26,3 +26,18 @@ def test_select_key_frames_uses_first_largest_and_spaced_frames(tmp_path: Path):
         ObjectObservation(20, "yellow_object_0", [0, 0, 20, 20], 400, "detected", crop_path=tmp_path / "20.png"),
     ]
     assert select_key_frames(observations, max_frames=3) == [0, 10, 20]
+
+
+def test_select_key_frames_with_zero_limit_returns_no_frames(tmp_path: Path):
+    observations = [
+        ObjectObservation(0, "yellow_object_0", [0, 0, 10, 10], 100, "detected", crop_path=tmp_path / "0.png"),
+    ]
+    assert select_key_frames(observations, max_frames=0) == []
+
+
+def test_select_key_frames_with_one_limit_keeps_first_valid_frame(tmp_path: Path):
+    observations = [
+        ObjectObservation(3, "yellow_object_0", [0, 0, 10, 10], 100, "detected", crop_path=tmp_path / "3.png"),
+        ObjectObservation(8, "yellow_object_0", [0, 0, 30, 30], 900, "detected", crop_path=tmp_path / "8.png"),
+    ]
+    assert select_key_frames(observations, max_frames=1) == [3]
