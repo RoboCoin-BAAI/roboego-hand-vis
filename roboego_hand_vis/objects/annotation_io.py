@@ -38,12 +38,14 @@ def write_object_tracks_json(
     backend: str,
     video_path: Path,
     depth_dir: Path,
+    warnings: list[dict[str, Any]] | None = None,
 ) -> Dict[str, Any]:
     payload = {
         "schema_version": "1.0",
         "backend": backend,
         "video": str(video_path),
         "depth_dir": str(depth_dir),
+        "warnings": warnings or [],
         "objects": {
             object_id: {"frames": [observation_to_json(obs, output_dir) for obs in frames]}
             for object_id, frames in observations.items()

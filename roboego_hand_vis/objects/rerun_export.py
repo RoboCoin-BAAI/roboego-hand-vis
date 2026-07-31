@@ -25,5 +25,5 @@ def draw_object_bbox_overlay(
     return overlay
 
 
-def log_object_overlay(entity_path: str, image_rgb: np.ndarray) -> None:
-    rr.log(entity_path, rr.Image(image_rgb))
+def log_object_overlay(entity_path: str, image_rgb: np.ndarray, *, jpeg_quality: int = 85) -> None:
+    rr.log(entity_path, rr.Image(image_rgb).compress(jpeg_quality=jpeg_quality))

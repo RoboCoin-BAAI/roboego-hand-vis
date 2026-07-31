@@ -22,14 +22,23 @@ from roboego_hand_vis.objects.rerun_export import draw_object_bbox_overlay, log_
 from roboego_hand_vis.objects.semantic_qwen import call_qwen_semantics, select_key_frames
 
 
-def read_rgb_frame(video_path: Path, frame_idx: int) -> np.ndarray:
+def iter_rgb_frames(video_path: Path, num_frames: int):
     cap = cv2.VideoCapture(str(video_path))
-    cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
-    ok, bgr = cap.read()
-    cap.release()
-    if not ok:
-        raise RuntimeError(f"Could not read frame {frame_idx} from {video_path}")
-    return cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    try:
+        for frame_idx in range(num_frames):
+            ok, bgr = cap.read()
+            if not ok:
+                raise RuntimeError(f"Could not read frame {frame_idx} from {video_path}")
+            yield frame_idx, cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    finally:
+        cap.release()
+
+
+def _sanitized_error(exc: Exception) -> str:
+    message = " ".join(str(exc).split())
+    if "DASHSCOPE_API_KEY" in message:
+        return "DASHSCOPE_API_KEY is not set"
+    return f"Qwen request failed ({type(exc).__name__})."
 
 
 def run_annotation(
@@ -47,29 +56,45 @@ def run_annotation(
     save_rrd: bool,
     qwen_model: str = "qwen-vl-plus",
     contact_threshold_m: float = 0.025,
+    jpeg_quality: int = 85,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     observations = []
+    warnings: list[dict[str, Any]] = []
     config = YellowSegmentationConfig()
-    for frame_idx in range(num_frames):
-        rgb = read_rgb_frame(video_path, frame_idx)
-        if backend != "color_yellow":
-            raise ValueError(f"Unsupported backend in this CLI pass: {backend}")
+    if backend != "color_yellow":
+        raise ValueError(f"Unsupported backend in this CLI pass: {backend}")
+    if save_rrd:
+        rr.init("RoboEgo Object Annotation", spawn=False)
+        rr.save(str(output_dir / "object_annotation.rrd"))
+    for frame_idx, rgb in iter_rgb_frames(video_path, num_frames):
         obs, mask = detect_yellow_object(rgb, frame_idx=frame_idx, object_id=object_id, config=config)
         obs = save_mask_and_crop(image_rgb=rgb, mask=mask, obs=obs, output_dir=output_dir, crop_padding_px=12)
         if obs.bbox_xywh is not None:
-            depth = load_depth_frame(depth_dir, frame_idx)
-            _points, stats = mask_depth_to_points(
-                depth,
-                mask,
-                intrinsics=intrinsics,
-                min_depth_m=0.15,
-                max_depth_m=2.5,
-                stride=4,
-            )
-            obs.depth_median_m = stats.depth_median_m
-            obs.depth_valid_ratio = stats.depth_valid_ratio
+            try:
+                depth = load_depth_frame(depth_dir, frame_idx)
+            except FileNotFoundError:
+                warnings.append({"frame_idx": frame_idx, "status": "depth_file_missing"})
+            else:
+                _points, stats = mask_depth_to_points(
+                    depth,
+                    mask,
+                    intrinsics=intrinsics,
+                    min_depth_m=0.15,
+                    max_depth_m=2.5,
+                    stride=4,
+                )
+                obs.depth_median_m = stats.depth_median_m
+                obs.depth_valid_ratio = stats.depth_valid_ratio
         observations.append(obs)
+        if save_rrd:
+            rr.set_time_sequence("frame", frame_idx)
+            overlay = draw_object_bbox_overlay(rgb, obs, label=object_id)
+            log_object_overlay(
+                "camera_opencv/camera/left/rgb_object_bbox_overlay",
+                overlay,
+                jpeg_quality=jpeg_quality,
+            )
     observations = fill_missing_observations(observations, max_gap=config.gap_fill_frames)
     write_object_tracks_json(
         observations={object_id: observations},
@@ -78,6 +103,7 @@ def run_annotation(
         backend=backend,
         video_path=video_path,
         depth_dir=depth_dir,
+        warnings=warnings,
     )
     write_object_tracks_csv({object_id: observations}, output_dir / "object_tracks.csv")
 
@@ -85,8 +111,31 @@ def run_annotation(
     if not no_qwen:
         key_frames = select_key_frames(observations, max_frames=4)
         crop_paths = [obs.crop_path for obs in observations if obs.frame_idx in key_frames and obs.crop_path is not None]
-        semantic = call_qwen_semantics(crop_paths=crop_paths, model=qwen_model)
-        semantic.update({"schema_version": "1.0", "object_id": object_id, "evidence_frames": key_frames})
+        if not crop_paths:
+            semantic = {
+                "schema_version": "1.0",
+                "provider": "qwen",
+                "model": qwen_model,
+                "object_id": object_id,
+                "evidence_frames": key_frames,
+                "status": "no_crops",
+            }
+        else:
+            try:
+                semantic = call_qwen_semantics(crop_paths=crop_paths, model=qwen_model)
+            except Exception as exc:
+                semantic = {
+                    "schema_version": "1.0",
+                    "provider": "qwen",
+                    "model": qwen_model,
+                    "object_id": object_id,
+                    "evidence_frames": key_frames,
+                    "status": "api_failed",
+                    "error_type": type(exc).__name__,
+                    "error": _sanitized_error(exc),
+                }
+            else:
+                semantic.update({"schema_version": "1.0", "object_id": object_id, "evidence_frames": key_frames})
     write_json_payload(semantic, output_dir / "semantic_annotations.json")
 
     contact_payload = {
@@ -95,6 +144,7 @@ def run_annotation(
         "distance_threshold_m": contact_threshold_m,
         "hand_tracks": str(hand_tracks_path) if hand_tracks_path else None,
         "hand_joints_npz": str(hand_joints_npz) if hand_joints_npz else None,
+        "status": "hand_joints_npz_missing" if hand_joints_npz is None else "disabled_until_task_8",
         "frames": [
             {
                 "frame_idx": obs.frame_idx,
@@ -110,14 +160,6 @@ def run_annotation(
     }
     write_json_payload(contact_payload, output_dir / "contact_annotations.json")
 
-    if save_rrd:
-        rr.init("RoboEgo Object Annotation", spawn=False)
-        rr.save(str(output_dir / "object_annotation.rrd"))
-        for obs in observations:
-            rr.set_time_sequence("frame", obs.frame_idx)
-            rgb = read_rgb_frame(video_path, obs.frame_idx)
-            overlay = draw_object_bbox_overlay(rgb, obs, label=object_id)
-            log_object_overlay("camera_opencv/camera/left/rgb_object_bbox_overlay", overlay)
     return {"object_id": object_id, "frame_count": num_frames, "output_dir": str(output_dir)}
 
 
@@ -134,6 +176,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num_frames", type=int, default=900)
     parser.add_argument("--no_qwen", action="store_true")
     parser.add_argument("--qwen_model", default="qwen-vl-plus")
+    parser.add_argument("--jpeg_quality", type=int, default=85)
     parser.add_argument("--no_save_rrd", action="store_true")
     return parser.parse_args()
 
@@ -155,6 +198,7 @@ def main() -> None:
         no_qwen=args.no_qwen,
         save_rrd=not args.no_save_rrd,
         qwen_model=args.qwen_model,
+        jpeg_quality=args.jpeg_quality,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
 

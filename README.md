@@ -69,6 +69,8 @@ rerun tmp/baai_object_annotation_900/object_annotation.rrd
 ```
 
 The RGB review layer is `camera_opencv/camera/left/rgb_object_bbox_overlay`.
+Rerun output can be large; use `--no_save_rrd` to disable it, or adjust
+`--jpeg_quality` (default: `85`) to trade image quality for output size.
 
 ## Code Layout
 
