@@ -117,5 +117,6 @@ def contact_payload_from_joints_npz_and_object_points(
         "object_id": object_id,
         "distance_threshold_m": threshold_m,
         "hand_joints_npz": str(hand_joints_npz),
+        "status": "ok",
         "frames": frames,
     }

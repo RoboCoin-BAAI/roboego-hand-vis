@@ -27,6 +27,7 @@ def test_contact_payload_from_joints_npz_and_object_points_marks_left_contact(tm
         threshold_m=0.025,
     )
     frame = payload["frames"][0]
+    assert payload["status"] == "ok"
     assert frame["left_contact"] is True
     assert frame["right_contact"] is False
     assert "left.index_tip" in frame["contact_points"]
