@@ -11,11 +11,11 @@ FRAME_SIZE = (96, 72)
 INTRINSICS = {"fx": 50.0, "fy": 50.0, "cx": 48.0, "cy": 36.0}
 
 
-def write_tiny_video(path: Path, *, yellow: bool = True) -> None:
+def write_tiny_video(path: Path, *, yellow: bool = True, missing_yellow_idx: int | None = None) -> None:
     writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 5.0, FRAME_SIZE)
-    for _ in range(3):
+    for idx in range(3):
         frame = np.zeros((FRAME_SIZE[1], FRAME_SIZE[0], 3), dtype=np.uint8)
-        if yellow:
+        if yellow and idx != missing_yellow_idx:
             frame[30:60, 24:64] = [20, 230, 255]
         writer.write(frame)
     writer.release()
@@ -94,3 +94,43 @@ def test_run_annotation_writes_api_failure_without_qwen_key(tmp_path: Path, monk
     assert semantic["provider"] == "qwen"
     assert semantic["error_type"] == "RuntimeError"
     assert "DASHSCOPE_API_KEY" in semantic["error"]
+
+
+def test_run_annotation_rerun_overlay_uses_gap_filled_observations(tmp_path: Path, monkeypatch):
+    video = tmp_path / "video.mp4"
+    write_tiny_video(video, missing_yellow_idx=1)
+    depth_dir = tmp_path / "depth"
+    write_depth_frames(depth_dir, missing_idx=1)
+    out = tmp_path / "out"
+    overlay_observations = []
+
+    monkeypatch.setattr("scripts.object.run_object_annotation.rr.init", lambda *args, **kwargs: None)
+    monkeypatch.setattr("scripts.object.run_object_annotation.rr.save", lambda *args, **kwargs: None)
+    monkeypatch.setattr("scripts.object.run_object_annotation.rr.set_time_sequence", lambda *args, **kwargs: None)
+
+    def record_overlay(image_rgb, obs, *, label, contact_text=None):
+        overlay_observations.append(obs)
+        return image_rgb
+
+    monkeypatch.setattr("scripts.object.run_object_annotation.draw_object_bbox_overlay", record_overlay)
+    monkeypatch.setattr("scripts.object.run_object_annotation.log_object_overlay", lambda *args, **kwargs: None)
+
+    run_annotation(
+        video_path=video,
+        depth_dir=depth_dir,
+        output_dir=out,
+        intrinsics=INTRINSICS,
+        hand_tracks_path=None,
+        hand_joints_npz=None,
+        backend="color_yellow",
+        object_id="yellow_object_0",
+        num_frames=3,
+        no_qwen=True,
+        save_rrd=True,
+    )
+
+    tracks = json.loads((out / "object_tracks.json").read_text())
+    assert tracks["objects"]["yellow_object_0"]["frames"][1]["source"] == "interpolated_yellow_bbox"
+    assert len(overlay_observations) == 3
+    assert overlay_observations[1].source == "interpolated_yellow_bbox"
+    assert overlay_observations[1].bbox_xywh is not None

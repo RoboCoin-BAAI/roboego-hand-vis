@@ -92,6 +92,19 @@ def test_parse_semantic_response_rejects_boolean_confidence(confidence: bool):
     assert parsed["raw_response"] == raw_response
 
 
+@pytest.mark.parametrize("confidence", [-0.1, 1.5])
+def test_parse_semantic_response_rejects_confidence_outside_unit_interval(confidence: float):
+    raw_response = _valid_semantic_response(confidence=confidence)
+    parsed = parse_semantic_response(raw_response)
+    assert parsed == {"status": "parse_failed", "raw_response": raw_response}
+
+
+def test_parse_semantic_response_rejects_non_string_semantic_fields():
+    raw_response = _valid_semantic_response(category={"nested": "box"})
+    parsed = parse_semantic_response(raw_response)
+    assert parsed == {"status": "parse_failed", "raw_response": raw_response}
+
+
 def test_parse_semantic_response_rejects_json_list():
     raw_response = json.dumps(["box", "yellow"])
     parsed = parse_semantic_response(raw_response)

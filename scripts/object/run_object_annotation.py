@@ -42,6 +42,26 @@ def _sanitized_error(exc: Exception) -> str:
     return f"Qwen request failed ({type(exc).__name__})."
 
 
+def log_rerun_overlays(
+    *,
+    video_path: Path,
+    observations: list,
+    object_id: str,
+    output_dir: Path,
+    jpeg_quality: int,
+) -> None:
+    rr.init("RoboEgo Object Annotation", spawn=False)
+    rr.save(str(output_dir / "object_annotation.rrd"))
+    for (frame_idx, rgb), obs in zip(iter_rgb_frames(video_path, len(observations)), observations):
+        rr.set_time_sequence("frame", frame_idx)
+        overlay = draw_object_bbox_overlay(rgb, obs, label=object_id)
+        log_object_overlay(
+            "camera_opencv/camera/left/rgb_object_bbox_overlay",
+            overlay,
+            jpeg_quality=jpeg_quality,
+        )
+
+
 def run_annotation(
     *,
     video_path: Path,
@@ -66,9 +86,6 @@ def run_annotation(
     config = YellowSegmentationConfig()
     if backend != "color_yellow":
         raise ValueError(f"Unsupported backend in this CLI pass: {backend}")
-    if save_rrd:
-        rr.init("RoboEgo Object Annotation", spawn=False)
-        rr.save(str(output_dir / "object_annotation.rrd"))
     for frame_idx, rgb in iter_rgb_frames(video_path, num_frames):
         obs, mask = detect_yellow_object(rgb, frame_idx=frame_idx, object_id=object_id, config=config)
         obs = save_mask_and_crop(image_rgb=rgb, mask=mask, obs=obs, output_dir=output_dir, crop_padding_px=12)
@@ -90,15 +107,15 @@ def run_annotation(
                 obs.depth_median_m = stats.depth_median_m
                 obs.depth_valid_ratio = stats.depth_valid_ratio
         observations.append(obs)
-        if save_rrd:
-            rr.set_time_sequence("frame", frame_idx)
-            overlay = draw_object_bbox_overlay(rgb, obs, label=object_id)
-            log_object_overlay(
-                "camera_opencv/camera/left/rgb_object_bbox_overlay",
-                overlay,
-                jpeg_quality=jpeg_quality,
-            )
     observations = fill_missing_observations(observations, max_gap=config.gap_fill_frames)
+    if save_rrd:
+        log_rerun_overlays(
+            video_path=video_path,
+            observations=observations,
+            object_id=object_id,
+            output_dir=output_dir,
+            jpeg_quality=jpeg_quality,
+        )
     write_object_tracks_json(
         observations={object_id: observations},
         output_path=output_dir / "object_tracks.json",
@@ -147,6 +164,7 @@ def run_annotation(
             hand_joints_npz=hand_joints_npz,
             object_points_by_frame=object_points_by_frame,
             threshold_m=contact_threshold_m,
+            frame_count=len(observations),
         )
     else:
         contact_payload = {

@@ -131,9 +131,10 @@ def contact_payload_from_joints_npz_and_object_points(
     hand_joints_npz: Path,
     object_points_by_frame: dict[int, np.ndarray],
     threshold_m: float,
+    frame_count: int | None = None,
 ) -> dict:
     left, right, left_valid, right_valid = _validated_hand_joints_npz(hand_joints_npz)
-    n = max(len(left), len(right), max(object_points_by_frame.keys(), default=-1) + 1)
+    n = frame_count if frame_count is not None else max(len(left), len(right), max(object_points_by_frame.keys(), default=-1) + 1)
     frames = []
     for frame_idx in range(n):
         points, object_status = _object_points_for_frame(

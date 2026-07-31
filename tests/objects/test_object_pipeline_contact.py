@@ -51,6 +51,53 @@ def test_contact_payload_from_joints_npz_and_object_points_marks_left_contact(tm
     assert "left.index_tip" in frame["contact_points"]
 
 
+def test_contact_payload_respects_annotation_frame_count(tmp_path: Path):
+    left = np.zeros((5, 21, 3), dtype=np.float32)
+    right = np.zeros((5, 21, 3), dtype=np.float32)
+    npz_path = tmp_path / "joints.npz"
+    _write_joints_npz(
+        npz_path,
+        left=left,
+        right=right,
+        left_valid=np.ones(5, dtype=bool),
+        right_valid=np.ones(5, dtype=bool),
+    )
+
+    payload = contact_payload_from_joints_npz_and_object_points(
+        object_id="yellow_object_0",
+        hand_joints_npz=npz_path,
+        object_points_by_frame={0: np.zeros((1, 3), dtype=np.float32)},
+        threshold_m=0.025,
+        frame_count=2,
+    )
+
+    assert [frame["frame_idx"] for frame in payload["frames"]] == [0, 1]
+
+
+def test_contact_payload_extends_short_npz_to_annotation_frame_count(tmp_path: Path):
+    left = np.zeros((2, 21, 3), dtype=np.float32)
+    right = np.zeros((2, 21, 3), dtype=np.float32)
+    npz_path = tmp_path / "joints.npz"
+    _write_joints_npz(
+        npz_path,
+        left=left,
+        right=right,
+        left_valid=np.ones(2, dtype=bool),
+        right_valid=np.ones(2, dtype=bool),
+    )
+
+    payload = contact_payload_from_joints_npz_and_object_points(
+        object_id="yellow_object_0",
+        hand_joints_npz=npz_path,
+        object_points_by_frame={},
+        threshold_m=0.025,
+        frame_count=4,
+    )
+
+    assert len(payload["frames"]) == 4
+    assert "left_hand_missing" in payload["frames"][3]["status"]
+
+
 def test_contact_payload_marks_empty_object_points_missing(tmp_path: Path):
     joints = np.zeros((1, 21, 3), dtype=np.float32)
     npz_path = tmp_path / "joints.npz"

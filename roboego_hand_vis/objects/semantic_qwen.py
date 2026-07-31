@@ -18,6 +18,11 @@ REQUIRED_FIELDS = ["category", "color", "shape", "material", "visual_description
 def _validated_semantic_object(data: Any) -> dict[str, Any] | None:
     if not isinstance(data, dict) or any(field not in data for field in REQUIRED_FIELDS):
         return None
+    for field in REQUIRED_FIELDS:
+        if field == "confidence":
+            continue
+        if not isinstance(data[field], str):
+            return None
     confidence_value = data["confidence"]
     if isinstance(confidence_value, bool):
         return None
@@ -26,6 +31,8 @@ def _validated_semantic_object(data: Any) -> dict[str, Any] | None:
     except (TypeError, ValueError, OverflowError):
         return None
     if not math.isfinite(confidence):
+        return None
+    if confidence < 0.0 or confidence > 1.0:
         return None
     out = {field: data[field] for field in REQUIRED_FIELDS}
     out["confidence"] = confidence
