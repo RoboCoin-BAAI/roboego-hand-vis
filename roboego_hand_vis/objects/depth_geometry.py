@@ -37,7 +37,7 @@ def mask_depth_to_points(
     stride: int,
     max_points: int = 20000,
 ) -> tuple[np.ndarray, MaskDepthStats]:
-    if depth_m.ndim == 2 and mask.ndim == 2 and depth_m.shape != mask.shape:
+    if depth_m.shape != mask.shape:
         raise ValueError(f"mask/depth shape mismatch: mask {mask.shape}, depth {depth_m.shape}")
 
     stride = max(1, int(stride))

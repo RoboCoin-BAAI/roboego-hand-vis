@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from roboego_hand_vis.objects.depth_geometry import (
     MaskDepthStats,
@@ -82,7 +83,7 @@ def test_mask_depth_to_points_stats_include_valid_unsampled_depth():
 def test_mask_depth_to_points_rejects_shape_mismatch():
     depth = np.ones((2, 2), dtype=np.float32)
     mask = np.ones((3, 3), dtype=np.uint8)
-    try:
+    with pytest.raises(ValueError, match="shape"):
         mask_depth_to_points(
             depth,
             mask,
@@ -91,10 +92,20 @@ def test_mask_depth_to_points_rejects_shape_mismatch():
             max_depth_m=5.0,
             stride=1,
         )
-    except ValueError as exc:
-        assert "shape" in str(exc).lower()
-    else:
-        raise AssertionError("expected ValueError for mask/depth shape mismatch")
+
+
+def test_mask_depth_to_points_rejects_non_2d_shape_mismatch():
+    depth = np.ones((2, 2, 1), dtype=np.float32)
+    mask = np.ones((2, 2), dtype=np.uint8)
+    with pytest.raises(ValueError, match="shape"):
+        mask_depth_to_points(
+            depth,
+            mask,
+            intrinsics={"fx": 1.0, "fy": 1.0, "cx": 0.0, "cy": 0.0},
+            min_depth_m=0.1,
+            max_depth_m=5.0,
+            stride=1,
+        )
 
 
 def test_load_depth_frame_uses_expected_path_and_float32(tmp_path):
