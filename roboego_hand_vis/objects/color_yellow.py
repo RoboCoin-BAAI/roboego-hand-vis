@@ -73,7 +73,10 @@ def fill_missing_observations(frames: list[ObjectObservation], max_gap: int) -> 
             continue
         prev = max((i for i in valid if i < idx), default=None)
         nxt = min((i for i in valid if i > idx), default=None)
-        if prev is None or nxt is None or nxt - prev > max_gap:
+        if prev is None or nxt is None:
+            continue
+        gap_len = nxt - prev - 1
+        if gap_len > max_gap:
             continue
         ratio = (idx - prev) / (nxt - prev)
         a = np.asarray(frames[prev].bbox_xywh, dtype=np.float32)
