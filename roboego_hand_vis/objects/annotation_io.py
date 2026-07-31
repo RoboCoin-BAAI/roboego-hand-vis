@@ -83,3 +83,9 @@ def write_object_tracks_csv(observations: Dict[str, List[ObjectObservation]], ou
                         "source": obs.source,
                     }
                 )
+
+
+def write_json_payload(payload: Dict[str, Any], output_path: Path) -> Dict[str, Any]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    return payload

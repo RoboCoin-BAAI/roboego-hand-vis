@@ -48,6 +48,28 @@ camera_opencv/camera/left/rgb/overlay/final/ego_right/mesh_projected_points
 Generated data, videos, model outputs, and `.rrd` files are intentionally not
 tracked by git. Keep them under `tmp/` or external data directories.
 
+## Object Annotation
+
+BAAI yellow-object segmentation, offline semantic status, contact annotations, and Rerun review:
+
+```bash
+python scripts/object/run_object_annotation.py \
+  --video data/baai/videos/left_rectified.mp4 \
+  --depth_dir tmp/baai_foundation_depth_continuous_900 \
+  --intrinsics_json tmp/baai_rectified_intrinsics.json \
+  --hand_tracks tmp/baai_ego_hand_tracking_900_identity_gate/ego_hand_tracks.json \
+  --hand_joints_npz tmp/baai_hand_joints21_identity_bbox_edge_gate/joints_21_camera_opencv.npz \
+  --output_dir tmp/baai_object_annotation_900 \
+  --backend color_yellow \
+  --object_id yellow_object_0 \
+  --num_frames 900 \
+  --no_qwen
+
+rerun tmp/baai_object_annotation_900/object_annotation.rrd
+```
+
+The RGB review layer is `camera_opencv/camera/left/rgb_object_bbox_overlay`.
+
 ## Code Layout
 
 ```text
