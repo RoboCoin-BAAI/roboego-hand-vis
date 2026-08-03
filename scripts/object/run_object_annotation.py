@@ -42,6 +42,13 @@ def _sanitized_error(exc: Exception) -> str:
     return f"Qwen request failed ({type(exc).__name__})."
 
 
+def _set_frame_time(frame_idx: int) -> None:
+    if hasattr(rr, "set_time"):
+        rr.set_time("frame", sequence=frame_idx)
+    else:
+        rr.set_time_sequence("frame", frame_idx)
+
+
 def log_rerun_overlays(
     *,
     video_path: Path,
@@ -53,7 +60,7 @@ def log_rerun_overlays(
     rr.init("RoboEgo Object Annotation", spawn=False)
     rr.save(str(output_dir / "object_annotation.rrd"))
     for (frame_idx, rgb), obs in zip(iter_rgb_frames(video_path, len(observations)), observations):
-        rr.set_time_sequence("frame", frame_idx)
+        _set_frame_time(frame_idx)
         overlay = draw_object_bbox_overlay(rgb, obs, label=object_id)
         log_object_overlay(
             "camera_opencv/camera/left/rgb_object_bbox_overlay",

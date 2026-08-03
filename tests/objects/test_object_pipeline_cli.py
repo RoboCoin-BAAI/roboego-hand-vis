@@ -106,7 +106,13 @@ def test_run_annotation_rerun_overlay_uses_gap_filled_observations(tmp_path: Pat
 
     monkeypatch.setattr("scripts.object.run_object_annotation.rr.init", lambda *args, **kwargs: None)
     monkeypatch.setattr("scripts.object.run_object_annotation.rr.save", lambda *args, **kwargs: None)
-    monkeypatch.setattr("scripts.object.run_object_annotation.rr.set_time_sequence", lambda *args, **kwargs: None)
+    time_calls = []
+    monkeypatch.setattr(
+        "scripts.object.run_object_annotation.rr.set_time",
+        lambda timeline, *, sequence: time_calls.append((timeline, sequence)),
+        raising=False,
+    )
+    monkeypatch.delattr("scripts.object.run_object_annotation.rr.set_time_sequence", raising=False)
 
     def record_overlay(image_rgb, obs, *, label, contact_text=None):
         overlay_observations.append(obs)
@@ -132,5 +138,6 @@ def test_run_annotation_rerun_overlay_uses_gap_filled_observations(tmp_path: Pat
     tracks = json.loads((out / "object_tracks.json").read_text())
     assert tracks["objects"]["yellow_object_0"]["frames"][1]["source"] == "interpolated_yellow_bbox"
     assert len(overlay_observations) == 3
+    assert time_calls == [("frame", 0), ("frame", 1), ("frame", 2)]
     assert overlay_observations[1].source == "interpolated_yellow_bbox"
     assert overlay_observations[1].bbox_xywh is not None
