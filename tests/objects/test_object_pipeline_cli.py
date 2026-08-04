@@ -32,6 +32,23 @@ def write_depth_frames(depth_dir: Path, *, missing_idx: int | None = None) -> No
         )
 
 
+def write_hand_joints_npz(path: Path) -> None:
+    left = np.full((3, 21, 3), np.nan, dtype=np.float32)
+    right = np.full((3, 21, 3), np.nan, dtype=np.float32)
+    left[:, :, 2] = 1.0
+    left[:, :, 0] = (44.0 - INTRINSICS["cx"]) / INTRINSICS["fx"]
+    left[:, :, 1] = (42.0 - INTRINSICS["cy"]) / INTRINSICS["fy"]
+    np.savez(
+        path,
+        left_joints_21_camera_opencv=left,
+        right_joints_21_camera_opencv=right,
+        left_valid=np.ones(3, dtype=bool),
+        right_valid=np.zeros(3, dtype=bool),
+        joint_names=np.array([f"j{i}" for i in range(21)]),
+        bones=np.zeros((0, 2), dtype=np.int32),
+    )
+
+
 def run_tiny_annotation(tmp_path: Path, *, missing_depth_idx: int | None = None, no_qwen: bool = True) -> Path:
     video = tmp_path / "video.mp4"
     write_tiny_video(video)
@@ -141,3 +158,44 @@ def test_run_annotation_rerun_overlay_uses_gap_filled_observations(tmp_path: Pat
     assert time_calls == [("frame", 0), ("frame", 1), ("frame", 2)]
     assert overlay_observations[1].source == "interpolated_yellow_bbox"
     assert overlay_observations[1].bbox_xywh is not None
+
+
+def test_run_annotation_sam3_masks_tracks_hand_near_candidate_and_gap_fills(tmp_path: Path):
+    video = tmp_path / "video.mp4"
+    write_tiny_video(video, yellow=False)
+    depth_dir = tmp_path / "depth"
+    write_depth_frames(depth_dir)
+    masks_root = tmp_path / "sam3_masks"
+    frame0 = masks_root / "frame_000000_masks"
+    frame0.mkdir(parents=True)
+    far = np.zeros((FRAME_SIZE[1], FRAME_SIZE[0]), dtype=np.uint8)
+    far[50:70, 70:95] = 255
+    near = np.zeros((FRAME_SIZE[1], FRAME_SIZE[0]), dtype=np.uint8)
+    near[35:50, 36:52] = 255
+    cv2.imwrite(str(frame0 / "far_large.png"), far)
+    cv2.imwrite(str(frame0 / "near_hand.png"), near)
+    hand_joints = tmp_path / "joints.npz"
+    write_hand_joints_npz(hand_joints)
+    out = tmp_path / "out"
+
+    run_annotation(
+        video_path=video,
+        depth_dir=depth_dir,
+        output_dir=out,
+        intrinsics=INTRINSICS,
+        hand_tracks_path=None,
+        hand_joints_npz=hand_joints,
+        backend="sam3_masks",
+        object_id="manipulated_object",
+        num_frames=3,
+        no_qwen=True,
+        save_rrd=False,
+        sam3_masks_root=masks_root,
+    )
+
+    tracks = json.loads((out / "object_tracks.json").read_text())
+    frames = tracks["objects"]["manipulated_object"]["frames"]
+    assert frames[0]["bbox_xywh"] == [36, 35, 16, 15]
+    assert frames[0]["source"] == "tracked:sam3_mask:near_hand"
+    assert frames[1]["bbox_xywh"] == [36, 35, 16, 15]
+    assert frames[1]["source"] == "tracked_gap_fill"

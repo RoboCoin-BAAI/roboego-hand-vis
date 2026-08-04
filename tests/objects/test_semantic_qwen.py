@@ -6,7 +6,11 @@ import pytest
 
 from roboego_hand_vis.objects.semantic_qwen import (
     build_qwen_messages,
+    build_qwen_object_candidate_messages,
+    build_qwen_object_target_messages,
     call_qwen_semantics,
+    parse_qwen_candidate_response,
+    parse_qwen_target_response,
     parse_semantic_response,
     select_key_frames,
 )
@@ -160,3 +164,70 @@ def test_call_qwen_semantics_requires_api_key_before_network(monkeypatch: pytest
     monkeypatch.setattr("roboego_hand_vis.objects.semantic_qwen.urllib.request.urlopen", fail_if_called)
     with pytest.raises(RuntimeError, match="DASHSCOPE_API_KEY is not set"):
         call_qwen_semantics(crop_paths=[], model="qwen-test")
+
+
+def test_parse_qwen_target_response_accepts_manipulated_object_json():
+    parsed = parse_qwen_target_response(
+        json.dumps(
+            {
+                "manipulated_object": "yellow smiley box",
+                "object_type": "box",
+                "avoid_parts": ["smiley face graphic"],
+                "visual_attributes": ["yellow", "rectangular"],
+                "confidence": 0.82,
+            }
+        )
+    )
+
+    assert parsed["status"] == "ok"
+    assert parsed["object_type"] == "box"
+    assert parsed["avoid_parts"] == ["smiley face graphic"]
+
+
+def test_parse_qwen_target_response_accepts_string_visual_attributes_from_markdown():
+    parsed = parse_qwen_target_response(
+        '```json\n{"manipulated_object":"keyboard","object_type":"computer peripheral",'
+        '"avoid_parts":["keys"],"visual_attributes":"black, rectangular","confidence":0.95}\n```'
+    )
+
+    assert parsed["status"] == "ok"
+    assert parsed["visual_attributes"] == ["black", "rectangular"]
+
+
+def test_parse_qwen_candidate_response_accepts_score_json():
+    parsed = parse_qwen_candidate_response(
+        '{"is_whole_object":true,"matches_target":true,"is_part_or_pattern":false,"score":0.91,"reason":"full box"}'
+    )
+
+    assert parsed["status"] == "ok"
+    assert parsed["score"] == 0.91
+
+
+def test_build_qwen_target_messages_mentions_whole_object(tmp_path: Path):
+    image_path = tmp_path / "frame.png"
+    image_path.write_bytes(b"frame")
+
+    messages = build_qwen_object_target_messages(image_path)
+
+    text = messages[0]["content"][0]["text"]
+    assert "whole object" in text
+    assert "local pattern" in text
+
+
+def test_build_qwen_candidate_messages_includes_target_description(tmp_path: Path):
+    crop_path = tmp_path / "crop.png"
+    crop_path.write_bytes(b"crop")
+
+    messages = build_qwen_object_candidate_messages(
+        crop_path,
+        target={
+            "manipulated_object": "yellow smiley box",
+            "object_type": "box",
+            "avoid_parts": ["smiley face graphic"],
+            "visual_attributes": ["yellow"],
+        },
+    )
+
+    text = messages[0]["content"][0]["text"]
+    assert "yellow smiley box" in text
+    assert "smiley face graphic" in text

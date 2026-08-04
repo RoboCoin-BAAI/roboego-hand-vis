@@ -13,6 +13,8 @@ from .segmentation import ObjectObservation
 
 DEFAULT_QWEN_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 REQUIRED_FIELDS = ["category", "color", "shape", "material", "visual_description", "confidence"]
+TARGET_FIELDS = ["manipulated_object", "object_type", "avoid_parts", "visual_attributes", "confidence"]
+CANIDATE_FIELDS = ["is_whole_object", "matches_target", "is_part_or_pattern", "score", "reason"]
 
 
 def _validated_semantic_object(data: Any) -> dict[str, Any] | None:
@@ -65,6 +67,98 @@ def parse_semantic_response(text: str) -> dict[str, Any]:
     return parsed or {"status": "parse_failed", "raw_response": text}
 
 
+def _json_object_from_text(text: str) -> dict[str, Any] | None:
+    text = _strip_markdown_json_fence(text)
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        decoder = json.JSONDecoder()
+        for index, character in enumerate(text):
+            if character != "{":
+                continue
+            try:
+                data, _ = decoder.raw_decode(text, index)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(data, dict):
+                return data
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _strip_markdown_json_fence(text: str) -> str:
+    stripped = text.strip()
+    if not stripped.startswith("```"):
+        return text
+    lines = stripped.splitlines()
+    if len(lines) >= 3 and lines[-1].strip() == "```":
+        return "\n".join(lines[1:-1]).strip()
+    return text
+
+
+def _finite_unit_float(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    try:
+        out = float(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not math.isfinite(out) or out < 0.0 or out > 1.0:
+        return None
+    return out
+
+
+def parse_qwen_target_response(text: str) -> dict[str, Any]:
+    data = _json_object_from_text(text)
+    if data is None or any(field not in data for field in TARGET_FIELDS):
+        return {"status": "parse_failed", "raw_response": text}
+    if not all(isinstance(data[field], str) for field in ["manipulated_object", "object_type"]):
+        return {"status": "parse_failed", "raw_response": text}
+    avoid_parts = _string_list_field(data["avoid_parts"])
+    visual_attributes = _string_list_field(data["visual_attributes"])
+    if avoid_parts is None or visual_attributes is None:
+        return {"status": "parse_failed", "raw_response": text}
+    confidence = _finite_unit_float(data["confidence"])
+    if confidence is None:
+        return {"status": "parse_failed", "raw_response": text}
+    return {
+        "status": "ok",
+        "manipulated_object": data["manipulated_object"],
+        "object_type": data["object_type"],
+        "avoid_parts": avoid_parts,
+        "visual_attributes": visual_attributes,
+        "confidence": confidence,
+    }
+
+
+def _string_list_field(value: Any) -> list[str] | None:
+    if isinstance(value, str):
+        return [part.strip() for part in value.split(",") if part.strip()]
+    if isinstance(value, list) and all(isinstance(item, str) for item in value):
+        return value
+    return None
+
+
+def parse_qwen_candidate_response(text: str) -> dict[str, Any]:
+    data = _json_object_from_text(text)
+    if data is None or any(field not in data for field in CANIDATE_FIELDS):
+        return {"status": "parse_failed", "raw_response": text}
+    for field in ["is_whole_object", "matches_target", "is_part_or_pattern"]:
+        if not isinstance(data[field], bool):
+            return {"status": "parse_failed", "raw_response": text}
+    score = _finite_unit_float(data["score"])
+    if score is None or not isinstance(data["reason"], str):
+        return {"status": "parse_failed", "raw_response": text}
+    return {
+        "status": "ok",
+        "is_whole_object": data["is_whole_object"],
+        "matches_target": data["matches_target"],
+        "is_part_or_pattern": data["is_part_or_pattern"],
+        "score": score,
+        "reason": data["reason"],
+    }
+
+
 def select_key_frames(observations: list[ObjectObservation], max_frames: int) -> list[int]:
     if max_frames <= 0:
         return []
@@ -115,22 +209,55 @@ def build_qwen_messages(crop_paths: list[Path]) -> list[dict[str, Any]]:
     return [{"role": "user", "content": content}]
 
 
-def call_qwen_semantics(
+def build_qwen_object_target_messages(frame_path: Path) -> list[dict[str, Any]]:
+    content: list[dict[str, Any]] = [
+        {
+            "type": "text",
+            "text": (
+                "Observe this egocentric hand-manipulation frame. Identify the main whole object "
+                "the hand is touching or operating. Distinguish the whole object from any local pattern, "
+                "printed graphic, logo, face, text, or part on it. Return strict JSON with keys: "
+                "manipulated_object, object_type, avoid_parts, visual_attributes, confidence. "
+                "Use concise English values. confidence must be 0 to 1."
+            ),
+        },
+        {"type": "image_url", "image_url": {"url": _image_data_url(frame_path)}},
+    ]
+    return [{"role": "user", "content": content}]
+
+
+def build_qwen_object_candidate_messages(crop_path: Path, target: dict[str, Any]) -> list[dict[str, Any]]:
+    avoid_parts = ", ".join(target.get("avoid_parts", [])) or "none"
+    visual_attributes = ", ".join(target.get("visual_attributes", [])) or "unknown"
+    content: list[dict[str, Any]] = [
+        {
+            "type": "text",
+            "text": (
+                "Score whether this crop is the whole manipulated target object, not merely a local part "
+                "or printed pattern. Target: "
+                f"{target.get('manipulated_object', '')}. Object type: {target.get('object_type', '')}. "
+                f"Visual attributes: {visual_attributes}. Avoid selecting parts/patterns: {avoid_parts}. "
+                "Return strict JSON with keys: is_whole_object, matches_target, is_part_or_pattern, score, reason. "
+                "score must be 0 to 1."
+            ),
+        },
+        {"type": "image_url", "image_url": {"url": _image_data_url(crop_path)}},
+    ]
+    return [{"role": "user", "content": content}]
+
+
+def _call_qwen_messages(
     *,
-    crop_paths: list[Path],
+    messages: list[dict[str, Any]],
     model: str,
-    api_key_env: str = "DASHSCOPE_API_KEY",
-    base_url: str = DEFAULT_QWEN_BASE_URL,
-    timeout_s: float = 60.0,
-) -> dict[str, Any]:
+    api_key_env: str,
+    base_url: str,
+    timeout_s: float,
+) -> str:
     api_key = os.environ.get(api_key_env)
     if not api_key:
         raise RuntimeError(f"{api_key_env} is not set")
-    body = {
-        "model": model,
-        "messages": build_qwen_messages(crop_paths),
-        "temperature": 0,
-    }
+    body = {"model": model, "messages": messages, "temperature": 0}
     req = urllib.request.Request(
         base_url,
         data=json.dumps(body).encode("utf-8"),
@@ -139,8 +266,68 @@ def call_qwen_semantics(
     )
     with urllib.request.urlopen(req, timeout=timeout_s) as resp:
         payload = json.loads(resp.read().decode("utf-8"))
-    content = payload["choices"][0]["message"]["content"]
+    return payload["choices"][0]["message"]["content"]
+
+
+def call_qwen_semantics(
+    *,
+    crop_paths: list[Path],
+    model: str,
+    api_key_env: str = "DASHSCOPE_API_KEY",
+    base_url: str = DEFAULT_QWEN_BASE_URL,
+    timeout_s: float = 60.0,
+) -> dict[str, Any]:
+    content = _call_qwen_messages(
+        messages=build_qwen_messages(crop_paths),
+        model=model,
+        api_key_env=api_key_env,
+        base_url=base_url,
+        timeout_s=timeout_s,
+    )
     parsed = parse_semantic_response(content)
+    parsed["provider"] = "qwen"
+    parsed["model"] = model
+    return parsed
+
+
+def call_qwen_object_target(
+    *,
+    frame_path: Path,
+    model: str,
+    api_key_env: str = "DASHSCOPE_API_KEY",
+    base_url: str = DEFAULT_QWEN_BASE_URL,
+    timeout_s: float = 60.0,
+) -> dict[str, Any]:
+    content = _call_qwen_messages(
+        messages=build_qwen_object_target_messages(frame_path),
+        model=model,
+        api_key_env=api_key_env,
+        base_url=base_url,
+        timeout_s=timeout_s,
+    )
+    parsed = parse_qwen_target_response(content)
+    parsed["provider"] = "qwen"
+    parsed["model"] = model
+    return parsed
+
+
+def call_qwen_object_candidate(
+    *,
+    crop_path: Path,
+    target: dict[str, Any],
+    model: str,
+    api_key_env: str = "DASHSCOPE_API_KEY",
+    base_url: str = DEFAULT_QWEN_BASE_URL,
+    timeout_s: float = 60.0,
+) -> dict[str, Any]:
+    content = _call_qwen_messages(
+        messages=build_qwen_object_candidate_messages(crop_path, target),
+        model=model,
+        api_key_env=api_key_env,
+        base_url=base_url,
+        timeout_s=timeout_s,
+    )
+    parsed = parse_qwen_candidate_response(content)
     parsed["provider"] = "qwen"
     parsed["model"] = model
     return parsed

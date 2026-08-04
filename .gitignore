@@ -17,6 +17,7 @@ demo_output/
 backups/
 
 # Large visualization artifacts
+*.pt
 *.rrd
 *.ply
 *.mp4

@@ -72,6 +72,34 @@ The RGB review layer is `camera_opencv/camera/left/rgb_object_bbox_overlay`.
 Rerun output can be large; use `--no_save_rrd` to disable it, or adjust
 `--jpeg_quality` (default: `85`) to trade image quality for output size.
 
+For SAM/SAM3 video segmentation outputs, put per-frame candidate masks under:
+
+```text
+tmp/<sam_output>/masks/
+  frame_000000_masks/
+    candidate_0.png
+    candidate_1.png
+  frame_000001_masks/
+    candidate_0.png
+```
+
+Then run the hand-near manipulated-object tracker:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python scripts/object/run_object_annotation.py \
+  --video data/baai/videos/left_rectified.mp4 \
+  --depth_dir tmp/baai_foundation_depth_continuous_900 \
+  --intrinsics_json tmp/baai_rectified_intrinsics.json \
+  --hand_tracks tmp/baai_ego_hand_tracking_900_identity_gate/ego_hand_tracks.json \
+  --hand_joints_npz tmp/baai_hand_joints21_identity_bbox_edge_gate/joints_21_camera_opencv.npz \
+  --output_dir tmp/baai_object_annotation_sam3_900 \
+  --backend sam3_masks \
+  --sam3_masks_root tmp/<sam_output>/masks \
+  --object_id manipulated_object \
+  --num_frames 900 \
+  --no_qwen
+```
+
 ## Code Layout
 
 ```text

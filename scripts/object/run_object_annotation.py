@@ -19,7 +19,9 @@ from roboego_hand_vis.objects.annotation_io import write_json_payload, write_obj
 from roboego_hand_vis.objects.contact import contact_payload_from_joints_npz_and_object_points
 from roboego_hand_vis.objects.color_yellow import YellowSegmentationConfig, detect_yellow_object, fill_missing_observations, save_mask_and_crop
 from roboego_hand_vis.objects.depth_geometry import load_depth_frame, mask_depth_to_points
+from roboego_hand_vis.objects.manipulated_tracker import ManipulatedObjectTracker
 from roboego_hand_vis.objects.rerun_export import draw_object_bbox_overlay, log_object_overlay
+from roboego_hand_vis.objects.sam3_backend import load_sam3_mask_candidates
 from roboego_hand_vis.objects.semantic_qwen import call_qwen_semantics, select_key_frames
 
 
@@ -47,6 +49,32 @@ def _set_frame_time(frame_idx: int) -> None:
         rr.set_time("frame", sequence=frame_idx)
     else:
         rr.set_time_sequence("frame", frame_idx)
+
+
+def _load_hand_joints_for_tracking(
+    hand_joints_npz: Path | None,
+) -> tuple[np.ndarray | None, np.ndarray | None, np.ndarray | None, np.ndarray | None]:
+    if hand_joints_npz is None or not hand_joints_npz.exists():
+        return None, None, None, None
+    with np.load(hand_joints_npz) as data:
+        return (
+            data["left_joints_21_camera_opencv"].astype(np.float32),
+            data["right_joints_21_camera_opencv"].astype(np.float32),
+            data["left_valid"].astype(bool),
+            data["right_valid"].astype(bool),
+        )
+
+
+def _frame_hand_joints(
+    joints: np.ndarray | None,
+    valid: np.ndarray | None,
+    frame_idx: int,
+) -> np.ndarray | None:
+    if joints is None or valid is None or frame_idx >= len(joints) or frame_idx >= len(valid):
+        return None
+    if not bool(valid[frame_idx]):
+        return None
+    return joints[frame_idx]
 
 
 def log_rerun_overlays(
@@ -82,6 +110,7 @@ def run_annotation(
     num_frames: int,
     no_qwen: bool,
     save_rrd: bool,
+    sam3_masks_root: Path | None = None,
     qwen_model: str = "qwen-vl-plus",
     contact_threshold_m: float = 0.025,
     jpeg_quality: int = 85,
@@ -91,30 +120,83 @@ def run_annotation(
     object_points_by_frame: dict[int, np.ndarray] = {}
     warnings: list[dict[str, Any]] = []
     config = YellowSegmentationConfig()
-    if backend != "color_yellow":
+    if backend not in {"color_yellow", "sam3_masks"}:
         raise ValueError(f"Unsupported backend in this CLI pass: {backend}")
+    if backend == "sam3_masks" and sam3_masks_root is None:
+        raise ValueError("--sam3_masks_root is required for --backend sam3_masks")
+    left_joints, right_joints, left_valid, right_valid = _load_hand_joints_for_tracking(hand_joints_npz)
+    tracker = ManipulatedObjectTracker(object_id=object_id) if backend == "sam3_masks" else None
     for frame_idx, rgb in iter_rgb_frames(video_path, num_frames):
-        obs, mask = detect_yellow_object(rgb, frame_idx=frame_idx, object_id=object_id, config=config)
-        obs = save_mask_and_crop(image_rgb=rgb, mask=mask, obs=obs, output_dir=output_dir, crop_padding_px=12)
-        if obs.bbox_xywh is not None:
-            try:
-                depth = load_depth_frame(depth_dir, frame_idx)
-            except FileNotFoundError:
-                warnings.append({"frame_idx": frame_idx, "status": "depth_file_missing"})
-            else:
-                points, stats = mask_depth_to_points(
-                    depth,
-                    mask,
-                    intrinsics=intrinsics,
-                    min_depth_m=0.15,
-                    max_depth_m=2.5,
-                    stride=4,
+        depth = None
+        if backend == "color_yellow":
+            obs, mask = detect_yellow_object(rgb, frame_idx=frame_idx, object_id=object_id, config=config)
+            obs = save_mask_and_crop(image_rgb=rgb, mask=mask, obs=obs, output_dir=output_dir, crop_padding_px=12)
+            if obs.bbox_xywh is not None:
+                try:
+                    depth = load_depth_frame(depth_dir, frame_idx)
+                except FileNotFoundError:
+                    warnings.append({"frame_idx": frame_idx, "status": "depth_file_missing"})
+                else:
+                    points, stats = mask_depth_to_points(
+                        depth,
+                        mask,
+                        intrinsics=intrinsics,
+                        min_depth_m=0.15,
+                        max_depth_m=2.5,
+                        stride=4,
+                    )
+                    object_points_by_frame[frame_idx] = points
+                    obs.depth_median_m = stats.depth_median_m
+                    obs.depth_valid_ratio = stats.depth_valid_ratio
+        else:
+            assert sam3_masks_root is not None
+            assert tracker is not None
+            candidates = load_sam3_mask_candidates(sam3_masks_root, frame_idx=frame_idx)
+            candidate_stats = {}
+            if candidates:
+                try:
+                    depth = load_depth_frame(depth_dir, frame_idx)
+                except FileNotFoundError:
+                    warnings.append({"frame_idx": frame_idx, "status": "depth_file_missing"})
+                else:
+                    for cand in candidates:
+                        points, stats = mask_depth_to_points(
+                            depth,
+                            cand.mask,
+                            intrinsics=intrinsics,
+                            min_depth_m=0.15,
+                            max_depth_m=2.5,
+                            stride=4,
+                        )
+                        cand.object_points = points
+                        candidate_stats[cand.candidate_id] = stats
+            obs, selected = tracker.update(
+                frame_idx=frame_idx,
+                candidates=candidates,
+                left_joints=_frame_hand_joints(left_joints, left_valid, frame_idx),
+                right_joints=_frame_hand_joints(right_joints, right_valid, frame_idx),
+                intrinsics=intrinsics,
+            )
+            if selected is not None:
+                stats = candidate_stats.get(selected.candidate_id)
+                if selected.object_points is not None:
+                    object_points_by_frame[frame_idx] = selected.object_points
+                if stats is not None:
+                    obs.depth_median_m = stats.depth_median_m
+                    obs.depth_valid_ratio = stats.depth_valid_ratio
+                obs = save_mask_and_crop(
+                    image_rgb=rgb,
+                    mask=selected.mask,
+                    obs=obs,
+                    output_dir=output_dir,
+                    crop_padding_px=12,
                 )
-                object_points_by_frame[frame_idx] = points
-                obs.depth_median_m = stats.depth_median_m
-                obs.depth_valid_ratio = stats.depth_valid_ratio
+            elif obs.bbox_xywh is not None:
+                obs.crop_path = None
+                obs.mask_path = None
         observations.append(obs)
-    observations = fill_missing_observations(observations, max_gap=config.gap_fill_frames)
+    if backend == "color_yellow":
+        observations = fill_missing_observations(observations, max_gap=config.gap_fill_frames)
     if save_rrd:
         log_rerun_overlays(
             video_path=video_path,
@@ -207,7 +289,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--intrinsics_json", default="tmp/baai_rectified_intrinsics.json")
     parser.add_argument("--hand_tracks", default="")
     parser.add_argument("--hand_joints_npz", default="")
-    parser.add_argument("--backend", default="color_yellow", choices=["color_yellow"])
+    parser.add_argument("--backend", default="color_yellow", choices=["color_yellow", "sam3_masks"])
+    parser.add_argument("--sam3_masks_root", default="")
     parser.add_argument("--object_id", default="yellow_object_0")
     parser.add_argument("--num_frames", type=int, default=900)
     parser.add_argument("--no_qwen", action="store_true")
@@ -233,6 +316,7 @@ def main() -> None:
         num_frames=args.num_frames,
         no_qwen=args.no_qwen,
         save_rrd=not args.no_save_rrd,
+        sam3_masks_root=Path(args.sam3_masks_root) if args.sam3_masks_root else None,
         qwen_model=args.qwen_model,
         jpeg_quality=args.jpeg_quality,
     )
