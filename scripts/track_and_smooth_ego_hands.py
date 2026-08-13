@@ -59,6 +59,32 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mesh_error_threshold_m", type=float, default=0.05)
     parser.add_argument("--min_valid_depth_ratio", type=float, default=0.5)
     parser.add_argument(
+        "--enable_lr_identity_gate",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Use cross-frame continuity to swap left/right observations when the per-frame labels are crossed.",
+    )
+    parser.add_argument(
+        "--drop_large_jumps",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Drop unexplained large target-anchor jumps before gap interpolation.",
+    )
+    parser.add_argument("--large_jump_threshold_m", type=float, default=0.12)
+    parser.add_argument(
+        "--max_bbox_center_jump_px",
+        type=float,
+        default=200.0,
+        help="Drop a same-side observation when its bbox center jumps by more than this many pixels. Use <=0 to disable.",
+    )
+    parser.add_argument("--lr_swap_margin_m", type=float, default=0.05)
+    parser.add_argument(
+        "--fill_edge_gaps",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help="Fill short missing gaps at the beginning/end of a track with the nearest observation.",
+    )
+    parser.add_argument(
         "--apply_recovered_depth_overrides",
         action=argparse.BooleanOptionalAction,
         default=False,
@@ -154,8 +180,22 @@ def main() -> None:
         unstable_recovered_max_area_ratio=(
             None if args.unstable_recovered_max_area_ratio <= 0 else args.unstable_recovered_max_area_ratio
         ),
+        enable_lr_identity_gate=args.enable_lr_identity_gate,
+        drop_large_jumps=args.drop_large_jumps,
+        large_jump_threshold_m=args.large_jump_threshold_m,
+        max_bbox_center_jump_px=args.max_bbox_center_jump_px,
+        lr_swap_margin_m=args.lr_swap_margin_m,
+        fill_edge_gaps_enabled=args.fill_edge_gaps,
     )
     summary = track_summary(tracks)
+    summary["identity_and_jump_gate"] = {
+        "enable_lr_identity_gate": bool(args.enable_lr_identity_gate),
+        "drop_large_jumps": bool(args.drop_large_jumps),
+        "large_jump_threshold_m": float(args.large_jump_threshold_m),
+        "max_bbox_center_jump_px": float(args.max_bbox_center_jump_px),
+        "lr_swap_margin_m": float(args.lr_swap_margin_m),
+        "fill_edge_gaps": bool(args.fill_edge_gaps),
+    }
     summary["recovered_depth_overrides"] = {
         "enabled": bool(args.apply_recovered_depth_overrides),
         "count": len(recovered_depth_overrides),

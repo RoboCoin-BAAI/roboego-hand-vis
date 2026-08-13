@@ -4,7 +4,9 @@ from roboego_hand_vis.egohand.temporal_tracking import (
     apply_recovered_depth_overrides,
     build_side_tracks,
     build_recovered_depth_overrides_from_frames,
+    apply_identity_and_jump_gate,
     filter_unstable_recovered_candidates,
+    fill_edge_gaps,
     interpolate_short_gaps,
     process_tracks,
     smooth_track_translations,
@@ -77,6 +79,21 @@ def test_does_not_interpolate_long_gap():
     assert filled[1] is None
     assert filled[2] is None
     assert filled[3] is None
+
+
+def test_fill_edge_gaps_uses_nearest_observation_for_short_boundary_gap():
+    track = [None, obs(1, "ego_left", 1.0), obs(2, "ego_left", 2.0), None]
+
+    filled = fill_edge_gaps(track, max_gap=1)
+
+    assert filled[0] is not None
+    assert filled[0]["status"] == "interpolated"
+    assert filled[0]["source"] == "interpolated_from_edge_neighbor"
+    assert filled[0]["frame_idx"] == 0
+    assert filled[0]["target_anchor"] == pytest.approx([1.0, 0.0, 0.5])
+    assert filled[3] is not None
+    assert filled[3]["frame_idx"] == 3
+    assert filled[3]["target_anchor"] == pytest.approx([2.0, 0.0, 0.5])
 
 
 def test_smooth_track_translations_flags_large_raw_jump_without_moving_anchor():
@@ -209,6 +226,77 @@ def test_recovered_depth_overrides_use_neighboring_normal_z_before_smoothing():
     assert recovered["target_anchor"][2] == pytest.approx(0.55)
     assert recovered["translation"][2] == pytest.approx(-9.45)
     assert recovered["smoothed_target_anchor"][2] == pytest.approx(0.55)
+
+
+def test_identity_gate_swaps_crossed_left_right_observations():
+    tracks = {
+        "ego_left": [
+            obs(0, "ego_left", 0.0),
+            obs(1, "ego_left", 1.0),
+        ],
+        "ego_right": [
+            obs(0, "ego_right", 1.0),
+            obs(1, "ego_right", 0.0),
+        ],
+    }
+
+    gated = apply_identity_and_jump_gate(
+        tracks,
+        enable_lr_identity_gate=True,
+        drop_large_jumps=False,
+        large_jump_threshold_m=0.5,
+        swap_margin_m=0.05,
+    )
+
+    assert gated["ego_left"][1]["target_anchor"] == pytest.approx([0.0, 0.0, 0.5])
+    assert gated["ego_left"][1]["side"] == "ego_left"
+    assert "lr_identity_swapped" in gated["ego_left"][1]["anomaly_flags"]
+    assert gated["ego_right"][1]["target_anchor"] == pytest.approx([1.0, 0.0, 0.5])
+    assert gated["ego_right"][1]["side"] == "ego_right"
+
+
+def test_large_jump_gate_drops_unexplained_jump_before_interpolation():
+    frames = [
+        hand_frame(0, "ego_left", 0.50),
+        hand_frame(1, "ego_left", 1.20),
+        hand_frame(2, "ego_left", 0.60),
+    ]
+
+    tracks = process_tracks(
+        frames,
+        start=0,
+        num_frames=3,
+        max_interp_gap=2,
+        smooth_alpha=1.0,
+        drop_large_jumps=True,
+        large_jump_threshold_m=0.25,
+    )
+
+    assert tracks["ego_left"][1]["status"] == "interpolated"
+    assert tracks["ego_left"][1]["target_anchor"][2] == pytest.approx(0.55)
+
+
+def test_large_jump_gate_can_drop_large_bbox_center_jump_even_when_3d_jump_is_small():
+    first = obs(0, "ego_left", 0.0)
+    jumped = {
+        **obs(1, "ego_left", 0.08),
+        "bbox_xyxy": [500.0, 10.0, 550.0, 60.0],
+    }
+    last = obs(2, "ego_left", 0.1)
+    tracks = {
+        "ego_left": [first, jumped, last],
+        "ego_right": [None, None, None],
+    }
+
+    gated = apply_identity_and_jump_gate(
+        tracks,
+        enable_lr_identity_gate=False,
+        drop_large_jumps=True,
+        large_jump_threshold_m=0.12,
+        max_bbox_center_jump_px=200.0,
+    )
+
+    assert gated["ego_left"][1] is None
 
 
 def test_weighted_center_smoothing_trusts_normal_more_than_recovered():

@@ -4,12 +4,13 @@ import json
 from pathlib import Path
 from typing import Any, Callable
 
-from . import generic_stereo, ropedia, wuxi
+from . import generic_stereo, ropedia, wumei01, wuxi
 from .common import ResolveConfig, as_abs, manifest_summary
 
 
 RESOLVERS: dict[str, Callable[[ResolveConfig], dict[str, Any]]] = {
     "wuxi": wuxi.resolve,
+    "wumei01": wumei01.resolve,
     "ropedia": ropedia.resolve,
     "generic_stereo": generic_stereo.resolve,
 }

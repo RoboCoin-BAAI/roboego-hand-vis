@@ -269,10 +269,139 @@ def interpolate_short_gaps(
     return out
 
 
+def make_edge_interpolation_observation(obs: Dict[str, Any], frame_idx: int) -> Dict[str, Any]:
+    out = deepcopy(obs)
+    out["frame_idx"] = int(frame_idx)
+    out["status"] = "interpolated"
+    out["source"] = "interpolated_from_edge_neighbor"
+    out["interpolation"] = {
+        "mode": "edge_nearest_neighbor",
+        "source_frame_idx": int(obs["frame_idx"]),
+    }
+    flags = list(out.get("anomaly_flags", []))
+    flags.append("interpolated")
+    flags.append("interpolated_edge")
+    out["anomaly_flags"] = sorted(set(flags))
+    return out
+
+
+def fill_edge_gaps(
+    track: List[Optional[Dict[str, Any]]],
+    max_gap: int,
+) -> List[Optional[Dict[str, Any]]]:
+    out = [deepcopy(item) if item is not None else None for item in track]
+    if not out or max_gap <= 0:
+        return out
+
+    first_present = next((idx for idx, obs in enumerate(out) if obs is not None), None)
+    if first_present is not None and 0 < first_present <= max_gap:
+        source = out[first_present]
+        for idx in range(first_present):
+            out[idx] = make_edge_interpolation_observation(source, idx)
+
+    last_present = next((idx for idx in range(len(out) - 1, -1, -1) if out[idx] is not None), None)
+    if last_present is not None:
+        trailing_gap = len(out) - 1 - last_present
+        if 0 < trailing_gap <= max_gap:
+            source = out[last_present]
+            for idx in range(last_present + 1, len(out)):
+                out[idx] = make_edge_interpolation_observation(source, idx)
+    return out
+
+
 def translation_distance(a: Dict[str, Any], b: Dict[str, Any], key: str = "target_anchor") -> float:
     va = np.asarray(a[key], dtype=np.float32)
     vb = np.asarray(b[key], dtype=np.float32)
     return float(np.linalg.norm(vb - va))
+
+
+def target_anchor_distance(a: Optional[Dict[str, Any]], b: Optional[Dict[str, Any]]) -> Optional[float]:
+    if a is None or b is None:
+        return None
+    if a.get("target_anchor") is None or b.get("target_anchor") is None:
+        return None
+    return translation_distance(a, b)
+
+
+def bbox_center_distance_px(a: Optional[Dict[str, Any]], b: Optional[Dict[str, Any]]) -> Optional[float]:
+    if a is None or b is None:
+        return None
+    bbox_a = a.get("bbox_xyxy")
+    bbox_b = b.get("bbox_xyxy")
+    if bbox_a is None or bbox_b is None:
+        return None
+    arr_a = np.asarray(bbox_a, dtype=np.float32).reshape(4)
+    arr_b = np.asarray(bbox_b, dtype=np.float32).reshape(4)
+    center_a = np.array([(arr_a[0] + arr_a[2]) * 0.5, (arr_a[1] + arr_a[3]) * 0.5], dtype=np.float32)
+    center_b = np.array([(arr_b[0] + arr_b[2]) * 0.5, (arr_b[1] + arr_b[3]) * 0.5], dtype=np.float32)
+    return float(np.linalg.norm(center_b - center_a))
+
+
+def relabel_observation_side(obs: Dict[str, Any], side: str, reason: str) -> Dict[str, Any]:
+    out = deepcopy(obs)
+    out["side"] = side
+    flags = list(out.get("anomaly_flags", []))
+    flags.append(reason)
+    out["anomaly_flags"] = sorted(set(flags))
+    return out
+
+
+def apply_identity_and_jump_gate(
+    tracks: Dict[str, List[Optional[Dict[str, Any]]]],
+    *,
+    enable_lr_identity_gate: bool = False,
+    drop_large_jumps: bool = False,
+    large_jump_threshold_m: float = 0.12,
+    max_bbox_center_jump_px: float = 200.0,
+    swap_margin_m: float = 0.05,
+) -> Dict[str, List[Optional[Dict[str, Any]]]]:
+    out: Dict[str, List[Optional[Dict[str, Any]]]] = {
+        side: [deepcopy(item) if item is not None else None for item in tracks[side]] for side in SIDES
+    }
+    if not out[SIDES[0]]:
+        return out
+
+    previous_by_side: Dict[str, Optional[Dict[str, Any]]] = {side: None for side in SIDES}
+    for idx in range(len(out[SIDES[0]])):
+        left = out["ego_left"][idx]
+        right = out["ego_right"][idx]
+
+        if enable_lr_identity_gate and left is not None and right is not None:
+            prev_left = previous_by_side["ego_left"]
+            prev_right = previous_by_side["ego_right"]
+            if prev_left is not None and prev_right is not None:
+                keep_left = target_anchor_distance(prev_left, left)
+                keep_right = target_anchor_distance(prev_right, right)
+                swap_left = target_anchor_distance(prev_left, right)
+                swap_right = target_anchor_distance(prev_right, left)
+                if None not in (keep_left, keep_right, swap_left, swap_right):
+                    keep_cost = float(keep_left + keep_right)
+                    swap_cost = float(swap_left + swap_right)
+                    if swap_cost + float(swap_margin_m) < keep_cost:
+                        out["ego_left"][idx] = relabel_observation_side(right, "ego_left", "lr_identity_swapped")
+                        out["ego_right"][idx] = relabel_observation_side(left, "ego_right", "lr_identity_swapped")
+                        left = out["ego_left"][idx]
+                        right = out["ego_right"][idx]
+
+        if drop_large_jumps:
+            for side in SIDES:
+                obs = out[side][idx]
+                prev_obs = previous_by_side[side]
+                jump = target_anchor_distance(prev_obs, obs)
+                bbox_jump = bbox_center_distance_px(prev_obs, obs)
+                has_large_3d_jump = jump is not None and jump > large_jump_threshold_m
+                has_large_bbox_jump = (
+                    max_bbox_center_jump_px > 0
+                    and bbox_jump is not None
+                    and bbox_jump > max_bbox_center_jump_px
+                )
+                if has_large_3d_jump or has_large_bbox_jump:
+                    out[side][idx] = None
+
+        for side in SIDES:
+            if out[side][idx] is not None:
+                previous_by_side[side] = out[side][idx]
+    return out
 
 
 def nearest_present(track: List[Optional[Dict[str, Any]]], start: int, step: int) -> Optional[Dict[str, Any]]:
@@ -403,8 +532,22 @@ def process_tracks(
     drop_unstable_recovered: bool = False,
     unstable_recovered_jump_threshold_m: float = 0.08,
     unstable_recovered_max_area_ratio: Optional[float] = None,
+    enable_lr_identity_gate: bool = False,
+    drop_large_jumps: bool = False,
+    large_jump_threshold_m: float = 0.12,
+    max_bbox_center_jump_px: float = 200.0,
+    lr_swap_margin_m: float = 0.05,
+    fill_edge_gaps_enabled: bool = False,
 ) -> Dict[str, List[Optional[Dict[str, Any]]]]:
     tracks = build_side_tracks(report_frames, start=start, num_frames=num_frames)
+    tracks = apply_identity_and_jump_gate(
+        tracks,
+        enable_lr_identity_gate=enable_lr_identity_gate,
+        drop_large_jumps=drop_large_jumps,
+        large_jump_threshold_m=large_jump_threshold_m,
+        max_bbox_center_jump_px=max_bbox_center_jump_px,
+        swap_margin_m=lr_swap_margin_m,
+    )
     processed = {}
     for side, track in tracks.items():
         if drop_unstable_recovered:
@@ -414,6 +557,8 @@ def process_tracks(
                 max_area_ratio=unstable_recovered_max_area_ratio,
             )
         filled = interpolate_short_gaps(track, max_gap=max_interp_gap)
+        if fill_edge_gaps_enabled:
+            filled = fill_edge_gaps(filled, max_gap=max_interp_gap)
         processed[side] = smooth_track_translations(
             filled,
             alpha=smooth_alpha,

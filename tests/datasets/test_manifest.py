@@ -51,6 +51,32 @@ def write_intrinsics(path: Path) -> None:
     )
 
 
+def write_wumei01_rectify_yaml(path: Path) -> None:
+    path.write_text(
+        """
+rectified:
+  image_size: [1920, 1074]
+  K1_rect:
+    - [444.4, 0.0, 959.9]
+    - [0.0, 444.4, 543.9]
+    - [0.0, 0.0, 1.0]
+  K2_rect:
+    - [444.4, 0.0, 959.9]
+    - [0.0, 444.4, 543.9]
+    - [0.0, 0.0, 1.0]
+  P2:
+    - [444.4, 0.0, 959.9, -44.35]
+    - [0.0, 444.4, 543.9, 0.0]
+    - [0.0, 0.0, 1.0, 0.0]
+stereo_params:
+  baseline_m: -0.0998
+source_model:
+  type: equidistant
+""",
+        encoding="utf-8",
+    )
+
+
 def test_generic_stereo_manifest_contains_standard_paths_and_camera_fields(tmp_path):
     left = tmp_path / "left.mp4"
     right = tmp_path / "right.mp4"
@@ -104,3 +130,38 @@ def test_write_manifest_outputs_json_and_summary(tmp_path):
     assert saved["dataset_name"] == "generic_stereo"
     assert "left_video:" in summary
     assert "baseline_m: 0.064" in summary
+
+
+def test_wumei01_manifest_uses_rectified_videos_and_positive_baseline(tmp_path):
+    videos = tmp_path / "videos"
+    timestamps = tmp_path / "timestamps"
+    calibrations = tmp_path / "calibrations"
+    videos.mkdir()
+    timestamps.mkdir()
+    calibrations.mkdir()
+    left = videos / "left_rectified.mp4"
+    right = videos / "right_rectified.mp4"
+    write_tiny_video(left, width=8, height=6)
+    write_tiny_video(right, width=8, height=6)
+    (timestamps / "left_timestamps.txt").write_text("0.0\n", encoding="utf-8")
+    (timestamps / "right_timestamps.txt").write_text("0.0\n", encoding="utf-8")
+    write_wumei01_rectify_yaml(calibrations / "rectify_params.yaml")
+
+    manifest = resolve_dataset_manifest(
+        ResolveConfig(
+            dataset="wumei01",
+            root=tmp_path,
+            output_dir=tmp_path / "manifest",
+            sequence_name="wumei01",
+        )
+    )
+
+    assert manifest["dataset_name"] == "wumei01"
+    assert manifest["videos"]["left"]["path"].endswith("videos/left_rectified.mp4")
+    assert manifest["intrinsics"]["left"]["fx"] == 444.4
+    assert manifest["intrinsics"]["right"]["cy"] == 543.9
+    assert manifest["extrinsics"]["baseline_m"] == 0.0998
+    assert manifest["extrinsics"]["left_to_right"]["t"] == [0.0998, 0.0, 0.0]
+    assert manifest["metadata"]["raw_stereo_params"]["baseline_m"] == -0.0998
+    assert manifest["camera_model"]["is_rectified"] is True
+    assert manifest["timestamps"]["left_path"].endswith("timestamps/left_timestamps.txt")

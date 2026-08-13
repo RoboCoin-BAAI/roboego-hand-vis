@@ -337,6 +337,17 @@ class HamerHandEstimator:
                 verts[:, 0] = (2 * is_right - 1) * verts[:, 0]
                 cam_t = pred_cam_t_full[n]
                 candidate["pred_cam_t_full"] = cam_t.tolist()
+                pred_mano_params = out.get("pred_mano_params", {})
+                if pred_mano_params:
+                    candidate["mano_params"] = {
+                        "format": "hamer_rotmat",
+                        "global_orient_rotmat": pred_mano_params["global_orient"][n].detach().cpu().numpy().tolist(),
+                        "hand_pose_rotmat": pred_mano_params["hand_pose"][n].detach().cpu().numpy().tolist(),
+                        "betas": pred_mano_params["betas"][n].detach().cpu().numpy().tolist(),
+                        "pred_cam": pred_cam[n].detach().cpu().numpy().tolist(),
+                        "pred_cam_t_full": cam_t.tolist(),
+                        "is_right": bool(is_right > 0.5),
+                    }
                 candidate["_verts"] = verts
                 candidate["_is_right_float"] = is_right
                 candidate["_scaled_focal_length"] = float(scaled_focal_length)
@@ -417,6 +428,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
     parser.add_argument("--depth_dir", default=None)
     parser.add_argument("--depth_quality_report", default="")
+    parser.add_argument(
+        "--ego_mode",
+        choices=["strict", "tolerant"],
+        default="strict",
+        help=(
+            "Ego hand selection mode. strict keeps the existing two-hand-oriented behavior; "
+            "tolerant records that downstream stages should accept only_left/only_right frames "
+            "and avoid force-filling the missing opposite hand."
+        ),
+    )
     parser.add_argument("--output_dir", default="tmp/ropedia_hamer_ego_filter")
     parser.add_argument("--hamer_root", default="/home/liuyou/Documents/hamer")
     parser.add_argument("--checkpoint", default=None)

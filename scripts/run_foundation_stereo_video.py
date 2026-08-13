@@ -70,6 +70,11 @@ def depth_to_vis(depth_m: np.ndarray, max_depth_m: float) -> np.ndarray:
     return cv2.applyColorMap(out, cv2.COLORMAP_TURBO)
 
 
+def make_depth_preview_panel_rgb(left_rgb: np.ndarray, depth_m: np.ndarray, max_depth_m: float) -> np.ndarray:
+    depth_vis_rgb = cv2.cvtColor(depth_to_vis(depth_m, max_depth_m), cv2.COLOR_BGR2RGB)
+    return np.concatenate([left_rgb, depth_vis_rgb], axis=1)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run FoundationStereo on left/right videos and save depth in meters.")
     parser.add_argument("--manifest", default="", help="Optional dataset_manifest.json. Overrides video/intrinsics args.")
@@ -141,7 +146,7 @@ def main() -> None:
     torch.autograd.set_grad_enabled(False)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = FoundationStereo(cfg)
-    ckpt = torch.load(str(ckpt_path), map_location=device)
+    ckpt = torch.load(str(ckpt_path), map_location=device, weights_only=False)
     model.load_state_dict(ckpt["model"])
     model.to(device)
     model.eval()
@@ -209,8 +214,7 @@ def main() -> None:
         np.save(depth_path, depth_m)
 
         if args.save_vis:
-            vis = depth_to_vis(depth_m, args.max_depth_m)
-            panel = np.concatenate([cv2.cvtColor(left_rgb, cv2.COLOR_RGB2BGR), vis], axis=1)
+            panel = make_depth_preview_panel_rgb(left_rgb, depth_m, args.max_depth_m)
             imageio.imwrite(vis_dir / f"frame_{frame_idx:06d}_depth_vis.jpg", panel)
 
         print(f"[{frame_idx}] {depth_path}")

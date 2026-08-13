@@ -834,13 +834,13 @@ current_best_mesh
 --orientation_aware_compensation:
   开启朝向感知补偿。
 
---orientation_depth_bias_m 0.035:
+--orientation_depth_bias_m 0.01:
   固定补偿基础量，单位米。
 
 --orientation_surface_min_m 0.005:
   手侧面时的最小 surface-to-skeleton 补偿。
 
---orientation_surface_max_m 0.020:
+--orientation_surface_max_m 0.010:
   手掌/手背正对相机时的最大 surface-to-skeleton 补偿。
 
 --orientation_ray_blend 0.3:

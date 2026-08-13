@@ -10,6 +10,7 @@ dist/
 
 # Local data and generated outputs
 data/
+final_data/
 tmp/
 models/
 output/
@@ -21,5 +22,20 @@ backups/
 *.rrd
 *.ply
 *.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.m4v
+*.wav
+*.npy
+*.npz
+*.tar
 *.mcap
 *.zip
+
+# Local experiment/checkpoint outputs
+checkpoints/
+outputs/
+wandb/
+*.log

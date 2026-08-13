@@ -1,0 +1,200 @@
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pytest
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from scripts.export.check_headband_data import (
+    DEFAULT_CAMERA_STREAMS,
+    SessionIntegrityError,
+    TimestampSeries,
+    assert_aligned_timestamps,
+    build_arg_parser,
+    default_quality_report_root,
+    export_quality_report,
+    inspect_imu,
+    parse_timestamp_file,
+    summarize_timestamp_duplicates,
+    validate_source_session,
+)
+
+
+def write_timestamp_file(path: Path, rows: list[tuple[int, float]]) -> None:
+    path.write_text("\n".join(f"{idx} {ts:.9f}" for idx, ts in rows) + "\n", encoding="utf-8")
+
+
+def parse_timestamp_file_from_rows(rows: list[tuple[int, float]]):
+    path = Path("/tmp/in-memory-headband-timestamps.txt")
+    write_timestamp_file(path, rows)
+    return parse_timestamp_file(path)
+
+
+def make_minimal_session(tmp_path: Path) -> Path:
+    session = tmp_path / "session_20260804_224442"
+    (session / "videos").mkdir(parents=True)
+    (session / "timestamps").mkdir()
+    (session / "imu").mkdir()
+    (session / "meta.json").write_text(json.dumps({"fps": 30}), encoding="utf-8")
+    (session / "imu" / "imu0.csv").write_text(
+        "timestamp,angular_velocity_x\n"
+        "0.990000000,1.0\n"
+        "0.995000000,1.1\n"
+        "0.995000000,1.2\n"
+        "1.000000000,1.3\n",
+        encoding="utf-8",
+    )
+    for stream in DEFAULT_CAMERA_STREAMS:
+        (session / "videos" / f"{stream}.mp4").write_bytes(b"fake mp4")
+        write_timestamp_file(session / "timestamps" / f"{stream}_timestamps.txt", [(0, 1.0), (1, 1.033333333)])
+    return session
+
+
+def test_parse_timestamp_file_returns_indices_and_absolute_timestamps(tmp_path):
+    path = tmp_path / "left_timestamps.txt"
+    write_timestamp_file(path, [(0, 1785854682.133340120), (1, 1785854682.166676283)])
+
+    parsed = parse_timestamp_file(path)
+
+    assert parsed.indices.tolist() == [0, 1]
+    assert parsed.timestamps.dtype == np.float64
+    assert parsed.timestamps.tolist() == pytest.approx([1785854682.133340120, 1785854682.166676283])
+
+
+def test_parse_timestamp_file_allows_duplicate_timestamps_and_reports_duplicate_rate(tmp_path):
+    path = tmp_path / "left_timestamps.txt"
+    write_timestamp_file(path, [(0, 10.0), (1, 10.0), (2, 10.1), (3, 10.1)])
+
+    summary = summarize_timestamp_duplicates(parse_timestamp_file(path))
+
+    assert summary["frame_count"] == 4
+    assert summary["duplicate_count"] == 2
+    assert summary["duplicate_rate"] == pytest.approx(2 / 3)
+    assert summary["first_duplicate_index"] == 1
+
+
+def test_parse_timestamp_file_rejects_decreasing_timestamps(tmp_path):
+    path = tmp_path / "left_timestamps.txt"
+    write_timestamp_file(path, [(0, 10.0), (1, 9.0)])
+
+    with pytest.raises(SessionIntegrityError, match="decreases"):
+        parse_timestamp_file(path)
+
+
+def test_assert_aligned_timestamps_reports_stream_outside_tolerance_without_raising():
+    streams = {
+        "left": parse_timestamp_file_from_rows([(0, 10.0), (1, 10.033333)]),
+        "right": parse_timestamp_file_from_rows([(0, 10.0), (1, 10.200000)]),
+    }
+
+    summary = assert_aligned_timestamps(streams, "left", start=0, num_frames=2, tolerance_s=0.04)
+
+    assert summary["right"]["over_tolerance_count"] == 1
+    assert summary["right"]["first_over_tolerance_index"] == 1
+    assert summary["right"]["max_abs_delta_s"] == pytest.approx(0.166667)
+
+
+def test_default_quality_report_root_uses_source_session_directory(tmp_path):
+    session = tmp_path / "data" / "session_20260804_224442"
+
+    assert default_quality_report_root(session) == session.resolve()
+
+
+def test_inspect_imu_reports_fps_duplicate_rate_and_first_timestamp(tmp_path):
+    session = make_minimal_session(tmp_path)
+
+    summary = inspect_imu(session / "imu" / "imu0.csv")
+
+    assert summary["path"] == str((session / "imu" / "imu0.csv").resolve())
+    assert summary["sample_count"] == 4
+    assert summary["first_timestamp"] == pytest.approx(0.99)
+    assert summary["last_timestamp"] == pytest.approx(1.0)
+    assert summary["duplicate_count"] == 1
+    assert summary["duplicate_rate"] == pytest.approx(1 / 3)
+    assert summary["estimated_fps"] == pytest.approx(200.0)
+
+
+def test_validate_source_session_rejects_missing_video_before_report(tmp_path):
+    session = make_minimal_session(tmp_path)
+    (session / "videos" / "left.mp4").unlink()
+
+    with pytest.raises(SessionIntegrityError, match="Missing video"):
+        validate_source_session(session, DEFAULT_CAMERA_STREAMS, start=0, num_frames=2, timestamp_tolerance_s=0.04)
+
+
+def test_validate_source_session_records_duplicate_rates_and_alignment_without_rejecting(tmp_path):
+    session = make_minimal_session(tmp_path)
+    write_timestamp_file(session / "timestamps" / "bleft_timestamps.txt", [(0, 1.0), (1, 1.0)])
+    write_timestamp_file(session / "timestamps" / "right_timestamps.txt", [(0, 1.0), (1, 1.2)])
+
+    result = validate_source_session(
+        session,
+        DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=0.04,
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 2, "fps": 30.0},
+    )
+
+    assert result.timestamp_duplicate_summaries["bleft"]["duplicate_rate"] == pytest.approx(1.0)
+    assert result.timestamp_alignment_summary["right"]["over_tolerance_count"] == 1
+
+
+def test_validate_source_session_default_tolerance_allows_one_frame_plus_rounding(tmp_path):
+    session = make_minimal_session(tmp_path)
+
+    result = validate_source_session(
+        session,
+        DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=None,
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 2, "fps": 30.0},
+    )
+
+    assert result.timestamp_tolerance_s == pytest.approx((1.0 / 30.0) + 0.001)
+
+
+def test_arg_parser_defaults_to_quality_report_in_source_directory(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    session = tmp_path / "data" / "session_20260804_224442"
+
+    args = build_arg_parser().parse_args(["--session", str(session)])
+
+    assert args.output_root is None
+    assert args.camera_stream == list(DEFAULT_CAMERA_STREAMS)
+
+
+def test_export_quality_report_writes_only_annotation_report_without_dataset_layout(tmp_path):
+    session = make_minimal_session(tmp_path)
+    output_root = tmp_path / "quality" / session.name
+
+    report_path = export_quality_report(
+        session,
+        output_root,
+        camera_streams=DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=0.04,
+        overwrite=False,
+        environment_name="py312",
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 2, "fps": 30.0},
+    )
+
+    assert report_path == (output_root / "annotation" / "quality_report.json").resolve()
+    assert not (output_root / "meta").exists()
+    assert not (output_root / "data").exists()
+    assert not (output_root / "videos").exists()
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["mode"] == "quality_report"
+    assert report["frame_window"] == {"start": 0, "num_frames": 2}
+    assert report["timestamp_duplicates"]["left"]["duplicate_rate"] == 0.0
+    assert report["timestamp_alignment"]["right"]["over_tolerance_count"] == 0
+    assert report["imu"]["sample_count"] == 4
+    assert report["imu"]["duplicate_count"] == 1
+    assert report["imu"]["start_delta_to_cameras_s"]["left"] == pytest.approx(-0.01)
+    assert report["imu"]["end_delta_to_cameras_s"]["left"] == pytest.approx(-0.033333333)

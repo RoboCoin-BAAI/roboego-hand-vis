@@ -19,7 +19,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Resolve a raw ego-stereo dataset into a standard dataset_manifest.json."
     )
-    parser.add_argument("--dataset", choices=["wuxi", "ropedia", "generic_stereo"], required=True)
+    parser.add_argument("--dataset", choices=["wuxi", "wumei01", "ropedia", "generic_stereo"], required=True)
     parser.add_argument("--root", required=True, help="Dataset root directory.")
     parser.add_argument("--output_dir", required=True, help="Directory for dataset_manifest.json.")
     parser.add_argument("--sequence_name", default="default")
