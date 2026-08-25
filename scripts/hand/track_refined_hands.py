@@ -25,6 +25,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num_frames", type=int, required=True)
     parser.add_argument("--max_gap", type=int, default=10)
     parser.add_argument("--max_bbox_jump_px", type=float, default=220.0)
+    parser.add_argument("--max_bbox_area_change_ratio", type=float, default=3.0)
+    parser.add_argument("--max_cam_t_jump", type=float, default=0.0, help="Disable camera-translation jump gate when <= 0.")
+    parser.add_argument("--min_cam_t_z", type=float, default=0.0)
+    parser.add_argument("--max_cam_t_z", type=float, default=200.0)
+    parser.add_argument("--max_mano_pose_jump", type=float, default=0.0, help="Disable MANO pose jump gate when <= 0.")
+    parser.add_argument("--max_mesh_centroid_jump", type=float, default=0.0, help="Disable mesh centroid jump gate when <= 0.")
+    parser.add_argument("--max_mesh_vertex_rmse", type=float, default=0.0, help="Disable mesh vertex RMSE gate when <= 0.")
+    parser.add_argument("--local_window_radius", type=int, default=2)
     parser.add_argument("--save_vis", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--contact_sheet_columns", type=int, default=4)
     parser.add_argument("--contact_sheet_thumb_width", type=int, default=360)
@@ -44,10 +52,18 @@ def main() -> None:
         num_frames=args.num_frames,
         max_gap=args.max_gap,
         max_bbox_jump_px=args.max_bbox_jump_px,
+        max_bbox_area_change_ratio=args.max_bbox_area_change_ratio,
+        max_cam_t_jump=args.max_cam_t_jump,
+        min_cam_t_z=args.min_cam_t_z,
+        max_cam_t_z=args.max_cam_t_z,
+        max_mano_pose_jump=args.max_mano_pose_jump,
+        max_mesh_centroid_jump=args.max_mesh_centroid_jump,
+        max_mesh_vertex_rmse=args.max_mesh_vertex_rmse,
+        local_window_radius=args.local_window_radius,
     )
     result["source_refined_json"] = str(refined_json)
     result["source_manifest"] = str(manifest)
-    result_path = output_dir / "refined_temporal_tracks.json"
+    result_path = output_dir / "refined_temporal_gate_tracks.json"
     result_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
     if args.save_vis:
         _write_temporal_visualization(

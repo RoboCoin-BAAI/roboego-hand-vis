@@ -9,7 +9,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.export.check_headband_data import (
+from roboego_hand_vis.quality.raw_headband_integrity import (
     DEFAULT_CAMERA_STREAMS,
     SessionIntegrityError,
     TimestampSeries,
@@ -54,6 +54,13 @@ def make_minimal_session(tmp_path: Path) -> Path:
     return session
 
 
+def make_minimal_session_with_video_ext(tmp_path: Path, video_ext: str) -> Path:
+    session = make_minimal_session(tmp_path)
+    for stream in DEFAULT_CAMERA_STREAMS:
+        (session / "videos" / f"{stream}.mp4").rename(session / "videos" / f"{stream}{video_ext}")
+    return session
+
+
 def test_parse_timestamp_file_returns_indices_and_absolute_timestamps(tmp_path):
     path = tmp_path / "left_timestamps.txt"
     write_timestamp_file(path, [(0, 1785854682.133340120), (1, 1785854682.166676283)])
@@ -93,7 +100,9 @@ def test_assert_aligned_timestamps_reports_stream_outside_tolerance_without_rais
 
     summary = assert_aligned_timestamps(streams, "left", start=0, num_frames=2, tolerance_s=0.04)
 
+    assert summary["right"]["frame_count"] == 2
     assert summary["right"]["over_tolerance_count"] == 1
+    assert summary["right"]["over_tolerance_rate"] == pytest.approx(0.5)
     assert summary["right"]["first_over_tolerance_index"] == 1
     assert summary["right"]["max_abs_delta_s"] == pytest.approx(0.166667)
 
@@ -116,6 +125,47 @@ def test_inspect_imu_reports_fps_duplicate_rate_and_first_timestamp(tmp_path):
     assert summary["duplicate_count"] == 1
     assert summary["duplicate_rate"] == pytest.approx(1 / 3)
     assert summary["estimated_fps"] == pytest.approx(200.0)
+    assert summary["signal_quality"]["numeric_column_count"] == 1
+    assert summary["signal_quality"]["all_zero_columns"] == []
+
+
+def test_inspect_imu_reports_all_zero_frozen_and_jump_columns(tmp_path):
+    imu_path = tmp_path / "imu0.csv"
+    imu_path.write_text(
+        "timestamp,gyro_x,gyro_y,accel_z,temperature,orientation_w,orientation_x,orientation_y,orientation_z\n"
+        "0.000,0,1.0,0.0,25.0,0,0,0,0\n"
+        "0.005,0,1.0,0.1,25.0,0,0,0,0\n"
+        "0.010,0,1.0,0.2,25.0,0,0,0,0\n"
+        "0.015,0,1.0,100.0,25.0,0,0,0,0\n",
+        encoding="utf-8",
+    )
+
+    summary = inspect_imu(imu_path)
+
+    quality = summary["signal_quality"]
+    assert quality["numeric_column_count"] == 4
+    assert quality["ignored_columns"] == ["orientation_w", "orientation_x", "orientation_y", "orientation_z"]
+    assert quality["finite_rate"] == pytest.approx(1.0)
+    assert quality["all_zero_columns"] == ["gyro_x"]
+    assert quality["frozen_columns"] == ["gyro_x", "gyro_y", "temperature"]
+    assert quality["jump_columns"] == ["accel_z"]
+    assert quality["columns"]["accel_z"]["max_abs_delta"] == pytest.approx(99.8)
+    assert quality["columns"]["accel_z"]["max_jump_sample_index"] == 3
+
+
+def test_inspect_imu_skips_non_numeric_signal_columns(tmp_path):
+    imu_path = tmp_path / "imu0.csv"
+    imu_path.write_text(
+        "timestamp,gyro_x,status\n"
+        "0.000,0.1,ok\n"
+        "0.005,0.2,ok\n",
+        encoding="utf-8",
+    )
+
+    quality = inspect_imu(imu_path)["signal_quality"]
+
+    assert quality["numeric_column_count"] == 1
+    assert list(quality["columns"]) == ["gyro_x"]
 
 
 def test_validate_source_session_rejects_missing_video_before_report(tmp_path):
@@ -124,6 +174,28 @@ def test_validate_source_session_rejects_missing_video_before_report(tmp_path):
 
     with pytest.raises(SessionIntegrityError, match="Missing video"):
         validate_source_session(session, DEFAULT_CAMERA_STREAMS, start=0, num_frames=2, timestamp_tolerance_s=0.04)
+
+
+def test_validate_source_session_uses_configured_video_extension(tmp_path):
+    session = make_minimal_session_with_video_ext(tmp_path, ".mkv")
+
+    result = validate_source_session(
+        session,
+        DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=0.04,
+        video_ext=".mkv",
+        video_inspector=lambda path: {
+            "path": str(path),
+            "width": 640,
+            "height": 480,
+            "frame_count": 2,
+            "fps": 30.0,
+        },
+    )
+
+    assert result.video_infos["left"]["path"].endswith("videos/left.mkv")
 
 
 def test_validate_source_session_records_duplicate_rates_and_alignment_without_rejecting(tmp_path):
@@ -198,3 +270,24 @@ def test_export_quality_report_writes_only_annotation_report_without_dataset_lay
     assert report["imu"]["duplicate_count"] == 1
     assert report["imu"]["start_delta_to_cameras_s"]["left"] == pytest.approx(-0.01)
     assert report["imu"]["end_delta_to_cameras_s"]["left"] == pytest.approx(-0.033333333)
+
+
+def test_export_quality_report_records_configured_video_extension(tmp_path):
+    session = make_minimal_session_with_video_ext(tmp_path, ".mkv")
+    output_root = tmp_path / "quality" / session.name
+
+    report_path = export_quality_report(
+        session,
+        output_root,
+        camera_streams=DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=0.04,
+        video_ext=".mkv",
+        overwrite=False,
+        environment_name="py312",
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 2, "fps": 30.0},
+    )
+
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["videos"]["left"].endswith("videos/left.mkv")

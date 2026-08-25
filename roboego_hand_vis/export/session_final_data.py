@@ -210,6 +210,11 @@ def overlay_object_masks_on_hands(
 def resolve_hand_visual_source(hamer_dir: Path) -> tuple[Path, str, str]:
     candidates = [
         (
+            "refined_temporal_gate",
+            hamer_dir / "refined_temporal_gate" / "temporal_annotated",
+            "frame_{idx:06d}_temporal.jpg",
+        ),
+        (
             "refined_temporal_size_extreme_filter",
             hamer_dir / "refined_temporal_size_extreme_filter" / "temporal_annotated",
             "frame_{idx:06d}_temporal.jpg",
@@ -274,7 +279,7 @@ def export_session_final_data(
     windows_path = session_dir / "annotation" / "hand_estimation_windows_left_v1.json"
     windows_payload = read_json(windows_path)
     windows = windows_payload.get("windows", [])
-    segments_root = session_dir / "segments" / "selected_video_segments_v1"
+    segments_root = session_dir / "segments"
 
     summary: dict[str, Any] = {
         "source_session": str(session_dir),
@@ -299,7 +304,7 @@ def export_session_final_data(
             clip_stage1_frames(stage1, int(segment_json["start"]), int(segment_json["end"])),
         )
 
-        processed = src_segment / "processed"
+        processed = src_segment / "rectified"
         stereo_dir = dst_segment / "stereo"
         copy_path(processed / "videos" / "left_rectified.mp4", stereo_dir / "left_rectified.mp4", overwrite=overwrite)
         copy_path(processed / "videos" / "right_rectified.mp4", stereo_dir / "right_rectified.mp4", overwrite=overwrite)

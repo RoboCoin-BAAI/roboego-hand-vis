@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Dict, Iterable, List, Optional
 
 import numpy as np
@@ -25,6 +25,11 @@ class EgoHandFilterConfig:
     recovery_min_area_ratio: float = 0.001
     recovery_min_center_y_ratio: float = 0.35
     recovery_max_median_depth_m: float = 1.2
+    wearer_roi_x_margin_ratio: float = 0.0
+    wearer_roi_y_margin_ratio: float = 0.05
+    semantic_hand_visible_y_margin_ratio: float = 0.25
+    semantic_hand_visible_min_area_ratio: float = 0.001
+    semantic_hand_visible_recovery_min_area_ratio: float = 0.0005
 
 
 @dataclass
@@ -79,6 +84,7 @@ def compute_candidate_features(
     image_height: int,
     depth_m: Optional[np.ndarray] = None,
     config: EgoHandFilterConfig = EgoHandFilterConfig(),
+    wearer_bbox_xyxy: Optional[Iterable[float]] = None,
 ) -> Dict[str, Any]:
     x1, y1, x2, y2 = [float(v) for v in candidate["bbox_xyxy"]]
     width = max(0.0, x2 - x1)
@@ -130,6 +136,15 @@ def compute_candidate_features(
         reject_reasons.append("too_high_in_image")
     if median_depth_m is not None and median_depth_m > config.max_median_depth_m:
         reject_reasons.append("too_far")
+    if wearer_bbox_xyxy is not None and not bbox_center_inside_wearer_region(
+        [x1, y1, x2, y2],
+        wearer_bbox_xyxy,
+        image_width=image_width,
+        image_height=image_height,
+        x_margin_ratio=config.wearer_roi_x_margin_ratio,
+        y_margin_ratio=config.wearer_roi_y_margin_ratio,
+    ):
+        reject_reasons.append("outside_wearer_region")
 
     score = (
         config.confidence_weight * clamp(confidence)
@@ -165,14 +180,18 @@ def select_ego_hands(
     image_height: int,
     depth_m: Optional[np.ndarray] = None,
     config: EgoHandFilterConfig = EgoHandFilterConfig(),
+    wearer_bbox_xyxy: Optional[Iterable[float]] = None,
+    semantic_hand_visible: bool = False,
 ) -> EgoHandSelection:
+    effective_config = semantic_hand_visible_config(config) if semantic_hand_visible else config
     enriched = [
         compute_candidate_features(
             candidate,
             image_width=image_width,
             image_height=image_height,
             depth_m=depth_m,
-            config=config,
+            config=effective_config,
+            wearer_bbox_xyxy=wearer_bbox_xyxy,
         )
         for candidate in candidates
     ]
@@ -191,9 +210,79 @@ def select_ego_hands(
         enriched[best_idx]["status"] = selected_key
         selected[selected_key] = best_idx
 
-    recover_missing_ego_hands(enriched, selected, config)
+    recover_missing_ego_hands(enriched, selected, effective_config)
 
     return EgoHandSelection(candidates=enriched, selected=selected)
+
+
+def semantic_hand_visible_config(config: EgoHandFilterConfig) -> EgoHandFilterConfig:
+    return replace(
+        config,
+        wearer_roi_y_margin_ratio=max(
+            float(config.wearer_roi_y_margin_ratio),
+            float(config.semantic_hand_visible_y_margin_ratio),
+        ),
+        min_area_ratio=min(
+            float(config.min_area_ratio),
+            float(config.semantic_hand_visible_min_area_ratio),
+        ),
+        recovery_min_area_ratio=min(
+            float(config.recovery_min_area_ratio),
+            float(config.semantic_hand_visible_recovery_min_area_ratio),
+        ),
+    )
+
+
+def normalize_wearer_bbox_xyxy(
+    bbox_xyxy: Iterable[float],
+    *,
+    image_width: int,
+    image_height: int,
+    x_margin_ratio: float = 0.0,
+    y_margin_ratio: float = 0.0,
+) -> List[float]:
+    x1, y1, x2, y2 = [float(v) for v in bbox_xyxy]
+    if max(abs(x1), abs(y1), abs(x2), abs(y2)) <= 1.5:
+        x1 *= float(image_width)
+        x2 *= float(image_width)
+        y1 *= float(image_height)
+        y2 *= float(image_height)
+    x_margin_px = max(0.0, float(x_margin_ratio)) * float(image_width)
+    y_margin_px = max(0.0, float(y_margin_ratio)) * float(image_height)
+    x1 -= x_margin_px
+    x2 += x_margin_px
+    y1 -= y_margin_px
+    y2 += y_margin_px
+    return [
+        max(0.0, min(float(image_width), x1)),
+        max(0.0, min(float(image_height), y1)),
+        max(0.0, min(float(image_width), x2)),
+        max(0.0, min(float(image_height), y2)),
+    ]
+
+
+def bbox_center_inside_wearer_region(
+    bbox_xyxy: Iterable[float],
+    wearer_bbox_xyxy: Iterable[float],
+    *,
+    image_width: int,
+    image_height: int,
+    x_margin_ratio: float = 0.0,
+    y_margin_ratio: float = 0.0,
+) -> bool:
+    x1, y1, x2, y2 = [float(v) for v in bbox_xyxy]
+    cx = (x1 + x2) * 0.5
+    cy = (y1 + y2) * 0.5
+    wx1, wy1, wx2, wy2 = normalize_wearer_bbox_xyxy(
+        wearer_bbox_xyxy,
+        image_width=image_width,
+        image_height=image_height,
+        x_margin_ratio=x_margin_ratio,
+        y_margin_ratio=y_margin_ratio,
+    )
+    if wx2 <= wx1 or wy2 <= wy1:
+        return True
+    return wx1 <= cx <= wx2 and wy1 <= cy <= wy2
 
 
 def is_recoverable_ego_candidate(

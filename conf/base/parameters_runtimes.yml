@@ -1,0 +1,9 @@
+runtimes:
+  ego:
+    python: /home/liuyou/miniconda3/envs/ego/bin/python
+  py312:
+    python: /home/liuyou/miniconda3/envs/py312/bin/python
+  realvdeblur:
+    python: /home/liuyou/miniconda3/envs/realvdeblur/bin/python
+  hamer:
+    python: /home/liuyou/miniconda3/envs/hamer/bin/python

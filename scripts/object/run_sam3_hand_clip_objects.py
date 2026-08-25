@@ -14,6 +14,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from roboego_hand_vis.objects.sam3_hand_clip import (
     build_sam3_hand_clip_plan,
     build_sam3_hand_clip_plans_from_stage1,
+    combine_sam3_object_tracks,
     find_window_by_id,
     infer_window_id_from_dir,
     infer_windows_json_from_hand_window_dir,
@@ -104,6 +105,13 @@ def main() -> None:
     if not args.dry_run:
         for plan in plans:
             subprocess.run(plan.command, check=True, stdin=subprocess.DEVNULL)
+        if len(plans) > 1:
+            combined = combine_sam3_object_tracks(
+                object_dirs=[plan.output_dir for plan in plans],
+                frames_dir=plans[0].frames_dir,
+                output_dir=plans[0].output_dir.parent / "combined",
+            )
+            print(json.dumps({"combined": combined}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

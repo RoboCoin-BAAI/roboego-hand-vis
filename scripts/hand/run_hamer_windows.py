@@ -17,8 +17,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", default=None, help="Single-segment manifest. Omit when using --segments_root.")
     parser.add_argument("--depth_dir", default=None, help="Single-segment FoundationStereo depth dir. Omit when using --segments_root.")
     parser.add_argument("--output_root", default=None, help="Single output root. Omit when using --segments_root.")
-    parser.add_argument("--segments_root", default=None, help="Session selected_video_segments_v1 directory. Dispatches windows by source_segment_id.")
-    parser.add_argument("--output_subdir", default="hamer_windows", help="Subdirectory under each segment processed/ when using --segments_root.")
+    parser.add_argument("--segments_root", default=None, help="Session segments directory. Dispatches windows by source_segment_id.")
+    parser.add_argument("--output_subdir", default="hamer_windows", help="Subdirectory under each materialized hand window when using --segments_root.")
     parser.add_argument("--hamer_root", required=True)
     parser.add_argument("--stage1_actions", required=True)
     parser.add_argument("--body_detector", default="regnety")
@@ -26,6 +26,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--python", default=sys.executable, help="Python executable used to run each HaMeR window.")
     parser.add_argument("--save_mesh", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--refine_mode", default="strict_ego_audit")
+    parser.add_argument("--wearer_roi_x_margin_ratio", type=float, default=None)
+    parser.add_argument("--wearer_roi_y_margin_ratio", type=float, default=None)
     parser.add_argument("--only_window_ids", nargs="*", default=None)
     parser.add_argument("--only_segment_ids", nargs="*", default=None)
     parser.add_argument("--max_windows", type=int, default=None)
@@ -59,7 +61,9 @@ def build_window_command_plan(
     only_segment_ids: list[str] | None = None,
     skip_missing_segments: bool = False,
     accept_uncertain_refined: bool = False,
-    max_windows: int | None,
+    wearer_roi_x_margin_ratio: float | None = None,
+    wearer_roi_y_margin_ratio: float | None = None,
+    max_windows: int | None = None,
 ) -> list[dict[str, Any]]:
     payload = json.loads(Path(windows_json).expanduser().read_text(encoding="utf-8"))
     selected_ids = set(only_window_ids or [])
@@ -83,7 +87,7 @@ def build_window_command_plan(
         window_type = str(window.get("window_type", "hand_window"))
         hands = "_".join(str(hand) for hand in window.get("hands_required", []) or ["hand"])
         policy = str(window.get("recommended_stage1_hand_policy") or ("permissive" if window_type == "two_hand" else "conservative"))
-        stage1_time_offset_s = float((window.get("source_segment_range") or {}).get("start", 0.0))
+        stage1_time_offset_s = float(window.get("start", (window.get("source_segment_range") or {}).get("start", 0.0)))
         try:
             window_io = _resolve_window_io(
                 window=window,
@@ -105,6 +109,11 @@ def build_window_command_plan(
                 )
                 continue
             raise
+        if window_io.get("start") is not None:
+            start = int(window_io["start"])
+        if window_io.get("num_frames") is not None:
+            num_frames = int(window_io["num_frames"])
+        end = start + num_frames - 1
         output_dir = window_io["output_root"] / f"{window_id}_{window_type}_{hands}_{start:06d}_{end:06d}"
         plan.append(
             {
@@ -138,6 +147,8 @@ def build_window_command_plan(
                     stage1_hand_policy=policy,
                     stage1_time_offset_s=stage1_time_offset_s,
                     accept_uncertain_refined=accept_uncertain_refined,
+                    wearer_roi_x_margin_ratio=wearer_roi_x_margin_ratio,
+                    wearer_roi_y_margin_ratio=wearer_roi_y_margin_ratio,
                 ),
             }
         )
@@ -163,21 +174,29 @@ def _resolve_window_io(
             "depth_dir": Path(depth_dir),
             "output_root": output_root,
             "segment_dir": None,
+            "start": None,
+            "num_frames": None,
         }
     segment_id = str(window.get("source_segment_id") or "").strip()
     if not segment_id:
         raise ValueError(f"Window missing source_segment_id: {window.get('window_id')}")
     segment_dir = _find_segment_dir(Path(segments_root), segment_id)
-    processed = segment_dir / "processed"
-    manifest_path = processed / "dataset_manifest/dataset_manifest.json"
-    depth_path = processed / "foundation_depth"
+    hand_window_dir = _find_hand_window_dir(segment_dir, str(window.get("window_id") or ""))
+    if hand_window_dir is None:
+        raise FileNotFoundError(
+            f"Missing materialized hand-window directory for {window.get('window_id')} under {segment_dir / 'hand_windows'}"
+        )
+    manifest_path = hand_window_dir / "dataset_manifest/dataset_manifest.json"
     if not manifest_path.exists():
-        raise FileNotFoundError(f"Missing segment manifest for {segment_id}: {manifest_path}")
+        raise FileNotFoundError(f"Missing hand-window manifest for {window.get('window_id')}: {manifest_path}")
+    depth_path = _preferred_depth_dir(hand_window_dir)
     return {
         "manifest": manifest_path,
-        "depth_dir": depth_path if depth_path.exists() else None,
-        "output_root": processed / output_subdir,
+        "depth_dir": depth_path,
+        "output_root": hand_window_dir / output_subdir,
         "segment_dir": segment_dir,
+        "start": 0,
+        "num_frames": int((window.get("segment_frame_range") or {}).get("num_frames", 0)),
     }
 
 
@@ -188,6 +207,31 @@ def _find_segment_dir(segments_root: Path, segment_id: str) -> Path:
     if len(matches) > 1:
         raise RuntimeError(f"Multiple segment directories for {segment_id} under {segments_root}: {matches}")
     return matches[0]
+
+
+def _find_hand_window_dir(segment_dir: Path, window_id: str) -> Path | None:
+    if not window_id:
+        return None
+    hand_windows_root = segment_dir / "hand_windows"
+    if not hand_windows_root.exists():
+        return None
+    exact = hand_windows_root / window_id
+    if exact.is_dir():
+        return exact
+    matches = sorted(path for path in hand_windows_root.glob(f"{window_id}_*") if path.is_dir())
+    if not matches:
+        return None
+    if len(matches) > 1:
+        raise RuntimeError(f"Multiple hand-window directories for {window_id} under {hand_windows_root}: {matches}")
+    return matches[0]
+
+
+def _preferred_depth_dir(hand_window_dir: Path) -> Path | None:
+    for name in ("fast_foundation_depth", "foundation_depth"):
+        path = hand_window_dir / name
+        if path.exists():
+            return path
+    return None
 
 
 def _window_command(
@@ -207,6 +251,8 @@ def _window_command(
     stage1_hand_policy: str,
     stage1_time_offset_s: float = 0.0,
     accept_uncertain_refined: bool = False,
+    wearer_roi_x_margin_ratio: float | None = None,
+    wearer_roi_y_margin_ratio: float | None = None,
 ) -> list[str]:
     command = [
         python_executable,
@@ -233,11 +279,17 @@ def _window_command(
         stage1_hand_policy,
         "--stage1_time_offset_s",
         str(stage1_time_offset_s),
+        "--wearer_regions_json",
+        stage1_actions,
         "--refine_mode",
         refine_mode,
     ]
     if depth_dir:
         command.extend(["--depth_dir", depth_dir])
+    if wearer_roi_x_margin_ratio is not None:
+        command.extend(["--wearer_roi_x_margin_ratio", str(wearer_roi_x_margin_ratio)])
+    if wearer_roi_y_margin_ratio is not None:
+        command.extend(["--wearer_roi_y_margin_ratio", str(wearer_roi_y_margin_ratio)])
     if save_mesh:
         command.append("--save_mesh")
     if accept_uncertain_refined:
@@ -269,6 +321,8 @@ def main() -> None:
         only_segment_ids=args.only_segment_ids,
         skip_missing_segments=args.skip_missing_segments,
         accept_uncertain_refined=args.accept_uncertain_refined,
+        wearer_roi_x_margin_ratio=args.wearer_roi_x_margin_ratio,
+        wearer_roi_y_margin_ratio=args.wearer_roi_y_margin_ratio,
         max_windows=args.max_windows,
     )
     plan_root = output_root or segments_root

@@ -42,7 +42,6 @@ def _strip_wrapper_args(argv: list[str]) -> list[str]:
         "--refine_max_depth_jump_m",
         "--refine_max_mesh_size_change_ratio",
         "--stage1_hand_policy",
-        "--stage1_time_offset_s",
         "--refine_mode",
     }
     flag_args = {"--save_refined_vis", "--no_save_refined_vis", "--accept_uncertain_refined"}
@@ -66,6 +65,84 @@ def _float_arg(name: str, default: float) -> float:
     if value is None:
         return default
     return float(value)
+
+
+def _load_vlm_frame_priors(path: str | None) -> dict[float, dict]:
+    if not path:
+        return {}
+    source = Path(path).expanduser()
+    if not source.exists():
+        return {}
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    frames = payload.get("frames") or []
+    out: dict[float, list[float]] = {}
+    if not isinstance(frames, list):
+        return out
+    for frame in frames:
+        if not isinstance(frame, dict):
+            continue
+        try:
+            t = float(frame.get("t"))
+        except (TypeError, ValueError):
+            continue
+        prior = {
+            "t": t,
+            "hand_visible": bool(frame.get("hand_visible", False)),
+            "hands_visible": frame.get("hands_visible") if isinstance(frame.get("hands_visible"), dict) else {},
+            "wearer_bbox_xyxy": None,
+        }
+        region = frame.get("wearer_region") or {}
+        if isinstance(region, dict) and bool(region.get("visible", True)):
+            bbox = region.get("bbox")
+            if isinstance(bbox, list) and len(bbox) >= 4:
+                try:
+                    prior["wearer_bbox_xyxy"] = [float(value) for value in bbox[:4]]
+                except (TypeError, ValueError):
+                    prior["wearer_bbox_xyxy"] = None
+        out[t] = prior
+    return out
+
+
+def _load_wearer_regions(path: str | None) -> dict[float, list[float]]:
+    return {
+        t: prior["wearer_bbox_xyxy"]
+        for t, prior in _load_vlm_frame_priors(path).items()
+        if prior.get("wearer_bbox_xyxy") is not None
+    }
+
+
+def _vlm_prior_for_frame(
+    priors_by_second: dict[float, dict],
+    *,
+    frame_idx: int,
+    fps: float,
+    stage1_time_offset_s: float,
+    max_delta_s: float = 1.5,
+) -> dict | None:
+    if not priors_by_second or fps <= 0:
+        return None
+    t = float(stage1_time_offset_s) + float(frame_idx) / float(fps)
+    best_t = min(priors_by_second, key=lambda key: abs(key - t))
+    if abs(best_t - t) > max_delta_s:
+        return None
+    return priors_by_second[best_t]
+
+
+def _wearer_region_for_frame(
+    regions_by_second: dict[float, list[float]],
+    *,
+    frame_idx: int,
+    fps: float,
+    stage1_time_offset_s: float,
+    max_delta_s: float = 1.5,
+) -> list[float] | None:
+    if not regions_by_second or fps <= 0:
+        return None
+    t = float(stage1_time_offset_s) + float(frame_idx) / float(fps)
+    best_t = min(regions_by_second, key=lambda key: abs(key - t))
+    if abs(best_t - t) > max_delta_s:
+        return None
+    return regions_by_second[best_t]
 
 
 def _stamp_ego_mode(output_dir: str | None, ego_mode: str) -> None:

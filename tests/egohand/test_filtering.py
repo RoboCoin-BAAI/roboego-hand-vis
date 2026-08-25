@@ -115,3 +115,111 @@ def test_recovers_missing_side_from_near_confident_small_candidate():
     assert result.candidates[1]["status"] == "ego_right_recovered"
     assert result.candidates[1]["recovery"]["reason"] == "missing_side_fallback"
     assert result.candidates[2]["status"] == "rejected"
+
+
+def test_select_ego_hands_uses_wearer_bbox_as_hard_roi():
+    candidates = [
+        {"bbox_xyxy": [5, 70, 35, 95], "handedness": "left", "confidence": 0.9},
+        {"bbox_xyxy": [65, 70, 95, 95], "handedness": "right", "confidence": 0.9},
+        {"bbox_xyxy": [10, 10, 40, 35], "handedness": "left", "confidence": 0.99},
+    ]
+
+    result = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.0, 0.5, 1.0, 1.0],
+        config=EgoHandFilterConfig(min_area_ratio=0.01),
+    )
+
+    assert result.selected["ego_left"] == 0
+    assert result.selected["ego_right"] == 1
+    assert result.candidates[2]["status"] == "rejected"
+    assert "outside_wearer_region" in result.candidates[2]["reject_reasons"]
+
+
+def test_wearer_bbox_gate_expands_vertically_but_not_horizontally():
+    candidates = [
+        {"bbox_xyxy": [40, 76, 60, 86], "handedness": "left", "confidence": 0.9},
+        {"bbox_xyxy": [20, 88, 34, 98], "handedness": "right", "confidence": 0.9},
+    ]
+
+    result = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.35, 0.85, 0.65, 1.0],
+        config=EgoHandFilterConfig(min_area_ratio=0.01, wearer_roi_y_margin_ratio=0.05),
+    )
+
+    assert result.selected["ego_left"] == 0
+    assert result.selected["ego_right"] is None
+    assert "outside_wearer_region" in result.candidates[1]["reject_reasons"]
+
+
+def test_wearer_bbox_gate_can_expand_x_when_explicitly_configured():
+    candidates = [
+        {"bbox_xyxy": [20, 88, 34, 98], "handedness": "right", "confidence": 0.9},
+    ]
+
+    strict = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.35, 0.85, 0.65, 1.0],
+        config=EgoHandFilterConfig(
+            min_area_ratio=0.01,
+            wearer_roi_x_margin_ratio=0.0,
+            wearer_roi_y_margin_ratio=0.05,
+        ),
+    )
+    expanded = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.35, 0.85, 0.65, 1.0],
+        config=EgoHandFilterConfig(
+            min_area_ratio=0.01,
+            wearer_roi_x_margin_ratio=0.2,
+            wearer_roi_y_margin_ratio=0.05,
+        ),
+    )
+
+    assert strict.selected["ego_right"] is None
+    assert expanded.selected["ego_right"] == 0
+
+
+def test_semantic_hand_visible_enables_more_permissive_roi_and_area_recovery():
+    candidates = [
+        {"bbox_xyxy": [40, 58, 60, 68], "handedness": "left", "confidence": 0.9},
+        {"bbox_xyxy": [18, 88, 32, 98], "handedness": "right", "confidence": 0.9},
+    ]
+    config = EgoHandFilterConfig(
+        min_area_ratio=0.02,
+        recovery_min_area_ratio=0.005,
+        wearer_roi_y_margin_ratio=0.05,
+        semantic_hand_visible_y_margin_ratio=0.3,
+        semantic_hand_visible_min_area_ratio=0.005,
+    )
+
+    strict_result = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.35, 0.85, 0.65, 1.0],
+        config=config,
+        semantic_hand_visible=False,
+    )
+    semantic_result = select_ego_hands(
+        candidates,
+        image_width=100,
+        image_height=100,
+        wearer_bbox_xyxy=[0.35, 0.85, 0.65, 1.0],
+        config=config,
+        semantic_hand_visible=True,
+    )
+
+    assert strict_result.selected["ego_left"] is None
+    assert semantic_result.selected["ego_left"] == 0
+    assert semantic_result.selected["ego_right"] is None
+    assert "outside_wearer_region" in semantic_result.candidates[1]["reject_reasons"]

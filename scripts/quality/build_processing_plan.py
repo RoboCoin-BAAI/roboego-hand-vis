@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build semantic processing/drop plan from Stage 1 annotations.")
     parser.add_argument("--stage1_json", required=True)
     parser.add_argument("--output_json", required=True)
-    parser.add_argument("--actions_json", default="")
+    parser.add_argument("--actions_json", default="", help="Optional Stage1 actions JSON or directory containing chunk JSON files.")
     parser.add_argument("--min_hold_interruption_s", type=int, default=8)
     parser.add_argument("--min_walk_interruption_s", type=int, default=5)
     parser.add_argument("--min_idle_interruption_s", type=int, default=8)

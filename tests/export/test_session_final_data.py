@@ -70,3 +70,19 @@ def test_resolve_hand_visual_source_prefers_temporal_size_filter(tmp_path):
     assert directory == temporal
     assert pattern == "frame_{idx:06d}_temporal.jpg"
     assert label == "refined_temporal_size_extreme_filter"
+
+
+def test_resolve_hand_visual_source_prefers_temporal_gate_over_legacy_temporal(tmp_path):
+    hamer_dir = tmp_path / "handwin_0000"
+    legacy = hamer_dir / "refined_temporal" / "temporal_annotated"
+    gate = hamer_dir / "refined_temporal_gate" / "temporal_annotated"
+    legacy.mkdir(parents=True)
+    gate.mkdir(parents=True)
+    (legacy / "frame_000120_temporal.jpg").write_bytes(b"legacy")
+    (gate / "frame_000120_temporal.jpg").write_bytes(b"gate")
+
+    directory, pattern, label = resolve_hand_visual_source(hamer_dir)
+
+    assert directory == gate
+    assert pattern == "frame_{idx:06d}_temporal.jpg"
+    assert label == "refined_temporal_gate"

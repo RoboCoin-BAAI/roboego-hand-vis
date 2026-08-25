@@ -12,6 +12,7 @@ from roboego_hand_vis.quality.qwen_frame_annotation import (
     build_data_inspection_placeholder_frames,
     call_qwen_frame_annotations,
     completed_batch_indices,
+    extract_video_frames_from_windows,
     is_data_inspection_failed,
     load_checkpoint_frames,
     migrate_object_attribute_hand_side,
@@ -32,6 +33,15 @@ def write_image(path: Path) -> None:
     cv2.imwrite(str(path), image)
 
 
+def write_video(path: Path, frame_count: int = 20, fps: float = 1.0) -> None:
+    writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (32, 24))
+    assert writer.isOpened()
+    for idx in range(frame_count):
+        frame = np.full((24, 32, 3), idx * 10 % 255, dtype=np.uint8)
+        writer.write(frame)
+    writer.release()
+
+
 def valid_payload() -> dict:
     return {
         "frames": [
@@ -41,6 +51,13 @@ def valid_payload() -> dict:
                 "activity": "wearer stands near shelves",
                 "hand_visible": False,
                 "hands_visible": {"left": False, "right": False},
+                "wearer_region": {
+                    "visible": False,
+                    "bbox": None,
+                    "body_parts": [],
+                    "confidence": 0.0,
+                    "notes": "",
+                },
                 "hand_object_interaction": False,
                 "interaction_objects": [],
                 "interaction_object_attributes": [],
@@ -59,6 +76,13 @@ def valid_payload() -> dict:
                 "activity": "wearer holds a product",
                 "hand_visible": True,
                 "hands_visible": {"left": False, "right": True},
+                "wearer_region": {
+                    "visible": True,
+                    "bbox": [0.55, 0.45, 0.98, 0.95],
+                    "body_parts": ["right hand", "right forearm"],
+                    "confidence": 0.85,
+                    "notes": "wearer's right hand and forearm occupy the lower-right image region",
+                },
                 "hand_object_interaction": True,
                 "interaction_objects": ["product"],
                 "interaction_object_attributes": [
@@ -91,6 +115,25 @@ def test_read_prompt_markdown_extracts_system_and_user_prompts():
     assert "ego-centric" in system_prompt
     assert "hand_side" in user_prompt
     assert "activity 必须复用 interaction_objects" in system_prompt
+    assert "纵向范围以召回优先" in system_prompt
+    assert "只在横向范围上收紧" in system_prompt
+    assert "y2 应接近或等于 1.0" in system_prompt
+    assert "最小外接矩形" not in system_prompt
+    assert "object_id" not in user_prompt
+
+
+def test_read_english_v5_prompt_keeps_v4_schema_and_roi_policy():
+    system_prompt, user_prompt = read_prompt_markdown(Path("docs/prompts/qwen_frame_annotation_v5_en.md"))
+
+    assert "egocentric" in system_prompt
+    assert "strict JSON" in system_prompt
+    assert "coarse ROI" in system_prompt
+    assert "vertical range" in system_prompt
+    assert "tighten only the horizontal range" in system_prompt
+    assert "y2 should be close to or equal to 1.0" in system_prompt
+    assert "minimum bounding rectangle" not in system_prompt
+    assert "wearer_region" in user_prompt
+    assert "interaction_object_attributes" in user_prompt
     assert "object_id" not in user_prompt
 
 
@@ -113,6 +156,32 @@ def test_build_qwen_frame_annotation_messages_includes_timestamps_and_images(tmp
     assert content[2]["image_url"]["url"].startswith("data:image/jpeg;base64,")
 
 
+def test_extract_video_frames_from_windows_preserves_absolute_timestamps(tmp_path: Path):
+    video = tmp_path / "input.mp4"
+    frames_dir = tmp_path / "frames"
+    write_video(video, frame_count=20, fps=1.0)
+
+    frame_paths, timestamps_s = extract_video_frames_from_windows(
+        video_path=video,
+        output_dir=frames_dir,
+        windows=[
+            {"start": 2.0, "end": 5.0, "route_hint": "pass_to_qwen"},
+            {"start": 10.0, "end": 12.0, "route_hint": "pass_to_qwen_with_aux"},
+        ],
+        fps=1.0,
+        max_width=32,
+    )
+
+    assert timestamps_s == [2.0, 3.0, 4.0, 10.0, 11.0]
+    assert [path.name for path in frame_paths] == [
+        "frame_t000002.jpg",
+        "frame_t000003.jpg",
+        "frame_t000004.jpg",
+        "frame_t000010.jpg",
+        "frame_t000011.jpg",
+    ]
+
+
 def test_call_qwen_frame_annotations_returns_http_error_body(monkeypatch):
     monkeypatch.setenv("DASHSCOPE_API_KEY", "test-key")
     error = urllib.error.HTTPError(
@@ -130,6 +199,57 @@ def test_call_qwen_frame_annotations_returns_http_error_body(monkeypatch):
     assert parsed["status"] == "http_error"
     assert parsed["http_status"] == 400
     assert "InvalidParameter" in parsed["raw_response"]
+
+
+def test_call_qwen_frame_annotations_retries_download_timeout_and_records_usage(monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "test-key")
+    error = urllib.error.HTTPError(
+        url="https://example.test",
+        code=400,
+        msg="Bad Request",
+        hdrs={},
+        fp=None,
+    )
+    error.read = lambda: b'{"error":{"message":"Download multimodal file timed out"}}'
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return json.dumps(
+                {
+                    "id": "chatcmpl-test",
+                    "request_id": "request-test",
+                    "usage": {"input_tokens": 11, "output_tokens": 13, "total_tokens": 24},
+                    "choices": [{"message": {"content": json.dumps(valid_payload())}}],
+                }
+            ).encode("utf-8")
+
+    calls = [error, Response()]
+
+    def fake_urlopen(req, timeout):
+        result = calls.pop(0)
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        parsed = call_qwen_frame_annotations(
+            messages=[],
+            model="qwen-vl-plus",
+            max_retries=2,
+            retry_sleep_s=0,
+        )
+
+    assert parsed["status"] == "ok"
+    assert parsed["retry_count"] == 1
+    assert parsed["attempt_count"] == 2
+    assert parsed["usage"] == {"input_tokens": 11, "output_tokens": 13, "total_tokens": 24}
+    assert parsed["request_id"] == "request-test"
 
 
 def test_data_inspection_failed_placeholder_frames_are_valid():
@@ -156,6 +276,23 @@ def test_parse_qwen_frame_annotation_response_accepts_markdown_json():
 
     assert parsed["status"] == "ok"
     assert parsed["frames"][1]["hands_visible"] == {"left": False, "right": True}
+    assert parsed["frames"][1]["wearer_region"]["bbox"] == [0.55, 0.45, 0.98, 0.95]
+
+
+def test_parse_qwen_frame_annotation_response_normalizes_missing_wearer_region():
+    payload = valid_payload()
+    del payload["frames"][1]["wearer_region"]
+
+    parsed = parse_qwen_frame_annotation_response(json.dumps(payload))
+
+    assert parsed["status"] == "ok"
+    assert parsed["frames"][1]["wearer_region"] == {
+        "visible": False,
+        "bbox": None,
+        "body_parts": [],
+        "confidence": 0.0,
+        "notes": "normalized_missing_wearer_region",
+    }
 
 
 def test_parse_qwen_frame_annotation_response_repairs_hands_visible_confidence_typo():
@@ -399,6 +536,14 @@ def test_validate_frame_annotations_rejects_objects_without_interaction_flag():
         validate_frame_annotations(payload["frames"])
 
 
+def test_validate_frame_annotations_rejects_invalid_wearer_region_bbox():
+    payload = valid_payload()
+    payload["frames"][1]["wearer_region"]["bbox"] = [0.8, 0.2, 0.7, 0.9]
+
+    with pytest.raises(ValueError, match="wearer_region.bbox"):
+        validate_frame_annotations(payload["frames"])
+
+
 def test_write_qwen_frame_annotation_output_adds_metadata(tmp_path: Path):
     output = tmp_path / "annotations.json"
 
@@ -409,11 +554,13 @@ def test_write_qwen_frame_annotation_output_adds_metadata(tmp_path: Path):
         prompt_path=Path("prompt.md"),
         model="qwen-vl-plus",
         sampling_fps=1.0,
+        usage={"input_tokens": 10, "output_tokens": 5, "total_tokens": 15},
     )
 
     saved = json.loads(output.read_text())
     assert saved == payload
     assert payload["model"] == "qwen-vl-plus"
+    assert payload["usage"] == {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15}
     assert payload["frames"][1]["interaction_object_attributes"][0]["shape"] == "bottle"
 
 
@@ -428,10 +575,27 @@ def test_checkpoint_records_completed_batches_and_frames(tmp_path: Path):
         prompt_path=Path("prompt.md"),
         model="qwen-vl-plus",
         sampling_fps=1.0,
+        usage={"input_tokens": 10, "output_tokens": 5, "total_tokens": 15},
     )
 
     assert completed_batch_indices(checkpoint) == {0, 1}
     assert len(load_checkpoint_frames(checkpoint)) == 2
+    assert json.loads(checkpoint.read_text())["usage"]["total_tokens"] == 15
+
+
+def test_load_checkpoint_frames_normalizes_legacy_frames(tmp_path: Path):
+    checkpoint = tmp_path / "legacy.checkpoint.json"
+    payload = {
+        "frames": valid_payload()["frames"],
+        "completed_batches": [0],
+    }
+    del payload["frames"][1]["wearer_region"]
+    checkpoint.write_text(json.dumps(payload), encoding="utf-8")
+
+    frames = load_checkpoint_frames(checkpoint)
+
+    assert frames[1]["wearer_region"]["bbox"] is None
+    assert frames[1]["wearer_region"]["notes"] == "normalized_missing_wearer_region"
 
 
 def test_recover_checkpoint_from_raw_parses_completed_batches(tmp_path: Path):

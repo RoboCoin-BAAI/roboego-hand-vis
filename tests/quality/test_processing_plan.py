@@ -130,6 +130,40 @@ def test_write_processing_plan_merges_external_actions(tmp_path: Path):
     assert plan["semantic_units"][0]["unit_type"] == "event_core"
 
 
+def test_write_processing_plan_merges_external_action_directory(tmp_path: Path):
+    stage1 = tmp_path / "stage1.json"
+    actions_dir = tmp_path / "stage1_action_resolved_chunks"
+    output = tmp_path / "plan.json"
+    actions_dir.mkdir()
+    stage1.write_text(
+        json.dumps(
+            {
+                "source_video": "left.mp4",
+                "frames": [
+                    frame(0, "wearer picks up a product"),
+                    frame(10, "wearer places a product"),
+                ],
+            }
+        )
+    )
+    (actions_dir / "chunk_0000.json").write_text(
+        json.dumps({"frames": [{"t": 0, "frame_actions": [{"action": "pick", "object_name": "product"}]}]})
+    )
+    (actions_dir / "chunk_0001.json").write_text(
+        json.dumps({"frames": [{"t": 10, "frame_actions": [{"action": "place", "object_name": "product"}]}]})
+    )
+
+    plan = write_processing_plan(
+        stage1_json=stage1,
+        output_json=output,
+        actions_json=actions_dir,
+        config=ProcessingPlanConfig(min_process_segment_s=1),
+    )
+
+    actions = [unit["actions"] for unit in plan["semantic_units"]]
+    assert actions == [["pick"], ["place"]]
+
+
 def test_build_segment_summaries_aggregates_actions_objects_and_privacy():
     frames = [
         frame(5, "wearer reaches for a product", action="reach"),

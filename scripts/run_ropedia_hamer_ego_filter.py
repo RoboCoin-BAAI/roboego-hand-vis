@@ -413,6 +413,11 @@ def build_filter_config(args: argparse.Namespace) -> EgoHandFilterConfig:
         recovery_min_area_ratio=args.recovery_min_area_ratio,
         recovery_min_center_y_ratio=args.recovery_min_center_y_ratio,
         recovery_max_median_depth_m=args.recovery_max_median_depth_m,
+        wearer_roi_x_margin_ratio=args.wearer_roi_x_margin_ratio,
+        wearer_roi_y_margin_ratio=args.wearer_roi_y_margin_ratio,
+        semantic_hand_visible_y_margin_ratio=args.semantic_hand_visible_y_margin_ratio,
+        semantic_hand_visible_min_area_ratio=args.semantic_hand_visible_min_area_ratio,
+        semantic_hand_visible_recovery_min_area_ratio=args.semantic_hand_visible_recovery_min_area_ratio,
     )
 
 
@@ -428,6 +433,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
     parser.add_argument("--depth_dir", default=None)
     parser.add_argument("--depth_quality_report", default="")
+    parser.add_argument("--wearer_regions_json", default="")
+    parser.add_argument("--stage1_time_offset_s", type=float, default=0.0)
     parser.add_argument(
         "--ego_mode",
         choices=["strict", "tolerant"],
@@ -463,6 +470,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--recovery_min_area_ratio", type=float, default=0.001)
     parser.add_argument("--recovery_min_center_y_ratio", type=float, default=0.35)
     parser.add_argument("--recovery_max_median_depth_m", type=float, default=1.2)
+    parser.add_argument("--wearer_roi_x_margin_ratio", type=float, default=0.0)
+    parser.add_argument("--wearer_roi_y_margin_ratio", type=float, default=0.05)
+    parser.add_argument("--semantic_hand_visible_y_margin_ratio", type=float, default=0.25)
+    parser.add_argument("--semantic_hand_visible_min_area_ratio", type=float, default=0.001)
+    parser.add_argument("--semantic_hand_visible_recovery_min_area_ratio", type=float, default=0.0005)
     parser.add_argument("--contact_sheet_columns", type=int, default=4)
     parser.add_argument("--contact_sheet_thumb_width", type=int, default=360)
     return parser.parse_args()
@@ -479,11 +491,17 @@ def main() -> None:
     args.depth_quality_report = (
         resolve_path(args.depth_quality_report, original_cwd) if args.depth_quality_report else None
     )
+    args.wearer_regions_json = (
+        resolve_path(args.wearer_regions_json, original_cwd) if args.wearer_regions_json else None
+    )
     args.checkpoint = resolve_path(args.checkpoint, original_cwd) if args.checkpoint else None
     manifest_inputs = load_hamer_filter_inputs_from_manifest(args.manifest) if args.manifest else None
     if manifest_inputs is not None:
         args.video = manifest_inputs.video_path
     depth_quality_warnings = load_depth_quality_warnings(args.depth_quality_report)
+    from scripts.hand.run_hamer_ego_filter import _load_vlm_frame_priors, _vlm_prior_for_frame
+
+    vlm_priors = _load_vlm_frame_priors(str(args.wearer_regions_json) if args.wearer_regions_json else None)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     frames_dir = args.output_dir / "frames"
@@ -507,6 +525,7 @@ def main() -> None:
         "batch_size": args.batch_size,
         "rescale_factor": args.rescale_factor,
         "save_mesh": args.save_mesh,
+        "wearer_regions_json": str(args.wearer_regions_json) if args.wearer_regions_json else None,
     }
     frame_range = {
         "start": args.start,
@@ -523,6 +542,12 @@ def main() -> None:
         hamer_config=hamer_config,
         fallback_video=args.video,
     )
+    report["wearer_region_filter"] = {
+        "mode": "vlm_wearer_bbox_center_gate",
+        "source_json": str(args.wearer_regions_json) if args.wearer_regions_json else None,
+        "region_count": sum(1 for prior in vlm_priors.values() if prior.get("wearer_bbox_xyxy") is not None),
+        "semantic_prior_count": len(vlm_priors),
+    }
 
     annotated_paths: List[Path] = []
     hamer_overlay_paths: List[Path] = []
@@ -533,6 +558,19 @@ def main() -> None:
         depth_m, depth_path = load_depth(args.depth_dir, frame_idx)
         candidates = estimator.detect_hand_candidates(image_bgr)
         estimator.reconstruct_meshes(image_bgr, candidates, mesh_dir, frame_idx)
+        fps = (
+            float(manifest_inputs.video_info.get("fps", 0.0))
+            if manifest_inputs is not None
+            else 30.0
+        )
+        vlm_prior = _vlm_prior_for_frame(
+            vlm_priors,
+            frame_idx=frame_idx,
+            fps=fps,
+            stage1_time_offset_s=args.stage1_time_offset_s,
+        )
+        wearer_bbox = vlm_prior.get("wearer_bbox_xyxy") if vlm_prior else None
+        semantic_hand_visible = bool(vlm_prior.get("hand_visible", False)) if vlm_prior else False
 
         selection = select_ego_hands(
             candidates,
@@ -540,6 +578,8 @@ def main() -> None:
             image_height=image_bgr.shape[0],
             depth_m=depth_m,
             config=filter_config,
+            wearer_bbox_xyxy=wearer_bbox,
+            semantic_hand_visible=semantic_hand_visible,
         )
         annotated = draw_candidates(image_bgr, selection.candidates)
         annotated_path = annotated_dir / f"frame_{frame_idx:06d}_ego_filter.jpg"
@@ -573,6 +613,9 @@ def main() -> None:
                 "image": str(frame_path),
                 "depth": depth_path,
                 "depth_quality_warnings": depth_quality_warnings_for_frame(frame_idx, depth_quality_warnings),
+                "wearer_bbox_xyxy": wearer_bbox,
+                "vlm_hand_visible": semantic_hand_visible,
+                "vlm_hands_visible": vlm_prior.get("hands_visible", {}) if vlm_prior else {},
                 "annotated_image": str(annotated_path),
                 "hamer_overlay_image": str(hamer_overlay_path) if hamer_overlay_path else None,
                 "selected": selection.selected,

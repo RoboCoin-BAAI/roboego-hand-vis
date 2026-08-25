@@ -37,6 +37,10 @@ def export_selected_video_segments(
                 raise FileExistsError(f"Segment directory exists; pass overwrite=True: {segment_dir}")
             shutil.rmtree(segment_dir)
         segment_dir.mkdir(parents=True)
+        videos_dir = segment_dir / "videos"
+        annotation_dir = segment_dir / "annotation"
+        videos_dir.mkdir(parents=True, exist_ok=True)
+        annotation_dir.mkdir(parents=True, exist_ok=True)
 
         start_frame = int(round(float(segment["start"]) * fps_value))
         end_frame_exclusive = int(round((float(segment["end"]) + 1.0) * fps_value))
@@ -44,7 +48,7 @@ def export_selected_video_segments(
         videos: dict[str, str] = {}
         for stream in camera_streams:
             source = session_dir / "videos" / f"{stream}.mp4"
-            target = segment_dir / f"{stream}.mp4"
+            target = videos_dir / f"{stream}.mp4"
             cut_video(
                 source_video=source,
                 output_video=target,
@@ -55,6 +59,16 @@ def export_selected_video_segments(
             )
             videos[stream] = str(target)
 
+        time_bounds = _write_segment_timestamps(
+            session_dir=session_dir,
+            segment_dir=segment_dir,
+            camera_streams=camera_streams,
+            start_frame=start_frame,
+            frame_count=frame_count,
+        )
+        _write_segment_imu(session_dir=session_dir, segment_dir=segment_dir, time_bounds=time_bounds)
+        _copy_tree_if_exists(session_dir / "calibrations", segment_dir / "calibrations")
+
         segment_payload = {
             **segment,
             "videos": videos,
@@ -64,9 +78,22 @@ def export_selected_video_segments(
             "segment_frame_count": frame_count,
             "fps": fps_value,
         }
+        (annotation_dir / "processing_plan_segment.json").write_text(
+            json.dumps(segment_payload, indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
         (segment_dir / "segment.json").write_text(
             json.dumps(segment_payload, indent=2, ensure_ascii=False),
             encoding="utf-8",
+        )
+        _write_segment_meta(
+            session_dir=session_dir,
+            segment_dir=segment_dir,
+            segment=segment,
+            start_frame=start_frame,
+            frame_count=frame_count,
+            fps=fps_value,
+            time_bounds=time_bounds,
         )
         exported.append(
             {
@@ -102,6 +129,110 @@ def segment_dir_name(segment: dict[str, Any]) -> str:
     end = int(segment["end"])
     label = _safe_label(str(segment.get("semantic_label") or "segment"))
     return f"{segment_id}_t{start:06d}_{end:06d}_{label}"
+
+
+def _write_segment_meta(
+    *,
+    session_dir: Path,
+    segment_dir: Path,
+    segment: dict[str, Any],
+    start_frame: int,
+    frame_count: int,
+    fps: float,
+    time_bounds: dict[str, dict[str, float | None]],
+) -> None:
+    source_meta_path = session_dir / "meta.json"
+    source_meta = json.loads(source_meta_path.read_text(encoding="utf-8")) if source_meta_path.exists() else {}
+    meta = {
+        **source_meta,
+        "session_kind": "selected_segment",
+        "segment_id": segment.get("segment_id"),
+        "semantic_label": segment.get("semantic_label"),
+        "source_session": str(session_dir),
+        "source_start_s": int(segment["start"]),
+        "source_end_s": int(segment["end"]),
+        "source_start_frame": int(start_frame),
+        "segment_frame_count": int(frame_count),
+        "duration_sec": float(frame_count) / float(fps) if fps else segment.get("duration"),
+        "fps": float(fps),
+        "timestamp_bounds": time_bounds,
+    }
+    (segment_dir / "meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def _write_segment_timestamps(
+    *,
+    session_dir: Path,
+    segment_dir: Path,
+    camera_streams: tuple[str, ...],
+    start_frame: int,
+    frame_count: int,
+) -> dict[str, dict[str, float | None]]:
+    timestamp_dir = session_dir / "timestamps"
+    output_dir = segment_dir / "timestamps"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    bounds: dict[str, dict[str, float | None]] = {}
+    for stream in camera_streams:
+        source = timestamp_dir / f"{stream}_timestamps.txt"
+        if not source.exists():
+            continue
+        rows = _read_timestamp_rows(source)
+        selected = rows[start_frame : start_frame + frame_count]
+        target = output_dir / source.name
+        with target.open("w", encoding="utf-8") as handle:
+            for idx, timestamp in enumerate(selected):
+                handle.write(f"{idx} {timestamp}\n")
+        bounds[stream] = {
+            "start": float(selected[0]) if selected else None,
+            "end": float(selected[-1]) if selected else None,
+        }
+    return bounds
+
+
+def _read_timestamp_rows(path: Path) -> list[str]:
+    rows: list[str] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        parts = line.strip().split()
+        if len(parts) >= 2:
+            rows.append(parts[1])
+    return rows
+
+
+def _write_segment_imu(
+    *,
+    session_dir: Path,
+    segment_dir: Path,
+    time_bounds: dict[str, dict[str, float | None]],
+) -> None:
+    source = session_dir / "imu" / "imu0.csv"
+    if not source.exists():
+        return
+    reference = time_bounds.get("left") or next(iter(time_bounds.values()), {})
+    start = reference.get("start")
+    end = reference.get("end")
+    target = segment_dir / "imu" / source.name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if start is None or end is None:
+        shutil.copy2(source, target)
+        return
+    with source.open("r", encoding="utf-8") as src, target.open("w", encoding="utf-8") as dst:
+        header = src.readline()
+        dst.write(header)
+        for line in src:
+            timestamp_text = line.split(",", 1)[0].strip()
+            if not timestamp_text:
+                continue
+            timestamp = float(timestamp_text)
+            if float(start) <= timestamp <= float(end):
+                dst.write(line)
+
+
+def _copy_tree_if_exists(source: Path, target: Path) -> None:
+    if not source.exists():
+        return
+    if target.exists():
+        shutil.rmtree(target)
+    shutil.copytree(source, target)
 
 
 def cut_video(

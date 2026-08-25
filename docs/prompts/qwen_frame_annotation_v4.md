@@ -12,7 +12,7 @@ to downstream rules.
 
 这是 ego-centric 第一视角视频。所有动作字段都以头戴相机佩戴者为主体。
 
-你的任务是观察 1 FPS 抽样帧，客观描述每一秒画面中头戴相机佩戴者正在做什么，并标记佩戴者自己的左手/右手是否可见、是否有手物交互、是否有隐私信息、是否有任务相关上下文。如果佩戴者正在拿取、推动、操作、指向或关注某个物体，还需要描述该完整物体对应哪只手、颜色、形状、材质和视觉特征。
+你的任务是观察 1 FPS 抽样帧，客观描述每一秒画面中头戴相机佩戴者正在做什么，并标记佩戴者自己的左手/右手是否可见、佩戴者身体/手臂/手在画面中的可见区域、是否有手物交互、是否有隐私信息、是否有任务相关上下文。如果佩戴者正在拿取、推动、操作、指向或关注某个物体，还需要描述该完整物体对应哪只手、颜色、形状、材质和视觉特征。
 
 你不需要判断这段数据是否应该保留或丢弃。
 你不需要输出 KEEP、DROP、REVIEW。
@@ -31,6 +31,14 @@ to downstream rules.
 - activity 正确示例："wearer holds a product" 或 "wearer holds a product and looks at it"。
 - hand_visible 只表示佩戴者自己的手是否可见，不要把其他人的手算作 hand_visible=true。
 - hands_visible 只回答佩戴者自己的左手和右手是否可见。
+- wearer_region 描述头戴相机佩戴者自己的可见身体区域，包括自己的手、前臂、手腕、衣袖或身体边缘；不要把其他人的手或身体算入。
+- wearer_region.bbox 是用于后续手部估计的粗 ROI，格式为 [x1, y1, x2, y2]，使用 0 到 1 的归一化坐标，左上角为 [0,0]，右下角为 [1,1]。
+- 如果能看到佩戴者自己的手、前臂、手腕、衣袖或身体边缘，wearer_region.visible=true，并给出 bbox；如果完全看不到佩戴者自己的身体区域，wearer_region.visible=false，bbox=null。
+- wearer_region.bbox 是粗略搜索区域，不是精确贴边检测框。不要为了贴边而同时收紧上下左右；本字段更重视完整覆盖佩戴者可见区域。
+- wearer_region.bbox 的纵向范围以召回优先，沿用宽松策略：上下边界可以比真实可见身体区域更高或更低，必须完整覆盖佩戴者自己的手、手腕、前臂、衣袖、躯干边缘和手持物体。
+- 如果佩戴者的躯干、衣服、手臂或身体边缘延伸到画面底部，wearer_region.bbox 的 y2 应接近或等于 1.0；不要只围绕手部局部给一个很矮的框。
+- wearer_region.bbox 只在横向范围上收紧：左右边界尽量贴近佩戴者自己的可见身体、手臂、手和手持物体；不要横向扩展到旁人、货架、地面或大面积背景。
+- 如果为了覆盖佩戴者手部必须包含少量手持物体可以接受，但不要包含大面积无关货架或旁人身体。
 - hand_object_interaction 只表示佩戴者自己的手与物体的接触、拿取、放置、推动、按压、扫码、操作等交互。
 - 单纯指向、挥手或手势不算 hand_object_interaction，除非画面中有明确被指向的任务物体；这种情况优先放入 attention_objects。
 - 如果 activity 是 "wearer points with the right index finger" 但没有明确目标物体，则 hand_object_interaction=false，interaction_objects=[]，interaction_object_attributes=[]。
@@ -64,6 +72,7 @@ to downstream rules.
 - activity: 头戴相机佩戴者正在发生的主要事情，不要描述旁人的主要动作，也不要包含物品颜色/形状/材质；如果本帧有 interaction_objects 或 interaction_object_attributes.name，activity 中的物体名必须和这些字段里的标准名称一致；例如 "wearer holds a product and looks at it"
 - hand_visible: 是否能看到佩戴者自己的手
 - hands_visible: 佩戴者左手/右手是否可见，包含 left 和 right 两个布尔字段
+- wearer_region: 佩戴者自己的可见身体区域；包含 visible、bbox、body_parts、confidence、notes
 - hand_object_interaction: 是否存在佩戴者自己的手和物体的实际交互，前提是 hand_visible=true
 - interaction_objects: 正在被佩戴者自己的手操作的完整物体列表；如果 hand_object_interaction=true 必须非空；如果 hand_object_interaction=false 必须为 []
 - interaction_object_attributes: 交互物体的视觉属性列表；如果 hand_object_interaction=true 必须非空并对应 interaction_objects；如果 hand_object_interaction=false 必须为 []
@@ -84,6 +93,13 @@ interaction_object_attributes 中每个对象必须包含：
 - material: 可见材质；不确定则 unknown
 - visual_description: 简短视觉描述，包含能帮助后续分割识别的属性
 - confidence: 0 到 1
+
+wearer_region 必须包含：
+- visible: 是否能看到佩戴者自己的手、前臂、手腕、衣袖或身体边缘
+- bbox: 如果 visible=true，输出 [x1, y1, x2, y2] 归一化矩形；如果 visible=false，输出 null
+- body_parts: 可见部位列表，例如 right hand, left hand, right forearm, left sleeve, torso edge；不确定则 []
+- confidence: 0 到 1
+- notes: 简短说明，尤其说明为什么判定这是佩戴者而不是旁人
 
 image_quality 只能从以下值选择：
 - clear
@@ -116,6 +132,13 @@ privacy_types 可以包含：
       "hands_visible": {
         "left": false,
         "right": true
+      },
+      "wearer_region": {
+        "visible": true,
+        "bbox": [0.55, 0.45, 0.98, 0.95],
+        "body_parts": ["right hand", "right forearm"],
+        "confidence": 0.85,
+        "notes": "wearer's right hand and forearm occupy the lower-right image region"
       },
       "hand_object_interaction": true,
       "interaction_objects": ["product"],
@@ -160,3 +183,6 @@ and (
 Use `interaction_object_attributes` to seed downstream Qwen target prompts for
 FastSAM/SAM3 candidate ranking. Assign persistent object IDs later in the mesh
 segmentation/object library stage; do not ask Qwen to invent them.
+
+Use `wearer_region.bbox` as a coarse spatial prior for downstream hand
+estimation and hand candidate filtering, especially in multi-person scenes.

@@ -5,6 +5,7 @@ import json
 import math
 import os
 import re
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -22,6 +23,7 @@ REQUIRED_FRAME_FIELDS = [
     "activity",
     "hand_visible",
     "hands_visible",
+    "wearer_region",
     "hand_object_interaction",
     "interaction_objects",
     "interaction_object_attributes",
@@ -98,6 +100,7 @@ def normalize_frame_annotations(frames: list[Any]) -> None:
                 "right": frame["hands_visible"].get("right") is True,
             }
         _normalize_hand_visible_from_hands_visible(frame)
+        _normalize_wearer_region(frame)
         _normalize_no_hand_interaction_objects(frame)
         _normalize_pointing_without_target(frame)
         _normalize_false_interaction_with_objects(frame)
@@ -141,6 +144,27 @@ def _normalize_hand_visible_from_hands_visible(frame: dict[str, Any]) -> None:
         return
     frame["hand_visible"] = False
     _append_note(frame, "normalized_hand_visible_from_hands_visible")
+
+
+def _normalize_wearer_region(frame: dict[str, Any]) -> None:
+    if "wearer_region" not in frame:
+        frame["wearer_region"] = {
+            "visible": False,
+            "bbox": None,
+            "body_parts": [],
+            "confidence": 0.0,
+            "notes": "normalized_missing_wearer_region",
+        }
+        return
+    value = frame["wearer_region"]
+    if not isinstance(value, dict):
+        return
+    if value.get("visible") is False and value.get("bbox") == []:
+        value["bbox"] = None
+    if "body_parts" not in value or value["body_parts"] is None:
+        value["body_parts"] = []
+    if "notes" not in value or value["notes"] is None:
+        value["notes"] = ""
 
 
 def _normalize_no_hand_interaction_objects(frame: dict[str, Any]) -> None:
@@ -340,6 +364,7 @@ def validate_frame_annotations(frames: list[Any]) -> None:
         _validate_bool(frame, idx, "task_context")
         _validate_bool(frame, idx, "privacy")
         _validate_hands_visible(frame, idx)
+        _validate_wearer_region(frame, idx)
         _validate_unit_float(frame.get("uncertainty"), f"frame[{idx}].uncertainty")
         if frame["image_quality"] not in IMAGE_QUALITIES:
             raise ValueError(f"frame[{idx}].image_quality invalid: {frame['image_quality']}")
@@ -386,6 +411,43 @@ def _validate_hands_visible(frame: dict[str, Any], idx: int) -> None:
         raise ValueError(f"frame[{idx}].hand_visible must match hands_visible")
 
 
+def _validate_wearer_region(frame: dict[str, Any], idx: int) -> None:
+    value = frame["wearer_region"]
+    prefix = f"frame[{idx}].wearer_region"
+    if not isinstance(value, dict):
+        raise ValueError(f"{prefix} must be an object")
+    required = ["visible", "bbox", "body_parts", "confidence", "notes"]
+    missing = [field for field in required if field not in value]
+    if missing:
+        raise ValueError(f"{prefix} missing fields: {missing}")
+    if not isinstance(value["visible"], bool):
+        raise ValueError(f"{prefix}.visible must be boolean")
+    if not isinstance(value["body_parts"], list) or not all(isinstance(part, str) for part in value["body_parts"]):
+        raise ValueError(f"{prefix}.body_parts must be a list of strings")
+    if not isinstance(value["notes"], str):
+        raise ValueError(f"{prefix}.notes must be a string")
+    _validate_unit_float(value["confidence"], f"{prefix}.confidence")
+    if value["visible"]:
+        _validate_normalized_bbox(value["bbox"], f"{prefix}.bbox")
+    elif value["bbox"] is not None:
+        raise ValueError(f"{prefix}.bbox must be null when visible=false")
+
+
+def _validate_normalized_bbox(value: Any, field_name: str) -> None:
+    if not isinstance(value, list) or len(value) != 4:
+        raise ValueError(f"{field_name} must be [x1, y1, x2, y2]")
+    if any(isinstance(item, bool) for item in value):
+        raise ValueError(f"{field_name} must contain numbers")
+    try:
+        x1, y1, x2, y2 = [float(item) for item in value]
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{field_name} must contain numbers") from exc
+    if not all(math.isfinite(item) for item in [x1, y1, x2, y2]):
+        raise ValueError(f"{field_name} must contain finite numbers")
+    if not (0.0 <= x1 < x2 <= 1.0 and 0.0 <= y1 < y2 <= 1.0):
+        raise ValueError(f"{field_name} must satisfy 0 <= x1 < x2 <= 1 and 0 <= y1 < y2 <= 1")
+
+
 def _validate_bool(frame: dict[str, Any], idx: int, field: str) -> None:
     if not isinstance(frame[field], bool):
         raise ValueError(f"frame[{idx}].{field} must be boolean")
@@ -409,6 +471,8 @@ def call_qwen_frame_annotations(
     api_key_env: str = "DASHSCOPE_API_KEY",
     base_url: str = DEFAULT_QWEN_BASE_URL,
     timeout_s: float = 120.0,
+    max_retries: int = 0,
+    retry_sleep_s: float = 1.0,
 ) -> dict[str, Any]:
     api_key = os.environ.get(api_key_env)
     if not api_key:
@@ -420,25 +484,91 @@ def call_qwen_frame_annotations(
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        raw_response = exc.read().decode("utf-8", errors="replace")
-        return {
-            "status": "http_error",
-            "http_status": exc.code,
-            "http_reason": exc.reason,
-            "provider": "qwen",
-            "model": model,
-            "raw_response": raw_response,
-        }
+    max_attempts = max(1, int(max_retries) + 1)
+    last_error: dict[str, Any] | None = None
+    for attempt_idx in range(max_attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as exc:
+            raw_response = exc.read().decode("utf-8", errors="replace")
+            last_error = {
+                "status": "http_error",
+                "http_status": exc.code,
+                "http_reason": exc.reason,
+                "provider": "qwen",
+                "model": model,
+                "raw_response": raw_response,
+                "retry_count": attempt_idx,
+                "attempt_count": attempt_idx + 1,
+            }
+            if attempt_idx >= max_attempts - 1 or not is_retriable_qwen_error(last_error):
+                return last_error
+            if retry_sleep_s > 0:
+                time.sleep(float(retry_sleep_s))
+        except urllib.error.URLError as exc:
+            last_error = {
+                "status": "url_error",
+                "provider": "qwen",
+                "model": model,
+                "raw_response": str(exc.reason),
+                "retry_count": attempt_idx,
+                "attempt_count": attempt_idx + 1,
+            }
+            if attempt_idx >= max_attempts - 1:
+                return last_error
+            if retry_sleep_s > 0:
+                time.sleep(float(retry_sleep_s))
+    else:
+        return last_error or {"status": "unknown_error", "provider": "qwen", "model": model}
     content = payload["choices"][0]["message"]["content"]
     parsed = parse_qwen_frame_annotation_response(content)
     parsed["provider"] = "qwen"
     parsed["model"] = model
     parsed["raw_response"] = content
+    parsed["usage"] = normalize_qwen_usage(payload.get("usage"))
+    parsed["request_id"] = str(payload.get("request_id") or payload.get("id") or "")
+    parsed["retry_count"] = 0
+    parsed["attempt_count"] = 1
+    if last_error is not None:
+        parsed["retry_count"] = int(last_error.get("attempt_count", 1))
+        parsed["attempt_count"] = int(last_error.get("attempt_count", 1)) + 1
     return parsed
+
+
+def normalize_qwen_usage(usage: Any) -> dict[str, int]:
+    if not isinstance(usage, dict):
+        return {}
+    normalized: dict[str, int] = {}
+    for key, value in usage.items():
+        if isinstance(value, bool):
+            continue
+        try:
+            normalized[str(key)] = int(value)
+        except (TypeError, ValueError, OverflowError):
+            continue
+    return normalized
+
+
+def merge_qwen_usage(items: list[dict[str, Any]]) -> dict[str, int]:
+    merged: dict[str, int] = {}
+    for item in items:
+        usage = normalize_qwen_usage(item)
+        for key, value in usage.items():
+            merged[key] = merged.get(key, 0) + int(value)
+    return merged
+
+
+def is_retriable_qwen_error(parsed: dict[str, Any]) -> bool:
+    status = str(parsed.get("status", ""))
+    raw_response = str(parsed.get("raw_response", "")).lower()
+    http_status = int(parsed.get("http_status", 0) or 0)
+    if status == "url_error":
+        return True
+    if http_status in {429, 500, 502, 503, 504}:
+        return True
+    return "download multimodal file timed out" in raw_response or "timed out" in raw_response or "timeout" in raw_response
 
 
 def is_data_inspection_failed(parsed: dict[str, Any]) -> bool:
@@ -461,6 +591,13 @@ def build_data_inspection_placeholder_frames(
                 "activity": "unknown due to provider data inspection failure",
                 "hand_visible": False,
                 "hands_visible": {"left": False, "right": False},
+                "wearer_region": {
+                    "visible": False,
+                    "bbox": None,
+                    "body_parts": [],
+                    "confidence": 0.0,
+                    "notes": "",
+                },
                 "hand_object_interaction": False,
                 "interaction_objects": [],
                 "interaction_object_attributes": [],
@@ -525,6 +662,52 @@ def extract_video_frames(
     return paths, timestamps
 
 
+def extract_video_frames_from_windows(
+    *,
+    video_path: Path,
+    output_dir: Path,
+    windows: list[dict[str, Any]],
+    fps: float,
+    max_width: int,
+) -> tuple[list[Path], list[float]]:
+    """Extract frames from valid windows while keeping absolute video timestamps."""
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        raise RuntimeError(f"Cannot open video: {video_path}")
+    video_fps = float(cap.get(cv2.CAP_PROP_FPS))
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    video_duration = frame_count / video_fps if video_fps > 0 else 0.0
+    step = 1.0 / max(fps, 1e-6)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    paths: list[Path] = []
+    timestamps: list[float] = []
+    seen_timestamps: set[float] = set()
+    for window in sorted(windows, key=lambda item: float(item["start"])):
+        start_s = max(0.0, float(window["start"]))
+        end_s = min(video_duration, float(window["end"]))
+        if end_s <= start_s:
+            continue
+        for time_s in np.arange(start_s, end_s, step):
+            timestamp = round(float(time_s), 6)
+            if timestamp in seen_timestamps:
+                continue
+            seen_timestamps.add(timestamp)
+            frame_idx = int(round(timestamp * video_fps)) if video_fps > 0 else 0
+            frame_idx = max(0, min(frame_count - 1, frame_idx))
+            cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+            ok, frame = cap.read()
+            if not ok:
+                continue
+            frame = _resize_max_width(frame, max_width=max_width)
+            path = output_dir / f"frame_t{int(round(timestamp)):06d}.jpg"
+            cv2.imwrite(str(path), frame)
+            paths.append(path)
+            timestamps.append(float(timestamp))
+    cap.release()
+    return paths, timestamps
+
+
 def _resize_max_width(frame: np.ndarray, *, max_width: int) -> np.ndarray:
     if max_width <= 0 or frame.shape[1] <= max_width:
         return frame
@@ -541,6 +724,7 @@ def write_qwen_frame_annotation_output(
     prompt_path: Path,
     model: str,
     sampling_fps: float,
+    usage: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     payload = {
         "source_video": str(video_path),
@@ -548,6 +732,7 @@ def write_qwen_frame_annotation_output(
         "sampling_fps": sampling_fps,
         "prompt": str(prompt_path),
         "model": model,
+        "usage": normalize_qwen_usage(usage),
         "frames": parsed_frames,
     }
     output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -564,6 +749,9 @@ def write_batch_annotation(
     prompt_path: Path,
     model: str,
     sampling_fps: float,
+    usage: dict[str, Any] | None = None,
+    retry_count: int = 0,
+    attempt_count: int = 1,
 ) -> Path:
     validate_frame_annotations(frames)
     sorted_frames = sorted(frames, key=lambda frame: float(frame["t"]))
@@ -576,6 +764,9 @@ def write_batch_annotation(
         "sampling_fps": sampling_fps,
         "prompt": str(prompt_path),
         "model": model,
+        "usage": normalize_qwen_usage(usage),
+        "retry_count": int(retry_count),
+        "attempt_count": int(attempt_count),
         "frames": sorted_frames,
     }
     batch_output_dir.mkdir(parents=True, exist_ok=True)
@@ -604,6 +795,7 @@ def write_chunk_annotations(
         batch_payloads = sorted(grouped[chunk_idx], key=lambda item: int(item["batch_idx"]))
         batch_indices = [int(item["batch_idx"]) for item in batch_payloads]
         frames = [frame for item in batch_payloads for frame in item["frames"]]
+        usage = merge_qwen_usage([item.get("usage", {}) for item in batch_payloads])
         frames = sorted(frames, key=lambda frame: float(frame["t"]))
         t_start, t_end = _frame_time_bounds(frames)
         chunk_payload = {
@@ -613,6 +805,7 @@ def write_chunk_annotations(
             "time_range": {"start": t_start, "end": t_end},
             "batch_count": len(batch_indices),
             "frame_count": len(frames),
+            "usage": usage,
             "frames": frames,
         }
         output_path = (
@@ -643,6 +836,7 @@ def write_checkpoint(
     prompt_path: Path,
     model: str,
     sampling_fps: float,
+    usage: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     payload = {
         "source_video": str(video_path),
@@ -650,6 +844,7 @@ def write_checkpoint(
         "sampling_fps": sampling_fps,
         "prompt": str(prompt_path),
         "model": model,
+        "usage": normalize_qwen_usage(usage),
         "completed_batches": sorted({int(idx) for idx in completed_batches}),
         "frames": sorted(frames, key=lambda frame: float(frame["t"])),
     }
@@ -665,6 +860,8 @@ def load_checkpoint_frames(checkpoint_path: Path) -> list[dict[str, Any]]:
         return []
     payload = json.loads(Path(checkpoint_path).read_text(encoding="utf-8"))
     frames = payload.get("frames", [])
+    normalize_frame_annotations(frames)
+    migrate_object_attribute_hand_side(frames)
     validate_frame_annotations(frames)
     return frames
 

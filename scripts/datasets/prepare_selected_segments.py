@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--segments_root",
         default="",
-        help="Selected segments directory. Defaults to <session>/segments/selected_video_segments_v1.",
+        help="Selected segments directory. Defaults to <session>/segments.",
     )
     parser.add_argument("--roboegopipe_root", default="/home/liuyou/Documents/RoboEgoPipe")
     parser.add_argument("--segment_ids", nargs="*", default=None, help="Optional source segment ids, e.g. seg_0001 seg_0002")
@@ -41,7 +41,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     session = Path(args.session).expanduser().resolve()
-    segments_root = Path(args.segments_root).expanduser().resolve() if args.segments_root else session / "segments/selected_video_segments_v1"
+    segments_root = Path(args.segments_root).expanduser().resolve() if args.segments_root else session / "segments"
     roboegopipe_root = Path(args.roboegopipe_root).expanduser().resolve()
     segment_dirs = _selected_segment_dirs(segments_root, args.segment_ids)
     summary: list[dict[str, str]] = []
@@ -75,16 +75,17 @@ def prepare_segment(
     overwrite: bool,
     dry_run: bool,
 ) -> dict[str, str]:
-    processed = segment_dir / "processed"
-    rectify_input = processed / "rectify_input"
-    rectify_output_root = processed / "rectify_output"
+    rectified = segment_dir / "rectified"
+    work_dir = rectified / "_work"
+    rectify_input = work_dir / "rectify_input"
+    rectify_output_root = work_dir / "rectify_output"
     rectified_session = rectify_output_root / rectify_input.name
-    manifest_dir = processed / "dataset_manifest"
+    manifest_dir = rectified / "dataset_manifest"
     out = {
         "segment_dir": str(segment_dir),
-        "processed_dir": str(processed),
-        "rectified_left": str(processed / "videos/left_rectified.mp4"),
-        "rectified_right": str(processed / "videos/right_rectified.mp4"),
+        "rectified_dir": str(rectified),
+        "rectified_left": str(rectified / "videos/left_rectified.mp4"),
+        "rectified_right": str(rectified / "videos/right_rectified.mp4"),
         "manifest": str(manifest_dir / "dataset_manifest.json"),
     }
     if dry_run:
@@ -92,9 +93,9 @@ def prepare_segment(
         return out
     _validate_segment(segment_dir)
     if overwrite:
-        _remove_known_outputs(processed)
+        _remove_known_outputs(rectified)
     _write_rectify_input(segment_dir=segment_dir, session_dir=session_dir, rectify_input=rectify_input)
-    if not (processed / "videos/left_rectified.mp4").exists() or not (processed / "videos/right_rectified.mp4").exists():
+    if not (rectified / "videos/left_rectified.mp4").exists() or not (rectified / "videos/right_rectified.mp4").exists():
         _run_rectify(
             rectify_input=rectify_input,
             rectify_output_root=rectify_output_root,
@@ -104,8 +105,10 @@ def prepare_segment(
             width=width,
             height=height,
         )
-        _move_rectified_outputs(rectified_session=rectified_session, processed=processed)
-    _write_manifest(processed=processed, manifest_dir=manifest_dir, segment_name=segment_dir.name, dataset_adapter=dataset_adapter)
+        _move_rectified_outputs(rectified_session=rectified_session, rectified=rectified)
+    if work_dir.exists():
+        shutil.rmtree(work_dir)
+    _write_manifest(processed=rectified, manifest_dir=manifest_dir, segment_name=segment_dir.name, dataset_adapter=dataset_adapter)
     out["status"] = "ok"
     return out
 
@@ -123,14 +126,14 @@ def _selected_segment_dirs(segments_root: Path, segment_ids: list[str] | None) -
 
 
 def _validate_segment(segment_dir: Path) -> None:
-    for rel in ["left.mp4", "right.mp4"]:
+    for rel in ["videos/left.mp4", "videos/right.mp4"]:
         path = segment_dir / rel
         if not path.exists():
             raise FileNotFoundError(f"Missing segment video: {path}")
 
 
 def _remove_known_outputs(processed: Path) -> None:
-    for name in ["videos", "calibrations", "timestamps", "dataset_manifest", "rectify_input", "rectify_output"]:
+    for name in ["videos", "calibrations", "timestamps", "dataset_manifest", "_work"]:
         path = processed / name
         if path.exists():
             shutil.rmtree(path)
@@ -142,9 +145,11 @@ def _remove_known_outputs(processed: Path) -> None:
 def _write_rectify_input(*, segment_dir: Path, session_dir: Path, rectify_input: Path) -> None:
     (rectify_input / "videos").mkdir(parents=True, exist_ok=True)
     (rectify_input / "calibrations").mkdir(parents=True, exist_ok=True)
-    shutil.copy2(segment_dir / "left.mp4", rectify_input / "videos/left.mp4")
-    shutil.copy2(segment_dir / "right.mp4", rectify_input / "videos/right.mp4")
-    calibration_dir = session_dir / "calibrations"
+    shutil.copy2(segment_dir / "videos/left.mp4", rectify_input / "videos/left.mp4")
+    shutil.copy2(segment_dir / "videos/right.mp4", rectify_input / "videos/right.mp4")
+    calibration_dir = segment_dir / "calibrations"
+    if not calibration_dir.exists():
+        calibration_dir = session_dir / "calibrations"
     if not calibration_dir.exists():
         raise FileNotFoundError(f"Missing session calibrations: {calibration_dir}")
     for path in calibration_dir.iterdir():
@@ -189,19 +194,23 @@ def _run_rectify(
     subprocess.run(command, cwd=str(roboegopipe_root), env=env, check=True)
 
 
-def _move_rectified_outputs(*, rectified_session: Path, processed: Path) -> None:
+def _move_rectified_outputs(*, rectified_session: Path, rectified: Path) -> None:
     if not rectified_session.exists():
         raise FileNotFoundError(f"Missing RoboEgoPipe rectified output: {rectified_session}")
     for name in ["videos", "calibrations", "timestamps"]:
         src = rectified_session / name
-        dst = processed / name
+        dst = rectified / name
         if src.exists():
             if dst.exists():
                 shutil.rmtree(dst)
             shutil.move(str(src), str(dst))
+    for source_video_name in ["left.mp4", "right.mp4"]:
+        source_video = rectified / "videos" / source_video_name
+        if source_video.exists():
+            source_video.unlink()
     meta_src = rectified_session / "meta.json"
     if meta_src.exists():
-        shutil.copy2(meta_src, processed / "meta.json")
+        shutil.copy2(meta_src, rectified / "meta.json")
 
 
 def _write_manifest(*, processed: Path, manifest_dir: Path, segment_name: str, dataset_adapter: str) -> None:

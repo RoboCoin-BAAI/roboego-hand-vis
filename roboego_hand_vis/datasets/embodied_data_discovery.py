@@ -1,0 +1,134 @@
+from __future__ import annotations
+
+from datetime import date
+from pathlib import Path
+
+
+DEFAULT_REPORTS_DIR = Path("reports/embodied-data-discovery")
+
+
+def find_previous_report(reports_dir: Path, *, today: date) -> Path | None:
+    """Return the newest dated report before today."""
+    if not reports_dir.exists():
+        return None
+    candidates: list[tuple[date, Path]] = []
+    for path in reports_dir.glob("*.md"):
+        if path.name.endswith(".prompt.md"):
+            continue
+        try:
+            report_date = date.fromisoformat(path.stem)
+        except ValueError:
+            continue
+        if report_date < today:
+            candidates.append((report_date, path))
+    if not candidates:
+        return None
+    return max(candidates, key=lambda item: item[0])[1]
+
+
+def build_daily_prompt(*, today: date, previous_report: Path | None) -> str:
+    previous_text = _read_previous_report(previous_report)
+    today_text = today.isoformat()
+    return f"""你是具身智能数据集情报分析助手。请联网搜索并生成今天的全球公开数据发现报告。
+
+目标：
+发现最近出现、更新、发布或被讨论的具身智能相关真实数据，重点关注：
+1. real robot / real-world robot manipulation data
+2. egocentric / ego / head-mounted / hand-object interaction data
+3. UMI / Universal Manipulation Interface 相关数据
+4. dexterous hand / bimanual / mobile manipulation / teleoperation data
+5. 可用于 imitation learning、robot learning、policy learning、LeRobot、RoboMimic、Open X-Embodiment 等的数据
+
+搜索范围优先级：
+- arXiv / project page / paper with dataset
+- Hugging Face Datasets
+- GitHub
+- Google Research / Stanford / Berkeley / CMU / MIT / TRI / NVIDIA / Meta / Physical Intelligence / Tesla 等机构页面
+- Papers with Code
+- X/Twitter、Reddit、Hacker News、机器人社区博客，仅作为线索，必须尽量追到原始来源
+
+必须搜索的关键词组合：
+- "robot manipulation dataset" "real robot"
+- "egocentric robot dataset"
+- "ego hand object dataset"
+- "Universal Manipulation Interface dataset"
+- "UMI robot data"
+- "teleoperation robot dataset"
+- "dexterous manipulation dataset"
+- "bimanual manipulation dataset"
+- "LeRobot dataset"
+- "Open X-Embodiment dataset"
+- "robot learning dataset Hugging Face"
+- "humanoid manipulation dataset"
+- "embodied AI real robot dataset"
+
+时间范围：
+- 今天是 {today_text}
+- 优先查找过去 24 小时的新内容
+- 如果过去 24 小时很少，也列出过去 7 天内的重要更新
+- 明确标注发布日期、更新时间或你能确认的最早出现日期
+- 不确定日期时写“日期未确认”，不要编造
+
+输入：
+昨天或最近一次报告如下：
+<<<YESTERDAY_REPORT_START>>>
+{previous_text}
+<<<YESTERDAY_REPORT_END>>>
+
+输出 Markdown 报告，结构如下：
+
+# Embodied Data Discovery Report - {today_text}
+
+## Executive Summary
+用 3-5 条 bullet 总结今天最重要的变化。
+
+## New Since Yesterday
+列出相比昨天新增的数据集、论文、项目或数据发布。每条包含：
+- Name
+- Link
+- Source type: paper / project / GitHub / Hugging Face / news / social
+- Data type: real robot / ego / UMI / simulation / mixed / unknown
+- Robot/platform, if known
+- Scale, if known: hours / episodes / trajectories / tasks / robots
+- Modalities: RGB, depth, wrist camera, head camera, proprioception, actions, tactile, language, etc.
+- License/access: open / request-only / unclear
+- Why it matters
+- Confidence: high / medium / low
+
+## Updated Since Yesterday
+列出昨天已有但今天有变化的条目，例如 GitHub 更新、HF 数据更新、论文版本更新、网页新增下载链接等。
+
+## Worth Watching
+列出看起来相关但还没有公开数据、信息不完整、或只是预告的线索。
+
+## Not Relevant / Excluded
+简短列出排除项，避免明天重复浪费时间。
+
+## Table
+输出一个汇总表，列：
+Name | Link | New/Updated | Real Robot | Ego | UMI | Open Data | Scale | Confidence | Notes
+
+## Source Links
+列出所有实际使用过的来源链接。不要只给搜索结果页。
+"""
+
+
+def save_daily_prompt(reports_dir: Path, *, today: date, prompt_text: str) -> Path:
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    prompt_path = reports_dir / f"{today.isoformat()}.prompt.md"
+    prompt_path.write_text(prompt_text, encoding="utf-8")
+    return prompt_path
+
+
+def save_daily_report(reports_dir: Path, *, today: date, report_text: str) -> Path:
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    report_path = reports_dir / f"{today.isoformat()}.md"
+    report_path.write_text(report_text, encoding="utf-8")
+    (reports_dir / "latest.md").write_text(report_text, encoding="utf-8")
+    return report_path
+
+
+def _read_previous_report(previous_report: Path | None) -> str:
+    if previous_report is None:
+        return "无上一份报告。这是第一次运行，请把所有发现都视为 baseline。"
+    return previous_report.read_text(encoding="utf-8").strip()

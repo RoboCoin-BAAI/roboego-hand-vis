@@ -95,7 +95,7 @@ def write_hand_estimation_windows(
     output_json: Path,
     config: HandWindowConfig = HandWindowConfig(),
 ) -> dict[str, Any]:
-    stage1_payload = json.loads(Path(stage1_actions_json).read_text(encoding="utf-8"))
+    stage1_payload = _load_stage1_actions_payload(Path(stage1_actions_json))
     plan_payload = json.loads(Path(processing_plan_json).read_text(encoding="utf-8"))
     payload = build_hand_estimation_windows(stage1_payload, plan_payload, config=config)
     payload["source_stage1_actions"] = str(stage1_actions_json)
@@ -103,6 +103,23 @@ def write_hand_estimation_windows(
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return payload
+
+
+def _load_stage1_actions_payload(path: Path) -> dict[str, Any]:
+    if path.is_dir():
+        frames: list[dict[str, Any]] = []
+        source_files: list[str] = []
+        for chunk_path in sorted(path.glob("*.json")):
+            payload = json.loads(chunk_path.read_text(encoding="utf-8"))
+            frames.extend(frame for frame in payload.get("frames", []) if isinstance(frame, dict))
+            source_files.append(str(chunk_path))
+        return {
+            "stage": "stage1_action_chunks_merged",
+            "source_files": source_files,
+            "frame_count": len(frames),
+            "frames": sorted(frames, key=lambda frame: float(frame.get("t", 0))),
+        }
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _frames_by_t(payload: dict[str, Any]) -> dict[int, dict[str, Any]]:

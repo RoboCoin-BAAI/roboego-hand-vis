@@ -28,6 +28,8 @@ class Stage1ObjectSpec:
     object_material: str
     prompt_text: str
     evidence_count: int
+    active_intervals: list[dict[str, float | int]]
+    prompt_frame_idx: int
 
 
 def collect_stage1_evidence(stage1_actions: Path, window: dict[str, Any], *, fps: float) -> list[dict[str, Any]]:
@@ -105,10 +107,21 @@ def safe_object_id(*parts: str) -> str:
     return raw or "object_0"
 
 
+def canonical_object_name(name: str, shape: str = "") -> str:
+    text = f"{name} {shape}".lower()
+    if "phone" in text or "mobile" in text:
+        return "phone"
+    if "bottle" in text or "product" in text:
+        return "bottle"
+    return str(name).strip().lower() or "object"
+
+
 def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any], *, fps: float) -> list[Stage1ObjectSpec]:
     evidence = collect_stage1_evidence(Path(stage1_actions), window, fps=fps)
     grouped: dict[str, dict[str, Any]] = {}
     for frame in evidence:
+        if frame.get("hand_object_interaction") is not True:
+            continue
         attrs = frame.get("interaction_object_attributes", [])
         if not isinstance(attrs, list):
             attrs = []
@@ -121,19 +134,22 @@ def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any],
             color = str(attr.get("color", "")).strip()
             shape = str(attr.get("shape", "")).strip()
             material = str(attr.get("material", "")).strip()
-            group_id = safe_object_id(name, color)
+            canonical_name = canonical_object_name(name, shape)
+            group_id = safe_object_id(canonical_name)
             item = grouped.setdefault(
                 group_id,
                 {
                     "object_id": group_id,
-                    "object_name": name,
+                    "object_name": canonical_name,
                     "object_shape": shape,
                     "object_color": color,
                     "object_material": material,
                     "evidence_count": 0,
+                    "evidence": [],
                 },
             )
             item["evidence_count"] += 1
+            item["evidence"].append(frame)
             if len(shape) > len(str(item.get("object_shape", ""))):
                 item["object_shape"] = shape
             if len(color) > len(str(item.get("object_color", ""))):
@@ -141,28 +157,15 @@ def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any],
             if len(material) > len(str(item.get("object_material", ""))):
                 item["object_material"] = material
 
-    if not grouped:
-        for name in window.get("objects", []) or []:
-            object_name = str(name).strip()
-            if not object_name:
-                continue
-            object_id = safe_object_id(object_name)
-            grouped[object_id] = {
-                "object_id": object_id,
-                "object_name": object_name,
-                "object_shape": "",
-                "object_color": "",
-                "object_material": "",
-                "evidence_count": 0,
-            }
-
     specs: list[Stage1ObjectSpec] = []
     for item in grouped.values():
         object_id = safe_object_id(
             str(item["object_name"]),
             str(item["object_color"]),
-            str(item["object_shape"]),
+            _shape_for_object_id(str(item["object_shape"]), object_name=str(item["object_name"])),
         )
+        intervals = _active_intervals(item.get("evidence", []), fps=fps)
+        prompt_frame_idx = _prompt_frame_idx(intervals, window)
         specs.append(
             Stage1ObjectSpec(
                 object_id=object_id,
@@ -177,10 +180,59 @@ def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any],
                     object_material=str(item["object_material"]),
                 ),
                 evidence_count=int(item["evidence_count"]),
+                active_intervals=intervals,
+                prompt_frame_idx=prompt_frame_idx,
             )
         )
     specs.sort(key=lambda spec: -spec.evidence_count)
     return specs
+
+
+def _shape_for_object_id(shape: str, *, object_name: str) -> str:
+    words = []
+    object_words = set(str(object_name).lower().split())
+    for word in str(shape).lower().split():
+        if word in object_words or word in {"product", "plastic", "metal"}:
+            continue
+        words.append(word)
+    return " ".join(words)
+
+
+def _active_intervals(evidence: list[dict[str, Any]], *, fps: float, max_gap_s: float = 1.1) -> list[dict[str, float | int]]:
+    if not evidence:
+        return []
+    items = sorted(evidence, key=lambda item: float(item["session_t"]))
+    intervals: list[list[dict[str, Any]]] = []
+    current: list[dict[str, Any]] = []
+    for item in items:
+        if current and float(item["session_t"]) - float(current[-1]["session_t"]) > max_gap_s:
+            intervals.append(current)
+            current = []
+        current.append(item)
+    if current:
+        intervals.append(current)
+    out: list[dict[str, float | int]] = []
+    for group in intervals:
+        start = group[0]
+        end = group[-1]
+        out.append(
+            {
+                "start_s": float(start["session_t"]),
+                "end_s": float(end["session_t"]),
+                "start_frame": int(start["clip_frame"]),
+                "end_frame": int(end["clip_frame"]),
+            }
+        )
+    return out
+
+
+def _prompt_frame_idx(intervals: list[dict[str, float | int]], window: dict[str, Any]) -> int:
+    if intervals:
+        best = max(intervals, key=lambda item: int(item["end_frame"]) - int(item["start_frame"]))
+        return int(round((int(best["start_frame"]) + int(best["end_frame"])) * 0.5))
+    segment_start_frame = int(window["segment_frame_range"]["start"])
+    core = window.get("core_segment_frame_range") or window.get("segment_frame_range")
+    return max(0, int(core["start"]) - segment_start_frame)
 
 
 def find_window_by_id(windows_json: Path, window_id: str) -> dict[str, Any]:
@@ -338,7 +390,7 @@ def build_sam3_hand_clip_plans_from_stage1(
             python_executable=python_executable,
             object_id=spec.object_id,
             fps=fps,
-            prompt_frame_idx=prompt_frame_idx,
+            prompt_frame_idx=spec.prompt_frame_idx if prompt_frame_idx is None else prompt_frame_idx,
             checkpoint=checkpoint,
             no_offload_video_to_cpu=no_offload_video_to_cpu,
         )
@@ -347,9 +399,77 @@ def build_sam3_hand_clip_plans_from_stage1(
         metadata["prompt"]["text"] = spec.prompt_text
         metadata["prompt"]["source"] = "stage1_actions"
         metadata["prompt"]["evidence_count"] = spec.evidence_count
+        metadata["prompt"]["active_intervals"] = spec.active_intervals
         metadata["command"][metadata["command"].index("--text") + 1] = spec.prompt_text
         plan.command[plan.command.index("--text") + 1] = spec.prompt_text
         plan.prompt_text = spec.prompt_text
         plan.metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
         plans.append(plan)
     return plans
+
+
+def combine_sam3_object_tracks(
+    *,
+    object_dirs: list[Path],
+    frames_dir: Path,
+    output_dir: Path,
+) -> dict[str, str]:
+    import cv2
+    import numpy as np
+
+    object_dirs = [Path(path) for path in object_dirs if Path(path).is_dir()]
+    frames_dir = Path(frames_dir)
+    output_dir = Path(output_dir)
+    indexed_dir = output_dir / "object_id_masks"
+    overlays_dir = output_dir / "overlays"
+    indexed_dir.mkdir(parents=True, exist_ok=True)
+    overlays_dir.mkdir(parents=True, exist_ok=True)
+    frame_paths = _frame_paths(frames_dir)
+    objects = [{"index": idx + 1, "object_id": path.name, "source_dir": str(path)} for idx, path in enumerate(object_dirs)]
+    colors = [
+        np.asarray([30, 144, 255], dtype=np.float32),
+        np.asarray([60, 220, 120], dtype=np.float32),
+        np.asarray([255, 170, 40], dtype=np.float32),
+        np.asarray([220, 80, 220], dtype=np.float32),
+    ]
+    for frame_idx, frame_path in enumerate(frame_paths):
+        frame_bgr = cv2.imread(str(frame_path), cv2.IMREAD_COLOR)
+        if frame_bgr is None:
+            continue
+        indexed = np.zeros(frame_bgr.shape[:2], dtype=np.uint8)
+        overlay = frame_bgr.astype(np.float32)
+        for obj_idx, obj_dir in enumerate(object_dirs, start=1):
+            mask_path = obj_dir / "masks" / f"frame_{frame_idx:06d}_masks" / f"{obj_dir.name}.png"
+            mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
+            if mask is None:
+                continue
+            active = mask > 0
+            indexed[active] = obj_idx
+            color = colors[(obj_idx - 1) % len(colors)]
+            overlay[active] = overlay[active] * 0.45 + color * 0.55
+        cv2.imwrite(str(indexed_dir / f"frame_{frame_idx:06d}_object_ids.png"), indexed)
+        cv2.imwrite(str(overlays_dir / f"frame_{frame_idx:06d}.png"), overlay.astype(np.uint8))
+    summary = {
+        "schema_version": "1.0",
+        "frames_dir": str(frames_dir),
+        "output_dir": str(output_dir),
+        "objects": objects,
+        "frame_count": len(frame_paths),
+    }
+    summary_json = output_dir / "object_tracks_summary.json"
+    summary_json.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {
+        "output_dir": str(output_dir),
+        "indexed_masks_dir": str(indexed_dir),
+        "overlays_dir": str(overlays_dir),
+        "summary_json": str(summary_json),
+    }
+
+
+def _frame_paths(frames_dir: Path) -> list[Path]:
+    image_exts = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
+    paths = [path for path in Path(frames_dir).iterdir() if path.suffix.lower() in image_exts]
+    try:
+        return sorted(paths, key=lambda path: int(path.stem.split("_")[-1]))
+    except ValueError:
+        return sorted(paths)

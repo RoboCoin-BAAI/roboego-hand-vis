@@ -89,6 +89,36 @@ def test_write_hand_estimation_windows_writes_json(tmp_path: Path):
     assert payload["window_count"] == 1
 
 
+def test_write_hand_estimation_windows_accepts_stage1_action_directory(tmp_path: Path):
+    stage1_dir = tmp_path / "stage1_action_resolved_chunks"
+    plan = tmp_path / "plan.json"
+    output = tmp_path / "hand_windows.json"
+    stage1_dir.mkdir()
+    (stage1_dir / "chunk_0000.json").write_text(
+        json.dumps({"frames": [frame(1, left=True, right=True, action="touch")]}),
+        encoding="utf-8",
+    )
+    (stage1_dir / "chunk_0001.json").write_text(
+        json.dumps({"frames": [frame(5, left=True, right=True, action="operate")]}),
+        encoding="utf-8",
+    )
+    plan.write_text(
+        json.dumps({"segments": [{"segment_id": "seg_0000", "start": 1, "end": 5}]}),
+        encoding="utf-8",
+    )
+
+    payload = write_hand_estimation_windows(
+        stage1_actions_json=stage1_dir,
+        processing_plan_json=plan,
+        output_json=output,
+        config=HandWindowConfig(context_expand_s=0, merge_gap_s=0, min_window_s=1),
+    )
+
+    assert output.exists()
+    assert payload["source_stage1_actions"] == str(stage1_dir)
+    assert payload["window_count"] == 2
+
+
 def test_build_hand_windows_can_split_single_and_two_hand_policy_windows():
     stage1 = {
         "frames": [

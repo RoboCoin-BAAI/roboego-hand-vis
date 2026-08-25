@@ -118,11 +118,28 @@ def write_processing_plan(
     stage1_payload = json.loads(Path(stage1_json).read_text(encoding="utf-8"))
     actions_payload = None
     if actions_json is not None and Path(actions_json).exists():
-        actions_payload = json.loads(Path(actions_json).read_text(encoding="utf-8"))
+        actions_payload = _load_actions_payload(Path(actions_json))
     plan = build_processing_plan(stage1_payload, actions_payload=actions_payload, config=config)
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
     return plan
+
+
+def _load_actions_payload(path: Path) -> dict[str, Any]:
+    if path.is_dir():
+        frames: list[dict[str, Any]] = []
+        source_files: list[str] = []
+        for chunk_path in sorted(path.glob("*.json")):
+            payload = json.loads(chunk_path.read_text(encoding="utf-8"))
+            frames.extend(frame for frame in payload.get("frames", []) if isinstance(frame, dict))
+            source_files.append(str(chunk_path))
+        return {
+            "stage": "stage1_action_resolved_chunks_merged",
+            "source_files": source_files,
+            "frame_count": len(frames),
+            "frames": sorted(frames, key=lambda frame: float(frame.get("t", 0))),
+        }
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def build_segment_summaries(

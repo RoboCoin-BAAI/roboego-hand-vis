@@ -87,14 +87,21 @@ def test_export_selected_video_segments_cuts_streams_and_writes_segment_metadata
     segment_dir = tmp_path / "selected" / "seg_0000_t000001_000003_pick_place"
     assert summary["segment_count"] == 1
     assert segment_dir.exists()
-    assert video_frame_count(segment_dir / "left.mp4") == 15
-    assert video_frame_count(segment_dir / "right.mp4") == 15
-    segment = json.loads((segment_dir / "segment.json").read_text(encoding="utf-8"))
+    assert video_frame_count(segment_dir / "videos/left.mp4") == 15
+    assert video_frame_count(segment_dir / "videos/right.mp4") == 15
+    assert (segment_dir / "meta.json").exists()
+    assert (segment_dir / "annotation/processing_plan_segment.json").exists()
+    segment = json.loads((segment_dir / "annotation/processing_plan_segment.json").read_text(encoding="utf-8"))
     assert segment["start"] == 1
     assert segment["end"] == 3
     assert segment["source_start_frame"] == 5
     assert segment["segment_frame_count"] == 15
-    assert segment["videos"]["left"].endswith("seg_0000_t000001_000003_pick_place/left.mp4")
+    assert segment["videos"]["left"].endswith("seg_0000_t000001_000003_pick_place/videos/left.mp4")
+    meta = json.loads((segment_dir / "meta.json").read_text(encoding="utf-8"))
+    assert meta["segment_id"] == "seg_0000"
+    assert meta["source_session"].endswith("/session")
+    assert meta["source_start_s"] == 1
+    assert meta["source_end_s"] == 3
 
 
 def test_export_selected_video_segments_defaults_to_browser_compatible_h264(tmp_path: Path):
@@ -128,7 +135,7 @@ def test_export_selected_video_segments_defaults_to_browser_compatible_h264(tmp_
         overwrite=True,
     )
 
-    info = video_codec_info(tmp_path / "selected" / "seg_0000_t000000_000001_pick" / "left.mp4")
+    info = video_codec_info(tmp_path / "selected" / "seg_0000_t000000_000001_pick" / "videos/left.mp4")
     assert info["codec_name"] == "h264"
     assert info["codec_tag_string"] == "avc1"
     assert info["pix_fmt"] == "yuv420p"
