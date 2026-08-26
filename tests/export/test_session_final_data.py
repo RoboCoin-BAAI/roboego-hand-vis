@@ -3,6 +3,7 @@ from pathlib import Path
 from roboego_hand_vis.export.session_final_data import (
     clip_stage1_frames,
     final_segment_name,
+    find_hamer_window_dir,
     make_window_manifest,
     resolve_hand_visual_source,
 )
@@ -86,3 +87,11 @@ def test_resolve_hand_visual_source_prefers_temporal_gate_over_legacy_temporal(t
     assert directory == gate
     assert pattern == "frame_{idx:06d}_temporal.jpg"
     assert label == "refined_temporal_gate"
+
+
+def test_find_hamer_window_dir_prefers_new_hand_layout(tmp_path):
+    hand_window_dir = tmp_path / "hand_windows/handwin_0000_t000000_000065"
+    hamer_raw = hand_window_dir / "hand/hamer_raw"
+    hamer_raw.mkdir(parents=True)
+
+    assert find_hamer_window_dir(hand_window_dir, "handwin_0000") == hamer_raw

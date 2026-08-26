@@ -291,7 +291,7 @@ hamer_windows:
   depth_dir:
   output_root:
   segments_root: ""
-  output_subdir: hamer_windows_left_v1
+  output_subdir: hand/hamer_raw
   hamer_root: /home/liuyou/Documents/hamer
   stage1_actions: ""
   hamer_python: /home/liuyou/miniconda3/envs/hamer/bin/python
@@ -319,16 +319,40 @@ refined_temporal_gate:
   start: 0
   num_frames: 240
   max_gap: 10
-  max_bbox_jump_px: 220
-  max_bbox_area_change_ratio: 3.0
+  max_bbox_jump_px: 360
+  max_bbox_area_change_ratio: 8.0
   max_cam_t_jump: 0.0
   min_cam_t_z: 0.0
   max_cam_t_z: 200.0
-  max_mano_pose_jump: 4.5
-  max_mesh_centroid_jump: 15.0
-  max_mesh_vertex_rmse: 8.5
+  max_mano_pose_jump: 0.0
+  max_mesh_centroid_jump: 0.0
+  max_mesh_vertex_rmse: 0.0
   local_window_radius: 2
-  save_vis: true
+  save_vis: false
+  contact_sheet_columns: 4
+  contact_sheet_thumb_width: 360
+
+hand_filter:
+  enabled: false
+  python: /home/liuyou/miniconda3/envs/ego/bin/python
+  script: scripts/hand/track_refined_hands.py
+  manifest: ""
+  refined_json: ""
+  output_dir: ""
+  output_name: filtered_hand_tracks.json
+  start: 0
+  num_frames: 240
+  max_gap: 10
+  max_bbox_jump_px: 360
+  max_bbox_area_change_ratio: 8.0
+  max_cam_t_jump: 0.0
+  min_cam_t_z: 0.0
+  max_cam_t_z: 200.0
+  max_mano_pose_jump: 0.0
+  max_mesh_centroid_jump: 0.0
+  max_mesh_vertex_rmse: 0.0
+  local_window_radius: 2
+  save_vis: false
   contact_sheet_columns: 4
   contact_sheet_thumb_width: 360
 
@@ -338,11 +362,27 @@ final_hand_result:
   script: scripts/hand/export_final_hand_result.py
   tracks_json: ""
   output_dir: ""
-  temporal_annotated_dir: ""
-  hamer_overlay_dir: ""
-  source_frames_dir: ""
+  depth_anchored_json: ""
+  depth_anchored_npz: ""
+  depth_anchored_summary_json: ""
+  copy_depth_anchored: true
   copy_meshes: true
-  copy_visuals: true
+
+final_hand_trajectory_polish:
+  enabled: false
+  python: /home/liuyou/miniconda3/envs/ego/bin/python
+  script: scripts/hand/polish_final_hand_trajectory.py
+  joints_json: ""
+  output_dir: ""
+  manifest: ""
+  preview_video: ""
+  max_interp_gap: 10
+  wrist_jump_m: 0.0
+  max_local_wrist_deviation_m: 0.0
+  local_window_radius: 5
+  smooth_window: 9
+  smooth_relative_fingers: true
+  write_preview: true
 
 joints21_pose_gate:
   enabled: false
@@ -355,10 +395,15 @@ joints21_pose_gate:
   mano_model_dir: /home/liuyou/Documents/hamer/_DATA/data/mano
   max_bone_length_ratio: 8.0
   max_joint_local_deviation: 7.0
-  max_wrist_local_deviation_m: 0.25
-  max_palm_local_deviation_m: 0.25
-  max_fingertip_local_deviation_m: 0.30
+  max_wrist_local_deviation_m: 0.6
+  max_palm_local_deviation_m: 0.6
+  max_fingertip_local_deviation_m: 0.7
   min_finger_direction_dot: -0.15
+  drop_fingertips_below_wrist: true
+  image_height: 0.0
+  max_suspicious_wrist_y_ratio: 0.55
+  min_fingertip_below_wrist_ratio: 1.0
+  min_fingertip_below_wrist_delta: 0.02
   local_window_radius: 2
 
 depth_anchored_joints21:

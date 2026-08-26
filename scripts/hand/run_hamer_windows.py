@@ -18,7 +18,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--depth_dir", default=None, help="Single-segment FoundationStereo depth dir. Omit when using --segments_root.")
     parser.add_argument("--output_root", default=None, help="Single output root. Omit when using --segments_root.")
     parser.add_argument("--segments_root", default=None, help="Session segments directory. Dispatches windows by source_segment_id.")
-    parser.add_argument("--output_subdir", default="hamer_windows", help="Subdirectory under each materialized hand window when using --segments_root.")
+    parser.add_argument("--output_subdir", default="hand/hamer_raw", help="Subdirectory under each materialized hand window when using --segments_root.")
     parser.add_argument("--hamer_root", required=True)
     parser.add_argument("--stage1_actions", required=True)
     parser.add_argument("--body_detector", default="regnety")
@@ -49,7 +49,7 @@ def build_window_command_plan(
     depth_dir: str | None,
     output_root: Path | None,
     segments_root: Path | None = None,
-    output_subdir: str = "hamer_windows",
+    output_subdir: str = "hand/hamer_raw",
     hamer_root: str,
     stage1_actions: str,
     body_detector: str,
@@ -114,7 +114,10 @@ def build_window_command_plan(
         if window_io.get("num_frames") is not None:
             num_frames = int(window_io["num_frames"])
         end = start + num_frames - 1
-        output_dir = window_io["output_root"] / f"{window_id}_{window_type}_{hands}_{start:06d}_{end:06d}"
+        if window_io.get("materialized_hand_window"):
+            output_dir = window_io["output_root"]
+        else:
+            output_dir = window_io["output_root"] / f"{window_id}_{window_type}_{hands}_{start:06d}_{end:06d}"
         plan.append(
             {
                 "window_id": window_id,
@@ -176,6 +179,7 @@ def _resolve_window_io(
             "segment_dir": None,
             "start": None,
             "num_frames": None,
+            "materialized_hand_window": False,
         }
     segment_id = str(window.get("source_segment_id") or "").strip()
     if not segment_id:
@@ -197,6 +201,7 @@ def _resolve_window_io(
         "segment_dir": segment_dir,
         "start": 0,
         "num_frames": int((window.get("segment_frame_range") or {}).get("num_frames", 0)),
+        "materialized_hand_window": True,
     }
 
 
@@ -227,7 +232,7 @@ def _find_hand_window_dir(segment_dir: Path, window_id: str) -> Path | None:
 
 
 def _preferred_depth_dir(hand_window_dir: Path) -> Path | None:
-    for name in ("fast_foundation_depth", "foundation_depth"):
+    for name in ("depth/fast_foundation", "depth/foundation", "fast_foundation_depth", "foundation_depth"):
         path = hand_window_dir / name
         if path.exists():
             return path

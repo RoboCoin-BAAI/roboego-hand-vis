@@ -77,8 +77,8 @@ def test_foundation_stereo_depth_node_defaults_output_next_to_manifest(monkeypat
 
     result = run_foundation_stereo_depth_node({"enabled": True, "manifest": str(manifest), "num_frames": 1})
 
-    assert result["output_dir"] == str(tmp_path / "handwin/foundation_depth")
-    assert calls[0][calls[0].index("--output_dir") + 1] == str(tmp_path / "handwin/foundation_depth")
+    assert result["output_dir"] == str(tmp_path / "handwin/depth/foundation")
+    assert calls[0][calls[0].index("--output_dir") + 1] == str(tmp_path / "handwin/depth/foundation")
 
 
 def test_foundation_stereo_depth_node_skips_when_disabled():
@@ -166,8 +166,8 @@ def test_fast_foundation_stereo_depth_node_defaults_output_next_to_manifest(monk
 
     result = run_fast_foundation_stereo_depth_node({"enabled": True, "manifest": str(manifest), "num_frames": 1})
 
-    assert result["output_dir"] == str(tmp_path / "handwin/fast_foundation_depth")
-    assert calls[0][calls[0].index("--output_dir") + 1] == str(tmp_path / "handwin/fast_foundation_depth")
+    assert result["output_dir"] == str(tmp_path / "handwin/depth/fast_foundation")
+    assert calls[0][calls[0].index("--output_dir") + 1] == str(tmp_path / "handwin/depth/fast_foundation")
 
 
 def test_fast_foundation_stereo_depth_node_skips_when_disabled():

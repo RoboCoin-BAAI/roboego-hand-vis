@@ -34,6 +34,11 @@ def build_joints21_pose_quality(
     max_palm_local_deviation_m: float = 0.0,
     max_fingertip_local_deviation_m: float = 0.0,
     min_finger_direction_dot: float = -0.15,
+    drop_fingertips_below_wrist: bool = True,
+    image_height: float = 0.0,
+    max_suspicious_wrist_y_ratio: float = 0.55,
+    min_fingertip_below_wrist_ratio: float = 1.0,
+    min_fingertip_below_wrist_delta: float = 0.02,
     local_window_radius: int = 2,
 ) -> dict[str, Any]:
     frames = final_tracks_payload.get("frames") or []
@@ -74,7 +79,7 @@ def build_joints21_pose_quality(
                 frame_out["hands"][side] = {"valid": False, "drop_reasons": ["missing_joints21"]}
                 gated_tracks[side].append(None)
                 continue
-            metrics = _quality_metrics(joints, local_refs[side][offset])
+            metrics = _quality_metrics(joints, local_refs[side][offset], hand=hand)
             reasons = _drop_reasons(
                 metrics,
                 max_bone_length_ratio=max_bone_length_ratio,
@@ -83,6 +88,11 @@ def build_joints21_pose_quality(
                 max_palm_local_deviation_m=max_palm_local_deviation_m,
                 max_fingertip_local_deviation_m=max_fingertip_local_deviation_m,
                 min_finger_direction_dot=min_finger_direction_dot,
+                drop_fingertips_below_wrist=drop_fingertips_below_wrist,
+                image_height=image_height,
+                max_suspicious_wrist_y_ratio=max_suspicious_wrist_y_ratio,
+                min_fingertip_below_wrist_ratio=min_fingertip_below_wrist_ratio,
+                min_fingertip_below_wrist_delta=min_fingertip_below_wrist_delta,
             )
             if reasons:
                 summary[side]["dropped"] += 1
@@ -120,6 +130,11 @@ def build_joints21_pose_quality(
             "max_palm_local_deviation_m": float(max_palm_local_deviation_m),
             "max_fingertip_local_deviation_m": float(max_fingertip_local_deviation_m),
             "min_finger_direction_dot": float(min_finger_direction_dot),
+            "drop_fingertips_below_wrist": bool(drop_fingertips_below_wrist),
+            "image_height": float(image_height),
+            "max_suspicious_wrist_y_ratio": float(max_suspicious_wrist_y_ratio),
+            "min_fingertip_below_wrist_ratio": float(min_fingertip_below_wrist_ratio),
+            "min_fingertip_below_wrist_delta": float(min_fingertip_below_wrist_delta),
             "local_window_radius": int(local_window_radius),
         },
         "joint_names": HAND21_NAMES,
@@ -190,7 +205,7 @@ def _extract_hand_joints21(
     return vertices_to_hamer21_joints(vertices_camera, regressor_by_side[side])
 
 
-def _quality_metrics(joints: np.ndarray, local_ref: dict[str, Any]) -> dict[str, Any]:
+def _quality_metrics(joints: np.ndarray, local_ref: dict[str, Any], *, hand: dict[str, Any]) -> dict[str, Any]:
     bone_lengths = _bone_lengths(joints)
     finite_lengths = bone_lengths[np.isfinite(bone_lengths) & (bone_lengths > 1e-6)]
     median_length = float(np.median(finite_lengths)) if len(finite_lengths) else None
@@ -201,6 +216,7 @@ def _quality_metrics(joints: np.ndarray, local_ref: dict[str, Any]) -> dict[str,
     wrist_deviation = _point_distance(joints[0], local_ref.get("wrist"))
     palm_deviation = _point_distance(_palm_points(joints).mean(axis=0), local_ref.get("palm"))
     fingertip_deviations = _pointwise_distances(_fingertip_points(joints), local_ref.get("fingertips"))
+    below_wrist = _fingertips_below_wrist_metrics(joints, hand=hand)
     return {
         "median_bone_length_m": median_length,
         "max_bone_length_ratio": max_ratio,
@@ -211,6 +227,7 @@ def _quality_metrics(joints: np.ndarray, local_ref: dict[str, Any]) -> dict[str,
         "fingertip_local_deviation_mean_m": float(np.mean(fingertip_deviations)) if fingertip_deviations else None,
         "finger_direction_min_dot": min(finger_dots) if finger_dots else None,
         "finger_direction_mean_dot": float(np.mean(finger_dots)) if finger_dots else None,
+        **below_wrist,
         "local_reference_count": int(local_ref.get("count", 0)),
     }
 
@@ -224,6 +241,11 @@ def _drop_reasons(
     max_palm_local_deviation_m: float,
     max_fingertip_local_deviation_m: float,
     min_finger_direction_dot: float,
+    drop_fingertips_below_wrist: bool,
+    image_height: float,
+    max_suspicious_wrist_y_ratio: float,
+    min_fingertip_below_wrist_ratio: float,
+    min_fingertip_below_wrist_delta: float,
 ) -> list[str]:
     reasons: list[str] = []
     bone_ratio = metrics.get("max_bone_length_ratio")
@@ -265,7 +287,76 @@ def _drop_reasons(
     finger_dot = metrics.get("finger_direction_min_dot")
     if local_count >= 2 and finger_dot is not None and float(finger_dot) < min_finger_direction_dot:
         reasons.append("finger_direction_flip")
+    below_ratio = metrics.get("fingertip_below_wrist_ratio")
+    below_delta = metrics.get("fingertip_below_wrist_median_delta")
+    wrist_y_ratio = _wrist_y_ratio(metrics, image_height=image_height)
+    if (
+        drop_fingertips_below_wrist
+        and below_ratio is not None
+        and below_delta is not None
+        and wrist_y_ratio is not None
+        and wrist_y_ratio <= max_suspicious_wrist_y_ratio
+        and float(below_ratio) >= min_fingertip_below_wrist_ratio
+        and float(below_delta) >= min_fingertip_below_wrist_delta
+    ):
+        reasons.append("fingertips_below_wrist")
     return reasons
+
+
+def _wrist_y_ratio(metrics: dict[str, Any], *, image_height: float) -> float | None:
+    explicit = metrics.get("wrist_y_ratio")
+    if explicit is not None:
+        return float(explicit)
+    wrist_y = metrics.get("wrist_y")
+    if wrist_y is None or image_height <= 0:
+        return None
+    return float(wrist_y) / max(float(image_height), 1e-6)
+
+
+def _fingertips_below_wrist_metrics(joints: np.ndarray, *, hand: dict[str, Any]) -> dict[str, Any]:
+    points = _image_joints21(hand)
+    source = "image"
+    if points is None:
+        points = np.asarray(joints[:, :2], dtype=np.float32)
+        source = "joints_y"
+    if points.shape != (21, 2) or not np.isfinite(points).all():
+        return {
+            "fingertip_below_wrist_ratio": None,
+            "fingertip_below_wrist_median_delta": None,
+            "fingertip_below_wrist_source": source,
+        }
+    wrist_y = float(points[0, 1])
+    fingertip_y = points[[4, 8, 12, 16, 20], 1].astype(np.float32)
+    deltas = fingertip_y - wrist_y
+    below = deltas[deltas > 0]
+    return {
+        "fingertip_below_wrist_ratio": float(len(below) / 5.0),
+        "fingertip_below_wrist_median_delta": float(np.median(below)) if len(below) else 0.0,
+        "fingertip_below_wrist_source": source,
+        "wrist_y": wrist_y,
+        "wrist_y_ratio": _infer_wrist_y_ratio(hand, wrist_y=wrist_y),
+    }
+
+
+def _infer_wrist_y_ratio(hand: dict[str, Any], *, wrist_y: float) -> float | None:
+    for key in ("image_height", "frame_height", "height"):
+        value = hand.get(key)
+        if value:
+            return float(wrist_y) / max(float(value), 1e-6)
+    return None
+
+
+def _image_joints21(hand: dict[str, Any]) -> np.ndarray | None:
+    values = hand.get("joints21_image_xy")
+    if values is None:
+        values = hand.get("joints21_image")
+    if values is None:
+        return None
+    arr = np.asarray(values, dtype=np.float32)
+    if arr.shape[0] != 21 or arr.shape[1] < 2:
+        return None
+    arr = arr[:, :2]
+    return arr if np.isfinite(arr).all() else None
 
 
 def _local_joint_references(

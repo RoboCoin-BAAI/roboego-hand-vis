@@ -244,7 +244,7 @@ def find_window_by_id(windows_json: Path, window_id: str) -> dict[str, Any]:
 
 
 def infer_window_id_from_dir(hand_window_dir: Path) -> str:
-    name = Path(hand_window_dir).name
+    name = _materialized_hand_window_root(Path(hand_window_dir)).name
     if not name.startswith("handwin_"):
         raise ValueError(f"Cannot infer hand window id from directory name: {hand_window_dir}")
     return "_".join(name.split("_")[:2])
@@ -263,7 +263,18 @@ def infer_windows_json_from_hand_window_dir(hand_window_dir: Path) -> Path:
 
 
 def default_output_dir(hand_window_dir: Path, object_id: str) -> Path:
-    return Path(hand_window_dir) / "sam3_object_tracks" / object_id
+    root = _materialized_hand_window_root(Path(hand_window_dir))
+    return root / "objects" / "sam3_object_tracks" / object_id
+
+
+def _materialized_hand_window_root(path: Path) -> Path:
+    path = Path(path)
+    if path.name.startswith("handwin_"):
+        return path
+    for parent in path.parents:
+        if parent.name.startswith("handwin_"):
+            return parent
+    return path
 
 
 def build_sam3_hand_clip_plan(

@@ -8,7 +8,7 @@ def make_joints(offset_x: float = 0.0) -> np.ndarray:
     for finger, base in enumerate([1, 5, 9, 13, 17]):
         x = offset_x + finger * 0.02
         for step in range(4):
-            joints[base + step] = [x, 0.03 * (step + 1), 0.0]
+            joints[base + step] = [x, -0.03 * (step + 1), 0.0]
     return joints
 
 
@@ -55,7 +55,13 @@ def test_pose_gate_exports_kept_hands_as_alignment_candidates():
     joints = make_joints()
     payload = make_payload([{"ego_left": make_hand(1, "ego_left", joints)}])
 
-    result = build_joints21_pose_quality(payload, start=0, num_frames=1)
+    result = build_joints21_pose_quality(
+        payload,
+        start=0,
+        num_frames=1,
+        image_height=120,
+        max_suspicious_wrist_y_ratio=0.55,
+    )
 
     assert result["summary"]["ego_left"]["kept"] == 1
     assert result["summary"]["ego_left"]["dropped"] == 0
@@ -131,6 +137,73 @@ def test_pose_gate_drops_finger_direction_flip():
     )
 
     assert result["frames"][1]["hands"]["ego_left"]["drop_reasons"] == ["finger_direction_flip"]
+
+
+def test_pose_gate_drops_hand_when_fingertips_are_below_wrist_in_image():
+    joints = make_joints()
+    hand = make_hand(1, "ego_left", joints)
+    hand["joints21_image_xy"] = [[50.0, 40.0] for _ in range(21)]
+    hand["joints21_image_xy"][0] = [50.0, 40.0]
+    for idx in [4, 8, 12, 16, 20]:
+        hand["joints21_image_xy"][idx] = [50.0, 100.0]
+    payload = make_payload([{"ego_left": hand}])
+
+    result = build_joints21_pose_quality(
+        payload,
+        start=0,
+        num_frames=1,
+        image_height=120,
+        max_suspicious_wrist_y_ratio=0.55,
+    )
+
+    assert result["summary"]["ego_left"]["kept"] == 0
+    assert result["summary"]["ego_left"]["dropped"] == 1
+    dropped = result["frames"][0]["hands"]["ego_left"]
+    assert dropped["drop_reasons"] == ["fingertips_below_wrist"]
+    assert result["final_hand_candidates_gated"]["frames"][0]["candidates"] == []
+
+
+def test_pose_gate_keeps_hand_when_only_four_fingertips_are_below_wrist():
+    joints = make_joints()
+    hand = make_hand(1, "ego_left", joints)
+    hand["joints21_image_xy"] = [[50.0, 40.0] for _ in range(21)]
+    hand["joints21_image_xy"][0] = [50.0, 40.0]
+    for idx in [4, 8, 12, 16]:
+        hand["joints21_image_xy"][idx] = [50.0, 100.0]
+    hand["joints21_image_xy"][20] = [50.0, 20.0]
+    payload = make_payload([{"ego_left": hand}])
+
+    result = build_joints21_pose_quality(
+        payload,
+        start=0,
+        num_frames=1,
+        image_height=120,
+        max_suspicious_wrist_y_ratio=0.55,
+    )
+
+    assert result["summary"]["ego_left"]["kept"] == 1
+    assert result["frames"][0]["hands"]["ego_left"]["valid"] is True
+
+
+def test_pose_gate_keeps_lower_frame_hand_even_when_fingertips_are_below_wrist():
+    joints = make_joints()
+    hand = make_hand(1, "ego_left", joints)
+    hand["joints21_image_xy"] = [[50.0, 80.0] for _ in range(21)]
+    hand["joints21_image_xy"][0] = [50.0, 80.0]
+    for idx in [4, 8, 12, 16, 20]:
+        hand["joints21_image_xy"][idx] = [50.0, 100.0]
+    payload = make_payload([{"ego_left": hand}])
+
+    result = build_joints21_pose_quality(
+        payload,
+        start=0,
+        num_frames=1,
+        image_height=120,
+        max_suspicious_wrist_y_ratio=0.55,
+    )
+
+    assert result["summary"]["ego_left"]["kept"] == 1
+    assert result["frames"][0]["hands"]["ego_left"]["valid"] is True
 
 
 def test_pose_gate_drops_fingertip_trajectory_jump_without_cascading():

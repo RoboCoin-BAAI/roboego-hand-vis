@@ -252,6 +252,10 @@ def find_segment_dir(segments_root: Path, segment_id: str) -> Path | None:
 
 
 def find_hamer_window_dir(segment_processed: Path, window_id: str) -> Path | None:
+    new_layout = segment_processed / "hand" / "hamer_raw"
+    if new_layout.exists():
+        return new_layout
+
     root = segment_processed / "hamer_windows_left_v1"
     if not root.exists():
         return None
