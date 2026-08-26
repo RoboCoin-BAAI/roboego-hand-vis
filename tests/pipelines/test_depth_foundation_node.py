@@ -1,6 +1,10 @@
 from pathlib import Path
 
-from roboego_hand_vis.pipelines.depth.nodes import run_fast_foundation_stereo_depth_node, run_foundation_stereo_depth_node
+from roboego_hand_vis.pipelines.depth.nodes import (
+    run_archive_depth_cache_node,
+    run_fast_foundation_stereo_depth_node,
+    run_foundation_stereo_depth_node,
+)
 
 
 def test_foundation_stereo_depth_node_runs_existing_script(monkeypatch, tmp_path):
@@ -173,6 +177,77 @@ def test_fast_foundation_stereo_depth_node_defaults_output_next_to_manifest(monk
 def test_fast_foundation_stereo_depth_node_skips_when_disabled():
     assert run_fast_foundation_stereo_depth_node({"enabled": False}) == {
         "stage": "fast_foundation_stereo_depth",
+        "status": "skipped",
+        "reason": "disabled",
+    }
+
+
+def test_archive_depth_cache_node_runs_existing_script(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.depth.nodes.subprocess.run", fake_run)
+    depth_dir = tmp_path / "handwin/depth/fast_foundation"
+    output_dir = tmp_path / "handwin/depth/fast_foundation_archive"
+
+    result = run_archive_depth_cache_node(
+        {
+            "enabled": True,
+            "python": "/envs/ego/bin/python",
+            "script": "scripts/depth/archive_depth_cache.py",
+            "depth_dir": str(depth_dir),
+            "output_dir": str(output_dir),
+            "max_depth_m": 2.5,
+            "invalid_value": 0,
+            "fps": 30,
+            "write_avi": True,
+            "write_preview": True,
+            "preview_codec": "mp4v",
+            "dry_run_avi": True,
+            "delete_npy": False,
+            "delete_png": True,
+        }
+    )
+
+    assert calls == [
+        {
+            "check": True,
+            "args": [
+                "/envs/ego/bin/python",
+                "scripts/depth/archive_depth_cache.py",
+                "--depth_dir",
+                str(depth_dir),
+                "--output_dir",
+                str(output_dir),
+                "--max_depth_m",
+                "2.5",
+                "--invalid_value",
+                "0",
+                "--fps",
+                "30",
+                "--write_avi",
+                "--write_preview",
+                "--preview_codec",
+                "mp4v",
+                "--dry_run_avi",
+                "--delete_png",
+            ],
+        }
+    ]
+    assert result == {
+        "stage": "archive_depth_cache",
+        "status": "complete",
+        "depth_dir": str(depth_dir),
+        "output_dir": str(output_dir),
+        "metadata_json": str(output_dir / "depth_archive_meta.json"),
+    }
+
+
+def test_archive_depth_cache_node_skips_when_disabled():
+    assert run_archive_depth_cache_node({"enabled": False}) == {
+        "stage": "archive_depth_cache",
         "status": "skipped",
         "reason": "disabled",
     }

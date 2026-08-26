@@ -270,6 +270,71 @@ conf/base/parameters.yml
 Most nodes are disabled by default. Enable only the node or stage you want with
 `--params <section>.enabled=True,...`.
 
+## Recommended Stage Launcher
+
+For day-to-day processing, use the lightweight launcher instead of writing long
+`kedro run --params ...` commands by hand. Dataset-specific defaults live in:
+
+```text
+conf/datasets/wumei.yml
+```
+
+Run one stage for a session:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/run_pipeline_stage.py \
+  --dataset wumei \
+  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --stage raw_quality
+```
+
+Run one hand-window stage:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/run_pipeline_stage.py \
+  --dataset wumei \
+  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --stage depth_anchored_joints21 \
+  --hand-window handwin_0000_t000000_000065
+```
+
+Print the generated Kedro command without running it:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/run_pipeline_stage.py \
+  --dataset wumei \
+  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --stage final_hand_result \
+  --all-hand-windows \
+  --dry-run
+```
+
+Supported first-version stages:
+
+```text
+raw_quality
+pre_semantic_quality
+stage1_actions
+processing_plan
+hand_windows
+export_segments
+prepare_segments
+export_hand_window_segments
+stereo_quality
+fast_foundation_depth
+archive_depth_cache
+hamer
+hand_filter
+joints21_pose_gate
+depth_anchored_joints21
+final_hand_result
+final_hand_trajectory_polish
+sam3_objects
+```
+
 ## Raw Headband Flow
 
 Set paths for a raw session:
@@ -487,6 +552,63 @@ export DEPTH_DIR=$HANDWIN_DIR/depth/fast_foundation
 
 Start with `num_frames=120` to estimate speed. For a full window, use the
 window frame count from `hand_estimation_windows_left_v1.json`.
+
+### Depth Cache Archive
+
+Full float32 depth maps are large and should be treated as cache. After depth
+anchoring has consumed them, archive the cache as uint16 millimeter PNG frames
+and an optional FFV1 lossless AVI:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/run_pipeline_stage.py \
+  --dataset wumei \
+  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --stage archive_depth_cache \
+  --hand-window handwin_0000_t000000_000065
+```
+
+Direct script form:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/depth/archive_depth_cache.py \
+  --depth_dir $HANDWIN_DIR/depth/fast_foundation \
+  --output_dir $HANDWIN_DIR/depth/fast_foundation_archive \
+  --max_depth_m 4.0 \
+  --fps 30
+```
+
+After confirming `depth_uint16_ffv1.avi` and `depth_preview.mp4`, remove the
+large float32 npy cache and temporary PNG sequence in the same run:
+
+```bash
+PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+  scripts/depth/archive_depth_cache.py \
+  --depth_dir $HANDWIN_DIR/depth/fast_foundation \
+  --output_dir $HANDWIN_DIR/depth/fast_foundation_archive \
+  --max_depth_m 4.0 \
+  --fps 30 \
+  --delete_npy \
+  --delete_png
+```
+
+For the launcher path, set `archive_depth_cache.delete_npy` and
+`archive_depth_cache.delete_png` in `conf/datasets/wumei.yml`.
+
+Output:
+
+```text
+$HANDWIN_DIR/depth/fast_foundation_archive/depth_uint16_png/
+$HANDWIN_DIR/depth/fast_foundation_archive/depth_uint16_ffv1.avi
+$HANDWIN_DIR/depth/fast_foundation_archive/depth_preview.mp4
+$HANDWIN_DIR/depth/fast_foundation_archive/depth_archive_meta.json
+```
+
+The encoded depth unit is millimeter. Invalid, NaN, non-positive, and
+out-of-range values are written as `0`. The FFV1 AVI is for machine-readable
+16-bit depth storage; `depth_preview.mp4` is the color video for quick human
+review.
 
 ## Ego-Hand Pipeline
 

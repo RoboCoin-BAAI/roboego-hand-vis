@@ -262,6 +262,22 @@ fast_foundation_stereo_depth:
   save_vis: true
   overwrite: false
 
+archive_depth_cache:
+  enabled: false
+  python: /home/liuyou/miniconda3/envs/ego/bin/python
+  script: scripts/depth/archive_depth_cache.py
+  depth_dir: ""
+  output_dir: ""
+  max_depth_m: 4.0
+  invalid_value: 0
+  fps: 30
+  write_avi: true
+  write_preview: true
+  preview_codec: mp4v
+  dry_run_avi: false
+  delete_npy: false
+  delete_png: false
+
 realvdeblur_stereo:
   enabled: false
   python: /home/liuyou/miniconda3/envs/ego/bin/python

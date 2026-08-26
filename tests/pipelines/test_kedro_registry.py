@@ -27,11 +27,11 @@ def test_stage_pipelines_have_smoke_nodes_for_cli_execution():
     for name, pipeline in pipelines.items():
         if name == "__default__":
             continue
-        expected_node_count = {"datasets": 4, "quality": 6, "semantic": 6, "depth": 2, "egohand": 10}.get(name, 1)
+        expected_node_count = {"datasets": 4, "quality": 6, "semantic": 6, "depth": 3, "egohand": 10}.get(name, 1)
         assert len(pipeline.nodes) == expected_node_count
 
 
 def test_default_pipeline_combines_all_stage_smoke_nodes():
     pipelines = register_pipelines()
 
-    assert len(pipelines["__default__"].nodes) == 32
+    assert len(pipelines["__default__"].nodes) == 33

@@ -117,3 +117,48 @@ def run_fast_foundation_stereo_depth_node(config: dict[str, Any] | None) -> dict
         "output_dir": str(output_dir),
         "meta_path": str(output_dir / "fast_foundation_stereo_video_meta.json"),
     }
+
+
+def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "archive_depth_cache", "status": "skipped", "reason": "disabled"}
+
+    depth_dir = Path(_required_value(config, "depth_dir", "archive_depth_cache"))
+    output_dir = Path(_required_value(config, "output_dir", "archive_depth_cache"))
+    args = [
+        _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/depth/archive_depth_cache.py",
+        "--depth_dir",
+        str(depth_dir),
+        "--output_dir",
+        str(output_dir),
+    ]
+    _append_arg(args, "--max_depth_m", config.get("max_depth_m", 4.0))
+    _append_arg(args, "--invalid_value", config.get("invalid_value", 0))
+    _append_arg(args, "--fps", config.get("fps", 30.0))
+    _append_arg(args, "--ffmpeg_bin", config.get("ffmpeg_bin"))
+    if bool(config.get("write_avi", True)):
+        args.append("--write_avi")
+    else:
+        args.append("--no-write_avi")
+    if bool(config.get("write_preview", True)):
+        args.append("--write_preview")
+    else:
+        args.append("--no-write_preview")
+    _append_arg(args, "--preview_codec", config.get("preview_codec"))
+    if bool(config.get("dry_run_avi", False)):
+        args.append("--dry_run_avi")
+    if bool(config.get("delete_npy", False)):
+        args.append("--delete_npy")
+    if bool(config.get("delete_png", False)):
+        args.append("--delete_png")
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "archive_depth_cache",
+        "status": "complete",
+        "depth_dir": str(depth_dir),
+        "output_dir": str(output_dir),
+        "metadata_json": str(output_dir / "depth_archive_meta.json"),
+    }
