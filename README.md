@@ -44,16 +44,192 @@ External repositories used by specific nodes:
 /home/liuyou/Documents/RealVDeblur
 ```
 
-The standalone OpenVINS adapter is documented in
-[`docs/pipeline/openvins_vio.md`](docs/pipeline/openvins_vio.md). It replays raw
-stereo video, capture timestamps, calibration, and IMU data without coupling VIO
-to the Kedro hand pipeline.
-
 For Qwen annotation, set:
 
 ```bash
 export DASHSCOPE_API_KEY=...
 ```
+
+## OpenVINS VIO
+
+VIO is currently a standalone offline adapter, not a node in the Kedro hand
+pipeline. It replays timestamped raw stereo images and IMU measurements into
+OpenVINS and records both the IMU pose and the left-camera pose. It does not use
+Qwen, other VLM credentials, depth, HaMeR, or SAM3.
+
+### Inputs
+
+The VIO session must contain this subset of the raw session layout:
+
+```text
+session/
+├── videos/
+│   ├── left.mp4
+│   └── right.mp4
+├── timestamps/
+│   ├── left_timestamps.txt
+│   └── right_timestamps.txt
+├── imu/imu0.csv
+└── calibrations/
+    ├── camera_imu-camchain-imucam.yaml
+    └── camera_imu-imu.yaml
+```
+
+Use the raw, unrectified camera videos. The runner loads the calibrated
+equidistant camera model directly. `left/right` are OpenVINS `cam0/cam1`;
+`bleft/bright` and audio may remain in a complete session but are not consumed
+by the current two-camera VIO adapter.
+
+Before estimation, the adapter validates video dimensions against calibration,
+matches stereo frames by timestamp, removes repeated timestamps, checks IMU
+coverage and gaps, converts Kalibr `T_cam_imu` to OpenVINS `T_imu_cam`, and
+writes the OpenCV-YAML configuration used by OpenVINS.
+
+### Dependencies
+
+The estimator process requires:
+
+```text
+Ubuntu 22.04 / ROS 2 Humble       /opt/ros/humble/setup.bash
+OpenVINS ROS 2 build              <OPENVINS_ROOT>/install_ros2/setup.bash
+OpenVINS packages                 ov_core, ov_init, ov_msckf
+Native build dependencies         Eigen3, Boost, Ceres
+System Python                     rclpy, sensor_msgs, geometry_msgs,
+                                  numpy, OpenCV, PyYAML
+```
+
+The runner intentionally uses `/usr/bin/python3` for ROS Python compatibility.
+The project environment is used for Rerun export and visualization. A standard
+OpenVINS build is:
+
+```bash
+sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev \
+  python3-numpy python3-opencv python3-yaml
+
+cd /home/user/open_vins
+source /opt/ros/humble/setup.bash
+colcon --log-base log_ros2 build \
+  --build-base build_ros2 \
+  --install-base install_ros2 \
+  --packages-select ov_core ov_init ov_msckf \
+  --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_ARUCO_TAGS=OFF
+```
+
+This workstation already has OpenVINS at `/home/user/open_vins/install_ros2`.
+Its user-local Ceres libraries are under
+`/home/user/.local/openvins-deps/usr`; the runner adds that library directory
+automatically. Verify the environment with:
+
+```bash
+source /opt/ros/humble/setup.bash
+source /home/user/open_vins/install_ros2/setup.bash
+/usr/bin/python3 -c 'import cv2, numpy, yaml, rclpy; import geometry_msgs, sensor_msgs'
+ros2 pkg executables ov_msckf
+```
+
+Runner defaults can be changed with `OPENVINS_ROOT`, `OPENVINS_INSTALL`,
+`OPENVINS_DEPS`, `SYSTEM_PYTHON`, and `ROS_DOMAIN_ID`. `ffmpeg` is optional and
+is only needed for the camera/trajectory comparison MP4.
+
+### Run The One-Minute Slice
+
+The complete test slice at `06:49-07:49` is:
+
+```text
+/home/user/ego_data/session_20260804_224442_clip_0649_60s/session
+```
+
+Run it into a new output directory:
+
+```bash
+cd /home/user/roboego-hand-vis
+
+scripts/vio/run_openvins_session.sh \
+  --session /home/user/ego_data/session_20260804_224442_clip_0649_60s/session \
+  --output tmp/openvins_clip_0649_60s \
+  --rate 1.0
+```
+
+Useful options:
+
+```text
+--start_s SECONDS       Offset from the first synchronized stereo pair
+--duration_s SECONDS    Process only this duration; omit for the whole session
+--rate RATE             Dataset seconds replayed per wall-clock second
+--no-downsample         Track at the raw 1920x1088 resolution
+--openvins_root PATH    Use PATH/install_ros2 instead of the default build
+```
+
+The runner launches OpenVINS in an isolated ROS domain, replays images and IMU
+in timestamp order, waits rather than bursting IMU samples when video decoding
+falls behind, records the trajectory, and shuts down the ROS processes on exit.
+
+### Outputs And Coordinates
+
+```text
+output/
+├── input/
+│   ├── stereo_pairs.csv
+│   ├── imu_clean.csv
+│   └── input_report.json
+├── config/
+├── trajectory/
+│   ├── trajectory.jsonl
+│   ├── trajectory.npz
+│   └── run_report.json
+├── run_manifest.json
+├── openvins.log
+├── openvins_timing.txt
+├── openvins_state_estimate.txt
+└── openvins_state_deviation.txt
+```
+
+`trajectory.npz` is the integration artifact. It contains absolute camera/IMU
+timestamps, source frame indices, covariance, `T_world_imu`, and
+`T_world_camera`. `T_world_camera` is the left camera (`cam0`) pose derived from
+the estimated IMU pose and the calibrated rigid transform:
+
+```text
+T_world_camera0 = T_world_imu @ T_imu_camera0
+p_world = T_world_camera0 @ p_camera0
+```
+
+The OpenVINS world origin is local and arbitrary. Translation is metric because
+the estimator uses the IMU, but this is not a globally registered map and the
+current adapter has no loop closure. Join the result to later stages by camera
+timestamp, or by frame index when both artifacts come from the same session.
+
+### Rerun Visualization
+
+Create a compact Rerun recording with a sampled left-camera reference:
+
+```bash
+/home/user/miniconda3/envs/egoall/bin/python \
+  scripts/vio/export_trajectory_rerun.py \
+  --trajectory tmp/openvins_clip_0649_60s/trajectory/trajectory.npz \
+  --output tmp/openvins_clip_0649_60s/trajectory/trajectory_with_left.rrd \
+  --camera_video /home/user/ego_data/session_20260804_224442_clip_0649_60s/session/videos/left.mp4 \
+  --camera_timestamps /home/user/ego_data/session_20260804_224442_clip_0649_60s/session/timestamps/left_timestamps.txt \
+  --camera_sample_fps 1 \
+  --camera_max_width 640 \
+  --jpeg_quality 70 \
+  --pose_sample_fps 5 \
+  --trajectory_chunk_seconds 5
+
+/home/user/miniconda3/envs/egoall/bin/rerun \
+  --memory-limit 2GB \
+  tmp/openvins_clip_0649_60s/trajectory/trajectory_with_left.rrd
+```
+
+The trajectory appears incrementally as the timeline advances. The bright
+yellow point is the current left-camera position. The full-rate trajectory
+remains in `trajectory.npz`; Rerun sampling only affects visualization.
+
+The current adapter is an offline reference implementation: decoding MP4 and
+publishing ROS messages can be slower than the estimator itself. It is not yet
+fused into the hand/depth outputs or the Kedro default pipeline. See
+[`docs/pipeline/openvins_vio.md`](docs/pipeline/openvins_vio.md) for validation,
+performance, long-recording visualization, and full-session details.
 
 Kedro telemetry can be disabled for reproducible logs:
 
