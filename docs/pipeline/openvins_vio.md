@@ -144,6 +144,26 @@ Export the trajectory to Rerun from the project Python environment:
 The Rerun recording shows the sampled camera centers, continuous trajectory,
 and the estimated camera coordinate axes over time.
 
+To include a scrub-friendly camera reference without storing all 30 FPS images,
+sample the left camera as JPEG frames. The VIO poses remain at their full rate:
+
+```bash
+/home/user/miniconda3/envs/egoall/bin/python \
+  scripts/vio/export_trajectory_rerun.py \
+  --trajectory tmp/openvins_session_224442_full/trajectory/trajectory.npz \
+  --output tmp/openvins_session_224442_full/trajectory/trajectory_with_left.rrd \
+  --camera_video /home/user/ego_data/session_20260804_224442/videos/left.mp4 \
+  --camera_timestamps /home/user/ego_data/session_20260804_224442/timestamps/left_timestamps.txt \
+  --camera_sample_fps 0.5 \
+  --camera_max_width 480 \
+  --jpeg_quality 65 \
+  --pose_sample_fps 2
+```
+
+The static trajectory keeps every estimated position. Only the dynamic camera
+transform and reference images are sampled, keeping long recordings responsive
+and memory-bounded in the viewer.
+
 For a long recording, do not put camera images into an RRD. Generate a
 streaming H.264 comparison video instead. It holds only the current frame and
 plot canvas in memory:
