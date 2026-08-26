@@ -44,6 +44,11 @@ External repositories used by specific nodes:
 /home/liuyou/Documents/RealVDeblur
 ```
 
+The standalone OpenVINS adapter is documented in
+[`docs/pipeline/openvins_vio.md`](docs/pipeline/openvins_vio.md). It replays raw
+stereo video, capture timestamps, calibration, and IMU data without coupling VIO
+to the Kedro hand pipeline.
+
 For Qwen annotation, set:
 
 ```bash

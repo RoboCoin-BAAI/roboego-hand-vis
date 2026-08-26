@@ -12,6 +12,7 @@ dependencies = [
     "kedro>=1.5,<2.0",
     "numpy",
     "opencv-python",
+    "PyYAML",
     "rerun-sdk",
     "scipy",
     "torch",
