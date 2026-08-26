@@ -21,6 +21,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--refined_json", required=True)
     parser.add_argument("--output_dir", required=True)
+    parser.add_argument("--output_name", default="refined_temporal_gate_tracks.json")
     parser.add_argument("--start", type=int, required=True)
     parser.add_argument("--num_frames", type=int, required=True)
     parser.add_argument("--max_gap", type=int, default=10)
@@ -63,7 +64,7 @@ def main() -> None:
     )
     result["source_refined_json"] = str(refined_json)
     result["source_manifest"] = str(manifest)
-    result_path = output_dir / "refined_temporal_gate_tracks.json"
+    result_path = output_dir / args.output_name
     result_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
     if args.save_vis:
         _write_temporal_visualization(

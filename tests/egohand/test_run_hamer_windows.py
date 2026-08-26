@@ -139,7 +139,7 @@ def test_build_window_command_plan_prefers_materialized_hand_window_dirs(tmp_pat
     segment_dir = tmp_path / "segments/seg_0000_t000006_000015_place_reach"
     handwin_dir = segment_dir / "hand_windows/handwin_0000_t000008_000015"
     (handwin_dir / "dataset_manifest").mkdir(parents=True)
-    (handwin_dir / "fast_foundation_depth").mkdir()
+    (handwin_dir / "depth/fast_foundation").mkdir(parents=True)
     (handwin_dir / "dataset_manifest/dataset_manifest.json").write_text("{}", encoding="utf-8")
 
     plan = build_window_command_plan(
@@ -148,7 +148,7 @@ def test_build_window_command_plan_prefers_materialized_hand_window_dirs(tmp_pat
         depth_dir=None,
         output_root=None,
         segments_root=tmp_path / "segments",
-        output_subdir="hamer_windows_left_v1",
+        output_subdir="hand/hamer_raw",
         hamer_root="/hamer",
         stage1_actions="stage1.json",
         body_detector="regnety",
@@ -166,12 +166,12 @@ def test_build_window_command_plan_prefers_materialized_hand_window_dirs(tmp_pat
         "hand_windows/handwin_0000_t000008_000015/dataset_manifest/dataset_manifest.json"
     )
     assert plan[0]["command"][plan[0]["command"].index("--depth_dir") + 1].endswith(
-        "hand_windows/handwin_0000_t000008_000015/fast_foundation_depth"
+        "hand_windows/handwin_0000_t000008_000015/depth/fast_foundation"
     )
     assert plan[0]["stage1_time_offset_s"] == 8.0
     assert plan[0]["command"][plan[0]["command"].index("--stage1_time_offset_s") + 1] == "8.0"
     assert plan[0]["output_dir"].endswith(
-        "hand_windows/handwin_0000_t000008_000015/hamer_windows_left_v1/handwin_0000_two_hand_left_right_000000_000239"
+        "hand_windows/handwin_0000_t000008_000015/hand/hamer_raw"
     )
 
 

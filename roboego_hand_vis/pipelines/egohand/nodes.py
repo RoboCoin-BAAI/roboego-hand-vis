@@ -154,6 +154,57 @@ def run_refined_temporal_gate_node(config: dict[str, Any] | None) -> dict[str, A
     }
 
 
+def run_hand_filter_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "hand_filter", "status": "skipped", "reason": "disabled"}
+
+    manifest = _required_value(config, "manifest", "hand_filter")
+    refined_json = _required_value(config, "refined_json", "hand_filter")
+    output_dir = _required_value(config, "output_dir", "hand_filter")
+    output_name = _optional_str(config.get("output_name")) or "filtered_hand_tracks.json"
+    args = [
+        _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/hand/track_refined_hands.py",
+        "--manifest",
+        manifest,
+        "--refined_json",
+        refined_json,
+        "--output_dir",
+        output_dir,
+        "--output_name",
+        output_name,
+    ]
+    _append_arg(args, "--start", config.get("start"))
+    _append_arg(args, "--num_frames", config.get("num_frames"))
+    _append_arg(args, "--max_gap", config.get("max_gap"))
+    _append_arg(args, "--max_bbox_jump_px", config.get("max_bbox_jump_px"))
+    _append_arg(args, "--max_bbox_area_change_ratio", config.get("max_bbox_area_change_ratio"))
+    _append_arg(args, "--max_cam_t_jump", config.get("max_cam_t_jump"))
+    _append_arg(args, "--min_cam_t_z", config.get("min_cam_t_z"))
+    _append_arg(args, "--max_cam_t_z", config.get("max_cam_t_z"))
+    _append_arg(args, "--max_mano_pose_jump", config.get("max_mano_pose_jump"))
+    _append_arg(args, "--max_mesh_centroid_jump", config.get("max_mesh_centroid_jump"))
+    _append_arg(args, "--max_mesh_vertex_rmse", config.get("max_mesh_vertex_rmse"))
+    _append_arg(args, "--local_window_radius", config.get("local_window_radius"))
+    if bool(config.get("save_vis", False)):
+        args.append("--save_vis")
+    else:
+        args.append("--no-save_vis")
+    _append_arg(args, "--contact_sheet_columns", config.get("contact_sheet_columns"))
+    _append_arg(args, "--contact_sheet_thumb_width", config.get("contact_sheet_thumb_width"))
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "hand_filter",
+        "status": "complete",
+        "manifest": manifest,
+        "refined_json": refined_json,
+        "output_dir": output_dir,
+        "tracks_json": str(Path(output_dir) / output_name),
+    }
+
+
 def run_final_hand_result_node(config: dict[str, Any] | None) -> dict[str, Any]:
     config = config or {}
     if not bool(config.get("enabled", False)):
@@ -169,17 +220,17 @@ def run_final_hand_result_node(config: dict[str, Any] | None) -> dict[str, Any]:
         "--output_dir",
         output_dir,
     ]
-    _append_arg(args, "--temporal_annotated_dir", config.get("temporal_annotated_dir"))
-    _append_arg(args, "--hamer_overlay_dir", config.get("hamer_overlay_dir"))
-    _append_arg(args, "--source_frames_dir", config.get("source_frames_dir"))
+    _append_arg(args, "--depth_anchored_json", config.get("depth_anchored_json"))
+    _append_arg(args, "--depth_anchored_npz", config.get("depth_anchored_npz"))
+    _append_arg(args, "--depth_anchored_summary_json", config.get("depth_anchored_summary_json"))
+    if bool(config.get("copy_depth_anchored", True)):
+        args.append("--copy_depth_anchored")
+    else:
+        args.append("--no-copy_depth_anchored")
     if bool(config.get("copy_meshes", True)):
         args.append("--copy_meshes")
     else:
         args.append("--no-copy_meshes")
-    if bool(config.get("copy_visuals", True)):
-        args.append("--copy_visuals")
-    else:
-        args.append("--no-copy_visuals")
 
     subprocess.run(args, check=True)
     return {
@@ -189,6 +240,52 @@ def run_final_hand_result_node(config: dict[str, Any] | None) -> dict[str, Any]:
         "output_dir": output_dir,
         "final_tracks_json": str(Path(output_dir) / "final_hand_tracks.json"),
         "final_summary_json": str(Path(output_dir) / "final_hand_summary.json"),
+        "joints21_depth_anchored_json": str(Path(output_dir) / "joints21_depth_anchored.json"),
+        "joints21_depth_anchored_npz": str(Path(output_dir) / "joints21_depth_anchored.npz"),
+    }
+
+
+def run_final_hand_trajectory_polish_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "final_hand_trajectory_polish", "status": "skipped", "reason": "disabled"}
+
+    joints_json = _required_value(config, "joints_json", "final_hand_trajectory_polish")
+    output_dir = _required_value(config, "output_dir", "final_hand_trajectory_polish")
+    args = [
+        _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/hand/polish_final_hand_trajectory.py",
+        "--joints_json",
+        joints_json,
+        "--output_dir",
+        output_dir,
+    ]
+    _append_arg(args, "--manifest", config.get("manifest"))
+    _append_arg(args, "--preview_video", config.get("preview_video"))
+    _append_arg(args, "--max_interp_gap", config.get("max_interp_gap"))
+    _append_arg(args, "--wrist_jump_m", config.get("wrist_jump_m"))
+    _append_arg(args, "--max_local_wrist_deviation_m", config.get("max_local_wrist_deviation_m"))
+    _append_arg(args, "--local_window_radius", config.get("local_window_radius"))
+    _append_arg(args, "--smooth_window", config.get("smooth_window"))
+    if bool(config.get("smooth_relative_fingers", True)):
+        args.append("--smooth_relative_fingers")
+    else:
+        args.append("--no-smooth_relative_fingers")
+    if bool(config.get("write_preview", True)):
+        args.append("--write_preview")
+    else:
+        args.append("--no-write_preview")
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "final_hand_trajectory_polish",
+        "status": "complete",
+        "joints_json": joints_json,
+        "output_dir": output_dir,
+        "smoothed_joints21_json": str(Path(output_dir) / "smoothed_joints21.json"),
+        "smoothed_joints21_npz": str(Path(output_dir) / "smoothed_joints21.npz"),
+        "trajectory_polish_report_json": str(Path(output_dir) / "trajectory_polish_report.json"),
+        "preview_video": str(Path(output_dir) / "hand_estimation_preview_smoothed.mp4"),
     }
 
 
@@ -216,6 +313,14 @@ def run_joints21_pose_gate_node(config: dict[str, Any] | None) -> dict[str, Any]
     _append_arg(args, "--max_palm_local_deviation_m", config.get("max_palm_local_deviation_m"))
     _append_arg(args, "--max_fingertip_local_deviation_m", config.get("max_fingertip_local_deviation_m"))
     _append_arg(args, "--min_finger_direction_dot", config.get("min_finger_direction_dot"))
+    if bool(config.get("drop_fingertips_below_wrist", True)):
+        args.append("--drop_fingertips_below_wrist")
+    else:
+        args.append("--no-drop_fingertips_below_wrist")
+    _append_arg(args, "--image_height", config.get("image_height"))
+    _append_arg(args, "--max_suspicious_wrist_y_ratio", config.get("max_suspicious_wrist_y_ratio"))
+    _append_arg(args, "--min_fingertip_below_wrist_ratio", config.get("min_fingertip_below_wrist_ratio"))
+    _append_arg(args, "--min_fingertip_below_wrist_delta", config.get("min_fingertip_below_wrist_delta"))
     _append_arg(args, "--local_window_radius", config.get("local_window_radius"))
 
     subprocess.run(args, check=True)

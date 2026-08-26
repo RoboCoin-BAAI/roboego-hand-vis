@@ -81,7 +81,7 @@ semantic     Qwen frame annotation, Stage1 actions, processing plan, hand window
 datasets     Segment export, rectification/manifest preparation, hand-window export
 restoration  Optional RealVDeblur stereo restoration
 depth        FoundationStereo and Fast-FoundationStereo
-egohand      HaMeR, temporal filtering, final hand result, 21-joint filtering/depth anchoring
+egohand      HaMeR, weak hand filtering, 21-joint pose gate, depth anchoring, final hand result
 objects      SAM3 object segmentation for hand-object interaction windows
 ```
 
@@ -300,7 +300,7 @@ Stereo quality before depth:
 Fast-FoundationStereo depth:
 
 ```bash
-export DEPTH_DIR=$HANDWIN_DIR/fast_foundation_depth
+export DEPTH_DIR=$HANDWIN_DIR/depth/fast_foundation
 
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
@@ -321,38 +321,28 @@ Run HaMeR on the hand window:
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
   --pipelines egohand \
   --nodes hamer_windows \
-  --params hamer_windows.enabled=True,hamer_windows.windows_json=$HAND_WINDOWS,hamer_windows.segments_root=$SEGMENTS_ROOT,hamer_windows.output_subdir=hamer_windows_left_v1,hamer_windows.hamer_root=/home/liuyou/Documents/hamer,hamer_windows.stage1_actions=$STAGE1,hamer_windows.hamer_python=/home/liuyou/miniconda3/envs/hamer/bin/python,hamer_windows.body_detector=regnety,hamer_windows.batch_size=1,hamer_windows.wearer_roi_x_margin_ratio=0.0,hamer_windows.wearer_roi_y_margin_ratio=0.10,hamer_windows.save_mesh=True,hamer_windows.refine_mode=strict_ego_audit,hamer_windows.only_window_ids=handwin_0000,hamer_windows.overwrite=True
+  --params hamer_windows.enabled=True,hamer_windows.windows_json=$HAND_WINDOWS,hamer_windows.segments_root=$SEGMENTS_ROOT,hamer_windows.output_subdir=hand/hamer_raw,hamer_windows.hamer_root=/home/liuyou/Documents/hamer,hamer_windows.stage1_actions=$STAGE1,hamer_windows.hamer_python=/home/liuyou/miniconda3/envs/hamer/bin/python,hamer_windows.body_detector=regnety,hamer_windows.batch_size=1,hamer_windows.wearer_roi_x_margin_ratio=0.0,hamer_windows.wearer_roi_y_margin_ratio=0.10,hamer_windows.save_mesh=True,hamer_windows.refine_mode=strict_ego_audit,hamer_windows.only_window_ids=handwin_0000,hamer_windows.overwrite=True
 ```
 
 Then set:
 
 ```bash
-export HAMER_RUN=$(find "$HANDWIN_DIR" -path "*hamer_windows_left_v1/handwin_*" -type d | head -1)
+export HAMER_RUN=$HANDWIN_DIR/hand/hamer_raw
 export REFINED_JSON=$HAMER_RUN/ego_hand_candidates_refined.json
-export TEMPORAL_DIR=$HAMER_RUN/refined_temporal
-export FINAL_DIR=$HAMER_RUN/final_hand_result
-export JOINTS_GATE_DIR=$HAMER_RUN/joints21_pose_gate
-export ANCHORED_DIR=$HAMER_RUN/joints21_depth_anchored
+export FILTER_DIR=$HANDWIN_DIR/hand/filtered
+export JOINTS_GATE_DIR=$HANDWIN_DIR/hand/joints21_pose_gate
+export ANCHORED_DIR=$HANDWIN_DIR/hand/joints21_depth_anchored
+export FINAL_DIR=$HANDWIN_DIR/hand/final_hand_result
 ```
 
-Temporal outlier removal:
+Weak hand filter:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
   --pipelines egohand \
-  --nodes refined_temporal_gate \
-  --params refined_temporal_gate.enabled=True,refined_temporal_gate.manifest=$MANIFEST,refined_temporal_gate.refined_json=$REFINED_JSON,refined_temporal_gate.output_dir=$TEMPORAL_DIR,refined_temporal_gate.start=0,refined_temporal_gate.num_frames=1980,refined_temporal_gate.max_bbox_jump_px=220,refined_temporal_gate.max_bbox_area_change_ratio=3.0,refined_temporal_gate.max_mano_pose_jump=1.6,refined_temporal_gate.max_mesh_centroid_jump=0.18,refined_temporal_gate.max_mesh_vertex_rmse=0.08,refined_temporal_gate.local_window_radius=2,refined_temporal_gate.save_vis=True
-```
-
-Final hand result:
-
-```bash
-/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
-  --pipelines egohand \
-  --nodes final_hand_result \
-  --params final_hand_result.enabled=True,final_hand_result.tracks_json=$TEMPORAL_DIR/refined_temporal_gate_tracks.json,final_hand_result.output_dir=$FINAL_DIR,final_hand_result.copy_meshes=True,final_hand_result.copy_visuals=True
+  --nodes hand_filter \
+  --params hand_filter.enabled=True,hand_filter.manifest=$MANIFEST,hand_filter.refined_json=$REFINED_JSON,hand_filter.output_dir=$FILTER_DIR,hand_filter.start=0,hand_filter.num_frames=1980,hand_filter.max_bbox_jump_px=360,hand_filter.max_bbox_area_change_ratio=8.0,hand_filter.max_mano_pose_jump=0,hand_filter.max_mesh_centroid_jump=0,hand_filter.max_mesh_vertex_rmse=0,hand_filter.local_window_radius=2,hand_filter.save_vis=False
 ```
 
 21-joint pose gate:
@@ -362,7 +352,7 @@ Final hand result:
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
   --pipelines egohand \
   --nodes joints21_pose_gate \
-  --params joints21_pose_gate.enabled=True,joints21_pose_gate.final_tracks_json=$FINAL_DIR/final_hand_tracks.json,joints21_pose_gate.output_dir=$JOINTS_GATE_DIR,joints21_pose_gate.start=0,joints21_pose_gate.num_frames=1980
+  --params joints21_pose_gate.enabled=True,joints21_pose_gate.final_tracks_json=$FILTER_DIR/filtered_hand_tracks.json,joints21_pose_gate.output_dir=$JOINTS_GATE_DIR,joints21_pose_gate.start=0,joints21_pose_gate.num_frames=1980,joints21_pose_gate.drop_fingertips_below_wrist=True,joints21_pose_gate.image_height=1050,joints21_pose_gate.max_suspicious_wrist_y_ratio=0.55,joints21_pose_gate.min_fingertip_below_wrist_ratio=1.0,joints21_pose_gate.min_fingertip_below_wrist_delta=0.02
 ```
 
 Depth-anchored 21 joints:
@@ -373,6 +363,26 @@ Depth-anchored 21 joints:
   --pipelines egohand \
   --nodes depth_anchored_joints21 \
   --params depth_anchored_joints21.enabled=True,depth_anchored_joints21.manifest=$MANIFEST,depth_anchored_joints21.candidates_json=$JOINTS_GATE_DIR/final_hand_candidates_gated.json,depth_anchored_joints21.depth_dir=$DEPTH_DIR,depth_anchored_joints21.output_dir=$ANCHORED_DIR,depth_anchored_joints21.start=0,depth_anchored_joints21.num_frames=1980,depth_anchored_joints21.anchor_mode=wrist_palm,depth_anchored_joints21.max_depth_m=2.5,depth_anchored_joints21.overlay_frames=auto
+```
+
+Final hand result:
+
+```bash
+/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
+/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+  --pipelines egohand \
+  --nodes final_hand_result \
+  --params final_hand_result.enabled=True,final_hand_result.tracks_json=$JOINTS_GATE_DIR/final_hand_candidates_gated.json,final_hand_result.output_dir=$FINAL_DIR,final_hand_result.depth_anchored_json=$ANCHORED_DIR/joints21_depth_anchored.json,final_hand_result.depth_anchored_npz=$ANCHORED_DIR/joints21_depth_anchored.npz,final_hand_result.depth_anchored_summary_json=$ANCHORED_DIR/joints21_depth_anchored_summary.json,final_hand_result.copy_meshes=True
+```
+
+Final trajectory polish:
+
+```bash
+/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
+/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+  --pipelines egohand \
+  --nodes final_hand_trajectory_polish \
+  --params final_hand_trajectory_polish.enabled=True,final_hand_trajectory_polish.joints_json=$FINAL_DIR/joints21_depth_anchored.json,final_hand_trajectory_polish.output_dir=$FINAL_DIR,final_hand_trajectory_polish.manifest=$MANIFEST,final_hand_trajectory_polish.max_interp_gap=10,final_hand_trajectory_polish.wrist_jump_m=0.0,final_hand_trajectory_polish.max_local_wrist_deviation_m=0.0,final_hand_trajectory_polish.local_window_radius=5,final_hand_trajectory_polish.smooth_window=9,final_hand_trajectory_polish.smooth_relative_fingers=True,final_hand_trajectory_polish.write_preview=True
 ```
 
 ## Object Segmentation
@@ -391,8 +401,8 @@ annotations.
 Output:
 
 ```text
-$HAMER_RUN/sam3_object_tracks/
-$HAMER_RUN/sam3_object_tracks/combined/
+$HANDWIN_DIR/objects/sam3_object_tracks/
+$HANDWIN_DIR/objects/sam3_object_tracks/combined/
 ```
 
 ## Optional Nodes
@@ -416,10 +426,11 @@ The recommended hand/depth path is:
 
 ```text
 hamer_windows
-refined_temporal_gate
-final_hand_result
+hand_filter
 joints21_pose_gate
 depth_anchored_joints21
+final_hand_result
+final_hand_trajectory_polish
 ```
 
 ## External Processed Datasets

@@ -28,12 +28,12 @@ def _append_arg(args: list[str], name: str, value: Any) -> None:
 
 def _default_depth_output_dir(manifest: Path) -> Path:
     data_root = manifest.parent.parent if manifest.parent.name == "dataset_manifest" else manifest.parent
-    return data_root / "foundation_depth"
+    return data_root / "depth" / "foundation"
 
 
 def _default_fast_depth_output_dir(manifest: Path) -> Path:
     data_root = manifest.parent.parent if manifest.parent.name == "dataset_manifest" else manifest.parent
-    return data_root / "fast_foundation_depth"
+    return data_root / "depth" / "fast_foundation"
 
 
 def run_foundation_stereo_depth_node(config: dict[str, Any] | None) -> dict[str, Any]:

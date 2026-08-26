@@ -6,6 +6,8 @@ from roboego_hand_vis.objects.sam3_hand_clip import (
     build_sam3_hand_clip_plans_from_stage1,
     combine_sam3_object_tracks,
     collect_stage1_evidence,
+    default_output_dir,
+    infer_window_id_from_dir,
     infer_object_specs_from_stage1,
 )
 
@@ -114,6 +116,16 @@ def test_build_sam3_hand_clip_plan_uses_frames_dir_and_writes_prompt_metadata(tm
     assert metadata["prompt"]["object_name"] == "mouse"
     assert metadata["time_alignment"]["prompt_frame_idx"] == 0
     assert metadata["stage1_evidence"][0]["session_t"] == 150
+
+
+def test_sam3_helpers_support_hamer_raw_under_materialized_hand_window(tmp_path: Path):
+    hamer_raw = tmp_path / "hand_windows/handwin_0000_t000000_000065/hand/hamer_raw"
+    hamer_raw.mkdir(parents=True)
+
+    assert infer_window_id_from_dir(hamer_raw) == "handwin_0000"
+    assert default_output_dir(hamer_raw, "object_0") == (
+        tmp_path / "hand_windows/handwin_0000_t000000_000065/objects/sam3_object_tracks/object_0"
+    )
 
 
 def test_infer_object_specs_from_stage1_uses_attributes_and_merges_duplicates(tmp_path: Path):

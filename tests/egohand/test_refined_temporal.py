@@ -258,3 +258,31 @@ def test_refined_temporal_drops_large_mesh_vertex_rmse_with_stable_centroid(tmp_
     assert dropped["drop_reasons"] == ["large_mesh_vertex_rmse"]
     assert dropped["mesh_vertex_rmse_local"] > 1.0
     assert result["tracks"]["ego_left"][2] is not None
+
+
+def test_refined_temporal_preserves_hands_when_pose_and_mesh_gates_are_disabled(tmp_path: Path):
+    first = hand_with_pose(1, [100, 100, 200, 200], 0.0, side="right")
+    second = hand_with_pose(2, [105, 102, 205, 202], 5.0, side="right")
+    first["mesh_obj"] = write_mesh(tmp_path / "first.obj", [[0, 0, 0], [1, 0, 0], [0, 1, 0]])
+    second["mesh_obj"] = write_mesh(tmp_path / "second.obj", [[100, 100, 100], [101, 100, 100], [100, 101, 100]])
+    payload = {
+        "frames": [
+            {"frame_idx": 0, "ego_right_refined": first},
+            {"frame_idx": 1, "ego_right_refined": second},
+        ]
+    }
+
+    result = build_temporal_tracks_from_refined(
+        payload,
+        start=0,
+        num_frames=2,
+        max_bbox_jump_px=360,
+        max_bbox_area_change_ratio=8.0,
+        max_mano_pose_jump=0,
+        max_mesh_centroid_jump=0,
+        max_mesh_vertex_rmse=0,
+    )
+
+    assert result["frames"][1]["hands"]["ego_right"]["candidate_id"] == 2
+    assert result["frames"][1]["dropped_hands"] == {}
+    assert result["summary"]["ego_right"]["dropped"] == 0

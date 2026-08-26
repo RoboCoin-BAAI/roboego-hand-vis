@@ -1,7 +1,9 @@
 from roboego_hand_vis.pipelines.egohand.nodes import (
     run_depth_anchored_joints21_node,
     run_final_hand_result_node,
+    run_final_hand_trajectory_polish_node,
     run_hamer_windows_node,
+    run_hand_filter_node,
     run_joints21_pose_gate_node,
     run_legacy_export_joints21_node,
     run_legacy_mesh_depth_alignment_node,
@@ -35,7 +37,7 @@ def test_hamer_windows_node_runs_existing_cli(monkeypatch, tmp_path):
             "script": "scripts/hand/run_hamer_windows.py",
             "windows_json": str(tmp_path / "session/annotation/hand_estimation_windows_left_v1.json"),
             "segments_root": str(tmp_path / "session/segments"),
-            "output_subdir": "hamer_windows_left_v1",
+            "output_subdir": "hand/hamer_raw",
             "hamer_root": "/home/liuyou/Documents/hamer",
             "stage1_actions": str(tmp_path / "session/annotation/stage1_action_resolved_chunks/chunk_0000.json"),
             "hamer_python": "/envs/hamer/bin/python",
@@ -63,7 +65,7 @@ def test_hamer_windows_node_runs_existing_cli(monkeypatch, tmp_path):
                 "--segments_root",
                 str(tmp_path / "session/segments"),
                 "--output_subdir",
-                "hamer_windows_left_v1",
+                "hand/hamer_raw",
                 "--hamer_root",
                 "/home/liuyou/Documents/hamer",
                 "--stage1_actions",
@@ -198,6 +200,86 @@ def test_refined_temporal_gate_node_runs_existing_cli(monkeypatch, tmp_path):
     }
 
 
+def test_hand_filter_node_skips_when_disabled():
+    result = run_hand_filter_node({"enabled": False})
+
+    assert result == {
+        "stage": "hand_filter",
+        "status": "skipped",
+        "reason": "disabled",
+    }
+
+
+def test_hand_filter_node_runs_weak_filter_cli(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.egohand.nodes.subprocess.run", fake_run)
+    output_dir = tmp_path / "handwin/hand/filtered"
+
+    result = run_hand_filter_node(
+        {
+            "enabled": True,
+            "python": "/envs/ego/bin/python",
+            "script": "scripts/hand/track_refined_hands.py",
+            "manifest": str(tmp_path / "handwin/dataset_manifest/dataset_manifest.json"),
+            "refined_json": str(tmp_path / "handwin/hand/hamer_raw/ego_hand_candidates_refined.json"),
+            "output_dir": str(output_dir),
+            "start": 0,
+            "num_frames": 240,
+            "max_bbox_jump_px": 360,
+            "max_bbox_area_change_ratio": 8.0,
+            "max_mano_pose_jump": 0,
+            "max_mesh_centroid_jump": 0,
+            "max_mesh_vertex_rmse": 0,
+            "save_vis": False,
+        }
+    )
+
+    assert calls == [
+        {
+            "check": True,
+            "args": [
+                "/envs/ego/bin/python",
+                "scripts/hand/track_refined_hands.py",
+                "--manifest",
+                str(tmp_path / "handwin/dataset_manifest/dataset_manifest.json"),
+                "--refined_json",
+                str(tmp_path / "handwin/hand/hamer_raw/ego_hand_candidates_refined.json"),
+                "--output_dir",
+                str(output_dir),
+                "--output_name",
+                "filtered_hand_tracks.json",
+                "--start",
+                "0",
+                "--num_frames",
+                "240",
+                "--max_bbox_jump_px",
+                "360",
+                "--max_bbox_area_change_ratio",
+                "8.0",
+                "--max_mano_pose_jump",
+                "0",
+                "--max_mesh_centroid_jump",
+                "0",
+                "--max_mesh_vertex_rmse",
+                "0",
+                "--no-save_vis",
+            ],
+        }
+    ]
+    assert result == {
+        "stage": "hand_filter",
+        "status": "complete",
+        "manifest": str(tmp_path / "handwin/dataset_manifest/dataset_manifest.json"),
+        "refined_json": str(tmp_path / "handwin/hand/hamer_raw/ego_hand_candidates_refined.json"),
+        "output_dir": str(output_dir),
+        "tracks_json": str(output_dir / "filtered_hand_tracks.json"),
+    }
+
+
 def test_final_hand_result_node_skips_when_disabled():
     result = run_final_hand_result_node({"enabled": False})
 
@@ -224,11 +306,13 @@ def test_final_hand_result_node_runs_existing_cli(monkeypatch, tmp_path):
             "script": "scripts/hand/export_final_hand_result.py",
             "tracks_json": str(tmp_path / "handwin/refined_temporal_gate/refined_temporal_gate_tracks.json"),
             "output_dir": str(output_dir),
-            "temporal_annotated_dir": str(tmp_path / "handwin/refined_temporal_gate/temporal_annotated"),
-            "hamer_overlay_dir": str(tmp_path / "handwin/hamer_overlay"),
-            "source_frames_dir": str(tmp_path / "handwin/frames"),
+            "depth_anchored_json": str(tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored.json"),
+            "depth_anchored_npz": str(tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored.npz"),
+            "depth_anchored_summary_json": str(
+                tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored_summary.json"
+            ),
+            "copy_depth_anchored": True,
             "copy_meshes": True,
-            "copy_visuals": False,
         }
     )
 
@@ -242,14 +326,14 @@ def test_final_hand_result_node_runs_existing_cli(monkeypatch, tmp_path):
                 str(tmp_path / "handwin/refined_temporal_gate/refined_temporal_gate_tracks.json"),
                 "--output_dir",
                 str(output_dir),
-                "--temporal_annotated_dir",
-                str(tmp_path / "handwin/refined_temporal_gate/temporal_annotated"),
-                "--hamer_overlay_dir",
-                str(tmp_path / "handwin/hamer_overlay"),
-                "--source_frames_dir",
-                str(tmp_path / "handwin/frames"),
+                "--depth_anchored_json",
+                str(tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored.json"),
+                "--depth_anchored_npz",
+                str(tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored.npz"),
+                "--depth_anchored_summary_json",
+                str(tmp_path / "handwin/hand/joints21_depth_anchored/joints21_depth_anchored_summary.json"),
+                "--copy_depth_anchored",
                 "--copy_meshes",
-                "--no-copy_visuals",
             ],
         }
     ]
@@ -260,6 +344,8 @@ def test_final_hand_result_node_runs_existing_cli(monkeypatch, tmp_path):
         "output_dir": str(output_dir),
         "final_tracks_json": str(output_dir / "final_hand_tracks.json"),
         "final_summary_json": str(output_dir / "final_hand_summary.json"),
+        "joints21_depth_anchored_json": str(output_dir / "joints21_depth_anchored.json"),
+        "joints21_depth_anchored_npz": str(output_dir / "joints21_depth_anchored.npz"),
     }
 
 
@@ -270,6 +356,73 @@ def test_joints21_pose_gate_node_skips_when_disabled():
         "stage": "joints21_pose_gate",
         "status": "skipped",
         "reason": "disabled",
+    }
+
+
+def test_final_hand_trajectory_polish_node_runs_cli(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.egohand.nodes.subprocess.run", fake_run)
+    output_dir = tmp_path / "handwin/hand/final_hand_result"
+    joints_json = output_dir / "joints21_depth_anchored.json"
+
+    result = run_final_hand_trajectory_polish_node(
+        {
+            "enabled": True,
+            "python": "/envs/ego/bin/python",
+            "script": "scripts/hand/polish_final_hand_trajectory.py",
+            "joints_json": str(joints_json),
+            "output_dir": str(output_dir),
+            "manifest": str(tmp_path / "handwin/dataset_manifest/dataset_manifest.json"),
+            "max_interp_gap": 10,
+            "wrist_jump_m": 0.0,
+            "max_local_wrist_deviation_m": 0.0,
+            "local_window_radius": 5,
+            "smooth_window": 9,
+            "smooth_relative_fingers": True,
+            "write_preview": True,
+        }
+    )
+
+    assert calls == [
+        {
+            "check": True,
+            "args": [
+                "/envs/ego/bin/python",
+                "scripts/hand/polish_final_hand_trajectory.py",
+                "--joints_json",
+                str(joints_json),
+                "--output_dir",
+                str(output_dir),
+                "--manifest",
+                str(tmp_path / "handwin/dataset_manifest/dataset_manifest.json"),
+                "--max_interp_gap",
+                "10",
+                "--wrist_jump_m",
+                "0.0",
+                "--max_local_wrist_deviation_m",
+                "0.0",
+                "--local_window_radius",
+                "5",
+                "--smooth_window",
+                "9",
+                "--smooth_relative_fingers",
+                "--write_preview",
+            ],
+        }
+    ]
+    assert result == {
+        "stage": "final_hand_trajectory_polish",
+        "status": "complete",
+        "joints_json": str(joints_json),
+        "output_dir": str(output_dir),
+        "smoothed_joints21_json": str(output_dir / "smoothed_joints21.json"),
+        "smoothed_joints21_npz": str(output_dir / "smoothed_joints21.npz"),
+        "trajectory_polish_report_json": str(output_dir / "trajectory_polish_report.json"),
+        "preview_video": str(output_dir / "hand_estimation_preview_smoothed.mp4"),
     }
 
 
@@ -299,6 +452,11 @@ def test_joints21_pose_gate_node_runs_existing_cli(monkeypatch, tmp_path):
             "max_palm_local_deviation_m": 0.25,
             "max_fingertip_local_deviation_m": 0.30,
             "min_finger_direction_dot": -0.15,
+            "drop_fingertips_below_wrist": True,
+            "image_height": 1050,
+            "max_suspicious_wrist_y_ratio": 0.55,
+            "min_fingertip_below_wrist_ratio": 1.0,
+            "min_fingertip_below_wrist_delta": 0.02,
             "local_window_radius": 2,
         }
     )
@@ -331,6 +489,15 @@ def test_joints21_pose_gate_node_runs_existing_cli(monkeypatch, tmp_path):
                 "0.3",
                 "--min_finger_direction_dot",
                 "-0.15",
+                "--drop_fingertips_below_wrist",
+                "--image_height",
+                "1050",
+                "--max_suspicious_wrist_y_ratio",
+                "0.55",
+                "--min_fingertip_below_wrist_ratio",
+                "1.0",
+                "--min_fingertip_below_wrist_delta",
+                "0.02",
                 "--local_window_radius",
                 "2",
             ],

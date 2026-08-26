@@ -14,14 +14,14 @@ from roboego_hand_vis.egohand.final_hand_result import export_final_hand_result
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Export a clean final hand result folder from temporal-gated hands.")
+    parser = argparse.ArgumentParser(description="Export a compact final hand result folder.")
     parser.add_argument("--tracks_json", required=True)
     parser.add_argument("--output_dir", required=True)
-    parser.add_argument("--temporal_annotated_dir", default="")
-    parser.add_argument("--hamer_overlay_dir", default="")
-    parser.add_argument("--source_frames_dir", default="")
+    parser.add_argument("--depth_anchored_json", default="")
+    parser.add_argument("--depth_anchored_npz", default="")
+    parser.add_argument("--depth_anchored_summary_json", default="")
+    parser.add_argument("--copy_depth_anchored", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--copy_meshes", action=argparse.BooleanOptionalAction, default=True)
-    parser.add_argument("--copy_visuals", action=argparse.BooleanOptionalAction, default=True)
     return parser.parse_args()
 
 
@@ -30,11 +30,13 @@ def main() -> None:
     result = export_final_hand_result(
         tracks_json=Path(args.tracks_json).expanduser(),
         output_dir=Path(args.output_dir).expanduser(),
-        temporal_annotated_dir=Path(args.temporal_annotated_dir).expanduser() if args.temporal_annotated_dir else None,
-        hamer_overlay_dir=Path(args.hamer_overlay_dir).expanduser() if args.hamer_overlay_dir else None,
-        source_frames_dir=Path(args.source_frames_dir).expanduser() if args.source_frames_dir else None,
+        depth_anchored_json=Path(args.depth_anchored_json).expanduser() if args.depth_anchored_json else None,
+        depth_anchored_npz=Path(args.depth_anchored_npz).expanduser() if args.depth_anchored_npz else None,
+        depth_anchored_summary_json=(
+            Path(args.depth_anchored_summary_json).expanduser() if args.depth_anchored_summary_json else None
+        ),
+        copy_depth_anchored=args.copy_depth_anchored,
         copy_meshes=args.copy_meshes,
-        copy_visuals=args.copy_visuals,
     )
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
