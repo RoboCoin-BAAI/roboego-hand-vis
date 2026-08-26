@@ -13,6 +13,7 @@ import yaml
 
 from roboego_hand_vis.vio.calibration import prepare_openvins_calibration
 from roboego_hand_vis.vio.prepare import prepare_openvins_run
+from roboego_hand_vis.vio.preview import fit_topdown_projection
 from roboego_hand_vis.vio.session import (
     ImuSample,
     load_camera_timestamps,
@@ -352,3 +353,15 @@ def test_openvins_root_option_controls_default_install_path(tmp_path: Path) -> N
 
     assert result.returncode == 2
     assert str(missing_root / "install_ros2" / "setup.bash") in result.stderr
+
+
+def test_topdown_projection_preserves_scale_and_flips_world_y() -> None:
+    positions = np.array([[-2.0, -1.0], [2.0, 1.0]])
+    projection = fit_topdown_projection(positions, width=400, height=300, margin=20)
+
+    pixels = projection.project(np.array([[0.0, 0.0], [1.0, 1.0]]))
+
+    np.testing.assert_array_equal(pixels[0], [200, 150])
+    assert pixels[1, 0] > pixels[0, 0]
+    assert pixels[1, 1] < pixels[0, 1]
+    assert pixels[1, 0] - pixels[0, 0] == pixels[0, 1] - pixels[1, 1]

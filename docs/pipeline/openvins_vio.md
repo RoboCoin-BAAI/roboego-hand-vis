@@ -144,6 +144,23 @@ Export the trajectory to Rerun from the project Python environment:
 The Rerun recording shows the sampled camera centers, continuous trajectory,
 and the estimated camera coordinate axes over time.
 
+For a long recording, do not put camera images into an RRD. Generate a
+streaming H.264 comparison video instead. It holds only the current frame and
+plot canvas in memory:
+
+```bash
+/home/user/miniconda3/envs/egoall/bin/python \
+  scripts/vio/export_camera_trajectory_video.py \
+  --video /home/user/ego_data/session_20260804_224442/videos/left.mp4 \
+  --trajectory tmp/openvins_session_224442_full/trajectory/trajectory.npz \
+  --output tmp/openvins_session_224442_full/trajectory/left_camera_vio.mp4 \
+  --fps 10
+```
+
+The left panel is the raw left camera. The right panel is the accumulated
+OpenVINS XY trajectory and current camera heading. This exporter writes MP4
+incrementally and does not create an RRD.
+
 ## Current Performance Boundary
 
 The estimator and the replay adapter are measured separately. OpenVINS writes
