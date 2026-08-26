@@ -128,6 +128,7 @@ def export_trajectory(
     camera_max_width: int = 960,
     jpeg_quality: int = 75,
     pose_sample_fps: float = 30.0,
+    trajectory_chunk_seconds: float = 5.0,
 ) -> dict[str, object]:
     timestamps, frame_indices, transforms = load_trajectory(trajectory_path)
     if not len(timestamps):
@@ -160,9 +161,11 @@ def export_trajectory(
         ),
         static=True,
     )
-    positions = transforms[:, :3, 3].astype(np.float32)
     next_pose_timestamp = float(timestamps[0])
     logged_pose_count = 0
+    trajectory_chunk_index = 0
+    trajectory_chunk_points: list[np.ndarray] = []
+    segments_per_chunk = max(2, round(pose_sample_fps * trajectory_chunk_seconds))
     for timestamp, frame_index, transform in zip(timestamps, frame_indices, transforms):
         if timestamp + 1e-9 < next_pose_timestamp and frame_index != frame_indices[-1]:
             continue
@@ -178,21 +181,32 @@ def export_trajectory(
         )
         rr.log(
             "world/current_camera_center",
-            rr.Points3D([transform[:3, 3]], colors=[255, 190, 60], radii=0.018),
+            rr.Points3D(
+                [transform[:3, 3]],
+                colors=[255, 245, 40],
+                radii=rr.Radius.ui_points(8.0),
+            ),
         )
+        position = np.asarray(transform[:3, 3], dtype=np.float32)
+        if not trajectory_chunk_points:
+            trajectory_chunk_points.append(position)
+        elif len(trajectory_chunk_points) > segments_per_chunk:
+            previous_position = trajectory_chunk_points[-1]
+            trajectory_chunk_index += 1
+            trajectory_chunk_points = [previous_position, position]
+        else:
+            trajectory_chunk_points.append(position)
+        if len(trajectory_chunk_points) >= 2:
+            rr.log(
+                f"world/trajectory/chunks/chunk_{trajectory_chunk_index:05d}",
+                rr.LineStrips3D(
+                    [np.asarray(trajectory_chunk_points)],
+                    colors=[60, 185, 255, 220],
+                    radii=0.018,
+                ),
+            )
         logged_pose_count += 1
         next_pose_timestamp = float(timestamps[0]) + logged_pose_count / pose_sample_fps
-
-    rr.log(
-        "world/trajectory",
-        rr.LineStrips3D([positions], colors=[80, 210, 255], radii=0.01),
-        static=True,
-    )
-    rr.log(
-        "world/pose_samples",
-        rr.Points3D(positions, colors=[255, 255, 255], radii=0.008),
-        static=True,
-    )
     camera_report = None
     if camera_video is not None and camera_timestamps is not None:
         camera_report = log_sampled_camera(
@@ -216,6 +230,9 @@ def export_trajectory(
         "pose_count": len(timestamps),
         "logged_pose_count": logged_pose_count,
         "pose_sample_fps": pose_sample_fps,
+        "trajectory_rendering": "incremental_chunks",
+        "trajectory_chunk_seconds": trajectory_chunk_seconds,
+        "trajectory_chunk_count": trajectory_chunk_index + 1,
         "first_frame_index": int(frame_indices[0]),
         "last_frame_index": int(frame_indices[-1]),
         "coordinate_convention": "T_world_camera",
@@ -238,6 +255,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--camera_max_width", type=int, default=960)
     parser.add_argument("--jpeg_quality", type=int, default=75)
     parser.add_argument("--pose_sample_fps", type=float, default=30.0)
+    parser.add_argument("--trajectory_chunk_seconds", type=float, default=5.0)
     return parser
 
 
@@ -249,9 +267,11 @@ def main() -> None:
         args.camera_sample_fps <= 0
         or args.camera_max_width <= 0
         or args.pose_sample_fps <= 0
+        or args.trajectory_chunk_seconds <= 0
     ):
         raise SystemExit(
-            "camera_sample_fps, camera_max_width, and pose_sample_fps must be positive"
+            "camera_sample_fps, camera_max_width, pose_sample_fps, and "
+            "trajectory_chunk_seconds must be positive"
         )
     if not 1 <= args.jpeg_quality <= 100:
         raise SystemExit("jpeg_quality must be between 1 and 100")
@@ -270,6 +290,7 @@ def main() -> None:
         camera_max_width=args.camera_max_width,
         jpeg_quality=args.jpeg_quality,
         pose_sample_fps=args.pose_sample_fps,
+        trajectory_chunk_seconds=args.trajectory_chunk_seconds,
     )
     print(json.dumps(report, indent=2))
 
