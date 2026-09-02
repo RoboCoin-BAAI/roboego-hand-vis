@@ -40,6 +40,8 @@ def test_sam3_hand_object_segmentation_node_runs_existing_script(monkeypatch, tm
             "checkpoint": "/models/sam3.pt",
             "fps": 30,
             "auto_from_stage1": True,
+            "clip_by_intervals": True,
+            "interval_expand_s": 2,
             "dry_run": True,
         }
     )
@@ -56,6 +58,8 @@ def test_sam3_hand_object_segmentation_node_runs_existing_script(monkeypatch, tm
                 str(stage1_actions),
                 "--windows_json",
                 str(windows_json),
+                "--sam3_script",
+                "scripts/object/run_sam3_video.py",
                 "--python",
                 "/env/py312/bin/python",
                 "--fps",
@@ -63,6 +67,9 @@ def test_sam3_hand_object_segmentation_node_runs_existing_script(monkeypatch, tm
                 "--checkpoint",
                 "/models/sam3.pt",
                 "--auto_from_stage1",
+                "--clip_by_intervals",
+                "--interval_expand_s",
+                "2",
                 "--dry_run",
             ],
         }
@@ -70,3 +77,27 @@ def test_sam3_hand_object_segmentation_node_runs_existing_script(monkeypatch, tm
     assert result["status"] == "complete"
     assert result["processed_count"] == 1
     assert result["hand_window_dirs"] == [str(hand_window_dir)]
+
+
+def test_sam3_hand_object_segmentation_node_uses_repo_local_runner_by_default(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.objects.nodes.subprocess.run", fake_run)
+
+    run_sam3_hand_object_segmentation_node(
+        {
+            "enabled": True,
+            "python": "/env/ego/bin/python",
+            "hand_window_dir": str(tmp_path / "handwin_0000"),
+            "stage1_actions": str(tmp_path / "annotation.json"),
+            "sam3_python": "/env/py312/bin/python",
+            "dry_run": True,
+        }
+    )
+
+    args = calls[0]["args"]
+    assert "--sam3_script" in args
+    assert args[args.index("--sam3_script") + 1] == "scripts/object/run_sam3_video.py"

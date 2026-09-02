@@ -1,5 +1,5 @@
 dataset:
-  name: wumei
+  name: raw
   type: raw_headband
   fps: 30
   camera_streams:
@@ -19,12 +19,62 @@ paths:
   stage1_actions: "{session}/annotation/stage1_action_resolved_chunks"
   processing_plan: "{session}/annotation/processing_plan_left_v1.json"
 
+workflows:
+  phase1_planning:
+    steps:
+      - qwen_annotation
+      - post_annotation_actions
+      - processing_plan
+      - hand_windows
+
+  phase1_depth:
+    strategy: duration_depth_workflow
+    short_max_s: 180
+    medium_max_s: 900
+    short_steps:
+      - materialize_session
+      - stereo_summary_quality_unit
+      - stereo_quality_unit
+      - fast_foundation_depth_unit
+      - depth_numeric_quality_unit
+      - archive_depth_cache_unit
+    medium_steps:
+      - materialize_hand_windows
+      - stage: prepare_stereo
+        all_hand_windows: true
+      - stage: stereo_summary_quality
+        all_hand_windows: true
+      - stage: stereo_quality
+        all_hand_windows: true
+      - stage: fast_foundation_depth
+        all_hand_windows: true
+      - stage: depth_numeric_quality
+        all_hand_windows: true
+      - stage: archive_depth_cache
+        all_hand_windows: true
+    long_steps:
+      - materialize_segment_hand_windows
+      - stage: stereo_summary_quality
+        all_hand_windows: true
+      - stage: stereo_quality
+        all_hand_windows: true
+      - stage: fast_foundation_depth
+        all_hand_windows: true
+      - stage: depth_numeric_quality
+        all_hand_windows: true
+      - stage: archive_depth_cache
+        all_hand_windows: true
+
 stages:
   raw_quality:
     pipeline: quality
-    node: raw_headband_integrity_check
+    node: raw_headband_quality_gate
+    selector: --to-nodes
     scope: session
     param_namespace: raw_headband_quality
+    extra_params:
+      raw_headband_quality_gate:
+        strict: false
     params:
       enabled: true
       session_dir: "{session}"
@@ -33,13 +83,41 @@ stages:
 
   pre_semantic_quality:
     pipeline: quality
-    node: pre_semantic_quality_gate
+    node: video_simple_quality_gate
+    selector: --to-nodes
     scope: session
     param_namespace: pre_semantic_quality
+    extra_params:
+      raw_headband_quality:
+        enabled: true
+        session_dir: "{session}"
+        output_root: "{session}"
+        overwrite: true
+      raw_headband_quality_gate:
+        strict: false
     params:
       enabled: true
       video: "{session}/videos/left.mp4"
-      output_json: "{session}/annotation/pre_semantic_quality_gate_left.json"
+      output_json: "{session}/annotation/video_simple_quality_left.json"
+
+  video_simple_quality:
+    pipeline: quality
+    node: video_simple_quality_gate
+    selector: --to-nodes
+    scope: session
+    param_namespace: pre_semantic_quality
+    extra_params:
+      raw_headband_quality:
+        enabled: true
+        session_dir: "{session}"
+        output_root: "{session}"
+        overwrite: true
+      raw_headband_quality_gate:
+        strict: false
+    params:
+      enabled: true
+      video: "{session}/videos/left.mp4"
+      output_json: "{session}/annotation/video_simple_quality_left.json"
 
   qwen_annotation:
     pipeline: __default__
@@ -52,13 +130,13 @@ stages:
         enabled: true
         session_dir: "{session}"
         output_root: "{session}"
-        overwrite: false
+        overwrite: true
       raw_headband_quality_gate:
         strict: false
       pre_semantic_quality:
         enabled: true
         video: "{session}/videos/left.mp4"
-        output_json: "{session}/annotation/pre_semantic_quality_gate_left.json"
+        output_json: "{session}/annotation/video_simple_quality_left.json"
     params:
       enabled: true
       video: "{session}/videos/left.mp4"
@@ -71,17 +149,17 @@ stages:
       prompt: docs/prompts/qwen_frame_annotation_v5_en.md
       fps: 1
       start_s: 0
-      duration_s: 90
+      use_video_simple_quality: true
       max_width: 768
       batch_size: 10
       batches_per_chunk: 5
-      model: qwen-vl-plus
+      model: qwen3.6-flash
       timeout_s: 120
       max_retries: 3
       retry_sleep_s: 5
       resume: true
 
-  stage1_actions:
+  post_annotation_actions:
     pipeline: semantic
     node: stage1_action_text_resolver_chunks
     selector: --to-nodes
@@ -141,6 +219,73 @@ stages:
         - right
       overwrite: true
 
+  materialize_session:
+    pipeline: datasets
+    node: prepare_stereo_unit
+    scope: session
+    param_namespace: prepare_stereo_unit
+    params:
+      enabled: true
+      session: "{session}"
+      unit_root: "{session}"
+      roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+      model: equidistant
+      balance: 0.0
+      overwrite: true
+
+  materialize_segments:
+    pipeline: datasets
+    node: export_selected_video_segments
+    scope: session
+    param_namespace: export_selected_video_segments
+    params:
+      enabled: true
+      session: "{session}"
+      processing_plan: "{session}/annotation/processing_plan_left_v1.json"
+      output_dir: "{session}/segments"
+      camera_streams:
+        - left
+        - right
+      overwrite: true
+
+  materialize_segment_hand_windows:
+    pipeline: datasets
+    node: export_hand_window_segments
+    selector: --to-nodes
+    scope: session
+    param_namespace: export_hand_window_segments
+    extra_params:
+      export_selected_video_segments:
+        enabled: true
+        session: "{session}"
+        processing_plan: "{session}/annotation/processing_plan_left_v1.json"
+        output_dir: "{session}/segments"
+        camera_streams:
+          - left
+          - right
+        overwrite: true
+      prepare_selected_segments:
+        enabled: true
+        session: "{session}"
+        segments_root: "{session}/segments"
+        roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+        model: equidistant
+        balance: 0.0
+        overwrite: true
+    params:
+      enabled: true
+      segments_root: "{session}/segments"
+      hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+      overwrite: true
+
+  materialize_auto:
+    strategy: duration_materialization
+    short_max_s: 180
+    medium_max_s: 900
+    short_stage: materialize_session
+    medium_stage: materialize_hand_windows
+    long_stage: materialize_segment_hand_windows
+
   prepare_segments:
     pipeline: datasets
     node: prepare_selected_segments
@@ -154,6 +299,20 @@ stages:
       model: equidistant
       balance: 0.0
 
+  prepare_stereo:
+    pipeline: datasets
+    node: prepare_stereo_unit
+    scope: unit
+    param_namespace: prepare_stereo_unit
+    params:
+      enabled: true
+      session: "{session}"
+      unit_root: "{unit}"
+      roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+      model: equidistant
+      balance: 0.0
+      overwrite: true
+
   export_hand_window_segments:
     pipeline: datasets
     node: export_hand_window_segments
@@ -163,6 +322,36 @@ stages:
       enabled: true
       segments_root: "{session}/segments"
       hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+      overwrite: true
+
+  direct_hand_window_segments:
+    pipeline: datasets
+    node: export_direct_hand_window_segments
+    scope: session
+    param_namespace: export_direct_hand_window_segments
+    params:
+      enabled: true
+      session: "{session}"
+      hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+      output_dir: "{session}/hand_windows"
+      camera_streams:
+        - left
+        - right
+      overwrite: true
+
+  materialize_hand_windows:
+    pipeline: datasets
+    node: export_direct_hand_window_segments
+    scope: session
+    param_namespace: export_direct_hand_window_segments
+    params:
+      enabled: true
+      session: "{session}"
+      hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+      output_dir: "{session}/hand_windows"
+      camera_streams:
+        - left
+        - right
       overwrite: true
 
   stereo_quality:
@@ -176,6 +365,40 @@ stages:
       output_dir: "{hand_window}/quality/stereo_segments"
       sample_every_s: 1.0
       orb_every_s: 5.0
+
+  stereo_summary_quality:
+    pipeline: quality
+    node: stereo_summary_quality
+    scope: hand_window
+    param_namespace: stereo_summary_quality
+    params:
+      enabled: true
+      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{hand_window}/quality/stereo_summary"
+      sample_count: 12
+
+  stereo_quality_unit:
+    pipeline: quality
+    node: stereo_segment_quality
+    scope: unit
+    param_namespace: stereo_segment_quality
+    params:
+      enabled: true
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/quality/stereo_segments"
+      sample_every_s: 1.0
+      orb_every_s: 5.0
+
+  stereo_summary_quality_unit:
+    pipeline: quality
+    node: stereo_summary_quality
+    scope: unit
+    param_namespace: stereo_summary_quality
+    params:
+      enabled: true
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/quality/stereo_summary"
+      sample_count: 12
 
   fast_foundation_depth:
     pipeline: depth
@@ -193,8 +416,89 @@ stages:
       valid_iters: 4
       max_disp: 192
       max_depth_m: 4.0
+      save_depth_png: true
+      save_npy: false
       save_vis: true
       overwrite: true
+
+  fast_foundation_depth_unit:
+    pipeline: depth
+    node: fast_foundation_stereo_depth
+    scope: unit
+    param_namespace: fast_foundation_stereo_depth
+    params:
+      enabled: true
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/depth/fast_foundation"
+      fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
+      start: 0
+      num_frames: "{num_frames}"
+      scale: 1.0
+      valid_iters: 4
+      max_disp: 192
+      max_depth_m: 4.0
+      save_depth_png: true
+      save_npy: false
+      save_vis: true
+      overwrite: true
+
+  depth_quality:
+    pipeline: quality
+    node: depth_quality
+    scope: hand_window
+    param_namespace: depth_quality
+    params:
+      enabled: true
+      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
+      depth_dir: "{hand_window}/depth/fast_foundation"
+      output_dir: "{hand_window}/quality/depth"
+      stereo_quality_report: "{hand_window}/quality/stereo_segments/bad_segments.json"
+      start: 0
+      num_frames: "{num_frames}"
+      min_depth_m: 0.15
+      max_depth_m: 4.0
+
+  depth_numeric_quality:
+    pipeline: quality
+    node: depth_numeric_quality
+    scope: hand_window
+    param_namespace: depth_numeric_quality
+    params:
+      enabled: true
+      depth_dir: "{hand_window}/depth/fast_foundation"
+      output_dir: "{hand_window}/quality/depth_numeric"
+      start: 0
+      num_frames: "{num_frames}"
+      min_depth_m: 0.15
+      max_depth_m: 4.0
+      min_valid_depth_ratio: 0.5
+      min_depth_std_m: 0.02
+      min_depth_iqr_m: 0.03
+      max_near_ratio: 0.8
+      max_far_ratio: 0.8
+      max_median_delta_m: 0.5
+      min_valid_mask_iou: 0.5
+
+  depth_numeric_quality_unit:
+    pipeline: quality
+    node: depth_numeric_quality
+    scope: unit
+    param_namespace: depth_numeric_quality
+    params:
+      enabled: true
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/quality/depth_numeric"
+      start: 0
+      num_frames: "{num_frames}"
+      min_depth_m: 0.15
+      max_depth_m: 4.0
+      min_valid_depth_ratio: 0.5
+      min_depth_std_m: 0.02
+      min_depth_iqr_m: 0.03
+      max_near_ratio: 0.8
+      max_far_ratio: 0.8
+      max_median_delta_m: 0.5
+      min_valid_mask_iou: 0.5
 
   archive_depth_cache:
     pipeline: depth
@@ -208,8 +512,36 @@ stages:
       max_depth_m: 4.0
       invalid_value: 0
       fps: 30
+      write_png: false
       write_avi: true
       write_preview: true
+      preview_mode: near
+      preview_near_min_m: 0.15
+      preview_near_max_m: 3.0
+      preview_contrast_percentile: 2.0
+      preview_codec: mp4v
+      delete_npy: false
+      delete_png: false
+
+  archive_depth_cache_unit:
+    pipeline: depth
+    node: archive_depth_cache
+    scope: unit
+    param_namespace: archive_depth_cache
+    params:
+      enabled: true
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/depth/fast_foundation_archive"
+      max_depth_m: 4.0
+      invalid_value: 0
+      fps: 30
+      write_png: false
+      write_avi: true
+      write_preview: true
+      preview_mode: near
+      preview_near_min_m: 0.15
+      preview_near_max_m: 3.0
+      preview_contrast_percentile: 2.0
       preview_codec: mp4v
       delete_npy: false
       delete_png: false
@@ -222,10 +554,11 @@ stages:
     params:
       enabled: true
       windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
-      segments_root: "{session}/segments"
+      segments_root: "{session}/hand_windows"
       output_subdir: hand/hamer_raw
       hamer_root: /home/liuyou/Documents/hamer
       stage1_actions: "{session}/annotation/stage1_action_resolved_chunks"
+      wearer_regions_json: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
       hamer_python: /home/liuyou/miniconda3/envs/hamer/bin/python
       body_detector: regnety
       batch_size: 1
@@ -332,6 +665,10 @@ stages:
       stage1_actions: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
       windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
       auto_from_stage1: true
+      clip_by_intervals: true
+      interval_expand_s: 0
+      interval_merge_gap_s: 0
+      sam3_script: scripts/object/run_sam3_video.py
       sam3_python: /home/liuyou/miniconda3/envs/py312/bin/python
       checkpoint: /home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
       fps: 30

@@ -74,6 +74,7 @@ def run_hamer_windows_node(config: dict[str, Any] | None) -> dict[str, Any]:
     _append_arg(args, "--segments_root", config.get("segments_root"))
     _append_arg(args, "--output_subdir", config.get("output_subdir"))
     args.extend(["--hamer_root", hamer_root, "--stage1_actions", stage1_actions])
+    _append_arg(args, "--wearer_regions_json", config.get("wearer_regions_json"))
     _append_arg(args, "--python", hamer_python)
     _append_arg(args, "--body_detector", config.get("body_detector"))
     _append_arg(args, "--batch_size", config.get("batch_size"))

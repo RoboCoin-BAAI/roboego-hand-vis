@@ -21,6 +21,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_subdir", default="hand/hamer_raw", help="Subdirectory under each materialized hand window when using --segments_root.")
     parser.add_argument("--hamer_root", required=True)
     parser.add_argument("--stage1_actions", required=True)
+    parser.add_argument(
+        "--wearer_regions_json",
+        default=None,
+        help="Frame-level annotation JSON containing wearer_region. Defaults to --stage1_actions only when it is a file.",
+    )
     parser.add_argument("--body_detector", default="regnety")
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--python", default=sys.executable, help="Python executable used to run each HaMeR window.")
@@ -63,6 +68,7 @@ def build_window_command_plan(
     accept_uncertain_refined: bool = False,
     wearer_roi_x_margin_ratio: float | None = None,
     wearer_roi_y_margin_ratio: float | None = None,
+    wearer_regions_json: str | None = None,
     max_windows: int | None = None,
 ) -> list[dict[str, Any]]:
     payload = json.loads(Path(windows_json).expanduser().read_text(encoding="utf-8"))
@@ -140,6 +146,7 @@ def build_window_command_plan(
                     output_dir=str(output_dir),
                     hamer_root=hamer_root,
                     stage1_actions=stage1_actions,
+                    wearer_regions_json=wearer_regions_json,
                     start=start,
                     num_frames=num_frames,
                     body_detector=body_detector,
@@ -181,14 +188,19 @@ def _resolve_window_io(
             "num_frames": None,
             "materialized_hand_window": False,
         }
-    segment_id = str(window.get("source_segment_id") or "").strip()
-    if not segment_id:
-        raise ValueError(f"Window missing source_segment_id: {window.get('window_id')}")
-    segment_dir = _find_segment_dir(Path(segments_root), segment_id)
-    hand_window_dir = _find_hand_window_dir(segment_dir, str(window.get("window_id") or ""))
+    root = Path(segments_root)
+    if _looks_like_hand_windows_root(root):
+        segment_dir = None
+        hand_window_dir = _find_direct_hand_window_dir(root, str(window.get("window_id") or ""))
+    else:
+        segment_id = str(window.get("source_segment_id") or "").strip()
+        if not segment_id:
+            raise ValueError(f"Window missing source_segment_id: {window.get('window_id')}")
+        segment_dir = _find_segment_dir(root, segment_id)
+        hand_window_dir = _find_hand_window_dir(segment_dir, str(window.get("window_id") or ""))
     if hand_window_dir is None:
         raise FileNotFoundError(
-            f"Missing materialized hand-window directory for {window.get('window_id')} under {segment_dir / 'hand_windows'}"
+            f"Missing materialized hand-window directory for {window.get('window_id')} under {root}"
         )
     manifest_path = hand_window_dir / "dataset_manifest/dataset_manifest.json"
     if not manifest_path.exists():
@@ -200,9 +212,28 @@ def _resolve_window_io(
         "output_root": hand_window_dir / output_subdir,
         "segment_dir": segment_dir,
         "start": 0,
-        "num_frames": int((window.get("segment_frame_range") or {}).get("num_frames", 0)),
+        "num_frames": _infer_manifest_frame_count(manifest_path)
+        or int((window.get("segment_frame_range") or {}).get("num_frames", 0)),
         "materialized_hand_window": True,
     }
+
+
+def _looks_like_hand_windows_root(root: Path) -> bool:
+    return root.name == "hand_windows" or any(path.is_dir() and path.name.startswith("handwin_") for path in root.glob("handwin_*"))
+
+
+def _find_direct_hand_window_dir(hand_windows_root: Path, window_id: str) -> Path | None:
+    if not window_id:
+        return None
+    exact = hand_windows_root / window_id
+    if exact.is_dir():
+        return exact
+    matches = sorted(path for path in hand_windows_root.glob(f"{window_id}_*") if path.is_dir())
+    if not matches:
+        return None
+    if len(matches) > 1:
+        raise RuntimeError(f"Multiple hand-window directories for {window_id} under {hand_windows_root}: {matches}")
+    return matches[0]
 
 
 def _find_segment_dir(segments_root: Path, segment_id: str) -> Path:
@@ -239,6 +270,30 @@ def _preferred_depth_dir(hand_window_dir: Path) -> Path | None:
     return None
 
 
+def _infer_manifest_frame_count(manifest_path: Path) -> int | None:
+    try:
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    videos = payload.get("videos")
+    if not isinstance(videos, dict):
+        return None
+    counts: list[int] = []
+    for camera in ("left", "right"):
+        entry = videos.get(camera)
+        if not isinstance(entry, dict):
+            continue
+        try:
+            count = int(entry.get("frame_count", 0))
+        except (TypeError, ValueError):
+            continue
+        if count > 0:
+            counts.append(count)
+    if not counts:
+        return None
+    return min(counts)
+
+
 def _window_command(
     *,
     manifest: str,
@@ -246,6 +301,7 @@ def _window_command(
     output_dir: str,
     hamer_root: str,
     stage1_actions: str,
+    wearer_regions_json: str | None,
     start: int,
     num_frames: int,
     body_detector: str,
@@ -259,6 +315,10 @@ def _window_command(
     wearer_roi_x_margin_ratio: float | None = None,
     wearer_roi_y_margin_ratio: float | None = None,
 ) -> list[str]:
+    wearer_regions_source = wearer_regions_json
+    if not wearer_regions_source and Path(stage1_actions).is_file():
+        wearer_regions_source = stage1_actions
+
     command = [
         python_executable,
         str(PROJECT_ROOT / "scripts/hand/run_hamer_ego_filter.py"),
@@ -284,11 +344,11 @@ def _window_command(
         stage1_hand_policy,
         "--stage1_time_offset_s",
         str(stage1_time_offset_s),
-        "--wearer_regions_json",
-        stage1_actions,
         "--refine_mode",
         refine_mode,
     ]
+    if wearer_regions_source:
+        command.extend(["--wearer_regions_json", wearer_regions_source])
     if depth_dir:
         command.extend(["--depth_dir", depth_dir])
     if wearer_roi_x_margin_ratio is not None:
@@ -317,6 +377,7 @@ def main() -> None:
         output_subdir=args.output_subdir,
         hamer_root=args.hamer_root,
         stage1_actions=args.stage1_actions,
+        wearer_regions_json=args.wearer_regions_json,
         body_detector=args.body_detector,
         batch_size=args.batch_size,
         save_mesh=args.save_mesh,

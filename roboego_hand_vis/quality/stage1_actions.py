@@ -15,17 +15,17 @@ ACTION_PATTERNS: list[tuple[str, list[str]]] = [
     ("put into", [r"\bput(?:s|ting)?\s+(?:it\s+|them\s+|.+?\s+)?(?:in|into)\b", r"\bplac(?:e|es|ing|ed)\s+.+?\s+(?:in|into)\b"]),
     ("take from", [r"\btak(?:e|es|ing|en)\s+.+?\s+from\b"]),
     ("put back", [r"\bput(?:s|ting)?\s+.+?\s+back\b", r"\breturn(?:s|ing|ed)?\s+.+?\b"]),
-    ("pick", [r"\bpick(?:s|ing|ed)?\s+up\b", r"\bpicks?\b"]),
+    ("pick", [r"\bpick(?:s|ing|ed)?\s+up\b", r"\bpicks?\b", r"\btak(?:e|es|ing|en)\b(?!\s+(?:out|from)\b)"]),
     ("hold", [r"\bhold(?:s|ing)?\b", r"\bheld\b"]),
     ("carry", [r"\bcarry(?:|ing|ies|ied)\b"]),
     ("support", [r"\bsupport(?:s|ing|ed)?\b", r"\bstabiliz(?:e|es|ing|ed)\b"]),
     ("touch", [r"\btouch(?:es|ing|ed)?\b"]),
-    ("reach", [r"\breach(?:es|ing|ed)?\s+(?:toward|for|to)\b"]),
+    ("reach", [r"\breach(?:es|ing|ed)?\s+(?:toward|for|to)\b", r"\bmov(?:e|es|ing|ed)\s+(?:the\s+)?(?:left|right)?\s*hand\s+(?:toward|for|to)\b"]),
     ("point", [r"\bpoint(?:s|ing|ed)?\s+(?:at|to|toward)\b"]),
-    ("scan", [r"\bscan(?:s|ning|ned)?\b"]),
+    ("scan", [r"\bscan(?:s|ning|ned)?\b", r"\bswip(?:e|es|ing|ed)\b[^,.;&]{0,64}\b(?:scanner|barcode)\b"]),
     ("grasp", [r"\bgrasp(?:s|ing|ed)?\b", r"\bgrab(?:s|bing|bed)?\b"]),
     ("release", [r"\breleas(?:e|es|ing|ed)\b", r"\blet(?:s|ting)?\s+go\b"]),
-    ("place", [r"\bplac(?:e|es|ing|ed)\b", r"\bput(?:s|ting)?\s+down\b"]),
+    ("place", [r"\bplac(?:e|es|ing|ed)\b", r"\bput(?:s|ting)?\s+down\b", r"\bset(?:s|ting)?\s+(?:it\s+|them\s+|.+?\s+)?down\b"]),
     ("press", [r"\bpress(?:es|ing|ed)?\b", r"\btap(?:s|ping|ped)?\b"]),
     ("rotate", [r"\brotat(?:e|es|ing|ed)\b", r"\bturn(?:s|ing|ed)?\b", r"\btwist(?:s|ing|ed)?\b"]),
     ("push", [r"\bpush(?:es|ing|ed)?\b"]),
@@ -33,7 +33,8 @@ ACTION_PATTERNS: list[tuple[str, list[str]]] = [
     ("flip", [r"\bflip(?:s|ping|ped)?\b"]),
     ("cut", [r"\bcut(?:s|ting)?\b"]),
     ("insert", [r"\binsert(?:s|ing|ed)?\b", r"\bplug(?:s|ging|ged)?\s+in\b"]),
-    ("operate", [r"\boperat(?:e|es|ing|ed)\b", r"\binteract(?:s|ing|ed)?\s+with\b", r"\bus(?:e|es|ing|ed)\b"]),
+    ("operate", [r"\boperat(?:e|es|ing|ed)\b", r"\binteract(?:s|ing|ed)?\s+with\b", r"\bus(?:e|es|ing|ed)\b", r"\badjust(?:s|ing|ed)?\b", r"\bmanipulat(?:e|es|ing|ed)\b", r"\bhandl(?:e|es|ing|ed)\b"]),
+    ("gesture", [r"\bgestur(?:e|es|ing|ed)\b", r"\bwav(?:e|es|ing|ed)\b"]),
     ("stir", [r"\bstir(?:s|ring|red)?\b"]),
     ("wipe", [r"\bwip(?:e|es|ing|ed)\b"]),
     ("fold", [r"\bfold(?:s|ing|ed)?\b"]),
@@ -254,6 +255,15 @@ def _task_object_can_use_visible_side(name: str, actions: list[str]) -> bool:
 
 
 def _bind_action_to_object(action: str, activity: str, attrs: list[dict[str, Any]]) -> dict[str, Any]:
+    if action == "gesture":
+        side = _hand_side_near_action(action, activity)
+        return {
+            "action": action,
+            "object_name": "unknown",
+            "hand_side": side if side in {"left", "right"} else "unknown",
+            "source": "unbound",
+            "confidence": 0.45,
+        }
     matched = _rank_activity_object_matches(action, activity, attrs)
     if len(matched) == 1 or (len(matched) > 1 and matched[0][0] < matched[1][0]):
         return _action_binding(action, matched[0][1], source="activity_object_match", confidence=0.9)
@@ -273,7 +283,7 @@ def _bind_action_to_object(action: str, activity: str, attrs: list[dict[str, Any
     return {
         "action": action,
         "object_name": "unknown",
-        "hand_side": "unknown",
+        "hand_side": side if side in {"left", "right"} else "unknown",
         "source": "unbound",
         "confidence": 0.45,
     }
@@ -338,10 +348,18 @@ def _action_object_distance(action: str, name: str, activity: str) -> int | None
             object_matches = list(re.finditer(rf"\b{re.escape(object_term)}\b", normalized))
             for action_match in action_matches:
                 for object_match in object_matches:
+                    if not _same_clause(action_match, object_match, normalized):
+                        continue
                     distance = abs(object_match.start() - action_match.start())
                     if distance <= 48 and (best is None or distance < best):
                         best = distance
     return best
+
+
+def _same_clause(first: re.Match[str], second: re.Match[str], text: str) -> bool:
+    left, right = sorted([first, second], key=lambda match: match.start())
+    between = text[left.end() : right.start()]
+    return re.search(r"[,;]|\b(?:and|then|while)\b", between) is None
 
 
 def _object_terms(name: str) -> list[str]:
@@ -410,7 +428,7 @@ def _action_terms(action: str) -> list[str]:
     return {
         "grasp": ["grasp", "grab"],
         "hold": ["hold", "held"],
-        "pick": ["pick"],
+        "pick": ["pick", "take"],
         "push": ["push"],
         "pull": ["pull"],
         "press": ["press", "tap"],
@@ -420,13 +438,15 @@ def _action_terms(action: str) -> list[str]:
         "put into": ["put", "place"],
         "take from": ["take"],
         "put back": ["put", "return"],
+        "place": ["place", "put", "set"],
         "carry": ["carry"],
         "support": ["support", "stabilize"],
         "touch": ["touch"],
-        "reach": ["reach"],
+        "reach": ["reach", "move"],
         "point": ["point"],
-        "scan": ["scan"],
-        "operate": ["operate", "interact", "use"],
+        "scan": ["scan", "swipe"],
+        "operate": ["operate", "interact", "use", "adjust", "manipulate", "handle"],
+        "gesture": ["gestur", "wav"],
         "stack": ["stack"],
         "load": ["load"],
         "unload": ["unload"],

@@ -49,6 +49,36 @@ def test_build_hand_windows_keeps_only_seconds_with_both_left_and_right_hands_vi
     assert windows["windows"][1]["objects"] == ["phone"]
 
 
+def test_build_hand_windows_uses_window_actions_for_semantic_label_and_keeps_source_label():
+    stage1 = {
+        "frames": [
+            frame(10, left=True, right=True, action="touch"),
+            frame(11, left=True, right=True, action="place"),
+        ]
+    }
+    plan = {
+        "segments": [
+            {
+                "segment_id": "seg_0000",
+                "start": 0,
+                "end": 20,
+                "semantic_label": "lift_open_operate_pick",
+            }
+        ]
+    }
+
+    windows = build_hand_estimation_windows(
+        stage1,
+        plan,
+        config=HandWindowConfig(context_expand_s=0, merge_gap_s=0, min_window_s=1),
+    )
+
+    window = windows["windows"][0]
+    assert window["actions"] == ["place", "touch"]
+    assert window["semantic_label"] == "place_touch"
+    assert window["source_segment_semantic_label"] == "lift_open_operate_pick"
+
+
 def test_build_hand_windows_expands_and_merges_close_two_hand_action_seconds():
     stage1 = {
         "frames": [

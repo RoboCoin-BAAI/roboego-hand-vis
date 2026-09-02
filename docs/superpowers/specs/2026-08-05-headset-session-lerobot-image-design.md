@@ -15,7 +15,7 @@ This step does not convert data, does not create LeRobot layout folders, does no
 Use the `py312` conda environment:
 
 ```bash
-conda run -n py312 python scripts/export/check_headband_data.py \
+conda run -n py312 python scripts/quality/check_raw_headband_integrity.py \
   --session data/session_20260804_224442 \
   --overwrite
 ```

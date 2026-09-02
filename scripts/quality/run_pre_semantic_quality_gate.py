@@ -16,17 +16,17 @@ from roboego_hand_vis.quality.pre_semantic_gate import PreSemanticGateConfig, ru
 def default_output_json_for_video(video_path: Path) -> Path:
     video_path = Path(video_path)
     if video_path.parent.name == "videos":
-        return video_path.parent.parent / "annotation" / f"pre_semantic_quality_gate_{video_path.stem}.json"
-    return video_path.parent / f"pre_semantic_quality_gate_{video_path.stem}.json"
+        return video_path.parent.parent / "annotation" / f"video_simple_quality_{video_path.stem}.json"
+    return video_path.parent / f"video_simple_quality_{video_path.stem}.json"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run pre-semantic low-cost quality gate on a single video.")
+    parser = argparse.ArgumentParser(description="Run video simple quality gate on a single video.")
     parser.add_argument("--video", required=True)
     parser.add_argument(
         "--output_json",
         default="",
-        help="Output report path. Defaults to <session>/annotation/pre_semantic_quality_gate_<camera>.json for session videos.",
+        help="Output report path. Defaults to <session>/annotation/video_simple_quality_<camera>.json for session videos.",
     )
     parser.add_argument("--sample_every_s", type=float, default=1.0)
     parser.add_argument("--dark_threshold", type=int, default=10)

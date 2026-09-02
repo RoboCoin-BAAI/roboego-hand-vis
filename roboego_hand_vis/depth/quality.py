@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 
 from .foundation import load_foundation_inputs_from_manifest, manifest_meta
+from .io import find_depth_path_for_frame, load_depth_frame
 
 
 @dataclass(frozen=True)
@@ -26,13 +27,7 @@ class DepthQualityConfig:
 
 
 def depth_filename(depth_dir: Path, frame_idx: int) -> Path:
-    preferred = depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-    if preferred.exists():
-        return preferred
-    fallback = depth_dir / f"frame_{frame_idx:06d}_depth_m.npy"
-    if fallback.exists():
-        return fallback
-    return preferred
+    return find_depth_path_for_frame(depth_dir, frame_idx)
 
 
 def read_rgb_frame(video_path: Path, frame_idx: int) -> np.ndarray:
@@ -281,7 +276,7 @@ def run_depth_quality_check(
             frames.append({"frame": frame_idx, "depth_path": str(path), "missing_depth": True, "warnings": ["missing_depth"]})
             continue
 
-        depth_m = np.load(path).astype(np.float32)
+        depth_m = load_depth_frame(depth_dir, frame_idx)
         left_rgb = read_rgb_frame(inputs.left_video, frame_idx)
         right_rgb = read_rgb_frame(inputs.right_video, frame_idx)
         stats = depth_stats(depth_m, config)

@@ -6,6 +6,8 @@ from scripts.hand.run_hamer_windows import build_window_command_plan
 
 def test_build_window_command_plan_uses_window_frame_range_and_policy(tmp_path: Path):
     windows_json = tmp_path / "windows.json"
+    stage1_json = tmp_path / "stage1.json"
+    stage1_json.write_text('{"frames": []}', encoding="utf-8")
     windows_json.write_text(
         json.dumps(
             {
@@ -36,7 +38,7 @@ def test_build_window_command_plan_uses_window_frame_range_and_policy(tmp_path: 
         depth_dir="depth",
         output_root=tmp_path / "out",
         hamer_root="/hamer",
-        stage1_actions="stage1.json",
+        stage1_actions=str(stage1_json),
         body_detector="regnety",
         batch_size=1,
         save_mesh=True,
@@ -57,7 +59,7 @@ def test_build_window_command_plan_uses_window_frame_range_and_policy(tmp_path: 
     assert "--accept_uncertain_refined" in plan[0]["command"]
     assert plan[0]["command"][plan[0]["command"].index("--wearer_roi_x_margin_ratio") + 1] == "0.0"
     assert plan[0]["command"][plan[0]["command"].index("--wearer_roi_y_margin_ratio") + 1] == "0.12"
-    assert plan[0]["command"][plan[0]["command"].index("--wearer_regions_json") + 1] == "stage1.json"
+    assert plan[0]["command"][plan[0]["command"].index("--wearer_regions_json") + 1] == str(stage1_json)
     assert plan[1]["stage1_hand_policy"] == "conservative"
 
 
@@ -221,6 +223,59 @@ def test_build_window_command_plan_can_filter_by_source_segment_id(tmp_path: Pat
     )
 
     assert [item["source_segment_id"] for item in plan] == ["seg_0004"]
+
+
+def test_build_window_command_plan_accepts_direct_hand_windows_root(tmp_path: Path):
+    windows_json = tmp_path / "windows.json"
+    windows_json.write_text(
+        json.dumps(
+            {
+                "windows": [
+                    {
+                        "window_id": "handwin_0001",
+                        "source_segment_id": "seg_0000",
+                        "start": 70,
+                        "segment_frame_range": {"start": 2100, "num_frames": 2460},
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    handwin_dir = tmp_path / "hand_windows/handwin_0001_t000070_000151_pick_place"
+    (handwin_dir / "dataset_manifest").mkdir(parents=True)
+    (handwin_dir / "depth/fast_foundation").mkdir(parents=True)
+    (handwin_dir / "dataset_manifest/dataset_manifest.json").write_text(
+        json.dumps({"videos": {"left": {"frame_count": 2450}, "right": {"frame_count": 2450}}}),
+        encoding="utf-8",
+    )
+
+    plan = build_window_command_plan(
+        windows_json=windows_json,
+        manifest=None,
+        depth_dir=None,
+        output_root=None,
+        segments_root=tmp_path / "hand_windows",
+        output_subdir="hand/hamer_raw",
+        hamer_root="/hamer",
+        stage1_actions="stage1.json",
+        wearer_regions_json="qwen_checkpoint.json",
+        body_detector="regnety",
+        batch_size=1,
+        save_mesh=True,
+        python_executable="/env/bin/python",
+        only_window_ids=None,
+        max_windows=None,
+    )
+
+    assert len(plan) == 1
+    assert plan[0]["num_frames"] == 2450
+    assert plan[0]["command"][plan[0]["command"].index("--manifest") + 1].endswith(
+        "hand_windows/handwin_0001_t000070_000151_pick_place/dataset_manifest/dataset_manifest.json"
+    )
+    assert plan[0]["command"][plan[0]["command"].index("--stage1_actions") + 1] == "stage1.json"
+    assert plan[0]["command"][plan[0]["command"].index("--wearer_regions_json") + 1] == "qwen_checkpoint.json"
+    assert plan[0]["output_dir"].endswith("hand_windows/handwin_0001_t000070_000151_pick_place/hand/hamer_raw")
 
 
 def test_build_window_command_plan_allows_hand_window_without_foundation_depth_for_hamer_only(tmp_path: Path):

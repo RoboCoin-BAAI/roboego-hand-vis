@@ -10,6 +10,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from roboego_hand_vis.depth.foundation import load_foundation_inputs_from_manifest  # noqa: E402
+from roboego_hand_vis.depth.numeric_quality import DepthNumericQualityConfig, run_depth_numeric_quality_check  # noqa: E402
 from roboego_hand_vis.depth.quality import DepthQualityConfig, run_depth_quality_check  # noqa: E402
 
 
@@ -126,3 +127,45 @@ def test_depth_quality_check_marks_stereo_quality_segment_warnings(tmp_path):
 
     assert "stereo_quality_sharpness_low" in report["frames"][0]["warnings"]
     assert "stereo_quality_p90_abs_dy" in report["frames"][0]["warnings"]
+
+
+def test_depth_numeric_quality_check_outputs_report_csv_and_bad_segments(tmp_path):
+    depth_dir = tmp_path / "depth"
+    output_dir = tmp_path / "depth_numeric_quality"
+    depth_dir.mkdir()
+    np.save(depth_dir / "frame_000000_foundation_depth_m.npy", np.full((8, 10), 1.0, dtype=np.float32))
+    varied = np.linspace(0.5, 1.5, 80, dtype=np.float32).reshape(8, 10)
+    np.save(depth_dir / "frame_000001_foundation_depth_m.npy", varied)
+    np.save(depth_dir / "frame_000002_foundation_depth_m.npy", varied + 1.2)
+
+    report = run_depth_numeric_quality_check(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthNumericQualityConfig(start=0, num_frames=4, min_depth_std_m=0.02, max_median_delta_m=0.5),
+    )
+
+    assert report["summary"]["frame_count"] == 4
+    assert report["summary"]["warning_frame_count"] == 3
+    assert "flat_depth_distribution" in report["frames"][0]["warnings"]
+    assert "large_median_depth_delta" in report["frames"][2]["warnings"]
+    assert report["frames"][3]["warnings"] == ["missing_depth"]
+    assert report["bad_segments"]
+    assert (output_dir / "depth_numeric_quality_report.json").exists()
+    assert (output_dir / "depth_numeric_quality_frames.csv").exists()
+
+
+def test_depth_numeric_quality_check_reads_uint16_png_depth(tmp_path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "depth_numeric_quality"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.full((8, 10), 1000, dtype=np.uint16))
+
+    report = run_depth_numeric_quality_check(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthNumericQualityConfig(start=0, num_frames=1),
+    )
+
+    assert report["frames"][0]["missing_depth"] is False
+    assert report["frames"][0]["depth_median_m"] == 1.0

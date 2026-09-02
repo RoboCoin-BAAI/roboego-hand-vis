@@ -102,6 +102,14 @@ def run_fast_foundation_stereo_depth_node(config: dict[str, Any] | None) -> dict
     _append_arg(args, "--hiera", config.get("hiera"))
     _append_arg(args, "--min_disp", config.get("min_disp"))
     _append_arg(args, "--max_depth_m", config.get("max_depth_m", 4.0))
+    if bool(config.get("save_depth_png", True)):
+        args.append("--save_depth_png")
+    else:
+        args.append("--no-save_depth_png")
+    if bool(config.get("save_npy", False)):
+        args.append("--save_npy")
+    else:
+        args.append("--no-save_npy")
     if bool(config.get("save_vis", True)):
         args.append("--save_vis")
     else:
@@ -138,6 +146,10 @@ def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any
     _append_arg(args, "--invalid_value", config.get("invalid_value", 0))
     _append_arg(args, "--fps", config.get("fps", 30.0))
     _append_arg(args, "--ffmpeg_bin", config.get("ffmpeg_bin"))
+    if bool(config.get("write_png", True)):
+        args.append("--write_png")
+    else:
+        args.append("--no-write_png")
     if bool(config.get("write_avi", True)):
         args.append("--write_avi")
     else:
@@ -146,6 +158,10 @@ def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any
         args.append("--write_preview")
     else:
         args.append("--no-write_preview")
+    _append_arg(args, "--preview_mode", config.get("preview_mode", "near"))
+    _append_arg(args, "--preview_near_min_m", config.get("preview_near_min_m", 0.15))
+    _append_arg(args, "--preview_near_max_m", config.get("preview_near_max_m", 3.0))
+    _append_arg(args, "--preview_contrast_percentile", config.get("preview_contrast_percentile", 2.0))
     _append_arg(args, "--preview_codec", config.get("preview_codec"))
     if bool(config.get("dry_run_avi", False)):
         args.append("--dry_run_avi")

@@ -7,6 +7,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from roboego_hand_vis.depth.numeric_quality import DepthNumericQualityConfig, run_depth_numeric_quality_check
 from roboego_hand_vis.depth.quality import DepthQualityConfig, run_depth_quality_check
 from roboego_hand_vis.quality.pre_semantic_gate import (
     PreSemanticGateConfig,
@@ -15,7 +16,6 @@ from roboego_hand_vis.quality.pre_semantic_gate import (
 from roboego_hand_vis.quality.raw_headband_integrity import (
     DEFAULT_CAMERA_STREAMS,
     DEFAULT_VIDEO_EXT,
-    SessionIntegrityError,
     export_quality_report,
 )
 from roboego_hand_vis.quality.raw_headband_rules import evaluate_quality_report
@@ -75,6 +75,9 @@ def run_raw_headband_quality_gate(
     report_path = Path(str(integrity_result["report_path"]))
     report = json.loads(report_path.read_text(encoding="utf-8"))
     result = evaluate_quality_report(report, config.get("rules") or {})
+    result["report_path"] = str(report_path)
+    report["raw_headband_quality_gate"] = result
+    report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     message = (
         f"Raw headband quality gate: status={result['status']} passed={result['passed']} "
         f"failed={len(result['failed_checks'])} warnings={len(result['warnings'])} "
@@ -82,8 +85,6 @@ def run_raw_headband_quality_gate(
     )
     LOGGER.info(message)
     print(message)
-    if bool(config.get("strict", True)) and not result["passed"]:
-        raise SessionIntegrityError(f"Raw headband quality gate failed: {', '.join(result['failed_checks'])}")
     return result
 
 
@@ -93,10 +94,10 @@ def run_pre_semantic_quality_gate_node(
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     config = config or {}
     if not bool(config.get("enabled", False)):
-        return {"stage": "pre_semantic_quality_gate", "status": "skipped", "reason": "disabled"}, []
+        return {"stage": "video_simple_quality_gate", "status": "skipped", "reason": "disabled"}, []
     if raw_gate_result and raw_gate_result.get("passed") is False:
         return {
-            "stage": "pre_semantic_quality_gate",
+            "stage": "video_simple_quality_gate",
             "status": "skipped",
             "reason": "raw_headband_quality_gate_not_passed",
         }, []
@@ -104,7 +105,7 @@ def run_pre_semantic_quality_gate_node(
     if not video:
         raise ValueError("pre_semantic_quality.video is required when enabled")
     video_path = Path(video)
-    output_json = Path(_optional_str(config.get("output_json")) or video_path.parent.parent / "annotation" / f"pre_semantic_quality_gate_{video_path.stem}.json")
+    output_json = Path(_optional_str(config.get("output_json")) or video_path.parent.parent / "annotation" / f"video_simple_quality_{video_path.stem}.json")
     gate_config = PreSemanticGateConfig(
         sample_every_s=float(config.get("sample_every_s", 1.0)),
         dark_threshold=int(config.get("dark_threshold", 10)),
@@ -248,6 +249,49 @@ def run_depth_quality_node(
         "depth_dir": str(depth_dir),
         "output_dir": str(output_dir),
         "report_path": str(output_dir / "depth_quality_report.json"),
+        "summary": report.get("summary", {}),
+        "outputs": report.get("outputs", {}),
+    }
+
+
+def run_depth_quality_node_from_config(config: dict[str, Any] | None) -> dict[str, Any]:
+    return run_depth_quality_node(None, config)
+
+
+def run_depth_numeric_quality_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "depth_numeric_quality", "status": "skipped", "reason": "disabled"}
+    depth_dir = Path(_required_value(config, "depth_dir", "depth_numeric_quality"))
+    output_dir = _optional_str(config.get("output_dir"))
+    if output_dir:
+        output_path = Path(output_dir)
+    else:
+        output_path = depth_dir.parent.parent / "quality" / "depth_numeric"
+    report = run_depth_numeric_quality_check(
+        depth_dir=depth_dir,
+        output_dir=output_path,
+        config=DepthNumericQualityConfig(
+            start=int(config.get("start", 0)),
+            num_frames=int(config.get("num_frames", 300)),
+            min_depth_m=float(config.get("min_depth_m", 0.15)),
+            max_depth_m=float(config.get("max_depth_m", 4.0)),
+            min_valid_depth_ratio=float(config.get("min_valid_depth_ratio", 0.5)),
+            min_depth_std_m=float(config.get("min_depth_std_m", 0.02)),
+            min_depth_iqr_m=float(config.get("min_depth_iqr_m", 0.03)),
+            max_near_ratio=float(config.get("max_near_ratio", 0.8)),
+            max_far_ratio=float(config.get("max_far_ratio", 0.8)),
+            edge_band_m=float(config.get("edge_band_m", 0.05)),
+            max_median_delta_m=float(config.get("max_median_delta_m", 0.5)),
+            min_valid_mask_iou=float(config.get("min_valid_mask_iou", 0.5)),
+        ),
+    )
+    return {
+        "stage": "depth_numeric_quality",
+        "status": "complete",
+        "depth_dir": str(depth_dir),
+        "output_dir": str(output_path),
+        "report_path": str(output_path / "depth_numeric_quality_report.json"),
         "summary": report.get("summary", {}),
         "outputs": report.get("outputs", {}),
     }

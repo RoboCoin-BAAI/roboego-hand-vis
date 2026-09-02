@@ -25,6 +25,7 @@ from roboego_hand_vis.quality.qwen_frame_annotation import (
     validate_frame_annotations,
     write_qwen_frame_annotation_output,
 )
+from scripts.quality import run_qwen_frame_annotation
 
 
 def write_image(path: Path) -> None:
@@ -40,6 +41,10 @@ def write_video(path: Path, frame_count: int = 20, fps: float = 1.0) -> None:
         frame = np.full((24, 32, 3), idx * 10 % 255, dtype=np.uint8)
         writer.write(frame)
     writer.release()
+
+
+def write_prompt(path: Path) -> None:
+    path.write_text("```text\nsystem\n```\n\n```text\nuser\n```\n", encoding="utf-8")
 
 
 def valid_payload() -> dict:
@@ -135,6 +140,14 @@ def test_read_english_v5_prompt_keeps_v4_schema_and_roi_policy():
     assert "wearer_region" in user_prompt
     assert "interaction_object_attributes" in user_prompt
     assert "object_id" not in user_prompt
+
+
+def test_qwen_frame_annotation_cli_defaults_to_english_v5_prompt(monkeypatch):
+    monkeypatch.setattr("sys.argv", ["run_qwen_frame_annotation.py", "--video", "left.mp4", "--output_json", "out.json"])
+
+    args = run_qwen_frame_annotation.parse_args()
+
+    assert args.prompt == "docs/prompts/qwen_frame_annotation_v5_en.md"
 
 
 def test_build_qwen_frame_annotation_messages_includes_timestamps_and_images(tmp_path: Path):
@@ -252,6 +265,91 @@ def test_call_qwen_frame_annotations_retries_download_timeout_and_records_usage(
     assert parsed["request_id"] == "request-test"
 
 
+def test_call_qwen_frame_annotations_retries_socket_timeout(monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "test-key")
+
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return json.dumps({"choices": [{"message": {"content": json.dumps(valid_payload())}}]}).encode("utf-8")
+
+    calls = [TimeoutError("The read operation timed out"), Response()]
+
+    def fake_urlopen(req, timeout):
+        result = calls.pop(0)
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        parsed = call_qwen_frame_annotations(
+            messages=[],
+            model="qwen-vl-plus",
+            max_retries=1,
+            retry_sleep_s=0,
+        )
+
+    assert parsed["status"] == "ok"
+    assert parsed["retry_count"] == 1
+    assert parsed["attempt_count"] == 2
+
+
+def test_call_qwen_frame_annotations_retries_validation_error_with_feedback(monkeypatch):
+    monkeypatch.setenv("DASHSCOPE_API_KEY", "test-key")
+    bad_payload = valid_payload()
+    bad_payload["frames"][1]["wearer_region"]["bbox"] = [0.9, 0.2, 0.8, 0.9]
+
+    class Response:
+        def __init__(self, payload: dict):
+            self.payload = payload
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def read(self):
+            return json.dumps(self.payload).encode("utf-8")
+
+    responses = [
+        Response({"choices": [{"message": {"content": json.dumps(bad_payload)}}]}),
+        Response({"choices": [{"message": {"content": json.dumps(valid_payload())}}]}),
+    ]
+    request_bodies = []
+
+    def fake_urlopen(req, timeout):
+        request_bodies.append(json.loads(req.data.decode("utf-8")))
+        return responses.pop(0)
+
+    messages = [
+        {"role": "system", "content": "system"},
+        {"role": "user", "content": [{"type": "text", "text": "annotate frames"}]},
+    ]
+
+    with patch("urllib.request.urlopen", side_effect=fake_urlopen):
+        parsed = call_qwen_frame_annotations(
+            messages=messages,
+            model="qwen-vl-plus",
+            max_retries=1,
+            retry_sleep_s=0,
+        )
+
+    assert parsed["status"] == "ok"
+    assert parsed["retry_count"] == 1
+    assert parsed["attempt_count"] == 2
+    assert len(request_bodies) == 2
+    retry_user_content = request_bodies[1]["messages"][1]["content"]
+    retry_feedback = retry_user_content[-1]["text"]
+    assert "Previous response failed schema validation" in retry_feedback
+    assert "wearer_region.bbox" in retry_feedback
+
+
 def test_data_inspection_failed_placeholder_frames_are_valid():
     parsed = {
         "status": "http_error",
@@ -267,6 +365,59 @@ def test_data_inspection_failed_placeholder_frames_are_valid():
     assert frames[0]["uncertainty"] == 1.0
     assert "data_inspection_failed" in frames[0]["notes"]
     validate_frame_annotations(frames)
+
+
+def test_qwen_annotation_cli_records_failed_batch_and_continues(monkeypatch, tmp_path: Path):
+    prompt = tmp_path / "prompt.md"
+    output_json = tmp_path / "annotations.json"
+    frame0 = tmp_path / "frame0.jpg"
+    frame1 = tmp_path / "frame1.jpg"
+    write_prompt(prompt)
+    write_image(frame0)
+    write_image(frame1)
+
+    monkeypatch.setattr(
+        run_qwen_frame_annotation,
+        "extract_video_frames",
+        lambda **kwargs: ([frame0, frame1], [0.0, 1.0]),
+    )
+    responses = [
+        {"status": "timeout_error", "raw_response": "read timed out", "retry_count": 1, "attempt_count": 2},
+        {"status": "ok", "frames": [valid_payload()["frames"][1]], "usage": {"total_tokens": 9}},
+    ]
+
+    def fake_call_qwen_frame_annotations(**kwargs):
+        return responses.pop(0)
+
+    monkeypatch.setattr(run_qwen_frame_annotation, "call_qwen_frame_annotations", fake_call_qwen_frame_annotations)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "run_qwen_frame_annotation.py",
+            "--video",
+            str(tmp_path / "left.mp4"),
+            "--output_json",
+            str(output_json),
+            "--prompt",
+            str(prompt),
+            "--batch_size",
+            "1",
+            "--retry_sleep_s",
+            "0",
+        ],
+    )
+
+    run_qwen_frame_annotation.main()
+
+    payload = json.loads(output_json.read_text(encoding="utf-8"))
+    checkpoint = json.loads((tmp_path / "annotations.json.checkpoint.json").read_text(encoding="utf-8"))
+    assert payload["status"] == "partial_failed"
+    assert payload["failed_batch_count"] == 1
+    assert payload["failed_batches"][0]["batch_idx"] == 0
+    assert payload["failed_batches"][0]["time_range"] == {"start": 0.0, "end": 0.0}
+    assert len(payload["frames"]) == 1
+    assert checkpoint["failed_batches"] == payload["failed_batches"]
+    assert checkpoint["completed_batches"] == [1]
 
 
 def test_parse_qwen_frame_annotation_response_accepts_markdown_json():
@@ -561,6 +712,15 @@ def test_write_qwen_frame_annotation_output_adds_metadata(tmp_path: Path):
     assert saved == payload
     assert payload["model"] == "qwen-vl-plus"
     assert payload["usage"] == {"input_tokens": 10, "output_tokens": 5, "total_tokens": 15}
+    assert payload["usage_summary"] == {
+        "input_tokens": 10,
+        "output_tokens": 5,
+        "total_tokens": 15,
+        "frame_count": 2,
+        "annotated_duration_s": 1.0,
+        "tokens_per_frame": 7.5,
+        "tokens_per_second": 15.0,
+    }
     assert payload["frames"][1]["interaction_object_attributes"][0]["shape"] == "bottle"
 
 
@@ -580,7 +740,9 @@ def test_checkpoint_records_completed_batches_and_frames(tmp_path: Path):
 
     assert completed_batch_indices(checkpoint) == {0, 1}
     assert len(load_checkpoint_frames(checkpoint)) == 2
-    assert json.loads(checkpoint.read_text())["usage"]["total_tokens"] == 15
+    checkpoint_payload = json.loads(checkpoint.read_text())
+    assert checkpoint_payload["usage"]["total_tokens"] == 15
+    assert checkpoint_payload["usage_summary"]["tokens_per_frame"] == 7.5
 
 
 def test_load_checkpoint_frames_normalizes_legacy_frames(tmp_path: Path):

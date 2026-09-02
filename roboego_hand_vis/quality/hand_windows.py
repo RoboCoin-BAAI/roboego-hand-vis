@@ -9,6 +9,24 @@ from typing import Any
 
 HIGH_PRIORITY_ACTIONS = {"grasp", "pick", "place", "touch", "operate", "press", "scan", "release"}
 MEDIUM_PRIORITY_ACTIONS = {"hold", "point", "reach"}
+CONTEXT_ACTIONS = {"hold", "carry", "support"}
+SEMANTIC_LABEL_ACTION_PRIORITY = {
+    "pick": 0,
+    "grasp": 1,
+    "place": 2,
+    "put into": 3,
+    "take out": 4,
+    "scan": 5,
+    "operate": 6,
+    "open": 7,
+    "close": 8,
+    "press": 9,
+    "touch": 10,
+    "reach": 11,
+    "point": 12,
+    "push": 13,
+    "pull": 14,
+}
 
 
 @dataclass(frozen=True)
@@ -236,7 +254,8 @@ def _window_from_range(
         "actions": actions,
         "objects": objects,
         "priority": _priority(actions),
-        "semantic_label": segment.get("semantic_label", ""),
+        "semantic_label": _semantic_label(actions),
+        "source_segment_semantic_label": segment.get("semantic_label", ""),
         "reason": _reason(actions, objects),
     }
 
@@ -351,6 +370,16 @@ def _priority(actions: list[str]) -> str:
     if action_set & MEDIUM_PRIORITY_ACTIONS:
         return "medium"
     return "low"
+
+
+def _semantic_label(actions: list[str]) -> str:
+    names = [action for action in actions if action not in CONTEXT_ACTIONS]
+    if not names:
+        names = list(actions)
+    if not names:
+        return "hand_window"
+    names = sorted(names, key=lambda name: (SEMANTIC_LABEL_ACTION_PRIORITY.get(name, 1000), name))
+    return "_".join(name.replace(" ", "_") for name in names[:4])
 
 
 def _reason(actions: list[str], objects: list[str]) -> str:

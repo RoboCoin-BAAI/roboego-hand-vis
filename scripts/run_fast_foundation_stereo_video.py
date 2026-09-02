@@ -19,6 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from roboego_hand_vis.depth.foundation import load_foundation_inputs_from_manifest, manifest_meta
+from roboego_hand_vis.depth.io import depth_path_for_frame, depth_uint16_png_path_for_frame, find_depth_path_for_frame, save_depth_uint16_png
 
 
 def read_frame(cap: cv2.VideoCapture, frame_idx: int, video_path: Path) -> np.ndarray:
@@ -99,6 +100,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max_disp", type=int, default=192)
     parser.add_argument("--min_disp", type=float, default=1e-3)
     parser.add_argument("--max_depth_m", type=float, default=4.0)
+    parser.add_argument("--save_depth_png", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--save_npy", action=argparse.BooleanOptionalAction, default=False)
     parser.add_argument("--save_vis", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
@@ -127,6 +130,8 @@ def main() -> None:
         raise ValueError("--scale must be in (0, 1].")
     if args.num_frames <= 0:
         raise ValueError("--num_frames must be > 0.")
+    if not args.save_depth_png and not args.save_npy:
+        raise ValueError("At least one of --save_depth_png or --save_npy must be enabled.")
 
     torch.autograd.set_grad_enabled(False)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -169,7 +174,12 @@ def main() -> None:
         "start": args.start,
         "num_frames": args.num_frames,
         "model_args": to_jsonable(model_args),
-        "depth_filename_pattern": "frame_%06d_foundation_depth_m.npy",
+        "depth_filename_pattern": "depth_uint16_png/frame_%06d_depth_mm.png",
+        "depth_unit": "millimeter",
+        "depth_encoding": "uint16_png",
+        "invalid_value": 0,
+        "save_depth_png": bool(args.save_depth_png),
+        "save_npy": bool(args.save_npy),
     }
     (output_dir / "fast_foundation_stereo_video_meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n",
@@ -178,8 +188,10 @@ def main() -> None:
 
     try:
         for frame_idx in range(args.start, args.start + args.num_frames):
-            depth_path = output_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-            if depth_path.exists() and not args.overwrite:
+            depth_path = depth_path_for_frame(output_dir, frame_idx)
+            depth_png_path = depth_uint16_png_path_for_frame(output_dir, frame_idx)
+            existing_depth_path = find_depth_path_for_frame(output_dir, frame_idx)
+            if existing_depth_path.exists() and not args.overwrite:
                 continue
 
             t0 = time.perf_counter()
@@ -217,12 +229,19 @@ def main() -> None:
                 min_disp=args.min_disp,
                 max_depth_m=args.max_depth_m,
             )
-            np.save(depth_path, depth_m)
+            saved_paths: list[str] = []
+            if args.save_npy:
+                np.save(depth_path, depth_m)
+                saved_paths.append(str(depth_path))
+            if args.save_depth_png:
+                if not save_depth_uint16_png(depth_png_path, depth_m, max_depth_m=args.max_depth_m):
+                    raise RuntimeError(f"Failed to write depth PNG: {depth_png_path}")
+                saved_paths.append(str(depth_png_path))
 
             if args.save_vis:
                 panel = make_depth_preview_panel_rgb(left_rgb, depth_m, args.max_depth_m)
                 imageio.imwrite(vis_dir / f"frame_{frame_idx:06d}_depth_vis.jpg", panel)
-            print(f"[{frame_idx}] {depth_path} elapsed_s={time.perf_counter() - t0:.3f}", flush=True)
+            print(f"[{frame_idx}] {','.join(saved_paths)} elapsed_s={time.perf_counter() - t0:.3f}", flush=True)
     finally:
         left_cap.release()
         right_cap.release()

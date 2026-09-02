@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from roboego_hand_vis.datasets.manifest import ResolveConfig, resolve_dataset_manifest, write_manifest
-from roboego_hand_vis.datasets.hand_window_segments import export_hand_window_segments
+from roboego_hand_vis.datasets.hand_window_segments import export_direct_hand_window_segments, export_hand_window_segments
 from roboego_hand_vis.quality.video_segments import (
     DEFAULT_CAMERA_STREAMS,
     export_selected_video_segments,
@@ -29,6 +29,15 @@ def _append_optional_arg(args: list[str], name: str, value: Any) -> None:
 def _optional_path(value: Any) -> Path | None:
     value_str = _optional_str(value)
     return Path(value_str) if value_str else None
+
+
+def _sequence_value(value: Any, default: tuple[str, ...]) -> tuple[str, ...]:
+    if value is None:
+        return default
+    if isinstance(value, str):
+        items = [item.strip() for item in value.split("|") if item.strip()]
+        return tuple(items) if items else default
+    return tuple(value)
 
 
 def run_resolve_dataset_manifest_node(config: dict[str, Any] | None) -> dict[str, Any]:
@@ -73,7 +82,7 @@ def run_export_selected_video_segments_node(config: dict[str, Any] | None) -> di
     session = _required_value(config, "session", "export_selected_video_segments")
     processing_plan = _required_value(config, "processing_plan", "export_selected_video_segments")
     output_dir = _required_value(config, "output_dir", "export_selected_video_segments")
-    camera_streams = tuple(config.get("camera_streams") or DEFAULT_CAMERA_STREAMS)
+    camera_streams = _sequence_value(config.get("camera_streams"), DEFAULT_CAMERA_STREAMS)
     summary = export_selected_video_segments(
         session_dir=Path(session),
         processing_plan_json=Path(processing_plan),
@@ -140,6 +149,41 @@ def run_prepare_selected_segments_node(
     }
 
 
+def run_prepare_stereo_unit_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "prepare_stereo_unit", "status": "skipped", "reason": "disabled"}
+
+    session = _required_value(config, "session", "prepare_stereo_unit")
+    unit_root = _required_value(config, "unit_root", "prepare_stereo_unit")
+    args = [
+        _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/datasets/prepare_selected_segments.py",
+        "--session",
+        session,
+        "--unit_root",
+        unit_root,
+    ]
+    _append_optional_arg(args, "--roboegopipe_root", config.get("roboegopipe_root"))
+    _append_optional_arg(args, "--dataset_adapter", config.get("dataset_adapter"))
+    _append_optional_arg(args, "--model", config.get("model"))
+    _append_optional_arg(args, "--balance", config.get("balance"))
+    _append_optional_arg(args, "--width", config.get("width"))
+    _append_optional_arg(args, "--height", config.get("height"))
+    if bool(config.get("overwrite", False)):
+        args.append("--overwrite")
+    if bool(config.get("dry_run", False)):
+        args.append("--dry_run")
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "prepare_stereo_unit",
+        "status": "complete",
+        "session": session,
+        "unit_root": unit_root,
+    }
+
+
 def run_export_hand_window_segments_node(
     prepare_selected_segments_report: dict[str, Any] | None,
     config: dict[str, Any] | None,
@@ -168,6 +212,27 @@ def run_export_hand_window_segments_node(
         codec=_optional_str(config.get("codec")) or "h264",
     )
     return {"stage": "export_hand_window_segments", "status": "complete", **summary}
+
+
+def run_export_direct_hand_window_segments_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "export_direct_hand_window_segments", "status": "skipped", "reason": "disabled"}
+
+    session = _required_value(config, "session", "export_direct_hand_window_segments")
+    hand_windows_json = _required_value(config, "hand_windows_json", "export_direct_hand_window_segments")
+    output_dir = _required_value(config, "output_dir", "export_direct_hand_window_segments")
+    camera_streams = _sequence_value(config.get("camera_streams"), DEFAULT_CAMERA_STREAMS)
+    summary = export_direct_hand_window_segments(
+        session_dir=Path(session),
+        hand_windows_json=Path(hand_windows_json),
+        output_dir=Path(output_dir),
+        camera_streams=camera_streams,
+        fps=config.get("fps"),
+        codec=_optional_str(config.get("codec")) or "h264",
+        overwrite=bool(config.get("overwrite", False)),
+    )
+    return {"stage": "export_direct_hand_window_segments", "status": "complete", **summary}
 
 
 def _required_value(config: dict[str, Any], key: str, namespace: str) -> str:

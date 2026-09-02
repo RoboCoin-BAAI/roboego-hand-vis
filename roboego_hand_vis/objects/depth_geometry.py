@@ -5,6 +5,9 @@ from pathlib import Path
 
 import numpy as np
 
+from roboego_hand_vis.depth.io import depth_path_for_frame as canonical_depth_path_for_frame
+from roboego_hand_vis.depth.io import load_depth_frame as canonical_load_depth_frame
+
 
 @dataclass
 class MaskDepthStats:
@@ -17,14 +20,11 @@ class MaskDepthStats:
 
 
 def depth_path_for_frame(depth_dir: Path, frame_idx: int) -> Path:
-    return depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
+    return canonical_depth_path_for_frame(depth_dir, frame_idx)
 
 
 def load_depth_frame(depth_dir: Path, frame_idx: int) -> np.ndarray:
-    path = depth_path_for_frame(depth_dir, frame_idx)
-    if not path.exists():
-        raise FileNotFoundError(path)
-    return np.load(path).astype(np.float32)
+    return canonical_load_depth_frame(depth_dir, frame_idx)
 
 
 def mask_depth_to_points(

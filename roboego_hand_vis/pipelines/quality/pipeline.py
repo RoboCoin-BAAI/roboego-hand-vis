@@ -5,7 +5,8 @@ from __future__ import annotations
 from kedro.pipeline import Pipeline, node
 
 from roboego_hand_vis.pipelines.quality.nodes import (
-    run_depth_quality_node,
+    run_depth_numeric_quality_node,
+    run_depth_quality_node_from_config,
     run_pre_semantic_quality_gate_node,
     run_raw_headband_integrity_check,
     run_raw_headband_quality_gate,
@@ -41,8 +42,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "config": "params:pre_semantic_quality",
                 },
                 outputs=["pre_semantic_quality_report", "pre_semantic_quality_windows"],
-                name="pre_semantic_quality_gate",
-                tags=["quality", "pre_semantic"],
+                name="video_simple_quality_gate",
+                tags=["quality", "video_simple_quality"],
             ),
             node(
                 func=run_stereo_summary_quality_node,
@@ -59,13 +60,17 @@ def create_pipeline(**kwargs) -> Pipeline:
                 tags=["quality", "stereo"],
             ),
             node(
-                func=run_depth_quality_node,
-                inputs={
-                    "stereo_segment_quality_result": "stereo_segment_quality_report",
-                    "config": "params:depth_quality",
-                },
+                func=run_depth_quality_node_from_config,
+                inputs="params:depth_quality",
                 outputs="depth_quality_report",
                 name="depth_quality",
+                tags=["quality", "depth"],
+            ),
+            node(
+                func=run_depth_numeric_quality_node,
+                inputs="params:depth_numeric_quality",
+                outputs="depth_numeric_quality_report",
+                name="depth_numeric_quality",
                 tags=["quality", "depth"],
             ),
         ]

@@ -14,6 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from roboego_hand_vis.depth.io import find_depth_path_for_frame, load_depth_frame  # noqa: E402
 from roboego_hand_vis.egohand.depth_anchored_joints21 import (  # noqa: E402
     anchor_joints_by_projected_xy_and_depth,
     fit_joints_xy_to_bbox,
@@ -77,8 +78,8 @@ def main() -> None:
     }
 
     for offset, frame_idx in enumerate(range(args.start, args.start + args.num_frames)):
-        depth_path = depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-        depth_m = np.load(depth_path).astype(np.float32) if depth_path.exists() else None
+        depth_path = find_depth_path_for_frame(depth_dir, frame_idx)
+        depth_m = load_depth_frame(depth_dir, frame_idx) if depth_path.exists() else None
         hands_out: dict[str, Any] = {}
         by_side = _select_candidates_by_side(candidates_by_frame.get(frame_idx, []))
         for side in SIDES:

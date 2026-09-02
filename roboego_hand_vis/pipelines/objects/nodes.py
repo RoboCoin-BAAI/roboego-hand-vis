@@ -50,6 +50,7 @@ def run_sam3_hand_object_segmentation_node(config: dict[str, Any] | None) -> dic
     stage1_actions = _required_value(config, "stage1_actions", "sam3_hand_object_segmentation")
     python = _optional_str(config.get("python")) or "python"
     script = _optional_str(config.get("script")) or "scripts/object/run_sam3_hand_clip_objects.py"
+    sam3_script = _optional_str(config.get("sam3_script")) or "scripts/object/run_sam3_video.py"
 
     processed: list[str] = []
     for hand_window_dir in hand_window_dirs:
@@ -67,7 +68,7 @@ def run_sam3_hand_object_segmentation_node(config: dict[str, Any] | None) -> dic
         _append_optional_arg(args, "--object_shape", config.get("object_shape"))
         _append_optional_arg(args, "--object_color", config.get("object_color"))
         _append_optional_arg(args, "--object_id", config.get("object_id"))
-        _append_optional_arg(args, "--sam3_script", config.get("sam3_script"))
+        _append_optional_arg(args, "--sam3_script", sam3_script)
         _append_optional_arg(args, "--python", config.get("sam3_python"))
         _append_optional_arg(args, "--fps", config.get("fps"))
         _append_optional_arg(args, "--prompt_frame_idx", config.get("prompt_frame_idx"))
@@ -76,6 +77,10 @@ def run_sam3_hand_object_segmentation_node(config: dict[str, Any] | None) -> dic
             args.append("--auto_from_stage1")
         if bool(config.get("no_offload_video_to_cpu", False)):
             args.append("--no_offload_video_to_cpu")
+        if bool(config.get("clip_by_intervals", False)):
+            args.append("--clip_by_intervals")
+            _append_optional_arg(args, "--interval_expand_s", config.get("interval_expand_s"))
+            _append_optional_arg(args, "--interval_merge_gap_s", config.get("interval_merge_gap_s"))
         if bool(config.get("dry_run", False)):
             args.append("--dry_run")
 

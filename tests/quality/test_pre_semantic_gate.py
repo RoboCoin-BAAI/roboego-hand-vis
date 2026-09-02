@@ -80,6 +80,7 @@ def test_run_pre_semantic_quality_gate_writes_report(tmp_path: Path):
         config=PreSemanticGateConfig(sample_every_s=1.0, min_freeze_duration_s=5),
     )
 
+    assert report["stage"] == "video_simple_quality_gate"
     assert report["checks"]["decode_ok"] is True
     assert report["checks"]["sampled_frame_count"] == 3
     assert report["intervals"][0]["route_hint"] in {"pass_to_qwen", "pass_to_qwen_with_aux"}

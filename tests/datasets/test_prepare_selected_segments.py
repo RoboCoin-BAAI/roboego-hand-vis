@@ -65,3 +65,55 @@ def test_prepare_segment_rejects_legacy_root_level_segment_videos(tmp_path: Path
 
     with pytest.raises(FileNotFoundError, match="videos/left.mp4"):
         prepare_selected_segments._validate_segment(segment)
+
+
+def test_prepare_stereo_unit_writes_rectified_outputs_at_unit_root(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    unit = session / "hand_windows/handwin_0000"
+    (unit / "videos").mkdir(parents=True)
+    (unit / "videos/left.mp4").write_bytes(b"left")
+    (unit / "videos/right.mp4").write_bytes(b"right")
+    (unit / "calibrations").mkdir(parents=True)
+    (unit / "calibrations/stereo.json").write_text("{}", encoding="utf-8")
+    (session / "meta.json").write_text(json.dumps({"fps": 30}), encoding="utf-8")
+
+    def fake_run_rectify(**kwargs):
+        output = kwargs["rectify_output_root"] / kwargs["rectify_input"].name
+        (output / "videos").mkdir(parents=True)
+        (output / "videos/left.mp4").write_bytes(b"left")
+        (output / "videos/right.mp4").write_bytes(b"right")
+        (output / "videos/left_rectified.mp4").write_bytes(b"left-rectified")
+        (output / "videos/right_rectified.mp4").write_bytes(b"right-rectified")
+        (output / "calibrations").mkdir(parents=True)
+        (output / "timestamps").mkdir(parents=True)
+        (output / "meta.json").write_text("{}", encoding="utf-8")
+
+    def fake_write_manifest(**kwargs):
+        manifest = kwargs["manifest_dir"] / "dataset_manifest.json"
+        manifest.parent.mkdir(parents=True, exist_ok=True)
+        manifest.write_text("{}", encoding="utf-8")
+
+    monkeypatch.setattr(prepare_selected_segments, "_run_rectify", fake_run_rectify)
+    monkeypatch.setattr(prepare_selected_segments, "_write_manifest", fake_write_manifest)
+
+    result = prepare_selected_segments.prepare_stereo_unit(
+        unit_root=unit,
+        session_dir=session,
+        roboegopipe_root=tmp_path / "RoboEgoPipe",
+        dataset_adapter="wumei01",
+        model="equidistant",
+        balance=0.0,
+        width=1600,
+        height=900,
+        overwrite=True,
+        dry_run=False,
+    )
+
+    assert result["status"] == "ok"
+    assert result["unit_root"] == str(unit)
+    assert (unit / "videos/left.mp4").exists()
+    assert (unit / "videos/right.mp4").exists()
+    assert (unit / "videos/left_rectified.mp4").exists()
+    assert (unit / "videos/right_rectified.mp4").exists()
+    assert (unit / "dataset_manifest/dataset_manifest.json").exists()
+    assert not (unit / "_prepare_stereo_work").exists()

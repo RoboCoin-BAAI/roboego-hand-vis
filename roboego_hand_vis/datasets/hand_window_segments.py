@@ -7,7 +7,14 @@ from pathlib import Path
 from typing import Any
 
 from roboego_hand_vis.datasets.common import manifest_summary, probe_video
-from roboego_hand_vis.quality.video_segments import cut_video
+from roboego_hand_vis.quality.video_segments import (
+    DEFAULT_CAMERA_STREAMS,
+    cut_video,
+    _copy_tree_if_exists,
+    _session_fps,
+    _write_segment_imu,
+    _write_segment_timestamps,
+)
 
 
 def export_hand_window_segments(
@@ -39,6 +46,122 @@ def export_hand_window_segments(
         "source_hand_windows": str(windows_path),
         "window_count": len(exported),
         "windows": exported,
+    }
+
+
+def export_direct_hand_window_segments(
+    *,
+    session_dir: Path,
+    hand_windows_json: Path,
+    output_dir: Path,
+    camera_streams: tuple[str, ...] = DEFAULT_CAMERA_STREAMS,
+    fps: float | None = None,
+    overwrite: bool = False,
+    codec: str = "h264",
+) -> dict[str, Any]:
+    session_dir = Path(session_dir).resolve()
+    windows_path = Path(hand_windows_json).resolve()
+    output_dir = Path(output_dir).resolve()
+    payload = json.loads(windows_path.read_text(encoding="utf-8"))
+    fps_value = float(fps if fps is not None else _session_fps(session_dir))
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    exported: list[dict[str, Any]] = []
+    for window in payload.get("windows", []):
+        exported.append(
+            export_direct_hand_window_segment(
+                session_dir=session_dir,
+                output_dir=output_dir,
+                window=window,
+                camera_streams=camera_streams,
+                fps=fps_value,
+                overwrite=overwrite,
+                codec=codec,
+            )
+        )
+    summary = {
+        "stage": "export_direct_hand_window_segments",
+        "source_session": str(session_dir),
+        "source_hand_windows": str(windows_path),
+        "output_dir": str(output_dir),
+        "fps": fps_value,
+        "camera_streams": list(camera_streams),
+        "window_count": len(exported),
+        "windows": exported,
+    }
+    (output_dir / "direct_hand_window_segments_summary.json").write_text(
+        json.dumps(summary, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return summary
+
+
+def export_direct_hand_window_segment(
+    *,
+    session_dir: Path,
+    output_dir: Path,
+    window: dict[str, Any],
+    camera_streams: tuple[str, ...] = DEFAULT_CAMERA_STREAMS,
+    fps: float,
+    overwrite: bool = False,
+    codec: str = "h264",
+) -> dict[str, Any]:
+    start_frame = int(round(float(window["start"]) * float(fps)))
+    end_frame_exclusive = int(round((float(window["end"]) + 1.0) * float(fps)))
+    frame_count = max(0, end_frame_exclusive - start_frame)
+    window_dir = Path(output_dir) / direct_hand_window_dir_name(window)
+    if window_dir.exists():
+        if not overwrite:
+            raise FileExistsError(f"Hand window directory exists; pass overwrite=True: {window_dir}")
+        shutil.rmtree(window_dir)
+    (window_dir / "videos").mkdir(parents=True, exist_ok=True)
+    (window_dir / "annotation").mkdir(parents=True, exist_ok=True)
+
+    videos: dict[str, str] = {}
+    for stream in camera_streams:
+        source = Path(session_dir) / "videos" / f"{stream}.mp4"
+        target = window_dir / "videos" / f"{stream}.mp4"
+        cut_video(
+            source_video=source,
+            output_video=target,
+            start_frame=start_frame,
+            frame_count=frame_count,
+            fps=float(fps),
+            codec=codec,
+        )
+        videos[stream] = str(target)
+
+    time_bounds = _write_segment_timestamps(
+        session_dir=Path(session_dir),
+        segment_dir=window_dir,
+        camera_streams=camera_streams,
+        start_frame=start_frame,
+        frame_count=frame_count,
+    )
+    _write_segment_imu(session_dir=Path(session_dir), segment_dir=window_dir, time_bounds=time_bounds)
+    _copy_tree_if_exists(Path(session_dir) / "calibrations", window_dir / "calibrations")
+    window_payload = {
+        **window,
+        "source_session": str(Path(session_dir).resolve()),
+        "source_hand_window_dir": str(window_dir.resolve()),
+        "source_start_frame": start_frame,
+        "segment_frame_count": frame_count,
+        "local_frame_range": {"start": 0, "end": frame_count - 1, "num_frames": frame_count},
+        "fps": float(fps),
+        "videos": videos,
+    }
+    (window_dir / "annotation" / "window.json").write_text(
+        json.dumps(window_payload, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return {
+        "window_id": window["window_id"],
+        "window_dir": str(window_dir),
+        "start": int(window["start"]),
+        "end": int(window["end"]),
+        "source_start_frame": start_frame,
+        "frame_count": frame_count,
+        "videos": videos,
     }
 
 
@@ -116,6 +239,12 @@ def export_hand_window_segment(
 
 def hand_window_dir_name(window: dict[str, Any]) -> str:
     return f"{window['window_id']}_t{int(window['start']):06d}_{int(window['end']):06d}"
+
+
+def direct_hand_window_dir_name(window: dict[str, Any]) -> str:
+    label = str(window.get("semantic_label") or "hand_window").replace(" ", "_")
+    safe_label = "".join(ch if ch.isalnum() or ch in {"_", "-"} else "_" for ch in label).strip("_")
+    return f"{hand_window_dir_name(window)}_{safe_label or 'hand_window'}"
 
 
 def _find_segment_dir(segments_root: Path, segment_id: str) -> Path | None:

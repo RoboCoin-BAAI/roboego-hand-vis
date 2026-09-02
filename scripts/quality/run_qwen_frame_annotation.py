@@ -35,7 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--video", required=True)
     parser.add_argument("--output_json", required=True)
     parser.add_argument("--frames_dir", default="")
-    parser.add_argument("--prompt", default="docs/prompts/qwen_frame_annotation_v4.md")
+    parser.add_argument("--prompt", default="docs/prompts/qwen_frame_annotation_v5_en.md")
     parser.add_argument("--model", default="qwen3.6-flash")
     parser.add_argument("--fps", type=float, default=1.0)
     parser.add_argument("--start_s", type=float, default=0.0)
@@ -121,6 +121,7 @@ def main() -> None:
         checkpoint_usage = json.loads(checkpoint_json.read_text(encoding="utf-8")).get("usage", {})
     all_frames: list[dict] = load_checkpoint_frames(checkpoint_json) if args.resume else []
     completed_batches = completed_batch_indices(checkpoint_json) if args.resume else set()
+    failed_batches: list[dict] = []
     usage_by_batch: dict[int, dict] = {}
     for batch_path in sorted(batch_output_dir.glob("batch_*.json")) if args.resume and batch_output_dir.exists() else []:
         try:
@@ -153,7 +154,8 @@ def main() -> None:
             encoding="utf-8",
         )
         if parsed.get("status") != "ok":
-            (raw_output_dir / f"batch_{batch_idx:04d}.error.json").write_text(
+            error_path = raw_output_dir / f"batch_{batch_idx:04d}.error.json"
+            error_path.write_text(
                 json.dumps(parsed, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
@@ -161,7 +163,30 @@ def main() -> None:
                 parsed["frames"] = build_data_inspection_placeholder_frames(batch_times, parsed)
                 parsed["status"] = "ok"
             else:
-                raise RuntimeError(f"Qwen annotation failed for batch {batch_idx}: {parsed.get('status')}")
+                failed_batches.append(
+                    {
+                        "batch_idx": int(batch_idx),
+                        "time_range": {"start": float(min(batch_times)), "end": float(max(batch_times))},
+                        "status": str(parsed.get("status") or "unknown_error"),
+                        "error": str(parsed.get("error") or parsed.get("raw_response") or ""),
+                        "error_json": str(error_path),
+                        "retry_count": int(parsed.get("retry_count", 0) or 0),
+                        "attempt_count": int(parsed.get("attempt_count", 1) or 1),
+                    }
+                )
+                total_usage = merge_qwen_usage(list(usage_by_batch.values()) or [checkpoint_usage])
+                write_checkpoint(
+                    checkpoint_path=checkpoint_json,
+                    frames=all_frames,
+                    completed_batches=sorted(completed_batches),
+                    video_path=Path(args.video),
+                    prompt_path=Path(args.prompt),
+                    model=args.model,
+                    sampling_fps=args.fps,
+                    usage=total_usage,
+                    failed_batches=failed_batches,
+                )
+                continue
         write_batch_annotation(
             batch_output_dir=batch_output_dir,
             batch_idx=batch_idx,
@@ -187,6 +212,7 @@ def main() -> None:
             model=args.model,
             sampling_fps=args.fps,
             usage=total_usage,
+            failed_batches=failed_batches,
         )
         write_chunk_annotations(
             batch_output_dir=batch_output_dir,
@@ -203,6 +229,7 @@ def main() -> None:
         model=args.model,
         sampling_fps=args.fps,
         usage=total_usage,
+        failed_batches=failed_batches,
     )
     summary = {
         "output_json": str(output_json),
@@ -214,6 +241,8 @@ def main() -> None:
         "model": args.model,
         "frame_count": len(payload["frames"]),
         "completed_batch_count": len(completed_batches),
+        "failed_batch_count": len(failed_batches),
+        "status": payload.get("status"),
         "usage": total_usage,
         "max_retries": args.max_retries,
         "retry_sleep_s": args.retry_sleep_s,

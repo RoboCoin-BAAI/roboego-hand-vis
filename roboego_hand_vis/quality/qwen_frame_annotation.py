@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import base64
+import copy
 import json
 import math
 import os
 import re
+import socket
 import time
 import urllib.error
 import urllib.request
@@ -73,6 +75,32 @@ def build_qwen_frame_annotation_messages(
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": content},
     ]
+
+
+def _messages_with_validation_feedback(messages: list[dict[str, Any]], parsed: dict[str, Any]) -> list[dict[str, Any]]:
+    retry_messages = copy.deepcopy(messages)
+    status = str(parsed.get("status") or "unknown_error")
+    error = str(parsed.get("error") or parsed.get("raw_response") or "").strip()
+    feedback = (
+        "Previous response failed schema validation. "
+        f"Failure status: {status}. "
+        f"Validation error: {error}. "
+        "Return the full annotation again as strict JSON only, preserving the requested schema and timestamps."
+    )
+    for message in retry_messages:
+        if message.get("role") != "user":
+            continue
+        content = message.get("content")
+        if isinstance(content, list):
+            content.append({"type": "text", "text": feedback})
+        else:
+            message["content"] = [
+                {"type": "text", "text": str(content or "")},
+                {"type": "text", "text": feedback},
+            ]
+        return retry_messages
+    retry_messages.append({"role": "user", "content": [{"type": "text", "text": feedback}]})
+    return retry_messages
 
 
 def parse_qwen_frame_annotation_response(text: str) -> dict[str, Any]:
@@ -477,20 +505,20 @@ def call_qwen_frame_annotations(
     api_key = os.environ.get(api_key_env)
     if not api_key:
         raise RuntimeError(f"{api_key_env} is not set")
-    body = {"model": model, "messages": messages, "temperature": 0}
-    req = urllib.request.Request(
-        base_url,
-        data=json.dumps(body).encode("utf-8"),
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-        method="POST",
-    )
     max_attempts = max(1, int(max_retries) + 1)
     last_error: dict[str, Any] | None = None
+    current_messages = copy.deepcopy(messages)
     for attempt_idx in range(max_attempts):
+        body = {"model": model, "messages": current_messages, "temperature": 0}
+        req = urllib.request.Request(
+            base_url,
+            data=json.dumps(body).encode("utf-8"),
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+            method="POST",
+        )
         try:
             with urllib.request.urlopen(req, timeout=timeout_s) as resp:
                 payload = json.loads(resp.read().decode("utf-8"))
-            break
         except urllib.error.HTTPError as exc:
             raw_response = exc.read().decode("utf-8", errors="replace")
             last_error = {
@@ -507,6 +535,7 @@ def call_qwen_frame_annotations(
                 return last_error
             if retry_sleep_s > 0:
                 time.sleep(float(retry_sleep_s))
+            continue
         except urllib.error.URLError as exc:
             last_error = {
                 "status": "url_error",
@@ -520,21 +549,41 @@ def call_qwen_frame_annotations(
                 return last_error
             if retry_sleep_s > 0:
                 time.sleep(float(retry_sleep_s))
+            continue
+        except (TimeoutError, socket.timeout) as exc:
+            last_error = {
+                "status": "timeout_error",
+                "provider": "qwen",
+                "model": model,
+                "raw_response": str(exc),
+                "retry_count": attempt_idx,
+                "attempt_count": attempt_idx + 1,
+            }
+            if attempt_idx >= max_attempts - 1:
+                return last_error
+            if retry_sleep_s > 0:
+                time.sleep(float(retry_sleep_s))
+            continue
+        content = payload["choices"][0]["message"]["content"]
+        parsed = parse_qwen_frame_annotation_response(content)
+        parsed["provider"] = "qwen"
+        parsed["model"] = model
+        parsed["raw_response"] = content
+        parsed["usage"] = normalize_qwen_usage(payload.get("usage"))
+        parsed["request_id"] = str(payload.get("request_id") or payload.get("id") or "")
+        parsed["retry_count"] = attempt_idx
+        parsed["attempt_count"] = attempt_idx + 1
+        if parsed.get("status") == "ok":
+            return parsed
+        last_error = parsed
+        if parsed.get("status") in {"parse_failed", "validation_failed"} and attempt_idx < max_attempts - 1:
+            current_messages = _messages_with_validation_feedback(current_messages, parsed)
+            if retry_sleep_s > 0:
+                time.sleep(float(retry_sleep_s))
+            continue
+        return parsed
     else:
         return last_error or {"status": "unknown_error", "provider": "qwen", "model": model}
-    content = payload["choices"][0]["message"]["content"]
-    parsed = parse_qwen_frame_annotation_response(content)
-    parsed["provider"] = "qwen"
-    parsed["model"] = model
-    parsed["raw_response"] = content
-    parsed["usage"] = normalize_qwen_usage(payload.get("usage"))
-    parsed["request_id"] = str(payload.get("request_id") or payload.get("id") or "")
-    parsed["retry_count"] = 0
-    parsed["attempt_count"] = 1
-    if last_error is not None:
-        parsed["retry_count"] = int(last_error.get("attempt_count", 1))
-        parsed["attempt_count"] = int(last_error.get("attempt_count", 1)) + 1
-    return parsed
 
 
 def normalize_qwen_usage(usage: Any) -> dict[str, int]:
@@ -558,6 +607,22 @@ def merge_qwen_usage(items: list[dict[str, Any]]) -> dict[str, int]:
         for key, value in usage.items():
             merged[key] = merged.get(key, 0) + int(value)
     return merged
+
+
+def summarize_qwen_usage(usage: dict[str, Any] | None, frames: list[dict[str, Any]]) -> dict[str, Any]:
+    normalized = normalize_qwen_usage(usage)
+    frame_count = len(frames)
+    t_start, t_end = _frame_time_bounds(frames)
+    annotated_duration_s = float(t_end - t_start) if frame_count > 1 else 0.0
+    total_tokens = int(normalized.get("total_tokens", 0))
+    summary: dict[str, Any] = {
+        **normalized,
+        "frame_count": frame_count,
+        "annotated_duration_s": annotated_duration_s,
+        "tokens_per_frame": float(total_tokens / frame_count) if frame_count else None,
+        "tokens_per_second": float(total_tokens / annotated_duration_s) if annotated_duration_s > 0 else None,
+    }
+    return summary
 
 
 def is_retriable_qwen_error(parsed: dict[str, Any]) -> bool:
@@ -725,14 +790,23 @@ def write_qwen_frame_annotation_output(
     model: str,
     sampling_fps: float,
     usage: dict[str, Any] | None = None,
+    failed_batches: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    failed_batches = failed_batches or []
+    status = "complete"
+    if failed_batches:
+        status = "partial_failed" if parsed_frames else "failed"
     payload = {
         "source_video": str(video_path),
         "stage": "qwen_ego_frame_annotation",
+        "status": status,
         "sampling_fps": sampling_fps,
         "prompt": str(prompt_path),
         "model": model,
         "usage": normalize_qwen_usage(usage),
+        "usage_summary": summarize_qwen_usage(usage, parsed_frames),
+        "failed_batch_count": len(failed_batches),
+        "failed_batches": failed_batches,
         "frames": parsed_frames,
     }
     output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -765,6 +839,7 @@ def write_batch_annotation(
         "prompt": str(prompt_path),
         "model": model,
         "usage": normalize_qwen_usage(usage),
+        "usage_summary": summarize_qwen_usage(usage, sorted_frames),
         "retry_count": int(retry_count),
         "attempt_count": int(attempt_count),
         "frames": sorted_frames,
@@ -806,6 +881,7 @@ def write_chunk_annotations(
             "batch_count": len(batch_indices),
             "frame_count": len(frames),
             "usage": usage,
+            "usage_summary": summarize_qwen_usage(usage, frames),
             "frames": frames,
         }
         output_path = (
@@ -837,14 +913,23 @@ def write_checkpoint(
     model: str,
     sampling_fps: float,
     usage: dict[str, Any] | None = None,
+    failed_batches: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    failed_batches = failed_batches or []
+    status = "complete"
+    if failed_batches:
+        status = "partial_failed" if frames else "failed"
     payload = {
         "source_video": str(video_path),
         "stage": "qwen_ego_frame_annotation_checkpoint",
+        "status": status,
         "sampling_fps": sampling_fps,
         "prompt": str(prompt_path),
         "model": model,
         "usage": normalize_qwen_usage(usage),
+        "usage_summary": summarize_qwen_usage(usage, frames),
+        "failed_batch_count": len(failed_batches),
+        "failed_batches": failed_batches,
         "completed_batches": sorted({int(idx) for idx in completed_batches}),
         "frames": sorted(frames, key=lambda frame: float(frame["t"])),
     }

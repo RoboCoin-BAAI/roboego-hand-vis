@@ -178,7 +178,14 @@ def test_extract_frame_actions_does_not_bind_walking_to_held_object():
             "hand_side": "left",
             "source": "single_interaction_object",
             "confidence": 0.8,
-        }
+        },
+        {
+            "action": "gesture",
+            "object_name": "unknown",
+            "hand_side": "right",
+            "source": "unbound",
+            "confidence": 0.45,
+        },
     ]
 
 
@@ -289,6 +296,77 @@ def test_extract_frame_actions_binds_use_hand_to_move_mouse_to_mouse():
             "source": "activity_object_match",
             "confidence": 0.9,
         },
+    ]
+
+
+def test_extract_frame_actions_generalizes_common_freeform_action_phrases():
+    frame = {
+        "t": 152,
+        "activity": "wearer adjusts a camera, swipes a product across the scanner, then moves the right hand toward the phone",
+        "hand_visible": True,
+        "hands_visible": {"left": True, "right": True},
+        "hand_object_interaction": True,
+        "interaction_objects": ["camera", "product", "phone"],
+        "interaction_object_attributes": [
+            {"name": "camera", "hand_side": "left", "confidence": 0.9},
+            {"name": "product", "hand_side": "right", "confidence": 0.9},
+            {"name": "phone", "hand_side": "right", "confidence": 0.9},
+        ],
+        "attention_objects": ["camera", "product", "phone"],
+    }
+
+    actions = extract_frame_actions(frame)
+
+    assert [action["action"] for action in actions] == ["operate", "scan", "reach"]
+    assert actions[0]["object_name"] == "camera"
+    assert actions[1]["object_name"] == "product"
+    assert actions[2]["object_name"] == "phone"
+
+
+def test_extract_frame_actions_generalizes_take_and_set_down():
+    frame = {
+        "t": 153,
+        "activity": "wearer takes a package from the counter and sets it down on the shelf",
+        "hand_visible": True,
+        "hands_visible": {"left": False, "right": True},
+        "hand_object_interaction": True,
+        "interaction_objects": ["package", "shelf"],
+        "interaction_object_attributes": [
+            {"name": "package", "hand_side": "right", "confidence": 0.9},
+            {"name": "shelf", "hand_side": "right", "confidence": 0.8},
+        ],
+        "attention_objects": ["package", "shelf"],
+    }
+
+    actions = extract_frame_actions(frame)
+
+    assert [action["action"] for action in actions] == ["take from", "pick", "place"]
+    assert actions[1]["object_name"] == "package"
+    assert actions[2]["object_name"] == "shelf"
+
+
+def test_extract_frame_actions_captures_gesture_as_low_specificity_action():
+    frame = {
+        "t": 154,
+        "activity": "wearer gestures with right hand near the checkout counter",
+        "hand_visible": True,
+        "hands_visible": {"left": False, "right": True},
+        "hand_object_interaction": False,
+        "interaction_objects": [],
+        "interaction_object_attributes": [],
+        "attention_objects": [],
+    }
+
+    actions = extract_frame_actions(frame)
+
+    assert actions == [
+        {
+            "action": "gesture",
+            "object_name": "unknown",
+            "hand_side": "right",
+            "source": "unbound",
+            "confidence": 0.45,
+        }
     ]
 
 

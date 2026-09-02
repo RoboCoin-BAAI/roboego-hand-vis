@@ -8,7 +8,7 @@ def test_default_output_json_for_video_uses_session_annotation_dir():
 
     output = default_output_json_for_video(video)
 
-    assert output == Path("data/session_20260804_223748/annotation/pre_semantic_quality_gate_left.json")
+    assert output == Path("data/session_20260804_223748/annotation/video_simple_quality_left.json")
 
 
 def test_default_output_json_for_video_uses_video_parent_for_non_session_layout():
@@ -16,4 +16,4 @@ def test_default_output_json_for_video_uses_video_parent_for_non_session_layout(
 
     output = default_output_json_for_video(video)
 
-    assert output == Path("tmp/pre_semantic_quality_gate_input.json")
+    assert output == Path("tmp/video_simple_quality_input.json")

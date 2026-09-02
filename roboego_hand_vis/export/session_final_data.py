@@ -364,7 +364,14 @@ def export_session_final_data(
                 fps,
             )
 
-            sam3_sources = [processed / "sam3_object_tracks", hamer_dir / "sam3_object_tracks"]
+            sam3_sources = [
+                processed / "objects",
+                hamer_dir / "objects",
+                processed / "objects" / "sam3_runs",
+                hamer_dir / "objects" / "sam3_runs",
+                processed / "sam3_object_tracks",
+                hamer_dir / "sam3_object_tracks",
+            ]
             object_dirs = []
             for sam3_src in sam3_sources:
                 object_dirs.extend(object_track_dirs(sam3_src, window["window_id"]))

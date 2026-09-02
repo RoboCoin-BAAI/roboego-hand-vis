@@ -42,17 +42,20 @@ def run_qwen_frame_annotation_node(
     if not output_json:
         raise ValueError("qwen_frame_annotation.output_json is required when enabled")
     windows = pre_semantic_quality_windows or []
-    if not windows:
+    use_video_simple_quality = bool(config.get("use_video_simple_quality", False))
+    if use_video_simple_quality and not windows:
         return {
             "stage": "qwen_frame_annotation",
             "status": "skipped",
-            "reason": "no_valid_pre_semantic_windows",
+            "reason": "no_valid_video_simple_quality_windows",
             "valid_window_count": 0,
         }
 
-    windows_json = Path(_optional_str(config.get("windows_json")) or Path(output_json).parent / "qwen_frame_annotation_windows.json")
-    windows_json.parent.mkdir(parents=True, exist_ok=True)
-    windows_json.write_text(json.dumps(windows, indent=2, ensure_ascii=False), encoding="utf-8")
+    windows_json: Path | None = None
+    if windows:
+        windows_json = Path(_optional_str(config.get("windows_json")) or Path(output_json).parent / "qwen_frame_annotation_windows.json")
+        windows_json.parent.mkdir(parents=True, exist_ok=True)
+        windows_json.write_text(json.dumps(windows, indent=2, ensure_ascii=False), encoding="utf-8")
 
     args = [
         _optional_str(config.get("python")) or "python",
@@ -86,13 +89,37 @@ def run_qwen_frame_annotation_node(
         args.append("--recover_from_raw")
 
     subprocess.run(args, check=True)
+    usage_payload = _read_qwen_usage(Path(output_json))
     return {
         "stage": "qwen_frame_annotation",
-        "status": "complete",
+        "status": usage_payload.get("status") or "complete",
         "video": video,
         "output_json": output_json,
         "valid_window_count": len(windows),
-        "window_filter_applied": True,
+        "window_filter_applied": bool(windows),
+        "usage": usage_payload.get("usage", {}),
+        "usage_summary": usage_payload.get("usage_summary", {}),
+        "failed_batch_count": int(usage_payload.get("failed_batch_count", 0) or 0),
+        "failed_batches": usage_payload.get("failed_batches", []),
+    }
+
+
+def _read_qwen_usage(output_json: Path) -> dict[str, Any]:
+    if not output_json.exists():
+        return {"usage": {}, "usage_summary": {}}
+    try:
+        payload = json.loads(output_json.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"usage": {}, "usage_summary": {}}
+    usage = payload.get("usage") if isinstance(payload.get("usage"), dict) else {}
+    usage_summary = payload.get("usage_summary") if isinstance(payload.get("usage_summary"), dict) else {}
+    failed_batches = payload.get("failed_batches") if isinstance(payload.get("failed_batches"), list) else []
+    return {
+        "status": payload.get("status"),
+        "usage": usage,
+        "usage_summary": usage_summary,
+        "failed_batch_count": int(payload.get("failed_batch_count", len(failed_batches)) or 0),
+        "failed_batches": failed_batches,
     }
 
 

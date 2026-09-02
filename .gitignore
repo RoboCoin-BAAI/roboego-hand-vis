@@ -16,6 +16,7 @@ models/
 output/
 demo_output/
 backups/
+reports/
 
 # Large visualization artifacts
 *.pt

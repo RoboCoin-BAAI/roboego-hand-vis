@@ -1,6 +1,32 @@
 from roboego_hand_vis.quality.raw_headband_rules import evaluate_quality_report
 
 
+def test_rules_fail_missing_or_unreadable_required_camera_modalities():
+    result = evaluate_quality_report(
+        {
+            "modality_presence": {
+                "videos:left": {"exists": False, "required": True},
+                "timestamps:left": {"exists": True, "required": True},
+            },
+            "camera_readability": {
+                "left": {"readable": False, "error": "Missing video"},
+            },
+            "timestamp_readability": {
+                "left": {"readable": True},
+            },
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "imu": None,
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert "modality_presence:videos:left" in result["failed_checks"]
+    assert "camera_readability:left" in result["failed_checks"]
+    assert result["passed"] is False
+
+
 def test_rules_fail_timestamp_alignment_from_configured_rate_threshold():
     result = evaluate_quality_report(
         {
@@ -64,6 +90,89 @@ def test_rules_warn_timestamp_duplicates_by_rate_threshold():
     assert result["warnings"] == ["timestamp_duplicates:left"]
     assert result["checks"][0]["level"] == "warning"
     assert result["checks"][0]["value"] == 0.02
+
+
+def test_rules_fail_imu_missing_duplicates_and_signal_anomalies():
+    missing_result = evaluate_quality_report(
+        {
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "imu": None,
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert "imu_missing" in missing_result["failed_checks"]
+    assert missing_result["passed"] is False
+
+    anomalous_result = evaluate_quality_report(
+        {
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "imu": {
+                "duplicate_rate": 0.02,
+                "signal_quality": {
+                    "all_zero_columns": ["gyro_x"],
+                    "frozen_columns": ["accel_y"],
+                    "jump_columns": ["accel_z"],
+                },
+            },
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert anomalous_result["passed"] is False
+    assert anomalous_result["failed_checks"] == [
+        "imu_duplicates",
+        "imu_all_zero",
+        "imu_frozen",
+        "imu_jump",
+    ]
+
+
+def test_rules_fail_frame_count_consistency_over_ten_frames():
+    result = evaluate_quality_report(
+        {
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "frame_count_consistency": {
+                "max_video_frame_count_delta": 11,
+                "max_timestamp_frame_count_delta": 0,
+                "max_video_timestamp_count_delta": 1,
+            },
+            "imu": {"duplicate_rate": 0.0, "signal_quality": {}},
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert result["passed"] is False
+    assert result["failed_checks"] == ["frame_count_consistency"]
+    assert result["checks"][0]["value"] == 11
+    assert result["checks"][0]["threshold"] == 10
+
+
+def test_rules_fail_imu_time_coverage_when_gap_exceeds_ten_frames():
+    result = evaluate_quality_report(
+        {
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "imu_time_coverage": {
+                "computed": True,
+                "max_missing_gap_frames": 12.5,
+            },
+            "imu": {"duplicate_rate": 0.0, "signal_quality": {}},
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert result["passed"] is False
+    assert result["failed_checks"] == ["imu_time_coverage"]
+    assert result["checks"][0]["value"] == 12.5
+    assert result["checks"][0]["threshold"] == 10
 
 
 def test_rules_can_disable_a_check():

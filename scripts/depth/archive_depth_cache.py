@@ -21,8 +21,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--invalid_value", type=int, default=0)
     parser.add_argument("--fps", type=float, default=30.0)
     parser.add_argument("--ffmpeg_bin", default="ffmpeg")
+    parser.add_argument("--write_png", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--write_avi", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--write_preview", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--preview_mode", choices=["near", "full"], default="near")
+    parser.add_argument("--preview_near_min_m", type=float, default=0.15)
+    parser.add_argument("--preview_near_max_m", type=float, default=3.0)
+    parser.add_argument(
+        "--preview_contrast_percentile",
+        type=float,
+        default=2.0,
+        help="Percentile clipping for color preview contrast. Use 0 to map by max_depth_m only.",
+    )
     parser.add_argument("--preview_codec", default="mp4v")
     parser.add_argument("--dry_run_avi", action="store_true", help="Write PNG/meta but only record the ffmpeg command.")
     parser.add_argument("--delete_npy", action="store_true", help="Delete source npy files after successful archive.")
@@ -39,8 +49,13 @@ def main() -> None:
             max_depth_m=args.max_depth_m,
             invalid_value=args.invalid_value,
             fps=args.fps,
+            write_png=args.write_png,
             write_avi=args.write_avi,
             write_preview=args.write_preview,
+            preview_mode=args.preview_mode,
+            preview_near_min_m=args.preview_near_min_m,
+            preview_near_max_m=args.preview_near_max_m,
+            preview_contrast_percentile=args.preview_contrast_percentile or None,
             preview_codec=args.preview_codec,
             dry_run_avi=args.dry_run_avi,
             delete_npy=args.delete_npy,

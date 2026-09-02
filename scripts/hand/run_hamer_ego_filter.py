@@ -44,7 +44,14 @@ def _strip_wrapper_args(argv: list[str]) -> list[str]:
         "--stage1_hand_policy",
         "--refine_mode",
     }
-    flag_args = {"--save_refined_vis", "--no_save_refined_vis", "--accept_uncertain_refined"}
+    value_args.add("--refined_preview_video")
+    flag_args = {
+        "--save_refined_vis",
+        "--no_save_refined_vis",
+        "--save_refined_frames",
+        "--no_save_refined_frames",
+        "--accept_uncertain_refined",
+    }
     for idx, item in enumerate(argv):
         if skip_next:
             skip_next = False
@@ -173,7 +180,13 @@ def _resolve_path(value: str | None, base_dir: Path) -> str | None:
     return str(path.resolve())
 
 
-def _maybe_refine_and_visualize(output_dir: str | None, manifest: str | None, stage1_actions: str | None, ego_mode: str) -> None:
+def _maybe_refine_and_visualize(
+    output_dir: str | None,
+    manifest: str | None,
+    stage1_actions: str | None,
+    ego_mode: str,
+    wearer_regions_json: str | None = None,
+) -> None:
     if ego_mode != "tolerant" or not output_dir:
         return
     output_root = Path(output_dir).expanduser()
@@ -199,8 +212,12 @@ def _maybe_refine_and_visualize(output_dir: str | None, manifest: str | None, st
         return
     refined_json = output_root / "ego_hand_candidates_refined.json"
     stage1_path = Path(stage1_actions).expanduser() if stage1_actions else None
-    if stage1_path is not None and not stage1_path.exists():
+    if stage1_path is not None and (not stage1_path.exists() or not stage1_path.is_file()):
         stage1_path = None
+    wearer_path = Path(wearer_regions_json).expanduser() if wearer_regions_json else None
+    if wearer_path is not None and (not wearer_path.exists() or not wearer_path.is_file()):
+        wearer_path = None
+    semantic_refine_path = wearer_path or stage1_path
     refine_source_json = candidates_json
     overlay_filtered_json = output_root / "ego_hand_candidates_overlay_filtered.json"
     if manifest:
@@ -212,7 +229,7 @@ def _maybe_refine_and_visualize(output_dir: str | None, manifest: str | None, st
             refine_source_json = overlay_filtered_json
     refine_candidates_file(
         candidates_json=refine_source_json,
-        stage1_actions_json=stage1_path,
+        stage1_actions_json=semantic_refine_path,
         output_json=refined_json,
         config=CandidateRefineConfig(
             refine_mode=_arg_value("--refine_mode", "strict_ego_audit") or "strict_ego_audit",
@@ -238,6 +255,8 @@ def _maybe_refine_and_visualize(output_dir: str | None, manifest: str | None, st
                 "refine_source_json": str(refine_source_json),
                 "refined_json": str(refined_json),
                 "stage1_actions": str(stage1_path) if stage1_path else None,
+                "semantic_refine_json": str(semantic_refine_path) if semantic_refine_path else None,
+                "wearer_regions_json": str(wearer_path) if wearer_path else None,
             },
             indent=2,
             ensure_ascii=False,
@@ -246,11 +265,13 @@ def _maybe_refine_and_visualize(output_dir: str | None, manifest: str | None, st
     )
     save_refined_vis = not _has_flag("--no_save_refined_vis")
     if save_refined_vis and manifest:
-        _write_refined_visualization(
+        _write_refined_selection_preview(
             manifest=Path(manifest).expanduser(),
             refined_json=refined_json,
-            output_dir=output_root / "refined_annotated",
-            contact_sheet_path=output_root / "refined_contact_sheet.jpg",
+            preview_path=output_root / (_arg_value("--refined_preview_video", "selection_preview.mp4") or "selection_preview.mp4"),
+            contact_sheet_path=output_root / "selection_contact_sheet.jpg",
+            frames_dir=output_root / "refined_annotated",
+            write_frames=_has_flag("--save_refined_frames"),
         )
 
 
@@ -305,6 +326,110 @@ def _write_refined_visualization(
     if sheet_images:
         sheet = _make_contact_sheet(sheet_images, cols=4)
         cv2.imwrite(str(contact_sheet_path), sheet)
+
+
+def _write_refined_selection_preview(
+    *,
+    manifest: Path,
+    refined_json: Path,
+    preview_path: Path,
+    contact_sheet_path: Path,
+    frames_dir: Path | None = None,
+    write_frames: bool = False,
+    preview_max_width: int = 960,
+    max_sheet_frames: int = 24,
+) -> dict[str, str | None]:
+    payload = json.loads(refined_json.read_text(encoding="utf-8"))
+    frames = payload.get("frames") or payload.get("results") or []
+    if not isinstance(frames, list):
+        frames = []
+    manifest_payload = json.loads(manifest.read_text(encoding="utf-8"))
+    left_video = manifest_payload["videos"]["left"]
+    video_path = Path(left_video["path"])
+    if not video_path.is_absolute():
+        video_path = manifest.parent / video_path
+    fps = float(left_video.get("fps") or 30.0)
+    cap = cv2.VideoCapture(str(video_path))
+    if not cap.isOpened():
+        raise RuntimeError(f"Could not open video for refined preview: {video_path}")
+    preview_path.parent.mkdir(parents=True, exist_ok=True)
+    if frames_dir is not None:
+        _prepare_refined_visualization_output_dir(frames_dir, contact_sheet_path)
+    elif contact_sheet_path.exists() and contact_sheet_path.is_file():
+        contact_sheet_path.unlink()
+
+    writer: cv2.VideoWriter | None = None
+    sheet_images: list[np.ndarray] = []
+    written_frames = 0
+    try:
+        for frame in frames:
+            if not isinstance(frame, dict):
+                continue
+            frame_idx = _frame_index(frame)
+            overlay_path = _find_hamer_overlay(refined_json.parent, frame_idx)
+            overlay_mask = None
+            if overlay_path is not None:
+                image = cv2.imread(str(overlay_path))
+                if image is None:
+                    continue
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                ok, raw_image = cap.read()
+                if ok:
+                    overlay_mask = _hamer_overlay_mask(raw_image, image)
+            else:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+                ok, image = cap.read()
+                if not ok:
+                    continue
+            annotated = _draw_refined_frame(image, frame, overlay_mask=overlay_mask)
+            annotated = _resize_max_width(annotated, max_width=preview_max_width)
+            if writer is None:
+                height, width = annotated.shape[:2]
+                writer = cv2.VideoWriter(
+                    str(preview_path),
+                    cv2.VideoWriter_fourcc(*"mp4v"),
+                    fps,
+                    (width, height),
+                )
+                if not writer.isOpened():
+                    raise RuntimeError(f"Could not open preview writer: {preview_path}")
+            writer.write(annotated)
+            written_frames += 1
+            if write_frames and frames_dir is not None:
+                cv2.imwrite(str(frames_dir / f"frame_{frame_idx:06d}_refined.jpg"), annotated)
+            if len(sheet_images) < max_sheet_frames:
+                sheet_images.append(_resize_for_sheet(annotated, width=360))
+    finally:
+        cap.release()
+        if writer is not None:
+            writer.release()
+    if sheet_images:
+        sheet = _make_contact_sheet(sheet_images, cols=4)
+        cv2.imwrite(str(contact_sheet_path), sheet)
+    summary_path = preview_path.parent / "selection_preview_summary.json"
+    summary_path.write_text(
+        json.dumps(
+            {
+                "preview_video": str(preview_path),
+                "contact_sheet": str(contact_sheet_path),
+                "source_refined_json": str(refined_json),
+                "source_manifest": str(manifest),
+                "write_frames": bool(write_frames),
+                "preview_max_width": int(preview_max_width),
+                "frames_dir": str(frames_dir) if frames_dir is not None else None,
+                "frame_count": written_frames,
+            },
+            indent=2,
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    return {
+        "preview_video": str(preview_path),
+        "contact_sheet": str(contact_sheet_path),
+        "summary_json": str(summary_path),
+        "frames_dir": str(frames_dir) if write_frames and frames_dir is not None else None,
+    }
 
 
 def _prepare_refined_visualization_output_dir(output_dir: Path, contact_sheet_path: Path) -> None:
@@ -597,6 +722,14 @@ def _resize_for_sheet(image: np.ndarray, *, width: int) -> np.ndarray:
     return cv2.resize(image, (width, int(round(image.shape[0] * scale))), interpolation=cv2.INTER_AREA)
 
 
+def _resize_max_width(image: np.ndarray, *, max_width: int) -> np.ndarray:
+    if max_width <= 0 or image.shape[1] <= max_width:
+        return image
+    scale = float(max_width) / float(image.shape[1])
+    height = max(1, int(round(image.shape[0] * scale)))
+    return cv2.resize(image, (int(max_width), height), interpolation=cv2.INTER_AREA)
+
+
 def _make_contact_sheet(images: list[np.ndarray], *, cols: int) -> np.ndarray:
     if not images:
         return np.zeros((1, 1, 3), dtype=np.uint8)
@@ -618,12 +751,13 @@ def main() -> None:
     output_dir = _resolve_path(_arg_value("--output_dir"), original_cwd)
     manifest = _resolve_path(_arg_value("--manifest"), original_cwd)
     stage1_actions = _resolve_path(_arg_value("--stage1_actions"), original_cwd)
+    wearer_regions_json = _resolve_path(_arg_value("--wearer_regions_json"), original_cwd)
     original_argv = sys.argv[:]
     sys.argv = _strip_wrapper_args(sys.argv)
     hamer_filter_impl_main()
     sys.argv = original_argv
     _stamp_ego_mode(output_dir, ego_mode)
-    _maybe_refine_and_visualize(output_dir, manifest, stage1_actions, ego_mode)
+    _maybe_refine_and_visualize(output_dir, manifest, stage1_actions, ego_mode, wearer_regions_json)
 
 
 if __name__ == "__main__":

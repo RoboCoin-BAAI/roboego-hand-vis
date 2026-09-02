@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 from typing import Any
 
 
@@ -17,6 +19,7 @@ class Sam3HandClipPlan:
     object_id: str
     command: list[str]
     metadata_path: Path
+    object_interval: dict[str, float | int] | None = None
 
 
 @dataclass
@@ -57,9 +60,14 @@ def collect_stage1_evidence(stage1_actions: Path, window: dict[str, Any], *, fps
 
 def build_prompt_text(*, object_name: str, object_shape: str = "", object_color: str = "") -> str:
     parts = [object_color.strip(), object_shape.strip(), object_name.strip()]
+    return _join_prompt_parts(parts)
+
+
+def _join_prompt_parts(parts: list[str]) -> str:
     tokens: list[str] = []
     seen: set[str] = set()
     for part in parts:
+        part = _clean_prompt_part(part)
         if not part:
             continue
         for token in part.split():
@@ -69,6 +77,10 @@ def build_prompt_text(*, object_name: str, object_shape: str = "", object_color:
             seen.add(key)
             tokens.append(token)
     return " ".join(tokens)
+
+
+def _clean_prompt_part(text: str) -> str:
+    return re.sub(r"[\\/]+", " ", str(text).strip())
 
 
 def build_stage1_prompt_text(
@@ -85,18 +97,7 @@ def build_stage1_prompt_text(
         shape = " ".join([*shape_words[:-1], material, shape_words[-1]])
         material = ""
     parts = [object_color.strip(), shape, material, object_name.strip()]
-    tokens: list[str] = []
-    seen: set[str] = set()
-    for part in parts:
-        if not part:
-            continue
-        for token in part.split():
-            key = token.lower()
-            if key in seen:
-                continue
-            seen.add(key)
-            tokens.append(token)
-    return " ".join(tokens)
+    return _join_prompt_parts(parts)
 
 
 def safe_object_id(*parts: str) -> str:
@@ -112,8 +113,15 @@ def canonical_object_name(name: str, shape: str = "") -> str:
     if "phone" in text or "mobile" in text:
         return "phone"
     if "bottle" in text or "product" in text:
-        return "bottle"
+        if "bottle" in text:
+            return "bottle"
+        return "product"
     return str(name).strip().lower() or "object"
+
+
+def object_group_id(name: str, shape: str = "") -> str:
+    canonical_name = canonical_object_name(name, shape)
+    return safe_object_id(canonical_name, _shape_for_object_id(shape, object_name=canonical_name))
 
 
 def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any], *, fps: float) -> list[Stage1ObjectSpec]:
@@ -135,7 +143,7 @@ def infer_object_specs_from_stage1(stage1_actions: Path, window: dict[str, Any],
             shape = str(attr.get("shape", "")).strip()
             material = str(attr.get("material", "")).strip()
             canonical_name = canonical_object_name(name, shape)
-            group_id = safe_object_id(canonical_name)
+            group_id = object_group_id(name, shape)
             item = grouped.setdefault(
                 group_id,
                 {
@@ -235,6 +243,118 @@ def _prompt_frame_idx(intervals: list[dict[str, float | int]], window: dict[str,
     return max(0, int(core["start"]) - segment_start_frame)
 
 
+def _expanded_object_intervals(
+    intervals: list[dict[str, float | int]],
+    window: dict[str, Any],
+    *,
+    fps: float,
+    expand_s: float,
+    merge_gap_s: float = 0.0,
+) -> list[dict[str, float | int]]:
+    if not intervals:
+        return []
+    source_start_s = float(window["source_segment_range"]["start"])
+    clip_start_s = float(window.get("start", source_start_s + int(window["segment_frame_range"]["start"]) / fps))
+    clip_end_s = window.get("end")
+    frame_range = window["segment_frame_range"]
+    max_frame = int(frame_range.get("num_frames", 0)) - 1
+    if max_frame < 0:
+        max_frame = int(frame_range["end"]) - int(frame_range["start"])
+    if clip_end_s is not None:
+        max_frame = min(max_frame, max(0, int(round((float(clip_end_s) - clip_start_s) * fps))))
+    expand_frames = max(0, int(round(float(expand_s) * fps)))
+    expanded: list[dict[str, float | int]] = []
+    for idx, interval in enumerate(intervals):
+        source_start_frame = int(interval["start_frame"])
+        source_end_frame = int(interval["end_frame"])
+        start_frame = max(0, source_start_frame - expand_frames)
+        end_frame = min(max_frame, source_end_frame + expand_frames)
+        expanded.append(
+            {
+                "start_s": clip_start_s + start_frame / fps,
+                "end_s": clip_start_s + end_frame / fps,
+                "start_frame": start_frame,
+                "end_frame": end_frame,
+                "source_start_s": float(interval["start_s"]),
+                "source_end_s": float(interval["end_s"]),
+                "source_start_frame": source_start_frame,
+                "source_end_frame": source_end_frame,
+                "clip_index": idx,
+            }
+        )
+    return _merge_object_intervals(expanded, fps=fps, merge_gap_s=merge_gap_s)
+
+
+def _merge_object_intervals(
+    intervals: list[dict[str, float | int]],
+    *,
+    fps: float,
+    merge_gap_s: float,
+) -> list[dict[str, float | int]]:
+    if not intervals:
+        return []
+    max_gap_frames = max(0, int(round(float(merge_gap_s) * fps)))
+    merged: list[dict[str, float | int]] = []
+    current = dict(sorted(intervals, key=lambda item: int(item["start_frame"]))[0])
+    for interval in sorted(intervals, key=lambda item: int(item["start_frame"]))[1:]:
+        if int(interval["start_frame"]) <= int(current["end_frame"]) + max_gap_frames:
+            current["end_frame"] = max(int(current["end_frame"]), int(interval["end_frame"]))
+            current["end_s"] = max(float(current["end_s"]), float(interval["end_s"]))
+            current["source_start_frame"] = min(
+                int(current["source_start_frame"]), int(interval["source_start_frame"])
+            )
+            current["source_end_frame"] = max(int(current["source_end_frame"]), int(interval["source_end_frame"]))
+            current["source_start_s"] = min(float(current["source_start_s"]), float(interval["source_start_s"]))
+            current["source_end_s"] = max(float(current["source_end_s"]), float(interval["source_end_s"]))
+            continue
+        merged.append(current)
+        current = dict(interval)
+    merged.append(current)
+    for idx, interval in enumerate(merged):
+        interval["clip_index"] = idx
+    return merged
+
+
+def _interval_prompt_frame_idx(interval: dict[str, float | int]) -> int:
+    source_midpoint = int(round((int(interval["source_start_frame"]) + int(interval["source_end_frame"])) * 0.5))
+    return max(0, min(source_midpoint, int(interval["end_frame"])) - int(interval["start_frame"]))
+
+
+def _clip_dir_name(interval: dict[str, float | int]) -> str:
+    return (
+        f"clip_{int(interval['clip_index']):04d}_"
+        f"t{int(round(float(interval['start_s']))):06d}_{int(round(float(interval['end_s']))):06d}"
+    )
+
+
+def materialize_interval_frames(
+    source_frames_dir: Path,
+    target_dir: Path,
+    interval: dict[str, float | int],
+) -> Path:
+    frame_paths = _frame_paths(source_frames_dir)
+    start_frame = int(interval["start_frame"])
+    end_frame = int(interval["end_frame"])
+    if start_frame < 0 or end_frame < start_frame or start_frame >= len(frame_paths):
+        raise ValueError(
+            f"Invalid SAM3 interval frame range [{start_frame}, {end_frame}] for {len(frame_paths)} frames."
+        )
+    end_frame = min(end_frame, len(frame_paths) - 1)
+    clip_frames_dir = Path(target_dir)
+    if clip_frames_dir.exists():
+        shutil.rmtree(clip_frames_dir)
+    clip_frames_dir.mkdir(parents=True, exist_ok=True)
+    for local_idx, source_path in enumerate(frame_paths[start_frame : end_frame + 1]):
+        target = clip_frames_dir / f"{local_idx:06d}{source_path.suffix.lower()}"
+        if target.exists():
+            continue
+        try:
+            os.symlink(source_path, target)
+        except OSError:
+            shutil.copy2(source_path, target)
+    return clip_frames_dir
+
+
 def find_window_by_id(windows_json: Path, window_id: str) -> dict[str, Any]:
     payload = json.loads(Path(windows_json).read_text())
     for window in payload.get("windows", []):
@@ -264,7 +384,7 @@ def infer_windows_json_from_hand_window_dir(hand_window_dir: Path) -> Path:
 
 def default_output_dir(hand_window_dir: Path, object_id: str) -> Path:
     root = _materialized_hand_window_root(Path(hand_window_dir))
-    return root / "objects" / "sam3_object_tracks" / object_id
+    return root / "objects" / object_id
 
 
 def _materialized_hand_window_root(path: Path) -> Path:
@@ -293,11 +413,11 @@ def build_sam3_hand_clip_plan(
     prompt_frame_idx: int | None = None,
     checkpoint: Path | None = None,
     no_offload_video_to_cpu: bool = False,
+    frames_dir_override: Path | None = None,
+    object_interval: dict[str, float | int] | None = None,
 ) -> Sam3HandClipPlan:
     hand_window_dir = Path(hand_window_dir)
-    frames_dir = hand_window_dir / "frames"
-    if not frames_dir.exists():
-        raise FileNotFoundError(f"Missing hand clip frames directory: {frames_dir}")
+    frames_dir = Path(frames_dir_override) if frames_dir_override is not None else resolve_hand_clip_frames_dir(hand_window_dir)
     output_dir = Path(output_dir) if output_dir is not None else default_output_dir(hand_window_dir, object_id)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -349,6 +469,7 @@ def build_sam3_hand_clip_plan(
             "segment_frame_range": window.get("segment_frame_range"),
             "core_segment_frame_range": window.get("core_segment_frame_range"),
             "prompt_frame_idx": prompt_frame_idx,
+            "object_interval": object_interval,
         },
         "stage1_evidence": evidence,
         "command": command,
@@ -365,6 +486,7 @@ def build_sam3_hand_clip_plan(
         object_id=object_id,
         command=command,
         metadata_path=metadata_path,
+        object_interval=object_interval,
     )
 
 
@@ -380,43 +502,77 @@ def build_sam3_hand_clip_plans_from_stage1(
     prompt_frame_idx: int | None = None,
     checkpoint: Path | None = None,
     no_offload_video_to_cpu: bool = False,
+    clip_by_intervals: bool = False,
+    interval_expand_s: float = 0.0,
+    interval_merge_gap_s: float = 0.0,
 ) -> list[Sam3HandClipPlan]:
     specs = infer_object_specs_from_stage1(Path(stage1_actions), window, fps=fps)
     if not specs:
         raise ValueError("No object specs found from stage1 annotations for this hand window.")
-    window_id = str(window.get("window_id") or infer_window_id_from_dir(Path(hand_window_dir)))
-    root = Path(output_root) if output_root is not None else Path(hand_window_dir) / "sam3_object_tracks"
+    root = Path(output_root) if output_root is not None else Path(hand_window_dir) / "objects"
     plans: list[Sam3HandClipPlan] = []
     for spec in specs:
-        output_dir = root / window_id / spec.object_id
-        plan = build_sam3_hand_clip_plan(
-            hand_window_dir=Path(hand_window_dir),
-            stage1_actions=Path(stage1_actions),
-            window=window,
-            object_name=spec.object_name,
-            object_shape=spec.object_shape,
-            object_color=spec.object_color,
-            output_dir=output_dir,
-            sam3_script=Path(sam3_script),
-            python_executable=python_executable,
-            object_id=spec.object_id,
-            fps=fps,
-            prompt_frame_idx=spec.prompt_frame_idx if prompt_frame_idx is None else prompt_frame_idx,
-            checkpoint=checkpoint,
-            no_offload_video_to_cpu=no_offload_video_to_cpu,
-        )
-        metadata = json.loads(plan.metadata_path.read_text())
-        metadata["prompt"]["object_material"] = spec.object_material
-        metadata["prompt"]["text"] = spec.prompt_text
-        metadata["prompt"]["source"] = "stage1_actions"
-        metadata["prompt"]["evidence_count"] = spec.evidence_count
-        metadata["prompt"]["active_intervals"] = spec.active_intervals
-        metadata["command"][metadata["command"].index("--text") + 1] = spec.prompt_text
-        plan.command[plan.command.index("--text") + 1] = spec.prompt_text
-        plan.prompt_text = spec.prompt_text
-        plan.metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
-        plans.append(plan)
+        object_intervals = [None]
+        if clip_by_intervals:
+            object_intervals = _expanded_object_intervals(
+                spec.active_intervals,
+                window,
+                fps=fps,
+                expand_s=interval_expand_s,
+                merge_gap_s=interval_merge_gap_s,
+            )
+        for interval in object_intervals:
+            output_dir = root / spec.object_id
+            frames_dir_override = None
+            adjusted_prompt_frame_idx = spec.prompt_frame_idx if prompt_frame_idx is None else int(prompt_frame_idx)
+            if interval is not None:
+                output_dir = output_dir / _clip_dir_name(interval)
+                source_frames_dir = resolve_hand_clip_frames_dir(Path(hand_window_dir))
+                frames_dir_override = source_frames_dir
+                adjusted_prompt_frame_idx = _interval_prompt_frame_idx(interval)
+            plan = build_sam3_hand_clip_plan(
+                hand_window_dir=Path(hand_window_dir),
+                stage1_actions=Path(stage1_actions),
+                window=window,
+                object_name=spec.object_name,
+                object_shape=spec.object_shape,
+                object_color=spec.object_color,
+                output_dir=output_dir,
+                sam3_script=Path(sam3_script),
+                python_executable=python_executable,
+                object_id=spec.object_id,
+                fps=fps,
+                prompt_frame_idx=adjusted_prompt_frame_idx,
+                checkpoint=checkpoint,
+                no_offload_video_to_cpu=no_offload_video_to_cpu,
+                frames_dir_override=frames_dir_override,
+                object_interval=interval,
+            )
+            metadata = json.loads(plan.metadata_path.read_text())
+            metadata["prompt"]["object_material"] = spec.object_material
+            metadata["prompt"]["text"] = spec.prompt_text
+            metadata["prompt"]["source"] = "stage1_actions"
+            metadata["prompt"]["evidence_count"] = spec.evidence_count
+            metadata["prompt"]["active_intervals"] = spec.active_intervals
+            metadata["command"][metadata["command"].index("--text") + 1] = spec.prompt_text
+            plan.command[plan.command.index("--text") + 1] = spec.prompt_text
+            plan.prompt_text = spec.prompt_text
+            plan.metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
+            plans.append(plan)
     return plans
+
+
+def resolve_hand_clip_frames_dir(hand_window_dir: Path) -> Path:
+    hand_window_dir = Path(hand_window_dir)
+    candidates = [
+        hand_window_dir / "frames",
+        hand_window_dir / "hand/hamer_raw/frames",
+    ]
+    for path in candidates:
+        if path.is_dir():
+            return path
+    searched = ", ".join(str(path) for path in candidates)
+    raise FileNotFoundError(f"Missing hand clip frames directory. Searched: {searched}")
 
 
 def combine_sam3_object_tracks(

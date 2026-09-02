@@ -4,7 +4,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from roboego_hand_vis.datasets.hand_window_segments import export_hand_window_segments
+from roboego_hand_vis.datasets.hand_window_segments import export_direct_hand_window_segments, export_hand_window_segments
 
 
 def write_video(path: Path, *, frame_count: int, fps: float = 5.0) -> None:
@@ -93,3 +93,49 @@ def test_export_hand_window_segments_cuts_rectified_videos_and_manifest(tmp_path
     assert out_manifest["videos"]["left"]["path"] == str(window_dir / "videos/left_rectified.mp4")
     assert out_manifest["metadata"]["hand_window"]["segment_frame_range"] == {"start": 5, "end": 12, "num_frames": 8}
     assert (window_dir / "timestamps/left_timestamps.txt").read_text(encoding="utf-8").splitlines()[0] == "0 1001.0"
+
+
+def test_export_direct_hand_window_segments_cuts_from_session_without_selected_segment(tmp_path: Path):
+    session = tmp_path / "session"
+    write_video(session / "videos/left.mp4", frame_count=40, fps=10)
+    write_video(session / "videos/right.mp4", frame_count=40, fps=10)
+    (session / "meta.json").write_text(json.dumps({"fps": 10}), encoding="utf-8")
+    hand_windows = tmp_path / "hand_windows.json"
+    hand_windows.write_text(
+        json.dumps(
+            {
+                "windows": [
+                    {
+                        "window_id": "handwin_0000",
+                        "start": 1,
+                        "end": 2,
+                        "semantic_label": "pick_place",
+                        "source_segment_id": "direct",
+                        "actions": ["pick", "place"],
+                        "objects": ["product"],
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    summary = export_direct_hand_window_segments(
+        session_dir=session,
+        hand_windows_json=hand_windows,
+        output_dir=session / "hand_windows",
+        camera_streams=("left", "right"),
+        overwrite=True,
+        codec="mp4v",
+    )
+
+    window_dir = session / "hand_windows/handwin_0000_t000001_000002_pick_place"
+    assert summary["window_count"] == 1
+    assert window_dir.exists()
+    assert frame_count(window_dir / "videos/left.mp4") == 20
+    assert frame_count(window_dir / "videos/right.mp4") == 20
+    assert (window_dir / "annotation/window.json").exists()
+    payload = json.loads((window_dir / "annotation/window.json").read_text(encoding="utf-8"))
+    assert payload["source_session"] == str(session.resolve())
+    assert payload["source_start_frame"] == 10
+    assert payload["local_frame_range"] == {"start": 0, "end": 19, "num_frames": 20}

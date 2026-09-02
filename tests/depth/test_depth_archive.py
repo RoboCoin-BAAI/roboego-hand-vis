@@ -46,6 +46,48 @@ def test_depth_uint16_mm_to_preview_bgr_maps_invalid_to_black():
     assert preview[0, 1].tolist() != preview[1, 1].tolist()
 
 
+def test_depth_preview_can_stretch_contrast_by_percentile():
+    depth_mm = np.array([[0, 700, 710, 720], [730, 740, 750, 4000]], dtype=np.uint16)
+
+    fixed = depth_uint16_mm_to_preview_bgr(
+        depth_mm,
+        max_depth_m=4.0,
+        invalid_value=0,
+        contrast_percentile=None,
+        preview_mode="full",
+    )
+    stretched = depth_uint16_mm_to_preview_bgr(
+        depth_mm,
+        max_depth_m=4.0,
+        invalid_value=0,
+        contrast_percentile=2.0,
+        preview_mode="full",
+    )
+
+    fixed_unique = np.unique(fixed.reshape(-1, 3), axis=0)
+    stretched_unique = np.unique(stretched.reshape(-1, 3), axis=0)
+
+    assert len(stretched_unique) > len(fixed_unique)
+
+
+def test_depth_preview_near_mode_emphasizes_015_to_3m_and_clamps_far():
+    depth_mm = np.array([[0, 150, 900], [1600, 3000, 4000]], dtype=np.uint16)
+
+    preview = depth_uint16_mm_to_preview_bgr(
+        depth_mm,
+        max_depth_m=4.0,
+        invalid_value=0,
+        preview_mode="near",
+        near_min_m=0.15,
+        near_max_m=3.0,
+    )
+
+    assert preview[0, 0].tolist() == [0, 0, 0]
+    assert preview[0, 1].tolist() != preview[0, 2].tolist()
+    assert preview[0, 2].tolist() != preview[1, 0].tolist()
+    assert preview[1, 1].tolist() == preview[1, 2].tolist()
+
+
 def test_archive_depth_cache_writes_uint16_pngs_and_metadata(tmp_path: Path):
     depth_dir = tmp_path / "depth"
     output_dir = tmp_path / "archive"
@@ -88,6 +130,26 @@ def test_archive_depth_cache_writes_color_preview_video(tmp_path: Path):
     assert int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) == 2
     cap.release()
     assert report["outputs"]["preview_video"] == str(preview_path)
+
+
+def test_archive_depth_cache_accepts_existing_uint16_png_depth(tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "archive"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.full((2, 2), 1000, dtype=np.uint16))
+
+    report = archive_depth_cache(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthArchiveConfig(write_png=False, write_avi=False, write_preview=False),
+    )
+
+    assert report["source_depth_format"] == "uint16_png"
+    assert report["frame_count"] == 1
+    assert report["frames"][0]["source_png"] == str(png_dir / "frame_000000_depth_mm.png")
+    assert not (output_dir / "depth_uint16_png").exists()
+    assert report["outputs"]["png_dir"] == str(png_dir)
 
 
 def test_build_ffv1_command_uses_gray16le_png_sequence(tmp_path: Path):

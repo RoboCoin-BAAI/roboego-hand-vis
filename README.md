@@ -33,12 +33,12 @@ hamer    HaMeR inference
 realvdeblur  Optional RealVDeblur video restoration
 ```
 
-External repositories used by specific nodes:
+See [Pipeline Environment Setup](docs/deployment/environments.md) for the full
+machine/environment matrix. External repositories used by specific nodes:
 
 ```text
 /home/liuyou/Documents/RoboEgoPipe
 /home/liuyou/Documents/Fast-FoundationStereo
-/home/liuyou/Documents/FoundationStereo
 /home/liuyou/Documents/hamer
 /home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
 /home/liuyou/Documents/RealVDeblur
@@ -252,7 +252,7 @@ PY
 Important pipelines:
 
 ```text
-quality      Raw data integrity, Stage0 visual quality, stereo/depth quality
+quality      Raw data integrity, video simple quality, stereo/depth quality
 semantic     Qwen frame annotation, Stage1 actions, processing plan, hand windows
 datasets     Segment export, rectification/manifest preparation, hand-window export
 restoration  Optional RealVDeblur stereo restoration
@@ -276,7 +276,7 @@ For day-to-day processing, use the lightweight launcher instead of writing long
 `kedro run --params ...` commands by hand. Dataset-specific defaults live in:
 
 ```text
-conf/datasets/wumei.yml
+conf/datasets/raw.yml
 ```
 
 Run one stage for a session:
@@ -284,17 +284,20 @@ Run one stage for a session:
 ```bash
 PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
   scripts/run_pipeline_stage.py \
-  --dataset wumei \
+  --dataset raw \
   --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
   --stage raw_quality
 ```
+
+`raw_quality` runs both the integrity checker and the quality gate. The terminal
+prints the gate status, failed checks, and warnings.
 
 Run one hand-window stage:
 
 ```bash
 PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
   scripts/run_pipeline_stage.py \
-  --dataset wumei \
+  --dataset raw \
   --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
   --stage depth_anchored_joints21 \
   --hand-window handwin_0000_t000000_000065
@@ -305,7 +308,7 @@ Print the generated Kedro command without running it:
 ```bash
 PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
   scripts/run_pipeline_stage.py \
-  --dataset wumei \
+  --dataset raw \
   --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
   --stage final_hand_result \
   --all-hand-windows \
@@ -316,13 +319,18 @@ Supported first-version stages:
 
 ```text
 raw_quality
-pre_semantic_quality
-stage1_actions
+video_simple_quality
+phase1_planning
+phase1_depth
+post_annotation_actions
 processing_plan
 hand_windows
-export_segments
-prepare_segments
-export_hand_window_segments
+materialize_session
+materialize_hand_windows
+materialize_segments
+materialize_segment_hand_windows
+materialize_auto
+prepare_stereo
 stereo_quality
 fast_foundation_depth
 archive_depth_cache
@@ -380,27 +388,39 @@ imu.signal_quality
 video_infos
 ```
 
-### 2. Stage0 Visual Quality
+### 2. Video Simple Quality
 
 Finds valid visual intervals before sending frames to the VLM.
 
 ```bash
-/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
-  --pipelines quality \
-  --to-nodes pre_semantic_quality_gate \
-  --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/pre_semantic_quality_gate_left.json
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session $SESSION \
+  --stage video_simple_quality
 ```
 
 Output:
 
 ```text
-$SESSION/annotation/pre_semantic_quality_gate_left.json
+$SESSION/annotation/video_simple_quality_left.json
+```
+
+### Phase 1 Planning Command
+
+Runs steps 1-6: raw quality, video simple quality, Qwen second-level
+annotation, post-annotation action normalization, processing plan, and hand
+window construction.
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage phase1_planning
 ```
 
 ### 3. Qwen Frame Annotation
 
-Runs Qwen on Stage0 valid windows. The node writes batch outputs, chunks, a
+Runs Qwen on video simple quality valid windows. The node writes batch outputs, chunks, a
 checkpoint, and a final merged JSON. Remote API failures such as multimodal
 download timeout are retried within the batch.
 
@@ -408,7 +428,7 @@ download timeout are retried within the batch.
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
   --to-nodes qwen_frame_annotation \
-  --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/pre_semantic_quality_gate_left.json,qwen_frame_annotation.enabled=True,qwen_frame_annotation.video=$SESSION/videos/left.mp4,qwen_frame_annotation.output_json=$SESSION/annotation/qwen_frame_annotations_left_v4.json,qwen_frame_annotation.checkpoint_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,qwen_frame_annotation.raw_output_dir=$SESSION/annotation/qwen_frame_annotation_raw,qwen_frame_annotation.batch_output_dir=$SESSION/annotation/qwen_frame_annotation_batches,qwen_frame_annotation.chunk_output_dir=$SESSION/annotation/qwen_frame_annotation_chunks,qwen_frame_annotation.frames_dir=$SESSION/annotation/qwen_frame_annotation_frames,qwen_frame_annotation.prompt=docs/prompts/qwen_frame_annotation_v5_en.md,qwen_frame_annotation.fps=1,qwen_frame_annotation.max_width=640,qwen_frame_annotation.batch_size=4,qwen_frame_annotation.batches_per_chunk=5,qwen_frame_annotation.model=qwen3.6-flash,qwen_frame_annotation.timeout_s=180,qwen_frame_annotation.max_retries=5,qwen_frame_annotation.retry_sleep_s=3,qwen_frame_annotation.resume=True
+  --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/video_simple_quality_left.json,qwen_frame_annotation.enabled=True,qwen_frame_annotation.video=$SESSION/videos/left.mp4,qwen_frame_annotation.output_json=$SESSION/annotation/qwen_frame_annotations_left_v4.json,qwen_frame_annotation.checkpoint_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,qwen_frame_annotation.raw_output_dir=$SESSION/annotation/qwen_frame_annotation_raw,qwen_frame_annotation.batch_output_dir=$SESSION/annotation/qwen_frame_annotation_batches,qwen_frame_annotation.chunk_output_dir=$SESSION/annotation/qwen_frame_annotation_chunks,qwen_frame_annotation.frames_dir=$SESSION/annotation/qwen_frame_annotation_frames,qwen_frame_annotation.prompt=docs/prompts/qwen_frame_annotation_v5_en.md,qwen_frame_annotation.fps=1,qwen_frame_annotation.max_width=768,qwen_frame_annotation.batch_size=10,qwen_frame_annotation.batches_per_chunk=5,qwen_frame_annotation.model=qwen3.6-flash,qwen_frame_annotation.timeout_s=120,qwen_frame_annotation.max_retries=3,qwen_frame_annotation.retry_sleep_s=5,qwen_frame_annotation.resume=True
 ```
 
 Important outputs:
@@ -420,10 +440,19 @@ $SESSION/annotation/qwen_frame_annotation_batches/
 $SESSION/annotation/qwen_frame_annotation_raw/
 ```
 
-### 4. Stage1 Actions
+### 4. Post-Annotation Actions
 
 Extracts per-frame hand actions, builds text review chunks, and resolves action
 word/object binding differences.
+
+Recommended stage launcher command:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session $SESSION \
+  --stage post_annotation_actions
+```
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
@@ -496,24 +525,82 @@ for w in d.get("windows", []):
 PY
 ```
 
-## Dataset and Hand-Window Preparation
+### 7. Materialization Strategy
 
-Exports selected process segments, prepares rectified stereo data and manifests,
-then exports hand-window clips.
+Planning decides which time ranges are valuable. Materialization decides whether
+to physically cut videos before the heavy stereo, depth, hand and object stages.
+
+Use one of these paths:
+
+```text
+A. No cut
+session -> prepare_stereo
+
+B. Hand windows only
+session -> hand_windows/handwin_xxx -> prepare_stereo
+
+C. Segments, then hand windows
+session -> segments/seg_xxx -> hand_windows/handwin_xxx -> prepare_stereo
+```
+
+The recommended default is automatic selection by session duration:
+
+```text
+< 3 min      materialize_session
+3-15 min     materialize_hand_windows
+> 15 min     materialize_segment_hand_windows
+```
 
 ```bash
-/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
-  --pipelines datasets \
-  --from-nodes export_selected_video_segments \
-  --to-nodes export_hand_window_segments \
-  --params export_selected_video_segments.enabled=True,export_selected_video_segments.session=$SESSION,export_selected_video_segments.processing_plan=$PLAN,export_selected_video_segments.output_dir=$SEGMENTS_ROOT,export_selected_video_segments.overwrite=True,prepare_selected_segments.enabled=True,prepare_selected_segments.session=$SESSION,prepare_selected_segments.segments_root=$SEGMENTS_ROOT,prepare_selected_segments.python=/home/liuyou/miniconda3/envs/ego/bin/python,prepare_selected_segments.roboegopipe_root=/home/liuyou/Documents/RoboEgoPipe,prepare_selected_segments.dataset_adapter=wumei01,prepare_selected_segments.model=equidistant,prepare_selected_segments.balance=0.0,prepare_selected_segments.width=1600,prepare_selected_segments.height=900,prepare_selected_segments.overwrite=True,export_hand_window_segments.enabled=True,export_hand_window_segments.segments_root=$SEGMENTS_ROOT,export_hand_window_segments.hand_windows_json=$HAND_WINDOWS,export_hand_window_segments.overwrite=True
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage materialize_auto
+```
+
+For short or manually pre-filtered data, skip selected segments and materialize
+hand windows directly:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage materialize_hand_windows
+```
+
+For long raw sessions, first materialize selected segments and then hand windows:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage materialize_segment_hand_windows
+```
+
+If the whole session is already the processing unit, do not cut it; prepare the
+session itself as the stereo unit:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage materialize_session
+```
+
+Run stereo preparation on one or all materialized hand windows:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage prepare_stereo \
+  --all-hand-windows
 ```
 
 Find the active hand window:
 
 ```bash
-export HANDWIN_DIR=$(find "$SEGMENTS_ROOT" -path "*handwin_0000*" -type d | head -1)
+export HANDWIN_DIR=$(find "$SESSION/hand_windows" "$SESSION/segments" -path "*handwin_0000*" -type d | head -1)
 export MANIFEST=$HANDWIN_DIR/dataset_manifest/dataset_manifest.json
 
 echo "$HANDWIN_DIR"
@@ -521,6 +608,22 @@ echo "$MANIFEST"
 ```
 
 ## Stereo Quality and Depth
+
+Run steps 7-10.2 on the compute machine. The materialization strategy is selected
+automatically from session duration:
+
+```text
+< 3 min      session
+3-15 min     hand_windows
+> 15 min     segment_hand_windows
+```
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage phase1_depth
+```
 
 Stereo quality before depth:
 
@@ -562,7 +665,7 @@ and an optional FFV1 lossless AVI:
 ```bash
 PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
   scripts/run_pipeline_stage.py \
-  --dataset wumei \
+  --dataset raw \
   --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
   --stage archive_depth_cache \
   --hand-window handwin_0000_t000000_000065
@@ -594,7 +697,7 @@ PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
 ```
 
 For the launcher path, set `archive_depth_cache.delete_npy` and
-`archive_depth_cache.delete_png` in `conf/datasets/wumei.yml`.
+`archive_depth_cache.delete_png` in `conf/datasets/raw.yml`.
 
 Output:
 
@@ -689,19 +792,22 @@ SAM3 runs only on hand-object interaction objects inferred from the Qwen/Stage1
 annotations.
 
 ```bash
-/usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
-  --pipelines objects \
-  --nodes sam3_hand_object_segmentation \
-  --params sam3_hand_object_segmentation.enabled=True,sam3_hand_object_segmentation.hand_window_dir=$HAMER_RUN,sam3_hand_object_segmentation.stage1_actions=$STAGE1,sam3_hand_object_segmentation.windows_json=$HAND_WINDOWS,sam3_hand_object_segmentation.auto_from_stage1=True,sam3_hand_object_segmentation.sam3_python=/home/liuyou/miniconda3/envs/py312/bin/python,sam3_hand_object_segmentation.checkpoint=/home/liuyou/Documents/do-as-i-do/sam3/sam3.pt,sam3_hand_object_segmentation.fps=30
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session /path/to/session \
+  --stage sam3_objects \
+  --hand-window handwin_0000
 ```
 
 Output:
 
 ```text
-$HANDWIN_DIR/objects/sam3_object_tracks/
-$HANDWIN_DIR/objects/sam3_object_tracks/combined/
+$HANDWIN_DIR/objects/<object_id>/clip_XXXX_tXXXXXX_XXXXXX/
 ```
+
+The SAM3 runner entrypoint is local: `scripts/object/run_sam3_video.py`.
+Set `SAM3_PKG_DIR` when the SAM3 backend module is not installed in the active
+environment.
 
 ## Optional Nodes
 

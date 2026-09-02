@@ -175,7 +175,14 @@ def inspect_video(path: str | Path) -> dict:
         fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
         if width <= 0 or height <= 0:
             raise SessionIntegrityError(f"Video has invalid dimensions: {path}")
-        return {"width": width, "height": height, "frame_count": frame_count, "fps": fps}
+        frame_readable, _frame = cap.read()
+        return {
+            "width": width,
+            "height": height,
+            "frame_count": frame_count,
+            "fps": fps,
+            "frame_readable": bool(frame_readable),
+        }
     finally:
         cap.release()
 
@@ -461,6 +468,338 @@ def build_quality_report(session: SourceSession, environment_name: str) -> dict:
     }
 
 
+def _read_meta_for_report(meta_path: Path) -> tuple[dict, int, list[str]]:
+    errors: list[str] = []
+    if not meta_path.exists():
+        return {}, 30, [f"Missing meta.json: {meta_path}"]
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return {}, 30, [f"Malformed meta.json: {meta_path}: {exc}"]
+    try:
+        fps = int(round(float(meta.get("fps", 30))))
+    except (TypeError, ValueError):
+        errors.append(f"Invalid fps in meta.json: {meta.get('fps')!r}")
+        fps = 30
+    if fps <= 0:
+        errors.append(f"Invalid fps in meta.json: {fps}")
+        fps = 30
+    return meta, fps, errors
+
+
+def _presence(path: Path, *, required: bool = True) -> dict:
+    return {"path": str(path), "exists": path.exists(), "required": required}
+
+
+def _count_delta(counts: dict[str, int]) -> int:
+    values = [int(value) for value in counts.values()]
+    return int(max(values) - min(values)) if values else 0
+
+
+def _build_frame_count_consistency(
+    *,
+    camera_streams: tuple[str, ...],
+    video_infos: dict[str, dict],
+    timestamps_by_stream: dict[str, TimestampSeries],
+    available_frames: int,
+) -> dict:
+    video_counts = {
+        stream: int(video_infos[stream]["frame_count"])
+        for stream in camera_streams
+        if stream in video_infos and video_infos[stream].get("readable", True) and video_infos[stream].get("frame_count") is not None
+    }
+    timestamp_counts = {
+        stream: int(len(timestamps_by_stream[stream].timestamps))
+        for stream in camera_streams
+        if stream in timestamps_by_stream
+    }
+    video_timestamp_deltas = {
+        stream: abs(int(video_counts[stream]) - int(timestamp_counts[stream]))
+        for stream in camera_streams
+        if stream in video_counts and stream in timestamp_counts
+    }
+    return {
+        "video_frame_counts": video_counts,
+        "timestamp_frame_counts": timestamp_counts,
+        "video_timestamp_frame_count_deltas": video_timestamp_deltas,
+        "max_video_frame_count_delta": _count_delta(video_counts),
+        "max_timestamp_frame_count_delta": _count_delta(timestamp_counts),
+        "max_video_timestamp_count_delta": max(video_timestamp_deltas.values()) if video_timestamp_deltas else 0,
+        "available_frames": int(available_frames),
+        "policy": "trim_to_min_available_frames",
+    }
+
+
+def _build_imu_time_coverage(
+    *,
+    imu_summary: dict | None,
+    timestamps_by_stream: dict[str, TimestampSeries],
+    start: int,
+    num_frames: int,
+    fps: int,
+) -> dict:
+    if not isinstance(imu_summary, dict) or imu_summary.get("first_timestamp") is None:
+        return {"computed": False, "reason": "imu_missing_or_unreadable"}
+    if num_frames <= 0 or not timestamps_by_stream:
+        return {"computed": False, "reason": "no_camera_frame_window"}
+
+    imu_start = float(imu_summary["first_timestamp"])
+    imu_end = float(imu_summary["last_timestamp"])
+    last_frame_idx = int(start) + int(num_frames) - 1
+    streams: dict[str, dict] = {}
+    max_missing_gap_s = 0.0
+    for stream, series in sorted(timestamps_by_stream.items()):
+        if int(start) >= len(series.timestamps) or last_frame_idx >= len(series.timestamps):
+            continue
+        camera_start = float(series.timestamps[int(start)])
+        camera_end = float(series.timestamps[last_frame_idx])
+        start_missing_gap_s = max(0.0, imu_start - camera_start)
+        end_missing_gap_s = max(0.0, camera_end - imu_end)
+        max_missing_gap_s = max(max_missing_gap_s, start_missing_gap_s, end_missing_gap_s)
+        streams[stream] = {
+            "camera_start_timestamp": camera_start,
+            "camera_end_timestamp": camera_end,
+            "imu_start_delta_to_camera_s": float(imu_start - camera_start),
+            "imu_end_delta_to_camera_s": float(imu_end - camera_end),
+            "start_missing_gap_s": start_missing_gap_s,
+            "end_missing_gap_s": end_missing_gap_s,
+            "start_missing_gap_frames": float(start_missing_gap_s * float(fps)),
+            "end_missing_gap_frames": float(end_missing_gap_s * float(fps)),
+            "covered": start_missing_gap_s == 0.0 and end_missing_gap_s == 0.0,
+        }
+
+    return {
+        "computed": bool(streams),
+        "fps": int(fps),
+        "imu_start_timestamp": imu_start,
+        "imu_end_timestamp": imu_end,
+        "max_missing_gap_s": max_missing_gap_s,
+        "max_missing_gap_frames": float(max_missing_gap_s * float(fps)),
+        "streams": streams,
+    }
+
+
+def build_resilient_quality_report(
+    session_dir: str | Path,
+    camera_streams: tuple[str, ...],
+    start: int,
+    num_frames: int | None,
+    timestamp_tolerance_s: float | None,
+    video_ext: str,
+    environment_name: str,
+    video_inspector=inspect_video,
+) -> dict:
+    """Build a raw quality report without raising for bad source data."""
+    session_dir = Path(session_dir).resolve()
+    video_ext = normalize_video_ext(video_ext)
+    camera_streams = tuple(camera_streams)
+    meta_path = session_dir / "meta.json"
+    imu_path = session_dir / "imu" / "imu0.csv"
+    meta, fps, meta_errors = _read_meta_for_report(meta_path)
+    if timestamp_tolerance_s is None:
+        timestamp_tolerance_s = (1.0 / float(fps)) + 0.001
+
+    collection_errors: list[str] = list(meta_errors)
+    modality_presence: dict[str, dict] = {
+        "session_dir": {"path": str(session_dir), "exists": session_dir.exists(), "required": True},
+        "meta": _presence(meta_path, required=True),
+        "imu": _presence(imu_path, required=False),
+    }
+    videos: dict[str, str] = {}
+    timestamps: dict[str, str] = {}
+    video_infos: dict[str, dict] = {}
+    camera_readability: dict[str, dict] = {}
+    timestamp_readability: dict[str, dict] = {}
+    timestamps_by_stream: dict[str, TimestampSeries] = {}
+    timestamp_duplicate_summaries: dict[str, dict] = {}
+
+    for stream in camera_streams:
+        video_path = session_dir / "videos" / f"{stream}{video_ext}"
+        timestamp_path = session_dir / "timestamps" / f"{stream}_timestamps.txt"
+        videos[stream] = str(video_path)
+        timestamps[stream] = str(timestamp_path)
+        modality_presence[f"videos:{stream}"] = _presence(video_path, required=True)
+        modality_presence[f"timestamps:{stream}"] = _presence(timestamp_path, required=True)
+
+        try:
+            if not video_path.exists():
+                raise SessionIntegrityError(f"Missing video: {video_path}")
+            info = dict(video_inspector(video_path))
+            info.setdefault("path", str(video_path))
+            info.setdefault("frame_readable", True)
+            info["readable"] = bool(info.get("frame_readable", True))
+            camera_readability[stream] = {
+                "path": str(video_path),
+                "exists": True,
+                "readable": bool(info["readable"]),
+                "frame_readable": bool(info.get("frame_readable", True)),
+                "error": None if info["readable"] else "first frame is not readable",
+            }
+            for key in ("width", "height", "frame_count", "fps"):
+                if key in info:
+                    camera_readability[stream][key] = info[key]
+            video_infos[stream] = info
+            if not info["readable"]:
+                collection_errors.append(f"Video first frame is not readable: {video_path}")
+        except Exception as exc:
+            message = str(exc)
+            camera_readability[stream] = {
+                "path": str(video_path),
+                "exists": video_path.exists(),
+                "readable": False,
+                "frame_readable": False,
+                "error": message,
+            }
+            video_infos[stream] = {
+                "path": str(video_path),
+                "exists": video_path.exists(),
+                "readable": False,
+                "error": message,
+            }
+            collection_errors.append(message)
+
+        try:
+            series = parse_timestamp_file(timestamp_path)
+            timestamps_by_stream[stream] = series
+            timestamp_duplicate_summaries[stream] = summarize_timestamp_duplicates(series)
+            timestamp_readability[stream] = {
+                "path": str(timestamp_path),
+                "exists": True,
+                "readable": True,
+                "frame_count": int(len(series.timestamps)),
+                "error": None,
+            }
+        except Exception as exc:
+            message = str(exc)
+            timestamp_readability[stream] = {
+                "path": str(timestamp_path),
+                "exists": timestamp_path.exists(),
+                "readable": False,
+                "frame_count": 0,
+                "error": message,
+            }
+            timestamp_duplicate_summaries[stream] = {
+                "frame_count": 0,
+                "duplicate_count": 0,
+                "duplicate_rate": 0.0,
+                "first_duplicate_index": None,
+                "error": message,
+            }
+            collection_errors.append(message)
+
+    readable_video_infos = [
+        info
+        for info in video_infos.values()
+        if info.get("readable", True) and int(info.get("width") or 0) > 0 and int(info.get("height") or 0) > 0
+    ]
+    width = int(readable_video_infos[0]["width"]) if readable_video_infos else 0
+    height = int(readable_video_infos[0]["height"]) if readable_video_infos else 0
+    available_counts = [len(series.timestamps) for series in timestamps_by_stream.values()]
+    available_counts.extend(
+        int(info["frame_count"])
+        for info in video_infos.values()
+        if info.get("readable", True) and int(info.get("frame_count") or 0) > 0
+    )
+    available_frames = min(available_counts) if available_counts else 0
+    frame_window_num_frames = int(num_frames) if num_frames is not None else max(available_frames - int(start), 0)
+    frame_count_consistency = _build_frame_count_consistency(
+        camera_streams=camera_streams,
+        video_infos=video_infos,
+        timestamps_by_stream=timestamps_by_stream,
+        available_frames=available_frames,
+    )
+    timestamp_alignment_summary: dict[str, dict] = {}
+    if MASTER_STREAM not in timestamps_by_stream:
+        collection_errors.append(f"Master stream {MASTER_STREAM!r} timestamp is not readable")
+    elif frame_window_num_frames <= 0:
+        collection_errors.append(f"num_frames must be positive, got {frame_window_num_frames}")
+    elif int(start) + frame_window_num_frames > available_frames:
+        collection_errors.append(
+            f"Requested frames [{int(start)}, {int(start) + frame_window_num_frames}) exceed available frame count {available_frames}"
+        )
+    elif set(camera_streams).issubset(timestamps_by_stream):
+        try:
+            timestamp_alignment_summary = assert_aligned_timestamps(
+                timestamps_by_stream,
+                MASTER_STREAM,
+                int(start),
+                frame_window_num_frames,
+                float(timestamp_tolerance_s),
+            )
+        except Exception as exc:
+            collection_errors.append(str(exc))
+    else:
+        collection_errors.append("Cannot compute timestamp alignment because one or more timestamp streams are unreadable")
+
+    try:
+        imu_summary = inspect_imu(imu_path)
+    except Exception as exc:
+        imu_summary = {"path": str(imu_path), "readable": False, "error": str(exc)}
+        collection_errors.append(str(exc))
+
+    if isinstance(imu_summary, dict) and imu_summary.get("first_timestamp") is not None and timestamps_by_stream:
+        imu_start = float(imu_summary["first_timestamp"])
+        imu_end = float(imu_summary["last_timestamp"])
+        last_frame_idx = int(start) + frame_window_num_frames - 1
+        if frame_window_num_frames > 0:
+            imu_summary["start_delta_to_cameras_s"] = {
+                stream: float(imu_start - series.timestamps[int(start)])
+                for stream, series in timestamps_by_stream.items()
+                if int(start) < len(series.timestamps)
+            }
+            imu_summary["end_delta_to_cameras_s"] = {
+                stream: float(imu_end - series.timestamps[last_frame_idx])
+                for stream, series in timestamps_by_stream.items()
+                if last_frame_idx < len(series.timestamps)
+            }
+    imu_time_coverage = _build_imu_time_coverage(
+        imu_summary=imu_summary,
+        timestamps_by_stream=timestamps_by_stream,
+        start=int(start),
+        num_frames=frame_window_num_frames,
+        fps=fps,
+    )
+
+    return {
+        "mode": "quality_report",
+        "collection_status": "completed_with_errors" if collection_errors else "complete",
+        "collection_errors": collection_errors,
+        "source_session": str(session_dir),
+        "environment": environment_name,
+        "report_time_utc": datetime.now(timezone.utc).isoformat(),
+        "camera_streams": list(camera_streams),
+        "frame_window": {
+            "start": int(start),
+            "num_frames": int(frame_window_num_frames),
+            "available_frames": int(available_frames),
+        },
+        "fps": int(fps),
+        "meta": meta,
+        "image_size": {
+            "width": int(width),
+            "height": int(height),
+        },
+        "modality_presence": modality_presence,
+        "camera_readability": camera_readability,
+        "timestamp_readability": timestamp_readability,
+        "frame_count_consistency": frame_count_consistency,
+        "imu_time_coverage": imu_time_coverage,
+        "videos": videos,
+        "timestamps": timestamps,
+        "video_infos": video_infos,
+        "timestamp_duplicates": timestamp_duplicate_summaries,
+        "timestamp_alignment": timestamp_alignment_summary,
+        "imu": imu_summary,
+        "timestamp_tolerance_s": float(timestamp_tolerance_s),
+        "notes": [
+            "Raw quality report is resilient: source errors are recorded in this JSON instead of interrupting the pipeline.",
+            "Video check opens the container and attempts to decode the first frame.",
+            "Alignment statistics are recorded for review and evaluated by raw_headband_quality_gate.",
+            "IMU orientation quaternion columns are ignored by signal quality checks.",
+        ],
+    }
+
+
 def export_quality_report(
     session_dir: str | Path,
     output_root: str | Path,
@@ -473,15 +812,6 @@ def export_quality_report(
     environment_name: str = "py312",
     video_inspector=inspect_video,
 ) -> Path:
-    session = validate_source_session(
-        session_dir,
-        tuple(camera_streams),
-        start=start,
-        num_frames=num_frames,
-        timestamp_tolerance_s=timestamp_tolerance_s,
-        video_ext=video_ext,
-        video_inspector=video_inspector,
-    )
     output_root = Path(output_root).resolve()
     output_root.mkdir(parents=True, exist_ok=True)
     annotation_dir = output_root / "annotation"
@@ -489,8 +819,18 @@ def export_quality_report(
     report_path = annotation_dir / "quality_report.json"
     if report_path.exists() and not overwrite:
         raise SessionIntegrityError(f"Quality report exists; pass --overwrite to replace it: {report_path}")
+    report = build_resilient_quality_report(
+        session_dir=session_dir,
+        camera_streams=tuple(camera_streams),
+        start=start,
+        num_frames=num_frames,
+        timestamp_tolerance_s=timestamp_tolerance_s,
+        video_ext=video_ext,
+        environment_name=environment_name,
+        video_inspector=video_inspector,
+    )
     report_path.write_text(
-        json.dumps(build_quality_report(session, environment_name), indent=2, ensure_ascii=False),
+        json.dumps(report, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
     return report_path.resolve()

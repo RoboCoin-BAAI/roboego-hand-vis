@@ -260,7 +260,7 @@ def run_pre_semantic_quality_gate(
     intervals = build_intervals(samples, config)
     report = {
         "source_video": str(video_path),
-        "stage": "pre_semantic_quality_gate",
+        "stage": "video_simple_quality_gate",
         "config": {
             "sample_every_s": config.sample_every_s,
             "min_freeze_duration_s": config.min_freeze_duration_s,

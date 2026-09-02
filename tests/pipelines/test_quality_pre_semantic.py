@@ -12,7 +12,7 @@ def test_pre_semantic_quality_gate_node_skips_when_disabled():
     )
 
     assert report == {
-        "stage": "pre_semantic_quality_gate",
+        "stage": "video_simple_quality_gate",
         "status": "skipped",
         "reason": "disabled",
     }
@@ -31,7 +31,7 @@ def test_pre_semantic_quality_gate_node_skips_when_raw_gate_did_not_pass():
     )
 
     assert report == {
-        "stage": "pre_semantic_quality_gate",
+        "stage": "video_simple_quality_gate",
         "status": "skipped",
         "reason": "raw_headband_quality_gate_not_passed",
     }
@@ -51,7 +51,7 @@ def test_pre_semantic_quality_gate_node_returns_valid_windows(monkeypatch, tmp_p
             }
         )
         return {
-            "stage": "pre_semantic_quality_gate",
+            "stage": "video_simple_quality_gate",
             "source_video": str(video_path),
             "checks": {"decode_ok": True, "sampled_frame_count": 4},
             "intervals": [
@@ -100,13 +100,13 @@ def test_pre_semantic_quality_gate_node_returns_valid_windows(monkeypatch, tmp_p
     assert calls == [
         {
             "video_path": video,
-            "output_json": tmp_path / "session" / "annotation" / "pre_semantic_quality_gate_left.json",
+            "output_json": tmp_path / "session" / "annotation" / "video_simple_quality_left.json",
             "sample_every_s": 2.0,
             "min_freeze_duration_s": 8.0,
         }
     ]
     assert report["status"] == "complete"
-    assert report["output_json"].endswith("annotation/pre_semantic_quality_gate_left.json")
+    assert report["output_json"].endswith("annotation/video_simple_quality_left.json")
     assert windows == [
         {
             "source_video": str(video),

@@ -1,9 +1,11 @@
 from pathlib import Path
 
 from roboego_hand_vis.pipelines.datasets.nodes import (
+    run_export_direct_hand_window_segments_node,
     run_export_hand_window_segments_node,
     run_export_selected_video_segments_node,
     run_prepare_selected_segments_node,
+    run_prepare_stereo_unit_node,
     run_resolve_dataset_manifest_node,
 )
 
@@ -180,6 +182,52 @@ def test_prepare_selected_segments_node_runs_existing_cli(monkeypatch, tmp_path)
     }
 
 
+def test_prepare_stereo_unit_node_runs_existing_cli(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.datasets.nodes.subprocess.run", fake_run)
+
+    result = run_prepare_stereo_unit_node(
+        {
+            "enabled": True,
+            "python": "python",
+            "script": "scripts/datasets/prepare_selected_segments.py",
+            "session": str(tmp_path / "session"),
+            "unit_root": str(tmp_path / "session/hand_windows/handwin_0000"),
+            "roboegopipe_root": "/tmp/RoboEgoPipe",
+            "model": "equidistant",
+            "balance": 0.0,
+            "overwrite": True,
+        },
+    )
+
+    assert calls[0]["check"] is True
+    assert calls[0]["args"] == [
+        "python",
+        "scripts/datasets/prepare_selected_segments.py",
+        "--session",
+        str(tmp_path / "session"),
+        "--unit_root",
+        str(tmp_path / "session/hand_windows/handwin_0000"),
+        "--roboegopipe_root",
+        "/tmp/RoboEgoPipe",
+        "--model",
+        "equidistant",
+        "--balance",
+        "0.0",
+        "--overwrite",
+    ]
+    assert result == {
+        "stage": "prepare_stereo_unit",
+        "status": "complete",
+        "session": str(tmp_path / "session"),
+        "unit_root": str(tmp_path / "session/hand_windows/handwin_0000"),
+    }
+
+
 def test_prepare_selected_segments_node_skips_when_export_not_complete():
     result = run_prepare_selected_segments_node({"status": "skipped"}, {"enabled": True})
 
@@ -234,3 +282,68 @@ def test_export_hand_window_segments_node_skips_when_prepare_not_complete():
         "status": "skipped",
         "reason": "prepare_selected_segments_not_complete",
     }
+
+
+def test_export_direct_hand_window_segments_node_runs_without_selected_segment(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_export_direct_hand_window_segments(**kwargs):
+        calls.append(kwargs)
+        return {"window_count": 1, "windows": [{"window_id": "handwin_0000"}]}
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.datasets.nodes.export_direct_hand_window_segments",
+        fake_export_direct_hand_window_segments,
+    )
+
+    result = run_export_direct_hand_window_segments_node(
+        {
+            "enabled": True,
+            "session": str(tmp_path / "session"),
+            "hand_windows_json": str(tmp_path / "session/annotation/hand_estimation_windows_left_v1.json"),
+            "output_dir": str(tmp_path / "session/hand_windows"),
+            "camera_streams": ["left", "right"],
+            "overwrite": True,
+            "codec": "mp4v",
+        }
+    )
+
+    assert calls == [
+        {
+            "session_dir": tmp_path / "session",
+            "hand_windows_json": tmp_path / "session/annotation/hand_estimation_windows_left_v1.json",
+            "output_dir": tmp_path / "session/hand_windows",
+            "camera_streams": ("left", "right"),
+            "fps": None,
+            "overwrite": True,
+            "codec": "mp4v",
+        }
+    ]
+    assert result["stage"] == "export_direct_hand_window_segments"
+    assert result["status"] == "complete"
+    assert result["window_count"] == 1
+
+
+def test_export_direct_hand_window_segments_node_accepts_pipe_encoded_camera_streams(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_export_direct_hand_window_segments(**kwargs):
+        calls.append(kwargs)
+        return {"window_count": 1, "windows": []}
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.datasets.nodes.export_direct_hand_window_segments",
+        fake_export_direct_hand_window_segments,
+    )
+
+    run_export_direct_hand_window_segments_node(
+        {
+            "enabled": True,
+            "session": str(tmp_path / "session"),
+            "hand_windows_json": str(tmp_path / "session/annotation/hand_estimation_windows_left_v1.json"),
+            "output_dir": str(tmp_path / "session/hand_windows"),
+            "camera_streams": "left|right",
+        }
+    )
+
+    assert calls[0]["camera_streams"] == ("left", "right")

@@ -104,7 +104,46 @@ def test_qwen_frame_annotation_node_runs_existing_script(monkeypatch, tmp_path):
         "output_json": str(output_json),
         "valid_window_count": 1,
         "window_filter_applied": True,
+        "usage": {},
+        "usage_summary": {},
+        "failed_batch_count": 0,
+        "failed_batches": [],
     }
+
+
+def test_qwen_frame_annotation_node_returns_usage_from_output_json(monkeypatch, tmp_path):
+    def fake_run(args, check):
+        output_path = Path(args[args.index("--output_json") + 1])
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(
+            json.dumps(
+                {
+                    "usage": {"input_tokens": 20, "output_tokens": 8, "total_tokens": 28},
+                    "usage_summary": {"tokens_per_frame": 14.0},
+                    "status": "partial_failed",
+                    "failed_batch_count": 1,
+                    "failed_batches": [{"batch_idx": 2, "status": "timeout_error"}],
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.semantic.nodes.subprocess.run",
+        fake_run,
+    )
+
+    output_json = tmp_path / "annotation" / "qwen_frame_annotations_left_v4.json"
+    result = run_qwen_frame_annotation_node(
+        [{"start": 0.0, "end": 2.0, "route_hint": "pass_to_qwen"}],
+        {"enabled": True, "video": "left.mp4", "output_json": str(output_json)},
+    )
+
+    assert result["usage"] == {"input_tokens": 20, "output_tokens": 8, "total_tokens": 28}
+    assert result["usage_summary"] == {"tokens_per_frame": 14.0}
+    assert result["status"] == "partial_failed"
+    assert result["failed_batch_count"] == 1
+    assert result["failed_batches"] == [{"batch_idx": 2, "status": "timeout_error"}]
 
 
 def test_qwen_frame_annotation_node_skips_when_no_valid_windows():
@@ -114,14 +153,71 @@ def test_qwen_frame_annotation_node_skips_when_no_valid_windows():
             "enabled": True,
             "video": "left.mp4",
             "output_json": "annotations.json",
+            "use_video_simple_quality": True,
         },
     )
 
     assert result == {
         "stage": "qwen_frame_annotation",
         "status": "skipped",
-        "reason": "no_valid_pre_semantic_windows",
+        "reason": "no_valid_video_simple_quality_windows",
         "valid_window_count": 0,
+    }
+
+
+def test_qwen_frame_annotation_node_runs_without_video_simple_quality_when_optional(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.semantic.nodes.subprocess.run",
+        fake_run,
+    )
+
+    video = tmp_path / "session" / "videos" / "left.mp4"
+    output_json = tmp_path / "session" / "annotation" / "qwen_frame_annotations_left_v4.json"
+
+    result = run_qwen_frame_annotation_node(
+        [],
+        {
+            "enabled": True,
+            "video": str(video),
+            "output_json": str(output_json),
+            "fps": 1,
+            "start_s": 10,
+            "duration_s": 20,
+            "use_video_simple_quality": False,
+        },
+    )
+
+    assert "--windows_json" not in calls[0]["args"]
+    assert calls[0]["args"] == [
+        "python",
+        "scripts/quality/run_qwen_frame_annotation.py",
+        "--video",
+        str(video),
+        "--output_json",
+        str(output_json),
+        "--fps",
+        "1",
+        "--start_s",
+        "10",
+        "--duration_s",
+        "20",
+    ]
+    assert result == {
+        "stage": "qwen_frame_annotation",
+        "status": "complete",
+        "video": str(video),
+        "output_json": str(output_json),
+        "valid_window_count": 0,
+        "window_filter_applied": False,
+        "usage": {},
+        "usage_summary": {},
+        "failed_batch_count": 0,
+        "failed_batches": [],
     }
 
 

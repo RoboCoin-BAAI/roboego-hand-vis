@@ -168,12 +168,37 @@ def test_inspect_imu_skips_non_numeric_signal_columns(tmp_path):
     assert list(quality["columns"]) == ["gyro_x"]
 
 
-def test_validate_source_session_rejects_missing_video_before_report(tmp_path):
+def test_validate_source_session_rejects_missing_video_in_strict_validator(tmp_path):
     session = make_minimal_session(tmp_path)
     (session / "videos" / "left.mp4").unlink()
 
     with pytest.raises(SessionIntegrityError, match="Missing video"):
         validate_source_session(session, DEFAULT_CAMERA_STREAMS, start=0, num_frames=2, timestamp_tolerance_s=0.04)
+
+
+def test_export_quality_report_records_missing_video_without_raising(tmp_path):
+    session = make_minimal_session(tmp_path)
+    (session / "videos" / "left.mp4").unlink()
+    output_root = tmp_path / "quality" / session.name
+
+    report_path = export_quality_report(
+        session,
+        output_root,
+        camera_streams=DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=2,
+        timestamp_tolerance_s=0.04,
+        overwrite=False,
+        environment_name="py312",
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 2, "fps": 30.0},
+    )
+
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["modality_presence"]["videos:left"]["exists"] is False
+    assert report["camera_readability"]["left"]["readable"] is False
+    assert "Missing video" in report["camera_readability"]["left"]["error"]
+    assert report["timestamp_readability"]["left"]["readable"] is True
+    assert report["collection_status"] == "completed_with_errors"
 
 
 def test_validate_source_session_uses_configured_video_extension(tmp_path):
@@ -263,13 +288,28 @@ def test_export_quality_report_writes_only_annotation_report_without_dataset_lay
     assert not (output_root / "videos").exists()
     report = json.loads(report_path.read_text(encoding="utf-8"))
     assert report["mode"] == "quality_report"
-    assert report["frame_window"] == {"start": 0, "num_frames": 2}
+    assert report["frame_window"]["start"] == 0
+    assert report["frame_window"]["num_frames"] == 2
+    assert report["frame_window"]["available_frames"] == 2
     assert report["timestamp_duplicates"]["left"]["duplicate_rate"] == 0.0
     assert report["timestamp_alignment"]["right"]["over_tolerance_count"] == 0
     assert report["imu"]["sample_count"] == 4
     assert report["imu"]["duplicate_count"] == 1
     assert report["imu"]["start_delta_to_cameras_s"]["left"] == pytest.approx(-0.01)
     assert report["imu"]["end_delta_to_cameras_s"]["left"] == pytest.approx(-0.033333333)
+    assert report["frame_count_consistency"] == {
+        "video_frame_counts": {"left": 2, "right": 2, "bleft": 2, "bright": 2},
+        "timestamp_frame_counts": {"left": 2, "right": 2, "bleft": 2, "bright": 2},
+        "video_timestamp_frame_count_deltas": {"left": 0, "right": 0, "bleft": 0, "bright": 0},
+        "max_video_frame_count_delta": 0,
+        "max_timestamp_frame_count_delta": 0,
+        "max_video_timestamp_count_delta": 0,
+        "available_frames": 2,
+        "policy": "trim_to_min_available_frames",
+    }
+    assert report["imu_time_coverage"]["computed"] is True
+    assert report["imu_time_coverage"]["max_missing_gap_frames"] == pytest.approx(1.0)
+    assert report["imu_time_coverage"]["streams"]["left"]["end_missing_gap_frames"] == pytest.approx(1.0)
 
 
 def test_export_quality_report_records_configured_video_extension(tmp_path):

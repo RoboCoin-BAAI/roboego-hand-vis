@@ -6,6 +6,7 @@ from omegaconf import ListConfig, OmegaConf
 from scripts.run_fast_foundation_stereo_video import (
     disparity_to_depth_original_size,
     make_depth_preview_panel_rgb,
+    parse_args,
     to_jsonable,
 )
 
@@ -64,3 +65,21 @@ def test_to_jsonable_converts_direct_omegaconf_list_config():
     assert converted == {"hidden_dims": [128]}
     assert type(converted["hidden_dims"]) is list
     json.dumps(converted)
+
+
+def test_fast_foundation_cli_defaults_to_png_without_npy(monkeypatch):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "run_fast_foundation_stereo_video.py",
+            "--manifest",
+            "manifest.json",
+            "--output_dir",
+            "depth",
+        ],
+    )
+
+    args = parse_args()
+
+    assert args.save_depth_png is True
+    assert args.save_npy is False
