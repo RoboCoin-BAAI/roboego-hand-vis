@@ -292,6 +292,15 @@ PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
 `raw_quality` runs both the integrity checker and the quality gate. The terminal
 prints the gate status, failed checks, and warnings.
 
+Every non-dry-run invocation writes or updates:
+
+```text
+<session>/pipeline_state.json
+```
+
+The state records the stage status, command, duration, return code, generated
+commands, and gate/blocking reason when a workflow is intentionally stopped.
+
 Run one hand-window stage:
 
 ```bash
@@ -315,16 +324,54 @@ PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
   --dry-run
 ```
 
+Run one stage across many sessions and write a static HTML dashboard:
+
+```bash
+python scripts/run_batch_pipeline.py \
+  --root /mnt/nas/synnas/ego/baai_ego_task \
+  --dataset raw \
+  --stage raw_quality \
+  --workers 4 \
+  --dashboard
+```
+
+Each discovered session gets a local state file:
+
+```text
+<session>/pipeline_state.json
+```
+
+The state records stage status, command, duration, return code, output tail, and
+failure reason. Exit code `2` from `run_pipeline_stage.py` is treated as
+`blocked`, which usually means a gate intentionally stopped the workflow.
+Workflow aliases such as `base_prepare` and `phase1_depth` are launch
+shortcuts; the dashboard expands them into the real stage columns.
+
+Generate or refresh the dashboard without running any stage:
+
+```bash
+python scripts/report_pipeline_state.py \
+  --root /mnt/nas/synnas/ego/baai_ego_task \
+  --dashboard
+```
+
+Default dashboard output:
+
+```text
+reports/pipeline_dashboard/index.html
+```
+
 Supported first-version stages:
 
 ```text
 raw_quality
 video_simple_quality
-phase1_planning
+base_prepare
 phase1_depth
 post_annotation_actions
 processing_plan
 hand_windows
+hand_visibility_gate
 materialize_session
 materialize_hand_windows
 materialize_segments
@@ -405,30 +452,61 @@ Output:
 $SESSION/annotation/video_simple_quality_left.json
 ```
 
-### Phase 1 Planning Command
+### Base Prepare Command
 
-Runs steps 1-6: raw quality, video simple quality, Qwen second-level
-annotation, post-annotation action normalization, processing plan, and hand
-window construction.
+Runs the pre-processing stages before heavy downstream work: raw quality,
+video simple quality, Qwen second-level annotation, post-annotation action
+normalization, processing plan, hand window construction, materialization, and
+stereo preparation.
 
 ```bash
 python scripts/run_pipeline_stage.py \
   --dataset raw \
   --session "$SESSION" \
-  --stage phase1_planning
+  --stage base_prepare
 ```
+
+The materialization step uses `materialize_auto`: sessions shorter than 3
+minutes are prepared directly, 3-15 minute sessions use direct hand windows, and
+longer sessions use selected segments plus hand windows.
+
+### Hand Visibility Gate Command
+
+Runs the middle gate after `base_prepare` and before heavier branches such as
+depth, hand, object, VIO, or privacy stages.
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session "$SESSION" \
+  --stage hand_visibility_gate
+```
+
+Hand visibility gate output:
+
+```text
+$SESSION/annotation/hand_visibility_quality_gate_left_v1.json
+```
+
+The gate computes `core_both_hands_visible_rate` for each hand window from Qwen
+`hands_visible.left/right`. The default threshold is `0.9`. Context seconds
+around the core window are reported separately and do not decide pass/fail.
 
 ### 3. Qwen Frame Annotation
 
-Runs Qwen on video simple quality valid windows. The node writes batch outputs, chunks, a
-checkpoint, and a final merged JSON. Remote API failures such as multimodal
-download timeout are retried within the batch.
+For manually clipped short sessions, Qwen runs only if video simple quality
+passes. By default it annotates the original video timeline instead of filtering
+by valid intervals. The valid-window filtering code is still available through
+`qwen_frame_annotation.use_video_simple_quality=True` for longer raw videos.
+The node writes batch outputs, chunks, a checkpoint, and a final merged JSON.
+Remote API failures such as multimodal download timeout are retried within the
+batch.
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
 /home/liuyou/miniconda3/envs/ego/bin/kedro run \
   --to-nodes qwen_frame_annotation \
-  --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/video_simple_quality_left.json,qwen_frame_annotation.enabled=True,qwen_frame_annotation.video=$SESSION/videos/left.mp4,qwen_frame_annotation.output_json=$SESSION/annotation/qwen_frame_annotations_left_v4.json,qwen_frame_annotation.checkpoint_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,qwen_frame_annotation.raw_output_dir=$SESSION/annotation/qwen_frame_annotation_raw,qwen_frame_annotation.batch_output_dir=$SESSION/annotation/qwen_frame_annotation_batches,qwen_frame_annotation.chunk_output_dir=$SESSION/annotation/qwen_frame_annotation_chunks,qwen_frame_annotation.frames_dir=$SESSION/annotation/qwen_frame_annotation_frames,qwen_frame_annotation.prompt=docs/prompts/qwen_frame_annotation_v5_en.md,qwen_frame_annotation.fps=1,qwen_frame_annotation.max_width=768,qwen_frame_annotation.batch_size=10,qwen_frame_annotation.batches_per_chunk=5,qwen_frame_annotation.model=qwen3.6-flash,qwen_frame_annotation.timeout_s=120,qwen_frame_annotation.max_retries=3,qwen_frame_annotation.retry_sleep_s=5,qwen_frame_annotation.resume=True
+  --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/video_simple_quality_left.json,qwen_frame_annotation.enabled=True,qwen_frame_annotation.video=$SESSION/videos/left.mp4,qwen_frame_annotation.output_json=$SESSION/annotation/qwen_frame_annotations_left_v4.json,qwen_frame_annotation.checkpoint_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,qwen_frame_annotation.raw_output_dir=$SESSION/annotation/qwen_frame_annotation_raw,qwen_frame_annotation.batch_output_dir=$SESSION/annotation/qwen_frame_annotation_batches,qwen_frame_annotation.chunk_output_dir=$SESSION/annotation/qwen_frame_annotation_chunks,qwen_frame_annotation.frames_dir=$SESSION/annotation/qwen_frame_annotation_frames,qwen_frame_annotation.prompt=docs/prompts/qwen_frame_annotation_v5_en.md,qwen_frame_annotation.fps=1,qwen_frame_annotation.require_video_simple_quality_pass=True,qwen_frame_annotation.use_video_simple_quality=False,qwen_frame_annotation.max_width=768,qwen_frame_annotation.batch_size=10,qwen_frame_annotation.batches_per_chunk=5,qwen_frame_annotation.model=qwen3.6-flash,qwen_frame_annotation.timeout_s=120,qwen_frame_annotation.max_retries=3,qwen_frame_annotation.retry_sleep_s=5,qwen_frame_annotation.resume=True
 ```
 
 Important outputs:

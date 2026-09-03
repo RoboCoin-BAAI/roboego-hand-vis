@@ -6,13 +6,17 @@ import shlex
 import subprocess
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import yaml
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG_DIR = PROJECT_ROOT / "conf" / "datasets"
+
+
+class WorkflowBlockedError(RuntimeError):
+    """Raised when a configured gate intentionally blocks later workflow steps."""
 
 
 @dataclass(frozen=True)
@@ -35,6 +39,9 @@ class StageInvocation:
     params: dict[str, Any]
     kedro_bin: str
     context: dict[str, str]
+
+
+WorkflowStageCallback = Callable[[str, str, list[StageInvocation], BaseException | None], None]
 
 
 def load_dataset_config(dataset: str, config_path: Path | None = None) -> dict[str, Any]:
@@ -78,13 +85,32 @@ def build_stage_invocations(request: LauncherRequest) -> list[StageInvocation]:
     return [_build_invocation(config, stage_config, context) for context in contexts]
 
 
-def run_launcher_request(request: LauncherRequest) -> list[str]:
+def run_launcher_request(request: LauncherRequest, stage_callback: WorkflowStageCallback | None = None) -> list[str]:
     config = load_dataset_config(request.dataset, request.config)
     workflows = config.get("workflows")
     if isinstance(workflows, dict) and request.stage in workflows:
-        return _run_workflow_request(config=config, request=request, workflow=workflows[request.stage] or {})
+        return _run_workflow_request(
+            config=config,
+            request=request,
+            workflow=workflows[request.stage] or {},
+            stage_callback=stage_callback,
+        )
     invocations = build_stage_invocations(request)
     return run_stage_invocations(invocations, dry_run=request.dry_run)
+
+
+def workflow_stage_names(request: LauncherRequest) -> list[str]:
+    config = load_dataset_config(request.dataset, request.config)
+    workflows = config.get("workflows")
+    if not isinstance(workflows, dict) or request.stage not in workflows:
+        return [request.stage]
+    steps = _workflow_steps(config=config, workflow=workflows[request.stage] or {}, session=request.session.expanduser().resolve())
+    names: list[str] = []
+    for step in steps:
+        for name in _workflow_step_state_stages(step):
+            if name not in names:
+                names.append(name)
+    return names
 
 
 def run_stage_invocations(invocations: list[StageInvocation], *, dry_run: bool = False) -> list[str]:
@@ -106,20 +132,121 @@ def _run_workflow_request(
     config: dict[str, Any],
     request: LauncherRequest,
     workflow: dict[str, Any],
+    stage_callback: WorkflowStageCallback | None = None,
 ) -> list[str]:
     commands: list[str] = []
     steps = _workflow_steps(config=config, workflow=workflow, session=request.session.expanduser().resolve())
     for step in steps:
+        step_stage = str(step["stage"])
+        state_stages = _workflow_step_state_stages(step)
         step_request = replace(
             request,
-            stage=step["stage"],
+            stage=step_stage,
             unit=step.get("unit") or request.unit,
             hand_window=step.get("hand_window") or request.hand_window,
             all_hand_windows=bool(step.get("all_hand_windows", False)),
         )
         invocations = build_stage_invocations(step_request)
-        commands.extend(run_stage_invocations(invocations, dry_run=request.dry_run))
+        if stage_callback and not request.dry_run:
+            for state_stage in state_stages:
+                stage_callback(state_stage, "processing", invocations, None)
+        try:
+            step_commands = run_stage_invocations(invocations, dry_run=request.dry_run)
+            if not request.dry_run:
+                _check_workflow_step_outputs(request=step_request, invocations=invocations)
+        except WorkflowBlockedError as exc:
+            if stage_callback and not request.dry_run:
+                for state_stage in state_stages:
+                    stage_callback(state_stage, "blocked", invocations, exc)
+            raise
+        except BaseException as exc:
+            if stage_callback and not request.dry_run:
+                for state_stage in state_stages:
+                    stage_callback(state_stage, "fail", invocations, exc)
+            raise
+        commands.extend(step_commands)
+        if stage_callback and not request.dry_run:
+            for state_stage in state_stages:
+                stage_callback(state_stage, "success", invocations, None)
     return commands
+
+
+def _check_workflow_step_outputs(*, request: LauncherRequest, invocations: list[StageInvocation]) -> None:
+    if request.stage != "qwen_annotation":
+        return
+    for invocation in invocations:
+        checkpoint_json = _first_param_value(invocation.params, ".checkpoint_json")
+        if checkpoint_json and not Path(checkpoint_json).exists():
+            raise WorkflowBlockedError(_qwen_checkpoint_missing_message(request.session, Path(checkpoint_json)))
+
+
+def _first_param_value(params: dict[str, Any], suffix: str) -> str:
+    for key, value in params.items():
+        if str(key).endswith(suffix) and value not in (None, ""):
+            return str(value)
+    return ""
+
+
+def _qwen_checkpoint_missing_message(session: Path, checkpoint_json: Path) -> str:
+    session = Path(session).expanduser().resolve()
+    lines = [
+        "",
+        "========== BASE PREPARE BLOCKED ==========",
+        "base_prepare blocked: Qwen annotation checkpoint was not produced.",
+        f"missing_checkpoint={checkpoint_json}",
+    ]
+    raw_report = session / "annotation" / "quality_report.json"
+    if raw_report.exists():
+        try:
+            report = json.loads(raw_report.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            lines.append(f"raw_quality_report={raw_report} (invalid json)")
+        else:
+            gate = report.get("raw_headband_quality_gate") if isinstance(report, dict) else {}
+            if isinstance(gate, dict) and gate.get("passed") is False:
+                lines.append(
+                    "raw_headband_quality_gate="
+                    f"{gate.get('status', 'failed')} failed_checks={gate.get('failed_checks', [])}"
+                )
+                for check in gate.get("checks", []):
+                    if not isinstance(check, dict) or check.get("passed") is not False:
+                        continue
+                    detail = f"- {check.get('name')}: {check.get('message', '')}"
+                    if "value" in check:
+                        detail += f" value={check.get('value')}"
+                    if "threshold" in check:
+                        detail += f" threshold={check.get('threshold')}"
+                    lines.append(detail)
+            lines.append(f"raw_quality_report={raw_report}")
+    else:
+        lines.append(f"raw_quality_report={raw_report} (missing)")
+    video_report = session / "annotation" / "video_simple_quality_left.json"
+    if video_report.exists():
+        try:
+            report = json.loads(video_report.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            lines.append(f"video_simple_quality_report={video_report} (invalid json)")
+        else:
+            if isinstance(report, dict) and report.get("passed") is False:
+                failed_intervals = report.get("failed_intervals", [])
+                lines.append(
+                    "video_simple_quality_gate="
+                    f"{report.get('status', 'failed')} failed_interval_count={len(failed_intervals)}"
+                )
+                for interval in failed_intervals:
+                    if not isinstance(interval, dict):
+                        continue
+                    start = float(interval.get("start", 0.0) or 0.0)
+                    end = float(interval.get("end", start) or start)
+                    detail = f"- {interval.get('label')}: {start:.3f}-{end:.3f}s"
+                    if interval.get("reason"):
+                        detail += f" | {interval.get('reason')}"
+                    lines.append(detail)
+            lines.append(f"video_simple_quality_report={video_report}")
+    else:
+        lines.append(f"video_simple_quality_report={video_report} (missing; likely skipped by raw gate)")
+    lines.append("=============================================")
+    return "\n".join(lines)
 
 
 def _workflow_steps(*, config: dict[str, Any], workflow: dict[str, Any], session: Path) -> list[dict[str, Any]]:
@@ -144,6 +271,13 @@ def _normalize_workflow_step(step: Any) -> dict[str, Any]:
     if isinstance(step, dict) and step.get("stage"):
         return dict(step)
     raise ValueError(f"Invalid workflow step: {step!r}")
+
+
+def _workflow_step_state_stages(step: dict[str, Any]) -> list[str]:
+    state_stages = step.get("state_stages")
+    if isinstance(state_stages, list) and state_stages:
+        return [str(stage) for stage in state_stages]
+    return [str(step["stage"])]
 
 
 def render_invocation_command(invocation: StageInvocation) -> str:

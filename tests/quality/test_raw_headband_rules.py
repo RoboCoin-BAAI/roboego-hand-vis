@@ -27,6 +27,39 @@ def test_rules_fail_missing_or_unreadable_required_camera_modalities():
     assert result["passed"] is False
 
 
+def test_rules_allow_missing_optional_back_camera_modalities():
+    result = evaluate_quality_report(
+        {
+            "modality_presence": {
+                "videos:left": {"exists": True, "required": True},
+                "timestamps:left": {"exists": True, "required": True},
+                "videos:right": {"exists": True, "required": True},
+                "timestamps:right": {"exists": True, "required": True},
+                "videos:bleft": {"exists": False, "required": False},
+                "timestamps:bleft": {"exists": False, "required": False},
+                "videos:bright": {"exists": False, "required": False},
+                "timestamps:bright": {"exists": False, "required": False},
+            },
+            "camera_readability": {
+                "left": {"readable": True},
+                "right": {"readable": True},
+            },
+            "timestamp_readability": {
+                "left": {"readable": True},
+                "right": {"readable": True},
+            },
+            "timestamp_alignment": {},
+            "timestamp_duplicates": {},
+            "imu": {"duplicate_rate": 0.0, "signal_quality": {}},
+            "video_infos": {},
+            "fps": 30,
+        }
+    )
+
+    assert result["passed"] is True
+    assert result["failed_checks"] == []
+
+
 def test_rules_fail_timestamp_alignment_from_configured_rate_threshold():
     result = evaluate_quality_report(
         {
@@ -132,15 +165,15 @@ def test_rules_fail_imu_missing_duplicates_and_signal_anomalies():
     ]
 
 
-def test_rules_fail_frame_count_consistency_over_ten_frames():
+def test_rules_fail_frame_count_consistency_over_zero_frames():
     result = evaluate_quality_report(
         {
             "timestamp_alignment": {},
             "timestamp_duplicates": {},
             "frame_count_consistency": {
-                "max_video_frame_count_delta": 11,
+                "max_video_frame_count_delta": 1,
                 "max_timestamp_frame_count_delta": 0,
-                "max_video_timestamp_count_delta": 1,
+                "max_video_timestamp_count_delta": 0,
             },
             "imu": {"duplicate_rate": 0.0, "signal_quality": {}},
             "video_infos": {},
@@ -150,8 +183,8 @@ def test_rules_fail_frame_count_consistency_over_ten_frames():
 
     assert result["passed"] is False
     assert result["failed_checks"] == ["frame_count_consistency"]
-    assert result["checks"][0]["value"] == 11
-    assert result["checks"][0]["threshold"] == 10
+    assert result["checks"][0]["value"] == 1
+    assert result["checks"][0]["threshold"] == 0
 
 
 def test_rules_fail_imu_time_coverage_when_gap_exceeds_ten_frames():

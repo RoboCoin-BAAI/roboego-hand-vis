@@ -42,6 +42,12 @@ class HandWindowConfig:
     fps: int = 30
 
 
+@dataclass(frozen=True)
+class HandVisibilityGateConfig:
+    min_core_both_hands_visible_rate: float = 0.9
+    unit_source: str = "hand_windows"
+
+
 def build_hand_estimation_windows(
     stage1_actions_payload: dict[str, Any],
     processing_plan_payload: dict[str, Any],
@@ -123,6 +129,76 @@ def write_hand_estimation_windows(
     return payload
 
 
+def build_hand_visibility_quality_gate(
+    stage1_payload: dict[str, Any],
+    hand_windows_payload: dict[str, Any],
+    *,
+    processing_plan_payload: dict[str, Any] | None = None,
+    config: HandVisibilityGateConfig = HandVisibilityGateConfig(),
+) -> dict[str, Any]:
+    frames = _frames_by_t(stage1_payload)
+    results: list[dict[str, Any]] = []
+    passed_ids: list[str] = []
+    blocked_ids: list[str] = []
+    units = _hand_visibility_units(
+        hand_windows_payload,
+        processing_plan_payload=processing_plan_payload,
+        unit_source=config.unit_source,
+    )
+    for window in units:
+        if not isinstance(window, dict):
+            continue
+        item = _hand_visibility_window_result(window, frames, config=config)
+        results.append(item)
+        if item["passed"]:
+            passed_ids.append(str(item["window_id"]))
+        else:
+            blocked_ids.append(str(item["window_id"]))
+    return {
+        "stage": "hand_visibility_quality_gate",
+        "passed": not blocked_ids,
+        "status": "passed" if not blocked_ids else "failed",
+        "config": {
+            "min_core_both_hands_visible_rate": config.min_core_both_hands_visible_rate,
+            "unit_source": config.unit_source,
+        },
+        "window_count": len(results),
+        "passed_window_count": len(passed_ids),
+        "blocked_window_count": len(blocked_ids),
+        "passed_window_ids": passed_ids,
+        "blocked_window_ids": blocked_ids,
+        "windows": results,
+    }
+
+
+def write_hand_visibility_quality_gate(
+    *,
+    stage1_json: Path,
+    hand_windows_json: Path,
+    processing_plan_json: Path | None = None,
+    output_json: Path,
+    config: HandVisibilityGateConfig = HandVisibilityGateConfig(),
+) -> dict[str, Any]:
+    stage1_payload = json.loads(Path(stage1_json).read_text(encoding="utf-8"))
+    windows_payload = json.loads(Path(hand_windows_json).read_text(encoding="utf-8"))
+    processing_plan_payload = (
+        json.loads(Path(processing_plan_json).read_text(encoding="utf-8")) if processing_plan_json else None
+    )
+    payload = build_hand_visibility_quality_gate(
+        stage1_payload,
+        windows_payload,
+        processing_plan_payload=processing_plan_payload,
+        config=config,
+    )
+    payload["source_stage1"] = str(stage1_json)
+    payload["source_hand_windows"] = str(hand_windows_json)
+    if processing_plan_json:
+        payload["source_processing_plan"] = str(processing_plan_json)
+    output_json.parent.mkdir(parents=True, exist_ok=True)
+    output_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    return payload
+
+
 def _load_stage1_actions_payload(path: Path) -> dict[str, Any]:
     if path.is_dir():
         frames: list[dict[str, Any]] = []
@@ -140,6 +216,44 @@ def _load_stage1_actions_payload(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _hand_visibility_units(
+    hand_windows_payload: dict[str, Any],
+    *,
+    processing_plan_payload: dict[str, Any] | None,
+    unit_source: str,
+) -> list[dict[str, Any]]:
+    if unit_source == "hand_windows":
+        return [window for window in hand_windows_payload.get("windows", []) if isinstance(window, dict)]
+    if unit_source != "processing_plan":
+        raise ValueError(f"Unsupported hand visibility unit_source: {unit_source}")
+    if not processing_plan_payload:
+        raise ValueError("processing_plan_payload is required when unit_source='processing_plan'")
+    units: list[dict[str, Any]] = []
+    for idx, segment in enumerate(processing_plan_payload.get("segments", [])):
+        if not isinstance(segment, dict) or segment.get("route", "process") != "process":
+            continue
+        start = int(float(segment.get("start", 0)))
+        end = int(float(segment.get("end", start)))
+        event_range = segment.get("source_event_range") if isinstance(segment.get("source_event_range"), dict) else {}
+        core_start = int(float(event_range.get("start", start)))
+        core_end = int(float(event_range.get("end", end)))
+        segment_id = str(segment.get("segment_id") or f"seg_{idx:04d}")
+        units.append(
+            {
+                "window_id": segment_id,
+                "unit_id": segment_id,
+                "unit_type": "processing_segment",
+                "start": start,
+                "end": end,
+                "core_range": {"start": core_start, "end": core_end},
+                "semantic_label": segment.get("semantic_label", ""),
+                "actions": segment.get("actions", []),
+                "objects": segment.get("objects", []),
+            }
+        )
+    return units
+
+
 def _frames_by_t(payload: dict[str, Any]) -> dict[int, dict[str, Any]]:
     out: dict[int, dict[str, Any]] = {}
     for frame in payload.get("frames", []):
@@ -148,6 +262,54 @@ def _frames_by_t(payload: dict[str, Any]) -> dict[int, dict[str, Any]]:
             item["t"] = int(float(item["t"]))
             out[item["t"]] = item
     return out
+
+
+def _hand_visibility_window_result(
+    window: dict[str, Any],
+    frames: dict[int, dict[str, Any]],
+    *,
+    config: HandVisibilityGateConfig,
+) -> dict[str, Any]:
+    start = int(window.get("start", 0))
+    end = int(window.get("end", start))
+    core = window.get("core_range") if isinstance(window.get("core_range"), dict) else {}
+    core_start = int(core.get("start", start))
+    core_end = int(core.get("end", end))
+    core_metrics = _visibility_metrics(frames, core_start, core_end)
+    window_metrics = _visibility_metrics(frames, start, end)
+    passed = core_metrics["both_hands_visible_rate"] >= config.min_core_both_hands_visible_rate
+    return {
+        "window_id": window.get("window_id", ""),
+        "unit_id": window.get("unit_id", window.get("window_id", "")),
+        "unit_type": window.get("unit_type", "hand_window"),
+        "start": start,
+        "end": end,
+        "core_range": {"start": core_start, "end": core_end},
+        "passed": passed,
+        "reason": "" if passed else "low_two_hand_visibility",
+        "core_sample_count": core_metrics["sample_count"],
+        "core_both_hands_visible_count": core_metrics["both_hands_visible_count"],
+        "core_both_hands_visible_rate": core_metrics["both_hands_visible_rate"],
+        "window_sample_count": window_metrics["sample_count"],
+        "window_both_hands_visible_count": window_metrics["both_hands_visible_count"],
+        "window_both_hands_visible_rate": window_metrics["both_hands_visible_rate"],
+        "threshold": config.min_core_both_hands_visible_rate,
+    }
+
+
+def _visibility_metrics(frames: dict[int, dict[str, Any]], start: int, end: int) -> dict[str, Any]:
+    selected = [frames[t] for t in range(start, end + 1) if t in frames]
+    both_visible = 0
+    for frame in selected:
+        hands = frame.get("hands_visible") or {}
+        if bool(hands.get("left")) and bool(hands.get("right")):
+            both_visible += 1
+    sample_count = len(selected)
+    return {
+        "sample_count": sample_count,
+        "both_hands_visible_count": both_visible,
+        "both_hands_visible_rate": float(both_visible / sample_count) if sample_count else 0.0,
+    }
 
 
 def _is_candidate_frame(frame: dict[str, Any], config: HandWindowConfig) -> bool:

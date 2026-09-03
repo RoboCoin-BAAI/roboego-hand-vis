@@ -41,7 +41,7 @@ raw_headband_quality_gate:
     frame_count_consistency:
       enabled: true
       level: fail
-      max_delta_frames: 10
+      max_delta_frames: 0
     imu_missing:
       enabled: true
       level: fail

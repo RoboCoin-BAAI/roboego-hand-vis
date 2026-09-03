@@ -1,7 +1,14 @@
 import json
 from pathlib import Path
 
-from roboego_hand_vis.quality.hand_windows import HandWindowConfig, build_hand_estimation_windows, write_hand_estimation_windows
+from roboego_hand_vis.quality.hand_windows import (
+    HandVisibilityGateConfig,
+    HandWindowConfig,
+    build_hand_estimation_windows,
+    build_hand_visibility_quality_gate,
+    write_hand_estimation_windows,
+    write_hand_visibility_quality_gate,
+)
 
 
 def frame(t: int, *, left: bool, right: bool, action: str | None = None, obj: str = "product") -> dict:
@@ -229,3 +236,108 @@ def test_build_hand_windows_filters_by_min_priority_and_core_duration():
     assert len(windows["windows"]) == 1
     assert windows["windows"][0]["core_range"] == {"start": 5, "end": 9}
     assert windows["windows"][0]["priority"] == "high"
+
+
+def test_hand_visibility_gate_uses_core_rate_for_pass_decision():
+    stage1 = {"frames": [frame(t, left=t < 9, right=t < 9) for t in range(13)]}
+    windows = {
+        "windows": [
+            {
+                "window_id": "handwin_0000",
+                "start": 0,
+                "end": 12,
+                "core_range": {"start": 0, "end": 9},
+            }
+        ]
+    }
+
+    result = build_hand_visibility_quality_gate(
+        stage1,
+        windows,
+        config=HandVisibilityGateConfig(min_core_both_hands_visible_rate=0.9),
+    )
+
+    window = result["windows"][0]
+    assert result["passed"] is True
+    assert result["passed_window_ids"] == ["handwin_0000"]
+    assert window["passed"] is True
+    assert window["core_both_hands_visible_rate"] == 0.9
+    assert window["window_both_hands_visible_rate"] < 0.9
+
+
+def test_hand_visibility_gate_blocks_low_core_two_hand_visibility():
+    stage1 = {"frames": [frame(t, left=t < 8, right=t < 8) for t in range(10)]}
+    windows = {
+        "windows": [
+            {
+                "window_id": "handwin_0000",
+                "start": 0,
+                "end": 9,
+                "core_range": {"start": 0, "end": 9},
+            }
+        ]
+    }
+
+    result = build_hand_visibility_quality_gate(
+        stage1,
+        windows,
+        config=HandVisibilityGateConfig(min_core_both_hands_visible_rate=0.9),
+    )
+
+    window = result["windows"][0]
+    assert result["passed"] is False
+    assert result["blocked_window_ids"] == ["handwin_0000"]
+    assert window["passed"] is False
+    assert window["reason"] == "low_two_hand_visibility"
+
+
+def test_hand_visibility_gate_can_use_processing_plan_segments_for_uncut_session():
+    stage1 = {"frames": [frame(t, left=2 <= t <= 12, right=2 <= t <= 12) for t in range(42)]}
+    windows = {"windows": [{"window_id": "handwin_0000", "start": 1, "end": 14}]}
+    processing_plan = {
+        "segments": [
+            {
+                "segment_id": "seg_0000",
+                "route": "process",
+                "start": 1,
+                "end": 41,
+                "source_event_range": {"start": 3, "end": 39},
+            }
+        ]
+    }
+
+    result = build_hand_visibility_quality_gate(
+        stage1,
+        windows,
+        processing_plan_payload=processing_plan,
+        config=HandVisibilityGateConfig(min_core_both_hands_visible_rate=0.9, unit_source="processing_plan"),
+    )
+
+    window = result["windows"][0]
+    assert result["config"]["unit_source"] == "processing_plan"
+    assert window["window_id"] == "seg_0000"
+    assert window["unit_type"] == "processing_segment"
+    assert window["start"] == 1
+    assert window["end"] == 41
+    assert window["core_range"] == {"start": 3, "end": 39}
+
+
+def test_write_hand_visibility_gate_accepts_files(tmp_path: Path):
+    stage1 = tmp_path / "stage1.json"
+    windows_json = tmp_path / "hand_windows.json"
+    output = tmp_path / "hand_visibility_gate.json"
+    stage1.write_text(json.dumps({"frames": [frame(t, left=True, right=True) for t in range(3)]}), encoding="utf-8")
+    windows_json.write_text(
+        json.dumps({"windows": [{"window_id": "handwin_0000", "start": 0, "end": 2}]}),
+        encoding="utf-8",
+    )
+
+    result = write_hand_visibility_quality_gate(
+        stage1_json=stage1,
+        hand_windows_json=windows_json,
+        output_json=output,
+        config=HandVisibilityGateConfig(min_core_both_hands_visible_rate=0.9),
+    )
+
+    assert output.exists()
+    assert result["passed"] is True

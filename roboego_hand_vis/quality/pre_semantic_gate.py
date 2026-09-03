@@ -258,9 +258,15 @@ def run_pre_semantic_quality_gate(
     video_info, frames, times_s = read_sampled_video_frames(video_path, config)
     samples = analyze_sampled_frames(frames, times_s=times_s, config=config) if video_info["decode_ok"] else []
     intervals = build_intervals(samples, config)
+    failed_intervals = [interval for interval in intervals if interval.get("label") in DROP_LABELS]
+    passed = bool(video_info.get("decode_ok")) and not failed_intervals
     report = {
         "source_video": str(video_path),
         "stage": "video_simple_quality_gate",
+        "passed": passed,
+        "status": "passed" if passed else "failed",
+        "failed_interval_count": len(failed_intervals),
+        "failed_intervals": failed_intervals,
         "config": {
             "sample_every_s": config.sample_every_s,
             "min_freeze_duration_s": config.min_freeze_duration_s,

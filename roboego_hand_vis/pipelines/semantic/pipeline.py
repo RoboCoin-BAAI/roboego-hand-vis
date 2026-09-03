@@ -7,6 +7,7 @@ from kedro.pipeline import Pipeline, node
 from roboego_hand_vis.pipelines.semantic.nodes import (
     run_build_hand_estimation_windows_node,
     run_build_processing_plan_node,
+    run_hand_visibility_quality_gate_node,
     run_qwen_frame_annotation_node,
     run_stage1_action_extraction_chunks_node,
     run_stage1_action_text_resolver_chunks_node,
@@ -20,6 +21,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 func=run_qwen_frame_annotation_node,
                 inputs={
+                    "pre_semantic_quality_report": "pre_semantic_quality_report",
                     "pre_semantic_quality_windows": "pre_semantic_quality_windows",
                     "config": "params:qwen_frame_annotation",
                 },
@@ -67,6 +69,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="hand_estimation_windows_report",
                 name="build_hand_estimation_windows",
                 tags=["semantic", "hand_windows"],
+            ),
+            node(
+                func=run_hand_visibility_quality_gate_node,
+                inputs={"config": "params:hand_visibility_gate"},
+                outputs="hand_visibility_gate_report",
+                name="hand_visibility_gate",
+                tags=["semantic", "hand_visibility_gate"],
             ),
         ]
     )

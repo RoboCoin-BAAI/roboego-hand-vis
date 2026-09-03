@@ -73,6 +73,30 @@ def test_raw_headband_integrity_check_calls_exporter(monkeypatch, tmp_path):
     }
 
 
+def test_raw_headband_integrity_check_accepts_pipe_encoded_camera_streams(monkeypatch, tmp_path):
+    calls = []
+    report_path = tmp_path / "session" / "annotation" / "quality_report.json"
+
+    def fake_export_quality_report(**kwargs):
+        calls.append(kwargs)
+        return report_path
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.quality.nodes.export_quality_report",
+        fake_export_quality_report,
+    )
+
+    run_raw_headband_integrity_check(
+        {
+            "enabled": True,
+            "session_dir": str(tmp_path / "session"),
+            "camera_streams": "left|right",
+        }
+    )
+
+    assert calls[0]["camera_streams"] == ("left", "right")
+
+
 def test_raw_headband_quality_gate_skips_when_integrity_check_skipped():
     result = run_raw_headband_quality_gate(
         {
@@ -90,7 +114,7 @@ def test_raw_headband_quality_gate_skips_when_integrity_check_skipped():
     }
 
 
-def test_raw_headband_quality_gate_records_failed_result_without_raising(tmp_path):
+def test_raw_headband_quality_gate_records_failed_result_without_raising(tmp_path, capsys):
     report_path = tmp_path / "quality_report.json"
     report_path.write_text(
         """
@@ -120,6 +144,10 @@ def test_raw_headband_quality_gate_records_failed_result_without_raising(tmp_pat
     assert result["status"] == "failed"
     assert result["passed"] is False
     assert result["failed_checks"] == ["timestamp_alignment:right"]
+    stdout = capsys.readouterr().out
+    assert "RAW QUALITY GATE FAILED" in stdout
+    assert "timestamp_alignment:right" in stdout
+    assert str(report_path) in stdout
     updated_report = json.loads(report_path.read_text(encoding="utf-8"))
     gate = updated_report["raw_headband_quality_gate"]
     assert gate["stage"] == "raw_headband_quality_gate"

@@ -11,6 +11,7 @@ from roboego_hand_vis.pipelines import (
     experiments,
     export,
     objects,
+    privacy,
     quality,
     restoration,
     semantic,
@@ -27,6 +28,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         "depth": depth.create_pipeline(),
         "egohand": egohand.create_pipeline(),
         "objects": objects.create_pipeline(),
+        "privacy": privacy.create_pipeline(),
         "export": export.create_pipeline(),
         "experiments": experiments.create_pipeline(),
     }

@@ -7,11 +7,13 @@ import pytest
 
 from roboego_hand_vis.pipeline_launcher import (
     LauncherRequest,
+    WorkflowBlockedError,
     build_stage_invocations,
     load_dataset_config,
     render_invocation_command,
     run_launcher_request,
     run_stage_invocations,
+    workflow_stage_names,
 )
 
 
@@ -43,7 +45,7 @@ def test_stage_can_use_to_nodes_selector_for_chained_work(tmp_path: Path):
     assert "stage1_action_chunks.qwen_chunk_dir=" in command
 
 
-def test_qwen_annotation_depends_on_video_simple_quality_report(tmp_path: Path):
+def test_qwen_annotation_gates_on_video_simple_quality_without_window_filter(tmp_path: Path):
     session = tmp_path / "session"
 
     invocation = build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="qwen_annotation"))[0]
@@ -52,9 +54,11 @@ def test_qwen_annotation_depends_on_video_simple_quality_report(tmp_path: Path):
     assert invocation.selector == "--to-nodes"
     assert invocation.node == "qwen_frame_annotation"
     assert "raw_headband_quality.overwrite=True" in command
+    assert "raw_headband_quality.camera_streams=left%7Cright" in command or "raw_headband_quality.camera_streams=left|right" in command
     assert "pre_semantic_quality.output_json=" in command
     assert "video_simple_quality_left.json" in command
-    assert "qwen_frame_annotation.use_video_simple_quality=True" in command
+    assert "qwen_frame_annotation.require_video_simple_quality_pass=True" in command
+    assert "qwen_frame_annotation.use_video_simple_quality=False" in command
     assert "qwen_frame_annotation.model=qwen3.6-flash" in command
     assert "qwen_frame_annotation.duration_s=" not in command
     assert "pre_semantic_quality_gate_left.json" not in command
@@ -72,6 +76,25 @@ def test_direct_hand_window_segments_stage_exports_to_session_hand_windows(tmp_p
     assert f"export_direct_hand_window_segments.output_dir={session.resolve()}/hand_windows" in command
     assert "export_direct_hand_window_segments.camera_streams=left|right" in command
     assert "[left,right]" not in command
+
+
+def test_egoblur_temporal_face_blur_stage_uses_session_video_defaults(tmp_path: Path):
+    session = tmp_path / "session"
+
+    invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="egoblur_temporal_face_blur")
+    )[0]
+    command = render_invocation_command(invocation)
+
+    assert invocation.pipeline == "privacy"
+    assert invocation.node == "egoblur_temporal_face_blur"
+    assert invocation.params["egoblur_temporal_face_blur.input_video"] == str(session.resolve() / "videos/left.mp4")
+    assert invocation.params["egoblur_temporal_face_blur.output_video"] == str(session.resolve() / "videos/left_blur.mp4")
+    assert (
+        invocation.params["egoblur_temporal_face_blur.output_json"]
+        == str(session.resolve() / "annotation/privacy/left_blur_report.json")
+    )
+    assert "egoblur_temporal_face_blur.detect_every_n_frames=3" in command
 
 
 def test_materialize_session_stage_uses_session_as_unit(tmp_path: Path):
@@ -160,24 +183,125 @@ def test_materialize_auto_uses_segment_hand_windows_for_long_sessions(tmp_path: 
     assert invocation.node == "export_hand_window_segments"
 
 
-def test_phase1_planning_workflow_runs_first_six_logical_steps(monkeypatch, tmp_path: Path):
+def test_base_prepare_workflow_combines_planning_and_stereo_prepare(monkeypatch, tmp_path: Path):
     session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
     calls = []
 
     def fake_run(invocations, *, dry_run=False):
-        calls.extend(invocation.node for invocation in invocations)
+        for invocation in invocations:
+            calls.append((invocation.node, invocation.context.get("materialization_strategy", "")))
         return [render_invocation_command(invocation) for invocation in invocations]
 
     monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
 
-    run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="phase1_planning"))
+    run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare", dry_run=True))
 
     assert calls == [
-        "qwen_frame_annotation",
-        "stage1_action_text_resolver_chunks",
-        "build_processing_plan",
-        "build_hand_estimation_windows",
+        ("qwen_frame_annotation", ""),
+        ("stage1_action_text_resolver_chunks", ""),
+        ("build_processing_plan", ""),
+        ("build_hand_estimation_windows", ""),
+        ("prepare_stereo_unit", "session"),
     ]
+
+
+def test_base_prepare_workflow_exposes_planning_and_stereo_state_stages(tmp_path: Path):
+    session = tmp_path / "session"
+
+    stages = workflow_stage_names(LauncherRequest(dataset="raw", session=session, stage="base_prepare"))
+
+    assert stages == [
+        "raw_quality",
+        "video_simple_quality",
+        "qwen_annotation",
+        "post_annotation_actions",
+        "processing_plan",
+        "hand_windows",
+        "materialize_auto",
+        "prepare_stereo",
+    ]
+
+
+def test_base_prepare_stops_with_gate_reason_when_qwen_checkpoint_missing(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    report_path = session / "annotation" / "quality_report.json"
+    report_path.parent.mkdir(parents=True)
+    report_path.write_text(
+        json.dumps(
+            {
+                "raw_headband_quality_gate": {
+                    "status": "failed",
+                    "passed": False,
+                    "checks": [
+                        {
+                            "name": "frame_count_consistency",
+                            "level": "fail",
+                            "passed": False,
+                            "value": 21,
+                            "threshold": 0,
+                            "message": "Max frame count delta across videos/timestamps is 21",
+                        }
+                    ],
+                    "failed_checks": ["frame_count_consistency"],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def fake_run(invocations, *, dry_run=False):
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    with pytest.raises(WorkflowBlockedError) as exc_info:
+        run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare"))
+
+    message = str(exc_info.value)
+    assert "BASE PREPARE BLOCKED" in message
+    assert "base_prepare blocked" in message
+    assert "qwen_frame_annotations_left_v4.checkpoint.json" in message
+    assert "frame_count_consistency" in message
+    assert "value=21" in message
+    assert "threshold=0" in message
+
+
+def test_base_prepare_block_message_includes_failed_video_simple_quality(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    report_path = session / "annotation" / "video_simple_quality_left.json"
+    report_path.parent.mkdir(parents=True)
+    report_path.write_text(
+        json.dumps(
+            {
+                "passed": False,
+                "status": "failed",
+                "failed_intervals": [
+                    {
+                        "start": 2.0,
+                        "end": 6.0,
+                        "label": "frozen_video",
+                        "reason": "near-identical frames over threshold duration",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def fake_run(invocations, *, dry_run=False):
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    with pytest.raises(WorkflowBlockedError) as exc_info:
+        run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare"))
+
+    message = str(exc_info.value)
+    assert "video_simple_quality_gate=failed" in message
+    assert "frozen_video" in message
+    assert "2.000-6.000s" in message
 
 
 def test_phase1_depth_workflow_runs_medium_session_then_all_hand_windows(monkeypatch, tmp_path: Path):

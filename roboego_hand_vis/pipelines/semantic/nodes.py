@@ -12,6 +12,7 @@ from roboego_hand_vis.quality.stage1_action_text_resolver import (
     merge_text_resolver_results,
     write_text_resolver_review_input,
 )
+from roboego_hand_vis.quality.hand_windows import HandVisibilityGateConfig, write_hand_visibility_quality_gate
 from roboego_hand_vis.quality.stage1_actions import write_stage1_action_output
 
 
@@ -28,9 +29,16 @@ def _append_optional_arg(args: list[str], name: str, value: Any) -> None:
 
 
 def run_qwen_frame_annotation_node(
-    pre_semantic_quality_windows: list[dict[str, Any]] | None,
-    config: dict[str, Any] | None,
+    pre_semantic_quality_report: dict[str, Any] | list[dict[str, Any]] | None,
+    pre_semantic_quality_windows: list[dict[str, Any]] | dict[str, Any] | None = None,
+    config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if config is None:
+        config = pre_semantic_quality_windows if isinstance(pre_semantic_quality_windows, dict) else None
+        pre_semantic_quality_windows = (
+            pre_semantic_quality_report if isinstance(pre_semantic_quality_report, list) else None
+        )
+        pre_semantic_quality_report = None
     config = config or {}
     if not bool(config.get("enabled", False)):
         return {"stage": "qwen_frame_annotation", "status": "skipped", "reason": "disabled"}
@@ -41,8 +49,18 @@ def run_qwen_frame_annotation_node(
         raise ValueError("qwen_frame_annotation.video is required when enabled")
     if not output_json:
         raise ValueError("qwen_frame_annotation.output_json is required when enabled")
-    windows = pre_semantic_quality_windows or []
-    use_video_simple_quality = bool(config.get("use_video_simple_quality", False))
+    quality_report = pre_semantic_quality_report if isinstance(pre_semantic_quality_report, dict) else {}
+    if bool(config.get("require_video_simple_quality_pass", False)) and quality_report.get("passed") is False:
+        return {
+            "stage": "qwen_frame_annotation",
+            "status": "skipped",
+            "reason": "video_simple_quality_gate_not_passed",
+            "failed_interval_count": int(
+                quality_report.get("failed_interval_count", len(quality_report.get("failed_intervals", []))) or 0
+            ),
+        }
+    windows = pre_semantic_quality_windows if isinstance(pre_semantic_quality_windows, list) else []
+    use_video_simple_quality = bool(config.get("use_video_simple_quality", bool(windows)))
     if use_video_simple_quality and not windows:
         return {
             "stage": "qwen_frame_annotation",
@@ -52,7 +70,7 @@ def run_qwen_frame_annotation_node(
         }
 
     windows_json: Path | None = None
-    if windows:
+    if use_video_simple_quality and windows:
         windows_json = Path(_optional_str(config.get("windows_json")) or Path(output_json).parent / "qwen_frame_annotation_windows.json")
         windows_json.parent.mkdir(parents=True, exist_ok=True)
         windows_json.write_text(json.dumps(windows, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -325,6 +343,40 @@ def run_build_hand_estimation_windows_node(
         "processing_plan": processing_plan,
         "output_json": output_json,
         "upstream_status": (build_processing_plan_report or {}).get("status", ""),
+    }
+
+
+def run_hand_visibility_quality_gate_node(
+    build_hand_estimation_windows_report: dict[str, Any] | None = None,
+    config: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "hand_visibility_quality_gate", "status": "skipped", "reason": "disabled"}
+
+    stage1_json = _required_value(config, "stage1_json", "hand_visibility_gate")
+    hand_windows_json = _required_value(config, "hand_windows_json", "hand_visibility_gate")
+    processing_plan_json = _optional_str(config.get("processing_plan_json"))
+    output_json = _required_value(config, "output_json", "hand_visibility_gate")
+    payload = write_hand_visibility_quality_gate(
+        stage1_json=Path(stage1_json),
+        hand_windows_json=Path(hand_windows_json),
+        processing_plan_json=Path(processing_plan_json) if processing_plan_json else None,
+        output_json=Path(output_json),
+        config=HandVisibilityGateConfig(
+            min_core_both_hands_visible_rate=float(config.get("min_core_both_hands_visible_rate", 0.9)),
+            unit_source=str(config.get("unit_source") or "hand_windows"),
+        ),
+    )
+    return {
+        "stage": "hand_visibility_quality_gate",
+        "status": payload["status"],
+        "passed": payload["passed"],
+        "output_json": output_json,
+        "window_count": payload["window_count"],
+        "passed_window_count": payload["passed_window_count"],
+        "blocked_window_count": payload["blocked_window_count"],
+        "upstream_status": (build_hand_estimation_windows_report or {}).get("status", ""),
     }
 
 

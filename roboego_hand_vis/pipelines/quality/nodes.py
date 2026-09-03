@@ -36,6 +36,14 @@ def _optional_str(value: Any) -> str:
     return str(value)
 
 
+def _camera_streams_from_config(value: Any) -> tuple[str, ...]:
+    if value is None or value == "":
+        return DEFAULT_CAMERA_STREAMS
+    if isinstance(value, str):
+        return tuple(part.strip() for part in value.split("|") if part.strip())
+    return tuple(str(part) for part in value)
+
+
 def run_raw_headband_integrity_check(config: dict[str, Any] | None) -> dict[str, Any]:
     config = config or {}
     if not bool(config.get("enabled", False)):
@@ -45,7 +53,7 @@ def run_raw_headband_integrity_check(config: dict[str, Any] | None) -> dict[str,
     if not session_dir:
         raise ValueError("raw_headband_quality.session_dir is required when enabled")
     output_root = _optional_str(config.get("output_root")) or session_dir
-    camera_streams = tuple(config.get("camera_streams") or DEFAULT_CAMERA_STREAMS)
+    camera_streams = _camera_streams_from_config(config.get("camera_streams"))
     report_path = export_quality_report(
         session_dir=Path(session_dir),
         output_root=Path(output_root),
@@ -84,8 +92,41 @@ def run_raw_headband_quality_gate(
         f"failed_checks={result['failed_checks']} warnings_list={result['warnings']}"
     )
     LOGGER.info(message)
-    print(message)
+    print(_format_raw_quality_gate_message(result))
     return result
+
+
+def _format_raw_quality_gate_message(result: dict[str, Any]) -> str:
+    if result.get("passed") is False:
+        lines = [
+            "",
+            "========== RAW QUALITY GATE FAILED ==========",
+            f"passed=False status={result.get('status', 'failed')}",
+            f"failed_checks={result.get('failed_checks', [])}",
+            f"warnings={result.get('warnings', [])}",
+        ]
+        for check in result.get("checks", []):
+            if not isinstance(check, dict) or check.get("passed") is not False:
+                continue
+            detail = f"- {check.get('name')}"
+            if check.get("stream"):
+                detail += f":{check.get('stream')}"
+            if check.get("message"):
+                detail += f" | {check.get('message')}"
+            if "value" in check:
+                detail += f" | value={check.get('value')}"
+            if "threshold" in check:
+                detail += f" | threshold={check.get('threshold')}"
+            lines.append(detail)
+        if result.get("report_path"):
+            lines.append(f"report={result['report_path']}")
+        lines.append("=============================================")
+        return "\n".join(lines)
+    return (
+        f"Raw headband quality gate: status={result['status']} passed={result['passed']} "
+        f"failed={len(result['failed_checks'])} warnings={len(result['warnings'])} "
+        f"failed_checks={result['failed_checks']} warnings_list={result['warnings']}"
+    )
 
 
 def run_pre_semantic_quality_gate_node(

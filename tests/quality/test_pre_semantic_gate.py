@@ -83,5 +83,25 @@ def test_run_pre_semantic_quality_gate_writes_report(tmp_path: Path):
     assert report["stage"] == "video_simple_quality_gate"
     assert report["checks"]["decode_ok"] is True
     assert report["checks"]["sampled_frame_count"] == 3
+    assert report["passed"] is True
+    assert report["status"] == "passed"
     assert report["intervals"][0]["route_hint"] in {"pass_to_qwen", "pass_to_qwen_with_aux"}
     assert output.exists()
+
+
+def test_run_pre_semantic_quality_gate_fails_when_drop_interval_exists(tmp_path: Path):
+    video = tmp_path / "input.mp4"
+    output = tmp_path / "quality_gate.json"
+    frames = [np.zeros((64, 64, 3), dtype=np.uint8) for _ in range(3)]
+    write_video(video, frames)
+
+    report = run_pre_semantic_quality_gate(
+        video_path=video,
+        output_json=output,
+        config=PreSemanticGateConfig(sample_every_s=1.0),
+    )
+
+    assert report["passed"] is False
+    assert report["status"] == "failed"
+    assert report["failed_interval_count"] >= 1
+    assert "black_screen" in {interval["label"] for interval in report["failed_intervals"]}

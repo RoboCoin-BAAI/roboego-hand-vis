@@ -6,7 +6,8 @@ be launched through this repository.
 
 ## Recommended Machines
 
-- `phase1_planning`: CPU machine is enough. Needs network access for Qwen API.
+- `base_prepare`: CPU machine is enough for planning; stereo preparation also
+  needs local video I/O and RoboEgoPipe.
 - `phase1_depth`: GPU machine recommended. RTX 4090/A800 class is preferred for
   Fast-FoundationStereo.
 - `egohand`: GPU machine with the HaMeR environment and MANO assets.
@@ -142,7 +143,8 @@ pass stage params from the launcher.
 | `post_annotation_actions` | `ego` | Qwen API key for resolver |
 | `processing_plan` | `ego` | none |
 | `hand_windows` | `ego` | none |
-| `phase1_planning` | `ego` | Qwen API key |
+| `base_prepare` | `ego` | Qwen API key, `/home/liuyou/Documents/RoboEgoPipe` |
+| `hand_visibility_gate` | `ego` | none |
 | `materialize_session` | `ego` | none |
 | `materialize_hand_windows` | `ego` | none |
 | `materialize_segment_hand_windows` | `ego` | none |
@@ -168,7 +170,7 @@ cd /home/liuyou/Documents/roboego-hand-vis
 python scripts/run_pipeline_stage.py \
   --dataset raw \
   --session /path/to/session \
-  --stage phase1_planning \
+  --stage base_prepare \
   --dry-run
 ```
 

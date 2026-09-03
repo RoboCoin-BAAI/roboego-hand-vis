@@ -20,26 +20,39 @@ paths:
   processing_plan: "{session}/annotation/processing_plan_left_v1.json"
 
 workflows:
-  phase1_planning:
+  base_prepare:
     steps:
-      - qwen_annotation
+      - stage: qwen_annotation
+        state_stages:
+          - raw_quality
+          - video_simple_quality
+          - qwen_annotation
       - post_annotation_actions
       - processing_plan
       - hand_windows
+      - stage: materialize_auto
+        state_stages:
+          - materialize_auto
+          - prepare_stereo
 
   phase1_depth:
     strategy: duration_depth_workflow
     short_max_s: 180
     medium_max_s: 900
     short_steps:
-      - materialize_session
+      - stage: materialize_session
+        state_stages:
+          - materialize_auto
+          - prepare_stereo
       - stereo_summary_quality_unit
       - stereo_quality_unit
       - fast_foundation_depth_unit
       - depth_numeric_quality_unit
       - archive_depth_cache_unit
     medium_steps:
-      - materialize_hand_windows
+      - stage: materialize_hand_windows
+        state_stages:
+          - materialize_auto
       - stage: prepare_stereo
         all_hand_windows: true
       - stage: stereo_summary_quality
@@ -53,7 +66,9 @@ workflows:
       - stage: archive_depth_cache
         all_hand_windows: true
     long_steps:
-      - materialize_segment_hand_windows
+      - stage: materialize_segment_hand_windows
+        state_stages:
+          - materialize_auto
       - stage: stereo_summary_quality
         all_hand_windows: true
       - stage: stereo_quality
@@ -79,6 +94,7 @@ stages:
       enabled: true
       session_dir: "{session}"
       output_root: "{session}"
+      camera_streams: left|right
       overwrite: true
 
   pre_semantic_quality:
@@ -92,6 +108,7 @@ stages:
         enabled: true
         session_dir: "{session}"
         output_root: "{session}"
+        camera_streams: left|right
         overwrite: true
       raw_headband_quality_gate:
         strict: false
@@ -111,6 +128,7 @@ stages:
         enabled: true
         session_dir: "{session}"
         output_root: "{session}"
+        camera_streams: left|right
         overwrite: true
       raw_headband_quality_gate:
         strict: false
@@ -130,6 +148,7 @@ stages:
         enabled: true
         session_dir: "{session}"
         output_root: "{session}"
+        camera_streams: left|right
         overwrite: true
       raw_headband_quality_gate:
         strict: false
@@ -149,7 +168,8 @@ stages:
       prompt: docs/prompts/qwen_frame_annotation_v5_en.md
       fps: 1
       start_s: 0
-      use_video_simple_quality: true
+      require_video_simple_quality_pass: true
+      use_video_simple_quality: false
       max_width: 768
       batch_size: 10
       batches_per_chunk: 5
@@ -203,6 +223,20 @@ stages:
       min_window_s: 5
       min_priority: high
       fps: 30
+
+  hand_visibility_gate:
+    pipeline: semantic
+    node: hand_visibility_gate
+    scope: session
+    param_namespace: hand_visibility_gate
+    params:
+      enabled: true
+      stage1_json: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
+      hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+      processing_plan_json: "{session}/annotation/processing_plan_left_v1.json"
+      output_json: "{session}/annotation/hand_visibility_quality_gate_left_v1.json"
+      min_core_both_hands_visible_rate: 0.9
+      unit_source: processing_plan
 
   export_segments:
     pipeline: datasets
@@ -672,3 +706,27 @@ stages:
       sam3_python: /home/liuyou/miniconda3/envs/py312/bin/python
       checkpoint: /home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
       fps: 30
+
+  egoblur_temporal_face_blur:
+    pipeline: privacy
+    node: egoblur_temporal_face_blur
+    scope: session
+    param_namespace: egoblur_temporal_face_blur
+    params:
+      enabled: true
+      python: /home/liuyou/miniconda3/envs/py312/bin/python
+      script: scripts/privacy/run_egoblur_temporal_face_blur.py
+      input_video: "{session}/videos/left.mp4"
+      output_video: "{session}/videos/left_blur.mp4"
+      output_json: "{session}/annotation/privacy/left_blur_report.json"
+      egoblur_root: /home/liuyou/Documents/EgoBlur
+      face_model_path: /home/liuyou/Documents/EgoBlur/models/ego_blur_face_gen2.jit
+      camera_name: camera-rgb
+      detect_every_n_frames: 3
+      face_model_score_threshold: 0.35
+      nms_iou_threshold: 0.5
+      scale_factor_detections: 1.35
+      max_gap_frames: 12
+      smooth_window: 5
+      crf: 18
+      preset: medium

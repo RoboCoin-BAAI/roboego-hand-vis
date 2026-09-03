@@ -31,7 +31,7 @@ DEFAULT_RULES: dict[str, dict[str, Any]] = {
     "frame_count_consistency": {
         "enabled": True,
         "level": "fail",
-        "max_delta_frames": 10,
+        "max_delta_frames": 0,
     },
     "imu_missing": {
         "enabled": True,
@@ -200,7 +200,7 @@ def evaluate_quality_report(report: dict[str, Any], rules: dict[str, Any] | None
     frame_count_rule = _rule_config(rules, "frame_count_consistency")
     frame_count_consistency = report.get("frame_count_consistency") or {}
     if frame_count_rule.get("enabled", True) and frame_count_consistency:
-        threshold = int(frame_count_rule.get("max_delta_frames", 10))
+        threshold = int(frame_count_rule.get("max_delta_frames", 0))
         value = max(
             int(frame_count_consistency.get("max_video_frame_count_delta", 0)),
             int(frame_count_consistency.get("max_timestamp_frame_count_delta", 0)),
