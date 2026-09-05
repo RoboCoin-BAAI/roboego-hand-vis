@@ -762,6 +762,20 @@ def test_all_hand_windows_builds_one_invocation_per_window(tmp_path: Path):
     assert all(inv.node == "final_hand_result" for inv in invocations)
 
 
+def test_sam3_objects_defaults_to_all_hand_windows_for_batch_use(tmp_path: Path):
+    session = tmp_path / "session"
+    for name in ("handwin_0000_t000000_000010", "handwin_0001_t000020_000030"):
+        (session / "hand_windows" / name).mkdir(parents=True)
+
+    invocations = build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="sam3_objects"))
+
+    assert [inv.context["hand_window_id"] for inv in invocations] == [
+        "handwin_0000_t000000_000010",
+        "handwin_0001_t000020_000030",
+    ]
+    assert all(inv.node == "sam3_hand_object_segmentation" for inv in invocations)
+
+
 def test_finds_direct_session_hand_windows(tmp_path: Path):
     session = tmp_path / "session"
     (session / "hand_windows/handwin_0000_t000000_000065").mkdir(parents=True)

@@ -7,6 +7,7 @@ from pathlib import Path
 from roboego_hand_vis.pipeline_state import (
     discover_sessions,
     print_state_report,
+    read_pipeline_state,
     render_dashboard,
     run_batch_stage,
     stage_artifact_outcome,
@@ -53,6 +54,17 @@ def test_discover_sessions_finds_direct_and_nested_sessions(tmp_path: Path):
     sessions = discover_sessions(tmp_path)
 
     assert sessions == [nested.resolve(), direct.resolve()]
+
+
+def test_discover_sessions_uses_fast_baai_divide_layout_without_rglob(monkeypatch, tmp_path: Path):
+    session = _make_session(tmp_path / "cp_0001/session_20260826_100651/divide", "session_20260826_100651_task")
+
+    def fail_rglob(self, pattern):  # noqa: ANN001
+        raise AssertionError("rglob should not be needed for baai divide roots")
+
+    monkeypatch.setattr(Path, "rglob", fail_rglob)
+
+    assert discover_sessions(tmp_path) == [session.resolve()]
 
 
 def test_run_batch_stage_marks_success_and_writes_dashboard(monkeypatch, tmp_path: Path):
@@ -188,6 +200,18 @@ def test_fast_foundation_depth_artifact_outcome_passes_when_meta_exists(tmp_path
     depth_meta.write_text(json.dumps({"status": "complete"}), encoding="utf-8")
 
     assert stage_artifact_outcome(session, "fast_foundation_depth") is None
+
+
+def test_depth_estimation_workflow_alias_expands_to_dashboard_stages(tmp_path: Path):
+    session = _make_session(tmp_path, "session_depth_estimation")
+    update_stage_state(session, "depth_estimation", "success", duration_s=2.0)
+
+    state = read_pipeline_state(session)
+
+    assert state["stages"]["stereo_summary_quality"]["status"] == "success"
+    assert state["stages"]["stereo_summary_quality"]["derived_from"] == "depth_estimation"
+    assert state["stages"]["fast_foundation_depth"]["status"] == "success"
+    assert state["stages"]["fast_foundation_depth"]["derived_from"] == "depth_estimation"
 
 
 def test_run_batch_stage_dry_run_does_not_write_pipeline_state(tmp_path: Path):

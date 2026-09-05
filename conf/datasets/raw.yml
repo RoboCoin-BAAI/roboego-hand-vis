@@ -733,6 +733,7 @@ stages:
     pipeline: objects
     node: sam3_hand_object_segmentation
     scope: hand_window
+    default_all_hand_windows: true
     param_namespace: sam3_hand_object_segmentation
     params:
       enabled: true

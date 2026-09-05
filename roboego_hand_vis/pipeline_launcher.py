@@ -84,6 +84,8 @@ def build_stage_invocations(request: LauncherRequest) -> list[StageInvocation]:
             for invocation in invocations
         ]
     scope = str(stage_config.get("scope") or "session")
+    if stage_config.get("default_all_hand_windows") and not request.hand_window and not request.unit:
+        request = replace(request, all_hand_windows=True)
     contexts = _build_contexts(config=config, request=request, scope=scope)
     return [_build_invocation(config, stage_config, context) for context in contexts]
 

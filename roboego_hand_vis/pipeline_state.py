@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import subprocess
 import sys
 import time
@@ -143,11 +144,62 @@ def discover_sessions(root: Path) -> list[Path]:
     if _looks_like_session(root):
         return [root]
     sessions: set[Path] = set()
-    for meta_path in root.rglob("meta.json"):
-        session = meta_path.parent
-        if _looks_like_session(session):
-            sessions.add(session.resolve())
+    sessions.update(_discover_baai_divide_sessions(root))
+    if not sessions:
+        sessions.update(_discover_sessions_pruned(root))
     return sorted(sessions)
+
+
+def _discover_baai_divide_sessions(root: Path) -> set[Path]:
+    sessions: set[Path] = set()
+    roots = sorted(root.glob("cp_*")) if root.name != "divide" else []
+    if root.name.startswith("cp_"):
+        roots = [root]
+    for cp_dir in roots:
+        if not cp_dir.is_dir():
+            continue
+        for parent_session in sorted(cp_dir.glob("session_*")):
+            divide = parent_session / "divide"
+            if not divide.is_dir():
+                continue
+            for session in sorted(divide.glob("session_*")):
+                if _looks_like_session(session):
+                    sessions.add(session.resolve())
+    if root.name == "divide":
+        for session in sorted(root.glob("session_*")):
+            if _looks_like_session(session):
+                sessions.add(session.resolve())
+    return sessions
+
+
+def _discover_sessions_pruned(root: Path) -> set[Path]:
+    sessions: set[Path] = set()
+    skip_dirs = {
+        ".git",
+        "__pycache__",
+        "annotation",
+        "dataset_manifest",
+        "depth",
+        "hand",
+        "hand_windows",
+        "objects",
+        "processed",
+        "quality",
+        "rectified",
+        "segments",
+    }
+    for current, dirnames, filenames in os.walk(root):
+        current_path = Path(current)
+        if current_path != root and current_path.name in skip_dirs:
+            dirnames[:] = []
+            continue
+        dirnames[:] = [name for name in dirnames if name not in skip_dirs]
+        if "meta.json" not in filenames:
+            continue
+        if _looks_like_session(current_path):
+            sessions.add(current_path.resolve())
+            dirnames[:] = []
+    return sessions
 
 
 def run_batch_stage(
