@@ -451,6 +451,28 @@ def test_phase1_depth_workflow_runs_medium_session_then_all_hand_windows(monkeyp
     ]
 
 
+def test_depth_estimation_workflow_runs_summary_then_fast_depth(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    hand_window = session / "hand_windows/handwin_0000_t000000_000065"
+    (hand_window / "dataset_manifest").mkdir(parents=True)
+    (hand_window / "dataset_manifest/dataset_manifest.json").write_text("{}", encoding="utf-8")
+    calls = []
+
+    def fake_run(invocations, *, dry_run=False):
+        for invocation in invocations:
+            calls.append((invocation.node, invocation.context.get("hand_window_id", "")))
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="depth_estimation"))
+
+    assert calls == [
+        ("stereo_summary_quality", "handwin_0000_t000000_000065"),
+        ("fast_foundation_stereo_depth", "handwin_0000_t000000_000065"),
+    ]
+
+
 def test_prepare_stereo_stage_runs_for_all_direct_hand_windows(tmp_path: Path):
     session = tmp_path / "session"
     (session / "hand_windows/handwin_0000_t000000_000065").mkdir(parents=True)

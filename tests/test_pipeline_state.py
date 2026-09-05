@@ -9,6 +9,7 @@ from roboego_hand_vis.pipeline_state import (
     print_state_report,
     render_dashboard,
     run_batch_stage,
+    stage_artifact_outcome,
     update_stage_state,
 )
 
@@ -160,6 +161,33 @@ def test_run_batch_stage_marks_blocked_for_gate_exit_code(monkeypatch, tmp_path:
     assert summary["status_counts"] == {"blocked": 1}
     assert stage_state["status"] == "blocked"
     assert "imu_jump" in stage_state["error"]
+
+
+def test_fast_foundation_depth_artifact_outcome_blocks_when_outputs_missing(tmp_path: Path):
+    session = _make_session(tmp_path, "session_depth_missing")
+    manifest = session / "dataset_manifest/dataset_manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 30}}}), encoding="utf-8")
+
+    outcome = stage_artifact_outcome(session, "fast_foundation_depth")
+
+    assert outcome is not None
+    assert outcome["status"] == "blocked"
+    assert outcome["returncode"] == 2
+    assert "FAST FOUNDATION DEPTH OUTPUT MISSING" in outcome["error"]
+    assert "stereo_summary_quality" in outcome["error"]
+
+
+def test_fast_foundation_depth_artifact_outcome_passes_when_meta_exists(tmp_path: Path):
+    session = _make_session(tmp_path, "session_depth_done")
+    manifest = session / "dataset_manifest/dataset_manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 30}}}), encoding="utf-8")
+    depth_meta = session / "depth/fast_foundation/fast_foundation_stereo_video_meta.json"
+    depth_meta.parent.mkdir(parents=True)
+    depth_meta.write_text(json.dumps({"status": "complete"}), encoding="utf-8")
+
+    assert stage_artifact_outcome(session, "fast_foundation_depth") is None
 
 
 def test_run_batch_stage_dry_run_does_not_write_pipeline_state(tmp_path: Path):

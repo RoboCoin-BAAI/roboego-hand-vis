@@ -64,11 +64,11 @@ workflows:
         state_stages:
           - materialize_auto
           - prepare_stereo
-      - stereo_summary_quality_unit
-      - stereo_quality_unit
-      - fast_foundation_depth_unit
-      - depth_numeric_quality_unit
-      - archive_depth_cache_unit
+      - stereo_summary_quality
+      - stereo_quality
+      - fast_foundation_depth
+      - depth_numeric_quality
+      - archive_depth_cache
     medium_steps:
       - stage: materialize_hand_windows
         state_stages:
@@ -98,6 +98,13 @@ workflows:
       - stage: depth_numeric_quality
         all_hand_windows: true
       - stage: archive_depth_cache
+        all_hand_windows: true
+
+  depth_estimation:
+    steps:
+      - stage: stereo_summary_quality
+        all_hand_windows: true
+      - stage: fast_foundation_depth
         all_hand_windows: true
 
 stages:

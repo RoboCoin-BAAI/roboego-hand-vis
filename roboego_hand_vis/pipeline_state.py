@@ -289,6 +289,8 @@ def stage_artifact_outcome(session: Path, stage: str) -> dict[str, Any] | None:
             report_path=session / "annotation" / "hand_visibility_quality_gate_left_v1.json",
             failed_key="blocked_window_ids",
         )
+    if stage == "fast_foundation_depth":
+        return _fast_foundation_depth_artifact_outcome(session)
     return None
 
 
@@ -344,6 +346,59 @@ def _read_json_report(path: Path) -> dict[str, Any] | None:
     except json.JSONDecodeError:
         return None
     return payload if isinstance(payload, dict) else None
+
+
+def _fast_foundation_depth_artifact_outcome(session: Path) -> dict[str, Any] | None:
+    units = _find_prepared_units(session)
+    if not units:
+        return {
+            "status": "blocked",
+            "returncode": 2,
+            "error": (
+                "FAST FOUNDATION DEPTH OUTPUT MISSING\n"
+                f"reason=no_prepared_dataset_manifest\n"
+                f"session={session}\n"
+                "run prepare_stereo or base_prepare first"
+            ),
+        }
+    missing: list[str] = []
+    for unit in units:
+        depth_dir = unit / "depth" / "fast_foundation"
+        meta = depth_dir / "fast_foundation_stereo_video_meta.json"
+        png_dir = depth_dir / "depth_uint16_png"
+        has_png = png_dir.is_dir() and any(png_dir.glob("*_depth_mm.png"))
+        if not meta.is_file() and not has_png:
+            missing.append(str(depth_dir))
+    if not missing:
+        return None
+    stereo_reports = [str(unit / "quality/stereo_summary/stereo_quality_report.json") for unit in units]
+    return {
+        "status": "blocked",
+        "returncode": 2,
+        "error": (
+            "FAST FOUNDATION DEPTH OUTPUT MISSING\n"
+            f"missing_depth_outputs={missing}\n"
+            f"required_before_depth=stereo_summary_quality\n"
+            f"stereo_quality_reports={stereo_reports}\n"
+            "If the depth node finished in 0.0 sec, it was probably blocked by a missing or unusable stereo summary report."
+        ),
+    }
+
+
+def _find_prepared_units(session: Path) -> list[Path]:
+    search_specs = [
+        (session / "hand_windows", "handwin_*/dataset_manifest/dataset_manifest.json"),
+        (session / "segments", "*/hand_windows/handwin_*/dataset_manifest/dataset_manifest.json"),
+        (session / "segments", "seg_*/dataset_manifest/dataset_manifest.json"),
+        (session, "dataset_manifest/dataset_manifest.json"),
+    ]
+    for root, pattern in search_specs:
+        if not root.exists():
+            continue
+        units = sorted({path.parents[1].resolve() for path in root.glob(pattern) if path.is_file()})
+        if units:
+            return units
+    return []
 
 
 def render_dashboard(sessions: list[Path], output_html: Path) -> Path:
