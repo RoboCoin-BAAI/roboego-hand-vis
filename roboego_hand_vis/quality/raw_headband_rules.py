@@ -27,6 +27,7 @@ DEFAULT_RULES: dict[str, dict[str, Any]] = {
         "enabled": True,
         "level": "warning",
         "max_duplicate_rate": 0.0,
+        "max_consecutive_duplicate_frames": 5,
     },
     "frame_count_consistency": {
         "enabled": True,
@@ -110,6 +111,7 @@ def evaluate_quality_report(report: dict[str, Any], rules: dict[str, Any] | None
     """Evaluate a raw headband quality report using configurable rules."""
     rules = rules or {}
     checks: list[dict[str, Any]] = []
+    duplicate_rule = _rule_config(rules, "timestamp_duplicates")
 
     modality_rule = _rule_config(rules, "modality_presence")
     if modality_rule.get("enabled", True):
@@ -158,9 +160,14 @@ def evaluate_quality_report(report: dict[str, Any], rules: dict[str, Any] | None
             )
 
     alignment_rule = _rule_config(rules, "timestamp_alignment")
+    timestamp_alignment_source = "timestamp_alignment"
+    timestamp_alignment = report.get("timestamp_alignment") or {}
+    if _can_use_repaired_timestamp_alignment(report, duplicate_rule):
+        timestamp_alignment = report.get("timestamp_alignment_repaired") or timestamp_alignment
+        timestamp_alignment_source = "timestamp_alignment_repaired"
     if alignment_rule.get("enabled", True):
         threshold = float(alignment_rule.get("max_over_tolerance_rate", 0.0))
-        for stream, summary in sorted((report.get("timestamp_alignment") or {}).items()):
+        for stream, summary in sorted(timestamp_alignment.items()):
             count = int(summary.get("over_tolerance_count", 0))
             if "over_tolerance_rate" in summary:
                 value = float(summary["over_tolerance_rate"])
@@ -181,20 +188,38 @@ def evaluate_quality_report(report: dict[str, Any], rules: dict[str, Any] | None
             if len(checks) > before_count:
                 checks[-1]["count"] = count
 
-    duplicate_rule = _rule_config(rules, "timestamp_duplicates")
     if duplicate_rule.get("enabled", True):
-        threshold = float(duplicate_rule.get("max_duplicate_rate", 0.0))
+        rate_threshold = float(duplicate_rule.get("max_duplicate_rate", 0.0))
+        run_threshold = int(duplicate_rule.get("max_consecutive_duplicate_frames", 5))
         for stream, summary in sorted((report.get("timestamp_duplicates") or {}).items()):
-            value = float(summary.get("duplicate_rate", 0.0))
+            duplicate_rate = float(summary.get("duplicate_rate", 0.0))
+            max_run = int(summary.get("max_consecutive_duplicate_frames", 0))
+            passed = duplicate_rate <= rate_threshold and max_run <= run_threshold
+            value: Any = duplicate_rate
+            threshold: Any = rate_threshold
+            message = f"{stream} timestamp duplicate rate is {duplicate_rate:.6f}"
+            if max_run > 0 or "max_consecutive_duplicate_frames" in summary:
+                value = {
+                    "duplicate_rate": duplicate_rate,
+                    "max_consecutive_duplicate_frames": max_run,
+                }
+                threshold = {
+                    "max_duplicate_rate": rate_threshold,
+                    "max_consecutive_duplicate_frames": run_threshold,
+                }
+                message = (
+                    f"{stream} timestamp duplicate rate is {duplicate_rate:.6f}; "
+                    f"max consecutive duplicate frames is {max_run}"
+                )
             _add_check(
                 checks,
                 name="timestamp_duplicates",
                 config=duplicate_rule,
-                passed=value <= threshold,
+                passed=passed,
                 stream=stream,
                 value=value,
                 threshold=threshold,
-                message=f"{stream} timestamp duplicate rate is {value:.6f}",
+                message=message,
             )
 
     frame_count_rule = _rule_config(rules, "frame_count_consistency")
@@ -329,4 +354,20 @@ def evaluate_quality_report(report: dict[str, Any], rules: dict[str, Any] | None
         "failed_checks": failed_checks,
         "warnings": warnings,
         "source_session": report.get("source_session"),
+        "timestamp_alignment_source": timestamp_alignment_source,
     }
+
+
+def _can_use_repaired_timestamp_alignment(report: dict[str, Any], duplicate_rule: dict[str, Any]) -> bool:
+    repair = report.get("timestamp_repair") or {}
+    repaired_alignment = report.get("timestamp_alignment_repaired") or {}
+    if not repair.get("applied") or not repaired_alignment:
+        return False
+    rate_threshold = float(duplicate_rule.get("max_duplicate_rate", 0.0))
+    run_threshold = int(duplicate_rule.get("max_consecutive_duplicate_frames", 5))
+    for summary in (report.get("timestamp_duplicates") or {}).values():
+        if float(summary.get("duplicate_rate", 0.0)) > rate_threshold:
+            return False
+        if int(summary.get("max_consecutive_duplicate_frames", 0)) > run_threshold:
+            return False
+    return True

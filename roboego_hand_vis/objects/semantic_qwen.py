@@ -11,10 +11,20 @@ from typing import Any
 from .segmentation import ObjectObservation
 
 
-DEFAULT_QWEN_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+DEFAULT_QWEN_BASE_URL = (
+    "https://llm-g3o8d3j71xbf6prc.cn-beijing.maas.aliyuncs.com"
+    "/compatible-mode/v1/chat/completions"
+)
 REQUIRED_FIELDS = ["category", "color", "shape", "material", "visual_description", "confidence"]
 TARGET_FIELDS = ["manipulated_object", "object_type", "avoid_parts", "visual_attributes", "confidence"]
 CANIDATE_FIELDS = ["is_whole_object", "matches_target", "is_part_or_pattern", "score", "reason"]
+
+
+def resolve_qwen_base_url(base_url: str | None = None) -> str:
+    configured = (base_url or os.environ.get("DASHSCOPE_BASE_URL") or DEFAULT_QWEN_BASE_URL).strip()
+    if not configured:
+        return DEFAULT_QWEN_BASE_URL
+    return configured
 
 
 def _validated_semantic_object(data: Any) -> dict[str, Any] | None:
@@ -257,6 +267,7 @@ def _call_qwen_messages(
     api_key = os.environ.get(api_key_env)
     if not api_key:
         raise RuntimeError(f"{api_key_env} is not set")
+    base_url = resolve_qwen_base_url(base_url)
     body = {"model": model, "messages": messages, "temperature": 0}
     req = urllib.request.Request(
         base_url,

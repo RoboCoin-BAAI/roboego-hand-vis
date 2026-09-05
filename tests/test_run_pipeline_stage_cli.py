@@ -160,3 +160,32 @@ def test_run_pipeline_stage_dry_run_does_not_write_state(monkeypatch, tmp_path: 
     run_pipeline_stage.main()
 
     assert not (session / "pipeline_state.json").exists()
+
+
+def test_run_pipeline_stage_passes_force_to_launcher(monkeypatch, tmp_path: Path):
+    session = _session(tmp_path)
+    captured = {}
+
+    def fake_run(request, stage_callback=None):
+        captured["force"] = request.force
+        return ["kedro run --force"]
+
+    monkeypatch.setattr(run_pipeline_stage, "run_launcher_request", fake_run)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_pipeline_stage.py",
+            "--dataset",
+            "raw",
+            "--session",
+            str(session),
+            "--stage",
+            "base_prepare",
+            "--force",
+        ],
+    )
+
+    run_pipeline_stage.main()
+
+    assert captured["force"] is True

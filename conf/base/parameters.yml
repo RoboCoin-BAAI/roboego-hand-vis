@@ -13,8 +13,11 @@ raw_headband_quality:
     - bright
   start: 0
   num_frames:
-  timestamp_tolerance_s:
+  timestamp_tolerance_s: 0.005
   video_ext: .mp4
+  repair_timestamp_files: true
+  max_repair_duplicate_rate: 0.001
+  max_repair_consecutive_duplicate_frames: 5
   overwrite: false
   environment_name: ego
 
@@ -33,11 +36,12 @@ raw_headband_quality_gate:
     timestamp_alignment:
       enabled: true
       level: fail
-      max_over_tolerance_rate: 0.001
+      max_over_tolerance_rate: 0.0
     timestamp_duplicates:
       enabled: true
       level: fail
       max_duplicate_rate: 0.001
+      max_consecutive_duplicate_frames: 5
     frame_count_consistency:
       enabled: true
       level: fail
@@ -181,6 +185,7 @@ stage1_action_chunks:
   action_chunk_dir: ""
   review_chunk_dir: ""
   resolved_chunk_dir: ""
+  merged_output_json: ""
   raw_output_dir: ""
   resolver_response_dir: ""
   model: qwen-plus

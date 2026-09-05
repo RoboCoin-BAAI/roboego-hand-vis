@@ -6,6 +6,7 @@ from pathlib import Path
 
 from roboego_hand_vis.pipeline_state import (
     discover_sessions,
+    print_state_report,
     render_dashboard,
     run_batch_stage,
     update_stage_state,
@@ -84,6 +85,65 @@ def test_run_batch_stage_marks_success_and_writes_dashboard(monkeypatch, tmp_pat
     assert "success" in html
 
 
+def test_run_batch_stage_marks_raw_quality_blocked_when_gate_report_failed(monkeypatch, tmp_path: Path):
+    session = _make_session(tmp_path, "session_raw_gate_failed")
+    report_path = session / "annotation/quality_report.json"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(
+        json.dumps(
+            {
+                "raw_headband_quality_gate": {
+                    "passed": False,
+                    "status": "failed",
+                    "failed_checks": ["timestamp_duplicates:left"],
+                    "warnings": [],
+                    "checks": [
+                        {
+                            "name": "timestamp_duplicates",
+                            "stream": "left",
+                            "message": "left timestamp duplicate rate is 0.004",
+                            "value": 0.004,
+                            "threshold": 0.001,
+                            "passed": False,
+                        }
+                    ],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    def fake_run(argv, **kwargs):
+        return subprocess.CompletedProcess(argv, 0, stdout="kedro ok\n", stderr="")
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_state.subprocess.run", fake_run)
+
+    summary = run_batch_stage(root=tmp_path, dataset="raw", stage="raw_quality", workers=1)
+
+    state = json.loads((session / "pipeline_state.json").read_text(encoding="utf-8"))
+    stage_state = state["stages"]["raw_quality"]
+
+    assert summary["status_counts"] == {"blocked": 1}
+    assert stage_state["status"] == "blocked"
+    assert stage_state["returncode"] == 2
+    assert "timestamp_duplicates:left" in stage_state["error"]
+
+
+def test_run_batch_stage_force_passes_force_to_single_stage_command(monkeypatch, tmp_path: Path):
+    _make_session(tmp_path, "session_force")
+    calls: list[list[str]] = []
+
+    def fake_run(argv, **kwargs):
+        calls.append(list(argv))
+        return subprocess.CompletedProcess(argv, 0, stdout="ok\n", stderr="")
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_state.subprocess.run", fake_run)
+
+    run_batch_stage(root=tmp_path, dataset="raw", stage="base_prepare", workers=1, force=True)
+
+    assert "--force" in calls[0]
+
+
 def test_run_batch_stage_marks_blocked_for_gate_exit_code(monkeypatch, tmp_path: Path):
     session = _make_session(tmp_path, "session_blocked")
 
@@ -126,6 +186,74 @@ def test_render_dashboard_shows_all_stage_statuses(tmp_path: Path):
     assert "raw_quality" in html
     assert "video_simple_quality" in html
     assert "decode failed" in html
+
+
+def test_render_dashboard_adds_quality_gate_columns_from_reports(tmp_path: Path):
+    session = _make_session(tmp_path, "session_quality_gate")
+    update_stage_state(session, "raw_quality", "success", duration_s=1.0)
+    update_stage_state(session, "video_simple_quality", "success", duration_s=2.0)
+    quality_report = session / "annotation/quality_report.json"
+    video_report = session / "annotation/video_simple_quality_left.json"
+    quality_report.parent.mkdir(parents=True, exist_ok=True)
+    quality_report.write_text(
+        json.dumps(
+            {
+                "raw_headband_quality_gate": {
+                    "passed": False,
+                    "status": "failed",
+                    "failed_checks": ["frame_count_consistency"],
+                    "checks": [
+                        {
+                            "name": "frame_count_consistency",
+                            "passed": False,
+                            "message": "Max frame count delta across videos/timestamps is 5",
+                            "value": 5,
+                            "threshold": 0,
+                        }
+                    ],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    video_report.write_text(json.dumps({"passed": True, "status": "passed"}), encoding="utf-8")
+
+    output = render_dashboard([session], tmp_path / "index.html")
+    html = output.read_text(encoding="utf-8")
+
+    assert "<th>raw_quality_gate</th>" in html
+    assert "<th>video_simple_quality_gate</th>" in html
+    assert 'title="raw_quality_gate | RAW QUALITY GATE FAILED' in html
+    assert ">blocked</td>" in html
+    assert 'title="video_simple_quality_gate' in html
+    assert ">success</td>" in html
+
+
+def test_print_state_report_counts_gate_conclusions_without_pending_noise(tmp_path: Path, capsys):
+    session = _make_session(tmp_path, "session_quality_gate")
+    update_stage_state(session, "raw_quality", "success", duration_s=1.0)
+    update_stage_state(session, "video_simple_quality", "success", duration_s=2.0)
+    quality_report = session / "annotation/quality_report.json"
+    quality_report.parent.mkdir(parents=True, exist_ok=True)
+    quality_report.write_text(
+        json.dumps(
+            {
+                "raw_headband_quality_gate": {
+                    "passed": False,
+                    "status": "failed",
+                    "failed_checks": ["frame_count_consistency"],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    payload = print_state_report(tmp_path)
+    captured = capsys.readouterr()
+
+    assert payload["stage_counts"]["raw_quality"] == {"success": 1}
+    assert payload["stage_counts"]["raw_quality_gate"] == {"blocked": 1}
+    assert "pending" not in captured.out
 
 
 def test_render_dashboard_expands_base_prepare_workflow_statuses(tmp_path: Path):

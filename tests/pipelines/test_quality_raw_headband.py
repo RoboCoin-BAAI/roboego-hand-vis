@@ -61,11 +61,14 @@ def test_raw_headband_integrity_check_calls_exporter(monkeypatch, tmp_path):
             "start": 5,
             "num_frames": 20,
             "timestamp_tolerance_s": 0.02,
-            "video_ext": ".mkv",
-            "overwrite": True,
-            "environment_name": "ego",
-        }
-    ]
+                "video_ext": ".mkv",
+                "overwrite": True,
+                "environment_name": "ego",
+                "repair_timestamp_files": False,
+                "max_repair_duplicate_rate": 0.001,
+                "max_repair_consecutive_duplicate_frames": 5,
+            }
+        ]
     assert result == {
         "stage": "raw_headband_integrity_check",
         "status": "complete",

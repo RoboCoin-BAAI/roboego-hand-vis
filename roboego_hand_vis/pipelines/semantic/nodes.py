@@ -59,6 +59,16 @@ def run_qwen_frame_annotation_node(
                 quality_report.get("failed_interval_count", len(quality_report.get("failed_intervals", []))) or 0
             ),
         }
+    if (
+        bool(config.get("require_video_simple_quality_pass", False))
+        and quality_report.get("status") == "skipped"
+        and quality_report.get("reason") == "raw_headband_quality_gate_not_passed"
+    ):
+        return {
+            "stage": "qwen_frame_annotation",
+            "status": "skipped",
+            "reason": "raw_headband_quality_gate_not_passed",
+        }
     windows = pre_semantic_quality_windows if isinstance(pre_semantic_quality_windows, list) else []
     use_video_simple_quality = bool(config.get("use_video_simple_quality", bool(windows)))
     if use_video_simple_quality and not windows:
@@ -211,6 +221,7 @@ def run_stage1_action_text_resolver_chunks_node(
     action_chunk_dir = _required_dir(config, "action_chunk_dir", "stage1_action_chunks")
     review_chunk_dir = _required_dir(config, "review_chunk_dir", "stage1_action_chunks")
     resolved_chunk_dir = Path(_required_value(config, "resolved_chunk_dir", "stage1_action_chunks"))
+    merged_output_json = Path(_optional_str(config.get("merged_output_json")) or resolved_chunk_dir.parent / "stage1_actions_left_v1_resolved.json")
     raw_output_dir = Path(_optional_str(config.get("raw_output_dir")) or resolved_chunk_dir.parent / "stage1_action_text_resolver_raw")
     resolver_response_dir = Path(_optional_str(config.get("resolver_response_dir")) or resolved_chunk_dir.parent / "stage1_action_text_resolver_responses")
     overwrite = bool(config.get("overwrite", False))
@@ -253,6 +264,9 @@ def run_stage1_action_text_resolver_chunks_node(
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(json.dumps(merged, indent=2, ensure_ascii=False), encoding="utf-8")
         processed.append(str(output_path))
+    merged_payload = _merge_stage1_action_chunk_dir(resolved_chunk_dir)
+    merged_output_json.parent.mkdir(parents=True, exist_ok=True)
+    merged_output_json.write_text(json.dumps(merged_payload, indent=2, ensure_ascii=False), encoding="utf-8")
     report = _chunk_report(
         stage="stage1_action_text_resolver_chunks",
         input_dir=review_chunk_dir,
@@ -262,7 +276,37 @@ def run_stage1_action_text_resolver_chunks_node(
         upstream=stage1_action_text_review_chunks_report,
     )
     report["empty_review_count"] = empty_review_count
+    report["merged_output_json"] = str(merged_output_json)
+    report["merged_frame_count"] = int(merged_payload.get("frame_count", 0) or 0)
     return report
+
+
+def _merge_stage1_action_chunk_dir(chunk_dir: Path) -> dict[str, Any]:
+    frames: list[dict[str, Any]] = []
+    source_files: list[str] = []
+    action_frame_count = 0
+    for chunk_path in _chunk_paths(chunk_dir):
+        payload = json.loads(chunk_path.read_text(encoding="utf-8"))
+        source_files.append(str(chunk_path))
+        for frame in payload.get("frames", []):
+            if not isinstance(frame, dict):
+                continue
+            frame_out = dict(frame)
+            frame_actions = frame_out.get("frame_actions")
+            if not isinstance(frame_actions, list):
+                frame_out["frame_actions"] = []
+            elif frame_actions:
+                action_frame_count += 1
+            frames.append(frame_out)
+    frames = sorted(frames, key=lambda frame: float(frame.get("t", 0)))
+    return {
+        "stage": "stage1_action_resolved_chunks_merged",
+        "source_chunk_dir": str(chunk_dir),
+        "source_files": source_files,
+        "frame_count": len(frames),
+        "action_frame_count": action_frame_count,
+        "frames": frames,
+    }
 
 
 def run_build_processing_plan_node(

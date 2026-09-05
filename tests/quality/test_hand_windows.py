@@ -203,6 +203,27 @@ def test_build_hand_windows_can_merge_adjacent_windows_after_context_expand():
     assert windows["windows"][0]["core_range"] == {"start": 10, "end": 15}
 
 
+def test_build_hand_windows_merge_after_expand_respects_merge_gap():
+    stage1 = {
+        "frames": [
+            frame(10, left=True, right=True, action="touch"),
+            frame(16, left=True, right=True, action="place"),
+        ]
+    }
+    plan = {"segments": [{"segment_id": "seg_0000", "start": 8, "end": 18, "semantic_label": "touch_place"}]}
+
+    windows = build_hand_estimation_windows(
+        stage1,
+        plan,
+        config=HandWindowConfig(context_expand_s=2, merge_gap_s=2, merge_after_expand=True),
+    )
+
+    assert len(windows["windows"]) == 1
+    assert windows["windows"][0]["start"] == 8
+    assert windows["windows"][0]["end"] == 18
+    assert windows["windows"][0]["core_range"] == {"start": 10, "end": 16}
+
+
 def test_build_hand_windows_filters_by_min_priority_and_core_duration():
     stage1 = {
         "frames": [

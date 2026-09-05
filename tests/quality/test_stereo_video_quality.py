@@ -14,6 +14,7 @@ from roboego_hand_vis.quality.stereo_video import (  # noqa: E402
     SummaryQualityConfig,
     run_segment_quality_check,
     run_summary_quality_check,
+    summarize,
 )
 
 
@@ -67,6 +68,36 @@ def test_summary_quality_check_reads_manifest_and_writes_report(tmp_path):
     assert (output_dir / "stereo_quality_report.json").exists()
     assert (output_dir / "stereo_quality_samples.csv").exists()
     assert (output_dir / "contact_sheet.png").exists()
+
+
+def test_summary_quality_marks_geometry_warning_as_usable_for_depth():
+    rows = [
+        {
+            "left_gray_mean": 120.0,
+            "right_gray_mean": 118.0,
+            "left_sharp_laplacian_var": 150.0,
+            "right_sharp_laplacian_var": 280.0,
+            "left_dark_ratio": 0.1,
+            "right_dark_ratio": 0.1,
+            "left_bright_ratio": 0.1,
+            "right_bright_ratio": 0.1,
+            "brightness_gap": 2.0,
+            "orb_matches": 100,
+            "median_abs_dy": 7.5,
+            "p90_abs_dy": 60.0,
+        }
+    ]
+
+    summary = summarize(rows, SummaryQualityConfig())
+
+    assert summary["passed"] is False
+    assert summary["checks"]["median_abs_dy"] is False
+    assert summary["checks"]["p90_abs_dy"] is False
+    assert summary["usable_for_depth"] is True
+    assert summary["depth_risk_level"] == "high_risk"
+    assert summary["depth_risk_reasons"] == ["geometry_warning"]
+    assert summary["usable_for_depth_thresholds"]["max_median_abs_dy"] == 8.0
+    assert summary["usable_for_depth_thresholds"]["max_p90_abs_dy"] == 70.0
 
 
 def test_segment_quality_check_reads_manifest_and_writes_bad_segments(tmp_path):

@@ -22,6 +22,15 @@ class StereoQualityThresholds:
 
 
 @dataclass(frozen=True)
+class DepthUsableThresholds:
+    max_median_abs_dy: float = 8.0
+    max_p90_abs_dy: float = 70.0
+
+
+DEPTH_USABLE_THRESHOLDS = DepthUsableThresholds()
+
+
+@dataclass(frozen=True)
 class SummaryQualityConfig(StereoQualityThresholds):
     sample_count: int = 12
     dark_threshold: int = 10
@@ -297,7 +306,37 @@ def summarize(rows: list[dict[str, Any]], config: StereoQualityThresholds) -> di
     }
     summary["checks"] = checks
     summary["passed"] = all(checks.values())
+    _add_depth_usable_summary(summary, DEPTH_USABLE_THRESHOLDS)
     return summary
+
+
+def _add_depth_usable_summary(summary: dict[str, Any], thresholds: DepthUsableThresholds) -> None:
+    base_checks = {
+        key: value
+        for key, value in summary["checks"].items()
+        if key not in {"median_abs_dy", "p90_abs_dy"}
+    }
+    geometry_usable = compare_le(summary["median_abs_dy_avg"], thresholds.max_median_abs_dy) and compare_le(
+        summary["p90_abs_dy_max"],
+        thresholds.max_p90_abs_dy,
+    )
+    usable_for_depth = all(base_checks.values()) and geometry_usable
+    risk_reasons: list[str] = []
+    if usable_for_depth and not summary["passed"]:
+        risk_reasons.append("geometry_warning")
+    if not usable_for_depth:
+        if not all(base_checks.values()):
+            risk_reasons.append("visual_quality_warning")
+        if not geometry_usable:
+            risk_reasons.append("geometry_too_poor")
+    summary["strict_passed"] = summary["passed"]
+    summary["usable_for_depth"] = usable_for_depth
+    summary["depth_risk_level"] = "low" if summary["passed"] else "high_risk" if usable_for_depth else "blocked"
+    summary["depth_risk_reasons"] = risk_reasons
+    summary["usable_for_depth_thresholds"] = {
+        "max_median_abs_dy": thresholds.max_median_abs_dy,
+        "max_p90_abs_dy": thresholds.max_p90_abs_dy,
+    }
 
 
 def compare_le(value: float | None, threshold: float) -> bool:
@@ -396,7 +435,9 @@ def metric_explanations_zh() -> dict[str, str]:
         "orb_matches_min": "每个抽样帧左右图 ORB 特征匹配数量的最小值。太少说明纹理少、模糊严重、曝光差异大，或者左右图不容易匹配。",
         "median_abs_dy_avg": "ORB 匹配点的左右图 y 坐标差的中位绝对值平均。双目图若已极线校正，对应点应该主要水平移动，所以这个值越接近0越好。",
         "p90_abs_dy_max": "ORB 匹配点 y 坐标差绝对值的90分位最大值。用于观察较差样本中的垂直误差尾部，越小越适合直接做双目深度。",
-        "passed": "所有 checks 都为 true 时为 true，表示当前抽样质检通过，可以进入下一步。",
+        "passed": "严格质检结论。所有 checks 都为 true 时为 true，表示当前抽样质检高质量通过。",
+        "usable_for_depth": "深度估计可用性结论。几何指标略差但仍在宽松阈值内时允许继续跑深度，并通过 depth_risk_level 标记风险。",
+        "depth_risk_level": "深度估计风险等级：low 表示严格通过，high_risk 表示可继续但有几何风险，blocked 表示不建议继续。",
     }
 
 
@@ -416,13 +457,19 @@ def next_step_gate_zh(summary: dict[str, Any]) -> dict[str, Any]:
     failed_checks = [name for name, ok in summary["checks"].items() if not ok]
     if summary["passed"]:
         recommendation = "当前抽样质检通过，可以进入下一步：读取 stereo 相机内参、baseline，并确认这些参数对应当前左右视频。"
+    elif summary.get("usable_for_depth"):
+        recommendation = "当前抽样质检未严格通过，但仍满足宽松深度可用标准；可以继续做深度估计，但应标记为 high_risk / geometry_warning。"
     else:
         recommendation = "当前抽样质检未通过，不建议直接做 FoundationStereo 深度估计。请先查看 failed_checks 和 contact_sheet，定位曝光、模糊、极线校正或匹配不足的问题。"
     return {
-        "进入下一步的标准": "summary.checks 中所有项目都为 true，也就是 summary.passed 为 true。",
+        "严格通过标准": "summary.checks 中所有项目都为 true，也就是 summary.passed 为 true。",
+        "宽松深度可用标准": "summary.usable_for_depth 为 true。当前宽松几何阈值为 median_abs_dy_avg <= 8 像素且 p90_abs_dy_max <= 70 像素，同时亮度、清晰度、曝光和 ORB 匹配数量仍需通过。",
         "下一步是什么": "确认 stereo 标定参数：K、baseline、是否已去畸变/极线校正、K 是否对应当前视频分辨率。",
         "当前建议": recommendation,
         "failed_checks": failed_checks,
+        "usable_for_depth": bool(summary.get("usable_for_depth", False)),
+        "depth_risk_level": summary.get("depth_risk_level", ""),
+        "depth_risk_reasons": summary.get("depth_risk_reasons", []),
     }
 
 

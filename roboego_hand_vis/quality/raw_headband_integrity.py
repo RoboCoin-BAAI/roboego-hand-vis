@@ -117,16 +117,204 @@ def summarize_timestamp_duplicates(series: TimestampSeries) -> dict:
             "duplicate_count": 0,
             "duplicate_rate": 0.0,
             "first_duplicate_index": None,
+            "max_consecutive_duplicate_frames": 0,
+            "first_max_consecutive_duplicate_index": None,
         }
     duplicate_mask = np.diff(series.timestamps) == 0
     duplicate_positions = np.where(duplicate_mask)[0] + 1
     duplicate_count = int(len(duplicate_positions))
+    max_run_length, first_max_run_index = _longest_equal_timestamp_run(series)
     return {
         "frame_count": int(len(series.timestamps)),
         "duplicate_count": duplicate_count,
         "duplicate_rate": float(duplicate_count / float(len(series.timestamps) - 1)),
         "first_duplicate_index": int(series.indices[duplicate_positions[0]]) if duplicate_count else None,
+        "max_consecutive_duplicate_frames": max_run_length,
+        "first_max_consecutive_duplicate_index": first_max_run_index,
     }
+
+
+def _longest_equal_timestamp_run(series: TimestampSeries) -> tuple[int, int | None]:
+    timestamps = series.timestamps
+    if len(timestamps) <= 1:
+        return 0, None
+    max_run_length = 0
+    max_run_start = None
+    run_start = 0
+    for idx in range(1, len(timestamps)):
+        if timestamps[idx] == timestamps[idx - 1]:
+            continue
+        run_length = idx - run_start
+        if run_length > 1 and run_length > max_run_length:
+            max_run_length = run_length
+            max_run_start = run_start
+        run_start = idx
+    run_length = len(timestamps) - run_start
+    if run_length > 1 and run_length > max_run_length:
+        max_run_length = run_length
+        max_run_start = run_start
+    if max_run_start is None:
+        return 0, None
+    return int(max_run_length), int(series.indices[max_run_start])
+
+
+def repair_duplicate_timestamps(series: TimestampSeries, fps: float) -> tuple[TimestampSeries, dict]:
+    """Return an in-memory timestamp series with equal-timestamp runs interpolated."""
+    timestamps = np.asarray(series.timestamps, dtype=np.float64).copy()
+    duplicate_summary = summarize_timestamp_duplicates(series)
+    if int(duplicate_summary["duplicate_count"]) == 0:
+        return series, {"applied": False, **duplicate_summary}
+
+    nominal_step = 1.0 / float(fps) if fps > 0 else None
+    idx = 0
+    repaired_runs: list[dict[str, int]] = []
+    while idx < len(timestamps):
+        run_end = idx + 1
+        while run_end < len(timestamps) and timestamps[run_end] == timestamps[idx]:
+            run_end += 1
+        run_length = run_end - idx
+        if run_length > 1:
+            repaired_runs.append(
+                {
+                    "start_index": int(series.indices[idx]),
+                    "end_index": int(series.indices[run_end - 1]),
+                    "frame_count": int(run_length),
+                }
+            )
+            prev_value = timestamps[idx - 1] if idx > 0 else None
+            next_value = timestamps[run_end] if run_end < len(timestamps) else None
+            if prev_value is not None and next_value is not None and next_value > prev_value:
+                step = float((next_value - prev_value) / float(run_length + 1))
+                for offset in range(run_length):
+                    timestamps[idx + offset] = float(prev_value + step * float(offset + 1))
+            elif prev_value is not None and nominal_step is not None:
+                for offset in range(run_length):
+                    timestamps[idx + offset] = float(prev_value + nominal_step * float(offset + 1))
+            elif next_value is not None and nominal_step is not None:
+                for offset in range(run_length):
+                    timestamps[idx + offset] = float(next_value - nominal_step * float(run_length - offset))
+        idx = run_end
+
+    return (
+        TimestampSeries(indices=series.indices.copy(), timestamps=timestamps),
+        {
+            "applied": True,
+            "method": "interpolate_equal_timestamp_runs",
+            **duplicate_summary,
+            "runs": repaired_runs,
+        },
+    )
+
+
+def repair_duplicate_timestamps_from_reference(
+    series: TimestampSeries,
+    reference: TimestampSeries | None,
+    fps: float,
+) -> tuple[TimestampSeries, dict]:
+    if reference is None or len(reference.timestamps) != len(series.timestamps):
+        return repair_duplicate_timestamps(series, fps)
+    repaired, summary = repair_duplicate_timestamps(series, fps)
+    if not summary.get("applied"):
+        return repaired, summary
+
+    timestamps = np.asarray(series.timestamps, dtype=np.float64).copy()
+    for run in summary.get("runs", []):
+        start_index = int(run["start_index"])
+        end_index = int(run["end_index"])
+        positions = np.where((series.indices >= start_index) & (series.indices <= end_index))[0]
+        if len(positions) == 0:
+            continue
+        reference_values = reference.timestamps[positions]
+        if len(reference_values) > 1 and not np.all(np.diff(reference_values) > 0):
+            continue
+        timestamps[positions] = reference_values
+
+    summary = dict(summary)
+    summary["method"] = "copy_master_timestamps_for_duplicate_runs"
+    return TimestampSeries(indices=series.indices.copy(), timestamps=timestamps), summary
+
+
+def repair_duplicate_timestamps_by_stream(
+    timestamps_by_stream: dict[str, TimestampSeries],
+    fps: float,
+    master_stream: str = MASTER_STREAM,
+) -> tuple[dict[str, TimestampSeries], dict]:
+    repaired: dict[str, TimestampSeries] = {}
+    streams: dict[str, dict] = {}
+    master_series = timestamps_by_stream.get(master_stream)
+    for stream, series in timestamps_by_stream.items():
+        reference = None if stream == master_stream else master_series
+        repaired_series, summary = repair_duplicate_timestamps_from_reference(series, reference, fps)
+        repaired[stream] = repaired_series
+        if summary.get("applied"):
+            streams[stream] = summary
+    return repaired, {
+        "applied": bool(streams),
+        "method": "interpolate_equal_timestamp_runs",
+        "streams": streams,
+    }
+
+
+def write_timestamp_file(path: str | Path, series: TimestampSeries) -> None:
+    path = Path(path)
+    lines = [f"{int(idx)} {float(timestamp):.9f}" for idx, timestamp in zip(series.indices, series.timestamps)]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def maybe_repair_timestamp_files(
+    *,
+    timestamp_paths: dict[str, Path],
+    timestamp_duplicate_summaries: dict[str, dict],
+    repaired_timestamps_by_stream: dict[str, TimestampSeries],
+    timestamp_alignment_repaired_summary: dict[str, dict],
+    repair_timestamp_files: bool,
+    max_repair_duplicate_rate: float,
+    max_repair_consecutive_duplicate_frames: int,
+) -> dict:
+    result = {
+        "enabled": bool(repair_timestamp_files),
+        "applied": False,
+        "streams": {},
+        "skipped_streams": {},
+    }
+    if not repair_timestamp_files:
+        return result
+
+    for stream, summary in sorted(timestamp_duplicate_summaries.items()):
+        if int(summary.get("duplicate_count", 0)) <= 0:
+            continue
+        reasons = []
+        if float(summary.get("duplicate_rate", 0.0)) > float(max_repair_duplicate_rate):
+            reasons.append("duplicate_rate_over_limit")
+        if int(summary.get("max_consecutive_duplicate_frames", 0)) > int(max_repair_consecutive_duplicate_frames):
+            reasons.append("consecutive_duplicate_frames_over_limit")
+        repaired_alignment = timestamp_alignment_repaired_summary.get(stream) or {}
+        if int(repaired_alignment.get("over_tolerance_count", 0)) > 0:
+            reasons.append("repaired_alignment_still_over_tolerance")
+        if reasons:
+            result["skipped_streams"][stream] = {
+                "reasons": reasons,
+                "duplicate_summary": summary,
+                "repaired_alignment": repaired_alignment,
+            }
+            continue
+        path = timestamp_paths.get(stream)
+        repaired_series = repaired_timestamps_by_stream.get(stream)
+        if path is None or repaired_series is None:
+            result["skipped_streams"][stream] = {
+                "reasons": ["missing_timestamp_path_or_repaired_series"],
+                "duplicate_summary": summary,
+            }
+            continue
+        write_timestamp_file(path, repaired_series)
+        result["applied"] = True
+        result["streams"][stream] = {
+            "written": True,
+            "path": str(path),
+            "duplicate_summary": summary,
+            "repaired_alignment": repaired_alignment,
+        }
+    return result
 
 
 def assert_aligned_timestamps(
@@ -587,6 +775,9 @@ def build_resilient_quality_report(
     timestamp_tolerance_s: float | None,
     video_ext: str,
     environment_name: str,
+    repair_timestamp_files: bool = False,
+    max_repair_duplicate_rate: float = 0.001,
+    max_repair_consecutive_duplicate_frames: int = 5,
     video_inspector=inspect_video,
 ) -> dict:
     """Build a raw quality report without raising for bad source data."""
@@ -607,6 +798,7 @@ def build_resilient_quality_report(
     }
     videos: dict[str, str] = {}
     timestamps: dict[str, str] = {}
+    timestamp_paths: dict[str, Path] = {}
     video_infos: dict[str, dict] = {}
     camera_readability: dict[str, dict] = {}
     timestamp_readability: dict[str, dict] = {}
@@ -618,6 +810,7 @@ def build_resilient_quality_report(
         timestamp_path = session_dir / "timestamps" / f"{stream}_timestamps.txt"
         videos[stream] = str(video_path)
         timestamps[stream] = str(timestamp_path)
+        timestamp_paths[stream] = timestamp_path
         modality_presence[f"videos:{stream}"] = _presence(video_path, required=True)
         modality_presence[f"timestamps:{stream}"] = _presence(timestamp_path, required=True)
 
@@ -708,7 +901,12 @@ def build_resilient_quality_report(
         timestamps_by_stream=timestamps_by_stream,
         available_frames=available_frames,
     )
+    repaired_timestamps_by_stream, timestamp_repair_summary = repair_duplicate_timestamps_by_stream(
+        timestamps_by_stream,
+        float(fps),
+    )
     timestamp_alignment_summary: dict[str, dict] = {}
+    timestamp_alignment_repaired_summary: dict[str, dict] = {}
     if MASTER_STREAM not in timestamps_by_stream:
         collection_errors.append(f"Master stream {MASTER_STREAM!r} timestamp is not readable")
     elif frame_window_num_frames <= 0:
@@ -726,10 +924,28 @@ def build_resilient_quality_report(
                 frame_window_num_frames,
                 float(timestamp_tolerance_s),
             )
+            if timestamp_repair_summary["applied"]:
+                timestamp_alignment_repaired_summary = assert_aligned_timestamps(
+                    repaired_timestamps_by_stream,
+                    MASTER_STREAM,
+                    int(start),
+                    frame_window_num_frames,
+                    float(timestamp_tolerance_s),
+                )
         except Exception as exc:
             collection_errors.append(str(exc))
     else:
         collection_errors.append("Cannot compute timestamp alignment because one or more timestamp streams are unreadable")
+
+    timestamp_file_repair = maybe_repair_timestamp_files(
+        timestamp_paths=timestamp_paths,
+        timestamp_duplicate_summaries=timestamp_duplicate_summaries,
+        repaired_timestamps_by_stream=repaired_timestamps_by_stream,
+        timestamp_alignment_repaired_summary=timestamp_alignment_repaired_summary,
+        repair_timestamp_files=repair_timestamp_files,
+        max_repair_duplicate_rate=float(max_repair_duplicate_rate),
+        max_repair_consecutive_duplicate_frames=int(max_repair_consecutive_duplicate_frames),
+    )
 
     try:
         imu_summary = inspect_imu(imu_path)
@@ -789,6 +1005,9 @@ def build_resilient_quality_report(
         "video_infos": video_infos,
         "timestamp_duplicates": timestamp_duplicate_summaries,
         "timestamp_alignment": timestamp_alignment_summary,
+        "timestamp_repair": timestamp_repair_summary,
+        "timestamp_alignment_repaired": timestamp_alignment_repaired_summary,
+        "timestamp_file_repair": timestamp_file_repair,
         "imu": imu_summary,
         "timestamp_tolerance_s": float(timestamp_tolerance_s),
         "notes": [
@@ -810,6 +1029,9 @@ def export_quality_report(
     video_ext: str = DEFAULT_VIDEO_EXT,
     overwrite: bool = False,
     environment_name: str = "py312",
+    repair_timestamp_files: bool = False,
+    max_repair_duplicate_rate: float = 0.001,
+    max_repair_consecutive_duplicate_frames: int = 5,
     video_inspector=inspect_video,
 ) -> Path:
     output_root = Path(output_root).resolve()
@@ -827,6 +1049,9 @@ def export_quality_report(
         timestamp_tolerance_s=timestamp_tolerance_s,
         video_ext=video_ext,
         environment_name=environment_name,
+        repair_timestamp_files=repair_timestamp_files,
+        max_repair_duplicate_rate=max_repair_duplicate_rate,
+        max_repair_consecutive_duplicate_frames=max_repair_consecutive_duplicate_frames,
         video_inspector=video_inspector,
     )
     report_path.write_text(
@@ -845,6 +1070,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--timestamp_tolerance_s", type=float, default=None)
     parser.add_argument("--video_ext", default=DEFAULT_VIDEO_EXT, help="Raw camera video extension, e.g. .mp4 or .mkv.")
     parser.add_argument("--camera_stream", action="append", choices=DEFAULT_CAMERA_STREAMS, default=list(DEFAULT_CAMERA_STREAMS))
+    parser.add_argument("--repair_timestamp_files", action="store_true")
+    parser.add_argument("--max_repair_duplicate_rate", type=float, default=0.001)
+    parser.add_argument("--max_repair_consecutive_duplicate_frames", type=int, default=5)
     parser.add_argument("--overwrite", action="store_true")
     return parser
 
@@ -863,6 +1091,9 @@ def main() -> None:
         num_frames=args.num_frames,
         timestamp_tolerance_s=args.timestamp_tolerance_s,
         video_ext=args.video_ext,
+        repair_timestamp_files=args.repair_timestamp_files,
+        max_repair_duplicate_rate=args.max_repair_duplicate_rate,
+        max_repair_consecutive_duplicate_frames=args.max_repair_consecutive_duplicate_frames,
         overwrite=args.overwrite,
     )
     print(json.dumps({"report_path": str(report_path), "mode": "quality_report"}, indent=2, ensure_ascii=False))

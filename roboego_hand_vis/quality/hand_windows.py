@@ -44,7 +44,7 @@ class HandWindowConfig:
 
 @dataclass(frozen=True)
 class HandVisibilityGateConfig:
-    min_core_both_hands_visible_rate: float = 0.9
+    min_core_both_hands_visible_rate: float = 0.6
     unit_source: str = "hand_windows"
 
 
@@ -89,7 +89,7 @@ def build_hand_estimation_windows(
                 )
     raw_windows.sort(key=lambda item: (int(item["start"]), int(item["end"]), item["window_type"], item["hands_required"]))
     if config.merge_after_expand:
-        raw_windows = _merge_expanded_windows(raw_windows, fps=config.fps)
+        raw_windows = _merge_expanded_windows(raw_windows, fps=config.fps, max_gap=config.merge_gap_s)
     raw_windows = _filter_windows(raw_windows, config=config)
     for idx, window in enumerate(raw_windows):
         window["window_id"] = f"handwin_{idx:04d}"
@@ -422,10 +422,10 @@ def _window_from_range(
     }
 
 
-def _merge_expanded_windows(windows: list[dict[str, Any]], *, fps: int) -> list[dict[str, Any]]:
+def _merge_expanded_windows(windows: list[dict[str, Any]], *, fps: int, max_gap: int) -> list[dict[str, Any]]:
     merged: list[dict[str, Any]] = []
     for window in sorted(windows, key=lambda item: (int(item["start"]), int(item["end"]))):
-        if not merged or not _can_merge_expanded_window(merged[-1], window):
+        if not merged or not _can_merge_expanded_window(merged[-1], window, max_gap=max_gap):
             merged.append(dict(window))
             continue
         prev = merged[-1]
@@ -453,12 +453,12 @@ def _merge_expanded_windows(windows: list[dict[str, Any]], *, fps: int) -> list[
     return merged
 
 
-def _can_merge_expanded_window(a: dict[str, Any], b: dict[str, Any]) -> bool:
+def _can_merge_expanded_window(a: dict[str, Any], b: dict[str, Any], *, max_gap: int) -> bool:
     return (
         a.get("source_segment_id") == b.get("source_segment_id")
         and a.get("window_type") == b.get("window_type")
         and list(a.get("hands_required", [])) == list(b.get("hands_required", []))
-        and int(b["start"]) <= int(a["end"]) + 1
+        and int(b["start"]) <= int(a["end"]) + int(max_gap) + 1
     )
 
 

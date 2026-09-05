@@ -6,7 +6,7 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL
+from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL, resolve_qwen_base_url
 from roboego_hand_vis.quality.stage1_actions import ACTION_PATTERNS
 
 
@@ -71,6 +71,7 @@ def call_qwen_text_resolver(
     api_key = os.environ.get(api_key_env)
     if not api_key:
         raise RuntimeError(f"{api_key_env} is not set")
+    base_url = resolve_qwen_base_url(base_url)
     body = {
         "model": model,
         "messages": build_text_resolver_messages(review_payload),

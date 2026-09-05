@@ -64,6 +64,9 @@ def run_raw_headband_integrity_check(config: dict[str, Any] | None) -> dict[str,
         video_ext=_optional_str(config.get("video_ext")) or DEFAULT_VIDEO_EXT,
         overwrite=bool(config.get("overwrite", False)),
         environment_name=_optional_str(config.get("environment_name")) or "ego",
+        repair_timestamp_files=bool(config.get("repair_timestamp_files", False)),
+        max_repair_duplicate_rate=float(config.get("max_repair_duplicate_rate", 0.001)),
+        max_repair_consecutive_duplicate_frames=int(config.get("max_repair_consecutive_duplicate_frames", 5)),
     )
     return {"stage": "raw_headband_integrity_check", "status": "complete", "report_path": str(report_path)}
 

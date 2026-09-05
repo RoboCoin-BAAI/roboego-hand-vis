@@ -16,7 +16,7 @@ from typing import Any
 import cv2
 import numpy as np
 
-from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL
+from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL, resolve_qwen_base_url
 
 
 REQUIRED_FRAME_FIELDS = [
@@ -505,6 +505,7 @@ def call_qwen_frame_annotations(
     api_key = os.environ.get(api_key_env)
     if not api_key:
         raise RuntimeError(f"{api_key_env} is not set")
+    base_url = resolve_qwen_base_url(base_url)
     max_attempts = max(1, int(max_retries) + 1)
     last_error: dict[str, Any] | None = None
     current_messages = copy.deepcopy(messages)

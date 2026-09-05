@@ -10,6 +10,8 @@ from typing import Any, Callable
 
 import yaml
 
+from roboego_hand_vis.pipeline_state import read_pipeline_state
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG_DIR = PROJECT_ROOT / "conf" / "datasets"
@@ -29,6 +31,7 @@ class LauncherRequest:
     hand_window: str | None = None
     all_hand_windows: bool = False
     dry_run: bool = False
+    force: bool = False
 
 
 @dataclass(frozen=True)
@@ -136,9 +139,12 @@ def _run_workflow_request(
 ) -> list[str]:
     commands: list[str] = []
     steps = _workflow_steps(config=config, workflow=workflow, session=request.session.expanduser().resolve())
+    state = read_pipeline_state(request.session)
     for step in steps:
         step_stage = str(step["stage"])
         state_stages = _workflow_step_state_stages(step)
+        if _workflow_step_already_succeeded(state, state_stages) and not request.force:
+            continue
         step_request = replace(
             request,
             stage=step_stage,
@@ -169,6 +175,13 @@ def _run_workflow_request(
             for state_stage in state_stages:
                 stage_callback(state_stage, "success", invocations, None)
     return commands
+
+
+def _workflow_step_already_succeeded(state: dict[str, Any], state_stages: list[str]) -> bool:
+    stages = state.get("stages", {})
+    if not isinstance(stages, dict):
+        return False
+    return all(isinstance(stages.get(stage), dict) and stages[stage].get("status") == "success" for stage in state_stages)
 
 
 def _check_workflow_step_outputs(*, request: LauncherRequest, invocations: list[StageInvocation]) -> None:
@@ -250,16 +263,18 @@ def _qwen_checkpoint_missing_message(session: Path, checkpoint_json: Path) -> st
 
 
 def _workflow_steps(*, config: dict[str, Any], workflow: dict[str, Any], session: Path) -> list[dict[str, Any]]:
-    if str(workflow.get("strategy") or "") == "duration_depth_workflow":
+    strategy = str(workflow.get("strategy") or "")
+    if strategy in {"duration_depth_workflow", "duration_prepare_workflow"}:
         duration_s = _infer_session_duration_s(session)
         short_max_s = float(workflow.get("short_max_s", 180.0))
         medium_max_s = float(workflow.get("medium_max_s", 900.0))
         if duration_s < short_max_s:
-            raw_steps = workflow.get("short_steps") or []
+            duration_steps = workflow.get("short_steps") or []
         elif duration_s <= medium_max_s:
-            raw_steps = workflow.get("medium_steps") or []
+            duration_steps = workflow.get("medium_steps") or []
         else:
-            raw_steps = workflow.get("long_steps") or []
+            duration_steps = workflow.get("long_steps") or []
+        raw_steps = list(workflow.get("common_steps") or []) + list(duration_steps)
     else:
         raw_steps = workflow.get("steps") or []
     return [_normalize_workflow_step(step) for step in raw_steps]
@@ -378,6 +393,12 @@ def _resolve_duration_materialization_stage(
 
 
 def _infer_session_duration_s(session: Path) -> float:
+    video_path = Path(session) / "videos" / "left.mp4"
+    if video_path.is_file():
+        duration_s = _infer_video_duration_s(video_path)
+        if duration_s > 0:
+            return duration_s
+
     meta_path = Path(session) / "meta.json"
     if meta_path.is_file():
         try:
@@ -391,26 +412,28 @@ def _infer_session_duration_s(session: Path) -> float:
                 if duration_s > 0:
                     return duration_s
 
-    video_path = Path(session) / "videos" / "left.mp4"
-    if video_path.is_file():
-        try:
-            import cv2
-
-            cap = cv2.VideoCapture(str(video_path))
-            if cap.isOpened():
-                fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
-                frame_count = float(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0.0)
-                cap.release()
-                if fps > 0 and frame_count > 0:
-                    return frame_count / fps
-            cap.release()
-        except Exception as exc:
-            raise ValueError(f"Failed to infer session duration from video: {video_path}") from exc
-
     raise ValueError(
         "Cannot infer session duration for auto materialization. "
         f"Expected positive duration_sec/span_sec in {meta_path} or readable {video_path}."
     )
+
+
+def _infer_video_duration_s(video_path: Path) -> float:
+    try:
+        import cv2
+
+        cap = cv2.VideoCapture(str(video_path))
+        try:
+            if cap.isOpened():
+                fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
+                frame_count = float(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0.0)
+                if fps > 0 and frame_count > 0:
+                    return frame_count / fps
+        finally:
+            cap.release()
+    except Exception as exc:
+        raise ValueError(f"Failed to infer session duration from video: {video_path}") from exc
+    return 0.0
 
 
 def _build_contexts(
@@ -423,6 +446,8 @@ def _build_contexts(
     base_context = _base_context(config, session)
     if scope == "session":
         return [base_context]
+    if scope == "prepared_unit":
+        return _build_prepared_unit_contexts(base_context=base_context, request=request)
     if scope == "unit":
         return _build_unit_contexts(base_context=base_context, request=request)
     if scope != "hand_window":
@@ -438,6 +463,16 @@ def _build_unit_contexts(*, base_context: dict[str, str], request: LauncherReque
         hand_windows = _select_hand_windows(Path(base_context["session"]), request.hand_window, request.all_hand_windows)
         return [_unit_context(base_context, path) for path in hand_windows]
     return [_unit_context(base_context, Path(base_context["session"]))]
+
+
+def _build_prepared_unit_contexts(*, base_context: dict[str, str], request: LauncherRequest) -> list[dict[str, str]]:
+    if request.unit or request.hand_window or request.all_hand_windows:
+        return _build_unit_contexts(base_context=base_context, request=request)
+    session = Path(base_context["session"])
+    units = _find_prepared_units(session)
+    if not units:
+        raise FileNotFoundError(f"No prepared dataset_manifest.json found under {session}")
+    return [_unit_context(base_context, unit) for unit in units]
 
 
 def _base_context(config: dict[str, Any], session: Path) -> dict[str, str]:
@@ -530,6 +565,28 @@ def _find_hand_windows(session: Path, name: str | None = None) -> list[Path]:
             if pattern:
                 matches.extend(path.resolve() for path in direct_root.glob(pattern) if path.is_dir())
     return sorted(set(matches))
+
+
+def _find_prepared_units(session: Path) -> list[Path]:
+    search_groups = [
+        session / "hand_windows",
+        session / "segments",
+        session / "segments",
+        session,
+    ]
+    manifest_patterns = [
+        "handwin_*/dataset_manifest/dataset_manifest.json",
+        "*/hand_windows/handwin_*/dataset_manifest/dataset_manifest.json",
+        "seg_*/dataset_manifest/dataset_manifest.json",
+        "dataset_manifest/dataset_manifest.json",
+    ]
+    for root, pattern in zip(search_groups, manifest_patterns):
+        if not root.exists():
+            continue
+        units = sorted({path.parents[1].resolve() for path in root.glob(pattern) if path.is_file()})
+        if units:
+            return units
+    return []
 
 
 def _infer_num_frames(root: Path, *, fps: str) -> str:

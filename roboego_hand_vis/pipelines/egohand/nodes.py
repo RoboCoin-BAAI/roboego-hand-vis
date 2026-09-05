@@ -107,6 +107,61 @@ def run_hamer_windows_node(config: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
+def run_hamer_unit_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "hamer_unit", "status": "skipped", "reason": "disabled"}
+
+    manifest = _required_value(config, "manifest", "hamer_unit")
+    output_dir = _required_value(config, "output_dir", "hamer_unit")
+    hamer_root = _required_value(config, "hamer_root", "hamer_unit")
+    stage1_actions = _required_value(config, "stage1_actions", "hamer_unit")
+    hamer_python = _optional_str(config.get("hamer_python") or config.get("python_for_hamer") or config.get("hamer_env_python"))
+
+    args = [
+        hamer_python or _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/hand/run_hamer_ego_filter.py",
+        "--manifest",
+        manifest,
+        "--output_dir",
+        output_dir,
+        "--hamer_root",
+        hamer_root,
+        "--stage1_actions",
+        stage1_actions,
+    ]
+    _append_arg(args, "--depth_dir", config.get("depth_dir"))
+    _append_arg(args, "--wearer_regions_json", config.get("wearer_regions_json"))
+    _append_arg(args, "--start", config.get("start"))
+    _append_arg(args, "--num_frames", config.get("num_frames"))
+    _append_arg(args, "--body_detector", config.get("body_detector"))
+    _append_arg(args, "--batch_size", config.get("batch_size"))
+    _append_arg(args, "--ego_mode", config.get("ego_mode"))
+    _append_arg(args, "--stage1_hand_policy", config.get("stage1_hand_policy"))
+    _append_arg(args, "--stage1_time_offset_s", config.get("stage1_time_offset_s"))
+    _append_arg(args, "--refine_mode", config.get("refine_mode"))
+    _append_arg(args, "--wearer_roi_x_margin_ratio", config.get("wearer_roi_x_margin_ratio"))
+    _append_arg(args, "--wearer_roi_y_margin_ratio", config.get("wearer_roi_y_margin_ratio"))
+    if bool(config.get("save_mesh", True)):
+        args.append("--save_mesh")
+    if bool(config.get("save_refined_vis", False)):
+        args.append("--save_refined_vis")
+    else:
+        args.append("--no_save_refined_vis")
+    if bool(config.get("save_refined_frames", False)):
+        args.append("--save_refined_frames")
+    if bool(config.get("accept_uncertain_refined", False)):
+        args.append("--accept_uncertain_refined")
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "hamer_unit",
+        "status": "complete",
+        "manifest": manifest,
+        "output_dir": output_dir,
+    }
+
+
 def run_refined_temporal_gate_node(config: dict[str, Any] | None) -> dict[str, Any]:
     config = config or {}
     if not bool(config.get("enabled", False)):

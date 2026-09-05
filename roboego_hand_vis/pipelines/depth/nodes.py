@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -84,6 +85,16 @@ def run_fast_foundation_stereo_depth_node(config: dict[str, Any] | None) -> dict
 
     manifest = Path(_required_value(config, "manifest", "fast_foundation_stereo_depth"))
     output_dir = Path(_optional_str(config.get("output_dir")) or _default_fast_depth_output_dir(manifest))
+    stereo_quality = _load_stereo_depth_gate(config.get("stereo_quality_report"))
+    if stereo_quality is not None and not stereo_quality["usable_for_depth"]:
+        return {
+            "stage": "fast_foundation_stereo_depth",
+            "status": "blocked",
+            "reason": "stereo_quality_not_usable_for_depth",
+            "manifest": str(manifest),
+            "output_dir": str(output_dir),
+            **stereo_quality,
+        }
     args = [
         _optional_str(config.get("python")) or "python",
         _optional_str(config.get("script")) or "scripts/run_fast_foundation_stereo_video.py",
@@ -124,6 +135,35 @@ def run_fast_foundation_stereo_depth_node(config: dict[str, Any] | None) -> dict
         "manifest": str(manifest),
         "output_dir": str(output_dir),
         "meta_path": str(output_dir / "fast_foundation_stereo_video_meta.json"),
+        **(stereo_quality or {}),
+    }
+
+
+def _load_stereo_depth_gate(value: Any) -> dict[str, Any] | None:
+    path_str = _optional_str(value)
+    if not path_str:
+        return None
+    path = Path(path_str).expanduser()
+    if not path.is_file():
+        return {
+            "stereo_quality_report": str(path),
+            "stereo_quality_passed": None,
+            "usable_for_depth": False,
+            "depth_risk_level": "blocked",
+            "depth_risk_reasons": ["missing_stereo_quality_report"],
+        }
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    summary = payload.get("summary") if isinstance(payload, dict) else {}
+    if not isinstance(summary, dict):
+        summary = {}
+    strict_passed = bool(summary.get("strict_passed", summary.get("passed", False)))
+    usable_for_depth = bool(summary.get("usable_for_depth", strict_passed))
+    return {
+        "stereo_quality_report": str(path),
+        "stereo_quality_passed": strict_passed,
+        "usable_for_depth": usable_for_depth,
+        "depth_risk_level": str(summary.get("depth_risk_level") or ("low" if strict_passed else "blocked")),
+        "depth_risk_reasons": summary.get("depth_risk_reasons", []),
     }
 
 

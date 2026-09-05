@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from roboego_hand_vis.pipelines.depth.nodes import (
@@ -165,6 +166,69 @@ def test_fast_foundation_stereo_depth_node_runs_fast_script(monkeypatch, tmp_pat
         "output_dir": str(output_dir),
         "meta_path": str(output_dir / "fast_foundation_stereo_video_meta.json"),
     }
+
+
+def test_fast_foundation_stereo_depth_node_allows_usable_stereo_warning(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr("roboego_hand_vis.pipelines.depth.nodes.subprocess.run", lambda args, check: calls.append(args))
+    manifest = tmp_path / "handwin/dataset_manifest/dataset_manifest.json"
+    stereo_report = tmp_path / "handwin/quality/stereo_summary/stereo_quality_report.json"
+    stereo_report.parent.mkdir(parents=True)
+    stereo_report.write_text(
+        json.dumps(
+            {
+                "summary": {
+                    "passed": False,
+                    "usable_for_depth": True,
+                    "depth_risk_level": "high_risk",
+                    "depth_risk_reasons": ["geometry_warning"],
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = run_fast_foundation_stereo_depth_node(
+        {
+            "enabled": True,
+            "manifest": str(manifest),
+            "stereo_quality_report": str(stereo_report),
+            "num_frames": 1,
+        }
+    )
+
+    assert calls
+    assert result["stereo_quality_report"] == str(stereo_report)
+    assert result["stereo_quality_passed"] is False
+    assert result["usable_for_depth"] is True
+    assert result["depth_risk_level"] == "high_risk"
+    assert result["depth_risk_reasons"] == ["geometry_warning"]
+
+
+def test_fast_foundation_stereo_depth_node_blocks_unusable_stereo_report(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr("roboego_hand_vis.pipelines.depth.nodes.subprocess.run", lambda args, check: calls.append(args))
+    manifest = tmp_path / "handwin/dataset_manifest/dataset_manifest.json"
+    stereo_report = tmp_path / "handwin/quality/stereo_summary/stereo_quality_report.json"
+    stereo_report.parent.mkdir(parents=True)
+    stereo_report.write_text(
+        json.dumps({"summary": {"passed": False, "usable_for_depth": False, "depth_risk_level": "blocked"}}),
+        encoding="utf-8",
+    )
+
+    result = run_fast_foundation_stereo_depth_node(
+        {
+            "enabled": True,
+            "manifest": str(manifest),
+            "stereo_quality_report": str(stereo_report),
+            "num_frames": 1,
+        }
+    )
+
+    assert calls == []
+    assert result["status"] == "blocked"
+    assert result["reason"] == "stereo_quality_not_usable_for_depth"
+    assert result["stereo_quality_report"] == str(stereo_report)
 
 
 def test_fast_foundation_stereo_depth_node_defaults_output_next_to_manifest(monkeypatch, tmp_path):

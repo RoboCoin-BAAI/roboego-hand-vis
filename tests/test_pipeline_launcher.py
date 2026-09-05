@@ -15,6 +15,7 @@ from roboego_hand_vis.pipeline_launcher import (
     run_stage_invocations,
     workflow_stage_names,
 )
+from roboego_hand_vis.pipeline_state import update_stage_state
 
 
 def test_load_raw_dataset_config_has_hand_window_stage():
@@ -28,8 +29,8 @@ def test_load_raw_dataset_config_has_hand_window_stage():
     stage = config["stages"]["depth_anchored_joints21"]
     assert stage["pipeline"] == "egohand"
     assert stage["node"] == "depth_anchored_joints21"
-    assert stage["scope"] == "hand_window"
-    assert stage["params"]["manifest"] == "{hand_window}/dataset_manifest/dataset_manifest.json"
+    assert stage["scope"] == "prepared_unit"
+    assert stage["params"]["manifest"] == "{unit}/dataset_manifest/dataset_manifest.json"
     assert Path(config["stages"]["qwen_annotation"]["params"]["prompt"]).is_file()
 
 
@@ -158,6 +159,21 @@ def test_materialize_auto_uses_session_for_short_sessions(tmp_path: Path):
     assert invocation.params["prepare_stereo_unit.unit_root"] == str(session.resolve())
 
 
+def test_materialize_auto_prefers_actual_video_duration_over_stale_meta(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    (session / "videos").mkdir(parents=True)
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 1872.982}), encoding="utf-8")
+    (session / "videos/left.mp4").write_bytes(b"fake-video")
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher._infer_video_duration_s", lambda path: 71.233)
+
+    invocation = build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="materialize_auto"))[0]
+
+    assert invocation.context["materialization_strategy"] == "session"
+    assert invocation.context["materialization_target_stage"] == "materialize_session"
+    assert invocation.context["materialization_duration_s"] == "71.233"
+    assert invocation.node == "prepare_stereo_unit"
+
+
 def test_materialize_auto_uses_hand_windows_for_medium_sessions(tmp_path: Path):
     session = tmp_path / "session"
     session.mkdir()
@@ -207,8 +223,108 @@ def test_base_prepare_workflow_combines_planning_and_stereo_prepare(monkeypatch,
     ]
 
 
+def test_base_prepare_workflow_prepares_direct_hand_windows_for_medium_session(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 600}), encoding="utf-8")
+    (session / "hand_windows/handwin_0000_t000000_000065").mkdir(parents=True)
+    calls = []
+
+    def fake_run(invocations, *, dry_run=False):
+        for invocation in invocations:
+            calls.append((invocation.node, invocation.context.get("hand_window_id", "")))
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare", dry_run=True))
+
+    assert calls == [
+        ("qwen_frame_annotation", ""),
+        ("stage1_action_text_resolver_chunks", ""),
+        ("build_processing_plan", ""),
+        ("build_hand_estimation_windows", ""),
+        ("export_direct_hand_window_segments", ""),
+        ("prepare_stereo_unit", "handwin_0000_t000000_000065"),
+    ]
+
+
+def test_base_prepare_workflow_skips_successful_steps(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
+    checkpoint = session / "annotation/qwen_frame_annotations_left_v4.checkpoint.json"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_text(json.dumps({"frames": []}), encoding="utf-8")
+    for stage in [
+        "raw_quality",
+        "video_simple_quality",
+        "qwen_annotation",
+        "post_annotation_actions",
+        "processing_plan",
+        "hand_windows",
+        "materialize_auto",
+        "prepare_stereo",
+    ]:
+        update_stage_state(session, stage, "success")
+
+    calls = []
+
+    def fake_run(invocations, *, dry_run=False):
+        calls.extend(invocations)
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    commands = run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare"))
+
+    assert commands == []
+    assert calls == []
+
+
+def test_base_prepare_workflow_force_reruns_successful_steps(monkeypatch, tmp_path: Path):
+    session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
+    checkpoint = session / "annotation/qwen_frame_annotations_left_v4.checkpoint.json"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_text(json.dumps({"frames": []}), encoding="utf-8")
+    for stage in [
+        "raw_quality",
+        "video_simple_quality",
+        "qwen_annotation",
+        "post_annotation_actions",
+        "processing_plan",
+        "hand_windows",
+        "materialize_auto",
+        "prepare_stereo",
+    ]:
+        update_stage_state(session, stage, "success")
+
+    calls = []
+
+    def fake_run(invocations, *, dry_run=False):
+        for invocation in invocations:
+            calls.append(invocation.node)
+        return [render_invocation_command(invocation) for invocation in invocations]
+
+    monkeypatch.setattr("roboego_hand_vis.pipeline_launcher.run_stage_invocations", fake_run)
+
+    run_launcher_request(LauncherRequest(dataset="raw", session=session, stage="base_prepare", force=True))
+
+    assert calls == [
+        "qwen_frame_annotation",
+        "stage1_action_text_resolver_chunks",
+        "build_processing_plan",
+        "build_hand_estimation_windows",
+        "prepare_stereo_unit",
+    ]
+
+
 def test_base_prepare_workflow_exposes_planning_and_stereo_state_stages(tmp_path: Path):
     session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
 
     stages = workflow_stage_names(LauncherRequest(dataset="raw", session=session, stage="base_prepare"))
 
@@ -226,6 +342,8 @@ def test_base_prepare_workflow_exposes_planning_and_stereo_state_stages(tmp_path
 
 def test_base_prepare_stops_with_gate_reason_when_qwen_checkpoint_missing(monkeypatch, tmp_path: Path):
     session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
     report_path = session / "annotation" / "quality_report.json"
     report_path.parent.mkdir(parents=True)
     report_path.write_text(
@@ -270,6 +388,8 @@ def test_base_prepare_stops_with_gate_reason_when_qwen_checkpoint_missing(monkey
 
 def test_base_prepare_block_message_includes_failed_video_simple_quality(monkeypatch, tmp_path: Path):
     session = tmp_path / "session"
+    session.mkdir()
+    (session / "meta.json").write_text(json.dumps({"duration_sec": 120}), encoding="utf-8")
     report_path = session / "annotation" / "video_simple_quality_left.json"
     report_path.parent.mkdir(parents=True)
     report_path.write_text(
@@ -427,18 +547,101 @@ def test_depth_numeric_quality_stage_runs_for_hand_windows(tmp_path: Path):
     assert invocation.params["depth_numeric_quality.num_frames"] == "1800"
 
 
-def test_hamer_stage_uses_direct_hand_windows_root(tmp_path: Path):
+def test_prepared_unit_stage_defaults_to_direct_hand_windows_when_manifests_exist(tmp_path: Path):
     session = tmp_path / "session"
+    for name in ("handwin_0000_t000000_000010", "handwin_0001_t000020_000030"):
+        manifest = session / "hand_windows" / name / "dataset_manifest/dataset_manifest.json"
+        manifest.parent.mkdir(parents=True)
+        manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 300}}}), encoding="utf-8")
+
+    invocations = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="fast_foundation_depth")
+    )
+
+    assert [item.context["unit_id"] for item in invocations] == [
+        "handwin_0000_t000000_000010",
+        "handwin_0001_t000020_000030",
+    ]
+    assert invocations[0].params["fast_foundation_stereo_depth.manifest"] == str(
+        session / "hand_windows/handwin_0000_t000000_000010/dataset_manifest/dataset_manifest.json"
+    )
+    assert invocations[0].params["fast_foundation_stereo_depth.output_dir"] == str(
+        session / "hand_windows/handwin_0000_t000000_000010/depth/fast_foundation"
+    )
+
+
+def test_prepared_unit_stage_defaults_to_segment_hand_windows_before_session_manifest(tmp_path: Path):
+    session = tmp_path / "session"
+    (session / "dataset_manifest").mkdir(parents=True)
+    (session / "dataset_manifest/dataset_manifest.json").write_text("{}", encoding="utf-8")
+    hand_window_manifest = (
+        session
+        / "segments/seg_0000_t000000_000020"
+        / "hand_windows/handwin_0000_t000000_000020"
+        / "dataset_manifest/dataset_manifest.json"
+    )
+    hand_window_manifest.parent.mkdir(parents=True)
+    hand_window_manifest.write_text("{}", encoding="utf-8")
+
+    invocations = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="depth_numeric_quality")
+    )
+
+    assert len(invocations) == 1
+    assert invocations[0].context["unit"] == str(hand_window_manifest.parents[1])
+    assert invocations[0].params["depth_numeric_quality.depth_dir"] == str(
+        hand_window_manifest.parents[1] / "depth/fast_foundation"
+    )
+
+
+def test_prepared_unit_stage_falls_back_to_session_manifest(tmp_path: Path):
+    session = tmp_path / "session"
+    manifest = session / "dataset_manifest/dataset_manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 660}}}), encoding="utf-8")
+
+    invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="fast_foundation_depth")
+    )[0]
+
+    assert invocation.context["unit"] == str(session)
+    assert invocation.params["fast_foundation_stereo_depth.manifest"] == str(manifest)
+    assert invocation.params["fast_foundation_stereo_depth.num_frames"] == "660"
+
+
+def test_hand_postprocess_stages_default_to_prepared_units(tmp_path: Path):
+    session = tmp_path / "session"
+    hand_window = session / "hand_windows/handwin_0000_t000000_000010"
+    manifest = hand_window / "dataset_manifest/dataset_manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 300, "height": 1050}}}), encoding="utf-8")
+
+    invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="hand_filter")
+    )[0]
+
+    assert invocation.context["unit"] == str(hand_window)
+    assert invocation.params["hand_filter.manifest"] == str(manifest)
+    assert invocation.params["hand_filter.output_dir"] == str(hand_window / "hand/filtered")
+
+
+def test_hamer_stage_defaults_to_prepared_units(tmp_path: Path):
+    session = tmp_path / "session"
+    hand_window = session / "hand_windows/handwin_0000_t000000_000010"
+    manifest = hand_window / "dataset_manifest/dataset_manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"videos": {"left": {"frame_count": 300}}}), encoding="utf-8")
 
     invocation = build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="hamer"))[0]
 
     assert invocation.pipeline == "egohand"
-    assert invocation.node == "hamer_windows"
-    assert invocation.params["hamer_windows.segments_root"] == str(session / "hand_windows")
-    assert invocation.params["hamer_windows.output_subdir"] == "hand/hamer_raw"
-    assert invocation.params["hamer_windows.wearer_regions_json"] == str(
+    assert invocation.node == "hamer_unit"
+    assert invocation.params["hamer_unit.manifest"] == str(manifest)
+    assert invocation.params["hamer_unit.output_dir"] == str(hand_window / "hand/hamer_raw")
+    assert invocation.params["hamer_unit.wearer_regions_json"] == str(
         session / "annotation/qwen_frame_annotations_left_v4.checkpoint.json"
     )
+    assert invocation.params["hamer_unit.num_frames"] == "300"
 
 
 def test_video_simple_quality_stage_alias_maps_to_pre_semantic_gate(tmp_path: Path):
@@ -551,12 +754,12 @@ def test_finds_direct_session_hand_windows(tmp_path: Path):
     )
 
 
-def test_hand_window_stage_requires_window_when_multiple_exist(tmp_path: Path):
+def test_prepared_unit_stage_requires_manifest_when_multiple_unprepared_windows_exist(tmp_path: Path):
     session = tmp_path / "session"
     (session / "segments/seg_0000/hand_windows/handwin_0000").mkdir(parents=True)
     (session / "segments/seg_0001/hand_windows/handwin_0001").mkdir(parents=True)
 
-    with pytest.raises(ValueError, match="multiple hand windows"):
+    with pytest.raises(FileNotFoundError, match="No prepared dataset_manifest"):
         build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="hand_filter"))
 
 

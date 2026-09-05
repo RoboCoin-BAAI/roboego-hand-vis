@@ -18,7 +18,7 @@ from roboego_hand_vis.pipeline_launcher import (
     run_launcher_request,
     workflow_stage_names,
 )
-from roboego_hand_vis.pipeline_state import update_stage_state
+from roboego_hand_vis.pipeline_state import stage_artifact_outcome, update_stage_state
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,6 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--unit", default="", help="Explicit unit root for unit-scoped stages.")
     parser.add_argument("--all-hand-windows", action="store_true", help="Run one command per discovered hand window.")
     parser.add_argument("--dry-run", action="store_true", help="Print generated command(s) without running them.")
+    parser.add_argument("--force", action="store_true", help="Re-run workflow steps that already succeeded.")
     return parser.parse_args()
 
 
@@ -46,6 +47,7 @@ def main() -> None:
         hand_window=args.hand_window or None,
         all_hand_windows=bool(args.all_hand_windows),
         dry_run=bool(args.dry_run),
+        force=bool(args.force),
     )
     started = time.monotonic()
     workflow_steps = workflow_stage_names(request)
@@ -117,15 +119,23 @@ def main() -> None:
         )
         raise
     if not request.dry_run and not is_workflow:
+        artifact_outcome = stage_artifact_outcome(request.session, request.stage)
+        state_status = str(artifact_outcome["status"]) if artifact_outcome is not None else "success"
+        returncode = int(artifact_outcome.get("returncode", 0)) if artifact_outcome is not None else 0
+        error = artifact_outcome.get("error") if artifact_outcome is not None else None
         update_stage_state(
             request.session,
             request.stage,
-            "success",
+            state_status,
             command=command,
             duration_s=time.monotonic() - started,
             outputs=commands,
-            returncode=0,
+            error=error,
+            returncode=returncode,
         )
+        if returncode:
+            print(str(error or f"{request.stage} blocked"), file=sys.stderr)
+            raise SystemExit(returncode)
 
 
 if __name__ == "__main__":

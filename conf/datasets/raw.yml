@@ -21,7 +21,10 @@ paths:
 
 workflows:
   base_prepare:
-    steps:
+    strategy: duration_prepare_workflow
+    short_max_s: 180
+    medium_max_s: 900
+    common_steps:
       - stage: qwen_annotation
         state_stages:
           - raw_quality
@@ -30,10 +33,27 @@ workflows:
       - post_annotation_actions
       - processing_plan
       - hand_windows
+    short_steps:
       - stage: materialize_auto
         state_stages:
           - materialize_auto
           - prepare_stereo
+    medium_steps:
+      - stage: materialize_hand_windows
+        state_stages:
+          - materialize_auto
+      - stage: prepare_stereo
+        state_stages:
+          - prepare_stereo
+        all_hand_windows: true
+    long_steps:
+      - stage: materialize_segment_hand_windows
+        state_stages:
+          - materialize_auto
+      - stage: prepare_stereo
+        state_stages:
+          - prepare_stereo
+        all_hand_windows: true
 
   phase1_depth:
     strategy: duration_depth_workflow
@@ -95,6 +115,10 @@ stages:
       session_dir: "{session}"
       output_root: "{session}"
       camera_streams: left|right
+      timestamp_tolerance_s: 0.005
+      repair_timestamp_files: true
+      max_repair_duplicate_rate: 0.001
+      max_repair_consecutive_duplicate_frames: 5
       overwrite: true
 
   pre_semantic_quality:
@@ -191,6 +215,7 @@ stages:
       action_chunk_dir: "{session}/annotation/stage1_action_chunks"
       review_chunk_dir: "{session}/annotation/stage1_action_text_review_chunks"
       resolved_chunk_dir: "{session}/annotation/stage1_action_resolved_chunks"
+      merged_output_json: "{session}/annotation/stage1_actions_left_v1_resolved.json"
       model: qwen-plus
       overwrite: false
 
@@ -220,6 +245,7 @@ stages:
       hand_window_mode: two
       context_expand_s: 2
       merge_gap_s: 2
+      merge_after_expand: true
       min_window_s: 5
       min_priority: high
       fps: 30
@@ -235,7 +261,7 @@ stages:
       hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
       processing_plan_json: "{session}/annotation/processing_plan_left_v1.json"
       output_json: "{session}/annotation/hand_visibility_quality_gate_left_v1.json"
-      min_core_both_hands_visible_rate: 0.9
+      min_core_both_hands_visible_rate: 0.6
       unit_source: processing_plan
 
   export_segments:
@@ -391,24 +417,24 @@ stages:
   stereo_quality:
     pipeline: quality
     node: stereo_segment_quality
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: stereo_segment_quality
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      output_dir: "{hand_window}/quality/stereo_segments"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/quality/stereo_segments"
       sample_every_s: 1.0
       orb_every_s: 5.0
 
   stereo_summary_quality:
     pipeline: quality
     node: stereo_summary_quality
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: stereo_summary_quality
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      output_dir: "{hand_window}/quality/stereo_summary"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/quality/stereo_summary"
       sample_count: 12
 
   stereo_quality_unit:
@@ -437,12 +463,13 @@ stages:
   fast_foundation_depth:
     pipeline: depth
     node: fast_foundation_stereo_depth
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: fast_foundation_stereo_depth
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      output_dir: "{hand_window}/depth/fast_foundation"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      output_dir: "{unit}/depth/fast_foundation"
+      stereo_quality_report: "{unit}/quality/stereo_summary/stereo_quality_report.json"
       fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
       start: 0
       num_frames: "{num_frames}"
@@ -464,6 +491,7 @@ stages:
       enabled: true
       manifest: "{unit}/dataset_manifest/dataset_manifest.json"
       output_dir: "{unit}/depth/fast_foundation"
+      stereo_quality_report: "{unit}/quality/stereo_summary/stereo_quality_report.json"
       fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
       start: 0
       num_frames: "{num_frames}"
@@ -479,14 +507,14 @@ stages:
   depth_quality:
     pipeline: quality
     node: depth_quality
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: depth_quality
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      depth_dir: "{hand_window}/depth/fast_foundation"
-      output_dir: "{hand_window}/quality/depth"
-      stereo_quality_report: "{hand_window}/quality/stereo_segments/bad_segments.json"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/quality/depth"
+      stereo_quality_report: "{unit}/quality/stereo_segments/bad_segments.json"
       start: 0
       num_frames: "{num_frames}"
       min_depth_m: 0.15
@@ -495,12 +523,12 @@ stages:
   depth_numeric_quality:
     pipeline: quality
     node: depth_numeric_quality
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: depth_numeric_quality
     params:
       enabled: true
-      depth_dir: "{hand_window}/depth/fast_foundation"
-      output_dir: "{hand_window}/quality/depth_numeric"
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/quality/depth_numeric"
       start: 0
       num_frames: "{num_frames}"
       min_depth_m: 0.15
@@ -537,12 +565,12 @@ stages:
   archive_depth_cache:
     pipeline: depth
     node: archive_depth_cache
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: archive_depth_cache
     params:
       enabled: true
-      depth_dir: "{hand_window}/depth/fast_foundation"
-      output_dir: "{hand_window}/depth/fast_foundation_archive"
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/depth/fast_foundation_archive"
       max_depth_m: 4.0
       invalid_value: 0
       fps: 30
@@ -582,36 +610,42 @@ stages:
 
   hamer:
     pipeline: egohand
-    node: hamer_windows
-    scope: session
-    param_namespace: hamer_windows
+    node: hamer_unit
+    scope: prepared_unit
+    param_namespace: hamer_unit
     params:
       enabled: true
-      windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
-      segments_root: "{session}/hand_windows"
-      output_subdir: hand/hamer_raw
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/hand/hamer_raw"
       hamer_root: /home/liuyou/Documents/hamer
       stage1_actions: "{session}/annotation/stage1_action_resolved_chunks"
       wearer_regions_json: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
       hamer_python: /home/liuyou/miniconda3/envs/hamer/bin/python
+      start: 0
+      num_frames: "{num_frames}"
+      ego_mode: tolerant
+      stage1_hand_policy: permissive
+      stage1_time_offset_s: 0
       body_detector: regnety
       batch_size: 1
       wearer_roi_x_margin_ratio: 0.0
       wearer_roi_y_margin_ratio: 0.10
       save_mesh: true
+      save_refined_vis: false
+      save_refined_frames: false
       refine_mode: strict_ego_audit
-      overwrite: true
 
   hand_filter:
     pipeline: egohand
     node: hand_filter
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: hand_filter
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      refined_json: "{hand_window}/hand/hamer_raw/ego_hand_candidates_refined.json"
-      output_dir: "{hand_window}/hand/filtered"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      refined_json: "{unit}/hand/hamer_raw/ego_hand_candidates_refined.json"
+      output_dir: "{unit}/hand/filtered"
       start: 0
       num_frames: "{num_frames}"
       max_bbox_jump_px: 360
@@ -625,12 +659,12 @@ stages:
   joints21_pose_gate:
     pipeline: egohand
     node: joints21_pose_gate
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: joints21_pose_gate
     params:
       enabled: true
-      final_tracks_json: "{hand_window}/hand/filtered/filtered_hand_tracks.json"
-      output_dir: "{hand_window}/hand/joints21_pose_gate"
+      final_tracks_json: "{unit}/hand/filtered/filtered_hand_tracks.json"
+      output_dir: "{unit}/hand/joints21_pose_gate"
       start: 0
       num_frames: "{num_frames}"
       drop_fingertips_below_wrist: true
@@ -642,14 +676,14 @@ stages:
   depth_anchored_joints21:
     pipeline: egohand
     node: depth_anchored_joints21
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: depth_anchored_joints21
     params:
       enabled: true
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
-      candidates_json: "{hand_window}/hand/joints21_pose_gate/final_hand_candidates_gated.json"
-      depth_dir: "{hand_window}/depth/fast_foundation"
-      output_dir: "{hand_window}/hand/joints21_depth_anchored"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+      candidates_json: "{unit}/hand/joints21_pose_gate/final_hand_candidates_gated.json"
+      depth_dir: "{unit}/depth/fast_foundation"
+      output_dir: "{unit}/hand/joints21_depth_anchored"
       start: 0
       num_frames: "{num_frames}"
       anchor_mode: wrist_palm
@@ -659,27 +693,27 @@ stages:
   final_hand_result:
     pipeline: egohand
     node: final_hand_result
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: final_hand_result
     params:
       enabled: true
-      tracks_json: "{hand_window}/hand/joints21_pose_gate/final_hand_candidates_gated.json"
-      output_dir: "{hand_window}/hand/final_hand_result"
-      depth_anchored_json: "{hand_window}/hand/joints21_depth_anchored/joints21_depth_anchored.json"
-      depth_anchored_npz: "{hand_window}/hand/joints21_depth_anchored/joints21_depth_anchored.npz"
-      depth_anchored_summary_json: "{hand_window}/hand/joints21_depth_anchored/joints21_depth_anchored_summary.json"
+      tracks_json: "{unit}/hand/joints21_pose_gate/final_hand_candidates_gated.json"
+      output_dir: "{unit}/hand/final_hand_result"
+      depth_anchored_json: "{unit}/hand/joints21_depth_anchored/joints21_depth_anchored.json"
+      depth_anchored_npz: "{unit}/hand/joints21_depth_anchored/joints21_depth_anchored.npz"
+      depth_anchored_summary_json: "{unit}/hand/joints21_depth_anchored/joints21_depth_anchored_summary.json"
       copy_meshes: true
 
   final_hand_trajectory_polish:
     pipeline: egohand
     node: final_hand_trajectory_polish
-    scope: hand_window
+    scope: prepared_unit
     param_namespace: final_hand_trajectory_polish
     params:
       enabled: true
-      joints_json: "{hand_window}/hand/final_hand_result/joints21_depth_anchored.json"
-      output_dir: "{hand_window}/hand/final_hand_result"
-      manifest: "{hand_window}/dataset_manifest/dataset_manifest.json"
+      joints_json: "{unit}/hand/final_hand_result/joints21_depth_anchored.json"
+      output_dir: "{unit}/hand/final_hand_result"
+      manifest: "{unit}/dataset_manifest/dataset_manifest.json"
       max_interp_gap: 10
       wrist_jump_m: 0.0
       max_local_wrist_deviation_m: 0.0

@@ -17,7 +17,9 @@ STATE_FILENAME = "pipeline_state.json"
 DEFAULT_DASHBOARD_PATH = Path("reports/pipeline_dashboard/index.html")
 STAGE_ORDER = [
     "raw_quality",
+    "raw_quality_gate",
     "video_simple_quality",
+    "video_simple_quality_gate",
     "qwen_annotation",
     "post_annotation_actions",
     "processing_plan",
@@ -37,7 +39,7 @@ STAGE_ORDER = [
     "final_hand_result",
     "sam3_objects",
 ]
-WORKFLOW_ALIAS_STAGES = {"base_prepare", "phase1_depth"}
+WORKFLOW_ALIAS_STAGES = {"base_prepare", "phase1_planning", "phase1_prepare_stereo", "phase1_depth"}
 WORKFLOW_ALIAS_EXPANSIONS = {
     "base_prepare": [
         "raw_quality",
@@ -60,6 +62,7 @@ WORKFLOW_ALIAS_EXPANSIONS = {
     ],
 }
 VALID_STATUSES = {"pending", "processing", "success", "fail", "skipped", "blocked"}
+QUALITY_GATE_STAGES = {"raw_quality_gate", "video_simple_quality_gate"}
 
 
 def read_pipeline_state(session: Path) -> dict[str, Any]:
@@ -221,7 +224,7 @@ def run_one_stage(
     if not force and existing.get("status") == "success":
         return {"session": str(Path(session).resolve()), "stage": stage, "status": "skipped", "reason": "already_success"}
 
-    argv = _stage_command(session=session, dataset=dataset, stage=stage, config=config)
+    argv = _stage_command(session=session, dataset=dataset, stage=stage, config=config, force=force)
     command = " ".join(_quote(part) for part in argv)
     if dry_run:
         print(command)
@@ -240,7 +243,14 @@ def run_one_stage(
     stdout_tail = _tail(completed.stdout)
     stderr_tail = _tail(completed.stderr)
     status = "success" if completed.returncode == 0 else "blocked" if completed.returncode == 2 else "fail"
+    returncode = completed.returncode
     error = None if status == "success" else (stderr_tail or stdout_tail or f"exit code {completed.returncode}")
+    if completed.returncode == 0:
+        artifact_outcome = stage_artifact_outcome(session, stage)
+        if artifact_outcome is not None:
+            status = str(artifact_outcome["status"])
+            returncode = int(artifact_outcome.get("returncode", returncode))
+            error = artifact_outcome.get("error")
     update_stage_state(
         session,
         stage,
@@ -250,7 +260,7 @@ def run_one_stage(
         error=error,
         stdout_tail=stdout_tail,
         stderr_tail=stderr_tail,
-        returncode=completed.returncode,
+        returncode=returncode,
     )
     print(f"[{status}] {session} stage={stage} duration_s={duration_s:.1f}")
     return {
@@ -258,9 +268,82 @@ def run_one_stage(
         "stage": stage,
         "status": status,
         "duration_s": round(duration_s, 3),
-        "returncode": completed.returncode,
+        "returncode": returncode,
         "error": error,
     }
+
+
+def stage_artifact_outcome(session: Path, stage: str) -> dict[str, Any] | None:
+    session = Path(session).expanduser().resolve()
+    if stage == "raw_quality":
+        return _raw_quality_artifact_outcome(session / "annotation" / "quality_report.json")
+    if stage == "video_simple_quality":
+        return _generic_passed_report_outcome(
+            stage=stage,
+            report_path=session / "annotation" / "video_simple_quality_left.json",
+            failed_key="failed_intervals",
+        )
+    if stage == "hand_visibility_gate":
+        return _generic_passed_report_outcome(
+            stage=stage,
+            report_path=session / "annotation" / "hand_visibility_quality_gate_left_v1.json",
+            failed_key="blocked_window_ids",
+        )
+    return None
+
+
+def _raw_quality_artifact_outcome(report_path: Path) -> dict[str, Any] | None:
+    report = _read_json_report(report_path)
+    if not isinstance(report, dict):
+        return None
+    gate = report.get("raw_headband_quality_gate")
+    if not isinstance(gate, dict) or gate.get("passed") is not False:
+        return None
+    failed_checks = gate.get("failed_checks", [])
+    lines = [
+        "RAW QUALITY GATE FAILED",
+        f"failed_checks={failed_checks}",
+        f"report={report_path}",
+    ]
+    for check in gate.get("checks", []):
+        if not isinstance(check, dict) or check.get("passed") is not False:
+            continue
+        detail = f"- {check.get('name')}"
+        if check.get("stream"):
+            detail += f":{check.get('stream')}"
+        if check.get("message"):
+            detail += f" | {check.get('message')}"
+        if "value" in check:
+            detail += f" | value={check.get('value')}"
+        if "threshold" in check:
+            detail += f" | threshold={check.get('threshold')}"
+        lines.append(detail)
+    return {"status": "blocked", "returncode": 2, "error": "\n".join(lines)}
+
+
+def _generic_passed_report_outcome(*, stage: str, report_path: Path, failed_key: str) -> dict[str, Any] | None:
+    report = _read_json_report(report_path)
+    if not isinstance(report, dict) or report.get("passed") is not False:
+        return None
+    return {
+        "status": "blocked",
+        "returncode": 2,
+        "error": (
+            f"{stage} gate failed\n"
+            f"{failed_key}={report.get(failed_key, [])}\n"
+            f"report={report_path}"
+        ),
+    }
+
+
+def _read_json_report(path: Path) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def render_dashboard(sessions: list[Path], output_html: Path) -> Path:
@@ -274,10 +357,14 @@ def render_dashboard(sessions: list[Path], output_html: Path) -> Path:
     counts = Counter()
     for session in sessions:
         state = read_pipeline_state(session)
-        for stage, record in state.get("stages", {}).items():
+        session_stages = state.get("stages", {})
+        for stage in stages:
             if stage in WORKFLOW_ALIAS_STAGES:
                 continue
-            counts[str(record.get("status", "pending"))] += 1
+            record = _dashboard_stage_record(Path(session), session_stages, stage)
+            status = str(record.get("status", "pending"))
+            if status != "pending":
+                counts[status] += 1
     output_html.write_text(_dashboard_html(rows, counts, stages), encoding="utf-8")
     return output_html
 
@@ -286,10 +373,16 @@ def print_state_report(root: Path) -> dict[str, Any]:
     sessions = discover_sessions(root)
     stage_counts: dict[str, Counter] = {}
     for session in sessions:
-        for stage, record in read_pipeline_state(session).get("stages", {}).items():
+        state = read_pipeline_state(session)
+        session_stages = state.get("stages", {})
+        for stage in _summary_stages(session, session_stages):
             if stage in WORKFLOW_ALIAS_STAGES:
                 continue
-            stage_counts.setdefault(stage, Counter())[str(record.get("status", "pending"))] += 1
+            record = _dashboard_stage_record(session, session_stages, stage)
+            status = str(record.get("status", "pending"))
+            if status == "pending":
+                continue
+            stage_counts.setdefault(stage, Counter())[status] += 1
     payload = {
         "root": str(Path(root).expanduser().resolve()),
         "session_count": len(sessions),
@@ -364,7 +457,7 @@ def _expand_legacy_workflow_aliases(state: dict[str, Any]) -> None:
             stages[stage] = record
 
 
-def _stage_command(*, session: Path, dataset: str, stage: str, config: Path | None) -> list[str]:
+def _stage_command(*, session: Path, dataset: str, stage: str, config: Path | None, force: bool = False) -> list[str]:
     argv = [
         sys.executable,
         "scripts/run_pipeline_stage.py",
@@ -377,6 +470,8 @@ def _stage_command(*, session: Path, dataset: str, stage: str, config: Path | No
     ]
     if config is not None:
         argv.extend(["--config", str(Path(config).expanduser())])
+    if force:
+        argv.append("--force")
     return argv
 
 
@@ -392,12 +487,28 @@ def _dashboard_stages(sessions: list[Path]) -> list[str]:
     return stages
 
 
+def _summary_stages(session: Path, stages: dict[str, Any]) -> list[str]:
+    names = [stage for stage in stages if stage not in WORKFLOW_ALIAS_STAGES]
+    for stage in QUALITY_GATE_STAGES:
+        record = _quality_gate_dashboard_record(session, stage)
+        if record.get("status") != "pending" and stage not in names:
+            names.append(stage)
+    return sorted(names, key=_stage_sort_key)
+
+
+def _stage_sort_key(stage: str) -> tuple[int, str]:
+    try:
+        return (STAGE_ORDER.index(stage), stage)
+    except ValueError:
+        return (len(STAGE_ORDER), stage)
+
+
 def _session_row(session: Path, stages_to_show: list[str]) -> str:
     state = read_pipeline_state(session)
     stages = state.get("stages", {})
     cells = []
     for stage in stages_to_show:
-        record = stages.get(stage) or {"status": "pending"}
+        record = _dashboard_stage_record(session, stages, stage)
         status = str(record.get("status", "pending"))
         title = _stage_title(stage, record)
         cells.append(f'<td class="status {html.escape(status)}" title="{title}">{html.escape(status)}</td>')
@@ -419,6 +530,34 @@ def _session_row(session: Path, stages_to_show: list[str]) -> str:
     )
 
 
+def _dashboard_stage_record(session: Path, stages: dict[str, Any], stage: str) -> dict[str, Any]:
+    if stage in QUALITY_GATE_STAGES:
+        return _quality_gate_dashboard_record(session, stage)
+    return stages.get(stage) or {"status": "pending"}
+
+
+def _quality_gate_dashboard_record(session: Path, stage: str) -> dict[str, Any]:
+    if stage == "raw_quality_gate":
+        outcome = stage_artifact_outcome(session, "raw_quality")
+        if outcome is not None:
+            return outcome
+        report = _read_json_report(Path(session) / "annotation" / "quality_report.json")
+        gate = report.get("raw_headband_quality_gate") if isinstance(report, dict) else None
+        if isinstance(gate, dict) and gate.get("passed") is True:
+            return {"status": "success", "report": str(Path(session) / "annotation" / "quality_report.json")}
+        return {"status": "pending"}
+    if stage == "video_simple_quality_gate":
+        outcome = stage_artifact_outcome(session, "video_simple_quality")
+        if outcome is not None:
+            return outcome
+        report_path = Path(session) / "annotation" / "video_simple_quality_left.json"
+        report = _read_json_report(report_path)
+        if isinstance(report, dict) and report.get("passed") is True:
+            return {"status": "success", "report": str(report_path)}
+        return {"status": "pending"}
+    return {"status": "pending"}
+
+
 def _stage_title(stage: str, record: dict[str, Any]) -> str:
     parts = [stage]
     if record.get("duration_s") is not None:
@@ -427,6 +566,8 @@ def _stage_title(stage: str, record: dict[str, Any]) -> str:
         parts.append(f"derived_from={record['derived_from']}")
     if record.get("error"):
         parts.append(str(record["error"]))
+    if record.get("report"):
+        parts.append(f"report={record['report']}")
     return html.escape(" | ".join(parts), quote=True)
 
 

@@ -98,6 +98,53 @@ def test_rules_fail_timestamp_alignment_from_configured_rate_threshold():
     ]
 
 
+def test_rules_use_repaired_alignment_when_timestamp_duplicates_are_within_limits():
+    result = evaluate_quality_report(
+        {
+            "source_session": "/data/session",
+            "timestamp_alignment": {
+                "left": {"over_tolerance_count": 0, "over_tolerance_rate": 0.0},
+                "right": {"over_tolerance_count": 1, "over_tolerance_rate": 0.0008},
+            },
+            "timestamp_alignment_repaired": {
+                "left": {"over_tolerance_count": 0, "over_tolerance_rate": 0.0},
+                "right": {"over_tolerance_count": 0, "over_tolerance_rate": 0.0},
+            },
+            "timestamp_repair": {
+                "applied": True,
+                "streams": {"right": {"duplicate_count": 1, "max_consecutive_duplicate_frames": 2}},
+            },
+            "timestamp_duplicates": {
+                "right": {
+                    "duplicate_count": 1,
+                    "duplicate_rate": 0.0008,
+                    "max_consecutive_duplicate_frames": 2,
+                }
+            },
+            "imu": {"duplicate_count": 0, "duplicate_rate": 0.0},
+            "video_infos": {},
+            "fps": 30,
+        },
+        {
+            "timestamp_alignment": {
+                "enabled": True,
+                "level": "fail",
+                "max_over_tolerance_rate": 0.0,
+            },
+            "timestamp_duplicates": {
+                "enabled": True,
+                "level": "fail",
+                "max_duplicate_rate": 0.001,
+                "max_consecutive_duplicate_frames": 5,
+            },
+        },
+    )
+
+    assert result["passed"] is True
+    assert result["failed_checks"] == []
+    assert result["timestamp_alignment_source"] == "timestamp_alignment_repaired"
+
+
 def test_rules_warn_timestamp_duplicates_by_rate_threshold():
     result = evaluate_quality_report(
         {
@@ -123,6 +170,45 @@ def test_rules_warn_timestamp_duplicates_by_rate_threshold():
     assert result["warnings"] == ["timestamp_duplicates:left"]
     assert result["checks"][0]["level"] == "warning"
     assert result["checks"][0]["value"] == 0.02
+
+
+def test_rules_fail_timestamp_duplicates_by_consecutive_run_threshold():
+    result = evaluate_quality_report(
+        {
+            "source_session": "/data/session",
+            "timestamp_alignment": {"left": {"over_tolerance_count": 0}},
+            "timestamp_duplicates": {
+                "left": {
+                    "duplicate_count": 5,
+                    "duplicate_rate": 0.0005,
+                    "max_consecutive_duplicate_frames": 6,
+                    "first_max_consecutive_duplicate_index": 120,
+                }
+            },
+            "imu": {"duplicate_count": 0, "duplicate_rate": 0.0},
+            "video_infos": {},
+            "fps": 30,
+        },
+        {
+            "timestamp_duplicates": {
+                "enabled": True,
+                "level": "fail",
+                "max_duplicate_rate": 0.001,
+                "max_consecutive_duplicate_frames": 5,
+            }
+        },
+    )
+
+    assert result["passed"] is False
+    assert result["failed_checks"] == ["timestamp_duplicates:left"]
+    assert result["checks"][0]["value"] == {
+        "duplicate_rate": 0.0005,
+        "max_consecutive_duplicate_frames": 6,
+    }
+    assert result["checks"][0]["threshold"] == {
+        "max_duplicate_rate": 0.001,
+        "max_consecutive_duplicate_frames": 5,
+    }
 
 
 def test_rules_fail_imu_missing_duplicates_and_signal_anomalies():

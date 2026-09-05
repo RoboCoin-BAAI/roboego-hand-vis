@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from roboego_hand_vis.objects.semantic_qwen import (
+    DEFAULT_QWEN_BASE_URL,
     build_qwen_messages,
     build_qwen_object_candidate_messages,
     build_qwen_object_target_messages,
@@ -12,6 +13,7 @@ from roboego_hand_vis.objects.semantic_qwen import (
     parse_qwen_candidate_response,
     parse_qwen_target_response,
     parse_semantic_response,
+    resolve_qwen_base_url,
     select_key_frames,
 )
 from roboego_hand_vis.objects.segmentation import ObjectObservation
@@ -164,6 +166,23 @@ def test_call_qwen_semantics_requires_api_key_before_network(monkeypatch: pytest
     monkeypatch.setattr("roboego_hand_vis.objects.semantic_qwen.urllib.request.urlopen", fail_if_called)
     with pytest.raises(RuntimeError, match="DASHSCOPE_API_KEY is not set"):
         call_qwen_semantics(crop_paths=[], model="qwen-test")
+
+
+def test_resolve_qwen_base_url_defaults_to_dedicated_maas_endpoint(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv("DASHSCOPE_BASE_URL", raising=False)
+
+    assert resolve_qwen_base_url(None) == DEFAULT_QWEN_BASE_URL
+    assert DEFAULT_QWEN_BASE_URL == (
+        "https://llm-g3o8d3j71xbf6prc.cn-beijing.maas.aliyuncs.com"
+        "/compatible-mode/v1/chat/completions"
+    )
+
+
+def test_resolve_qwen_base_url_prefers_environment_override(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("DASHSCOPE_BASE_URL", "https://example.test/compatible-mode/v1/chat/completions")
+
+    assert resolve_qwen_base_url(None) == "https://example.test/compatible-mode/v1/chat/completions"
+    assert resolve_qwen_base_url("https://explicit.test/chat/completions") == "https://explicit.test/chat/completions"
 
 
 def test_parse_qwen_target_response_accepts_manipulated_object_json():

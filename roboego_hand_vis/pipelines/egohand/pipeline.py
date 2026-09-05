@@ -8,6 +8,7 @@ from roboego_hand_vis.pipelines.egohand.nodes import (
     run_depth_anchored_joints21_node,
     run_final_hand_result_node,
     run_final_hand_trajectory_polish_node,
+    run_hamer_unit_node,
     run_hamer_windows_node,
     run_hand_filter_node,
     run_joints21_pose_gate_node,
@@ -26,6 +27,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs="params:hamer_windows",
                 outputs="hamer_windows_report",
                 name="hamer_windows",
+                tags=["egohand", "hamer"],
+            ),
+            node(
+                func=run_hamer_unit_node,
+                inputs="params:hamer_unit",
+                outputs="hamer_unit_report",
+                name="hamer_unit",
                 tags=["egohand", "hamer"],
             ),
             node(

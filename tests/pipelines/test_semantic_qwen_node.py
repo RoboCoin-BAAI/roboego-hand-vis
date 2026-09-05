@@ -198,6 +198,37 @@ def test_qwen_frame_annotation_node_skips_when_video_simple_quality_failed(monke
     }
 
 
+def test_qwen_frame_annotation_node_skips_when_raw_quality_blocked_video_quality(monkeypatch):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append(args)
+
+    monkeypatch.setattr(
+        "roboego_hand_vis.pipelines.semantic.nodes.subprocess.run",
+        fake_run,
+    )
+
+    result = run_qwen_frame_annotation_node(
+        {"status": "skipped", "reason": "raw_headband_quality_gate_not_passed"},
+        [],
+        {
+            "enabled": True,
+            "video": "left.mp4",
+            "output_json": "annotations.json",
+            "require_video_simple_quality_pass": True,
+            "use_video_simple_quality": False,
+        },
+    )
+
+    assert calls == []
+    assert result == {
+        "stage": "qwen_frame_annotation",
+        "status": "skipped",
+        "reason": "raw_headband_quality_gate_not_passed",
+    }
+
+
 def test_qwen_frame_annotation_node_runs_without_video_simple_quality_when_optional(monkeypatch, tmp_path):
     calls = []
 
@@ -417,6 +448,7 @@ def test_stage1_action_text_resolver_chunks_skips_empty_reviews_without_api(tmp_
     action_dir = tmp_path / "action_chunks"
     review_dir = tmp_path / "review_chunks"
     resolved_dir = tmp_path / "resolved_chunks"
+    merged_json = tmp_path / "stage1_actions_left_v1_resolved.json"
     action_dir.mkdir()
     review_dir.mkdir()
     action_payload = {"frames": [{"t": 0, "frame_actions": []}]}
@@ -436,12 +468,20 @@ def test_stage1_action_text_resolver_chunks_skips_empty_reviews_without_api(tmp_
             "action_chunk_dir": str(action_dir),
             "review_chunk_dir": str(review_dir),
             "resolved_chunk_dir": str(resolved_dir),
+            "merged_output_json": str(merged_json),
             "model": "qwen-plus",
         },
     )
 
     resolved = json.loads((resolved_dir / chunk_name).read_text(encoding="utf-8"))
+    merged = json.loads(merged_json.read_text(encoding="utf-8"))
     assert resolved["frames"] == action_payload["frames"]
+    assert merged["stage"] == "stage1_action_resolved_chunks_merged"
+    assert merged["source_chunk_dir"] == str(resolved_dir)
+    assert merged["source_files"] == [str(resolved_dir / chunk_name)]
+    assert merged["frame_count"] == 1
+    assert merged["frames"] == action_payload["frames"]
+    assert report["merged_output_json"] == str(merged_json)
     assert resolved["text_resolver_frame_count"] == 0
     assert report["empty_review_count"] == 1
 
