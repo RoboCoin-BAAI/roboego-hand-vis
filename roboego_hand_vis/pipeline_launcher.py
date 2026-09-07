@@ -312,7 +312,7 @@ def _build_invocation(
     selector = str(stage_config.get("selector") or "--nodes")
     namespace = str(stage_config.get("param_namespace") or node)
     runtime = dataset_config.get("runtime") or {}
-    kedro_bin = str(runtime.get("kedro_bin") or "kedro")
+    kedro_bin = str(_render_value(runtime.get("kedro_bin") or "kedro", context))
     params = _render_params(namespace=namespace, params=stage_config.get("params") or {}, context=context)
     extra_params = stage_config.get("extra_params") or {}
     if isinstance(extra_params, dict):

@@ -203,12 +203,27 @@ def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any
     _append_arg(args, "--preview_near_max_m", config.get("preview_near_max_m", 3.0))
     _append_arg(args, "--preview_contrast_percentile", config.get("preview_contrast_percentile", 2.0))
     _append_arg(args, "--preview_codec", config.get("preview_codec"))
+    _append_arg(args, "--ffv1_container", config.get("ffv1_container", "avi"))
     if bool(config.get("dry_run_avi", False)):
         args.append("--dry_run_avi")
     if bool(config.get("delete_npy", False)):
         args.append("--delete_npy")
     if bool(config.get("delete_png", False)):
         args.append("--delete_png")
+    if bool(config.get("write_hevc12", False)):
+        args.append("--write_hevc12")
+    else:
+        args.append("--no-write_hevc12")
+    _append_arg(args, "--hevc12_crf", config.get("hevc12_crf", 0))
+    _append_arg(args, "--hevc12_preset", config.get("hevc12_preset", "slow"))
+    if bool(config.get("hevc12_lossless", True)):
+        args.append("--hevc12_lossless")
+    else:
+        args.append("--no-hevc12_lossless")
+    if bool(config.get("write_valid_mask", False)):
+        args.append("--write_valid_mask")
+    else:
+        args.append("--no-write_valid_mask")
 
     subprocess.run(args, check=True)
     return {

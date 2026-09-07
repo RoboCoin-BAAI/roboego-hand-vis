@@ -278,9 +278,15 @@ def test_archive_depth_cache_node_runs_existing_script(monkeypatch, tmp_path):
             "preview_near_max_m": 3.0,
             "preview_contrast_percentile": 2.0,
             "preview_codec": "mp4v",
+            "ffv1_container": "mkv",
             "dry_run_avi": True,
             "delete_npy": False,
             "delete_png": True,
+            "write_hevc12": True,
+            "hevc12_crf": 0,
+            "hevc12_preset": "slow",
+            "hevc12_lossless": True,
+            "write_valid_mask": True,
         }
     )
 
@@ -313,8 +319,17 @@ def test_archive_depth_cache_node_runs_existing_script(monkeypatch, tmp_path):
                 "2.0",
                 "--preview_codec",
                 "mp4v",
+                "--ffv1_container",
+                "mkv",
                 "--dry_run_avi",
                 "--delete_png",
+                "--write_hevc12",
+                "--hevc12_crf",
+                "0",
+                "--hevc12_preset",
+                "slow",
+                "--hevc12_lossless",
+                "--write_valid_mask",
             ],
         }
     ]

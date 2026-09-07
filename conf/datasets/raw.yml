@@ -7,12 +7,14 @@ dataset:
     - right
 
 runtime:
-  kedro_bin: /home/liuyou/miniconda3/envs/ego/bin/kedro
-  ego_python: /home/liuyou/miniconda3/envs/ego/bin/python
-  hamer_python: /home/liuyou/miniconda3/envs/hamer/bin/python
-  sam3_python: /home/liuyou/miniconda3/envs/py312/bin/python
+  kedro_bin: "{conda_root}/envs/ego/bin/kedro"
+  ego_python: "{conda_root}/envs/ego/bin/python"
+  hamer_python: "{conda_root}/envs/hamer/bin/python"
+  sam3_python: "{conda_root}/envs/py312/bin/python"
 
 paths:
+  workspace_root: /home/liuyou/Documents
+  conda_root: /home/liuyou/miniconda3
   annotation_dir: "{session}/annotation"
   segments_root: "{session}/segments"
   hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
@@ -295,7 +297,7 @@ stages:
       enabled: true
       session: "{session}"
       unit_root: "{session}"
-      roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+      roboegopipe_root: "{workspace_root}/RoboEgoPipe"
       model: equidistant
       balance: 0.0
       overwrite: true
@@ -335,7 +337,7 @@ stages:
         enabled: true
         session: "{session}"
         segments_root: "{session}/segments"
-        roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+        roboegopipe_root: "{workspace_root}/RoboEgoPipe"
         model: equidistant
         balance: 0.0
         overwrite: true
@@ -362,7 +364,7 @@ stages:
       enabled: true
       session: "{session}"
       segments_root: "{session}/segments"
-      roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+      roboegopipe_root: "{workspace_root}/RoboEgoPipe"
       model: equidistant
       balance: 0.0
 
@@ -375,7 +377,7 @@ stages:
       enabled: true
       session: "{session}"
       unit_root: "{unit}"
-      roboegopipe_root: /home/liuyou/Documents/RoboEgoPipe
+      roboegopipe_root: "{workspace_root}/RoboEgoPipe"
       model: equidistant
       balance: 0.0
       overwrite: true
@@ -477,7 +479,7 @@ stages:
       manifest: "{unit}/dataset_manifest/dataset_manifest.json"
       output_dir: "{unit}/depth/fast_foundation"
       stereo_quality_report: "{unit}/quality/stereo_summary/stereo_quality_report.json"
-      fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
+      fast_foundation_root: "{workspace_root}/Fast-FoundationStereo"
       start: 0
       num_frames: "{num_frames}"
       scale: 1.0
@@ -499,7 +501,7 @@ stages:
       manifest: "{unit}/dataset_manifest/dataset_manifest.json"
       output_dir: "{unit}/depth/fast_foundation"
       stereo_quality_report: "{unit}/quality/stereo_summary/stereo_quality_report.json"
-      fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
+      fast_foundation_root: "{workspace_root}/Fast-FoundationStereo"
       start: 0
       num_frames: "{num_frames}"
       scale: 1.0
@@ -582,13 +584,19 @@ stages:
       invalid_value: 0
       fps: 30
       write_png: false
-      write_avi: true
+      write_avi: false
+      ffv1_container: mkv
       write_preview: true
       preview_mode: near
       preview_near_min_m: 0.15
       preview_near_max_m: 3.0
       preview_contrast_percentile: 2.0
       preview_codec: mp4v
+      write_hevc12: true
+      hevc12_crf: 0
+      hevc12_preset: fast
+      hevc12_lossless: false
+      write_valid_mask: true
       delete_npy: false
       delete_png: false
 
@@ -605,14 +613,20 @@ stages:
       invalid_value: 0
       fps: 30
       write_png: false
-      write_avi: true
+      write_avi: false
+      ffv1_container: mkv
       write_preview: true
       preview_mode: near
       preview_near_min_m: 0.15
       preview_near_max_m: 3.0
       preview_contrast_percentile: 2.0
       preview_codec: mp4v
-      delete_npy: false
+      write_hevc12: true
+      hevc12_crf: 0
+      hevc12_preset: fast
+      hevc12_lossless: false
+      write_valid_mask: true
+      delete_npy: true
       delete_png: false
 
   hamer:
@@ -625,10 +639,10 @@ stages:
       manifest: "{unit}/dataset_manifest/dataset_manifest.json"
       depth_dir: "{unit}/depth/fast_foundation"
       output_dir: "{unit}/hand/hamer_raw"
-      hamer_root: /home/liuyou/Documents/hamer
+      hamer_root: "{workspace_root}/hamer"
       stage1_actions: "{session}/annotation/stage1_action_resolved_chunks"
       wearer_regions_json: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
-      hamer_python: /home/liuyou/miniconda3/envs/hamer/bin/python
+      hamer_python: "{conda_root}/envs/hamer/bin/python"
       start: 0
       num_frames: "{num_frames}"
       ego_mode: tolerant
@@ -745,8 +759,8 @@ stages:
       interval_expand_s: 0
       interval_merge_gap_s: 0
       sam3_script: scripts/object/run_sam3_video.py
-      sam3_python: /home/liuyou/miniconda3/envs/py312/bin/python
-      checkpoint: /home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
+      sam3_python: "{conda_root}/envs/py312/bin/python"
+      checkpoint: "{workspace_root}/do-as-i-do/sam3/sam3.pt"
       fps: 30
 
   egoblur_temporal_face_blur:
@@ -756,13 +770,13 @@ stages:
     param_namespace: egoblur_temporal_face_blur
     params:
       enabled: true
-      python: /home/liuyou/miniconda3/envs/py312/bin/python
+      python: "{conda_root}/envs/py312/bin/python"
       script: scripts/privacy/run_egoblur_temporal_face_blur.py
       input_video: "{session}/videos/left.mp4"
       output_video: "{session}/videos/left_blur.mp4"
       output_json: "{session}/annotation/privacy/left_blur_report.json"
-      egoblur_root: /home/liuyou/Documents/EgoBlur
-      face_model_path: /home/liuyou/Documents/EgoBlur/models/ego_blur_face_gen2.jit
+      egoblur_root: "{workspace_root}/EgoBlur"
+      face_model_path: "{workspace_root}/EgoBlur/models/ego_blur_face_gen2.jit"
       camera_name: camera-rgb
       detect_every_n_frames: 3
       face_model_score_threshold: 0.35

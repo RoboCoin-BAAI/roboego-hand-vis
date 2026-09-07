@@ -46,6 +46,56 @@ def test_stage_can_use_to_nodes_selector_for_chained_work(tmp_path: Path):
     assert "stage1_action_chunks.qwen_chunk_dir=" in command
 
 
+def test_runtime_kedro_bin_can_use_dataset_path_context(tmp_path: Path):
+    config_path = tmp_path / "dataset.yml"
+    config_path.write_text(
+        """
+dataset:
+  fps: 30
+runtime:
+  kedro_bin: "{conda_root}/envs/ego/bin/kedro"
+paths:
+  conda_root: /opt/miniconda3
+stages:
+  archive:
+    pipeline: depth
+    node: archive_depth_cache
+    scope: session
+    param_namespace: archive_depth_cache
+    params:
+      enabled: true
+      depth_dir: "{session}/depth/fast_foundation"
+      output_dir: "{session}/depth/fast_foundation_archive"
+""",
+        encoding="utf-8",
+    )
+
+    invocation = build_stage_invocations(
+        LauncherRequest(dataset="custom", config=config_path, session=tmp_path / "session", stage="archive")
+    )[0]
+
+    assert invocation.kedro_bin == "/opt/miniconda3/envs/ego/bin/kedro"
+
+
+def test_raw_dataset_external_tool_paths_render_from_workspace_root(tmp_path: Path):
+    session = tmp_path / "session"
+
+    fast_invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="fast_foundation_depth_unit", unit=str(session))
+    )[0]
+    hamer_invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="hamer", unit=str(session))
+    )[0]
+    sam_invocation = build_stage_invocations(
+        LauncherRequest(dataset="raw", session=session, stage="sam3_objects", hand_window=str(session))
+    )[0]
+
+    assert fast_invocation.params["fast_foundation_stereo_depth.fast_foundation_root"] == "/home/liuyou/Documents/Fast-FoundationStereo"
+    assert hamer_invocation.params["hamer_unit.hamer_root"] == "/home/liuyou/Documents/hamer"
+    assert hamer_invocation.params["hamer_unit.hamer_python"] == "/home/liuyou/miniconda3/envs/hamer/bin/python"
+    assert sam_invocation.params["sam3_hand_object_segmentation.checkpoint"] == "/home/liuyou/Documents/do-as-i-do/sam3/sam3.pt"
+
+
 def test_qwen_annotation_gates_on_video_simple_quality_without_window_filter(tmp_path: Path):
     session = tmp_path / "session"
 

@@ -7,11 +7,14 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+import pytest
 
 from roboego_hand_vis.depth.archive import (
     DepthArchiveConfig,
     archive_depth_cache,
     build_ffv1_command,
+    build_hevc12_command,
+    build_valid_mask_command,
     depth_m_to_uint16_mm,
     depth_uint16_mm_to_preview_bgr,
 )
@@ -172,6 +175,264 @@ def test_build_ffv1_command_uses_gray16le_png_sequence(tmp_path: Path):
         "-pix_fmt",
         "gray16le",
         str(output_avi),
+    ]
+
+
+def test_archive_depth_cache_can_write_ffv1_mkv_container(monkeypatch, tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "archive"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.full((2, 2), 1000, dtype=np.uint16))
+    calls = []
+
+    def fake_run(args, check):
+        calls.append((args, check))
+        (output_dir / "depth_ffv1.mkv").write_bytes(b"ffv1")
+
+    monkeypatch.setattr("roboego_hand_vis.depth.archive.subprocess.run", fake_run)
+
+    report = archive_depth_cache(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthArchiveConfig(write_png=False, write_avi=True, write_preview=False, ffv1_container="mkv"),
+    )
+
+    assert calls[0][0][-1] == str(output_dir / "depth_ffv1.mkv")
+    assert report["outputs"]["avi_path"] == ""
+    assert report["outputs"]["ffv1_video"] == str(output_dir / "depth_ffv1.mkv")
+    assert report["ffv1"] == {
+        "enabled": True,
+        "codec": "ffv1",
+        "container": "mkv",
+        "pixel_format": "gray16le",
+        "bit_depth": 16,
+        "depth_unit": "millimeter",
+        "invalid_value": 0,
+        "lossless": True,
+        "source_frame_pattern": "depth_uint16_png/frame_%06d_depth_mm.png",
+        "frame_count": 1,
+        "fps": 30.0,
+        "width": 2,
+        "height": 2,
+    }
+    assert report["compression"]["ffv1_bytes"] == 4
+
+
+def test_build_hevc12_command_uses_gray12le_x265_rawvideo_pipe(tmp_path: Path):
+    output_video = tmp_path / "depth_hevc12.mkv"
+
+    command = build_hevc12_command(
+        width=10,
+        height=8,
+        output_video=output_video,
+        fps=30.0,
+        crf=0,
+        preset="slow",
+        lossless=True,
+    )
+
+    assert command == [
+        "ffmpeg",
+        "-y",
+        "-f",
+        "rawvideo",
+        "-vcodec",
+        "rawvideo",
+        "-s",
+        "10x8",
+        "-pix_fmt",
+        "gray12le",
+        "-r",
+        "30",
+        "-i",
+        "-",
+        "-r",
+        "30",
+        "-fps_mode",
+        "cfr",
+        "-video_track_timescale",
+        "90000",
+        "-c:v",
+        "libx265",
+        "-crf",
+        "0",
+        "-preset",
+        "slow",
+        "-pix_fmt",
+        "gray12le",
+        "-g",
+        "30",
+        "-keyint_min",
+        "30",
+        "-x265-params",
+        "lossless=1:bframes=0",
+        str(output_video),
+    ]
+
+
+def test_archive_depth_cache_rejects_hevc12_when_max_depth_exceeds_12bit(tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    output_dir = tmp_path / "archive"
+    depth_dir.mkdir()
+    np.save(depth_dir / "frame_000000_foundation_depth_m.npy", np.full((2, 2), 1.0, dtype=np.float32))
+
+    with pytest.raises(ValueError, match="HEVC12 direct millimeter encoding requires max_depth_m <= 4.095"):
+        archive_depth_cache(
+            depth_dir=depth_dir,
+            output_dir=output_dir,
+            config=DepthArchiveConfig(write_avi=False, write_preview=False, write_hevc12=True, max_depth_m=4.2),
+        )
+
+
+def test_archive_depth_cache_writes_hevc12_from_uint16_png_and_metadata(monkeypatch, tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "archive"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.array([[0, 500], [4000, 5000]], dtype=np.uint16))
+
+    calls = []
+
+    class FakeStdin:
+        def __init__(self):
+            self.data = bytearray()
+            self.closed = False
+
+        def write(self, data):
+            self.data.extend(data)
+
+        def close(self):
+            self.closed = True
+
+    class FakePopen:
+        def __init__(self, args, stdin, stdout, stderr):
+            self.args = args
+            self.stdin = FakeStdin()
+            calls.append(self)
+
+        def wait(self):
+            (output_dir / "depth_hevc12.mkv").write_bytes(b"hevc12")
+            return 0
+
+    monkeypatch.setattr("roboego_hand_vis.depth.archive.subprocess.Popen", FakePopen)
+
+    report = archive_depth_cache(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthArchiveConfig(write_png=False, write_avi=False, write_preview=False, write_hevc12=True),
+    )
+
+    assert len(calls) == 1
+    written = np.frombuffer(calls[0].stdin.data, dtype=np.uint16).reshape(2, 2)
+    assert written.tolist() == [[0, 500], [4000, 4000]]
+    assert calls[0].stdin.closed is True
+    assert "gray12le" in calls[0].args
+    assert report["outputs"]["hevc12_video"] == str(output_dir / "depth_hevc12.mkv")
+    assert report["hevc12"]["bit_depth"] == 12
+    assert report["hevc12"]["valid_range_mm"] == [1, 4000]
+    metadata = json.loads((output_dir / "depth_archive_meta.json").read_text(encoding="utf-8"))
+    assert metadata["outputs"]["hevc12_video"] == str(output_dir / "depth_hevc12.mkv")
+
+
+def test_archive_depth_cache_writes_lossless_valid_mask_for_hevc12(monkeypatch, tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "archive"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.array([[0, 500], [4000, 0]], dtype=np.uint16))
+
+    calls = []
+
+    class FakeStdin:
+        def __init__(self):
+            self.data = bytearray()
+
+        def write(self, data):
+            self.data.extend(data)
+
+        def close(self):
+            pass
+
+    class FakePopen:
+        def __init__(self, args, stdin, stdout, stderr):
+            self.args = args
+            self.stdin = FakeStdin()
+            calls.append(self)
+
+        def wait(self):
+            output_path = Path(self.args[-1])
+            output_path.write_bytes(output_path.name.encode("utf-8"))
+            return 0
+
+    monkeypatch.setattr("roboego_hand_vis.depth.archive.subprocess.Popen", FakePopen)
+
+    report = archive_depth_cache(
+        depth_dir=depth_dir,
+        output_dir=output_dir,
+        config=DepthArchiveConfig(
+            write_png=False,
+            write_avi=False,
+            write_preview=False,
+            write_hevc12=True,
+            hevc12_lossless=False,
+            write_valid_mask=True,
+        ),
+    )
+
+    assert [Path(call.args[-1]).name for call in calls] == ["depth_hevc12.mkv", "valid_mask_ffv1.mkv"]
+    mask = np.frombuffer(calls[1].stdin.data, dtype=np.uint8).reshape(2, 2)
+    assert mask.tolist() == [[0, 255], [255, 0]]
+    assert report["outputs"]["valid_mask_video"] == str(output_dir / "valid_mask_ffv1.mkv")
+    assert report["hevc12"]["requires_valid_mask"] is True
+    assert report["valid_mask"] == {
+        "enabled": True,
+        "codec": "ffv1",
+        "container": "mkv",
+        "pixel_format": "gray",
+        "bit_depth": 8,
+        "lossless": True,
+        "valid_value": 255,
+        "invalid_value": 0,
+        "restore_rule": "depth_mm[valid_mask == 0] = 0",
+        "frame_count": 1,
+        "fps": 30.0,
+        "width": 2,
+        "height": 2,
+    }
+
+
+def test_build_valid_mask_command_uses_gray_ffv1_mkv(tmp_path: Path):
+    output_video = tmp_path / "valid_mask_ffv1.mkv"
+
+    command = build_valid_mask_command(width=10, height=8, output_video=output_video, fps=30.0)
+
+    assert command == [
+        "ffmpeg",
+        "-y",
+        "-f",
+        "rawvideo",
+        "-vcodec",
+        "rawvideo",
+        "-s",
+        "10x8",
+        "-pix_fmt",
+        "gray",
+        "-r",
+        "30",
+        "-i",
+        "-",
+        "-r",
+        "30",
+        "-fps_mode",
+        "cfr",
+        "-c:v",
+        "ffv1",
+        "-level",
+        "3",
+        "-pix_fmt",
+        "gray",
+        str(output_video),
     ]
 
 
