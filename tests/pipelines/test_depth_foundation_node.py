@@ -348,3 +348,56 @@ def test_archive_depth_cache_node_skips_when_disabled():
         "status": "skipped",
         "reason": "disabled",
     }
+
+
+def test_archive_depth_cache_node_blocks_until_depth_stage_success(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr("roboego_hand_vis.pipelines.depth.nodes.subprocess.run", lambda args, check: calls.append(args))
+    depth_dir = tmp_path / "handwin/depth/fast_foundation"
+    output_dir = tmp_path / "handwin/depth/fast_foundation_archive"
+    state_path = tmp_path / "pipeline_state.json"
+    state_path.write_text(
+        json.dumps({"stages": {"fast_foundation_depth": {"status": "processing"}}}),
+        encoding="utf-8",
+    )
+
+    result = run_archive_depth_cache_node(
+        {
+            "enabled": True,
+            "depth_dir": str(depth_dir),
+            "output_dir": str(output_dir),
+            "depth_stage_state": str(state_path),
+            "required_depth_stage": "fast_foundation_depth",
+        }
+    )
+
+    assert calls == []
+    assert result["status"] == "blocked"
+    assert result["reason"] == "required_depth_stage_not_success"
+    assert result["required_depth_stage"] == "fast_foundation_depth"
+    assert result["depth_stage_status"] == "processing"
+
+
+def test_archive_depth_cache_node_runs_when_depth_stage_succeeded(monkeypatch, tmp_path):
+    calls = []
+    monkeypatch.setattr("roboego_hand_vis.pipelines.depth.nodes.subprocess.run", lambda args, check: calls.append(args))
+    depth_dir = tmp_path / "handwin/depth/fast_foundation"
+    output_dir = tmp_path / "handwin/depth/fast_foundation_archive"
+    state_path = tmp_path / "pipeline_state.json"
+    state_path.write_text(
+        json.dumps({"stages": {"fast_foundation_depth": {"status": "success"}}}),
+        encoding="utf-8",
+    )
+
+    result = run_archive_depth_cache_node(
+        {
+            "enabled": True,
+            "depth_dir": str(depth_dir),
+            "output_dir": str(output_dir),
+            "depth_stage_state": str(state_path),
+            "required_depth_stage": "fast_foundation_depth",
+        }
+    )
+
+    assert calls
+    assert result["status"] == "complete"

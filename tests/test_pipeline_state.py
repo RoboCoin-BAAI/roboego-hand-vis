@@ -202,6 +202,26 @@ def test_fast_foundation_depth_artifact_outcome_passes_when_meta_exists(tmp_path
     assert stage_artifact_outcome(session, "fast_foundation_depth") is None
 
 
+def test_archive_depth_cache_artifact_outcome_blocks_until_depth_stage_success(tmp_path: Path):
+    session = _make_session(tmp_path, "session_archive_depth_processing")
+    update_stage_state(session, "fast_foundation_depth", "processing")
+
+    outcome = stage_artifact_outcome(session, "archive_depth_cache")
+
+    assert outcome is not None
+    assert outcome["status"] == "blocked"
+    assert outcome["returncode"] == 2
+    assert "required_depth_stage=fast_foundation_depth" in outcome["error"]
+    assert "depth_stage_status=processing" in outcome["error"]
+
+
+def test_archive_depth_cache_artifact_outcome_passes_after_depth_stage_success(tmp_path: Path):
+    session = _make_session(tmp_path, "session_archive_depth_done")
+    update_stage_state(session, "fast_foundation_depth", "success")
+
+    assert stage_artifact_outcome(session, "archive_depth_cache") is None
+
+
 def test_depth_estimation_workflow_alias_expands_to_dashboard_stages(tmp_path: Path):
     session = _make_session(tmp_path, "session_depth_estimation")
     update_stage_state(session, "depth_estimation", "success", duration_s=2.0)
