@@ -40,7 +40,7 @@ STAGE_ORDER = [
     "final_hand_result",
     "sam3_objects",
 ]
-WORKFLOW_ALIAS_STAGES = {"base_prepare", "phase1_planning", "phase1_prepare_stereo", "phase1_depth"}
+WORKFLOW_ALIAS_STAGES = {"base_prepare", "phase1_planning", "phase1_prepare_stereo", "phase1_depth", "depth_estimation"}
 WORKFLOW_ALIAS_EXPANSIONS = {
     "base_prepare": [
         "raw_quality",
@@ -60,6 +60,10 @@ WORKFLOW_ALIAS_EXPANSIONS = {
         "fast_foundation_depth",
         "depth_numeric_quality",
         "archive_depth_cache",
+    ],
+    "depth_estimation": [
+        "stereo_summary_quality",
+        "fast_foundation_depth",
     ],
 }
 VALID_STATUSES = {"pending", "processing", "success", "fail", "skipped", "blocked"}
@@ -343,8 +347,6 @@ def stage_artifact_outcome(session: Path, stage: str) -> dict[str, Any] | None:
         )
     if stage == "fast_foundation_depth":
         return _fast_foundation_depth_artifact_outcome(session)
-    if stage == "archive_depth_cache":
-        return _archive_depth_cache_artifact_outcome(session)
     return None
 
 
@@ -435,26 +437,6 @@ def _fast_foundation_depth_artifact_outcome(session: Path) -> dict[str, Any] | N
             f"required_before_depth=stereo_summary_quality\n"
             f"stereo_quality_reports={stereo_reports}\n"
             "If the depth node finished in 0.0 sec, it was probably blocked by a missing or unusable stereo summary report."
-        ),
-    }
-
-
-def _archive_depth_cache_artifact_outcome(session: Path) -> dict[str, Any] | None:
-    required_stage = "fast_foundation_depth"
-    state = read_pipeline_state(session)
-    stage_state = state.get("stages", {}).get(required_stage, {})
-    depth_stage_status = stage_state.get("status") if isinstance(stage_state, dict) else None
-    if depth_stage_status == "success":
-        return None
-    return {
-        "status": "blocked",
-        "returncode": 2,
-        "error": (
-            "ARCHIVE DEPTH CACHE BLOCKED\n"
-            f"reason=required_depth_stage_not_success\n"
-            f"required_depth_stage={required_stage}\n"
-            f"depth_stage_status={depth_stage_status or 'missing'}\n"
-            f"session={session}"
         ),
     }
 

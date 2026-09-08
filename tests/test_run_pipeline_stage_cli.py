@@ -189,3 +189,104 @@ def test_run_pipeline_stage_passes_force_to_launcher(monkeypatch, tmp_path: Path
     run_pipeline_stage.main()
 
     assert captured["force"] is True
+
+
+def test_run_pipeline_stage_skips_already_success_stage_without_force(monkeypatch, tmp_path: Path):
+    session = _session(tmp_path)
+    (session / "pipeline_state.json").write_text(
+        json.dumps({"stages": {"archive_depth_cache": {"status": "success"}}}),
+        encoding="utf-8",
+    )
+
+    def fake_run(request, stage_callback=None):
+        raise AssertionError("already successful stage should not start without --force")
+
+    monkeypatch.setattr(run_pipeline_stage, "run_launcher_request", fake_run)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_pipeline_stage.py",
+            "--dataset",
+            "raw",
+            "--session",
+            str(session),
+            "--stage",
+            "archive_depth_cache",
+        ],
+    )
+
+    run_pipeline_stage.main()
+
+    state = json.loads((session / "pipeline_state.json").read_text(encoding="utf-8"))
+    assert state["stages"]["archive_depth_cache"]["status"] == "success"
+
+
+def test_run_pipeline_stage_blocks_archive_until_depth_success(monkeypatch, tmp_path: Path):
+    session = _session(tmp_path)
+    (session / "pipeline_state.json").write_text(
+        json.dumps({"stages": {"fast_foundation_depth": {"status": "processing"}}}),
+        encoding="utf-8",
+    )
+
+    def fake_run(request, stage_callback=None):
+        raise AssertionError("archive should not start before depth succeeds")
+
+    monkeypatch.setattr(run_pipeline_stage, "run_launcher_request", fake_run)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_pipeline_stage.py",
+            "--dataset",
+            "raw",
+            "--session",
+            str(session),
+            "--stage",
+            "archive_depth_cache",
+        ],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        run_pipeline_stage.main()
+
+    state = json.loads((session / "pipeline_state.json").read_text(encoding="utf-8"))
+    record = state["stages"]["archive_depth_cache"]
+    assert exc_info.value.code == 2
+    assert record["status"] == "blocked"
+    assert record["returncode"] == 2
+    assert "depth_stage_status=processing" in record["error"]
+
+
+def test_run_pipeline_stage_records_archive_success_after_depth_success(monkeypatch, tmp_path: Path):
+    session = _session(tmp_path)
+    (session / "pipeline_state.json").write_text(
+        json.dumps({"stages": {"fast_foundation_depth": {"status": "success"}}}),
+        encoding="utf-8",
+    )
+
+    def fake_run(request, stage_callback=None):
+        assert request.stage == "archive_depth_cache"
+        return ["kedro run --pipelines depth --nodes archive_depth_cache"]
+
+    monkeypatch.setattr(run_pipeline_stage, "run_launcher_request", fake_run)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_pipeline_stage.py",
+            "--dataset",
+            "raw",
+            "--session",
+            str(session),
+            "--stage",
+            "archive_depth_cache",
+        ],
+    )
+
+    run_pipeline_stage.main()
+
+    state = json.loads((session / "pipeline_state.json").read_text(encoding="utf-8"))
+    record = state["stages"]["archive_depth_cache"]
+    assert record["status"] == "success"
+    assert record["returncode"] == 0

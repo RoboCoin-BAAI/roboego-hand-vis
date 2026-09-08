@@ -167,19 +167,6 @@ def _load_stereo_depth_gate(value: Any) -> dict[str, Any] | None:
     }
 
 
-def _load_required_stage_status(state_path: Path, stage: str) -> str:
-    if not state_path.is_file():
-        return "missing_state"
-    payload = json.loads(state_path.read_text(encoding="utf-8"))
-    stages = payload.get("stages") if isinstance(payload, dict) else {}
-    if not isinstance(stages, dict):
-        return "missing_stage"
-    stage_state = stages.get(stage)
-    if not isinstance(stage_state, dict):
-        return "missing_stage"
-    return str(stage_state.get("status") or "missing_status")
-
-
 def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any]:
     config = config or {}
     if not bool(config.get("enabled", False)):
@@ -187,22 +174,6 @@ def run_archive_depth_cache_node(config: dict[str, Any] | None) -> dict[str, Any
 
     depth_dir = Path(_required_value(config, "depth_dir", "archive_depth_cache"))
     output_dir = Path(_required_value(config, "output_dir", "archive_depth_cache"))
-    depth_stage_state = _optional_str(config.get("depth_stage_state"))
-    required_depth_stage = _optional_str(config.get("required_depth_stage")) or "fast_foundation_depth"
-    if depth_stage_state:
-        state_path = Path(depth_stage_state).expanduser()
-        depth_stage_status = _load_required_stage_status(state_path, required_depth_stage)
-        if depth_stage_status != "success":
-            return {
-                "stage": "archive_depth_cache",
-                "status": "blocked",
-                "reason": "required_depth_stage_not_success",
-                "required_depth_stage": required_depth_stage,
-                "depth_stage_status": depth_stage_status,
-                "depth_stage_state": str(state_path),
-                "depth_dir": str(depth_dir),
-                "output_dir": str(output_dir),
-            }
     args = [
         _optional_str(config.get("python")) or "python",
         _optional_str(config.get("script")) or "scripts/depth/archive_depth_cache.py",

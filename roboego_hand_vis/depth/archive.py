@@ -181,12 +181,21 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
                 hevc12_proc = subprocess.Popen(
                     hevc12_command,
                     stdin=subprocess.PIPE,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
                 )
             if hevc12_proc.stdin is None:
                 raise RuntimeError("Failed to open HEVC12 encoder stdin")
-            hevc12_proc.stdin.write(hevc12_frame.tobytes())
+            try:
+                hevc12_proc.stdin.write(hevc12_frame.tobytes())
+            except BrokenPipeError as exc:
+                _raise_encoder_failure(
+                    label="HEVC12",
+                    proc=hevc12_proc,
+                    command=hevc12_command,
+                    context=f"while writing frame {frame_idx}",
+                    cause=exc,
+                )
         if config.write_valid_mask:
             valid_mask_frame = np.where(encoded != int(config.invalid_value), 255, 0).astype(np.uint8)
             if valid_mask_proc is None:
@@ -202,12 +211,21 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
                 valid_mask_proc = subprocess.Popen(
                     valid_mask_command,
                     stdin=subprocess.PIPE,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
                 )
             if valid_mask_proc.stdin is None:
                 raise RuntimeError("Failed to open valid mask encoder stdin")
-            valid_mask_proc.stdin.write(valid_mask_frame.tobytes())
+            try:
+                valid_mask_proc.stdin.write(valid_mask_frame.tobytes())
+            except BrokenPipeError as exc:
+                _raise_encoder_failure(
+                    label="Valid mask encoder",
+                    proc=valid_mask_proc,
+                    command=valid_mask_command,
+                    context=f"while writing frame {frame_idx}",
+                    cause=exc,
+                )
         frames.append(
             {
                 "frame_idx": frame_idx,
@@ -220,19 +238,9 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
     if preview_writer is not None:
         preview_writer.release()
     if hevc12_proc is not None:
-        if hevc12_proc.stdin is not None:
-            hevc12_proc.stdin.close()
-        return_code = hevc12_proc.wait()
-        if return_code != 0:
-            raise RuntimeError(f"HEVC12 encoder failed with exit code {return_code}: {' '.join(hevc12_command)}")
+        _finish_encoder_process(label="HEVC12", proc=hevc12_proc, command=hevc12_command)
     if valid_mask_proc is not None:
-        if valid_mask_proc.stdin is not None:
-            valid_mask_proc.stdin.close()
-        return_code = valid_mask_proc.wait()
-        if return_code != 0:
-            raise RuntimeError(
-                f"Valid mask encoder failed with exit code {return_code}: {' '.join(valid_mask_command)}"
-            )
+        _finish_encoder_process(label="Valid mask encoder", proc=valid_mask_proc, command=valid_mask_command)
 
     ffv1_path = output_dir / ("depth_ffv1.mkv" if config.ffv1_container == "mkv" else "depth_uint16_ffv1.avi")
     ffmpeg_command: list[str] = []
@@ -376,6 +384,66 @@ def _reported_png_dir(
     return ""
 
 
+def _finish_encoder_process(*, label: str, proc: subprocess.Popen, command: list[str]) -> None:
+    _close_encoder_stdin(proc)
+    return_code, _stdout, stderr = _communicate_encoder(proc)
+    if return_code != 0:
+        raise RuntimeError(_encoder_failure_message(label=label, return_code=return_code, command=command, stderr=stderr))
+
+
+def _raise_encoder_failure(
+    *,
+    label: str,
+    proc: subprocess.Popen,
+    command: list[str],
+    context: str,
+    cause: BaseException,
+) -> None:
+    _close_encoder_stdin(proc)
+    return_code, _stdout, stderr = _communicate_encoder(proc)
+    if return_code is None:
+        return_code = proc.poll()
+    message = _encoder_failure_message(label=label, return_code=return_code, command=command, stderr=stderr, context=context)
+    raise RuntimeError(message) from cause
+
+
+def _close_encoder_stdin(proc: subprocess.Popen) -> None:
+    if proc.stdin is None:
+        return
+    try:
+        proc.stdin.close()
+    except BrokenPipeError:
+        pass
+    proc.stdin = None
+
+
+def _communicate_encoder(proc: subprocess.Popen) -> tuple[int | None, bytes, bytes]:
+    try:
+        stdout, stderr = proc.communicate()
+    except AttributeError:
+        return proc.wait(), b"", b""
+    return getattr(proc, "returncode", None), stdout or b"", stderr or b""
+
+
+def _encoder_failure_message(
+    *,
+    label: str,
+    return_code: int | None,
+    command: list[str],
+    stderr: bytes,
+    context: str | None = None,
+) -> str:
+    status = f"exit code {return_code}" if return_code is not None else "unknown exit code"
+    details = [
+        f"{label} encoder failed" + (f" {context}" if context else "") + f" with {status}",
+        f"ffmpeg command: {' '.join(command)}",
+    ]
+    stderr_text = stderr.decode("utf-8", errors="replace").strip()
+    if stderr_text:
+        details.append(f"ffmpeg stderr:\n{stderr_text}")
+    return "\n".join(details)
+
+
 def build_ffv1_command(
     *,
     png_dir: Path,
@@ -432,7 +500,7 @@ def build_hevc12_command(
         "-",
         "-r",
         fps_value,
-        "-fps_mode",
+        "-vsync",
         "cfr",
         "-video_track_timescale",
         "90000",
@@ -480,7 +548,7 @@ def build_valid_mask_command(
         "-",
         "-r",
         fps_value,
-        "-fps_mode",
+        "-vsync",
         "cfr",
         "-c:v",
         "ffv1",

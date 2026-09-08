@@ -18,7 +18,11 @@ from roboego_hand_vis.pipeline_launcher import (
     run_launcher_request,
     workflow_stage_names,
 )
-from roboego_hand_vis.pipeline_state import stage_artifact_outcome, update_stage_state
+from roboego_hand_vis.pipeline_state import read_pipeline_state, stage_artifact_outcome, update_stage_state
+
+
+ARCHIVE_DEPTH_STAGES = {"archive_depth_cache", "archive_depth_cache_unit"}
+REQUIRED_DEPTH_STAGE = "fast_foundation_depth"
 
 
 def parse_args() -> argparse.Namespace:
@@ -53,6 +57,24 @@ def main() -> None:
     workflow_steps = workflow_stage_names(request)
     is_workflow = workflow_steps != [request.stage]
     step_starts: dict[str, float] = {}
+
+    if not request.dry_run and not is_workflow:
+        if _stage_already_succeeded(request):
+            print(f"[skipped] {request.session} stage={request.stage} reason=already_success")
+            return
+        blocked_reason = _archive_depth_block_reason(request)
+        if blocked_reason:
+            update_stage_state(
+                request.session,
+                request.stage,
+                "blocked",
+                command=command,
+                duration_s=0.0,
+                error=blocked_reason,
+                returncode=2,
+            )
+            print(blocked_reason, file=sys.stderr)
+            raise SystemExit(2)
 
     def record_workflow_stage(
         stage: str,
@@ -136,6 +158,31 @@ def main() -> None:
         if returncode:
             print(str(error or f"{request.stage} blocked"), file=sys.stderr)
             raise SystemExit(returncode)
+
+
+def _archive_depth_block_reason(request: LauncherRequest) -> str:
+    if request.stage not in ARCHIVE_DEPTH_STAGES:
+        return ""
+    state = read_pipeline_state(request.session)
+    depth_record = state.get("stages", {}).get(REQUIRED_DEPTH_STAGE, {})
+    depth_status = depth_record.get("status") if isinstance(depth_record, dict) else None
+    if depth_status == "success":
+        return ""
+    return (
+        "ARCHIVE DEPTH CACHE BLOCKED\n"
+        "reason=required_depth_stage_not_success\n"
+        f"required_depth_stage={REQUIRED_DEPTH_STAGE}\n"
+        f"depth_stage_status={depth_status or 'missing'}\n"
+        f"session={request.session}"
+    )
+
+
+def _stage_already_succeeded(request: LauncherRequest) -> bool:
+    if request.force:
+        return False
+    state = read_pipeline_state(request.session)
+    record = state.get("stages", {}).get(request.stage, {})
+    return isinstance(record, dict) and record.get("status") == "success"
 
 
 if __name__ == "__main__":

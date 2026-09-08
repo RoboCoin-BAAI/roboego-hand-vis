@@ -580,11 +580,10 @@ stages:
       enabled: true
       depth_dir: "{unit}/depth/fast_foundation"
       output_dir: "{unit}/depth/fast_foundation_archive"
-      depth_stage_state: "{session}/pipeline_state.json"
-      required_depth_stage: fast_foundation_depth
       max_depth_m: 4.0
       invalid_value: 0
       fps: 30
+      ffmpeg_bin: /usr/bin/ffmpeg
       write_png: false
       write_avi: false
       ffv1_container: mkv
@@ -611,11 +610,10 @@ stages:
       enabled: true
       depth_dir: "{unit}/depth/fast_foundation"
       output_dir: "{unit}/depth/fast_foundation_archive"
-      depth_stage_state: "{session}/pipeline_state.json"
-      required_depth_stage: fast_foundation_depth
       max_depth_m: 4.0
       invalid_value: 0
       fps: 30
+      ffmpeg_bin: /usr/bin/ffmpeg
       write_png: false
       write_avi: false
       ffv1_container: mkv

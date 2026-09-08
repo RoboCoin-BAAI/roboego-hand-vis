@@ -11,6 +11,7 @@ import pytest
 
 from roboego_hand_vis.depth.archive import (
     DepthArchiveConfig,
+    _finish_encoder_process,
     archive_depth_cache,
     build_ffv1_command,
     build_hevc12_command,
@@ -249,7 +250,7 @@ def test_build_hevc12_command_uses_gray12le_x265_rawvideo_pipe(tmp_path: Path):
         "-",
         "-r",
         "30",
-        "-fps_mode",
+        "-vsync",
         "cfr",
         "-video_track_timescale",
         "90000",
@@ -308,7 +309,8 @@ def test_archive_depth_cache_writes_hevc12_from_uint16_png_and_metadata(monkeypa
     class FakePopen:
         def __init__(self, args, stdin, stdout, stderr):
             self.args = args
-            self.stdin = FakeStdin()
+            self.stdin_obj = FakeStdin()
+            self.stdin = self.stdin_obj
             calls.append(self)
 
         def wait(self):
@@ -324,15 +326,79 @@ def test_archive_depth_cache_writes_hevc12_from_uint16_png_and_metadata(monkeypa
     )
 
     assert len(calls) == 1
-    written = np.frombuffer(calls[0].stdin.data, dtype=np.uint16).reshape(2, 2)
+    written = np.frombuffer(calls[0].stdin_obj.data, dtype=np.uint16).reshape(2, 2)
     assert written.tolist() == [[0, 500], [4000, 4000]]
-    assert calls[0].stdin.closed is True
+    assert calls[0].stdin_obj.closed is True
     assert "gray12le" in calls[0].args
     assert report["outputs"]["hevc12_video"] == str(output_dir / "depth_hevc12.mkv")
     assert report["hevc12"]["bit_depth"] == 12
     assert report["hevc12"]["valid_range_mm"] == [1, 4000]
     metadata = json.loads((output_dir / "depth_archive_meta.json").read_text(encoding="utf-8"))
     assert metadata["outputs"]["hevc12_video"] == str(output_dir / "depth_hevc12.mkv")
+
+
+def test_archive_depth_cache_reports_hevc12_stderr_when_pipe_breaks(monkeypatch, tmp_path: Path):
+    depth_dir = tmp_path / "depth"
+    png_dir = depth_dir / "depth_uint16_png"
+    output_dir = tmp_path / "archive"
+    png_dir.mkdir(parents=True)
+    cv2.imwrite(str(png_dir / "frame_000000_depth_mm.png"), np.full((2, 2), 1000, dtype=np.uint16))
+
+    class BrokenStdin:
+        def write(self, data):
+            raise BrokenPipeError("encoder pipe closed")
+
+        def close(self):
+            pass
+
+    class FakePopen:
+        def __init__(self, args, stdin, stdout, stderr):
+            self.args = args
+            self.stdin = BrokenStdin()
+
+        def poll(self):
+            return 1
+
+        def communicate(self):
+            return b"", b"Unknown encoder 'libx265'\n"
+
+    monkeypatch.setattr("roboego_hand_vis.depth.archive.subprocess.Popen", FakePopen)
+
+    with pytest.raises(RuntimeError, match="HEVC12 encoder failed while writing frame 0") as excinfo:
+        archive_depth_cache(
+            depth_dir=depth_dir,
+            output_dir=output_dir,
+            config=DepthArchiveConfig(write_png=False, write_avi=False, write_preview=False, write_hevc12=True),
+        )
+
+    message = str(excinfo.value)
+    assert "Unknown encoder 'libx265'" in message
+    assert "ffmpeg command:" in message
+
+
+def test_finish_encoder_process_does_not_flush_closed_stdin():
+    class FakeStdin:
+        def __init__(self):
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    class FakePopen:
+        def __init__(self):
+            self.stdin = FakeStdin()
+            self.returncode = 0
+
+        def communicate(self):
+            if self.stdin is not None:
+                raise ValueError("flush of closed file")
+            return b"", b""
+
+    proc = FakePopen()
+
+    _finish_encoder_process(label="HEVC12", proc=proc, command=["ffmpeg"])
+
+    assert proc.stdin is None
 
 
 def test_archive_depth_cache_writes_lossless_valid_mask_for_hevc12(monkeypatch, tmp_path: Path):
@@ -357,7 +423,8 @@ def test_archive_depth_cache_writes_lossless_valid_mask_for_hevc12(monkeypatch, 
     class FakePopen:
         def __init__(self, args, stdin, stdout, stderr):
             self.args = args
-            self.stdin = FakeStdin()
+            self.stdin_obj = FakeStdin()
+            self.stdin = self.stdin_obj
             calls.append(self)
 
         def wait(self):
@@ -381,7 +448,7 @@ def test_archive_depth_cache_writes_lossless_valid_mask_for_hevc12(monkeypatch, 
     )
 
     assert [Path(call.args[-1]).name for call in calls] == ["depth_hevc12.mkv", "valid_mask_ffv1.mkv"]
-    mask = np.frombuffer(calls[1].stdin.data, dtype=np.uint8).reshape(2, 2)
+    mask = np.frombuffer(calls[1].stdin_obj.data, dtype=np.uint8).reshape(2, 2)
     assert mask.tolist() == [[0, 255], [255, 0]]
     assert report["outputs"]["valid_mask_video"] == str(output_dir / "valid_mask_ffv1.mkv")
     assert report["hevc12"]["requires_valid_mask"] is True
@@ -424,7 +491,7 @@ def test_build_valid_mask_command_uses_gray_ffv1_mkv(tmp_path: Path):
         "-",
         "-r",
         "30",
-        "-fps_mode",
+        "-vsync",
         "cfr",
         "-c:v",
         "ffv1",
