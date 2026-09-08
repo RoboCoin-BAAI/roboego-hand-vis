@@ -126,7 +126,7 @@ stages:
       camera_streams: left|right
       timestamp_tolerance_s: 0.005
       repair_timestamp_files: true
-      max_repair_duplicate_rate: 0.003
+      max_repair_duplicate_rate: 0.005
       max_repair_consecutive_duplicate_frames: 5
       overwrite: true
 

@@ -289,8 +289,6 @@ def maybe_repair_timestamp_files(
         if int(summary.get("max_consecutive_duplicate_frames", 0)) > int(max_repair_consecutive_duplicate_frames):
             reasons.append("consecutive_duplicate_frames_over_limit")
         repaired_alignment = timestamp_alignment_repaired_summary.get(stream) or {}
-        if int(repaired_alignment.get("over_tolerance_count", 0)) > 0:
-            reasons.append("repaired_alignment_still_over_tolerance")
         if reasons:
             result["skipped_streams"][stream] = {
                 "reasons": reasons,

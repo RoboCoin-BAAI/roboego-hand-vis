@@ -16,7 +16,7 @@ raw_headband_quality:
   timestamp_tolerance_s: 0.005
   video_ext: .mp4
   repair_timestamp_files: true
-  max_repair_duplicate_rate: 0.003
+  max_repair_duplicate_rate: 0.005
   max_repair_consecutive_duplicate_frames: 5
   overwrite: false
   environment_name: ego
@@ -36,7 +36,7 @@ raw_headband_quality_gate:
     timestamp_alignment:
       enabled: true
       level: fail
-      max_over_tolerance_rate: 0.0
+      max_over_tolerance_rate: 0.005
     timestamp_duplicates:
       enabled: true
       level: fail

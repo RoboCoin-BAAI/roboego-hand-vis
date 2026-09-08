@@ -371,6 +371,37 @@ def test_export_quality_report_records_repaired_timestamp_alignment_for_duplicat
     assert repaired_right.timestamps.tolist() == pytest.approx([row[1] for row in left_rows])
 
 
+def test_export_quality_report_writes_duplicate_repair_when_alignment_still_fails(tmp_path):
+    session = make_minimal_session(tmp_path)
+    left_rows = [(0, 1.0), (1, 1.033333333), (2, 1.066666667), (3, 1.1)]
+    right_rows = [(0, 1.0), (1, 1.0), (2, 1.066666667), (3, 1.111111111)]
+    for stream in DEFAULT_CAMERA_STREAMS:
+        write_timestamp_file(session / "timestamps" / f"{stream}_timestamps.txt", left_rows)
+    write_timestamp_file(session / "timestamps" / "right_timestamps.txt", right_rows)
+
+    report_path = export_quality_report(
+        session,
+        session,
+        camera_streams=DEFAULT_CAMERA_STREAMS,
+        start=0,
+        num_frames=4,
+        timestamp_tolerance_s=0.005,
+        overwrite=True,
+        repair_timestamp_files=True,
+        max_repair_duplicate_rate=1.0,
+        max_repair_consecutive_duplicate_frames=5,
+        video_inspector=lambda path: {"width": 640, "height": 480, "frame_count": 4, "fps": 30.0},
+    )
+
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    repaired_right = parse_timestamp_file(session / "timestamps" / "right_timestamps.txt")
+
+    assert report["timestamp_file_repair"]["applied"] is True
+    assert report["timestamp_file_repair"]["streams"]["right"]["written"] is True
+    assert report["timestamp_alignment_repaired"]["right"]["over_tolerance_count"] == 1
+    assert repaired_right.timestamps.tolist() == pytest.approx([1.0, 1.033333333, 1.066666667, 1.111111111])
+
+
 def test_export_quality_report_does_not_rewrite_long_duplicate_runs(tmp_path):
     session = make_minimal_session(tmp_path)
     rows = [
