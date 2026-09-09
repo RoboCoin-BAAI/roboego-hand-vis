@@ -737,11 +737,11 @@ stages:
       joints_json: "{unit}/hand/final_hand_result/joints21_depth_anchored.json"
       output_dir: "{unit}/hand/final_hand_result"
       manifest: "{unit}/dataset_manifest/dataset_manifest.json"
-      max_interp_gap: 10
+      max_interp_gap: 3
       wrist_jump_m: 0.0
       max_local_wrist_deviation_m: 0.0
       local_window_radius: 5
-      smooth_window: 9
+      smooth_window: 3
       smooth_relative_fingers: true
       write_preview: true
 
