@@ -826,6 +826,19 @@ def test_sam3_objects_defaults_to_all_hand_windows_for_batch_use(tmp_path: Path)
     assert all(inv.node == "sam3_hand_object_segmentation" for inv in invocations)
 
 
+def test_hand_parquet_export_runs_once_for_parent_session(tmp_path: Path):
+    session = tmp_path / "session"
+    (session / "hand_windows/handwin_0000_t000000_000010").mkdir(parents=True)
+    (session / "hand_windows/handwin_0001_t000020_000030").mkdir(parents=True)
+
+    invocations = build_stage_invocations(LauncherRequest(dataset="raw", session=session, stage="hand_parquet_export"))
+
+    assert len(invocations) == 1
+    invocation = invocations[0]
+    assert invocation.node == "hand_parquet_export"
+    assert invocation.params["hand_parquet_export.session"] == str(session)
+
+
 def test_finds_direct_session_hand_windows(tmp_path: Path):
     session = tmp_path / "session"
     (session / "hand_windows/handwin_0000_t000000_000065").mkdir(parents=True)

@@ -11,6 +11,7 @@ from roboego_hand_vis.pipelines.egohand.nodes import (
     run_hamer_unit_node,
     run_hamer_windows_node,
     run_hand_filter_node,
+    run_hand_parquet_export_node,
     run_joints21_pose_gate_node,
     run_legacy_export_joints21_node,
     run_legacy_mesh_depth_alignment_node,
@@ -77,6 +78,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="final_hand_trajectory_polish_report",
                 name="final_hand_trajectory_polish",
                 tags=["egohand", "final_hand_result"],
+            ),
+            node(
+                func=run_hand_parquet_export_node,
+                inputs="params:hand_parquet_export",
+                outputs="hand_parquet_export_report",
+                name="hand_parquet_export",
+                tags=["egohand", "export"],
             ),
             node(
                 func=run_legacy_mesh_depth_alignment_node,

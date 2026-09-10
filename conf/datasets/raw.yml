@@ -126,7 +126,7 @@ stages:
       camera_streams: left|right
       timestamp_tolerance_s: 0.005
       repair_timestamp_files: true
-      max_repair_duplicate_rate: 0.005
+      max_repair_duplicate_rate: 0.01
       max_repair_consecutive_duplicate_frames: 5
       overwrite: true
 
@@ -744,6 +744,15 @@ stages:
       smooth_window: 3
       smooth_relative_fingers: true
       write_preview: true
+
+  hand_parquet_export:
+    pipeline: egohand
+    node: hand_parquet_export
+    scope: session
+    param_namespace: hand_parquet_export
+    params:
+      enabled: true
+      session: "{session}"
 
   sam3_objects:
     pipeline: objects

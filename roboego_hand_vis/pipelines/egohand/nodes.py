@@ -345,6 +345,33 @@ def run_final_hand_trajectory_polish_node(config: dict[str, Any] | None) -> dict
     }
 
 
+def run_hand_parquet_export_node(config: dict[str, Any] | None) -> dict[str, Any]:
+    config = config or {}
+    if not bool(config.get("enabled", False)):
+        return {"stage": "hand_parquet_export", "status": "skipped", "reason": "disabled"}
+
+    session = _required_value(config, "session", "hand_parquet_export")
+    output_root = _optional_str(config.get("output_root"))
+    args = [
+        _optional_str(config.get("python")) or "python",
+        _optional_str(config.get("script")) or "scripts/export/roboego_hand_parquet.py",
+        "--session",
+        session,
+    ]
+    _append_arg(args, "--output-root", output_root)
+    _append_arg(args, "--episode-index", config.get("episode_index"))
+    if bool(config.get("overwrite", False)):
+        args.append("--overwrite")
+
+    subprocess.run(args, check=True)
+    return {
+        "stage": "hand_parquet_export",
+        "status": "complete",
+        "session": session,
+        "output_root": output_root,
+    }
+
+
 def run_joints21_pose_gate_node(config: dict[str, Any] | None) -> dict[str, Any]:
     config = config or {}
     if not bool(config.get("enabled", False)):

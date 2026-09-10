@@ -16,7 +16,7 @@ raw_headband_quality:
   timestamp_tolerance_s: 0.005
   video_ext: .mp4
   repair_timestamp_files: true
-  max_repair_duplicate_rate: 0.005
+  max_repair_duplicate_rate: 0.01
   max_repair_consecutive_duplicate_frames: 5
   overwrite: false
   environment_name: ego
@@ -40,7 +40,7 @@ raw_headband_quality_gate:
     timestamp_duplicates:
       enabled: true
       level: fail
-      max_duplicate_rate: 0.003
+      max_duplicate_rate: 0.01
       max_consecutive_duplicate_frames: 5
     frame_count_consistency:
       enabled: true
@@ -460,6 +460,15 @@ final_hand_trajectory_polish:
   smooth_window: 3
   smooth_relative_fingers: true
   write_preview: true
+
+hand_parquet_export:
+  enabled: false
+  python: /home/liuyou/miniconda3/envs/ego/bin/python
+  script: scripts/export/roboego_hand_parquet.py
+  session: ""
+  output_root: ""
+  episode_index: ""
+  overwrite: false
 
 joints21_pose_gate:
   enabled: false

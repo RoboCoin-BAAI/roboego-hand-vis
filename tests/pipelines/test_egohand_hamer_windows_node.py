@@ -4,6 +4,7 @@ from roboego_hand_vis.pipelines.egohand.nodes import (
     run_final_hand_trajectory_polish_node,
     run_hamer_windows_node,
     run_hand_filter_node,
+    run_hand_parquet_export_node,
     run_joints21_pose_gate_node,
     run_legacy_export_joints21_node,
     run_legacy_mesh_depth_alignment_node,
@@ -426,6 +427,43 @@ def test_final_hand_trajectory_polish_node_runs_cli(monkeypatch, tmp_path):
         "smoothed_joints21_npz": str(output_dir / "smoothed_joints21.npz"),
         "trajectory_polish_report_json": str(output_dir / "trajectory_polish_report.json"),
         "preview_video": str(output_dir / "hand_estimation_preview_smoothed.mp4"),
+    }
+
+
+def test_hand_parquet_export_node_runs_auto_export_cli(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(args, check):
+        calls.append({"args": args, "check": check})
+
+    monkeypatch.setattr("roboego_hand_vis.pipelines.egohand.nodes.subprocess.run", fake_run)
+    session = tmp_path / "session_0001"
+
+    result = run_hand_parquet_export_node(
+        {
+            "enabled": True,
+            "python": "/envs/ego/bin/python",
+            "script": "scripts/export/roboego_hand_parquet.py",
+            "session": str(session),
+        }
+    )
+
+    assert calls == [
+        {
+            "check": True,
+            "args": [
+                "/envs/ego/bin/python",
+                "scripts/export/roboego_hand_parquet.py",
+                "--session",
+                str(session),
+            ],
+        }
+    ]
+    assert result == {
+        "stage": "hand_parquet_export",
+        "status": "complete",
+        "session": str(session),
+        "output_root": "",
     }
 
 
