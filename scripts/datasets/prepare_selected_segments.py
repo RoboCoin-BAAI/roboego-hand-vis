@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Prepare one stereo unit directly, e.g. a session, selected segment, or hand window root.",
     )
-    parser.add_argument("--roboegopipe_root", default="/home/liuyou/Documents/RoboEgoPipe")
+    parser.add_argument("--roboegopipe_root", default="../RoboEgoPipe")
     parser.add_argument("--segment_ids", nargs="*", default=None, help="Optional source segment ids, e.g. seg_0001 seg_0002")
     parser.add_argument("--dataset_adapter", default="wumei01", help="Manifest adapter for rectified Wumei-style segments.")
     parser.add_argument("--model", choices=["double_sphere", "equidistant", "fisheye"], default="equidistant")

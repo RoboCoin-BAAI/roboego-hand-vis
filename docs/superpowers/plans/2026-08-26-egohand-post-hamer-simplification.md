@@ -70,7 +70,7 @@ def test_temporal_gate_can_preserve_hand_when_mesh_and_pose_gates_disabled(tmp_p
 Run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/egohand/test_refined_temporal.py -q
+PYTHONPATH=. python -m pytest tests/egohand/test_refined_temporal.py -q
 ```
 
 Expected: PASS if disable semantics already work. If it fails, implement the minimal fix in `roboego_hand_vis/egohand/refined_temporal.py` so values `<= 0` disable MANO and mesh gates consistently.
@@ -94,7 +94,7 @@ refined_temporal_gate:
 Run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/egohand/test_refined_temporal.py tests/pipelines/test_egohand_hamer_windows_node.py -q
+PYTHONPATH=. python -m pytest tests/egohand/test_refined_temporal.py tests/pipelines/test_egohand_hamer_windows_node.py -q
 ```
 
 Expected: all selected tests pass.
@@ -154,7 +154,7 @@ joints21_pose_gate:
 Run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/egohand/test_joints21_pose_gate.py -q
+PYTHONPATH=. python -m pytest tests/egohand/test_joints21_pose_gate.py -q
 ```
 
 Expected: PASS.
@@ -220,7 +220,7 @@ def test_export_final_hand_result_minimal_output_has_no_annotated_visuals(tmp_pa
 Run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/egohand/test_final_hand_result.py -q
+PYTHONPATH=. python -m pytest tests/egohand/test_final_hand_result.py -q
 ```
 
 Expected: PASS. If it fails, adjust `export_final_hand_result` so `copy_visuals=False` never creates `annotated/`.
@@ -270,7 +270,7 @@ Update the README command for `hand_filter`:
 Run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/egohand/test_refined_temporal.py tests/egohand/test_final_hand_result.py tests/egohand/test_joints21_pose_gate.py tests/pipelines/test_egohand_hamer_windows_node.py -q
+PYTHONPATH=. python -m pytest tests/egohand/test_refined_temporal.py tests/egohand/test_final_hand_result.py tests/egohand/test_joints21_pose_gate.py tests/pipelines/test_egohand_hamer_windows_node.py -q
 git diff --check
 ```
 

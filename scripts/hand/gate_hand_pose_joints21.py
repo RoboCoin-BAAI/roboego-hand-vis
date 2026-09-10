@@ -23,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--start", type=int, required=True)
     parser.add_argument("--num_frames", type=int, required=True)
-    parser.add_argument("--mano_model_dir", default="/home/liuyou/Documents/hamer/_DATA/data/mano")
+    parser.add_argument("--mano_model_dir", default="../hamer/_DATA/data/mano")
     parser.add_argument("--max_bone_length_ratio", type=float, default=8.0)
     parser.add_argument("--max_joint_local_deviation", type=float, default=7.0)
     parser.add_argument("--max_wrist_local_deviation_m", type=float, default=0.6)

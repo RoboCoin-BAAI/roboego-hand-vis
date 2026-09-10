@@ -134,7 +134,7 @@ def parse_args() -> argparse.Namespace:
         "--candidates_json",
         default="tmp/ropedia_hamer_ego_filter_000000_000029_recovered/ego_hand_candidates_recovered.json",
     )
-    parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
+    parser.add_argument("--video", default="data/ropedia_data/stereo_left.mp4")
     parser.add_argument("--hamer_overlay_dir", default="")
     parser.add_argument("--output_dir", default="tmp/ropedia_hamer_renderer_projection_alignment")
     parser.add_argument("--hamer_base_focal_length", type=float, default=5000.0)

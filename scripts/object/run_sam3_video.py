@@ -11,7 +11,7 @@ Output structure (in <video_dir>/video_segmentation/ by default):
 
 Usage examples:
     # Text prompt (output: video_segmentation/tracked_person.mp4)
-    python run_sam3_video.py --video /path/to/video.mp4 --text "left hand" --obj_id left_hand_0
+    python run_sam3_video.py --video input/video.mp4 --text "left hand" --obj_id left_hand_0
 
     # Text prompt with custom output directory
     python run_sam3_video.py --video video.mp4 --text "dog" --output_dir output/
@@ -23,7 +23,7 @@ Usage examples:
     python run_sam3_video.py --video video.mp4 --box 100,120,300,360 --obj_id box_0
 
     # Interactive click mode - opens a window to click points on a frame
-    python run_sam3_video.py --video /path/to/video.mp4 --click --obj_id scooper_0 --frame_idx 6
+    python run_sam3_video.py --video input/video.mp4 --click --obj_id scooper_0 --frame_idx 6
 """
 
 import argparse
@@ -41,7 +41,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 _sam3_pkg_candidates = [
     os.environ.get("SAM3_PKG_DIR", ""),
     os.path.join(PROJECT_ROOT, "external", "sam3"),
-    "/home/liuyou/Documents/do-as-i-do/reconstruction/modules/sam3",
+    "../do-as-i-do/reconstruction/modules/sam3",
 ]
 for _path in _sam3_pkg_candidates:
     if _path and _path not in sys.path and os.path.exists(_path):

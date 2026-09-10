@@ -34,8 +34,8 @@ camera_display:
 Ropedia 默认输入：
 
 ```text
-left video:  /home/liuyou/Documents/ropedia_data/stereo_left.mp4
-right video: /home/liuyou/Documents/ropedia_data/stereo_right.mp4
+left video:  /path/to/ropedia_data/stereo_left.mp4
+right video: /path/to/ropedia_data/stereo_right.mp4
 depth dir:   tmp/ropedia_foundation_depth_continuous_000000_000299
 ```
 
@@ -89,23 +89,23 @@ reference_camera:
 ### 环境
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
-source /home/liuyou/miniconda3/etc/profile.d/conda.sh
+cd /path/to/roboego-hand-vis
+source /path/to/conda/etc/profile.d/conda.sh
 conda activate ego
 ```
 
 HaMeR 代码和 MANO 模型默认位置：
 
 ```text
-HAMER_ROOT=/home/liuyou/Documents/hamer
-MANO_MODEL_DIR=/home/liuyou/Documents/hamer/_DATA/data/mano
+HAMER_ROOT=/path/to/hamer
+MANO_MODEL_DIR=/path/to/hamer/_DATA/data/mano
 ```
 
 FoundationStereo 默认位置：
 
 ```text
-FOUNDATION_ROOT=/home/liuyou/Documents/FoundationStereo
-FOUNDATION_CKPT=/home/liuyou/Documents/FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth
+FOUNDATION_ROOT=/path/to/FoundationStereo
+FOUNDATION_CKPT=/path/to/FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth
 ```
 
 ## 1. 一键入口
@@ -138,7 +138,7 @@ Ropedia：
 ```bash
 python scripts/datasets/resolve_dataset.py \
   --dataset ropedia \
-  --root /home/liuyou/Documents/ropedia_data \
+  --root /path/to/ropedia_data \
   --output_dir tmp/ropedia_dataset_manifest
 ```
 
@@ -349,7 +349,7 @@ tmp/wuxi_hand_vis_0_299_wuxiK_finger_orient/wuxi_hand_vis.rrd
 打开：
 
 ```bash
-rerun /home/liuyou/Documents/roboego-hand-vis/tmp/wuxi_hand_vis_0_299_wuxiK_finger_orient/wuxi_hand_vis.rrd
+rerun /path/to/roboego-hand-vis/tmp/wuxi_hand_vis_0_299_wuxiK_finger_orient/wuxi_hand_vis.rrd
 ```
 
 ## 3. 公共参数
@@ -622,7 +622,7 @@ python scripts/hand/run_hamer_ego_filter.py \
   --depth_dir tmp/wuxi_foundation_depth_continuous_000000_000299 \
   --depth_quality_report tmp/wuxi_depth_quality_000000_000299/depth_quality_report.json \
   --output_dir tmp/wuxi_hamer_ego_filter_000000_000299_tuned \
-  --hamer_root /home/liuyou/Documents/hamer \
+  --hamer_root /path/to/hamer \
   --start 0 \
   --num_frames 300 \
   --body_detector regnety \
@@ -1223,8 +1223,8 @@ finger anchor 和 orientation-aware compensation 已作为标准流程开启。
 如果需要复现当前确认版本：
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
-source /home/liuyou/miniconda3/etc/profile.d/conda.sh
+cd /path/to/roboego-hand-vis
+source /path/to/conda/etc/profile.d/conda.sh
 conda activate ego
 
 RUN_FOUNDATION=0 \
@@ -1235,9 +1235,9 @@ RUN_TRACK=1 \
 RUN_RRD=1 \
 START=0 \
 NUM_FRAMES=300 \
-VIDEO=/home/liuyou/Documents/roboego-hand-vis/data/wuxi/stereo_left.mp4 \
-RIGHT_VIDEO=/home/liuyou/Documents/roboego-hand-vis/data/wuxi/stereo_right.mp4 \
-INTRINSICS_JSON=/home/liuyou/Documents/roboego-hand-vis/data/wuxi/camera_intrinsics.json \
+VIDEO=/path/to/roboego-hand-vis/data/wuxi/stereo_left.mp4 \
+RIGHT_VIDEO=/path/to/roboego-hand-vis/data/wuxi/stereo_right.mp4 \
+INTRINSICS_JSON=/path/to/roboego-hand-vis/data/wuxi/camera_intrinsics.json \
 INTRINSICS_CAMERA=left \
 INTRINSICS_RESIZE_SCALE=1.0 \
 DEPTH_DIR=tmp/wuxi_foundation_depth_continuous_000000_000299 \

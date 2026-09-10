@@ -28,12 +28,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--egoblur_root",
         type=Path,
-        default=Path("/home/liuyou/Documents/EgoBlur"),
+        default=Path("../EgoBlur"),
     )
     parser.add_argument(
         "--face_model_path",
         type=Path,
-        default=Path("/home/liuyou/Documents/EgoBlur/models/ego_blur_face_gen2.jit"),
+        default=Path("../EgoBlur/models/ego_blur_face_gen2.jit"),
     )
     parser.add_argument("--camera_name", default="camera-rgb")
     parser.add_argument("--detect_every_n_frames", type=int, default=3)

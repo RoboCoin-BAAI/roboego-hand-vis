@@ -430,7 +430,7 @@ def parse_args() -> argparse.Namespace:
         description="Run HaMeR on ego-stereo left/RGB frames and filter ego-hand candidates."
     )
     parser.add_argument("--manifest", default="", help="Optional dataset_manifest.json. Overrides --video.")
-    parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
+    parser.add_argument("--video", default="data/ropedia_data/stereo_left.mp4")
     parser.add_argument("--depth_dir", default=None)
     parser.add_argument("--depth_quality_report", default="")
     parser.add_argument("--wearer_regions_json", default="")
@@ -446,7 +446,7 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--output_dir", default="tmp/ropedia_hamer_ego_filter")
-    parser.add_argument("--hamer_root", default="/home/liuyou/Documents/hamer")
+    parser.add_argument("--hamer_root", default="../hamer")
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--num_frames", type=int, default=8)

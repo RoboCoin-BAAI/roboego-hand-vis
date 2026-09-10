@@ -119,7 +119,7 @@ def dataset_defaults(args: argparse.Namespace) -> tuple[Path, Path, dict, float]
     if args.dataset == "ropedia":
         depth_dir = Path(args.depth_dir or "tmp/ropedia_foundation_depth_continuous_000000_000029")
         depth_path = depth_dir / f"frame_{args.frame:06d}_foundation_depth_m.npy"
-        video_path = Path(args.video or "/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
+        video_path = Path(args.video or "data/ropedia_data/stereo_left.mp4")
         return depth_path, video_path, dict(ROPEDIA_K), 1.0
 
     depth_dir = Path(args.depth_dir or "tmp/wuxi_foundation_depth_continuous_000000_000029")

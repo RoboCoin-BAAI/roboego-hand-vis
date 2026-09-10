@@ -43,6 +43,6 @@
 **Files:**
 - Test: `tests/test_pipeline_launcher.py`
 
-- [ ] Run `PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/test_pipeline_launcher.py -q`.
+- [ ] Run `PYTHONPATH=. python -m pytest tests/test_pipeline_launcher.py -q`.
 - [ ] Run full test suite.
 - [ ] Run `git diff --check`.

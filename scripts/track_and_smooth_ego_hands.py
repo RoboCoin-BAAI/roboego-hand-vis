@@ -49,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", default="", help="Optional dataset_manifest.json. Overrides --video.")
     parser.add_argument("--alignment_report", required=True)
     parser.add_argument("--depth_dir", required=True)
-    parser.add_argument("--video", default="/home/liuyou/Documents/ropedia_data/stereo_left.mp4")
+    parser.add_argument("--video", default="data/ropedia_data/stereo_left.mp4")
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--num_frames", type=int, default=300)

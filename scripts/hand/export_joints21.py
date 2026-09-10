@@ -134,7 +134,7 @@ def main() -> None:
     mano_model_dir = (
         resolve_path(args.mano_model_dir, cwd)
         if args.mano_model_dir
-        else Path(orientation_config.get("mano_model_dir") or "/home/liuyou/Documents/hamer/_DATA/data/mano").expanduser()
+        else Path(orientation_config.get("mano_model_dir") or "../hamer/_DATA/data/mano").expanduser()
     )
     regressor_by_side = load_mano_regressors(mano_model_dir)
 

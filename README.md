@@ -17,8 +17,8 @@ HaMeR hand meshes, filtered 21-joint hand tracks, and SAM3 object masks.
 The project is usually run from the `ego` environment:
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
-source /home/liuyou/miniconda3/etc/profile.d/conda.sh
+cd /path/to/roboego-hand-vis
+source /path/to/conda/etc/profile.d/conda.sh
 conda activate ego
 
 pip install -e ".[dev]"
@@ -37,11 +37,11 @@ See [Pipeline Environment Setup](docs/deployment/environments.md) for the full
 machine/environment matrix. External repositories used by specific nodes:
 
 ```text
-/home/liuyou/Documents/RoboEgoPipe
-/home/liuyou/Documents/Fast-FoundationStereo
-/home/liuyou/Documents/hamer
-/home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
-/home/liuyou/Documents/RealVDeblur
+/path/to/RoboEgoPipe
+/path/to/Fast-FoundationStereo
+/path/to/hamer
+/path/to/do-as-i-do/sam3/sam3.pt
+/path/to/RealVDeblur
 ```
 
 For Qwen annotation, set:
@@ -204,7 +204,7 @@ timestamp, or by frame index when both artifacts come from the same session.
 Create a compact Rerun recording with a sampled left-camera reference:
 
 ```bash
-/home/user/miniconda3/envs/egoall/bin/python \
+python \
   scripts/vio/export_trajectory_rerun.py \
   --trajectory tmp/openvins_clip_0649_60s/trajectory/trajectory.npz \
   --output tmp/openvins_clip_0649_60s/trajectory/trajectory_with_left.rrd \
@@ -216,7 +216,7 @@ Create a compact Rerun recording with a sampled left-camera reference:
   --pose_sample_fps 5 \
   --trajectory_chunk_seconds 5
 
-/home/user/miniconda3/envs/egoall/bin/rerun \
+rerun \
   --memory-limit 2GB \
   tmp/openvins_clip_0649_60s/trajectory/trajectory_with_left.rrd
 ```
@@ -242,7 +242,7 @@ export KEDRO_DISABLE_TELEMETRY=1
 Available Kedro pipelines:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python - <<'PY'
+PYTHONPATH=. python - <<'PY'
 from roboego_hand_vis.pipeline_registry import register_pipelines
 for name in sorted(register_pipelines()):
     print(name)
@@ -282,10 +282,10 @@ conf/datasets/raw.yml
 Run one stage for a session:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/run_pipeline_stage.py \
   --dataset raw \
-  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --session /path/to/roboego-hand-vis/data/session_20260818_182102 \
   --stage raw_quality
 ```
 
@@ -304,10 +304,10 @@ commands, and gate/blocking reason when a workflow is intentionally stopped.
 Run one hand-window stage:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/run_pipeline_stage.py \
   --dataset raw \
-  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --session /path/to/roboego-hand-vis/data/session_20260818_182102 \
   --stage depth_anchored_joints21 \
   --hand-window handwin_0000_t000000_000065
 ```
@@ -315,10 +315,10 @@ PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
 Print the generated Kedro command without running it:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/run_pipeline_stage.py \
   --dataset raw \
-  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --session /path/to/roboego-hand-vis/data/session_20260818_182102 \
   --stage final_hand_result \
   --all-hand-windows \
   --dry-run
@@ -395,9 +395,9 @@ sam3_objects
 Set paths for a raw session:
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
+cd /path/to/roboego-hand-vis
 
-export SESSION=/home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102
+export SESSION=/path/to/roboego-hand-vis/data/session_20260818_182102
 export PLAN=$SESSION/annotation/processing_plan_left_v1.json
 export HAND_WINDOWS=$SESSION/annotation/hand_estimation_windows_left_v1.json
 export SEGMENTS_ROOT=$SESSION/segments
@@ -414,7 +414,7 @@ and IMU signal quality. Quaternion columns are ignored by default.
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines quality \
   --to-nodes raw_headband_quality_gate \
   --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False
@@ -504,7 +504,7 @@ batch.
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --to-nodes qwen_frame_annotation \
   --params raw_headband_quality.enabled=True,raw_headband_quality.session_dir=$SESSION,raw_headband_quality.output_root=$SESSION,raw_headband_quality.overwrite=True,raw_headband_quality_gate.strict=False,pre_semantic_quality.enabled=True,pre_semantic_quality.video=$SESSION/videos/left.mp4,pre_semantic_quality.output_json=$SESSION/annotation/video_simple_quality_left.json,qwen_frame_annotation.enabled=True,qwen_frame_annotation.video=$SESSION/videos/left.mp4,qwen_frame_annotation.output_json=$SESSION/annotation/qwen_frame_annotations_left_v4.json,qwen_frame_annotation.checkpoint_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,qwen_frame_annotation.raw_output_dir=$SESSION/annotation/qwen_frame_annotation_raw,qwen_frame_annotation.batch_output_dir=$SESSION/annotation/qwen_frame_annotation_batches,qwen_frame_annotation.chunk_output_dir=$SESSION/annotation/qwen_frame_annotation_chunks,qwen_frame_annotation.frames_dir=$SESSION/annotation/qwen_frame_annotation_frames,qwen_frame_annotation.prompt=docs/prompts/qwen_frame_annotation_v5_en.md,qwen_frame_annotation.fps=1,qwen_frame_annotation.require_video_simple_quality_pass=True,qwen_frame_annotation.use_video_simple_quality=False,qwen_frame_annotation.max_width=768,qwen_frame_annotation.batch_size=10,qwen_frame_annotation.batches_per_chunk=5,qwen_frame_annotation.model=qwen3.6-flash,qwen_frame_annotation.timeout_s=120,qwen_frame_annotation.max_retries=3,qwen_frame_annotation.retry_sleep_s=5,qwen_frame_annotation.resume=True
 ```
@@ -534,7 +534,7 @@ python scripts/run_pipeline_stage.py \
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines semantic \
   --from-nodes stage1_action_extraction_chunks \
   --to-nodes stage1_action_text_resolver_chunks \
@@ -555,7 +555,7 @@ directory.
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines semantic \
   --nodes build_processing_plan \
   --params processing_plan.enabled=True,processing_plan.stage1_json=$SESSION/annotation/qwen_frame_annotations_left_v4.checkpoint.json,processing_plan.actions_json=$SESSION/annotation/stage1_action_resolved_chunks,processing_plan.output_json=$PLAN,processing_plan.min_process_segment_s=5,processing_plan.context_expand_s=2
@@ -583,7 +583,7 @@ be a resolved chunk directory.
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines semantic \
   --nodes build_hand_estimation_windows \
   --params hand_estimation_windows.enabled=True,hand_estimation_windows.stage1_actions=$SESSION/annotation/stage1_action_resolved_chunks,hand_estimation_windows.processing_plan=$PLAN,hand_estimation_windows.output_json=$HAND_WINDOWS,hand_estimation_windows.hand_window_mode=two,hand_estimation_windows.context_expand_s=2,hand_estimation_windows.merge_gap_s=2,hand_estimation_windows.min_window_s=5,hand_estimation_windows.min_priority=high,hand_estimation_windows.fps=30
@@ -707,13 +707,13 @@ Stereo quality before depth:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines quality \
   --nodes stereo_summary_quality \
   --params stereo_summary_quality.enabled=True,stereo_summary_quality.manifest=$MANIFEST,stereo_summary_quality.output_dir=$HANDWIN_DIR/quality/stereo_summary
 
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines quality \
   --nodes stereo_segment_quality \
   --params stereo_segment_quality.enabled=True,stereo_segment_quality.manifest=$MANIFEST,stereo_segment_quality.output_dir=$HANDWIN_DIR/quality/stereo_segments,stereo_segment_quality.sample_every_s=1.0,stereo_segment_quality.orb_every_s=5.0
@@ -725,7 +725,7 @@ Fast-FoundationStereo depth:
 export DEPTH_DIR=$HANDWIN_DIR/depth/fast_foundation
 
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines depth \
   --nodes fast_foundation_stereo_depth \
   --params fast_foundation_stereo_depth.enabled=True,fast_foundation_stereo_depth.manifest=$MANIFEST,fast_foundation_stereo_depth.output_dir=$DEPTH_DIR,fast_foundation_stereo_depth.start=0,fast_foundation_stereo_depth.num_frames=120,fast_foundation_stereo_depth.scale=0.5,fast_foundation_stereo_depth.valid_iters=4,fast_foundation_stereo_depth.max_disp=192,fast_foundation_stereo_depth.max_depth_m=4.0,fast_foundation_stereo_depth.overwrite=True
@@ -741,10 +741,10 @@ anchoring has consumed them, archive the cache as uint16 millimeter PNG frames
 and an optional FFV1 lossless AVI:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/run_pipeline_stage.py \
   --dataset raw \
-  --session /home/liuyou/Documents/roboego-hand-vis/data/session_20260818_182102 \
+  --session /path/to/roboego-hand-vis/data/session_20260818_182102 \
   --stage archive_depth_cache \
   --hand-window handwin_0000_t000000_000065
 ```
@@ -752,7 +752,7 @@ PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
 Direct script form:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/depth/archive_depth_cache.py \
   --depth_dir $HANDWIN_DIR/depth/fast_foundation \
   --output_dir $HANDWIN_DIR/depth/fast_foundation_archive \
@@ -764,7 +764,7 @@ After confirming `depth_uint16_ffv1.avi` and `depth_preview.mp4`, remove the
 large float32 npy cache and temporary PNG sequence in the same run:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python \
+PYTHONPATH=. python \
   scripts/depth/archive_depth_cache.py \
   --depth_dir $HANDWIN_DIR/depth/fast_foundation \
   --output_dir $HANDWIN_DIR/depth/fast_foundation_archive \
@@ -797,10 +797,10 @@ Run HaMeR on the hand window:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes hamer_windows \
-  --params hamer_windows.enabled=True,hamer_windows.windows_json=$HAND_WINDOWS,hamer_windows.segments_root=$SEGMENTS_ROOT,hamer_windows.output_subdir=hand/hamer_raw,hamer_windows.hamer_root=/home/liuyou/Documents/hamer,hamer_windows.stage1_actions=$STAGE1,hamer_windows.hamer_python=/home/liuyou/miniconda3/envs/hamer/bin/python,hamer_windows.body_detector=regnety,hamer_windows.batch_size=1,hamer_windows.wearer_roi_x_margin_ratio=0.0,hamer_windows.wearer_roi_y_margin_ratio=0.10,hamer_windows.save_mesh=True,hamer_windows.refine_mode=strict_ego_audit,hamer_windows.only_window_ids=handwin_0000,hamer_windows.overwrite=True
+  --params hamer_windows.enabled=True,hamer_windows.windows_json=$HAND_WINDOWS,hamer_windows.segments_root=$SEGMENTS_ROOT,hamer_windows.output_subdir=hand/hamer_raw,hamer_windows.hamer_root=/path/to/hamer,hamer_windows.stage1_actions=$STAGE1,hamer_windows.hamer_python=python,hamer_windows.body_detector=regnety,hamer_windows.batch_size=1,hamer_windows.wearer_roi_x_margin_ratio=0.0,hamer_windows.wearer_roi_y_margin_ratio=0.10,hamer_windows.save_mesh=True,hamer_windows.refine_mode=strict_ego_audit,hamer_windows.only_window_ids=handwin_0000,hamer_windows.overwrite=True
 ```
 
 Then set:
@@ -818,7 +818,7 @@ Weak hand filter:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes hand_filter \
   --params hand_filter.enabled=True,hand_filter.manifest=$MANIFEST,hand_filter.refined_json=$REFINED_JSON,hand_filter.output_dir=$FILTER_DIR,hand_filter.start=0,hand_filter.num_frames=1980,hand_filter.max_bbox_jump_px=360,hand_filter.max_bbox_area_change_ratio=8.0,hand_filter.max_mano_pose_jump=0,hand_filter.max_mesh_centroid_jump=0,hand_filter.max_mesh_vertex_rmse=0,hand_filter.local_window_radius=2,hand_filter.save_vis=False
@@ -828,7 +828,7 @@ Weak hand filter:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes joints21_pose_gate \
   --params joints21_pose_gate.enabled=True,joints21_pose_gate.final_tracks_json=$FILTER_DIR/filtered_hand_tracks.json,joints21_pose_gate.output_dir=$JOINTS_GATE_DIR,joints21_pose_gate.start=0,joints21_pose_gate.num_frames=1980,joints21_pose_gate.drop_fingertips_below_wrist=True,joints21_pose_gate.image_height=1050,joints21_pose_gate.max_suspicious_wrist_y_ratio=0.55,joints21_pose_gate.min_fingertip_below_wrist_ratio=1.0,joints21_pose_gate.min_fingertip_below_wrist_delta=0.02
@@ -838,7 +838,7 @@ Depth-anchored 21 joints:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes depth_anchored_joints21 \
   --params depth_anchored_joints21.enabled=True,depth_anchored_joints21.manifest=$MANIFEST,depth_anchored_joints21.candidates_json=$JOINTS_GATE_DIR/final_hand_candidates_gated.json,depth_anchored_joints21.depth_dir=$DEPTH_DIR,depth_anchored_joints21.output_dir=$ANCHORED_DIR,depth_anchored_joints21.start=0,depth_anchored_joints21.num_frames=1980,depth_anchored_joints21.anchor_mode=wrist_palm,depth_anchored_joints21.max_depth_m=2.5,depth_anchored_joints21.overlay_frames=auto
@@ -848,7 +848,7 @@ Final hand result:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes final_hand_result \
   --params final_hand_result.enabled=True,final_hand_result.tracks_json=$JOINTS_GATE_DIR/final_hand_candidates_gated.json,final_hand_result.output_dir=$FINAL_DIR,final_hand_result.depth_anchored_json=$ANCHORED_DIR/joints21_depth_anchored.json,final_hand_result.depth_anchored_npz=$ANCHORED_DIR/joints21_depth_anchored.npz,final_hand_result.depth_anchored_summary_json=$ANCHORED_DIR/joints21_depth_anchored_summary.json,final_hand_result.copy_meshes=True
@@ -858,7 +858,7 @@ Final trajectory polish:
 
 ```bash
 /usr/bin/time -v env KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. \
-/home/liuyou/miniconda3/envs/ego/bin/kedro run \
+python -m kedro run \
   --pipelines egohand \
   --nodes final_hand_trajectory_polish \
   --params final_hand_trajectory_polish.enabled=True,final_hand_trajectory_polish.joints_json=$FINAL_DIR/joints21_depth_anchored.json,final_hand_trajectory_polish.output_dir=$FINAL_DIR,final_hand_trajectory_polish.manifest=$MANIFEST,final_hand_trajectory_polish.max_interp_gap=10,final_hand_trajectory_polish.wrist_jump_m=0.0,final_hand_trajectory_polish.max_local_wrist_deviation_m=0.0,final_hand_trajectory_polish.local_window_radius=5,final_hand_trajectory_polish.smooth_window=9,final_hand_trajectory_polish.smooth_relative_fingers=True,final_hand_trajectory_polish.write_preview=True
@@ -921,9 +921,9 @@ For already-processed stereo datasets such as Ropedia, resolve a
 `dataset_manifest.json` first:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python scripts/datasets/resolve_dataset.py \
+PYTHONPATH=. python scripts/datasets/resolve_dataset.py \
   --dataset ropedia \
-  --root /home/liuyou/Documents/ropedia_data \
+  --root /path/to/ropedia_data \
   --output_dir tmp/ropedia_dataset_manifest
 ```
 
@@ -935,13 +935,13 @@ manifest.
 Run tests:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest -q
+PYTHONPATH=. python -m pytest -q
 ```
 
 Run a subset:
 
 ```bash
-PYTHONPATH=. /home/liuyou/miniconda3/envs/ego/bin/python -m pytest tests/pipelines -q
+PYTHONPATH=. python -m pytest tests/pipelines -q
 ```
 
 Generated data, videos, model outputs, masks, meshes, and `.rrd` files should

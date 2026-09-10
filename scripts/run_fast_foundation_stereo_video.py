@@ -86,10 +86,10 @@ def to_jsonable(value):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run Fast-FoundationStereo on left/right videos and save depth in meters.")
     parser.add_argument("--manifest", required=True)
-    parser.add_argument("--fast_foundation_root", default="/home/liuyou/Documents/Fast-FoundationStereo")
+    parser.add_argument("--fast_foundation_root", default="../Fast-FoundationStereo")
     parser.add_argument(
         "--ckpt",
-        default="/home/liuyou/Documents/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth",
+        default="../Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth",
     )
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--start", type=int, default=0)

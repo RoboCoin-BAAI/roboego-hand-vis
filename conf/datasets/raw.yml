@@ -7,14 +7,14 @@ dataset:
     - right
 
 runtime:
-  kedro_bin: "{conda_root}/envs/ego/bin/kedro"
-  ego_python: "{conda_root}/envs/ego/bin/python"
-  hamer_python: "{conda_root}/envs/hamer/bin/python"
-  sam3_python: "{conda_root}/envs/py312/bin/python"
+  kedro_bin: "{ego_python} -m kedro"
+  ego_python: python
+  hamer_python: python
+  sam3_python: python
 
 paths:
-  workspace_root: /home/liuyou/Documents
-  conda_root: /home/liuyou/miniconda3
+  workspace_root: "{project_parent}"
+  conda_root: ""
   annotation_dir: "{session}/annotation"
   segments_root: "{session}/segments"
   hand_windows_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
@@ -644,7 +644,7 @@ stages:
       hamer_root: "{workspace_root}/hamer"
       stage1_actions: "{session}/annotation/stage1_action_resolved_chunks"
       wearer_regions_json: "{session}/annotation/qwen_frame_annotations_left_v4.checkpoint.json"
-      hamer_python: "{conda_root}/envs/hamer/bin/python"
+      hamer_python: "{hamer_python}"
       start: 0
       num_frames: "{num_frames}"
       ego_mode: tolerant
@@ -770,7 +770,7 @@ stages:
       interval_expand_s: 0
       interval_merge_gap_s: 0
       sam3_script: scripts/object/run_sam3_video.py
-      sam3_python: "{conda_root}/envs/py312/bin/python"
+      sam3_python: "{sam3_python}"
       checkpoint: "{workspace_root}/do-as-i-do/sam3/sam3.pt"
       fps: 30
 
@@ -781,7 +781,7 @@ stages:
     param_namespace: egoblur_temporal_face_blur
     params:
       enabled: true
-      python: "{conda_root}/envs/py312/bin/python"
+      python: "{sam3_python}"
       script: scripts/privacy/run_egoblur_temporal_face_blur.py
       input_video: "{session}/videos/left.mp4"
       output_video: "{session}/videos/left_blur.mp4"

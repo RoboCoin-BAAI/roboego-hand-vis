@@ -259,7 +259,7 @@ def make_projection_contact_sheet(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--annotation", type=Path, default=Path("/home/liuyou/Documents/ropedia_data/annotation.hdf5"))
+    parser.add_argument("--annotation", type=Path, default=Path("data/ropedia_data/annotation.hdf5"))
     parser.add_argument(
         "--alignment_report",
         type=Path,
@@ -267,8 +267,8 @@ def main() -> None:
             "tmp/ropedia_hamer_new_method_shape_preserved_000000_000299_area0007_recovered_z_interp_layered/hand_depth_mesh_alignment_report.json"
         ),
     )
-    parser.add_argument("--video", type=Path, default=Path("/home/liuyou/Documents/ropedia_data/stereo_left.mp4"))
-    parser.add_argument("--mano_model_dir", type=Path, default=Path("/home/liuyou/Documents/hamer/_DATA/data/mano"))
+    parser.add_argument("--video", type=Path, default=Path("data/ropedia_data/stereo_left.mp4"))
+    parser.add_argument("--mano_model_dir", type=Path, default=Path("../hamer/_DATA/data/mano"))
     parser.add_argument("--output_dir", type=Path, default=Path("tmp/ropedia_official_hand_eval_000000_000299"))
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--num_frames", type=int, default=300)

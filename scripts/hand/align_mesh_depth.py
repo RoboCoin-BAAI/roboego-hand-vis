@@ -38,7 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no_save_rrd", action="store_true")
     parser.add_argument("--scene_point_stride", type=int, default=4)
     parser.add_argument("--max_scene_points", type=int, default=90000)
-    parser.add_argument("--mano_model_dir", default="/home/liuyou/Documents/hamer/_DATA/data/mano")
+    parser.add_argument("--mano_model_dir", default="../hamer/_DATA/data/mano")
     parser.add_argument("--mesh_mask_source", default="hamer_overlay_diff")
     parser.add_argument("--mesh_mask_padding_px", type=int, default=2)
     parser.add_argument("--overlay_diff_threshold", type=float, default=8.0)

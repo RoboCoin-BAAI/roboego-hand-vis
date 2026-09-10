@@ -132,12 +132,12 @@ accuracy requires ground truth or an external loop-closure reference.
 Export the trajectory to Rerun from the project Python environment:
 
 ```bash
-/home/user/miniconda3/envs/egoall/bin/python \
+python \
   scripts/vio/export_trajectory_rerun.py \
   --trajectory tmp/openvins_session_224442_20s/trajectory/trajectory.npz \
   --output tmp/openvins_session_224442_20s/trajectory/trajectory.rrd
 
-/home/user/miniconda3/envs/egoall/bin/rerun \
+rerun \
   tmp/openvins_session_224442_20s/trajectory/trajectory.rrd
 ```
 
@@ -149,7 +149,7 @@ sample the left camera as JPEG frames. For a long recording, the Rerun view can
 also sample poses while the source `trajectory.npz` remains at its full rate:
 
 ```bash
-/home/user/miniconda3/envs/egoall/bin/python \
+python \
   scripts/vio/export_trajectory_rerun.py \
   --trajectory tmp/openvins_session_224442_full/trajectory/trajectory.npz \
   --output tmp/openvins_session_224442_full/trajectory/trajectory_with_left.rrd \
@@ -172,7 +172,7 @@ streaming H.264 comparison video instead. It holds only the current frame and
 plot canvas in memory:
 
 ```bash
-/home/user/miniconda3/envs/egoall/bin/python \
+python \
   scripts/vio/export_camera_trajectory_video.py \
   --video /home/user/ego_data/session_20260804_224442/videos/left.mp4 \
   --trajectory tmp/openvins_session_224442_full/trajectory/trajectory.npz \

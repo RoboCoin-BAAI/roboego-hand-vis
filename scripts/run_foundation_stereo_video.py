@@ -82,10 +82,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--right_video", default="")
     parser.add_argument("--intrinsics_json", default="")
     parser.add_argument("--intrinsics_camera", default="left")
-    parser.add_argument("--foundation_root", default="/home/liuyou/Documents/FoundationStereo")
+    parser.add_argument("--foundation_root", default="../FoundationStereo")
     parser.add_argument(
         "--ckpt",
-        default="/home/liuyou/Documents/FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth",
+        default="../FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth",
     )
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--start", type=int, default=0)

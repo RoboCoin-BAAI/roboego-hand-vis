@@ -7,6 +7,7 @@ import pytest
 
 from roboego_hand_vis.pipeline_launcher import (
     LauncherRequest,
+    PROJECT_ROOT,
     WorkflowBlockedError,
     build_stage_invocations,
     load_dataset_config,
@@ -55,7 +56,7 @@ dataset:
 runtime:
   kedro_bin: "{conda_root}/envs/ego/bin/kedro"
 paths:
-  conda_root: /opt/miniconda3
+  conda_root: /opt/python-runtime
 stages:
   archive:
     pipeline: depth
@@ -74,7 +75,49 @@ stages:
         LauncherRequest(dataset="custom", config=config_path, session=tmp_path / "session", stage="archive")
     )[0]
 
-    assert invocation.kedro_bin == "/opt/miniconda3/envs/ego/bin/kedro"
+    assert invocation.kedro_bin == "/opt/python-runtime/envs/ego/bin/kedro"
+
+
+def test_python_override_replaces_kedro_runtime_and_stage_python(tmp_path: Path):
+    config_path = tmp_path / "dataset.yml"
+    config_path.write_text(
+        """
+dataset:
+  fps: 30
+runtime:
+  kedro_bin: "{ego_python} -m kedro"
+  ego_python: "{conda_root}/envs/ego/bin/python"
+paths:
+  conda_root: /opt/python-runtime
+stages:
+  archive:
+    pipeline: depth
+    node: archive_depth_cache
+    scope: session
+    param_namespace: archive_depth_cache
+    params:
+      enabled: true
+      python: "{ego_python}"
+      depth_dir: "{session}/depth/fast_foundation"
+      output_dir: "{session}/depth/fast_foundation_archive"
+""",
+        encoding="utf-8",
+    )
+
+    invocation = build_stage_invocations(
+        LauncherRequest(
+            dataset="custom",
+            config=config_path,
+            session=tmp_path / "session",
+            stage="archive",
+            python="/custom/python",
+        )
+    )[0]
+    command = render_invocation_command(invocation)
+
+    assert invocation.kedro_bin == "/custom/python -m kedro"
+    assert command.startswith("KEDRO_DISABLE_TELEMETRY=1 PYTHONPATH=. /custom/python -m kedro run")
+    assert invocation.params["archive_depth_cache.python"] == "/custom/python"
 
 
 def test_raw_dataset_external_tool_paths_render_from_workspace_root(tmp_path: Path):
@@ -90,10 +133,11 @@ def test_raw_dataset_external_tool_paths_render_from_workspace_root(tmp_path: Pa
         LauncherRequest(dataset="raw", session=session, stage="sam3_objects", hand_window=str(session))
     )[0]
 
-    assert fast_invocation.params["fast_foundation_stereo_depth.fast_foundation_root"] == "/home/liuyou/Documents/Fast-FoundationStereo"
-    assert hamer_invocation.params["hamer_unit.hamer_root"] == "/home/liuyou/Documents/hamer"
-    assert hamer_invocation.params["hamer_unit.hamer_python"] == "/home/liuyou/miniconda3/envs/hamer/bin/python"
-    assert sam_invocation.params["sam3_hand_object_segmentation.checkpoint"] == "/home/liuyou/Documents/do-as-i-do/sam3/sam3.pt"
+    workspace_root = str(PROJECT_ROOT.parent)
+    assert fast_invocation.params["fast_foundation_stereo_depth.fast_foundation_root"] == f"{workspace_root}/Fast-FoundationStereo"
+    assert hamer_invocation.params["hamer_unit.hamer_root"] == f"{workspace_root}/hamer"
+    assert hamer_invocation.params["hamer_unit.hamer_python"] == "python"
+    assert sam_invocation.params["sam3_hand_object_segmentation.checkpoint"] == f"{workspace_root}/do-as-i-do/sam3/sam3.pt"
 
 
 def test_qwen_annotation_gates_on_video_simple_quality_without_window_filter(tmp_path: Path):

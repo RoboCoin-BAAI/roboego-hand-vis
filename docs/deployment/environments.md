@@ -19,8 +19,8 @@ Use this for Kedro, data quality, semantic post-processing, materialization,
 depth cache archival, and most lightweight nodes.
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
-source /home/liuyou/miniconda3/etc/profile.d/conda.sh
+cd /path/to/roboego-hand-vis
+source /path/to/conda/etc/profile.d/conda.sh
 conda create -n ego python=3.11 -y
 conda activate ego
 pip install -e ".[dev]"
@@ -44,18 +44,18 @@ export DASHSCOPE_API_KEY=...
 Use this for Fast-FoundationStereo and SAM3 subprocesses.
 
 ```bash
-source /home/liuyou/miniconda3/etc/profile.d/conda.sh
+source /path/to/conda/etc/profile.d/conda.sh
 conda create -n py312 python=3.12 -y
 conda activate py312
-cd /home/liuyou/Documents/roboego-hand-vis
+cd /path/to/roboego-hand-vis
 pip install -e ".[dev]"
 ```
 
 External repositories/checkpoints used by depth and SAM3:
 
 ```text
-/home/liuyou/Documents/Fast-FoundationStereo
-/home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
+/path/to/Fast-FoundationStereo
+/path/to/do-as-i-do/sam3/sam3.pt
 ```
 
 SAM3 runner entrypoint is now local to this repository:
@@ -69,13 +69,13 @@ The runner imports the SAM3 backend in this order:
 ```text
 SAM3_PKG_DIR
 <roboego-hand-vis>/external/sam3
-/home/liuyou/Documents/do-as-i-do/reconstruction/modules/sam3
+/path/to/do-as-i-do/reconstruction/modules/sam3
 ```
 
 Recommended explicit setting during migration:
 
 ```bash
-export SAM3_PKG_DIR=/home/liuyou/Documents/do-as-i-do/reconstruction/modules/sam3
+export SAM3_PKG_DIR=/path/to/do-as-i-do/reconstruction/modules/sam3
 ```
 
 This keeps the script dependency inside `roboego-hand-vis`; only the SAM3
@@ -87,14 +87,14 @@ directly.
 Use this only for hand mesh inference.
 
 ```text
-/home/liuyou/Documents/hamer
-/home/liuyou/Documents/hamer/_DATA/data/mano
+/path/to/hamer
+/path/to/hamer/_DATA/data/mano
 ```
 
 The Kedro stage launches HaMeR as a subprocess, usually with:
 
 ```text
-/home/liuyou/miniconda3/envs/hamer/bin/python
+python
 ```
 
 ## Optional Restoration Environment
@@ -102,7 +102,7 @@ The Kedro stage launches HaMeR as a subprocess, usually with:
 Use this only when running video deblurring before depth estimation.
 
 ```text
-/home/liuyou/Documents/RealVDeblur
+/path/to/RealVDeblur
 ```
 
 Typical large model assets are kept outside this repository.
@@ -114,20 +114,20 @@ local paths:
 
 ```text
 Fast-FoundationStereo:
-  /home/liuyou/Documents/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+  /path/to/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
 
 Legacy FoundationStereo:
-  /home/liuyou/Documents/FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth
+  /path/to/FoundationStereo/pretrained_models/23-51-11/model_best_bp2.pth
 
 HaMeR MANO assets:
-  /home/liuyou/Documents/hamer/_DATA/data/mano
+  /path/to/hamer/_DATA/data/mano
 
 SAM3:
-  /home/liuyou/Documents/do-as-i-do/sam3/sam3.pt
+  /path/to/do-as-i-do/sam3/sam3.pt
 
 RealVDeblur:
-  /home/liuyou/Documents/RealVDeblur/checkpoints/Wan2.1-T2V-1.3B
-  /home/liuyou/Documents/RealVDeblur/checkpoints/realvdeblur_dmd.safetensors
+  /path/to/RealVDeblur/checkpoints/Wan2.1-T2V-1.3B
+  /path/to/RealVDeblur/checkpoints/realvdeblur_dmd.safetensors
 ```
 
 If a machine uses different paths, override them in `conf/datasets/raw.yml` or
@@ -143,19 +143,19 @@ pass stage params from the launcher.
 | `post_annotation_actions` | `ego` | Qwen API key for resolver |
 | `processing_plan` | `ego` | none |
 | `hand_windows` | `ego` | none |
-| `base_prepare` | `ego` | Qwen API key, `/home/liuyou/Documents/RoboEgoPipe` |
+| `base_prepare` | `ego` | Qwen API key, `/path/to/RoboEgoPipe` |
 | `hand_visibility_gate` | `ego` | none |
 | `materialize_session` | `ego` | none |
 | `materialize_hand_windows` | `ego` | none |
 | `materialize_segment_hand_windows` | `ego` | none |
-| `prepare_stereo` | `ego` | `/home/liuyou/Documents/RoboEgoPipe` |
+| `prepare_stereo` | `ego` | `/path/to/RoboEgoPipe` |
 | `stereo_summary_quality` | `ego` | none |
 | `stereo_quality` | `ego` | none |
-| `fast_foundation_depth` | `ego` launcher + `py312` subprocess | `/home/liuyou/Documents/Fast-FoundationStereo` |
+| `fast_foundation_depth` | `ego` launcher + `py312` subprocess | `/path/to/Fast-FoundationStereo` |
 | `depth_numeric_quality` | `ego` | none |
 | `archive_depth_cache` | `ego` | none |
 | `phase1_depth` | `ego` launcher + `py312` subprocess | RoboEgoPipe, Fast-FoundationStereo |
-| `hamer` | `ego` launcher + `hamer` subprocess | `/home/liuyou/Documents/hamer`, MANO assets |
+| `hamer` | `ego` launcher + `hamer` subprocess | `/path/to/hamer`, MANO assets |
 | `hand_filter` | `ego` | none |
 | `joints21_pose_gate` | `ego` | none |
 | `depth_anchored_joints21` | `ego` | depth PNG cache |
@@ -166,7 +166,7 @@ pass stage params from the launcher.
 Planning machine:
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
+cd /path/to/roboego-hand-vis
 python scripts/run_pipeline_stage.py \
   --dataset raw \
   --session /path/to/session \
@@ -177,7 +177,7 @@ python scripts/run_pipeline_stage.py \
 Depth machine:
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
+cd /path/to/roboego-hand-vis
 python scripts/run_pipeline_stage.py \
   --dataset raw \
   --session /path/to/session \
@@ -188,8 +188,8 @@ python scripts/run_pipeline_stage.py \
 SAM3 object segmentation:
 
 ```bash
-cd /home/liuyou/Documents/roboego-hand-vis
-export SAM3_PKG_DIR=/home/liuyou/Documents/do-as-i-do/reconstruction/modules/sam3
+cd /path/to/roboego-hand-vis
+export SAM3_PKG_DIR=/path/to/do-as-i-do/reconstruction/modules/sam3
 python scripts/run_pipeline_stage.py \
   --dataset raw \
   --session /path/to/session \

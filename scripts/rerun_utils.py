@@ -8,7 +8,7 @@ import rerun as rr
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-OLD_ROBOEGO_ROOT = Path("/home/liuyou/Documents/RoboEgoPipe")
+OLD_ROBOEGO_ROOT = Path("../RoboEgoPipe")
 
 
 def depth_to_vis(depth_m: np.ndarray, min_m: float, max_m: float) -> np.ndarray:

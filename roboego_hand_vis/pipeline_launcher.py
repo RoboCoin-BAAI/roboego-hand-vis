@@ -27,6 +27,7 @@ class LauncherRequest:
     session: Path
     stage: str
     config: Path | None = None
+    python: str | None = None
     unit: str | None = None
     hand_window: str | None = None
     all_hand_windows: bool = False
@@ -331,7 +332,7 @@ def _build_invocation(
 
 def _invocation_argv(invocation: StageInvocation) -> list[str]:
     return [
-        invocation.kedro_bin,
+        *shlex.split(invocation.kedro_bin),
         "run",
         "--pipelines",
         invocation.pipeline,
@@ -445,7 +446,7 @@ def _build_contexts(
     scope: str,
 ) -> list[dict[str, str]]:
     session = request.session.expanduser().resolve()
-    base_context = _base_context(config, session)
+    base_context = _base_context(config, session, python_override=request.python)
     if scope == "session":
         return [base_context]
     if scope == "prepared_unit":
@@ -477,13 +478,15 @@ def _build_prepared_unit_contexts(*, base_context: dict[str, str], request: Laun
     return [_unit_context(base_context, unit) for unit in units]
 
 
-def _base_context(config: dict[str, Any], session: Path) -> dict[str, str]:
+def _base_context(config: dict[str, Any], session: Path, python_override: str | None = None) -> dict[str, str]:
     dataset = config.get("dataset") or {}
     fps = str(dataset.get("fps") or 30)
     paths = config.get("paths") or {}
     context = {
         "session": str(session),
         "session_name": session.name,
+        "project_root": str(PROJECT_ROOT),
+        "project_parent": str(PROJECT_ROOT.parent),
         "fps": fps,
         "annotation_dir": str(session / "annotation"),
         "segments_root": str(session / "segments"),
@@ -493,6 +496,19 @@ def _base_context(config: dict[str, Any], session: Path) -> dict[str, str]:
     for key, value in paths.items():
         if isinstance(value, str):
             context[key] = value.format(**context)
+    runtime = config.get("runtime") or {}
+    if isinstance(runtime, dict):
+        for _ in range(3):
+            for key, value in runtime.items():
+                if isinstance(value, str):
+                    try:
+                        context[key] = value.format(**context)
+                    except KeyError:
+                        continue
+    if python_override:
+        for key in ("runtime_python", "ego_python", "hamer_python", "sam3_python", "realvdeblur_python"):
+            context[key] = python_override
+        context["kedro_bin"] = f"{python_override} -m kedro"
     return context
 
 

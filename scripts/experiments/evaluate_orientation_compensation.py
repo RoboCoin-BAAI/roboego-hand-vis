@@ -63,13 +63,13 @@ def evaluate(pred_all: np.ndarray, official_all: np.ndarray) -> Dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate orientation-aware surface compensation against Ropedia official joints.")
-    parser.add_argument("--annotation", type=Path, default=Path("/home/liuyou/Documents/ropedia_data/annotation.hdf5"))
+    parser.add_argument("--annotation", type=Path, default=Path("data/ropedia_data/annotation.hdf5"))
     parser.add_argument(
         "--alignment_report",
         type=Path,
         default=Path("tmp/ropedia_hamer_new_method_shape_preserved_000000_000299_area0007_recovered_z_interp_layered/hand_depth_mesh_alignment_report.json"),
     )
-    parser.add_argument("--mano_model_dir", type=Path, default=Path("/home/liuyou/Documents/hamer/_DATA/data/mano"))
+    parser.add_argument("--mano_model_dir", type=Path, default=Path("../hamer/_DATA/data/mano"))
     parser.add_argument("--output_dir", type=Path, default=Path("tmp/ropedia_orientation_compensation_eval"))
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--num_frames", type=int, default=300)

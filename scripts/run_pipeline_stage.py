@@ -34,6 +34,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hand-window", default="", help="Hand-window id or absolute path for hand-window scoped stages.")
     parser.add_argument("--unit", default="", help="Explicit unit root for unit-scoped stages.")
     parser.add_argument("--all-hand-windows", action="store_true", help="Run one command per discovered hand window.")
+    parser.add_argument("--python", default="", help="Python executable used to run Kedro and stage subprocesses.")
     parser.add_argument("--dry-run", action="store_true", help="Print generated command(s) without running them.")
     parser.add_argument("--force", action="store_true", help="Re-run workflow steps that already succeeded.")
     return parser.parse_args()
@@ -47,6 +48,7 @@ def main() -> None:
         config=Path(args.config).expanduser() if args.config else None,
         session=Path(args.session).expanduser(),
         stage=args.stage,
+        python=args.python or None,
         unit=args.unit or None,
         hand_window=args.hand_window or None,
         all_hand_windows=bool(args.all_hand_windows),

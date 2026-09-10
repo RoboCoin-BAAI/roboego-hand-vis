@@ -67,7 +67,7 @@ def build_legacy_alignment_argv(
     no_save_rrd: bool = False,
     scene_point_stride: int = 4,
     max_scene_points: int = 90000,
-    mano_model_dir: str | Path = "/home/liuyou/Documents/hamer/_DATA/data/mano",
+    mano_model_dir: str | Path = "../hamer/_DATA/data/mano",
     mesh_mask_source: str = "hamer_overlay_diff",
     mesh_mask_padding_px: int = 2,
     overlay_diff_threshold: float = 8.0,

@@ -19,7 +19,7 @@ from roboego_hand_vis.egohand.track_rerun import build_final_smoothed_meshes, lo
 from scripts.export_depth_pointcloud import read_rgb_frame  # noqa: E402
 
 
-ROOT = Path("/home/liuyou/Documents/roboego-hand-vis")
+ROOT = Path(".")
 TRACK_DIR = ROOT / "tmp/baai_ego_hand_tracking_900_identity_gate"
 TRACKS_JSON = TRACK_DIR / "ego_hand_tracks.json"
 ALIGNMENT_REPORT = ROOT / "tmp/baai_hand_depth_alignment_900/hand_depth_mesh_alignment_report.json"

@@ -39,7 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", required=True)
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--num_frames", type=int, default=240)
-    parser.add_argument("--mano_model_dir", default="/home/liuyou/Documents/hamer/_DATA/data/mano")
+    parser.add_argument("--mano_model_dir", default="../hamer/_DATA/data/mano")
     parser.add_argument("--anchor_mode", choices=["wrist", "palm", "wrist_palm"], default="wrist_palm")
     parser.add_argument("--anchor_joint_index", type=int, default=0)
     parser.add_argument("--depth_window_radius_px", type=int, default=4)
