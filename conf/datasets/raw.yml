@@ -797,3 +797,12 @@ stages:
       smooth_window: 5
       crf: 18
       preset: medium
+
+  video_privacy_blur:
+    pipeline: privacy
+    node: video_privacy_blur
+    scope: session
+    param_namespace: video_privacy_blur
+    params:
+      enabled: true
+      session_dir: "{session}"

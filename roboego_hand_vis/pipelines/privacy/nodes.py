@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from .video_blur import run_video_privacy_blur_node  # noqa: F401
+
 
 def _optional_str(value: Any) -> str:
     if value is None:

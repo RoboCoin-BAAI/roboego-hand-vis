@@ -5,7 +5,7 @@ ego-hand data. The current architecture is organized around stage pipelines
 instead of one-off shell scripts:
 
 ```text
-quality -> semantic -> datasets -> restoration -> depth -> egohand -> objects
+quality -> semantic -> datasets -> restoration -> depth -> egohand -> objects -> privacy
 ```
 
 The main use case is processing a raw headband session into selected hand-object
@@ -259,6 +259,7 @@ restoration  Optional RealVDeblur stereo restoration
 depth        FoundationStereo and Fast-FoundationStereo
 egohand      HaMeR, weak hand filtering, 21-joint pose gate, depth anchoring, final hand result
 objects      SAM3 object segmentation for hand-object interaction windows
+privacy      Final session video face blur, after the processing stages
 ```
 
 All runtime parameters live in:
@@ -388,6 +389,7 @@ depth_anchored_joints21
 final_hand_result
 final_hand_trajectory_polish
 sam3_objects
+video_privacy_blur
 ```
 
 ## Raw Headband Flow
@@ -886,6 +888,120 @@ $HANDWIN_DIR/objects/<object_id>/clip_XXXX_tXXXXXX_XXXXXX/
 The SAM3 runner entrypoint is local: `scripts/object/run_sam3_video.py`.
 Set `SAM3_PKG_DIR` when the SAM3 backend module is not installed in the active
 environment.
+
+## Session Video Privacy Blur
+
+The `video_privacy_blur` node in the `privacy` pipeline is the final video
+privacy stage after `objects`. In the default Kedro graph it depends on the
+completion reports from `quality`, `semantic`, `datasets`, `restoration`,
+`depth`, `egohand`, and `objects`, so it cannot start until those stages finish,
+including with a parallel runner. This constraint does not change the existing
+dependencies among those stages.
+
+The node remains disabled by default. Enable it in `conf/base/parameters.yml`
+when running the full default pipeline. The named `privacy` pipeline and stage
+launcher can still run independently on an existing session; they do not rerun
+upstream stages. `base_prepare`, `phase1_depth`, and the original EgoBlur node
+remain unchanged.
+
+The implementation is part of the main project at
+`roboego_hand_vis/video_privacy_blur/`, with tests under `tests/privacy/`.
+There is no separate package installation or nested project configuration.
+Install the main project's optional privacy dependencies:
+
+```bash
+pip install -e ".[privacy]"
+```
+
+Configure `video_privacy_blur` in `conf/base/parameters.yml`. Relative paths
+resolve from this project root. By default, `python: python` uses the current
+runtime; an explicit interpreter path remains supported. Processing runs in a
+child process using `roboego_hand_vis.video_privacy_blur.batch`; worker and
+resource-probe processes use the same project package and interpreter. Model
+libraries are not imported into Kedro merely by registering the node.
+
+FFmpeg/ffprobe must be on `PATH`. The default YOLO face weights are included at
+`conf/models/yolov8n-face.pt` (6,389,512 bytes). Both the node and batch CLI use this
+project-local model by default; `face_weights` can override it. The model's
+[source and SHA-256 record](conf/models/yolov8n-face.pt.source.json) is included.
+Git tracks this model and its source record; other model files remain ignored.
+No model download is needed for the default configuration.
+
+Run on one session:
+
+```bash
+python scripts/run_pipeline_stage.py \
+  --dataset raw \
+  --session /path/to/session \
+  --stage video_privacy_blur
+```
+
+Use `--dry-run` to print the Kedro command without processing or GPU warm-up.
+The launcher updates the existing `pipeline_state.json`; the batch launcher and
+dashboard support the new stage through the existing mechanisms. A direct node
+invocation is also available:
+
+```bash
+python -m kedro run --pipelines privacy --nodes video_privacy_blur \
+  --params 'video_privacy_blur.enabled=True,video_privacy_blur.session_dir=/path/to/session'
+```
+
+`camera_streams: auto` processes existing `videos/left.mp4`, `right.mp4`,
+`bleft.mp4`, and `bright.mp4`, ignoring derived videos. Set `[left, right]` in
+YAML or `left|right` in a parameter override to select a subset. Missing
+explicitly selected cameras and sessions without original camera videos fail.
+
+Defaults are Gaussian blur, confidence `0.35`, inference size `960`, box scale
+`1.35`, blur-strength divisor `1`, and temporal filling disabled (`track_gap: 0`).
+`method` also accepts `pixelate` and `egoblur`. `jobs: 1` limits per-session file
+concurrency; `auto` enables resource-based planning. `threads: 2`, `retries: 1`,
+and optional `timeout` (seconds per file attempt, including validation) control
+resource use. With multiple sessions, total concurrency also depends on the
+batch launcher's worker count.
+
+Default outputs:
+
+```text
+<session>/privacy/video_privacy_blur/
+├── left_blurred.mp4
+├── right_blurred.mp4
+├── session_report.json
+├── run.log
+└── .batch/
+    ├── jobs/
+    ├── logs/
+    ├── previous/
+    └── summary.json
+```
+
+Output names use the input stem plus `_blurred.mp4`: `left.mp4` becomes
+`left_blurred.mp4`, and `right.mp4` becomes `right_blurred.mp4`. Subdirectories
+are preserved. Inputs such as `a.mp4` and `a.mov` in the same directory are
+rejected because they would produce the same output. Previous
+`left.mp4.blurred.mp4` files are retained; the first run after this change
+creates the new names, and subsequent runs resume against them.
+
+The session report maps cameras to inputs/outputs and records counts, failures,
+and log paths. A file failure does not stop other files; any failure makes the
+node and stage fail. Keep `.batch/` for recovery. Re-running verifies the input,
+configuration, model, source/runtime signature, and output before skipping a
+completed file. Unmanaged existing outputs are not overwritten. Ctrl-C or
+SIGTERM is forwarded to the batch processes for cleanup.
+
+Backend tests now belong to the main project test suite. Run the focused tests
+with the privacy and development dependencies installed:
+
+```bash
+pip install -e ".[dev,privacy]"
+PYTHONPATH=. python -m pytest tests/privacy tests/pipelines/test_video_privacy_blur.py -q
+```
+
+Raw videos, calibration, sensor timestamps, and downstream manifests are not
+modified. Outputs are silent H.264 MP4 videos with the original frame count,
+dimensions, and constant frame interval, starting at timestamp zero. Variable
+frame rate, rotation metadata, and odd dimensions are rejected by the backend.
+File validation establishes video integrity, not face-detection coverage; review
+the processed video before sharing.
 
 ## Optional Nodes
 

@@ -622,3 +622,25 @@ legacy_export_joints21:
   bone_radius_m:
   rgb_joint_radius_px:
   rgb_bone_radius_px:
+
+# Opt-in session face blur. Relative paths resolve from the project root.
+# Uses the project video_privacy_blur package in a child interpreter; never replaces raw videos.
+video_privacy_blur:
+  enabled: false
+  python: python  # Set an interpreter with the project privacy optional dependencies.
+  session_dir: ""
+  camera_streams: auto  # Existing left/right/bleft/bright; or [left, right].
+  output_dir: ""  # Default: <session>/privacy/video_privacy_blur
+  face_weights: conf/models/yolov8n-face.pt
+  device: auto  # auto, cpu, cuda, mps
+  conf: 0.35
+  imgsz: 960
+  scale: 1.35
+  method: gaussian  # gaussian, pixelate, egoblur
+  blur_strength: 1
+  track_gap: 0
+  track_scale: 1.25
+  jobs: 1  # Positive integer or auto. Per-session file concurrency.
+  threads: 2
+  retries: 1
+  timeout: null  # Seconds per file attempt, including output validation.

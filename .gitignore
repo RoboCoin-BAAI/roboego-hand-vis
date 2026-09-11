@@ -40,3 +40,9 @@ checkpoints/
 outputs/
 wandb/
 *.log
+
+# Version only the default privacy face model and its source/checksum record.
+!/conf/models/
+/conf/models/*
+!/conf/models/yolov8n-face.pt
+!/conf/models/yolov8n-face.pt.source.json

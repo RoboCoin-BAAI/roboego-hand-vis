@@ -32,5 +32,13 @@ def register_pipelines() -> dict[str, Pipeline]:
         "export": export.create_pipeline(),
         "experiments": experiments.create_pipeline(),
     }
-    pipelines["__default__"] = sum(pipelines.values())
+    # Privacy consumes completion reports only in the default graph, ensuring
+    # it starts after the processing stages even with a parallel Kedro runner.
+    processing_stages = ("quality", "semantic", "datasets", "restoration", "depth", "egohand", "objects")
+    completion_reports = sorted(set().union(*(pipelines[name].outputs() for name in processing_stages)))
+    default_privacy = privacy.create_pipeline(after=completion_reports)
+    pipelines["__default__"] = sum(
+        (pipeline for name, pipeline in pipelines.items() if name != "privacy"),
+        default_privacy,
+    )
     return pipelines
