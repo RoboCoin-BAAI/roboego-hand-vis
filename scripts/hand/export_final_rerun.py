@@ -15,9 +15,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from roboego_hand_vis.egohand.orientation import load_mano_regressors  # noqa: E402
-from roboego_hand_vis.egohand.rerun_logging import log_mesh3d, log_points2d, rgb_overlay_entity, side_mesh_entity  # noqa: E402
-from roboego_hand_vis.egohand.temporal_tracking import SIDES  # noqa: E402
+from roboego_hand_vis.hand_depth_alignment.orientation import load_mano_regressors  # noqa: E402
+from roboego_hand_vis.hand_rerun_visualization.rerun_logging import log_mesh3d, log_points2d, rgb_overlay_entity, side_mesh_entity  # noqa: E402
+from roboego_hand_vis.hand_rerun_visualization.temporal_tracking import SIDES  # noqa: E402
+from roboego_hand_vis.common.depth_io import load_depth_frame  # noqa: E402
 from scripts.export_depth_pointcloud import ROPEDIA_K, depth_to_pointcloud, read_rgb_frame  # noqa: E402
 from scripts.rerun_utils import depth_to_vis, log_pinhole  # noqa: E402
 from scripts.track_and_smooth_ego_hands import (  # noqa: E402
@@ -43,10 +44,7 @@ def iter_export_offsets(args: argparse.Namespace) -> Iterator[tuple[int, int]]:
 
 
 def load_depth(depth_dir: Path, frame_idx: int) -> np.ndarray:
-    path = depth_dir / f"frame_{frame_idx:06d}_foundation_depth_m.npy"
-    if not path.exists():
-        raise FileNotFoundError(path)
-    return np.load(path).astype(np.float32)
+    return load_depth_frame(depth_dir, frame_idx).astype(np.float32)
 
 
 def parse_args() -> argparse.Namespace:
