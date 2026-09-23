@@ -1,20 +1,25 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 
+TOOL_DIR = Path(__file__).resolve().parent
+
 try:
-    from . import local_raw_quality
-    from .local_raw_quality import DEFAULT_CAMERA_STREAMS, DEFAULT_VIDEO_EXT
-    from .local_raw_rules import evaluate_quality_report
-    from .upload_core import find_all_cp_cs_folders
-except ImportError:
-    import local_raw_quality
-    from local_raw_quality import DEFAULT_CAMERA_STREAMS, DEFAULT_VIDEO_EXT
-    from local_raw_rules import evaluate_quality_report
-    from upload_core import find_all_cp_cs_folders
+    from roboego_hand_vis.windows_l1_tool import local_raw_quality
+    from roboego_hand_vis.windows_l1_tool.local_raw_quality import DEFAULT_CAMERA_STREAMS, DEFAULT_VIDEO_EXT
+    from roboego_hand_vis.windows_l1_tool.local_raw_rules import evaluate_quality_report
+    from roboego_hand_vis.windows_l1_tool.upload_core import find_all_cp_cs_folders
+except ModuleNotFoundError:
+    if str(TOOL_DIR) not in sys.path:
+        sys.path.insert(0, str(TOOL_DIR))
+    import local_raw_quality  # noqa: E402
+    from local_raw_quality import DEFAULT_CAMERA_STREAMS, DEFAULT_VIDEO_EXT  # noqa: E402
+    from local_raw_rules import evaluate_quality_report  # noqa: E402
+    from upload_core import find_all_cp_cs_folders  # noqa: E402
 
 
 DEFAULT_FAILED_REPORT_NAME = "l1_quality_failed_sessions.json"

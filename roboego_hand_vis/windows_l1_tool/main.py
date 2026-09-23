@@ -3,26 +3,30 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+TOOL_DIR = Path(__file__).resolve().parent
+
 try:
-    from .batch_quality import batch_quality_check, discover_cp_cs_sessions
-    from .upload_core import (
+    from roboego_hand_vis.windows_l1_tool.batch_quality import batch_quality_check, discover_cp_cs_sessions
+    from roboego_hand_vis.windows_l1_tool.upload_core import (
         DEFAULT_AK,
         DEFAULT_PROJECT_ID,
         DEFAULT_SK,
         parse_args as parse_upload_args,
         scan_and_upload_once,
     )
-    from .upload_orchestrator import upload_quality_passed_sessions
-except ImportError:
-    from batch_quality import batch_quality_check, discover_cp_cs_sessions
-    from upload_core import (
-    DEFAULT_AK,
-    DEFAULT_PROJECT_ID,
-    DEFAULT_SK,
-    parse_args as parse_upload_args,
-    scan_and_upload_once,
+    from roboego_hand_vis.windows_l1_tool.upload_orchestrator import upload_quality_passed_sessions
+except ModuleNotFoundError:
+    if str(TOOL_DIR) not in sys.path:
+        sys.path.insert(0, str(TOOL_DIR))
+    from batch_quality import batch_quality_check, discover_cp_cs_sessions  # noqa: E402
+    from upload_core import (  # noqa: E402
+        DEFAULT_AK,
+        DEFAULT_PROJECT_ID,
+        DEFAULT_SK,
+        parse_args as parse_upload_args,
+        scan_and_upload_once,
     )
-    from upload_orchestrator import upload_quality_passed_sessions
+    from upload_orchestrator import upload_quality_passed_sessions  # noqa: E402
 
 
 def _prompt_roots() -> list[Path]:

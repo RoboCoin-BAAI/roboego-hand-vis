@@ -1,15 +1,20 @@
 from __future__ import annotations
 
 import json
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 
+TOOL_DIR = Path(__file__).resolve().parent
+
 try:
-    from .upload_core import MANIFEST_FILENAME, load_uploaded_folders, upload_folder
-except ImportError:
-    from upload_core import MANIFEST_FILENAME, load_uploaded_folders, upload_folder
+    from roboego_hand_vis.windows_l1_tool.upload_core import MANIFEST_FILENAME, load_uploaded_folders, upload_folder
+except ModuleNotFoundError:
+    if str(TOOL_DIR) not in sys.path:
+        sys.path.insert(0, str(TOOL_DIR))
+    from upload_core import MANIFEST_FILENAME, load_uploaded_folders, upload_folder  # noqa: E402
 
 
 DEFAULT_SKIPPED_UPLOAD_NAME = "raw_headband_quality_skipped_uploads.json"

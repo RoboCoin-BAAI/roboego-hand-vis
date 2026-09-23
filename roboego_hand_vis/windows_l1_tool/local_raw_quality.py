@@ -13,12 +13,6 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
-
-
 def find_named_video(video_dir: str | Path, name: str, preferred_ext: str = ".mp4") -> Path:
     video_dir = Path(video_dir)
     preferred = video_dir / f"{name}{preferred_ext}"
