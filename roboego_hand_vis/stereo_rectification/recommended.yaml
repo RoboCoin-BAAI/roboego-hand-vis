@@ -1,0 +1,17 @@
+stage: stereo_rectification
+runtime:
+  recommended_env: py312
+io:
+  session: "{session}"
+  dataset_adapter: wumei01
+parameters:
+  model: equidistant
+  balance: 0.0
+  width: 1600
+  height: 900
+  overwrite: false
+  dry_run: false
+notes:
+  - session 是本阶段唯一数据输入目录。
+  - session 下需要包含 videos/left.mp4、videos/right.mp4 和 calibrations。
+  - --roboegopipe_root 是旧参数兼容占位，新实现不再依赖外部 RoboEgoPipe 仓库。

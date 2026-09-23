@@ -1,0 +1,19 @@
+paths:
+  egohandkit_root: /home/liuyou/Documents/EgoHandKit
+  python: python
+  run_script: run.py
+
+parameters:
+  frontend: canonical
+  observations: observations.jsonl
+  backend: hamer
+  gpu: 0
+  batch_size: 16
+  depth_gate: true
+  motion_gate: true
+  mint_3d_consistency_gate: true
+  hand_tracking_parquet: true
+  render_hand_tracking_parquet: true
+  no_omega_world: true
+  extra_args: []
+

@@ -1,0 +1,91 @@
+schema_version: "1.0"
+name: fast_foundation_depth
+display_name: Fast-FoundationStereo Depth
+description: Estimate per-frame metric depth from rectified stereo video using Fast-FoundationStereo.
+entrypoint: python scripts/run_fast_foundation_stereo_video.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - manifest
+    - output_dir
+  optional:
+    - fast_foundation_root
+    - ckpt
+    - start
+    - num_frames
+    - scale
+    - hiera
+    - valid_iters
+    - max_disp
+    - min_disp
+    - max_depth_m
+    - save_depth_png
+    - save_npy
+    - save_vis
+    - preview_every_n_frames
+    - overwrite
+
+outputs:
+  files:
+    - path: "{output_dir}/fast_foundation_stereo_video_meta.json"
+      type: metadata
+    - path: "{output_dir}/depth_uint16_png/frame_%06d_depth_mm.png"
+      type: depth_uint16_png
+      optional: true
+    - path: "{output_dir}/frame_%06d_depth.npy"
+      type: depth_float32_npy
+      optional: true
+    - path: "{output_dir}/vis/depth_preview.mp4"
+      type: preview_video
+      optional: true
+
+runtime:
+  python: ">=3.10,<3.13"
+  recommended_env: py312
+  gpu: required
+  cuda: required
+  cpu: "video decode, resize, depth encoding, and preview video encoding"
+  memory: "Depends on input resolution; current implementation streams frames and does not load full videos into memory."
+
+dependencies:
+  source: Fast-FoundationStereo/requirements.txt plus this stage implementation.
+  pip:
+    - torch
+    - torchvision
+    - timm
+    - einops
+    - omegaconf
+    - scipy
+    - numpy
+    - scikit-image
+    - opencv-contrib-python
+    - imageio
+    - PyYAML
+  notes:
+    - This section records the packages required by this stage; it does not create or modify environments.
+    - The current recommended manual environment is conda env py312.
+    - open3d is imported by Fast-FoundationStereo/Utils.py when available, but the import is optional in that repository code path.
+  external_repos:
+    - name: Fast-FoundationStereo
+      path_env: FAST_FOUNDATION_ROOT
+      default_path: ../Fast-FoundationStereo
+      required_files:
+        - core/utils/utils.py
+        - Utils.py
+  model_files:
+    - name: fast_foundation_stereo_23-36-37
+      path_env: FAST_FOUNDATION_CKPT
+      default_path: ../Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+      required_files:
+        - weights/23-36-37/model_best_bp2_serialize.pth
+        - weights/23-36-37/cfg.yaml
+
+execution:
+  parallelism_unit: prepared_stereo_unit
+  single_process_gpu_count: 1
+  streaming: true
+  temporal_dependency: none
+  notes:
+    - Frames are processed independently; multi-video or multi-window scheduling is preferred for throughput.
+    - Preview video samples every preview_every_n_frames frames and derives preview FPS from input video FPS.

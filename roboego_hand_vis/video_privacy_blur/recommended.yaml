@@ -1,0 +1,36 @@
+schema_version: "1.0"
+stage: video_privacy_blur
+description: Recommended default parameters for face privacy blurring on session videos.
+
+runtime:
+  recommended_env: py312
+  requires_gpu: optional
+  requires_ffmpeg: true
+
+paths:
+  face_weights: /home/liuyou/Documents/roboego-hand-vis/conf/models/yolov8n-face.pt
+
+parameters:
+  device: auto
+  conf: 0.35
+  imgsz: 960
+  scale: 1.35
+  blur_strength: 1.0
+  method: gaussian
+  retries: 1
+  timeout:
+  jobs: auto
+  threads: 2
+  track_gap: 0
+  track_scale: 1.25
+  videos: []
+  dry_run: false
+
+io:
+  input_dir: "{session}/videos"
+  output_dir: "{session}/privacy/video_privacy_blur"
+
+notes:
+  - This file records recommended parameters only; it does not create or modify environments.
+  - Use --video repeatedly to restrict processing to selected relative filenames such as left.mp4 and right.mp4.
+  - Batch execution is resumable through the .batch state directory under output_dir.

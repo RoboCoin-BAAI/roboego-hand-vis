@@ -1,0 +1,30 @@
+schema_version: "1.0"
+stage: hand_windows
+description: Recommended default parameters for hand-estimation window generation.
+
+runtime:
+  recommended_env: py312
+  requires_gpu: false
+  requires_network: false
+
+parameters:
+  output_json:
+  require_both_hands: true
+  hand_window_mode: two
+  context_expand_s: 1
+  merge_gap_s: 2
+  merge_after_expand: false
+  min_window_s: 1
+  min_priority:
+  min_core_duration_s: 0
+  fps: 30
+
+io:
+  stage1_actions: "{session}/annotation/stage1_actions_left_v1_resolved.json"
+  processing_plan: "{session}/annotation/processing_plan_left_v1.json"
+  output_json: "{session}/annotation/hand_estimation_windows_left_v1.json"
+
+notes:
+  - This stage selects temporal windows for hand estimation; it is not semantic subtask segmentation.
+  - hand_window_mode controls whether one-hand, two-hand, or any-hand candidates are kept.
+

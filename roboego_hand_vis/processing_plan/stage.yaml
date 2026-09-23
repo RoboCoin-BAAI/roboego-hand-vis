@@ -1,0 +1,36 @@
+schema_version: "1.0"
+name: processing_plan
+display_name: Processing Plan
+description: Build coarse semantic processing segments from resolved per-second frame actions.
+entrypoint: roboego_hand_vis/processing_plan/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - stage1_actions
+  optional:
+    - config
+    - actions_json
+    - output_json
+
+outputs:
+  files:
+    - path: "{output_json}"
+      type: processing_plan
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  network: not_required
+  streaming: true
+  memory: "Loads per-second annotation JSON; does not load video frames."
+
+dependencies:
+  pip:
+    - PyYAML
+
+execution:
+  parallelism_unit: session
+  resumable: false
+  temporal_dependency: coarse_semantic_continuity

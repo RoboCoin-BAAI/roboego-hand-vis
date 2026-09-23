@@ -1,0 +1,43 @@
+schema_version: "1.0"
+stage: archive_depth_cache
+description: Recommended default parameters for archiving depth outputs when a dataset does not provide its own YAML.
+
+runtime:
+  recommended_env: py312
+
+paths:
+  ffmpeg_bin: ffmpeg
+
+parameters:
+  max_depth_m: 4.0
+  invalid_value: 0
+  fps: 30
+  write_png: true
+  write_avi: true
+  write_preview: true
+  preview_mode: near
+  preview_near_min_m: 0.15
+  preview_near_max_m: 3.0
+  preview_contrast_percentile: 2.0
+  preview_codec: mp4v
+  ffv1_container: avi
+  dry_run_avi: false
+  delete_npy: false
+  delete_png: true
+  write_hevc12: true
+  hevc12_crf: 0
+  hevc12_preset: slow
+  hevc12_lossless: false
+  write_valid_mask: true
+
+notes:
+  - This file records recommended parameters only; it does not create or modify environments.
+  - output_dir intentionally points directly at depth_dir so archive files stay in the hand-window depth directory.
+  - ffmpeg is required when write_avi, write_hevc12, or write_valid_mask is enabled.
+
+io:
+  depth_dir: "{unit}/depth"
+  output_dir: "{unit}/depth"
+
+
+# python roboego_hand_vis/archive_depth_cache/run.py --depth_dir "/home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/depth" --output_dir "/home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/depth"

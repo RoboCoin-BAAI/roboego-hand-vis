@@ -1,0 +1,1 @@
+"""Video simple quality stage."""

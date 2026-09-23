@@ -1,0 +1,40 @@
+schema_version: "1.0"
+stage: fast_foundation_depth
+description: Recommended default parameters for Fast-FoundationStereo depth estimation when a dataset does not provide its own YAML.
+
+runtime:
+  recommended_env: py312
+  gpu_index: 0
+
+paths:
+  fast_foundation_root: /home/liuyou/Documents/Fast-FoundationStereo
+  ckpt: /home/liuyou/Documents/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+
+parameters:
+  start: 0
+  num_frames: 600
+  scale: 0.5
+  hiera: 0
+  valid_iters: 4
+  max_disp: 192
+  min_disp: 1.0e-3
+  max_depth_m: 4.0
+  save_depth_png: true
+  save_npy: false
+  save_vis: true
+  preview_every_n_frames: 5
+  progress_every_n_frames: 300
+  verbose: false
+  overwrite: true
+
+io:
+  manifest: "{unit}/dataset_manifest/dataset_manifest.json"
+  output_dir: "{unit}/depth"
+
+notes:
+  - This file records recommended parameters only; it does not create or modify environments.
+  - num_frames may be resolved from the stereo manifest or source video frame count by the caller.
+  - output_dir intentionally points directly at the hand-window depth directory.
+
+
+# CUDA_VISIBLE_DEVICES=0 python roboego_hand_vis/fast_foundation_depth/run.py --manifest /home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/dataset_manifest/dataset_manifest.json --output_dir /home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/depth --num_frames 818 --overwrite

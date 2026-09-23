@@ -1,0 +1,42 @@
+name: stereo_rectification
+description: 去畸变并做双目立体矫正，输出左右目 rectified 视频、矫正参数和 dataset manifest。
+entrypoint: python roboego_hand_vis/stereo_rectification/run.py
+recommended_config: recommended.yaml
+inputs:
+  required:
+    - session
+  optional:
+    - dataset_adapter
+    - model
+    - balance
+    - width
+    - height
+    - overwrite
+    - dry_run
+  notes:
+    - session 需要包含 videos/left.mp4、videos/right.mp4，以及 calibrations/camera01-camchain.yaml 或 camera-camchain.yaml。
+outputs:
+  files:
+    - path: "{session}/videos/left_rectified.mp4"
+      description: 左目去畸变并立体矫正后视频。
+    - path: "{session}/videos/right_rectified.mp4"
+      description: 右目去畸变并立体矫正后视频。
+    - path: "{session}/calibrations/rectify_params.yaml"
+      description: 矫正后的 K/P/Q、baseline、depth_factor 等参数。
+    - path: "{session}/dataset_manifest/dataset_manifest.json"
+      description: 后续深度估计等环节使用的数据清单。
+runtime:
+  recommended_env: py312
+  gpu: optional
+  cuda: optional
+dependencies:
+  source: This stage includes the formerly external rectification script and camera model code.
+  pip:
+    - numpy
+    - opencv-python
+    - PyYAML
+  system:
+    - ffmpeg
+  external_repos: []
+  notes:
+    - This stage only records the recommended environment and dependencies; it does not create or modify environments.

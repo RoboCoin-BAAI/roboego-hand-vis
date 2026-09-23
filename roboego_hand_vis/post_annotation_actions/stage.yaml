@@ -1,0 +1,49 @@
+schema_version: "1.0"
+name: post_annotation_actions
+display_name: Post Annotation Actions
+description: Extract hand actions from Qwen frame annotations, resolve uncertain bindings, and output robolabel-standard actions.
+entrypoint: roboego_hand_vis/post_annotation_actions/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - qwen_chunk_dir
+  optional:
+    - config
+    - output_dir
+    - frames_dir
+
+outputs:
+  files:
+    - path: "{output_dir}/stage1_action_chunks"
+      type: intermediate_action_chunks
+    - path: "{output_dir}/stage1_action_text_review_chunks"
+      type: text_review_chunks
+    - path: "{output_dir}/stage1_action_resolved_chunks"
+      type: robolabel_action_chunks
+    - path: "{output_dir}/stage1_actions_left_v1_resolved.json"
+      type: merged_robolabel_actions
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  network: required
+  api_key_env: DASHSCOPE_API_KEY
+  streaming: true
+  memory: "Processes annotation chunks one at a time; original video is not loaded."
+
+dependencies:
+  pip:
+    - PyYAML
+  external_services:
+    - name: Qwen/DashScope compatible chat completions API
+      api_key_env: DASHSCOPE_API_KEY
+
+execution:
+  parallelism_unit: annotation_chunk
+  resumable: true
+  temporal_dependency: adjacent_second_object_identity
+  notes:
+    - Minimum input is qwen_chunk_dir.
+    - frames_dir is only needed when use_vl_object_resolver=true.

@@ -1,0 +1,36 @@
+schema_version: "1.0"
+name: hand_windows
+display_name: Hand Windows
+description: Build hand-estimation windows from resolved frame actions and a processing plan.
+entrypoint: roboego_hand_vis/hand_windows/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - stage1_actions
+    - processing_plan
+  optional:
+    - config
+    - output_json
+
+outputs:
+  files:
+    - path: "{output_json}"
+      type: hand_estimation_windows
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  network: not_required
+  streaming: true
+  memory: "Loads per-second annotation JSON and processing-plan JSON; does not load video frames."
+
+dependencies:
+  pip:
+    - PyYAML
+
+execution:
+  parallelism_unit: session
+  resumable: false
+  temporal_dependency: hand_visibility_and_action_continuity

@@ -1,3 +1,0 @@
-pre_semantic_quality_windows:
-  type: kedro.io.MemoryDataset
-  data: []

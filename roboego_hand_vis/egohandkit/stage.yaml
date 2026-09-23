@@ -1,0 +1,13 @@
+stage: egohandkit
+description: 调用外部 EgoHandKit 仓库进行手部估计，主仓库只负责调度和参数记录。
+recommended_env: egohandkit
+external_repository: /home/liuyou/Documents/EgoHandKit
+entrypoint: roboego_hand_vis/egohandkit/run.py
+minimal_inputs:
+  - input
+  - output_root
+optional_inputs:
+  - depth_dir
+  - prediction
+outputs:
+  - output_root

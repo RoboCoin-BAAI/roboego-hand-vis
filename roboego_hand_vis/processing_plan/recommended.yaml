@@ -1,0 +1,27 @@
+schema_version: "1.0"
+stage: processing_plan
+description: Recommended default parameters for coarse semantic processing segment generation.
+
+runtime:
+  recommended_env: py312
+  requires_gpu: false
+  requires_network: false
+
+parameters:
+  output_json:
+  actions_json:
+  min_hold_interruption_s: 8
+  min_walk_interruption_s: 5
+  min_idle_interruption_s: 8
+  context_expand_s: 3
+  min_process_segment_s: 1
+  merge_process_gap_s: 5
+
+io:
+  stage1_actions: "{session}/annotation/stage1_actions_left_v1_resolved.json"
+  output_json: "{session}/annotation/processing_plan_left_v1.json"
+
+notes:
+  - This stage is a coarse processing router, not fine-grained subtask segmentation.
+  - Set min_process_segment_s higher if you want fewer, longer processing segments.
+

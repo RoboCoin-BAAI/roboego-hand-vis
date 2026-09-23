@@ -6,8 +6,9 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from roboego_hand_vis.common.video_paths import find_named_video
 from roboego_hand_vis.datasets.common import manifest_summary, probe_video
-from roboego_hand_vis.quality.video_segments import (
+from roboego_hand_vis.datasets.video_segments import (
     DEFAULT_CAMERA_STREAMS,
     cut_video,
     _copy_tree_if_exists,
@@ -119,7 +120,7 @@ def export_direct_hand_window_segment(
 
     videos: dict[str, str] = {}
     for stream in camera_streams:
-        source = Path(session_dir) / "videos" / f"{stream}.mp4"
+        source = find_named_video(Path(session_dir) / "videos", stream)
         target = window_dir / "videos" / f"{stream}.mp4"
         cut_video(
             source_video=source,

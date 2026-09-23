@@ -1,0 +1,36 @@
+schema_version: "1.0"
+stage: raw_headband_integrity
+description: Recommended default parameters for raw headband data integrity checks.
+
+runtime:
+  recommended_env: py312
+  requires_gpu: false
+
+parameters:
+  camera_streams:
+    - left
+    - right
+    - bleft
+    - bright
+  start: 0
+  num_frames:
+  timestamp_tolerance_s:
+  video_ext: .mp4
+  overwrite: true
+  environment_name: py312
+  repair_timestamp_files: true
+  max_repair_duplicate_rate: 0.001
+  max_repair_consecutive_duplicate_frames: 5
+
+gate:
+  enabled: true
+  rules: {}
+
+io:
+  session: "{session}"
+  output_root: "{session}"
+
+notes:
+  - This file records recommended parameters only; it does not create or modify environments.
+  - The stage writes annotation/quality_report.json under output_root and embeds the raw_headband_quality_gate result when gate.enabled is true.
+  - The default quality gate requires audio/audio.wav and fails when its duration differs from readable video durations by more than 1 second.

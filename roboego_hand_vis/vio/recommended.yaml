@@ -1,0 +1,30 @@
+stage: vio
+
+runtime:
+  recommended_env: openvins_offline
+  requires_ros2: false
+  system_python: /usr/bin/python3
+
+io:
+  output_dir: "{session}/vio"
+
+prepare:
+  input_mode: raw
+  stereo_tolerance_s: 0.001
+  max_imu_gap_s: 0.05
+  max_imu_boundary_gap_s: 0.1
+  downsample_cameras: true
+  rectified_downsample_cameras: false
+
+run:
+  start_s: 0.0
+  duration_s:
+
+openvins:
+  root: /home/liuyou/Documents/open_vins
+  binary: "{openvins_root}/ov_msckf/build/roboego_openvins_offline"
+
+outputs:
+  manifest: "{output_dir}/run_manifest.json"
+  trajectory_report: "{output_dir}/trajectory/run_report.json"
+  trajectory_jsonl: "{output_dir}/trajectory/trajectory.jsonl"

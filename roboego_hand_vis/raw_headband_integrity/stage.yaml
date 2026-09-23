@@ -1,0 +1,41 @@
+schema_version: "1.0"
+name: raw_headband_integrity
+display_name: Raw Headband Integrity
+description: Check raw headband session completeness and audio/video duration consistency before downstream processing.
+entrypoint: roboego_hand_vis/raw_headband_integrity/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - session
+  optional:
+    - output_root
+    - camera_stream
+    - config
+    - overwrite
+
+outputs:
+  files:
+    - path: "{output_root}/annotation/quality_report.json"
+      type: raw_quality_report
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  streaming: true
+  memory: "Video containers are inspected incrementally; the full session is not loaded into memory."
+
+dependencies:
+  pip:
+    - opencv-python
+    - numpy
+    - PyYAML
+
+execution:
+  parallelism_unit: session
+  resumable: false
+  temporal_dependency: timestamps_and_imu_coverage
+  notes:
+    - This stage wraps the existing raw headband integrity report and rule evaluation.
+    - It is intended to run before rectification, depth, VIO, and semantic stages.

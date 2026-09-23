@@ -9,7 +9,6 @@ description = "Ropedia ego-hand mesh/depth visualization pipeline"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "kedro>=1.5,<2.0",
     "numpy",
     "opencv-python",
     "PyYAML",
@@ -25,11 +24,3 @@ privacy = ["ultralytics>=8.2.0", "opencv-python>=4.9.0", "numpy>=1.26"]
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["roboego_hand_vis*", "scripts*"]
-
-[tool.kedro]
-package_name = "roboego_hand_vis"
-project_name = "roboego-hand-vis"
-kedro_init_version = "1.5.0"
-tools = ""
-example_pipeline = "False"
-source_dir = "."

@@ -1,0 +1,59 @@
+schema_version: "1.0"
+name: qwen_annotation
+display_name: Qwen Semantic Annotation
+description: Sample video frames and call Qwen to produce ego-frame semantic annotations.
+entrypoint: roboego_hand_vis/qwen_annotation/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - video
+    - output_json
+  optional:
+    - config
+
+outputs:
+  files:
+    - path: "{output_json}"
+      type: qwen_frame_annotations
+    - path: "{output_json}.checkpoint.json"
+      type: qwen_checkpoint
+      optional: true
+    - path: "{output_dir}/qwen_frame_annotation_frames"
+      type: sampled_frames
+      optional: true
+    - path: "{output_dir}/qwen_frame_annotation_raw"
+      type: raw_api_outputs
+      optional: true
+    - path: "{output_dir}/qwen_frame_annotation_batches"
+      type: batch_annotations
+      optional: true
+    - path: "{output_dir}/qwen_frame_annotation_chunks"
+      type: chunk_annotations
+      optional: true
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  network: required
+  api_key_env: DASHSCOPE_API_KEY
+  streaming: true
+  memory: "Samples frames to disk in batches; full video is not loaded into memory."
+
+dependencies:
+  pip:
+    - opencv-python
+    - numpy
+    - PyYAML
+  external_services:
+    - name: Qwen/DashScope compatible chat completions API
+      api_key_env: DASHSCOPE_API_KEY
+
+execution:
+  parallelism_unit: video
+  resumable: true
+  temporal_dependency: frame_sampling_order
+  notes:
+    - This stage does not run raw data integrity or video simple quality checks.
+    - Use resume=true to continue from checkpoint and existing batch outputs.

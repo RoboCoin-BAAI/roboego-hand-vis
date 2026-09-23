@@ -1,0 +1,22 @@
+stage: stereo_depth_gate
+runtime:
+  recommended_env: py312
+io:
+  manifest: "{session}/dataset_manifest/dataset_manifest.json"
+  output_dir: "{session}/quality/stereo_depth_gate"
+summary:
+  sample_count: 12
+  dark_threshold: 10
+  bright_threshold: 245
+  orb_features: 1500
+thresholds:
+  max_brightness_gap: 35.0
+  min_sharpness: 50.0
+  max_dark_ratio: 0.25
+  max_bright_ratio: 0.25
+  min_orb_matches: 30
+  max_median_abs_dy: 2.0
+  max_p90_abs_dy: 5.0
+notes:
+  - 这是深度估计前的独立质量门禁阶段。
+  - 只输出一个总 gate 报告，不生成中间 CSV、可视化图或局部坏片段文件。

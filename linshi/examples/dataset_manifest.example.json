@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "dataset_name": "generic_stereo",
+  "sequence_name": "example_session_0001",
+  "root_dir": "/data/example_session_0001",
+  "reference_camera": "left",
+  "videos": {
+    "left": {
+      "path": "/data/example_session_0001/videos/left.mp4",
+      "exists": true,
+      "width": 1600,
+      "height": 900,
+      "fps": 30.0,
+      "frame_count": 9000,
+      "duration_sec": 300.0
+    },
+    "right": {
+      "path": "/data/example_session_0001/videos/right.mp4",
+      "exists": true,
+      "width": 1600,
+      "height": 900,
+      "fps": 30.0,
+      "frame_count": 9000,
+      "duration_sec": 300.0
+    }
+  },
+  "camera_model": {
+    "type": "pinhole",
+    "is_rectified": true,
+    "is_undistorted": true,
+    "calibration_source": "/data/example_session_0001/calibrations/camera_intrinsics.json"
+  },
+  "intrinsics": {
+    "left": {
+      "fx": 700.0,
+      "fy": 700.0,
+      "cx": 800.0,
+      "cy": 450.0,
+      "width": 1600,
+      "height": 900,
+      "distortion_model": null,
+      "distortion_coeffs": [],
+      "raw_extrinsics": null
+    },
+    "right": {
+      "fx": 700.0,
+      "fy": 700.0,
+      "cx": 800.0,
+      "cy": 450.0,
+      "width": 1600,
+      "height": 900,
+      "distortion_model": null,
+      "distortion_coeffs": [],
+      "raw_extrinsics": null
+    }
+  },
+  "extrinsics": {
+    "left_to_right": {
+      "R": [
+        [1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "t": [0.064, 0.0, 0.0],
+      "baseline_m": 0.064,
+      "convention": "rectified_left_camera_to_right_camera"
+    },
+    "baseline_m": 0.064,
+    "raw": {
+      "left": null,
+      "right": null,
+      "depth": null
+    },
+    "note": "left_to_right uses rectified stereo convention when baseline_m exists. Raw camera extrinsics are preserved separately because source convention may differ."
+  },
+  "timestamps": {
+    "type": "file",
+    "left_path": "/data/example_session_0001/timestamps/left_timestamps.txt",
+    "right_path": "/data/example_session_0001/timestamps/right_timestamps.txt"
+  },
+  "trajectory": {
+    "tracking_path": "/data/example_session_0001/tracking/head_trajectory.jsonl",
+    "head_pose_available": true,
+    "imu_available": true,
+    "hand_tracking_available": false,
+    "coordinate_frame": "source_tracking_frame",
+    "sample_keys": ["head_6dof", "imu"]
+  },
+  "annotations": {
+    "annotation_hdf5": null,
+    "source": null
+  },
+  "metadata": {
+    "unit_type": "session",
+    "source_session": "/data/example_session_0001",
+    "notes": "Example manifest for documentation; paths and numbers are placeholders."
+  }
+}

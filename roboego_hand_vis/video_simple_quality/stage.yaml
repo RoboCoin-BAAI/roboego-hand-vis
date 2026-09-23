@@ -1,0 +1,39 @@
+schema_version: "1.0"
+name: video_simple_quality
+display_name: Video Simple Quality
+description: Run rough visual quality screening before semantic or annotation stages.
+entrypoint: roboego_hand_vis/video_simple_quality/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - video
+  optional:
+    - output_json
+    - config
+
+outputs:
+  files:
+    - path: "{output_json}"
+      type: video_simple_quality_report
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: not_required
+  streaming: true
+  memory: "Samples frames from one video; the full video is not loaded into memory."
+
+dependencies:
+  pip:
+    - opencv-python
+    - numpy
+    - PyYAML
+
+execution:
+  parallelism_unit: video_file
+  resumable: false
+  temporal_dependency: sampled_frame_order
+  notes:
+    - This stage wraps the existing pre-semantic visual quality gate.
+    - The raw pipeline stage name video_simple_quality can continue to use the existing Kedro node.

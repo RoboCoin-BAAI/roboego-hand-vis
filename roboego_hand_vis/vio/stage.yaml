@@ -1,0 +1,37 @@
+name: vio
+description: 准备并运行 OpenVINS VIO，输出相机轨迹和运行统计。
+entrypoint: roboego_hand_vis/vio/run.py
+recommended_config: recommended.yaml
+
+runtime:
+  recommended_env: openvins_offline
+  requires_ros2: false
+
+inputs:
+  session:
+    required: true
+    description: 包含双目视频、时间戳、IMU 和相机-IMU 标定的 session 目录。
+    required_paths:
+      - videos/left.mp4
+      - videos/right.mp4
+      - timestamps/left_timestamps.txt
+      - timestamps/right_timestamps.txt
+      - imu/imu0.csv
+      - calibrations/camera_imu-camchain-imucam.yaml
+      - calibrations/camera_imu-imu.yaml
+
+outputs:
+  manifest: "{output_dir}/run_manifest.json"
+  trajectory_report: "{output_dir}/trajectory/run_report.json"
+  trajectory_jsonl: "{output_dir}/trajectory/trajectory.jsonl"
+
+steps:
+  - name: prepare
+    script: prepare_entry.py
+    description: 同步双目时间戳，清洗 IMU，检查输入并生成 OpenVINS 配置。
+  - name: openvins
+    script: offline_entry.py
+    description: 调用 OpenVINS offline runner，直接读取准备好的视频、IMU、时间戳和标定输入。
+  - name: summarize
+    script: summarize.py
+    description: 将 OpenVINS timing 写入轨迹报告。

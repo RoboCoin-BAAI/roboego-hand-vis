@@ -1,0 +1,83 @@
+schema_version: "1.0"
+name: archive_depth_cache
+display_name: Depth Archive Cache
+description: Archive per-frame metric depth cache into uint16 depth frames, FFV1 depth video, optional HEVC12 depth video, valid mask, preview video, and metadata.
+entrypoint: python scripts/depth/archive_depth_cache.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - depth_dir
+  optional:
+    - output_dir
+    - max_depth_m
+    - invalid_value
+    - fps
+    - ffmpeg_bin
+    - write_png
+    - write_avi
+    - write_preview
+    - preview_mode
+    - preview_near_min_m
+    - preview_near_max_m
+    - preview_contrast_percentile
+    - preview_codec
+    - ffv1_container
+    - dry_run_avi
+    - delete_npy
+    - delete_png
+    - write_hevc12
+    - hevc12_crf
+    - hevc12_preset
+    - hevc12_lossless
+    - write_valid_mask
+
+outputs:
+  files:
+    - path: "{output_dir}/depth_archive_meta.json"
+      type: metadata
+    - path: "{output_dir}/depth_uint16_png/frame_%06d_depth_mm.png"
+      type: depth_uint16_png
+      optional: true
+    - path: "{output_dir}/depth_uint16_ffv1.avi"
+      type: depth_ffv1_video
+      optional: true
+    - path: "{output_dir}/depth_ffv1.mkv"
+      type: depth_ffv1_video
+      optional: true
+    - path: "{output_dir}/depth_preview.mp4"
+      type: preview_video
+      optional: true
+    - path: "{output_dir}/depth_hevc12.mkv"
+      type: depth_hevc12_video
+      optional: true
+    - path: "{output_dir}/valid_mask_ffv1.mkv"
+      type: valid_mask_video
+      optional: true
+
+runtime:
+  python: ">=3.10,<3.13"
+  recommended_env: py312
+  gpu: not_required
+  cuda: not_required
+  cpu: "depth encoding, preview video encoding, and ffmpeg video compression"
+  memory: "Streams frames from disk; memory depends on one depth frame resolution."
+
+dependencies:
+  pip:
+    - numpy
+    - opencv-python
+  system:
+    - ffmpeg
+  notes:
+    - This section records the packages required by this stage; it does not create or modify environments.
+    - ffmpeg is only required when write_avi, write_hevc12, or write_valid_mask is enabled.
+
+execution:
+  parallelism_unit: prepared_stereo_unit
+  single_process_gpu_count: 0
+  streaming: true
+  temporal_dependency: ordered_frames
+  notes:
+    - This stage is normally run after fast_foundation_depth.
+    - If output_dir is omitted, outputs are written directly into depth_dir.

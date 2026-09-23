@@ -1,0 +1,55 @@
+schema_version: "1.0"
+name: video_privacy_blur
+display_name: Video Privacy Blur
+description: Blur faces in session videos with resumable per-file processing.
+entrypoint: roboego_hand_vis/video_privacy_blur/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - input_dir
+    - output_dir
+  optional:
+    - video
+    - config
+    - dry_run
+
+outputs:
+  files:
+    - path: "{output_dir}/.batch/summary.json"
+      type: batch_summary
+    - path: "{output_dir}/{video_stem}_blurred.mp4"
+      type: privacy_blurred_video
+    - path: "{output_dir}/.batch/logs"
+      type: worker_logs
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: py312
+  gpu: optional
+  ffmpeg: required
+  streaming: true
+  memory: "One worker streams one video at a time; total memory depends on jobs, image size, and detector backend."
+
+dependencies:
+  pip:
+    - ultralytics
+    - opencv-python
+    - numpy
+    - torch
+    - torchvision
+    - PyYAML
+  system:
+    - ffmpeg
+    - ffprobe
+  model_files:
+    - name: yolov8n-face
+      default_path: conf/models/yolov8n-face.pt
+
+execution:
+  parallelism_unit: video_file
+  resumable: true
+  temporal_dependency: short_gap_face_tracking
+  notes:
+    - The stage wraps the existing batch worker and does not split a single video across workers.
+    - Existing completed outputs are reused when input hash, code signature, and config match.

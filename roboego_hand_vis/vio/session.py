@@ -227,7 +227,7 @@ def load_imu_samples(path: str | Path) -> tuple[list[ImuSample], dict[str, Any]]
 
 def _write_stereo_pairs(path: Path, pairs: Iterable[StereoPair]) -> None:
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(
             [
                 "timestamp",
@@ -253,7 +253,7 @@ def _write_stereo_pairs(path: Path, pairs: Iterable[StereoPair]) -> None:
 
 def _write_imu(path: Path, samples: Iterable[ImuSample]) -> None:
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(IMU_FIELDS)
         for sample in samples:
             writer.writerow(

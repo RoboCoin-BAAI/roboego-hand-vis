@@ -35,7 +35,7 @@ class OpenVinsCalibration:
 
 def _estimator_config(output_dir: Path, *, downsample_cameras: bool) -> dict[str, Any]:
     return {
-        "verbosity": "INFO",
+        "verbosity": "WARNING",
         "use_fej": True,
         "integration": "rk4",
         "use_stereo": True,
@@ -110,6 +110,10 @@ def _estimator_config(output_dir: Path, *, downsample_cameras: bool) -> dict[str
     }
 
 
+def load_yaml_mapping(path: str | Path) -> dict[str, Any]:
+    return _load_yaml(Path(path))
+
+
 def _load_yaml(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     if text.startswith("%YAML:"):
@@ -117,6 +121,15 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(text)
     if not isinstance(data, dict):
         raise TypeError(f"Expected a YAML mapping in {path}")
+    return data
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    import json
+
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise TypeError(f"Expected a JSON mapping in {path}")
     return data
 
 
@@ -196,6 +209,134 @@ def prepare_openvins_calibration(
         camera, transform = _camera_config(camera_source, source_id, output_id)
         cameras[f"cam{output_id}"] = camera
         transforms.append(transform)
+
+    if "imu0" not in imu_source:
+        raise KeyError("IMU calibration does not contain imu0")
+    imu = dict(imu_source["imu0"])
+    imu["rostopic"] = "/roboego_vio/imu"
+    identity = np.eye(3).tolist()
+    zeros = np.zeros((3, 3)).tolist()
+    imu.setdefault("Tw", identity)
+    imu.setdefault("R_IMUtoGYRO", identity)
+    imu.setdefault("Ta", identity)
+    imu.setdefault("R_IMUtoACC", identity)
+    imu.setdefault("Tg", zeros)
+
+    camera_config_path = output / "kalibr_imucam_chain.yaml"
+    imu_config_path = output / "kalibr_imu_chain.yaml"
+    estimator_config_path = output / "estimator_config.yaml"
+    _write_opencv_yaml(camera_config_path, cameras)
+    _write_opencv_yaml(imu_config_path, {"imu0": imu})
+    _write_opencv_yaml(
+        estimator_config_path,
+        _estimator_config(output.parent, downsample_cameras=downsample_cameras),
+    )
+    return OpenVinsCalibration(
+        output_dir=output,
+        camera_config_path=camera_config_path,
+        imu_config_path=imu_config_path,
+        estimator_config_path=estimator_config_path,
+        transform_imu_camera=transforms[0],
+        timeshift_cam_imu_s=float(cameras["cam0"]["timeshift_cam_imu"]),
+        camera_resolutions=tuple(
+            tuple(int(value) for value in cameras[f"cam{camera_id}"]["resolution"])
+            for camera_id in range(2)
+        ),
+        camera_models=tuple(
+            str(cameras[f"cam{camera_id}"]["camera_model"]) for camera_id in range(2)
+        ),
+        distortion_models=tuple(
+            str(cameras[f"cam{camera_id}"]["distortion_model"])
+            for camera_id in range(2)
+        ),
+    )
+
+
+def prepare_rectified_openvins_calibration(
+    manifest_path: str | Path,
+    camera_imu_path: str | Path,
+    imu_path: str | Path,
+    rectify_params_path: str | Path,
+    output_dir: str | Path,
+    *,
+    stereo_camera_path: str | Path | None = None,
+    camera_ids: tuple[int, int] = (0, 1),
+    downsample_cameras: bool = True,
+) -> OpenVinsCalibration:
+    """Write OpenVINS configs for undistorted and stereo-rectified cameras."""
+    manifest = _load_json(Path(manifest_path).expanduser().resolve())
+    camera_source = _load_yaml(Path(camera_imu_path).expanduser().resolve())
+    imu_source = _load_yaml(Path(imu_path).expanduser().resolve())
+    rectify_source_path = Path(rectify_params_path).expanduser().resolve()
+    rectify = _load_yaml(rectify_source_path)
+    stereo_source = None
+    if stereo_camera_path is None:
+        inferred_stereo_path = rectify_source_path.parent / "camera-camchain.yaml"
+        if inferred_stereo_path.exists():
+            stereo_source = _load_yaml(inferred_stereo_path)
+    else:
+        stereo_source = _load_yaml(Path(stereo_camera_path).expanduser().resolve())
+    output = Path(output_dir).expanduser().resolve()
+    output.mkdir(parents=True, exist_ok=True)
+
+    rectified = rectify.get("rectified", {})
+    cameras: dict[str, Any] = {}
+    transforms: list[np.ndarray] = []
+    raw_transforms_cam_imu: list[np.ndarray] = []
+    for output_id, source_id in enumerate(camera_ids):
+        source_key = f"cam{source_id}"
+        rect_key = "left" if output_id == 0 else "right"
+        rotation_key = f"R{output_id + 1}"
+        if source_key not in camera_source:
+            raise KeyError(f"Camera calibration does not contain {source_key}")
+        if rotation_key not in rectified:
+            raise KeyError(f"Rectification parameters do not contain {rotation_key}")
+        raw_intrinsics = manifest["intrinsics"][rect_key]
+        transform_cam_imu = _validate_transform(
+            camera_source[source_key]["T_cam_imu"],
+            name=f"{source_key}.T_cam_imu",
+        )
+        if output_id == 1 and stereo_source is not None:
+            stereo_camera_key = f"cam{source_id}"
+            if stereo_camera_key not in stereo_source:
+                raise KeyError(
+                    f"Stereo camera calibration does not contain {stereo_camera_key}"
+                )
+            transform_cam_prev = _validate_transform(
+                stereo_source[stereo_camera_key]["T_cn_cnm1"],
+                name=f"{stereo_camera_key}.T_cn_cnm1",
+            )
+            transform_cam_imu = transform_cam_prev @ raw_transforms_cam_imu[0]
+        raw_transforms_cam_imu.append(transform_cam_imu)
+        rect_rotation = np.asarray(rectified[rotation_key], dtype=np.float64)
+        if rect_rotation.shape != (3, 3):
+            raise ValueError(f"{rotation_key} must be 3x3, got {rect_rotation.shape}")
+        transform_rect_cam_imu = np.eye(4)
+        transform_rect_cam_imu[:3, :3] = rect_rotation @ transform_cam_imu[:3, :3]
+        transform_rect_cam_imu[:3, 3] = rect_rotation @ transform_cam_imu[:3, 3]
+        transform_imu_rect_cam = np.linalg.inv(transform_rect_cam_imu)
+        transforms.append(transform_imu_rect_cam)
+        cameras[f"cam{output_id}"] = {
+            "cam_overlaps": [1 - output_id],
+            "camera_model": "pinhole",
+            "distortion_coeffs": [0.0, 0.0, 0.0, 0.0],
+            "distortion_model": "radtan",
+            "intrinsics": [
+                float(raw_intrinsics["fx"]),
+                float(raw_intrinsics["fy"]),
+                float(raw_intrinsics["cx"]),
+                float(raw_intrinsics["cy"]),
+            ],
+            "resolution": [
+                int(raw_intrinsics["width"]),
+                int(raw_intrinsics["height"]),
+            ],
+            "rostopic": f"/roboego_vio/cam{output_id}/image_raw",
+            "timeshift_cam_imu": float(
+                camera_source[source_key]["timeshift_cam_imu"]
+            ),
+            "T_imu_cam": transform_imu_rect_cam.tolist(),
+        }
 
     if "imu0" not in imu_source:
         raise KeyError("IMU calibration does not contain imu0")

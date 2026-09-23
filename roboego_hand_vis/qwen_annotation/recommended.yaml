@@ -1,0 +1,40 @@
+schema_version: "1.0"
+stage: qwen_annotation
+description: Recommended default parameters for Qwen ego-frame semantic annotation.
+
+runtime:
+  recommended_env: py312
+  requires_gpu: false
+  requires_network: true
+  api_key_env: DASHSCOPE_API_KEY
+
+parameters:
+  prompt: docs/prompts/qwen_frame_annotation_v5_en.md
+  model: qwen3.6-flash
+  fps: 1.0
+  start_s: 0.0
+  duration_s:
+  windows_json:
+  max_width: 768
+  batch_size: 10
+  batches_per_chunk: 5
+  api_key_env: DASHSCOPE_API_KEY
+  timeout_s: 120.0
+  max_retries: 3
+  retry_sleep_s: 5.0
+  frames_dir:
+  checkpoint_json:
+  raw_output_dir:
+  batch_output_dir:
+  chunk_output_dir:
+  resume: true
+  recover_from_raw: false
+
+io:
+  video: "{session}/videos/left.mp4"
+  output_json: "{session}/annotation/qwen_frame_annotations_left_v4.json"
+
+notes:
+  - This file records recommended parameters only; it does not create or modify environments.
+  - The stage calls Qwen/DashScope through the configured api_key_env environment variable.
+  - The stage is intentionally decoupled from raw and video quality gates.

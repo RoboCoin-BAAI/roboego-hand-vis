@@ -1,0 +1,2438 @@
+{
+  "root": "/mnt/nas/synnas/ego/baai_ego_task",
+  "final_stage": "final_hand_trajectory_polish",
+  "all_session_count": 1139,
+  "final_session_count": 209,
+  "all_total_duration_h": 36.189348494166616,
+  "final_total_duration_h": 4.178935208611113,
+  "final_window_count": 326,
+  "final_hand_window_count": 141,
+  "final_whole_session_unit_count": 185,
+  "final_window_duration_h": 3.311685197500002,
+  "all_headbands": {
+    "cp_0001": {
+      "session_count": 122,
+      "duration_h": 3.3631388749999993,
+      "final_count": 31
+    },
+    "cp_0002": {
+      "session_count": 152,
+      "duration_h": 4.750661367777778,
+      "final_count": 0
+    },
+    "cp_0003": {
+      "session_count": 39,
+      "duration_h": 1.287333332222222,
+      "final_count": 38
+    },
+    "cp_0005": {
+      "session_count": 152,
+      "duration_h": 2.080970386944445,
+      "final_count": 124
+    },
+    "cp_0006": {
+      "session_count": 191,
+      "duration_h": 7.566448184444445,
+      "final_count": 16
+    },
+    "cs_0001": {
+      "session_count": 483,
+      "duration_h": 17.140796347777773,
+      "final_count": 0
+    }
+  },
+  "final_headbands": {
+    "cp_0001": {
+      "session_count": 31,
+      "duration_h": 1.139296307222222,
+      "final_count": 31
+    },
+    "cp_0003": {
+      "session_count": 38,
+      "duration_h": 1.1209166647222226,
+      "final_count": 38
+    },
+    "cp_0005": {
+      "session_count": 124,
+      "duration_h": 1.4790092769444445,
+      "final_count": 124
+    },
+    "cp_0006": {
+      "session_count": 16,
+      "duration_h": 0.43971295972222224,
+      "final_count": 16
+    }
+  },
+  "stage_counts_all": {
+    "raw_quality": {
+      "success": 870,
+      "missing": 1,
+      "blocked": 268
+    },
+    "raw_quality_gate": {
+      "missing": 1139
+    },
+    "video_simple_quality": {
+      "missing": 778,
+      "success": 266,
+      "blocked": 95
+    },
+    "video_simple_quality_gate": {
+      "missing": 1139
+    },
+    "qwen_annotation": {
+      "missing": 778,
+      "success": 266,
+      "blocked": 95
+    },
+    "post_annotation_actions": {
+      "missing": 779,
+      "success": 266,
+      "processing": 94
+    },
+    "processing_plan": {
+      "missing": 779,
+      "success": 266,
+      "processing": 94
+    },
+    "hand_windows": {
+      "missing": 779,
+      "success": 266,
+      "blocked": 94
+    },
+    "materialize_auto": {
+      "missing": 779,
+      "success": 266,
+      "processing": 94
+    },
+    "prepare_stereo": {
+      "missing": 779,
+      "success": 266,
+      "processing": 94
+    },
+    "stereo_summary_quality": {
+      "fail": 389,
+      "success": 267,
+      "missing": 483
+    },
+    "stereo_quality": {
+      "missing": 1126,
+      "processing": 12,
+      "success": 1
+    },
+    "fast_foundation_depth": {
+      "fail": 389,
+      "success": 247,
+      "blocked": 18,
+      "processing": 2,
+      "missing": 483
+    },
+    "depth_numeric_quality": {
+      "missing": 1126,
+      "processing": 13
+    },
+    "archive_depth_cache": {
+      "blocked": 412,
+      "success": 243,
+      "fail": 1,
+      "missing": 483
+    },
+    "hamer": {
+      "fail": 303,
+      "success": 215,
+      "processing": 1,
+      "missing": 620
+    },
+    "hand_filter": {
+      "missing": 930,
+      "success": 209
+    },
+    "joints21_pose_gate": {
+      "missing": 930,
+      "success": 209
+    },
+    "depth_anchored_joints21": {
+      "missing": 930,
+      "success": 209
+    },
+    "final_hand_result": {
+      "missing": 930,
+      "success": 209
+    },
+    "final_hand_trajectory_polish": {
+      "missing": 930,
+      "success": 209
+    },
+    "hand_parquet_export": {
+      "missing": 930,
+      "success": 209
+    }
+  },
+  "stage_counts_final": {
+    "raw_quality": {
+      "success": 209
+    },
+    "raw_quality_gate": {
+      "missing": 209
+    },
+    "video_simple_quality": {
+      "success": 209
+    },
+    "video_simple_quality_gate": {
+      "missing": 209
+    },
+    "qwen_annotation": {
+      "success": 209
+    },
+    "post_annotation_actions": {
+      "success": 209
+    },
+    "processing_plan": {
+      "success": 209
+    },
+    "hand_windows": {
+      "success": 209
+    },
+    "materialize_auto": {
+      "success": 209
+    },
+    "prepare_stereo": {
+      "success": 209
+    },
+    "stereo_summary_quality": {
+      "success": 209
+    },
+    "stereo_quality": {
+      "missing": 196,
+      "processing": 12,
+      "success": 1
+    },
+    "fast_foundation_depth": {
+      "success": 209
+    },
+    "depth_numeric_quality": {
+      "missing": 196,
+      "processing": 13
+    },
+    "archive_depth_cache": {
+      "success": 208,
+      "fail": 1
+    },
+    "hamer": {
+      "success": 209
+    },
+    "hand_filter": {
+      "success": 209
+    },
+    "joints21_pose_gate": {
+      "success": 209
+    },
+    "depth_anchored_joints21": {
+      "success": 209
+    },
+    "final_hand_result": {
+      "success": 209
+    },
+    "final_hand_trajectory_polish": {
+      "success": 209
+    },
+    "hand_parquet_export": {
+      "success": 209
+    }
+  },
+  "duration_distribution_all_s": {
+    "min": 0.032999999999901775,
+    "p50": 62.799999,
+    "p90": 297.4400024,
+    "p95": 410.82329239999984,
+    "max": 600.0
+  },
+  "duration_distribution_final_s": {
+    "min": 0.033333,
+    "p50": 32.966677,
+    "p90": 190.2066656,
+    "p95": 280.51333099999977,
+    "max": 599.933334
+  },
+  "duration_distribution_final_units_s": {
+    "min": 0.033333,
+    "p50": 24.2333335,
+    "p90": 83.5,
+    "p95": 109.950003,
+    "max": 224.0
+  },
+  "final_unit_duration_bins": {
+    "0-5秒": 5,
+    "5-10秒": 54,
+    "10-20秒": 82,
+    "20-30秒": 46,
+    "30-60秒": 84,
+    "1-2分钟": 41,
+    "2-5分钟": 14,
+    "5分钟以上": 0
+  },
+  "top_quality_reasons": [
+    [
+      "archive_depth_cache:blocked",
+      412
+    ],
+    [
+      "stereo_summary_quality:fail",
+      389
+    ],
+    [
+      "fast_foundation_depth:fail",
+      389
+    ],
+    [
+      "hamer:fail",
+      303
+    ],
+    [
+      "raw_quality:blocked",
+      268
+    ],
+    [
+      "raw:imu_frozen",
+      244
+    ],
+    [
+      "stereo:p90_abs_dy",
+      215
+    ],
+    [
+      "stereo:median_abs_dy",
+      195
+    ],
+    [
+      "depth_risk:geometry_warning",
+      195
+    ],
+    [
+      "video_simple_quality:blocked",
+      95
+    ],
+    [
+      "qwen_annotation:blocked",
+      95
+    ],
+    [
+      "base_prepare:blocked",
+      94
+    ],
+    [
+      "hand_windows:blocked",
+      94
+    ],
+    [
+      "depth_risk:visual_quality_warning",
+      30
+    ],
+    [
+      "stereo:sharpness",
+      25
+    ],
+    [
+      "raw:imu_jump",
+      25
+    ],
+    [
+      "depth_risk:geometry_too_poor",
+      19
+    ],
+    [
+      "fast_foundation_depth:blocked",
+      18
+    ],
+    [
+      "phase1_depth:fail",
+      12
+    ],
+    [
+      "stereo_summary_quality_unit:fail",
+      11
+    ],
+    [
+      "depth_estimation:fail",
+      9
+    ],
+    [
+      "stereo:orb_matches",
+      8
+    ],
+    [
+      "raw:timestamp_duplicates:right",
+      3
+    ],
+    [
+      "raw:timestamp_alignment:right",
+      2
+    ],
+    [
+      "raw:timestamp_duplicates:left",
+      2
+    ],
+    [
+      "raw:imu_time_coverage",
+      2
+    ],
+    [
+      "archive_depth_cache:fail",
+      1
+    ],
+    [
+      "stereo:dark_ratio",
+      1
+    ],
+    [
+      "raw:timestamp_readability:right",
+      1
+    ]
+  ],
+  "top_raw_quality_reasons": [
+    [
+      "raw:imu_frozen",
+      244
+    ],
+    [
+      "raw:imu_jump",
+      25
+    ],
+    [
+      "raw:timestamp_duplicates:right",
+      3
+    ],
+    [
+      "raw:timestamp_alignment:right",
+      2
+    ],
+    [
+      "raw:timestamp_duplicates:left",
+      2
+    ],
+    [
+      "raw:imu_time_coverage",
+      2
+    ],
+    [
+      "raw:timestamp_readability:right",
+      1
+    ]
+  ],
+  "top_scenes_all": [
+    [
+      "整理货架",
+      269
+    ],
+    [
+      "打包",
+      117
+    ],
+    [
+      "补充货物",
+      56
+    ],
+    [
+      "补充商品",
+      54
+    ],
+    [
+      "搜寻商品",
+      40
+    ],
+    [
+      "回收小推车",
+      33
+    ],
+    [
+      "商品打包",
+      31
+    ],
+    [
+      "收银",
+      24
+    ],
+    [
+      "打包货物",
+      23
+    ],
+    [
+      "贴标签",
+      21
+    ],
+    [
+      "物品称重标价",
+      20
+    ],
+    [
+      "整理摆货台",
+      17
+    ],
+    [
+      "整理商品",
+      16
+    ],
+    [
+      "整理货物",
+      15
+    ],
+    [
+      "开榴莲",
+      15
+    ],
+    [
+      "商品称重标价",
+      15
+    ],
+    [
+      "协助顾客付款",
+      14
+    ],
+    [
+      "打包商品",
+      13
+    ],
+    [
+      "打扫收银台",
+      13
+    ],
+    [
+      "摆放商品",
+      12
+    ],
+    [
+      "拿取货物",
+      8
+    ],
+    [
+      "拿取商品",
+      7
+    ],
+    [
+      "回收篮子",
+      7
+    ],
+    [
+      "摆放物品",
+      6
+    ],
+    [
+      "核对商品信息",
+      5
+    ],
+    [
+      "食物称重标价",
+      5
+    ],
+    [
+      "称重标价",
+      5
+    ],
+    [
+      "拿袋子",
+      5
+    ],
+    [
+      "核对信息",
+      5
+    ],
+    [
+      "物品打包",
+      5
+    ],
+    [
+      "称重打包",
+      5
+    ],
+    [
+      "打包榴莲",
+      4
+    ],
+    [
+      "葡萄装盒",
+      4
+    ],
+    [
+      "商品上架",
+      4
+    ],
+    [
+      "搜寻货物",
+      4
+    ],
+    [
+      "搜寻商品打包",
+      4
+    ],
+    [
+      "搜寻商品并打包",
+      4
+    ],
+    [
+      "记账收银",
+      4
+    ],
+    [
+      "给商品贴标签",
+      3
+    ],
+    [
+      "拿商品",
+      3
+    ],
+    [
+      "整理物品",
+      3
+    ],
+    [
+      "结账并把小票给顾客",
+      3
+    ],
+    [
+      "给商品扫码",
+      3
+    ],
+    [
+      "结账收银",
+      3
+    ],
+    [
+      "商品标价",
+      3
+    ],
+    [
+      "货物称重标价",
+      3
+    ],
+    [
+      "系腰带",
+      3
+    ],
+    [
+      "推购物车",
+      3
+    ],
+    [
+      "收集订单物品",
+      3
+    ],
+    [
+      "核对物品信息",
+      3
+    ],
+    [
+      "拿取水果",
+      3
+    ],
+    [
+      "货架补货",
+      3
+    ],
+    [
+      "收银记帐",
+      3
+    ],
+    [
+      "打包称重贴标签",
+      3
+    ],
+    [
+      "称重贴标签",
+      3
+    ],
+    [
+      "检查商品保质期",
+      2
+    ],
+    [
+      "把牛奶放到购物车里",
+      2
+    ],
+    [
+      "拿打包盒",
+      2
+    ],
+    [
+      "放置商品",
+      2
+    ],
+    [
+      "称重",
+      2
+    ],
+    [
+      "摆放货物",
+      2
+    ],
+    [
+      "从柜中拿出葡萄",
+      2
+    ],
+    [
+      "整理",
+      2
+    ],
+    [
+      "扔垃圾",
+      2
+    ],
+    [
+      "将物品放回原位",
+      2
+    ],
+    [
+      "整理货架商品",
+      2
+    ],
+    [
+      "整理货架添加新标价",
+      2
+    ],
+    [
+      "榴莲标价装盒",
+      2
+    ],
+    [
+      "整理桌面",
+      2
+    ],
+    [
+      "榴莲装盒",
+      2
+    ],
+    [
+      "切西瓜",
+      2
+    ],
+    [
+      "回收商品",
+      2
+    ],
+    [
+      "为商品贴签",
+      2
+    ],
+    [
+      "拿打包袋",
+      2
+    ],
+    [
+      "将未购买物品放到柜台",
+      2
+    ],
+    [
+      "搬运整理货物",
+      2
+    ],
+    [
+      "扫描商品二维码",
+      2
+    ],
+    [
+      "拿取袋子并将商品装入",
+      2
+    ],
+    [
+      "给顾客结账",
+      2
+    ],
+    [
+      "引导顾客付款",
+      2
+    ],
+    [
+      "寻找物品",
+      2
+    ],
+    [
+      "打印小票",
+      2
+    ],
+    [
+      "货物打包",
+      2
+    ],
+    [
+      "打包矿泉水",
+      2
+    ],
+    [
+      "拿标签",
+      2
+    ],
+    [
+      "拿矿泉水",
+      2
+    ],
+    [
+      "整理仓库并取货",
+      2
+    ],
+    [
+      "搬运货物",
+      2
+    ],
+    [
+      "买单结账",
+      2
+    ],
+    [
+      "收银装东西",
+      2
+    ],
+    [
+      "擦拭展示柜",
+      2
+    ],
+    [
+      "寻找商品",
+      1
+    ],
+    [
+      "将商品放到购物车里",
+      1
+    ],
+    [
+      "将商品翻面检查商品保质期",
+      1
+    ],
+    [
+      "拾取掉落商品",
+      1
+    ],
+    [
+      "拿手机扫描商品信息",
+      1
+    ],
+    [
+      "核对商品数量并记录",
+      1
+    ],
+    [
+      "纪录商品信息",
+      1
+    ],
+    [
+      "翻找标签",
+      1
+    ],
+    [
+      "讲解商品信息",
+      1
+    ]
+  ],
+  "top_scenes_final": [
+    [
+      "整理货架",
+      52
+    ],
+    [
+      "回收小推车",
+      33
+    ],
+    [
+      "物品称重标价",
+      19
+    ],
+    [
+      "协助顾客付款",
+      14
+    ],
+    [
+      "商品称重标价",
+      11
+    ],
+    [
+      "收银",
+      9
+    ],
+    [
+      "回收篮子",
+      7
+    ],
+    [
+      "物品打包",
+      4
+    ],
+    [
+      "商品标价",
+      3
+    ],
+    [
+      "称重标价",
+      3
+    ],
+    [
+      "收集订单物品",
+      3
+    ],
+    [
+      "核对物品信息",
+      3
+    ],
+    [
+      "将未购买物品放到柜台",
+      2
+    ],
+    [
+      "搬运整理货物",
+      2
+    ],
+    [
+      "整理货物",
+      2
+    ],
+    [
+      "引导顾客付款",
+      2
+    ],
+    [
+      "货物称重标价",
+      2
+    ],
+    [
+      "拿袋子",
+      2
+    ],
+    [
+      "寻找物品",
+      2
+    ],
+    [
+      "打印小票",
+      2
+    ],
+    [
+      "装袋",
+      1
+    ],
+    [
+      "拿盒子",
+      1
+    ],
+    [
+      "整理纸箱",
+      1
+    ],
+    [
+      "协助小推车回收",
+      1
+    ],
+    [
+      "小推车回收",
+      1
+    ],
+    [
+      "擦桌子",
+      1
+    ],
+    [
+      "更换标价机的标签",
+      1
+    ],
+    [
+      "水果称重标价",
+      1
+    ],
+    [
+      "篮子回收",
+      1
+    ],
+    [
+      "篮子放回原位",
+      1
+    ],
+    [
+      "整理桌面",
+      1
+    ],
+    [
+      "整理购物袋",
+      1
+    ],
+    [
+      "商品装袋",
+      1
+    ],
+    [
+      "回收小推车并将垃圾扔掉",
+      1
+    ],
+    [
+      "开椰子",
+      1
+    ],
+    [
+      "捡起垃圾并扔掉",
+      1
+    ],
+    [
+      "搬运货物并将篮子放回原位",
+      1
+    ],
+    [
+      "协助客户付款",
+      1
+    ],
+    [
+      "回收小推车，并扔掉垃圾",
+      1
+    ],
+    [
+      "修理扔垃圾",
+      1
+    ],
+    [
+      "协助顾客",
+      1
+    ],
+    [
+      "商品标价回收篮子",
+      1
+    ],
+    [
+      "回收小推车并扔垃圾",
+      1
+    ],
+    [
+      "回收小推车并扔掉垃圾",
+      1
+    ],
+    [
+      "清理桌面物品",
+      1
+    ],
+    [
+      "系腰带",
+      1
+    ],
+    [
+      "将桌面物品放到柜子上",
+      1
+    ],
+    [
+      "将篮子中的物品放到柜子上",
+      1
+    ],
+    [
+      "水果封口",
+      1
+    ],
+    [
+      "移动物品位置",
+      1
+    ],
+    [
+      "物品标单",
+      1
+    ],
+    [
+      "商品打包",
+      1
+    ]
+  ],
+  "top_actions_all": [
+    [
+      "hold",
+      13186
+    ],
+    [
+      "operate",
+      2677
+    ],
+    [
+      "push",
+      2025
+    ],
+    [
+      "reach",
+      1906
+    ],
+    [
+      "touch",
+      1543
+    ],
+    [
+      "place",
+      1168
+    ],
+    [
+      "put into",
+      565
+    ],
+    [
+      "point",
+      413
+    ],
+    [
+      "pick",
+      248
+    ],
+    [
+      "open",
+      244
+    ],
+    [
+      "scan",
+      169
+    ],
+    [
+      "lift",
+      144
+    ],
+    [
+      "grasp",
+      83
+    ],
+    [
+      "pull",
+      71
+    ],
+    [
+      "stack",
+      64
+    ],
+    [
+      "gesture",
+      43
+    ],
+    [
+      "lower",
+      41
+    ],
+    [
+      "cut",
+      36
+    ],
+    [
+      "move",
+      27
+    ],
+    [
+      "press",
+      27
+    ],
+    [
+      "close",
+      25
+    ],
+    [
+      "take from",
+      18
+    ],
+    [
+      "carry",
+      14
+    ],
+    [
+      "wipe",
+      12
+    ],
+    [
+      "fold",
+      12
+    ],
+    [
+      "handover",
+      11
+    ],
+    [
+      "rotate",
+      7
+    ],
+    [
+      "unfold",
+      6
+    ],
+    [
+      "pass",
+      5
+    ],
+    [
+      "insert",
+      4
+    ],
+    [
+      "load",
+      3
+    ],
+    [
+      "pull out",
+      2
+    ],
+    [
+      "take out",
+      2
+    ],
+    [
+      "press button",
+      1
+    ],
+    [
+      "align",
+      1
+    ],
+    [
+      "put back",
+      1
+    ],
+    [
+      "sort",
+      1
+    ],
+    [
+      "measure",
+      1
+    ],
+    [
+      "release",
+      1
+    ]
+  ],
+  "top_actions_final": [
+    [
+      "hold",
+      6676
+    ],
+    [
+      "operate",
+      1562
+    ],
+    [
+      "reach",
+      1183
+    ],
+    [
+      "touch",
+      981
+    ],
+    [
+      "push",
+      851
+    ],
+    [
+      "place",
+      715
+    ],
+    [
+      "point",
+      361
+    ],
+    [
+      "put into",
+      235
+    ],
+    [
+      "scan",
+      118
+    ],
+    [
+      "pick",
+      107
+    ],
+    [
+      "open",
+      107
+    ],
+    [
+      "lift",
+      66
+    ],
+    [
+      "grasp",
+      41
+    ],
+    [
+      "gesture",
+      35
+    ],
+    [
+      "lower",
+      28
+    ],
+    [
+      "stack",
+      26
+    ],
+    [
+      "pull",
+      20
+    ],
+    [
+      "move",
+      19
+    ],
+    [
+      "press",
+      18
+    ],
+    [
+      "take from",
+      17
+    ],
+    [
+      "close",
+      10
+    ],
+    [
+      "handover",
+      9
+    ],
+    [
+      "wipe",
+      7
+    ],
+    [
+      "rotate",
+      6
+    ],
+    [
+      "fold",
+      5
+    ],
+    [
+      "carry",
+      4
+    ],
+    [
+      "pass",
+      3
+    ],
+    [
+      "press button",
+      1
+    ],
+    [
+      "load",
+      1
+    ],
+    [
+      "take out",
+      1
+    ],
+    [
+      "align",
+      1
+    ],
+    [
+      "put back",
+      1
+    ]
+  ],
+  "top_objects_all": [
+    [
+      "product",
+      17627
+    ],
+    [
+      "phone",
+      12252
+    ],
+    [
+      "shopping cart",
+      5198
+    ],
+    [
+      "bag",
+      3150
+    ],
+    [
+      "plastic bag",
+      2345
+    ],
+    [
+      "package",
+      1717
+    ],
+    [
+      "scanner",
+      1017
+    ],
+    [
+      "bottle",
+      775
+    ],
+    [
+      "carton",
+      517
+    ],
+    [
+      "box",
+      487
+    ],
+    [
+      "receipt",
+      451
+    ],
+    [
+      "checkout screen",
+      431
+    ],
+    [
+      "cardboard box",
+      391
+    ],
+    [
+      "orange bag",
+      352
+    ],
+    [
+      "label",
+      338
+    ],
+    [
+      "shopping basket",
+      330
+    ],
+    [
+      "kiosk",
+      263
+    ],
+    [
+      "paper",
+      261
+    ],
+    [
+      "bubble wrap",
+      197
+    ],
+    [
+      "unknown",
+      193
+    ],
+    [
+      "money",
+      176
+    ],
+    [
+      "card",
+      171
+    ],
+    [
+      "shopping bag",
+      169
+    ],
+    [
+      "device",
+      159
+    ],
+    [
+      "screen",
+      147
+    ],
+    [
+      "crate",
+      147
+    ],
+    [
+      "payment terminal",
+      137
+    ],
+    [
+      "cash",
+      132
+    ],
+    [
+      "self-checkout kiosk",
+      126
+    ],
+    [
+      "container",
+      121
+    ],
+    [
+      "computer screen",
+      115
+    ],
+    [
+      "monitor",
+      109
+    ],
+    [
+      "shelf",
+      101
+    ],
+    [
+      "scale",
+      93
+    ],
+    [
+      "price tag",
+      83
+    ],
+    [
+      "banknote",
+      78
+    ],
+    [
+      "basket",
+      74
+    ],
+    [
+      "cash drawer",
+      68
+    ],
+    [
+      "door",
+      67
+    ],
+    [
+      "carton of eggs",
+      67
+    ],
+    [
+      "handheld device",
+      63
+    ],
+    [
+      "vegetable",
+      60
+    ],
+    [
+      "curtain",
+      59
+    ],
+    [
+      "stick",
+      56
+    ],
+    [
+      "sign",
+      55
+    ],
+    [
+      "white bag",
+      53
+    ],
+    [
+      "watermelon",
+      52
+    ],
+    [
+      "thermal bag",
+      51
+    ],
+    [
+      "plastic bags",
+      49
+    ],
+    [
+      "label strip",
+      48
+    ],
+    [
+      "paper bag",
+      46
+    ],
+    [
+      "tool",
+      44
+    ],
+    [
+      "sack",
+      44
+    ],
+    [
+      "bucket",
+      42
+    ],
+    [
+      "vegetables",
+      41
+    ],
+    [
+      "orange plastic bag",
+      41
+    ],
+    [
+      "freezer",
+      39
+    ],
+    [
+      "product package",
+      38
+    ],
+    [
+      "insulated bag",
+      37
+    ],
+    [
+      "bin",
+      36
+    ],
+    [
+      "tag",
+      35
+    ],
+    [
+      "bag of fruit",
+      35
+    ],
+    [
+      "cup",
+      34
+    ],
+    [
+      "bags",
+      34
+    ],
+    [
+      "cloth",
+      33
+    ],
+    [
+      "tray",
+      33
+    ],
+    [
+      "camera",
+      31
+    ],
+    [
+      "banknotes",
+      27
+    ],
+    [
+      "terminal",
+      26
+    ],
+    [
+      "kiosk screen",
+      26
+    ],
+    [
+      "cucumber",
+      25
+    ],
+    [
+      "checkout terminal",
+      24
+    ],
+    [
+      "strap",
+      24
+    ],
+    [
+      "shelf bin",
+      24
+    ],
+    [
+      "bag of vegetables",
+      23
+    ],
+    [
+      "gift box",
+      22
+    ],
+    [
+      "computer_screen",
+      21
+    ],
+    [
+      "bag of produce",
+      21
+    ],
+    [
+      "glasses",
+      21
+    ],
+    [
+      "cash register",
+      20
+    ],
+    [
+      "coin",
+      20
+    ],
+    [
+      "boxes",
+      20
+    ],
+    [
+      "blue package",
+      19
+    ],
+    [
+      "bananas",
+      19
+    ],
+    [
+      "small package",
+      19
+    ],
+    [
+      "touchscreen",
+      18
+    ],
+    [
+      "list",
+      18
+    ],
+    [
+      "pack of bottled water",
+      18
+    ],
+    [
+      "handheld scanner",
+      18
+    ],
+    [
+      "refrigerator",
+      17
+    ],
+    [
+      "white plastic bag",
+      17
+    ],
+    [
+      "product bag",
+      17
+    ],
+    [
+      "pen",
+      17
+    ],
+    [
+      "packet",
+      16
+    ],
+    [
+      "plastic container",
+      16
+    ],
+    [
+      "scanner gun",
+      16
+    ],
+    [
+      "roll",
+      16
+    ],
+    [
+      "can",
+      16
+    ],
+    [
+      "freezer door",
+      16
+    ],
+    [
+      "self-checkout machine",
+      16
+    ]
+  ],
+  "top_objects_final": [
+    [
+      "product",
+      11295
+    ],
+    [
+      "phone",
+      3561
+    ],
+    [
+      "shopping cart",
+      2523
+    ],
+    [
+      "plastic bag",
+      1753
+    ],
+    [
+      "bag",
+      1165
+    ],
+    [
+      "package",
+      712
+    ],
+    [
+      "bottle",
+      541
+    ],
+    [
+      "scanner",
+      513
+    ],
+    [
+      "checkout screen",
+      431
+    ],
+    [
+      "shopping basket",
+      284
+    ],
+    [
+      "carton",
+      281
+    ],
+    [
+      "receipt",
+      274
+    ],
+    [
+      "kiosk",
+      263
+    ],
+    [
+      "cardboard box",
+      238
+    ],
+    [
+      "money",
+      176
+    ],
+    [
+      "card",
+      170
+    ],
+    [
+      "box",
+      162
+    ],
+    [
+      "screen",
+      147
+    ],
+    [
+      "unknown",
+      141
+    ],
+    [
+      "payment terminal",
+      137
+    ],
+    [
+      "shopping bag",
+      134
+    ],
+    [
+      "cash",
+      132
+    ],
+    [
+      "self-checkout kiosk",
+      126
+    ],
+    [
+      "label",
+      125
+    ],
+    [
+      "computer screen",
+      115
+    ],
+    [
+      "monitor",
+      109
+    ],
+    [
+      "container",
+      95
+    ],
+    [
+      "scale",
+      93
+    ],
+    [
+      "paper",
+      92
+    ],
+    [
+      "banknote",
+      78
+    ],
+    [
+      "price tag",
+      75
+    ],
+    [
+      "cash drawer",
+      68
+    ],
+    [
+      "stick",
+      56
+    ],
+    [
+      "watermelon",
+      52
+    ],
+    [
+      "thermal bag",
+      51
+    ],
+    [
+      "vegetable",
+      46
+    ],
+    [
+      "paper bag",
+      46
+    ],
+    [
+      "basket",
+      44
+    ],
+    [
+      "bucket",
+      42
+    ],
+    [
+      "orange bag",
+      41
+    ],
+    [
+      "plastic bags",
+      39
+    ],
+    [
+      "shelf",
+      35
+    ],
+    [
+      "bag of fruit",
+      35
+    ],
+    [
+      "cup",
+      34
+    ],
+    [
+      "white bag",
+      34
+    ],
+    [
+      "vegetables",
+      31
+    ],
+    [
+      "banknotes",
+      27
+    ],
+    [
+      "terminal",
+      26
+    ],
+    [
+      "kiosk screen",
+      26
+    ],
+    [
+      "tool",
+      25
+    ],
+    [
+      "cucumber",
+      25
+    ],
+    [
+      "door",
+      24
+    ],
+    [
+      "checkout terminal",
+      24
+    ],
+    [
+      "tray",
+      24
+    ],
+    [
+      "bag of vegetables",
+      23
+    ],
+    [
+      "handheld device",
+      23
+    ],
+    [
+      "gift box",
+      22
+    ],
+    [
+      "tag",
+      21
+    ],
+    [
+      "device",
+      21
+    ],
+    [
+      "computer_screen",
+      21
+    ],
+    [
+      "bag of produce",
+      21
+    ],
+    [
+      "cash register",
+      20
+    ],
+    [
+      "coin",
+      20
+    ],
+    [
+      "blue package",
+      19
+    ],
+    [
+      "bananas",
+      19
+    ],
+    [
+      "small package",
+      19
+    ],
+    [
+      "touchscreen",
+      18
+    ],
+    [
+      "white plastic bag",
+      17
+    ],
+    [
+      "strap",
+      17
+    ],
+    [
+      "insulated bag",
+      17
+    ],
+    [
+      "scanner gun",
+      16
+    ],
+    [
+      "freezer door",
+      16
+    ],
+    [
+      "self-checkout machine",
+      16
+    ],
+    [
+      "self-checkout terminal",
+      16
+    ],
+    [
+      "bubble wrap",
+      16
+    ],
+    [
+      "document",
+      15
+    ],
+    [
+      "paper towel",
+      15
+    ],
+    [
+      "chopsticks",
+      14
+    ],
+    [
+      "cloth",
+      14
+    ],
+    [
+      "long rectangular package",
+      14
+    ],
+    [
+      "freezer",
+      14
+    ],
+    [
+      "self-checkout screen",
+      14
+    ],
+    [
+      "product bag",
+      14
+    ],
+    [
+      "green package",
+      13
+    ],
+    [
+      "counter",
+      13
+    ],
+    [
+      "packet",
+      12
+    ],
+    [
+      "barcode scanner",
+      12
+    ],
+    [
+      "food container",
+      12
+    ],
+    [
+      "boxes",
+      12
+    ],
+    [
+      "label printer",
+      12
+    ],
+    [
+      "trash can",
+      12
+    ],
+    [
+      "sheet",
+      12
+    ],
+    [
+      "item",
+      11
+    ],
+    [
+      "paper roll",
+      10
+    ],
+    [
+      "bin",
+      10
+    ],
+    [
+      "roll",
+      10
+    ],
+    [
+      "product package",
+      10
+    ],
+    [
+      "crate",
+      10
+    ],
+    [
+      "self-service terminal",
+      10
+    ],
+    [
+      "clothing",
+      10
+    ]
+  ],
+  "hand_continuity_bins": {
+    "0%-10%": 48,
+    "10%-20%": 56,
+    "20%-30%": 48,
+    "30%-40%": 58,
+    "40%-50%": 51,
+    "50%-60%": 25,
+    "60%-70%": 15,
+    "70%-80%": 12,
+    "80%-90%": 10,
+    "90%-100%": 3
+  },
+  "slowest_stages": [
+    {
+      "stage": "hamer",
+      "total_duration_s": 282892.11100000003,
+      "avg_duration_s": 546.1237664092665,
+      "count": 518
+    },
+    {
+      "stage": "fast_foundation_depth",
+      "total_duration_s": 201825.08099999937,
+      "avg_duration_s": 307.6601844512185,
+      "count": 656
+    },
+    {
+      "stage": "base_prepare",
+      "total_duration_s": 125610.98499999996,
+      "avg_duration_s": 349.89132311977704,
+      "count": 359
+    },
+    {
+      "stage": "video_simple_quality",
+      "total_duration_s": 107417.63000000002,
+      "avg_duration_s": 297.55576177285326,
+      "count": 361
+    },
+    {
+      "stage": "qwen_annotation",
+      "total_duration_s": 107417.56699999998,
+      "avg_duration_s": 297.5555872576177,
+      "count": 361
+    },
+    {
+      "stage": "archive_depth_cache",
+      "total_duration_s": 28566.003999999975,
+      "avg_duration_s": 43.54573780487801,
+      "count": 656
+    },
+    {
+      "stage": "prepare_stereo",
+      "total_duration_s": 15613.947000000002,
+      "avg_duration_s": 58.699048872180455,
+      "count": 266
+    },
+    {
+      "stage": "depth_anchored_joints21",
+      "total_duration_s": 11882.994999999997,
+      "avg_duration_s": 56.85643540669855,
+      "count": 209
+    },
+    {
+      "stage": "materialize_auto",
+      "total_duration_s": 10857.814000000002,
+      "avg_duration_s": 40.81884962406016,
+      "count": 266
+    },
+    {
+      "stage": "final_hand_trajectory_polish",
+      "total_duration_s": 4015.2300000000023,
+      "avg_duration_s": 19.211626794258382,
+      "count": 209
+    },
+    {
+      "stage": "hand_filter",
+      "total_duration_s": 3561.824000000002,
+      "avg_duration_s": 17.04222009569379,
+      "count": 209
+    },
+    {
+      "stage": "stereo_summary_quality",
+      "total_duration_s": 2880.470999999996,
+      "avg_duration_s": 4.390961890243896,
+      "count": 656
+    },
+    {
+      "stage": "post_annotation_actions",
+      "total_duration_s": 2658.2700000000004,
+      "avg_duration_s": 9.993496240601505,
+      "count": 266
+    },
+    {
+      "stage": "joints21_pose_gate",
+      "total_duration_s": 2370.2069999999994,
+      "avg_duration_s": 11.340703349282293,
+      "count": 209
+    },
+    {
+      "stage": "raw_quality",
+      "total_duration_s": 1414.9659999999985,
+      "avg_duration_s": 1.243379613356765,
+      "count": 1138
+    },
+    {
+      "stage": "materialize_hand_windows",
+      "total_duration_s": 1014.721,
+      "avg_duration_s": 53.40636842105263,
+      "count": 19
+    },
+    {
+      "stage": "final_hand_result",
+      "total_duration_s": 537.8899999999999,
+      "avg_duration_s": 2.573636363636363,
+      "count": 209
+    },
+    {
+      "stage": "hand_parquet_export",
+      "total_duration_s": 358.91,
+      "avg_duration_s": 1.7172727272727273,
+      "count": 209
+    },
+    {
+      "stage": "processing_plan",
+      "total_duration_s": 158.26700000000005,
+      "avg_duration_s": 0.5949887218045115,
+      "count": 266
+    },
+    {
+      "stage": "hand_windows",
+      "total_duration_s": 158.23399999999992,
+      "avg_duration_s": 0.5948646616541351,
+      "count": 266
+    }
+  ],
+  "processed_stage_runtime": [
+    {
+      "stage": "raw_quality",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 508.08299999999986,
+      "total_duration_h": 0.14113416666666662,
+      "avg_duration_s": 2.43101913875598,
+      "p50_duration_s": 0.962,
+      "p90_duration_s": 1.1329999999999998
+    },
+    {
+      "stage": "video_simple_quality",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 63118.52500000001,
+      "total_duration_h": 17.532923611111112,
+      "avg_duration_s": 302.0025119617225,
+      "p50_duration_s": 141.431,
+      "p90_duration_s": 740.2995999999995
+    },
+    {
+      "stage": "qwen_annotation",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 63118.48900000001,
+      "total_duration_h": 17.532913611111113,
+      "avg_duration_s": 302.0023397129187,
+      "p50_duration_s": 141.431,
+      "p90_duration_s": 740.2995999999995
+    },
+    {
+      "stage": "post_annotation_actions",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 1794.2579999999998,
+      "total_duration_h": 0.49840499999999993,
+      "avg_duration_s": 8.584966507177032,
+      "p50_duration_s": 3.137,
+      "p90_duration_s": 25.02339999999999
+    },
+    {
+      "stage": "processing_plan",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 124.63600000000004,
+      "total_duration_h": 0.03462111111111112,
+      "avg_duration_s": 0.5963444976076557,
+      "p50_duration_s": 0.592,
+      "p90_duration_s": 0.6152
+    },
+    {
+      "stage": "hand_windows",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 124.2899999999999,
+      "total_duration_h": 0.03452499999999997,
+      "avg_duration_s": 0.5946889952153106,
+      "p50_duration_s": 0.592,
+      "p90_duration_s": 0.6222
+    },
+    {
+      "stage": "materialize_auto",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 6832.0449999999955,
+      "total_duration_h": 1.8977902777777764,
+      "avg_duration_s": 32.68921052631577,
+      "p50_duration_s": 24.565,
+      "p90_duration_s": 67.85759999999999
+    },
+    {
+      "stage": "prepare_stereo",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 9214.475,
+      "total_duration_h": 2.559576388888889,
+      "avg_duration_s": 44.0883971291866,
+      "p50_duration_s": 25.302,
+      "p90_duration_s": 106.9514
+    },
+    {
+      "stage": "stereo_summary_quality",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 1817.2879999999996,
+      "total_duration_h": 0.5048022222222222,
+      "avg_duration_s": 8.69515789473684,
+      "p50_duration_s": 5.802,
+      "p90_duration_s": 10.617999999999968
+    },
+    {
+      "stage": "fast_foundation_depth",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 144220.729,
+      "total_duration_h": 40.06131361111111,
+      "avg_duration_s": 690.0513349282296,
+      "p50_duration_s": 433.533,
+      "p90_duration_s": 1496.0111999999995
+    },
+    {
+      "stage": "hamer",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 258432.83000000007,
+      "total_duration_h": 71.78689722222224,
+      "avg_duration_s": 1236.5207177033496,
+      "p50_duration_s": 656.944,
+      "p90_duration_s": 2735.4749999999976
+    },
+    {
+      "stage": "hand_filter",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 3561.824000000001,
+      "total_duration_h": 0.9893955555555558,
+      "avg_duration_s": 17.042220095693786,
+      "p50_duration_s": 7.235,
+      "p90_duration_s": 43.71199999999997
+    },
+    {
+      "stage": "joints21_pose_gate",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 2370.2070000000003,
+      "total_duration_h": 0.6583908333333335,
+      "avg_duration_s": 11.340703349282299,
+      "p50_duration_s": 5.147,
+      "p90_duration_s": 29.727399999999992
+    },
+    {
+      "stage": "depth_anchored_joints21",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 11882.995000000004,
+      "total_duration_h": 3.300831944444446,
+      "avg_duration_s": 56.85643540669859,
+      "p50_duration_s": 35.376,
+      "p90_duration_s": 133.97759999999997
+    },
+    {
+      "stage": "final_hand_result",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 537.8900000000001,
+      "total_duration_h": 0.14941388888888893,
+      "avg_duration_s": 2.573636363636364,
+      "p50_duration_s": 1.278,
+      "p90_duration_s": 6.058999999999999
+    },
+    {
+      "stage": "final_hand_trajectory_polish",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 4015.229999999998,
+      "total_duration_h": 1.1153416666666662,
+      "avg_duration_s": 19.211626794258365,
+      "p50_duration_s": 10.909,
+      "p90_duration_s": 46.754999999999995
+    },
+    {
+      "stage": "hand_parquet_export",
+      "success": 209,
+      "duration_count": 209,
+      "total_duration_s": 358.9099999999999,
+      "total_duration_h": 0.0996972222222222,
+      "avg_duration_s": 1.7172727272727268,
+      "p50_duration_s": 1.451,
+      "p90_duration_s": 2.0353999999999997
+    }
+  ],
+  "interpretation": [
+    "全库进入统计 1139 条，已处理完成 209 条。",
+    "最常见质量/阻塞原因是 archive_depth_cache:blocked。",
+    "已处理分析单元手部连续性按 10% 分档统计，共 326 个单元。",
+    "累计耗时最长流程是 hamer。"
+  ]
+}

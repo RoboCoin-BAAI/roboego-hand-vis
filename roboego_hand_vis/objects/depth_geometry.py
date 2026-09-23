@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from roboego_hand_vis.depth.io import depth_path_for_frame as canonical_depth_path_for_frame
-from roboego_hand_vis.depth.io import load_depth_frame as canonical_load_depth_frame
+from roboego_hand_vis.common.depth_io import depth_path_for_frame as canonical_depth_path_for_frame
+from roboego_hand_vis.common.depth_io import load_depth_frame as canonical_load_depth_frame
 
 
 @dataclass
