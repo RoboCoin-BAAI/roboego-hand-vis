@@ -1,0 +1,26 @@
+schema_version: "1.0"
+stage: detect_hand
+description: Recommended default parameters for YOLO-based hand presence detection.
+
+runtime:
+  recommended_env: ego
+  requires_gpu: true
+
+paths:
+  model: detector.pt
+
+parameters:
+  sample_every: 5
+  conf: 0.15
+  device: "0"
+  imgsz: 640
+  batch_size: 32
+
+io:
+  video: "{session}/videos/left.mkv"
+  output_json: "{session}/annotation/detect_hand_left.json"
+
+notes:
+  - Relative model paths are resolved from the detect_hand stage directory.
+  - When --output_json is omitted, the default path is session/annotation/detect_hand_<video>.json for videos under a videos directory.
+  - The output summarizes sampled-frame hand, left-hand, and right-hand presence ratios.

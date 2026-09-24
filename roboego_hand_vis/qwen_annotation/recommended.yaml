@@ -3,14 +3,14 @@ stage: qwen_annotation
 description: Recommended default parameters for Qwen ego-frame semantic annotation.
 
 runtime:
-  recommended_env: py312
+  recommended_env: ego
   requires_gpu: false
   requires_network: true
-  api_key_env: DASHSCOPE_API_KEY
+  api_key_env: QWEN_API_KEY
 
 parameters:
   prompt: docs/prompts/qwen_frame_annotation_v5_en.md
-  model: qwen3.6-flash
+  model: qwen3.8-27b
   fps: 1.0
   start_s: 0.0
   duration_s:
@@ -18,7 +18,14 @@ parameters:
   max_width: 768
   batch_size: 10
   batches_per_chunk: 5
-  api_key_env: DASHSCOPE_API_KEY
+  api_key_env: QWEN_API_KEY
+  base_url: http://127.0.0.1:18000/v1/chat/completions
+  chat_template_kwargs:
+    enable_thinking: true
+  # parameters:
+  # model: qwen-vl-plus
+  # api_key_env: DASHSCOPE_API_KEY
+  # base_url: https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions
   timeout_s: 120.0
   max_retries: 3
   retry_sleep_s: 5.0
@@ -31,10 +38,11 @@ parameters:
   recover_from_raw: false
 
 io:
-  video: "{session}/videos/left.mp4"
-  output_json: "{session}/annotation/qwen_frame_annotations_left_v4.json"
+  video: "{session}/videos/left.mkv"
+  output_json: "{session}/annotation/qwen_frame_annotations_left.json"
 
 notes:
   - This file records recommended parameters only; it does not create or modify environments.
-  - The stage calls Qwen/DashScope through the configured api_key_env environment variable.
+  - The stage calls an OpenAI-compatible Qwen endpoint through the configured base_url and api_key_env environment variable.
+  - The default base_url targets a local SSH tunnel at 127.0.0.1:18000.
   - The stage is intentionally decoupled from raw and video quality gates.

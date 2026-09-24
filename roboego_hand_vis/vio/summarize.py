@@ -2,7 +2,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+
+STAGE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = STAGE_DIR.parent.parent
+for path in (PROJECT_ROOT, STAGE_DIR):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 try:
     from .timing import summarize_openvins_timing

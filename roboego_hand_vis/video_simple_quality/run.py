@@ -18,6 +18,7 @@ from cli import (  # noqa: E402
     load_yaml,
     main,
     parse_args,
+    run_session_video_simple_quality,
     run_video_simple_quality,
 )
 
@@ -27,6 +28,7 @@ __all__ = [
     "load_yaml",
     "main",
     "parse_args",
+    "run_session_video_simple_quality",
     "run_video_simple_quality",
 ]
 

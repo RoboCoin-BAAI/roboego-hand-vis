@@ -1,0 +1,1 @@
+"""YOLO hand detection stage."""

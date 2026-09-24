@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import struct
 import sys
 import wave
 from dataclasses import dataclass
@@ -383,6 +384,7 @@ def inspect_audio(path: str | Path) -> dict | None:
     if not path.exists():
         return None
 
+    wav_header_repair = repair_wav_header_sizes(path)
     with wave.open(str(path), "rb") as handle:
         frame_count = int(handle.getnframes())
         sample_rate = int(handle.getframerate())
@@ -399,6 +401,82 @@ def inspect_audio(path: str | Path) -> dict | None:
         "channel_count": channel_count,
         "sample_width_bytes": sample_width_bytes,
         "duration_s": float(frame_count / float(sample_rate)),
+        "wav_header_repair": wav_header_repair,
+    }
+
+
+def repair_wav_header_sizes(path: str | Path) -> dict:
+    """Repair RIFF/data chunk sizes when a WAV header overstates real PCM data.
+
+    Some recorders reserve a large data chunk size and fail to finalize the WAV
+    header. The PCM payload can still be valid; in that case the correct chunk
+    sizes are derivable from the file length.
+    """
+    path = Path(path).resolve()
+    try:
+        raw = path.read_bytes()
+    except OSError as exc:
+        return {"applied": False, "reason": f"read_failed: {exc}"}
+    if len(raw) < 44 or raw[:4] != b"RIFF" or raw[8:12] != b"WAVE":
+        return {"applied": False, "reason": "not_riff_wave"}
+
+    original_riff_size = struct.unpack_from("<I", raw, 4)[0]
+    offset = 12
+    data_offset: int | None = None
+    data_size: int | None = None
+    block_align: int | None = None
+    fmt_seen = False
+    while offset + 8 <= len(raw):
+        chunk_id = raw[offset : offset + 4]
+        chunk_size = struct.unpack_from("<I", raw, offset + 4)[0]
+        chunk_data = offset + 8
+        if chunk_id == b"fmt ":
+            fmt_seen = True
+            if chunk_size >= 16 and chunk_data + 16 <= len(raw):
+                block_align = int(struct.unpack_from("<H", raw, chunk_data + 12)[0])
+        if chunk_id == b"data":
+            data_offset = offset
+            data_size = chunk_size
+            break
+        offset = chunk_data + chunk_size + (chunk_size % 2)
+
+    if data_offset is None or data_size is None:
+        return {"applied": False, "reason": "missing_data_chunk"}
+    if not fmt_seen:
+        return {"applied": False, "reason": "missing_fmt_chunk"}
+
+    actual_riff_size = len(raw) - 8
+    actual_data_size = len(raw) - (data_offset + 8)
+    if actual_data_size < 0:
+        return {"applied": False, "reason": "invalid_data_chunk_offset"}
+    if block_align and actual_data_size % block_align != 0:
+        return {
+            "applied": False,
+            "reason": "actual_data_size_not_block_aligned",
+            "block_align": block_align,
+            "actual_data_size": actual_data_size,
+        }
+    if original_riff_size == actual_riff_size and data_size == actual_data_size:
+        return {
+            "applied": False,
+            "reason": "header_sizes_already_match_file",
+            "riff_size": original_riff_size,
+            "data_size": data_size,
+        }
+
+    patched = bytearray(raw)
+    struct.pack_into("<I", patched, 4, actual_riff_size)
+    struct.pack_into("<I", patched, data_offset + 4, actual_data_size)
+    path.write_bytes(patched)
+    return {
+        "applied": True,
+        "reason": "wav_chunk_size_mismatch",
+        "original_riff_size": original_riff_size,
+        "actual_riff_size": actual_riff_size,
+        "original_data_size": data_size,
+        "actual_data_size": actual_data_size,
+        "data_chunk_offset": data_offset,
+        "block_align": block_align,
     }
 
 

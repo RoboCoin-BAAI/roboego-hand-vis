@@ -142,8 +142,8 @@ def run_raw_headband_integrity(config: RawHeadbandIntegrityConfig) -> dict[str, 
         summary["gate"] = {
             "passed": gate_result.get("passed"),
             "risk_level": gate_result.get("risk_level"),
-            "blocking_check_count": len(gate_result.get("blocking_checks") or ()),
-            "warning_check_count": len(gate_result.get("warning_checks") or ()),
+            "blocking_check_count": len(gate_result.get("failed_checks") or ()),
+            "warning_check_count": len(gate_result.get("warnings") or ()),
         }
     return summary
 

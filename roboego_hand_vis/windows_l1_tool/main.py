@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import getpass
 import sys
 from pathlib import Path
 
@@ -40,16 +41,23 @@ def _prompt_roots() -> list[Path]:
     return roots
 
 
-def _build_upload_args(roots: list[Path]):
+def _prompt_upload_credentials() -> tuple[str, str]:
+    print("请输入上传认证信息。直接回车使用默认值。")
+    ak = input(f"AK [{DEFAULT_AK}]: ").strip() or DEFAULT_AK
+    sk = getpass.getpass("SK [默认值已内置，直接回车使用默认值]: ").strip() or DEFAULT_SK
+    return ak, sk
+
+
+def _build_upload_args(roots: list[Path], *, ak: str, sk: str, project_id: int):
     return parse_upload_args(
         [
             *(item for root in roots for item in ("--root", str(root))),
             "--ak",
-            DEFAULT_AK,
+            ak,
             "--sk",
-            DEFAULT_SK,
+            sk,
             "--project-id",
-            str(DEFAULT_PROJECT_ID),
+            str(project_id),
         ]
     )
 
@@ -77,7 +85,8 @@ def main() -> int:
         print("1. 只上传质检通过的")
         print("2. 默认逻辑上传")
         upload_choice = input("输入 1 或 2: ").strip()
-        upload_args = _build_upload_args(roots)
+        ak, sk = _prompt_upload_credentials()
+        upload_args = _build_upload_args(roots, ak=ak, sk=sk, project_id=DEFAULT_PROJECT_ID)
         if upload_choice == "1":
             sessions = discover_cp_cs_sessions(roots)
             summary = upload_quality_passed_sessions(sessions, args=upload_args)

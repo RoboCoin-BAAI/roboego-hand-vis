@@ -34,10 +34,10 @@ outputs:
 
 runtime:
   python: ">=3.10,<4.0"
-  recommended_env: py312
+  recommended_env: ego
   gpu: not_required
   network: required
-  api_key_env: DASHSCOPE_API_KEY
+  api_key_env: QWEN_API_KEY
   streaming: true
   memory: "Samples frames to disk in batches; full video is not loaded into memory."
 
@@ -48,7 +48,8 @@ dependencies:
     - PyYAML
   external_services:
     - name: Qwen/DashScope compatible chat completions API
-      api_key_env: DASHSCOPE_API_KEY
+      api_key_env: QWEN_API_KEY
+      base_url: http://127.0.0.1:18000/v1/chat/completions
 
 execution:
   parallelism_unit: video

@@ -12,6 +12,7 @@ from typing import Any
 import yaml
 
 from roboego_hand_vis.common.video_paths import find_named_video
+from roboego_hand_vis.datasets.manifest import ResolveConfig, resolve_dataset_manifest, write_manifest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 STAGE_DIR = Path(__file__).resolve().parent
@@ -31,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--session", required=True, help="Session directory containing videos/left.mp4 and videos/right.mp4.")
     parser.add_argument("--roboegopipe_root", default="", help="旧参数兼容占位；当前实现不再依赖外部 RoboEgoPipe 仓库。")
-    parser.add_argument("--dataset_adapter", default=None, help="Manifest adapter for rectified Wumei-style segments.")
+    parser.add_argument("--dataset_adapter", default=None, help="Manifest adapter for rectified raw sessions.")
     parser.add_argument("--model", choices=["double_sphere", "equidistant", "fisheye"], default=None)
     parser.add_argument("--balance", type=float, default=None, help="Equidistant/fisheye crop balance.")
     parser.add_argument("--width", type=int, default=None)
@@ -56,7 +57,7 @@ def resolved_options_from_yaml_and_args(data: dict[str, Any], args: argparse.Nam
     parameters = data.get("parameters", {})
 
     return {
-        "dataset_adapter": args.dataset_adapter or str(io_config.get("dataset_adapter", "wumei01")),
+        "dataset_adapter": args.dataset_adapter or str(io_config.get("dataset_adapter", "raw")),
         "model": args.model or str(parameters.get("model", "equidistant")),
         "balance": float(args.balance if args.balance is not None else parameters.get("balance", 0.0)),
         "width": int(args.width if args.width is not None else parameters.get("width", 1600)),
@@ -321,22 +322,14 @@ def _move_stereo_unit_outputs(*, rectified_session: Path, unit_root: Path) -> No
 
 
 def _write_manifest(*, processed: Path, manifest_dir: Path, segment_name: str, dataset_adapter: str) -> None:
-    subprocess.run(
-        [
-            sys.executable,
-            str(PROJECT_ROOT / "scripts/datasets/resolve_dataset.py"),
-            "--dataset",
-            dataset_adapter,
-            "--root",
-            str(processed),
-            "--output_dir",
-            str(manifest_dir),
-            "--sequence_name",
-            segment_name,
-        ],
-        cwd=str(PROJECT_ROOT),
-        check=True,
+    config = ResolveConfig(
+        dataset=dataset_adapter,
+        root=processed,
+        output_dir=manifest_dir,
+        sequence_name=segment_name,
     )
+    manifest = resolve_dataset_manifest(config)
+    write_manifest(manifest, manifest_dir)
 
 
 if __name__ == "__main__":

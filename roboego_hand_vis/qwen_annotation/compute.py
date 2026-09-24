@@ -39,6 +39,8 @@ class QwenAnnotationConfig:
     max_width: int
     batch_size: int
     api_key_env: str
+    base_url: str
+    chat_template_kwargs: dict[str, Any]
     timeout_s: float
     max_retries: int
     retry_sleep_s: float
@@ -130,6 +132,8 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
             messages=messages,
             model=config.model,
             api_key_env=config.api_key_env,
+            base_url=config.base_url,
+            chat_template_kwargs=config.chat_template_kwargs,
             timeout_s=config.timeout_s,
             max_retries=config.max_retries,
             retry_sleep_s=config.retry_sleep_s,

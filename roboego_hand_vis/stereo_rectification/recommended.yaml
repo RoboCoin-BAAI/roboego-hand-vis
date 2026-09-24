@@ -3,7 +3,7 @@ runtime:
   recommended_env: py312
 io:
   session: "{session}"
-  dataset_adapter: wumei01
+  dataset_adapter: raw
 parameters:
   model: equidistant
   balance: 0.0

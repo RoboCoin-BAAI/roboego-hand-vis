@@ -7,6 +7,10 @@ runtime:
   requires_gpu: false
 
 parameters:
+  camera_streams:
+    - left
+    - right
+  video_ext: .mkv
   sample_every_s: 1.0
   dark_threshold: 10
   bright_threshold: 245
@@ -19,9 +23,13 @@ parameters:
   min_bad_visual_duration_s: 3.0
 
 io:
-  video: "{session}/videos/left.mp4"
-  output_json: "{session}/annotation/video_simple_quality_left.json"
+  session: "{session}"
+  videos:
+    left: "{session}/videos/left.mkv"
+    right: "{session}/videos/right.mkv"
+  output_json: "{session}/annotation/video_simple_quality.json"
 
 notes:
   - This file records recommended parameters only; it does not create or modify environments.
   - The stage samples frames instead of decoding the whole video into memory.
+  - The default session mode passes only when all configured streams can be sent to Qwen without drop_before_qwen intervals.

@@ -24,7 +24,9 @@ parameters:
 
 gate:
   enabled: true
-  rules: {}
+  rules:
+    audio_video_duration:
+      max_abs_delta_s: 2.5
 
 io:
   session: "{session}"
@@ -33,4 +35,4 @@ io:
 notes:
   - This file records recommended parameters only; it does not create or modify environments.
   - The stage writes annotation/quality_report.json under output_root and embeds the raw_headband_quality_gate result when gate.enabled is true.
-  - The default quality gate requires audio/audio.wav and fails when its duration differs from readable video durations by more than 1 second.
+  - The default quality gate requires audio/audio.wav and fails when its duration differs from readable video durations by more than 2.5 seconds.

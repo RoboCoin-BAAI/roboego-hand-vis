@@ -1,0 +1,20 @@
+# Minimal pip requirements for the ego environment stages documented here:
+# - raw_headband_integrity
+# - video_simple_quality
+# - detect_hand
+# - stereo_rectification
+#
+# Export source: /home/liuyou/miniconda3/envs/ego on 2026-09-24.
+# Python used by the working environment: 3.11.9.
+
+numpy==2.0.1
+opencv-python==4.13.0.92
+PyYAML==6.0.3
+
+# Required by detect_hand.
+ultralytics==8.4.154
+torch==2.4.1
+torchvision==0.19.1
+
+# Kept because it is part of the project base dependency set and already present in ego.
+scipy==1.17.1

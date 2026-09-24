@@ -1,0 +1,40 @@
+schema_version: "1.0"
+name: detect_hand
+display_name: Detect Hand
+description: Run YOLO hand detection on one video and report left/right hand presence ratios.
+entrypoint: roboego_hand_vis/detect_hand/run.py
+recommended_config: recommended.yaml
+
+inputs:
+  required:
+    - video
+  optional:
+    - model
+    - output_json
+    - config
+
+outputs:
+  files:
+    - path: "{output_json}"
+      type: detect_hand_report
+
+runtime:
+  python: ">=3.10,<4.0"
+  recommended_env: ego
+  gpu: recommended
+  streaming: true
+  memory: "Samples frames and batches YOLO inference; the full video is not loaded into memory."
+
+dependencies:
+  pip:
+    - ultralytics
+    - opencv-python
+    - PyYAML
+
+execution:
+  parallelism_unit: video_file
+  resumable: false
+  temporal_dependency: sampled_frame_order
+  notes:
+    - This stage is a lightweight hand-presence detector, separate from Qwen semantic hand visibility.
+    - Use --device cpu when no CUDA device is available.

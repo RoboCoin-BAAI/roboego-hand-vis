@@ -498,6 +498,7 @@ def call_qwen_frame_annotations(
     model: str,
     api_key_env: str = "DASHSCOPE_API_KEY",
     base_url: str = DEFAULT_QWEN_BASE_URL,
+    chat_template_kwargs: dict[str, Any] | None = None,
     timeout_s: float = 120.0,
     max_retries: int = 0,
     retry_sleep_s: float = 1.0,
@@ -511,6 +512,8 @@ def call_qwen_frame_annotations(
     current_messages = copy.deepcopy(messages)
     for attempt_idx in range(max_attempts):
         body = {"model": model, "messages": current_messages, "temperature": 0}
+        if chat_template_kwargs:
+            body["chat_template_kwargs"] = chat_template_kwargs
         req = urllib.request.Request(
             base_url,
             data=json.dumps(body).encode("utf-8"),

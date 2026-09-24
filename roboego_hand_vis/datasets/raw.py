@@ -74,7 +74,7 @@ def resolve(config: ResolveConfig) -> dict[str, Any]:
     baseline = float(calib["baseline_m"])
 
     return base_manifest(
-        dataset_name="wumei01",
+        dataset_name="raw",
         sequence_name=config.sequence_name,
         root_dir=root,
         left_video=left_video,
@@ -91,7 +91,7 @@ def resolve(config: ResolveConfig) -> dict[str, Any]:
             "baseline_m": baseline,
             "raw": {"left": None, "right": None, "depth": None},
             "note": (
-                "Wumei01 videos are already undistorted and stereo-rectified. "
+                "Raw headband videos are already undistorted and stereo-rectified. "
                 "The manifest uses positive baseline_m for downstream depth estimation; "
                 "the signed source baseline is preserved in metadata.raw_stereo_params."
             ),
@@ -113,7 +113,7 @@ def resolve(config: ResolveConfig) -> dict[str, Any]:
             "rectify_params_yaml": str(rectify_path),
         },
         metadata={
-            "adapter": "wumei01",
+            "adapter": "raw",
             "raw_stereo_params": calib["raw_stereo_params"],
         },
     )

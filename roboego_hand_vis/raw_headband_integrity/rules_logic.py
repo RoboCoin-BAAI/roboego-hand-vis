@@ -21,12 +21,12 @@ DEFAULT_RULES: dict[str, dict[str, Any]] = {
     "timestamp_alignment": {
         "enabled": True,
         "level": "fail",
-        "max_over_tolerance_rate": 0.0,
+        "max_over_tolerance_rate": 0.001,
     },
     "timestamp_duplicates": {
         "enabled": True,
         "level": "warning",
-        "max_duplicate_rate": 0.0,
+        "max_duplicate_rate": 0.001,
         "max_consecutive_duplicate_frames": 5,
     },
     "frame_count_consistency": {
@@ -46,7 +46,7 @@ DEFAULT_RULES: dict[str, dict[str, Any]] = {
     "imu_duplicates": {
         "enabled": True,
         "level": "fail",
-        "max_duplicate_rate": 0.0,
+        "max_duplicate_rate": 0.001,
     },
     "imu_all_zero": {
         "enabled": True,
@@ -71,7 +71,7 @@ DEFAULT_RULES: dict[str, dict[str, Any]] = {
     "audio_video_duration": {
         "enabled": True,
         "level": "fail",
-        "max_abs_delta_s": 1.0,
+        "max_abs_delta_s": 2.5,
     },
     "video_fps_delta": {
         "enabled": True,

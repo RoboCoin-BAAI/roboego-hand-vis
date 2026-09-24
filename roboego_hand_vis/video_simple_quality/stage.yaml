@@ -7,15 +7,16 @@ recommended_config: recommended.yaml
 
 inputs:
   required:
-    - video
+    - session
   optional:
+    - video
     - output_json
     - config
 
 outputs:
   files:
-    - path: "{output_json}"
-      type: video_simple_quality_report
+    - path: "{session}/annotation/video_simple_quality.json"
+      type: video_simple_quality_aggregate_report
 
 runtime:
   python: ">=3.10,<4.0"
@@ -31,9 +32,10 @@ dependencies:
     - PyYAML
 
 execution:
-  parallelism_unit: video_file
+  parallelism_unit: session
   resumable: false
   temporal_dependency: sampled_frame_order
   notes:
     - This stage wraps the existing pre-semantic visual quality gate.
-    - The raw pipeline stage name video_simple_quality can continue to use the existing Kedro node.
+    - The default session mode checks left/right videos and writes a top-level pass/fail conclusion.
+    - The legacy --video mode can still write a single-video report.
