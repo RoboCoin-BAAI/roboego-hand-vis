@@ -1,8 +1,189 @@
-# ROS-Free VIO Environment
+# ROS-Free VIO Setup And Usage
 
-For the self-contained image with bundled code and binaries, see
-[Bundled Runtime](RUNTIME.md). This page describes the source-mounted development
-environment, which remains available separately.
+## Normal Use: Bundled Runtime
+
+Use `roboego-vio-runtime:dev` for normal inference. It includes the OpenVINS
+binary, Python adapters and dependencies. Recipients do NOT need ROS, a GPU,
+model weights, OpenVINS source or a compiler. Only Docker, input data and the
+small `run-runtime.sh` launcher are needed. Full details: [RUNTIME.md](RUNTIME.md).
+
+### Install Or Build
+
+Complete [host Docker installation](../README.md#host-installation); the NVIDIA
+steps are for hand estimation only. Run commands from this repository root.
+Choose ONE path:
+
+```bash
+# A: Import a delivered runtime image. No compilation is needed.
+docker load -i /absolute/path/to/vio-runtime.tar
+```
+
+```bash
+# B: Build locally using the validated OpenVINS fork/snapshot.
+export OPENVINS_ROOT="$HOME/open_vins"
+test -f "$OPENVINS_ROOT/ov_offline/frame_export.py"
+docker build -t roboego-vio-env:dev docker/vio-env
+bash docker/vio-env/build-runtime.sh
+```
+
+The dependency build may download packages; the runtime build compiles C++
+inside Docker with networking disabled. The OpenVINS fork uses branch
+`feature/ros-free-offline` plus the current delivered adapter changes; official
+`master` alone has no compatible offline entry. Preserve tested source revisions.
+
+```bash
+docker run --rm --network none roboego-vio-runtime:dev doctor
+docker run --rm --network none roboego-vio-runtime:dev test
+```
+
+Doctor validates imports/native loading, not trajectory quality. The tests use
+synthetic fixtures; a private real-data test can be skipped without its dataset.
+Override `VIO_RUNTIME_IMAGE` to use a different tag or immutable image ID.
+
+### Input Layout
+
+All runs require stereo video, camera timestamps, IMU measurements and valid
+calibration for the actual device. Depth, hand results and Qwen are not needed.
+
+```text
+session/
+  videos/left.mp4, right.mp4                       for raw mode
+  videos/left_rectified.mp4, right_rectified.mp4   for rectified mode
+  timestamps/left_timestamps.txt, right_timestamps.txt
+  imu/imu0.csv
+  calibrations/camera_imu-camchain-imucam.yaml
+  calibrations/camera_imu-imu.yaml
+  calibrations/rectify_params.yaml                additionally for rectified
+  calibrations/camera-camchain.yaml               use when supplied
+  dataset_manifest/dataset_manifest.json          additionally for rectified
+```
+
+Placeholder calibration is invalid. Copying calibration from an unrelated
+device is not a fix. Video frame counts must match timestamp counts, and IMU
+timestamps/units must match the dataset convention. See preparation errors
+before changing estimator parameters.
+
+### Run A Raw Session
+
+```bash
+cd ~/roboego-hand-vis
+export INPUT_DIR=/absolute/path/to/session
+export OUTPUT_DIR="$HOME/ego_data/vio_raw_$(date +%Y%m%d_%H%M%S)"
+unset INPUT_CONTAINER_PATH
+bash docker/vio-env/run-runtime.sh run --input_mode raw
+python3 -m json.tool "$OUTPUT_DIR/report.json"
+```
+
+### Run A Rectified Session
+
+The reader follows absolute video paths recorded in the dataset manifest. For
+the local processed sessions, mount the input at their original `root_dir`:
+
+```bash
+cd ~/roboego-hand-vis
+export INPUT_DIR="$HOME/ego_data/processed_data/session_20260827_113215_收银_20260903162506"
+export OUTPUT_DIR="$HOME/ego_data/vio_cashier_$(date +%Y%m%d_%H%M%S)"
+export INPUT_CONTAINER_PATH="$(python3 -c \
+  'import json,sys; print(json.load(open(sys.argv[1]))["root_dir"])' \
+  "$INPUT_DIR/dataset_manifest/dataset_manifest.json")"
+
+bash docker/vio-env/run-runtime.sh run --input_mode rectified
+python3 -m json.tool "$OUTPUT_DIR/report.json"
+```
+
+For another dataset, change INPUT_DIR and confirm that manifest video paths are
+under its `root_dir`, with matching relative files. The original NAS directory
+does not need to exist on the host: INPUT_CONTAINER_PATH is a container mount
+destination. It must not collide with `/opt` or `/data/output`. This does not
+rewrite the source manifest. Host input is read-only and output is writable.
+
+Append `--start_s 10 --duration_s 8` to select a time window, or `--debug` to
+retain intermediates. Use a NEW OUTPUT_DIR for each run. Window replay can use
+pre-window IMU history and is not the same as cutting out a strict cold-start
+dataset. With no duration argument the whole selected session is replayed.
+
+### Results And Frame Status
+
+Successful default output contains only `trajectory.npz` and `report.json`.
+`--debug` additionally retains `debug/` with configuration, CSV, legacy JSONL
+and logs. Failure returns nonzero and keeps `report.json` plus `error.log`;
+an exported frame-aligned NPZ is also kept even if every pose is unavailable.
+Read report status, not just file existence. Data rejected before export may
+not produce NPZ. A directory from `prepare` is not an empty inference output.
+
+NPZ `openvins.frame_aligned.v2` keeps every left-video frame. `frame_index`
+is `0..N-1`, and each row has timestamps, right-frame index, IMU/camera 4x4
+transforms and ONE `status` field. Missing transforms are all NaN, never zero
+or copied poses. No redundant `valid`, `processed`, `initialized` arrays are
+saved. Schema/quality metadata are scalar fields; report contains aggregate counts.
+Native initialization flags remain available in debug `frame_status.csv`.
+
+| Status | Meaning |
+| --- | --- |
+| `valid` | Finite pose at this frame's timestamp; accuracy NOT certified |
+| `initializing` | Processed, but initialization not complete |
+| `imu_unavailable` | IMU does not bracket the aligned camera time |
+| `state_not_advanced` | Initialized estimator did not advance to this frame |
+| `invalid_state` | Non-finite estimator state |
+| `not_processed` | Requested frame not reached, e.g. after a runtime failure |
+| `not_requested` | Known stereo pair outside the selected replay interval |
+| `no_stereo_pair` | Left-video frame absent from stereo-pair input |
+
+Timestamps are seconds; translations are meters. `T_world_camera` maps the left
+camera into the local VIO world, not GPS coordinates. Missing stereo pairs have
+right index -1 and unknown timestamps NaN. Even windowed replay retains the
+full input video's N rows. Legacy JSONL is intentionally valid-pose-only.
+Inspect NPZ using the image's NumPy (no host NumPy installation needed):
+
+```bash
+bash docker/vio-env/run-runtime.sh python3 -c '
+import numpy as np
+with np.load("/data/output/trajectory.npz", allow_pickle=False) as data:
+    valid = data["status"] == "valid"
+    print("schema:", data["schema_version"])
+    print("frames:", len(data["frame_index"]), "poses:", int(valid.sum()))
+    print("statuses:", np.unique(data["status"], return_counts=True))
+    positions = data["T_world_camera"][valid, :3, 3]
+'
+```
+
+Earlier frame-aligned v1 files had three boolean arrays. New v2 files use
+`status == "valid"`; old outputs are not rewritten automatically. Frame-level
+availability does not certify drift/accuracy (`quality_status: not_validated`).
+
+### Updating And Troubleshooting
+
+| Symptom / change | Action |
+| --- | --- |
+| Cannot open manifest video path | Verify INPUT_CONTAINER_PATH and relative video files |
+| Output must be empty | Use a fresh OUTPUT_DIR, including after `prepare` or failure |
+| Calibration incomplete / frame-timestamp mismatch | Fix source data or supply correct device calibration; do not bypass checks |
+| `not_initialized` | Inspect statuses and debug log; do not count NaN rows as poses |
+| Complete but trajectory drifts | Initialization/output availability is not quality acceptance; preserve failing data for diagnosis |
+| Host code changed but runtime unchanged | Run `build-runtime.sh`; bundled runtime never mounts host source |
+| Docker permission denied | Complete host Docker access setup; avoid changing file ownership via sudo launcher runs |
+
+The full-session cashier timing divergence is fixed in the current profile;
+short-window cold-start drift and a feature-starved shelf initialization case
+remain under investigation. Neither status fields nor online timing estimation
+solve all quality problems. No production thresholds are silently relaxed.
+
+The host launcher creates/removes a container for each invocation; no persistent
+service or shell entry is needed. To transfer the current image:
+
+```bash
+docker save -o /absolute/path/to/vio-runtime.tar roboego-vio-runtime:dev
+# On the destination:
+docker load -i /absolute/path/to/vio-runtime.tar
+```
+
+Deliver `run-runtime.sh` separately, or use the direct `docker run` example in
+[RUNTIME.md](RUNTIME.md). Old TAR archives do not update when an image is rebuilt.
+
+## Development Environment Only
+
+The remaining sections describe `roboego-vio-env:dev`, not the normal bundled
+runtime. Use it only when compiling/testing a mounted OpenVINS working tree.
 
 Environment-only image for the current `roboego_hand_vis/vio` entrypoint.
 No OpenVINS source, host binaries, session data or pretrained models are copied
@@ -145,10 +326,11 @@ Check timestamps, coverage and failure logs, not just process exit status.
 
 Doctor, core compilation, tests and session preparation validate only
 the environment and input preparation. Real-data replay now emits initialized
-trajectories for four local sessions, but the cashier session diverges badly.
+trajectories for four local sessions. The original fixed-time-offset cashier
+baseline diverged badly; current online estimation fixes that full-session case.
 `status: complete` and exit zero describe execution, not trajectory quality.
-Full acceptance still requires resolving this divergence and checking output
-quality. No small-motion fix is claimed. See `VALIDATION.md` for measurements.
+Full acceptance still requires checking output quality, including independently
+started short windows. No general small-motion fix is claimed. See `VALIDATION.md`.
 The hand module's 32-frame depth sample is not a VIO initialization
 acceptance dataset; use original stereo video, timestamps, IMU and calibration.
 
@@ -164,3 +346,12 @@ input preparation. See `VALIDATION.md` for replay results and remaining limits.
 Start with raw input. Rectified mode uses absolute paths stored in the dataset
 manifest; those paths must be valid inside the container. Do not blindly reuse
 a manifest containing host-only paths.
+## Session Timing Update
+
+The local offline adapter now estimates the camera/IMU time offset online by
+default. This resolves the reproduced cashier divergence with the supplied
+calibration in raw replay; see the newest `VALIDATION.md` section for coverage.
+For development comparisons, set `OPENVINS_TIME_OFFSET_MODE=config` before
+`run.sh` to honor the original estimator YAML setting. The underlying project
+Python files and source calibration remain unchanged. Earlier validation notes
+in this document refer to the fixed-offset baseline.

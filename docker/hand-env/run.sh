@@ -16,6 +16,16 @@ EGO_ROOT=$(realpath "$EGO_ROOT")
 PROJECT_ROOT=$(realpath "$PROJECT_ROOT")
 INPUT_DIR=$(realpath "$INPUT_DIR")
 OUTPUT_DIR=$(realpath "$OUTPUT_DIR")
+# Docker cannot create a nested mountpoint beneath a read-only source bind.
+# Keep this directory empty on the host; frame data goes into WORK_DIR below.
+if [[ -L "$EGO_ROOT/test_data" || ( -e "$EGO_ROOT/test_data" && ! -d "$EGO_ROOT/test_data" ) ]]; then
+  printf 'Cache mountpoint must be a real directory, not a file or symlink: %s\n' "$EGO_ROOT/test_data" >&2
+  exit 1
+fi
+if ! mkdir -p "$EGO_ROOT/test_data"; then
+  printf 'Create an empty directory before launching: %s\n' "$EGO_ROOT/test_data" >&2
+  exit 1
+fi
 # Copy-up once into an image-specific named volume. Nested read-only mounts
 # override host _DATA/MANO symlinks without modifying either source repository.
 IMAGE_ID=$(docker image inspect --format '{{.Id}}' "$IMAGE")

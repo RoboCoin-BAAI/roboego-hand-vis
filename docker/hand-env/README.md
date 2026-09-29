@@ -5,6 +5,63 @@ gating, Parquet export and EGL rendering. No algorithm repositories are copied
 into the image. Source repositories are mounted at runtime. Qwen,
 FoundationStereo, Omega, ViTPose and other HMR backends are not part of v1.
 
+## Install And First Run
+
+1. Complete [host Docker/GPU installation](../README.md#host-installation).
+2. Import a delivered image, or follow [Build](#build) below. Importing an image
+   does not require running `prepare_assets.py`; its weights are already bundled.
+3. Obtain the validated MINT and optimized EgoHandKit source snapshots, plus this
+   repository. A vanilla EgoHandKit `master` checkout is NOT compatible. The
+   validated EgoHandKit branch is `feature/mint-frontend`; preserve the supplied
+   commit and any MINT local modifications, not just upstream repository names.
+4. Set paths in the same terminal, preflight the source contract, then run.
+
+```bash
+cd ~/roboego-hand-vis
+docker load -i /absolute/path/to/hand-env.tar
+export HAND_ENV_IMAGE=roboego-hand-env:dev
+export MINT_ROOT="$HOME/wuji-ego-mint"
+export EGO_ROOT="$HOME/EgoHandKit"
+export INPUT_DIR=/absolute/path/to/processed-session
+export OUTPUT_DIR="$HOME/ego_data/hand_$(date +%Y%m%d_%H%M%S)"
+
+test -f "$EGO_ROOT/scripts/export_egohandkit_cache_mint.py"
+test -f "$MINT_ROOT/scripts/export_egohandkit_cache.py"
+cmp "$EGO_ROOT/scripts/export_egohandkit_cache_mint.py" \
+    "$MINT_ROOT/scripts/export_egohandkit_cache.py"
+# Empty mountpoints only; host weights are not required after image import.
+mkdir -p "$EGO_ROOT/_DATA" "$MINT_ROOT/assets/mano"
+bash docker/hand-env/run.sh doctor
+
+bash docker/hand-env/run.sh bash \
+  /home/user/roboego-hand-vis/docker/hand-env/documented-pipeline.sh \
+  /home/user/data/input/videos/left_rectified.mp4 \
+  /home/user/data/input/depth/fast_foundation \
+  /home/user/data/output/result
+
+python3 -m json.tool "$OUTPUT_DIR/result/report.json"
+```
+
+Stop on a failed preflight/doctor; do not simply remove the exporter check.
+If mountpoints are existing symlinks, verify their targets rather than replacing
+them blindly. Source setup is separate from runtime read-only mounts.
+The example processes the entire video (default maximum 10000 frames), NOT 100
+frames. For a short acceptance run, use [Prepare And Run 100 Frames](#prepare-and-run-100-frames).
+Input must contain:
+
+```text
+videos/left_rectified.mp4                         30 FPS RGB
+depth/fast_foundation/depth_uint16_png/           aligned per-frame depth in mm
+depth/fast_foundation/fast_foundation_stereo_video_meta.json
+```
+
+Depth must already be computed and registered to this left video. This image
+does not run depth estimation or Qwen. If the depth cache lives directly in
+`depth/`, change the container argument accordingly. Do not archive/delete depth
+PNGs before hand estimation. The container paths above stay fixed even when
+host source or data directories are elsewhere. There is no container to enter
+first: `run.sh` starts it, waits for completion and removes it.
+
 ## Layout
 
 ```text
@@ -46,7 +103,18 @@ Required source assets (not supplied by Git):
 
 The MINT working tree must also contain `scripts/export_egohandkit_cache.py`,
 identical to EgoHandKit's `scripts/export_egohandkit_cache_mint.py`. The launcher
-does not synchronize or modify these read-only source mounts.
+does not synchronize or edit source files. It creates an empty host directory
+`$EGO_ROOT/test_data` if missing, because Docker needs this mountpoint before
+mounting the source read-only. Frame caches are written to a separate temporary
+directory, not to this host directory; existing host contents are left untouched.
+If the checkout itself is not writable, create the mountpoint before launching.
+Files or symlinks at this cache mountpoint are rejected rather than overwritten.
+
+To regression-test a fresh checkout's cache mount with the built image and GPU:
+
+```bash
+HAND_DOCKER_TEST=1 python3 docker/hand-env/tests/test_launcher_mounts.py
+```
 
 From the roboego-hand-vis repository root:
 
@@ -118,9 +186,10 @@ not prove checkpoint inference or algorithm accuracy.
 
 ## Documented Algorithm Profile
 
-Use `documented-pipeline.sh` for the document's full algorithm settings. It runs
-MINT, canonical export and EgoHandKit with the flags in the local
-`EgoHandKit/scripts/run_without_front.sh`. It keeps the default HaMeR batch size
+Use `documented-pipeline.sh` for the frozen document-equivalent algorithm profile.
+It runs MINT, canonical export and EgoHandKit using the validated baseline derived
+from `EgoHandKit/scripts/run_without_front.sh`. It does not automatically import
+later changes to that upstream wrapper. It keeps the default HaMeR batch size
 (currently 48), rather than the earlier smoke test's override of 2. If memory
 fails, report it before changing the acceptance configuration. Algorithm commands
 are kept in the internal `pipeline-stages.sh`; the public entry wraps it with
@@ -280,3 +349,34 @@ can fall back to MINT when HaMeR is rejected. Do not count fallback as successfu
 HaMeR recovery or fabricate missing observations. Record mounted repository commits and
 dirty status with results. Algorithm changes alone do not require rebuilding;
 new imports, native extensions, checkpoint layouts or runtime version changes do.
+
+## Troubleshooting And Updating
+
+| Symptom | Action |
+| --- | --- |
+| `docker/hand-env/run.sh: No such file` | Run from the roboego-hand-vis root, not EgoHandKit |
+| `export_egohandkit_cache_mint.py` missing / unknown CLI flags | Check EgoHandKit branch and validated source snapshot; doctor alone does not validate algorithm interfaces |
+| Read-only `test_data` mount error | Current launcher creates the empty mountpoint automatically; update launcher and ensure host checkout allows its creation |
+| Pipeline failed | Read `$OUTPUT_DIR/result/error.log` and `report.json`; use a NEW result directory and append `--debug` to rerun with intermediates |
+| Depth/video missing | Check INPUT_DIR and container-relative paths; processed depth is often under `depth/fast_foundation` |
+| GPU not visible | Check host `nvidia-smi`, Container Toolkit and Docker runtime configuration |
+| CUDA out of memory | Stop competing GPU jobs and verify target VRAM; any batch-size change is a profile change, not an automatic fallback |
+| Output permission denied / disk full | Output must be writable by current UID; allow space for decoded frames under host TMPDIR, model volume and intermediates |
+
+Use `HAND_GPUS=device=0` to select a GPU. Use `TMPDIR=/large/writable/directory`
+to relocate temporary decoded frames; create that directory first. Caches are
+disk files and may use the OS page cache, not an intentionally retained RAM copy.
+Default cache cleanup also occurs after ordinary failures; hard kills may leave
+temporary directories. Debug retains pipeline intermediates, but not the
+separate decoded-frame scratch directory.
+
+Source/script-only edits apply on the next invocation; changing libraries,
+native dependencies or bundled weights requires rebuilding. Runtime directories
+are not part of `docker save`. To deliver a built hand image:
+
+```bash
+docker save -o /absolute/path/to/hand-env.tar roboego-hand-env:dev
+```
+
+Deliver this repository and matching MINT/EgoHandKit snapshots separately.
+Do not assume a prior exported TAR includes later image or source updates.

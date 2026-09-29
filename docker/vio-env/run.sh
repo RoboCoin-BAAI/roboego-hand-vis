@@ -23,6 +23,7 @@ mkdir -p "$OUTPUT_DIR/logs"
 printf '%s\n' "$image_id" > "$OUTPUT_DIR/logs/image-id.txt"
 exec docker run --rm --init --network none --entrypoint /bin/bash --user "$(id -u):$(id -g)" \
     -e BUILD_JOBS="${BUILD_JOBS:-2}" \
+    -e OPENVINS_TIME_OFFSET_MODE="${OPENVINS_TIME_OFFSET_MODE:-estimate}" \
     --mount "type=bind,src=$PROJECT_ROOT,dst=/home/user/roboego-hand-vis,readonly" \
     --mount "type=bind,src=$OPENVINS_ROOT,dst=/home/user/open_vins,readonly" \
     --mount "type=bind,src=$INPUT_DIR,dst=/home/user/data/input,readonly" \

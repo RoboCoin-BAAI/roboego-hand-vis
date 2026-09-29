@@ -1,5 +1,100 @@
 # Local Validation - 2026-09-28
 
+## Status-Only Delivery - 2026-09-29
+
+Current image: `sha256:f98e46bf20659cc23874ea16c2d936bf554addcf0b0699424b45f625d0afa239`.
+NPZ schema `openvins.frame_aligned.v2` removes the redundant `valid`, `processed`
+and `initialized` arrays. Use `status == "valid"`; other values explain missing
+poses, whose matrices remain NaN. Native diagnostic flags remain in debug CSV.
+The earlier v1 validation below is historical; old result files/TARs are not
+rewritten automatically.
+
+Rebuilt-image doctor and 29 tests passed; one private-data test skipped.
+Real-data acceptance under `/home/user/ego_data/vio_status_only_20260929/`:
+
+- Default compact cashier run: 1360 rows, 1290 valid, 68 initializing, 2
+  IMU-unavailable. Only `trajectory.npz` and `report.json` published.
+- Frozen 120-frame shelf cold replay: exit 3 / not_initialized; 120 rows,
+  119 initializing, 1 IMU-unavailable, all pose matrices NaN.
+- Both NPZ files have only metadata, original frame/time/pose fields and status;
+  none contain the three removed arrays.
+
+Documentation bash syntax/local-link checks passed (32 shell blocks). Hand
+image was not rebuilt: both hand doctors, mount regression and five hand output
+unit tests passed. No full hand inference was rerun for this output-only change.
+
+## Frame-Aligned Delivery - 2026-09-29
+
+Image: `sha256:e46629a28aee8bee41ad8f1ef544ca2df09cdf37013c208ef04495b9e77b8395`.
+Output report schema is `roboego.vio.delivery.v2`; NPZ schema is
+`openvins.frame_aligned.v1`. Missing matrices are NaN and must be filtered by
+`valid`. Legacy JSONL remains valid-pose-only. No estimator tuning was changed.
+
+- Image tests: 29 passed, 1 private-data test skipped. Covers explicit IMU
+  boundary records, initialization, non-advanced/invalid states, interrupted
+  tails, absent stereo pairs, replay windows, and default failure publication.
+- Full rectified cashier run: 1360 NPZ rows, 1290 available poses, 68 initializing
+  frames and 2 IMU-unavailable frames. All 70 missing matrices are entirely NaN.
+  Available frame IDs match the prior run exactly; maximum absolute matrix-entry
+  difference was 1.85e-6 (numerical replay variation, not pose filling).
+- 19..23 s shelf replay using production pre-roll: 714 rows for the full input
+  video, 594 not-requested frames, 46 initializing frames and 74 available poses.
+- Frozen strict cold-start shelf case was also materialized as lossless
+  120-frame stereo videos with remapped frame indices and original timestamps.
+  Native replay returns 3 / not_initialized, but NPZ retains all 120 rows:
+  119 initializing, 1 IMU-unavailable, zero valid poses, all matrices NaN.
+
+Artifacts: `/home/user/ego_data/vio_frame_aligned_20260929/` (`cashier`, `shelf19`,
+`cold_fixture/result/trajectory`). The lossless fixture script is retained there.
+This is an output-contract fix, not a solution for feature-starved initialization
+or the separately observed short-window cashier drift. `valid` means an
+available finite advanced state; positioning accuracy remains unvalidated.
+
+## Cashier Timing Fix - 2026-09-29
+
+Image: `sha256:65c4724c2b1cb5e477a3e64bcc0685b7f0a014727b7b61a74e50c8507f38c512`.
+Offline estimation now enables the official camera/IMU time-offset state rather
+than freezing the supplied -47.7755 ms offset. Source calibration files and
+project VIO Python code were not changed. No output poses were clipped, frozen
+or discarded to make a trajectory appear bounded.
+
+Evidence: the first 10 seconds of cashier data repeatedly fail the private
+regression's generous 10 m work-area bound (about 35.3 m displacement). Visual
+rotation versus gyro alignment favors approximately -10 ms; the same check on
+a shelf session favors approximately -40 ms, near its calibration value.
+Changing only the cashier test config to -10 ms reduced full raw path length to
+7.61 m. Enabling the official online state instead, without hard-coding a value,
+converged to -6.8 ms and produced 8.78 m cumulative raw path length, with a maximum
+0.80 m distance from the initial position and 1298 continuous pose samples.
+
+Full rectified replay in the bundled image was compared on the same recording:
+
+| Mode | Poses | Duration | Path length | Max distance from initial position |
+| --- | ---: | ---: | ---: | ---: |
+| Fixed YAML offset (old image) | 1290 | 42.97 s | 3323.93 m | 3228.84 m |
+| Online offset estimate | 1290 | 42.97 s | 8.92 m | 0.56 m |
+
+The rectified offset converged to -7.23 ms; maximum output timestamp gap remained
+0.03339 s. This identifies an inappropriate fixed effective timing offset for
+this recording, not its exact upstream origin (capture/cutting clock handling
+versus calibration session). Online estimation fixes the reproduced divergence;
+there is no ground truth pose-accuracy certification.
+
+The other three full raw sessions retain the same pose counts (2071, 652, 2737),
+with finite, continuous outputs and no comparable divergence. Their final time
+offsets are -39.33, -38.98 and -43.78 ms. The private regression fails in `config`
+mode and passes in `estimate` mode. Image suite: 20 passed, 1 private-fixture skip;
+an additional Docker mode-forwarding test passes in the source suite (6 Docker
+wrapper tests). Development suite: 15 passed, 1 skip; private replay: 1 passed.
+
+All data/probes: `/home/user/ego_data/vio_cashier_fix_20260929/`.
+User-facing fixed rectified results: `rectified_after/trajectory.npz` and
+`rectified_after/report.json`; intermediate evidence is under its `debug/`.
+Use `--time-offset-mode config` for an explicit fixed-configuration comparison.
+The normal `run` command now defaults to `estimate`. Quality remains
+`not_validated`; arbitrary sensor miscalibration or tracking failures are not
+claimed solved by this change.
+
 ## Compact Outputs - 2026-09-29
 
 Runtime image rebuilt as

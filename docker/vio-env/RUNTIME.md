@@ -49,15 +49,41 @@ record the original temporary paths and are diagnostic snapshots, not portable
 replay manifests.
 
 On failure, `report.json` and `error.log` are retained even without `--debug`,
-the exit code is nonzero, and no partial trajectory is published as a final
-result. Existing nonempty output directories are rejected without modification.
+and the exit code remains nonzero. If frame-aligned export succeeded,
+`trajectory.npz` is also retained with explicit invalid/unprocessed rows, even
+when no frame initialized. Its presence does not indicate success. Invalid
+inputs that prevent export may leave only report/log. Existing nonempty output
+directories are rejected without modification.
 An interrupted/killed container may leave `.work`; use a new directory rather
 than treating such an incomplete run as successful.
 
 `report.json` includes execution status, input arguments, code revisions, image
 ID (when launched by the host script), pose count and trajectory statistics.
 `quality_status: not_validated` explicitly means execution success is not an
-accuracy certification. NPZ fields remain those of the existing exporter.
+accuracy certification. The delivery report schema is `roboego.vio.delivery.v2`.
+`frame_alignment` contains input frame count, valid/invalid pose counts and
+status counts. NPZ schema `openvins.frame_aligned.v2` provides one row per left
+video frame; the existing matrix and timestamp arrays now include invalid rows.
+Always filter poses by `data['status'] == 'valid'`. Invalid matrices are NaN.
+NPZ does not store redundant `valid`, `processed`, or `initialized` arrays.
+Detailed initialization/state-advance flags remain in debug `frame_status.csv`.
+Old v1 files are not automatically rewritten; rerun with the current image.
+`status` distinguishes `initializing`, `imu_unavailable`, `state_not_advanced`,
+`invalid_state`, `not_processed`, `not_requested`, `no_stereo_pair`, and `valid`.
+The last means a finite advanced estimate, not validated positioning accuracy.
+Windowed runs retain the full video's indices/row count and mark excluded known
+pairs `not_requested`. Frames missing stereo pairs have right index -1 and
+unknown timestamps NaN. Legacy debug JSONL remains valid-pose-only.
+
+```python
+import numpy as np
+with np.load('trajectory.npz', allow_pickle=False) as data:
+    print('Video frames:', len(data['frame_index']))
+    valid = data['status'] == 'valid'
+    print('Available poses:', int(valid.sum()))
+    print(np.unique(data['status'], return_counts=True))
+    poses = data['T_world_camera'][valid]
+```
 The separate `prepare` action intentionally retains preparation intermediates;
 the compact contract applies to `run`.
 
@@ -119,6 +145,20 @@ input data are still required. The small `run-runtime.sh` launcher can be copied
 separately, or use `docker run` directly. Preserve corresponding source revisions
 and license obligations when distributing an image.
 
-Packaging does not fix the known cashier trajectory divergence. Successful
-execution is not proof of accurate VIO; inspect the trajectory before accepting
-results. See `VALIDATION.md` for measured test coverage.
+Successful execution is not proof of accurate VIO; inspect the trajectory before
+accepting results. See `VALIDATION.md` for measured test coverage.
+
+## Camera-IMU Timing
+
+Offline replay now defaults to `--time-offset-mode estimate`: OpenVINS estimates
+the camera/IMU time offset online, starting from the supplied calibration. This
+addresses the reproduced cashier divergence caused by treating an inappropriate
+session offset as fixed. It does not hard-code the correction measured on that
+recording, modify source calibration files, or change the project's Python code.
+
+For a controlled comparison, append `--time-offset-mode config` to honor the
+estimator YAML's `calib_cam_timeoffset` setting. The wrapper passes this mode to
+the OpenVINS launcher through its environment, not through the unchanged project
+CLI. Reports include the requested mode, whether estimation was enabled, and
+initial/final offsets. Online estimation still requires informative observations;
+it is not a guarantee against every synchronization or low-motion failure.
