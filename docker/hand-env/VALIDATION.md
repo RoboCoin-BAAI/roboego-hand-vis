@@ -86,3 +86,21 @@ passed. No calibration was guessed and no algorithm implementation was changed.
   long-video memory usage, other backends, or deployment on the target 24 GB GPU.
 - Review model redistribution licenses before delivery. Transitive dependencies
   are recorded but not yet supplied as fully locked rebuild requirements.
+# Compact Output Validation - 2026-09-29
+
+The mounted documented pipeline now publishes only `hand_tracking.parquet`,
+`render.mp4` and `report.json` on success. `--debug` retains intermediate stage
+outputs under `debug/`; failures retain `report.json` and `error.log` without
+publishing partial final artifacts. Algorithm commands/flags were moved intact
+to `pipeline-stages.sh`, with no algorithm source edits or image rebuild.
+
+- Output-wrapper tests: 5 passed (default/debug success, failure, missing final
+  artifacts and overwrite refusal).
+- Real offline 100-frame GPU replay passed: 100 Parquet rows, 100 rendered frames,
+  146 hand instances, 123.7 seconds wall time.
+- Result: `/home/user/ego_data/hand_compact_20260929/normal`.
+- Missing-video runs return nonzero and preserve errors; `debug_failure` also
+  retains the work directory as `debug/`.
+- The host launcher now removes its own per-run decoded-frame scratch directory
+  outside the output tree. Old output caches are not removed retroactively.
+- No new accuracy claim is made; `quality_status` remains `not_validated`.

@@ -107,8 +107,10 @@ seeded once from the bundled assets, then mounted read-only at both `~/model`
 and the model paths expected by the code. This costs one additional copy of the
 models on the Docker host, avoids changing the mounted source, and prevents
 host-specific model symlinks from leaking into the runtime. A new image ID uses
-a new volume. Unique `.frames-*` directories under the output directory prevent
-EgoHandKit's frame cache from reusing a different input accidentally.
+a new volume. Unique temporary directories under host `TMPDIR` (default `/tmp`)
+isolate EgoHandKit's decoded frame cache. The host launcher removes its own cache
+directory when the container exits; it is not retained in the result directory,
+even with `--debug`.
 
 The doctor checks both import stacks, CUDA matrix multiplication, torchvision
 CUDA NMS, both MANO assets in MINT, and a nonblank headless EGL render. It does
@@ -120,7 +122,9 @@ Use `documented-pipeline.sh` for the document's full algorithm settings. It runs
 MINT, canonical export and EgoHandKit with the flags in the local
 `EgoHandKit/scripts/run_without_front.sh`. It keeps the default HaMeR batch size
 (currently 48), rather than the earlier smoke test's override of 2. If memory
-fails, report it before changing the acceptance configuration.
+fails, report it before changing the acceptance configuration. Algorithm commands
+are kept in the internal `pipeline-stages.sh`; the public entry wraps it with
+compact output publishing, without changing model settings.
 
 For a complete session with 30 FPS rectified RGB, registered left-camera depth
 PNGs, and at most 10000 frames, use the exported directories above:
@@ -135,11 +139,44 @@ bash docker/hand-env/run.sh bash \
 ```
 
 No image rebuild is needed: the script is mounted from this repository. It
-requires a new output directory, 30 FPS video, and matching exporter copies in
+requires an empty/new output directory, 30 FPS video, and matching exporter copies in
 EgoHandKit/MINT. It does not copy into read-only repositories. The frame limit
-defaults to 10000; shorter tests must trim RGB and matching depth first. Output
-includes `mint_pre`, `mint/canonical_inputs`, EgoHandKit outputs under `mint`,
-and `pipeline.log`. Depth archiving is deliberately not run here.
+defaults to 10000; shorter tests must trim RGB and matching depth first.
+Depth archiving is deliberately not run here.
+
+Successful output is exactly:
+
+```text
+NEW_OUTPUT_ROOT/
+  hand_tracking.parquet
+  render.mp4
+  report.json
+```
+
+Add `--debug` after the optional frame limit to retain MINT predictions, canonical
+observations, EgoHandKit intermediate results and logs under `debug/`:
+
+```bash
+bash docker/hand-env/run.sh bash \
+  /home/user/roboego-hand-vis/docker/hand-env/documented-pipeline.sh \
+  /home/user/data/input/videos/left_rectified.mp4 \
+  /home/user/data/input/depth \
+  /home/user/data/output/my_debug_run 10000 --debug
+```
+
+Without debug, `.work` intermediates are deleted after final artifacts have
+been validated/published. Parquet row count and render frame count must match
+the input video. `report.json` contains frame/hand counts, model source revisions,
+image ID, elapsed time and execution status, with `quality_status: not_validated`.
+It does not certify hand-pose accuracy or distinguish every fallback hand by
+itself; detailed intermediate results remain available in debug mode.
+
+Failures return nonzero and retain `report.json` plus `error.log` even without
+debug. Partial final artifacts are not published. Existing nonempty result
+directories are rejected. Hard-killed runs can leave `.work`; use a fresh output
+directory instead of treating them as complete. Debug snapshots may contain
+temporary paths and are not self-contained replay datasets. Low-level `mint`,
+`export`, and `egohandkit` commands retain their original output behavior.
 
 This profile passed a 100-frame end-to-end offline test on 2026-09-27; see
 VALIDATION.md. Earlier 32-frame results below used a reduced smoke configuration.
@@ -184,8 +221,9 @@ find "$OUTPUT_DIR/$RUN_NAME" -type f \
 For the exact 100-frame test, verify MINT/export report 100 frames, the final
 Parquet has 100 sequential frame rows, and the render decodes to 100 frames.
 Review the video visually; missing hands and MINT fallback must be distinguished
-from successful HaMeR estimates. Consult `pipeline.log` for the actual commands
-and final exit status. The video encoder may pad/resize height to a multiple of
+from successful HaMeR estimates. In debug mode, consult `debug/run/pipeline.log`
+for actual commands and exit status; default mode retains the summary in
+`report.json`. The video encoder may pad/resize height to a multiple of
 16; the test's 1920x1080 RGB produced a 1920x1088 rendered video.
 
 All paths passed after `run.sh` are container paths. `export INPUT_DIR` and
@@ -194,7 +232,7 @@ container command. No shell login or long-lived container is needed.
 
 Do not run depth archiving during this test: its recommended configuration can
 delete the depth PNGs required for rerunning hand estimation. Parameter changes
-belong in `documented-pipeline.sh`; preserve this validated baseline when making
+belong in `pipeline-stages.sh`; preserve this validated baseline when making
 an experimental copy. No algorithm simplification or automatic tuning occurs.
 
 ## Historical 32-Frame Smoke Test (Not Document-Equivalent)

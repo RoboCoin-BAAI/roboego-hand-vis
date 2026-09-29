@@ -23,8 +23,10 @@ MODEL_VOLUME="roboego-hand-models-${IMAGE_ID#sha256:}"
 docker volume create "$MODEL_VOLUME" >/dev/null
 docker run --rm --network none --entrypoint /bin/true \
   --mount "type=volume,src=$MODEL_VOLUME,dst=/home/user/model" "$IMAGE"
-WORK_DIR=$(mktemp -d "$OUTPUT_DIR/.frames-XXXXXX")
-exec docker run --rm --init --network none --gpus "${HAND_GPUS:-all}" --shm-size 2g \
+WORK_DIR=$(mktemp -d "${TMPDIR:-/tmp}/roboego-hand-frames-XXXXXX")
+trap 'rm -rf -- "$WORK_DIR"' EXIT
+docker run --rm --init --network none --gpus "${HAND_GPUS:-all}" --shm-size 2g \
+  -e "HAND_IMAGE_ID=$IMAGE_ID" \
   --user "$(id -u):$(id -g)" \
   --mount "type=bind,src=$MINT_ROOT,dst=/home/user/wuji-ego-mint,readonly" \
   --mount "type=bind,src=$EGO_ROOT,dst=/home/user/EgoHandKit,readonly" \
