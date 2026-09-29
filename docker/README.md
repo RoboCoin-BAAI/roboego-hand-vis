@@ -5,7 +5,7 @@ Run all documented commands from the roboego-hand-vis repository root.
 | Image | Build and run instructions | Verified scope |
 | --- | --- | --- |
 | `roboego-hand-env:dev` | [Hand README](hand-env/README.md) | Offline MINT + canonical export + EgoHandKit, documented parameters, 100 frames |
-| `roboego-vio-env:dev` | [VIO README](vio-env/README.md) | Offline dependencies, official OpenVINS core compilation and loading; not end-to-end VIO |
+| `roboego-vio-env:dev` | [VIO README](vio-env/README.md) | Offline replay and real-data outputs verified; cashier trajectory diverges, quality acceptance pending |
 
 These are environment images, not copies of the algorithm repositories. Source
 is mounted read-only from the host, while results are written to separate host

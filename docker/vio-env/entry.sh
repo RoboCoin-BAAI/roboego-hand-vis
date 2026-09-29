@@ -25,18 +25,22 @@ case "$action" in
         cmake -S /home/user/open_vins/ov_msckf -B "$build" -G Ninja \
             -DENABLE_ROS=OFF -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-        cmake --build "$build" --parallel "${BUILD_JOBS:-2}" --target "${1:-roboego_openvins_offline}"
+        target=${1:-roboego_openvins_offline}
+        cmake --build "$build" --parallel "${BUILD_JOBS:-2}" --target "$target"
         ;;
     prepare|run)
         extra=()
         if [[ "$action" == prepare ]]; then extra+=(--prepare_only); fi
-        python3 "$stage/run.py" \
+        python3 -m roboego_hand_vis.vio.run \
             --session /home/user/data/input --output_dir /home/user/data/output/run \
             --openvins_root /home/user/open_vins \
             --openvins_binary "$build/roboego_openvins_offline" "${extra[@]}" "$@"
         ;;
     test)
-        python3 -m pytest -p no:cacheprovider /home/user/roboego-hand-vis/tests/vio -q "$@"
+        PYTHONPATH="/home/user/open_vins:${PYTHONPATH:-}" \
+            VIO_OFFLINE_BINARY="$build/openvins_offline_native" \
+            python3 -m pytest -p no:cacheprovider /home/user/roboego-hand-vis/tests/vio \
+            /home/user/open_vins/ov_offline/tests -q "$@"
         ;;
     *) "$action" "$@" ;;
 esac

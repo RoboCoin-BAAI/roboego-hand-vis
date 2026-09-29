@@ -21,11 +21,11 @@ done
 image_id=$(docker image inspect --format '{{.Id}}' "$IMAGE")
 mkdir -p "$OUTPUT_DIR/logs"
 printf '%s\n' "$image_id" > "$OUTPUT_DIR/logs/image-id.txt"
-exec docker run --rm --init --network none --user "$(id -u):$(id -g)" \
+exec docker run --rm --init --network none --entrypoint /bin/bash --user "$(id -u):$(id -g)" \
     -e BUILD_JOBS="${BUILD_JOBS:-2}" \
     --mount "type=bind,src=$PROJECT_ROOT,dst=/home/user/roboego-hand-vis,readonly" \
     --mount "type=bind,src=$OPENVINS_ROOT,dst=/home/user/open_vins,readonly" \
     --mount "type=bind,src=$INPUT_DIR,dst=/home/user/data/input,readonly" \
     --mount "type=bind,src=$OUTPUT_DIR,dst=/home/user/data/output" \
     --mount "type=bind,src=$BUILD_DIR,dst=/home/user/build" \
-    "$image_id" "$@"
+    "$image_id" /home/user/roboego-hand-vis/docker/vio-env/entry.sh "$@"
