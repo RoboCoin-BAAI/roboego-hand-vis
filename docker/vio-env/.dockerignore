@@ -1,3 +1,7 @@
 *
 !Dockerfile
 !entry.sh
+!runtime-entry.sh
+!runtime-output.py
+!tests/
+!tests/**

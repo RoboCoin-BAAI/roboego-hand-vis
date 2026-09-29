@@ -1,5 +1,47 @@
 # Local Validation - 2026-09-28
 
+## Compact Outputs - 2026-09-29
+
+Runtime image rebuilt as
+`sha256:09b26b0de6cde2188fb69048e467307de271bd8fde4e09a1ead4470d4875df12`.
+The delivery wrapper is entirely under `docker/vio-env`; project VIO source
+and OpenVINS estimator behavior are unchanged.
+
+- Image test suite: 18 passed, including output layout, debug retention,
+  failure logging, missing-result handling and refusal to overwrite.
+- Real 20-second raw replay: 539 poses; only `trajectory.npz` and `report.json`
+  at the output root. Another run with `--debug` additionally retains `debug/`.
+- A 0.1-second replay fails initialization, exits nonzero and publishes only
+  `report.json` and `error.log`; no final trajectory is published.
+- Re-running into the successful output directory is rejected.
+- Results: `/home/user/ego_data/vio_compact_20260929/{normal,debug,failure}`.
+- Reports distinguish execution completion from `quality_status: not_validated`.
+
+Earlier runtime validation below describes the previous image/output layout.
+
+## Bundled Runtime - 2026-09-29
+
+Built `roboego-vio-runtime:dev` from the existing dependency image, compiling
+OpenVINS from source in a network-disabled build step. The runtime bundles code,
+native executable, shared library and Python compatibility launcher. No host
+source or build directory is mounted for these checks:
+
+- Image ID: `sha256:d30ab73d37239a865285661765e7ca72117341c1dccae81ebf510a977973c037`.
+- OpenVINS revision: `e34182f543628567d3a2403b79ba717207138c64`.
+- Project revision: `e36a1d769f89ff1c1458e78557bb2e6449254edb` plus Docker-only work.
+- Doctor passed; bundled test suite: 13 passed, with networking disabled.
+- 20-second raw replay of shelf session ending `20260828102934`: 539 poses,
+  17.93 seconds of output, 3.46 m path length.
+- Same session, rectified mode: 536 poses, 17.83 seconds of output, 3.82 m path
+  length. The manifest's original NAS directory was used as the input mount
+  destination; no input metadata was rewritten. Initialization logged covariance
+  rank-deficiency warnings before succeeding; this is not an accuracy guarantee.
+- Results: `/home/user/ego_data/vio_runtime_test_20260929/{raw,rectified}`.
+
+The image-local recommended config uses bundled OpenVINS paths; the host project
+config/code are unchanged. This does not fix the known cashier divergence.
+Development image and source-mounted launcher are retained independently.
+
 ## Compatibility Boundary - 2026-09-29
 
 The user requires this repository to change only under `docker/`. All earlier

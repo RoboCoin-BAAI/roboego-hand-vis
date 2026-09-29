@@ -6,8 +6,9 @@ Run all documented commands from the roboego-hand-vis repository root.
 | --- | --- | --- |
 | `roboego-hand-env:dev` | [Hand README](hand-env/README.md) | Offline MINT + canonical export + EgoHandKit, documented parameters, 100 frames |
 | `roboego-vio-env:dev` | [VIO README](vio-env/README.md) | Offline replay and real-data outputs verified; cashier trajectory diverges, quality acceptance pending |
+| `roboego-vio-runtime:dev` | [Bundled VIO runtime](vio-env/RUNTIME.md) | Bundled code and binaries; only input/output mounts required; algorithm limitations unchanged |
 
-These are environment images, not copies of the algorithm repositories. Source
+The `*-env` images are environment images, not copies of the algorithm repositories. Source
 is mounted read-only from the host, while results are written to separate host
 directories. Each launcher creates a temporary container and removes it after
 the command finishes. Outputs, model volumes and build directories persist.

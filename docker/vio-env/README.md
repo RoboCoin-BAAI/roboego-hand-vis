@@ -1,5 +1,9 @@
 # ROS-Free VIO Environment
 
+For the self-contained image with bundled code and binaries, see
+[Bundled Runtime](RUNTIME.md). This page describes the source-mounted development
+environment, which remains available separately.
+
 Environment-only image for the current `roboego_hand_vis/vio` entrypoint.
 No OpenVINS source, host binaries, session data or pretrained models are copied
 into the image. No ROS, GPU or NVIDIA runtime is required for this scope.
