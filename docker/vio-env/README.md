@@ -27,8 +27,8 @@ bash docker/vio-env/build-runtime.sh
 ```
 
 The dependency build may download packages; the runtime build compiles C++
-inside Docker with networking disabled. The OpenVINS fork uses branch
-`feature/ros-free-offline` plus the current delivered adapter changes; official
+inside Docker with networking disabled. The cold-start release uses OpenVINS
+`fix/vio-cold-start` at `aeaad0ec5a5b37fc475058e693a3b08d02da6168`; official
 `master` alone has no compatible offline entry. Preserve tested source revisions.
 
 ```bash
@@ -355,3 +355,44 @@ For development comparisons, set `OPENVINS_TIME_OFFSET_MODE=config` before
 `run.sh` to honor the original estimator YAML setting. The underlying project
 Python files and source calibration remain unchanged. Earlier validation notes
 in this document refer to the fixed-offset baseline.
+
+## Cold-Start Release
+
+The full-session pre-release audit covers all four local sessions in raw and
+rectified mode, with old-image comparisons and both private cold regressions.
+See [VALIDATION.md](VALIDATION.md) for coverage, startup tradeoffs and remaining
+accuracy limits. Release image tag: `roboego-vio-runtime:20260930-cold-start`.
+Build from committed sources into that tag, verify, then promote `:dev` while
+retaining the old image as `roboego-vio-runtime:baseline-20260929`.
+The earlier `:cold-start` tag is an uncommitted candidate, not the release.
+
+The `fix/vio-cold-start` OpenVINS branch adds shortage-triggered stereo feature
+replenishment and a confidence-checked timing bootstrap before initialization.
+No initialization/geometric/innovation acceptance thresholds are relaxed. The
+bootstrap uses at most six seconds of images inside the requested window and
+only the supplied IMU. This is offline look-ahead, not real-time initialization.
+It estimates a local correction from visual/gyro rotation agreement; it does
+not hard-code the cashier's offset or rewrite calibration files. An ambiguous,
+poor or unexcited fit leaves the configured offset unchanged and records why.
+That fallback is not a certificate of correct timing or pose accuracy.
+
+Build a versioned image without replacing `:dev` before verification:
+
+```bash
+OPENVINS_ROOT=/home/user/open_vins \
+VIO_RUNTIME_IMAGE=roboego-vio-runtime:20260930-cold-start \
+  bash docker/vio-env/build-runtime.sh
+docker run --rm --network none roboego-vio-runtime:20260930-cold-start doctor
+docker run --rm --network none roboego-vio-runtime:20260930-cold-start test
+```
+
+Use the same data-only mounts and `run` command as above with this versioned
+tag. The new delivery option `--timing-bootstrap auto|off` defaults to `auto`.
+`off` retains online offset estimation while disabling the startup bootstrap;
+`--time-offset-mode config` always bypasses bootstrap and honors the YAML. Read
+`offline.timing_bootstrap` in `report.json` for the actual decision and offsets.
+Changing alignment can legitimately change IMU coverage and initialization
+frame counts. Successful default output remains exactly `trajectory.npz` and
+`report.json`, with all input frames, status-only validity, and NaN invalid
+matrices. `--debug` retains intermediate artifacts. `valid` is not an accuracy
+guarantee, and remaining upstream timing provenance is unresolved.

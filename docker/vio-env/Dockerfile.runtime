@@ -8,7 +8,8 @@ RUN rm -rf /opt/open_vins/ov_msckf/build \
     && cmake -S /opt/open_vins/ov_msckf -B /opt/open_vins/ov_msckf/build \
        -G Ninja -DENABLE_ROS=OFF -DCMAKE_BUILD_TYPE=Release \
     && cmake --build /opt/open_vins/ov_msckf/build \
-       --target roboego_openvins_offline --parallel 2
+       --target roboego_openvins_offline offline_timing_test --parallel 2 \
+    && /opt/open_vins/ov_msckf/build/offline_timing_test
 
 FROM ${BASE_IMAGE}
 ARG PROJECT_REVISION=unknown

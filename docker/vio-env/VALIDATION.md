@@ -1,5 +1,86 @@
 # Local Validation - 2026-09-28
 
+## Full-Session Release Gate - 2026-09-30
+
+OpenVINS repair commit: `aeaad0ec5a5b37fc475058e693a3b08d02da6168`.
+All four extracted sessions under `/home/user/ego_data/processed_data` were
+replayed in raw and rectified modes against the pinned previous runtime. The
+sibling ZIP is a duplicate, not a fifth session. No algorithm changes were made
+after the candidate tested below; final cleanup adds tests/audit/docs only.
+
+Eight corrected candidate runs passed frame coverage, v2 status/NaN/rigid-pose
+contract checks and gross-trajectory symptom checks. All have continuous valid
+tails to the last frame; maximum translation increment is below 5.91 cm and
+maximum finite-difference speed is below 1.771 m/s. No prolonged zero-exported-
+visual-count stretch occurred (maximum 11 frames; a proxy, not an update log).
+
+| Session suffix | Raw available/path m | Rectified available/path m |
+| --- | --- | --- |
+| Shelf 20260827190358 | 2071 / 17.408840 | 2075 / 18.683074 |
+| Shelf 20260828102934 | 652 / 3.786154 | 649 / 4.309932 |
+| Packing 20260831144710 | 2737 / 23.088412 | 2737 / 25.665842 |
+| Cashier 20260903162506 | 1272 / 7.422920 | 1287 / 8.594048 |
+
+Explicit tradeoff: cashier raw initialization is 26 frames (0.867 s) later than
+baseline; rectified is three frames later. All video rows remain present.
+Common-frame comparisons avoid counting this startup difference as a quality
+improvement. Neither the old nor new trajectory is ground truth.
+
+Rectified manifests retain original-machine `/mnt/nas/...` paths. The initial
+attempt failed before estimation; reruns use explicit validated read-only mount
+aliases, not rewritten source data. Exact commands and reports are in
+`/home/user/ego_data/vio_release_audit_20260930/{baseline_mounted,candidate}`.
+The OpenVINS `ov_offline/diagnostics/RELEASE_AUDIT_20260930.md` contains the full
+comparison and reproducible audit command. Temporary probes are archived under
+the audit root, not shipped as production code.
+
+Pre-build verification: **39 passed, 1 skipped**, including both private cold
+cases and delivery/audit tests; native timing unit tests also pass. The remaining
+skip is the older optional cashier-manifest test. Build a clean-commit image as
+`roboego-vio-runtime:20260930-cold-start` and repeat doctor, bundled tests and the
+full audit before promoting `:dev`. Final image/commit IDs and results are
+recorded alongside the audit artifacts after building. No remote push.
+
+## Cold-Start Candidate - 2026-09-30
+
+Candidate: `roboego-vio-runtime:cold-start`, image
+`sha256:636fc8e9b200267534d11c219708bc38069c35d029255ae4cb40ba0aad102482`.
+`:dev` remains pinned to `4474a8157e80`; the existing exported TAR is unchanged.
+Sources are uncommitted on `fix/vio-cold-start` in both repositories, based on
+OpenVINS `7e036d9` and project `1d47c92`. Project edits are only under `docker/`.
+
+- Build includes native timing unit tests; all passed. Bundled doctor passed.
+- Bundled tests with the two private cold cases enabled: **35 passed, 1 skipped**.
+  Only private data was mounted, not source or compiled artifacts. The skip is
+  the older optional cashier manifest test, not either cold-window regression.
+- Shelf strict cold: 0 -> 60 available poses out of 120 requested frames.
+- Cashier strict cold: automatic initial offset -7.776 ms, 176 available poses,
+  0.829028 m path. In the boundary-controlled comparison, exactly the same 179
+  frames have path 18.546230 -> 0.847708 m (full-run reference: 0.824331 m).
+- Negative control in the same new image, bootstrap disabled: cashier test
+  intentionally fails again at 18.546230 m. Online estimation remains enabled.
+- Two cold windows, corresponding historical-IMU windows and four full
+  rectified recordings completed regression. Bootstrap is a bounded offline
+  look-ahead with rejection checks, not a hard-coded lag or relaxed VIO gate.
+- Public raw `run` smoke checks: cashier full returns exactly NPZ + report;
+  shelf 19..23 s with `--debug` adds only the requested debug directory. Every
+  frame remains present, status is the only validity array, invalid matrices
+  are entirely NaN, and available matrices are finite. The latter window retains
+  historical IMU and is not described as a strict cold start.
+
+Detailed diagnosis, commands, bounds and limitations:
+`/home/user/open_vins/ov_offline/diagnostics/COLD_START_FIX_20260930.md`.
+Artifacts: `/home/user/ego_data/vio_cashier_cold_20260930/`, including
+`bootstrap_final`, `bootstrap_other_full`, `runtime_cashier_raw_full` and
+`runtime_shelf_raw_window`. Run with `--timing-bootstrap off` to disable only
+startup alignment, or `--time-offset-mode config` to honor the YAML timing
+policy. Timing decisions are in `report.json` under `offline.timing_bootstrap`.
+
+No ground truth is available. These are reproduced-failure regressions, not
+trajectory accuracy acceptance; upstream recovery/cutting timing provenance
+remains unresolved. Rejected bootstrap retains the configured lag, not a
+guarantee that the lag or subsequent estimates are correct.
+
 ## Status-Only Delivery - 2026-09-29
 
 Current image: `sha256:f98e46bf20659cc23874ea16c2d936bf554addcf0b0699424b45f625d0afa239`.

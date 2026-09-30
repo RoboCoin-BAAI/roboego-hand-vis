@@ -23,6 +23,30 @@ host binaries. The final image retains the dependency image's tools for now;
 size minimization is not part of this first test image. Source revisions are
 recorded in image labels; a dirty revision denotes local uncommitted changes.
 
+The cold-start release is `roboego-vio-runtime:20260930-cold-start`, built from
+committed sources. `:dev` can be promoted to it after verification; the previous
+runtime is retained as `roboego-vio-runtime:baseline-20260929`. The earlier
+`:cold-start` tag is a development candidate. Select the versioned tag explicitly
+with `VIO_RUNTIME_IMAGE=roboego-vio-runtime:20260930-cold-start` for reproducibility.
+
+## Startup Timing
+
+`run` defaults to `--time-offset-mode estimate --timing-bootstrap auto`.
+Before initializing, it checks visual/gyro rotation agreement using up to six
+seconds inside the requested camera window and only the supplied IMU. An
+accepted estimate replaces the configured initial offset in memory; insufficient
+or inconsistent evidence retains it with a reported reason. Online estimation
+then continues. This is offline look-ahead, not a real-time startup guarantee.
+It does not modify source calibration or repair upstream timestamps.
+
+`--timing-bootstrap off` disables only this pre-initialization step.
+`--time-offset-mode config` disables bootstrap and honors the YAML's online
+calibration setting. Decisions are under `offline.timing_bootstrap` in the
+report. A retained calibration or accepted estimate is not an accuracy verdict.
+Ordinary `--start_s` window replay retains historical IMU, unlike a strict cold
+fixture containing no earlier IMU. See [VALIDATION.md](VALIDATION.md) for the
+full-session matrix, fixed cold cases and observed startup availability tradeoff.
+
 ## Test Without Code Mounts
 
 ```bash

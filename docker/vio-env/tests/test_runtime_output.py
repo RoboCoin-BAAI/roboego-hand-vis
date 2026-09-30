@@ -104,3 +104,11 @@ def test_time_offset_mode_reaches_openvins_without_changing_project_cli(tmp_path
     assert process.call_args.kwargs["env"]["OPENVINS_TIME_OFFSET_MODE"] == "config"
     assert "--time-offset-mode" not in process.call_args.args[0]
     assert json.loads((tmp_path / "report.json").read_text())["time_offset_mode"] == "config"
+
+
+def test_timing_bootstrap_mode_reaches_openvins_without_changing_project_cli(tmp_path):
+    with patch.object(runtime.subprocess, "Popen", side_effect=fake_process()) as process:
+        assert runtime.execute(["--output_dir", str(tmp_path), "--timing-bootstrap", "off"]) == 0
+    assert process.call_args.kwargs["env"]["OPENVINS_TIMING_BOOTSTRAP"] == "off"
+    assert "--timing-bootstrap" not in process.call_args.args[0]
+    assert json.loads((tmp_path / "report.json").read_text())["timing_bootstrap_mode"] == "off"

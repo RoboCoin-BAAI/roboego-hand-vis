@@ -18,6 +18,7 @@ def execute(argv=None):
     parser.add_argument("--output_dir", type=Path, default=Path("/data/output"))
     parser.add_argument("--session", default=os.environ.get("INPUT_CONTAINER_PATH", "/data/input"))
     parser.add_argument("--time-offset-mode", choices=("estimate", "config"), default="estimate")
+    parser.add_argument("--timing-bootstrap", choices=("auto", "off"), default="auto")
     args, extra = parser.parse_known_args(argv)
     if "--prepare_only" in extra:
         parser.error("Use the prepare action separately; run publishes a trajectory")
@@ -37,13 +38,15 @@ def execute(argv=None):
               "input": {"session": args.session, "arguments": extra},
               "debug": args.debug, "image_id": os.environ.get("VIO_IMAGE_ID"),
               "time_offset_mode": args.time_offset_mode,
+              "timing_bootstrap_mode": args.timing_bootstrap,
               "project_revision": os.environ.get("VIO_PROJECT_REVISION"),
               "openvins_revision": os.environ.get("VIO_OPENVINS_REVISION"), "artifacts": {}}
     started = time.monotonic()
     code = 1
     try:
         with (work / "console.log").open("w") as log:
-            environment = dict(os.environ, OPENVINS_TIME_OFFSET_MODE=args.time_offset_mode)
+            environment = dict(os.environ, OPENVINS_TIME_OFFSET_MODE=args.time_offset_mode,
+                               OPENVINS_TIMING_BOOTSTRAP=args.timing_bootstrap)
             with subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
                                   start_new_session=True, env=environment) as process:
                 try:
