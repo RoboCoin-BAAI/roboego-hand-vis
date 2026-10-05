@@ -37,12 +37,14 @@ ENV HOME=/home/user \
     HF_HOME=/tmp/huggingface TORCH_HOME=/tmp/torch \
     MPLCONFIGDIR=/tmp/matplotlib YOLO_CONFIG_DIR=/tmp/ultralytics \
     PYOPENGL_PLATFORM=egl \
+    __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/10_nvidia.json \
     NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 COPY --from=mint-env /home/user/envs/mint /home/user/envs/mint
 COPY --from=ego-env /home/user/envs/egohandkit /home/user/envs/egohandkit
 COPY .build/models/ /home/user/model/
 COPY container-entry.sh /usr/local/bin/hand-env
 COPY smoke.py /usr/local/lib/hand-env/smoke.py
+COPY egl-fix/10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
 RUN useradd --uid 1000 --create-home user \
     && chmod 755 /usr/local/bin/hand-env \
     && mkdir -p /home/user/data /home/user/wuji-ego-mint /home/user/EgoHandKit /home/user/roboego-hand-vis \

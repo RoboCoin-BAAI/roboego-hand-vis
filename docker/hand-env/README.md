@@ -1,5 +1,10 @@
 # Offline Hand Runtime
 
+On 2026-10-05, local `roboego-hand-env:dev` was updated to the NVIDIA EGL-fixed
+image (`ccd977845714`). The original (`c8a998c05a1e`) remains available as
+`roboego-hand-env:pre-egl-c8a998c05a1e`. See the
+[EGL validation and rollback](egl-fix/README.md) before comparing historical runs.
+
 Scope: MINT headless inference, canonical observation export, HaMeR, depth
 gating, Parquet export and EGL rendering. No algorithm repositories are copied
 into the image. Source repositories are mounted at runtime. Qwen,
