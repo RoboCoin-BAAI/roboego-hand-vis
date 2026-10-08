@@ -1,9 +1,0 @@
-**
-!Dockerfile
-!requirements-*.txt
-!container-entry.sh
-!smoke.py
-!check-mint-deps.py
-!.build/
-!.build/models/
-!.build/models/**
