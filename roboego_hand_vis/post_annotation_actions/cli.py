@@ -51,8 +51,17 @@ def config_from_yaml(
         review_chunk_dir=_path(parameters.get("review_chunk_dir") or base_dir / "stage1_action_text_review_chunks"),
         resolved_chunk_dir=_path(parameters.get("resolved_chunk_dir") or base_dir / "stage1_action_resolved_chunks"),
         merged_output_json=_path(parameters.get("merged_output_json") or base_dir / "stage1_actions_left_v1_resolved.json"),
+        subtask_output_json=_path(parameters.get("subtask_output_json") or base_dir / "stage1_subtasks_left_v1.json"),
         frames_dir=_optional_path(parameters.get("frames_dir") or base_dir / "qwen_frame_annotation_frames"),
         text_model=str(parameters.get("text_model", "qwen-plus")),
+        subtask_model=str(parameters.get("subtask_model", parameters.get("text_model", "qwen-plus"))),
+        subtask_prompt=_path(parameters.get("subtask_prompt", "docs/prompts/stage1_subtask_segmentation_en.md")),
+        subtask_object_prompt=_path(
+            parameters.get("subtask_object_prompt", "docs/prompts/stage1_subtask_object_resolution_en.md")
+        ),
+        subtask_chunk_size=int(parameters.get("subtask_chunk_size", 8)),
+        subtask_overlap=int(parameters.get("subtask_overlap", 1)),
+        generate_subtasks=bool(parameters.get("generate_subtasks", True)),
         use_vl_object_resolver=bool(parameters.get("use_vl_object_resolver", True)),
         vl_object_model=str(parameters.get("vl_object_model", "qwen-vl-plus")),
         max_vl_frames_per_chunk=int(parameters.get("max_vl_frames_per_chunk", 30)),
@@ -86,4 +95,3 @@ def _optional_path(value: Any) -> Path | None:
     if not text:
         return None
     return _path(text)
-

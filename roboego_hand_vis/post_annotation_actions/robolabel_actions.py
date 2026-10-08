@@ -25,7 +25,7 @@ PHASE_ACTIONS = {
     "press_motion",
     "push_motion",
     "pull_motion",
-    "rotate_motion",
+    "rotate",
     "tilt_motion",
     "pour_motion",
     "fold_motion",
@@ -71,12 +71,12 @@ ACTION_TO_PHASE = {
     "pull apart": "pull_motion",
     "take out": "pull_motion",
     "take from": "pull_motion",
-    "rotate": "rotate_motion",
-    "open": "rotate_motion",
-    "close": "rotate_motion",
-    "operate": "rotate_motion",
-    "flip": "rotate_motion",
-    "uncap": "rotate_motion",
+    "rotate": "rotate",
+    "open": "rotate",
+    "close": "rotate",
+    "operate": "rotate",
+    "flip": "rotate",
+    "uncap": "rotate",
     "pour": "pour_motion",
     "fold": "fold_motion",
     "unfold": "fold_motion",
@@ -90,6 +90,45 @@ ACTION_TO_PHASE = {
     "load": "position",
     "unload": "position",
     "gesture": "idle",
+}
+
+ACTION_TO_SKILL = {
+    "press button": "press",
+    "pull out": "pull",
+    "pull apart": "pull",
+    "push together": "push",
+    "take out": "pull",
+    "place": "place",
+    "put into": "place",
+    "take from": "pull",
+    "put back": "place",
+    "pick": "pick",
+    "grasp": "pick",
+    "pinch": "pick",
+    "clip": "pick",
+    "hold": "hold",
+    "support": "hold",
+    "carry": "transfer",
+    "move": "transfer",
+    "pass": "hand over",
+    "handover": "hand over",
+    "press": "press",
+    "scan": "press",
+    "push": "push",
+    "pull": "pull",
+    "rotate": "twist",
+    "flip": "twist",
+    "uncap": "twist",
+    "open": "open",
+    "close": "close",
+    "operate": "manipulate",
+    "stir": "stir",
+    "cut": "cut",
+    "wipe": "wipe",
+    "fold": "fold",
+    "unfold": "fold",
+    "insert": "insert",
+    "pour": "pour",
 }
 
 GENERIC_OBJECT_WORDS = {
@@ -287,16 +326,19 @@ def _standardize_frame(frame: dict[str, Any]) -> dict[str, Any]:
 def _standardize_action(action: dict[str, Any], *, attrs: list[Any]) -> dict[str, Any]:
     original_action = str(action.get("action", "")).strip().lower()
     phase_action = ACTION_TO_PHASE.get(original_action, "idle")
+    skill = ACTION_TO_SKILL.get(original_action, "")
     object_name = _clean_object_name(action.get("object_name", "unknown"))
     out = dict(action)
     out["original_action"] = original_action
-    out["action"] = phase_action
+    out["action"] = skill
     out["phase_action"] = phase_action
-    out["skill"] = phase_action
+    out["skill"] = skill
     out["subject"] = _subject_from_hand_side(out.get("hand_side", "unknown"))
     out["object_name"] = object_name
     out["manipulated_object"] = object_name
     out["object_description"] = _object_description(object_name, attrs)
+    if skill:
+        out["description"] = _action_description(skill, object_name)
     out["robolabel_source"] = "robolabel_standardizer"
     return out
 
@@ -328,6 +370,11 @@ def _apply_vl_object_update(action: dict[str, Any], update: dict[str, Any]) -> N
     action["object_name"] = name
     action["manipulated_object"] = name
     action["object_description"] = description
+    skill = str(action.get("skill", action.get("action", ""))).strip()
+    if skill:
+        action["description"] = _action_description(skill, name)
+    else:
+        action.pop("description", None)
     action["object_track_id"] = str(update.get("object_track_id") or action.get("object_track_id", ""))
     action["same_object_as_previous_second"] = bool(
         update.get("same_object_as_previous_second", action.get("same_object_as_previous_second", False))
@@ -365,6 +412,16 @@ def _object_description(object_name: str, attrs: list[Any]) -> str:
             if value:
                 parts.append(f"{key}={value}")
     return "; ".join(parts)
+
+
+def _action_description(action_name: str, object_name: str) -> str:
+    action_text = str(action_name).strip()
+    if not action_text:
+        return ""
+    object_text = _clean_object_name(object_name)
+    if object_text and object_text != "unknown":
+        return f"wearer {action_text} {object_text}"
+    return f"wearer {action_text}".strip()
 
 
 def _matching_attr(object_name: str, attrs: list[Any]) -> dict[str, Any] | None:

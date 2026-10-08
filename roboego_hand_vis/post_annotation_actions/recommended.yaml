@@ -10,6 +10,10 @@ runtime:
 
 parameters:
   text_model: qwen-plus
+  generate_subtasks: true
+  subtask_model: qwen-plus
+  subtask_chunk_size: 8
+  subtask_overlap: 1
   use_vl_object_resolver: true
   vl_object_model: qwen-vl-plus
   max_vl_frames_per_chunk: 30
@@ -19,6 +23,9 @@ parameters:
   review_chunk_dir:
   resolved_chunk_dir:
   merged_output_json:
+  subtask_output_json:
+  subtask_prompt: docs/prompts/stage1_subtask_segmentation_en.md
+  subtask_object_prompt: docs/prompts/stage1_subtask_object_resolution_en.md
   frames_dir:
   overwrite: false
 
@@ -30,4 +37,3 @@ notes:
   - This file records recommended parameters only; it does not create or modify environments.
   - The stage converts legacy frame actions to robolabel phase actions.
   - qwen-vl-plus is used to check adjacent-second object identity when frame images are available.
-

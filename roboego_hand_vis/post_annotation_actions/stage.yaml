@@ -23,6 +23,8 @@ outputs:
       type: robolabel_action_chunks
     - path: "{output_dir}/stage1_actions_left_v1_resolved.json"
       type: merged_robolabel_actions
+    - path: "{output_dir}/stage1_subtasks_left_v1.json"
+      type: robolabel_subtasks
 
 runtime:
   python: ">=3.10,<4.0"

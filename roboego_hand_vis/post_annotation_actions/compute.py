@@ -12,6 +12,11 @@ from roboego_hand_vis.post_annotation_actions.text_resolver import (
     write_text_resolver_review_input,
 )
 from roboego_hand_vis.post_annotation_actions.stage1_actions import write_stage1_action_output
+from roboego_hand_vis.post_annotation_actions.model_subtasks import (
+    call_qwen_object_resolver,
+    call_qwen_subtask_resolver,
+    write_model_subtask_output,
+)
 
 
 @dataclass(frozen=True)
@@ -21,8 +26,15 @@ class PostAnnotationActionsConfig:
     review_chunk_dir: Path
     resolved_chunk_dir: Path
     merged_output_json: Path
+    subtask_output_json: Path
     frames_dir: Path | None
     text_model: str
+    subtask_model: str
+    subtask_prompt: Path
+    subtask_object_prompt: Path
+    subtask_chunk_size: int
+    subtask_overlap: int
+    generate_subtasks: bool
     use_vl_object_resolver: bool
     vl_object_model: str
     max_vl_frames_per_chunk: int
@@ -77,6 +89,9 @@ def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str
     merged_payload = merge_resolved_chunks(config.resolved_chunk_dir)
     config.merged_output_json.parent.mkdir(parents=True, exist_ok=True)
     config.merged_output_json.write_text(json.dumps(merged_payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    subtask_payload = None
+    if config.generate_subtasks:
+        subtask_payload = _write_subtasks(config)
     return {
         "stage": "post_annotation_actions",
         "status": "complete",
@@ -85,6 +100,7 @@ def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str
         "review_chunk_dir": str(config.review_chunk_dir),
         "resolved_chunk_dir": str(config.resolved_chunk_dir),
         "merged_output_json": str(config.merged_output_json),
+        "subtask_output_json": str(config.subtask_output_json) if subtask_payload is not None else "",
         "processed_count": len(processed),
         "processed_outputs": processed,
         "skipped_existing_count": skipped_existing,
@@ -93,6 +109,37 @@ def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str
         "use_vl_object_resolver": config.use_vl_object_resolver,
         "vl_object_model": config.vl_object_model,
     }
+
+
+def _write_subtasks(config: PostAnnotationActionsConfig) -> dict[str, Any]:
+    def resolver(review_payload: dict[str, Any]) -> dict[str, Any]:
+        return call_qwen_subtask_resolver(
+            review_payload,
+            prompt_path=config.subtask_prompt,
+            model=config.subtask_model,
+            api_key_env=config.api_key_env,
+            timeout_s=config.timeout_s,
+        )
+
+    def object_resolver(review_payload: dict[str, Any]) -> dict[str, Any]:
+        return call_qwen_object_resolver(
+            review_payload,
+            prompt_path=config.subtask_object_prompt,
+            model=config.subtask_model,
+            api_key_env=config.api_key_env,
+            timeout_s=config.timeout_s,
+        )
+
+    return write_model_subtask_output(
+        input_json=config.merged_output_json,
+        output_json=config.subtask_output_json,
+        resolver=resolver,
+        object_resolver=object_resolver,
+        prompt_path=config.subtask_prompt,
+        model=config.subtask_model,
+        chunk_size=config.subtask_chunk_size,
+        overlap=config.subtask_overlap,
+    )
 
 
 def merge_resolved_chunks(chunk_dir: Path) -> dict[str, Any]:
