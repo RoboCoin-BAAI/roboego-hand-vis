@@ -2,7 +2,7 @@ paths:
   mint_root: ~/wuji-ego-mint
   mint_python: ~/miniconda3/envs/mint-inference/bin/python
   mint_checkpoint: checkpoints/model.safetensors
-  egohandkit_root: ~/EgoHandKit-native-hand
+  egohandkit_root: ~/EgoHandKit
   egohandkit_python: ~/miniconda3/envs/egohandkit/bin/python
 
 input:
