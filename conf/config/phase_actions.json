@@ -1,0 +1,174 @@
+[
+  {
+    "value": "approach",
+    "label": "接近目标",
+    "meaning": "末端在未接触或控制目标时，持续向目标靠近。",
+    "start_frame_definition": "末端开始朝目标移动，且末端与目标距离持续减小的第一帧。",
+    "end_frame_definition": "末端开始精细对准、接触目标、闭合夹爪或执行具体操作前的第一帧。"
+  },
+  {
+    "value": "align",
+    "label": "对准目标",
+    "meaning": "在目标附近小幅调整末端、工具或被持物的位置和方向，使其满足交互要求。",
+    "start_frame_definition": "大范围接近或搬运结束，末端开始进行小幅位置或姿态调整的第一帧。",
+    "end_frame_definition": "对准完成并开始抓取、按压、插入、释放等后续动作的第一帧；若无后续动作，则以调整停止的第一帧结束。"
+  },
+  {
+    "value": "grasp",
+    "label": "执行抓取",
+    "meaning": "夹爪、手指或吸盘与目标建立稳定控制关系。",
+    "start_frame_definition": "夹爪开始闭合、手指开始收拢的第一帧。",
+    "end_frame_definition": "夹爪完全闭合；或者目标被稳定控制并开始随末端共同运动的第一帧。"
+  },
+  {
+    "value": "secure",
+    "label": "稳定控制",
+    "meaning": "持续固定已抓取或已约束的目标，使其基本不发生任务相关位移。（包含由于遥操轻微晃动的干扰动作）",
+    "start_frame_definition": "目标被稳定控制并停止明显运动的第一帧。",
+    "end_frame_definition": "目标开始被主动移动、控制开始解除或稳定保持关系丢失的第一帧。可进入 lift / carry / pull / twist / shake。"
+  },
+  {
+    "value": "lift",
+    "label": "抬起",
+    "meaning": "将已控制物体向上移动，使其脱离原支撑面。",
+    "start_frame_definition": "物体开始向上移动，与原支撑面解除接触的第一帧。",
+    "end_frame_definition": "物体完全脱离支撑面并停止上升，或转为其他方向移动的第一帧。"
+  },
+  {
+    "value": "carry",
+    "label": "搬运",
+    "meaning": "夹持物体状态下，末端 / 机械臂带着物体空间移动，物体不持续依托支撑面运动。",
+    "start_frame_definition": "被持物结束 grasp、secure 或 lift 后，开始进行明显空间移动的第一帧。",
+    "end_frame_definition": "主要空间移动停止，运动转为精细 align、lower、insert、pour 或其他目标操作的第一帧。"
+  },
+  {
+    "value": "position",
+    "label": "精确定位"
+  },
+  {
+    "value": "lower",
+    "label": "下放",
+    "meaning": "将已控制的物体或工具向下移动至支撑面、容器、孔槽或操作区域。",
+    "start_frame_definition": "carry 结束后，末端或被持物开始下降的第一帧。",
+    "end_frame_definition": "被持物与目标支撑面形成稳定接触且下降停止的第一帧；若未发生接触，则以下降运动停止或转为其他运动的第一帧为结束边界。"
+  },
+  {
+    "value": "release",
+    "label": "释放",
+    "meaning": "解除夹爪、手指、或其他末端对物体的控制，使物体由机器人控制转为由支撑面、接收方、容器或自由运动状态承接。",
+    "start_frame_definition": "夹爪开始张开、手指开始松开、或控制约束开始撤销的第一帧。",
+    "end_frame_definition": "夹爪完全张开、手指完全松开、或控制约束完全撤销的第一帧。"
+  },
+  {
+    "value": "press_motion",
+    "label": "按压",
+    "meaning": "末端或工具沿目标表面法向持续施力，使按钮、开关、弹性部件或表面发生压入、变形或触发。",
+    "start_frame_definition": "末端或工具与被按压物品开始接触的第一帧。",
+    "end_frame_definition": "末端或工具与被按压物品结束接触的第一帧。"
+  },
+  {
+    "value": "push_motion",
+    "label": "推动",
+    "meaning": "末端通过压缩接触向目标施加推力，使目标沿受力方向远离末端或随末端向前位移。",
+    "start_frame_definition": "紧接grasp之后，或末端或工具与被推动物品开始接触的第一帧。",
+    "end_frame_definition": "末端或工具与被推动物品结束接触的第一帧。"
+  },
+  {
+    "value": "pull_motion",
+    "label": "拉动",
+    "meaning": "末端通过抓持、勾拉或牵引使目标朝末端方向或随末端共同移动。",
+    "start_frame_definition": "紧接grasp之后，或末端或工具与被推动物品开始接触的第一帧。",
+    "end_frame_definition": "末端或工具与被拉动物品结束接触的第一帧。"
+  },
+  {
+    "value": "rotate",
+    "label": "旋转/拧动",
+    "meaning": "使目标、工具或末端围绕明确或隐含的旋转轴发生持续角位移，包括拧动、转动旋钮和环形搅拌。",
+    "start_frame_definition": "物品开始旋转的第一帧。",
+    "end_frame_definition": "物品停止旋转的第一帧。"
+  },
+  {
+    "value": "tilt_motion",
+    "label": "倾斜",
+    "meaning": "将物体从容器或物体从原有姿态连续转至倾倒、展示或操作所需的倾斜姿态。",
+    "start_frame_definition": "被控物体开始倾斜，方向产生角位移的第一帧。",
+    "end_frame_definition": "达到倾倒姿态前一帧，溶液首次开始持续流出的前一帧，或执行另一动作的前一帧。"
+  },
+  {
+    "value": "pour_motion",
+    "label": "倾倒",
+    "meaning": "使液体、颗粒或粉末从源容器转移至目标容器或目标区域。",
+    "start_frame_definition": "被控制的容器变成比水平面略低几度，或容器开始流出液体的第一帧；",
+    "end_frame_definition": "被控制的容器变成比水平面略高几度，或容器停止流出液体的第一帧；"
+  },
+  {
+    "value": "fold_motion",
+    "label": "折叠",
+    "meaning": "使物体的一部分相对于另一部分翻转、覆盖或对合，从而形成新的折叠关系或折痕。",
+    "start_frame_definition": "紧接grasp之后，软物体/纸张开始形成折痕或折叠形变。",
+    "end_frame_definition": "折叠形态完成，夹爪等末端张开的前一帧。"
+  },
+  {
+    "value": "slide_motion",
+    "label": "表面滑动",
+    "meaning": "目标始终与支撑面保持接触，并沿支撑面发生切向位移；区别于脱离支撑面的 carry。",
+    "start_frame_definition": "物体开始位移的第一帧。",
+    "end_frame_definition": "物体停止位移、离开支撑面，或动作转为其他运动的第一帧。"
+  },
+  {
+    "value": "insert_motion",
+    "label": "插入",
+    "meaning": "将被持物沿入口轴送入孔、槽、接口、插座等容器开口，使其由入口外部进入内部区域。",
+    "start_frame_definition": "被插入物的前端或有效插入部位首次越过入口平面、开始进入孔槽或容器开口内部的第一帧。",
+    "end_frame_definition": "达到预期插入深度且停止深入，或结构锁定/装配关系形成的第一帧。"
+  },
+  {
+    "value": "shake_motion",
+    "label": "摇晃",
+    "meaning": "对已受控物体进行重复往复、摆动或振荡，使内容物混合、散开、掉落或重新分布。",
+    "start_frame_definition": "开始有意摆动的第一帧。",
+    "end_frame_definition": "停止有意摆动的第一帧。"
+  },
+  {
+    "value": "strike_motion",
+    "label": "敲击/盖章/拍打",
+    "meaning": "末端或工具通过具有明显冲击性的短时运动与目标发生一次或多次碰撞，包括敲击、拍打、盖章。",
+    "start_frame_definition": "对准完成后，末端或工具开始直接导致碰撞的明确冲击行程的第一帧。",
+    "end_frame_definition": "敲击物体与被敲击物体脱离接触的第一帧。"
+  },
+  {
+    "value": "throw_motion",
+    "label": "抛掷加速",
+    "meaning": "通过加速、摆动或甩动使被持物获得释放速度，并在释放后进入自由飞行。",
+    "start_frame_definition": "紧接grasp之后，夹爪完全闭合的后一帧。",
+    "end_frame_definition": "夹爪开始张开的前一帧。"
+  },
+  {
+    "value": "scrub_motion",
+    "label": "擦拭/刷洗",
+    "meaning": "末端或工具在与目标表面持续接触的条件下，进行一次或多次往复、圆周或轨迹式表面作用。",
+    "start_frame_definition": "紧接approach之后，工具或末端与目标表面形成接触的第一帧。",
+    "end_frame_definition": "工具或末端与目标表面解除接触的第一帧。"
+  },
+  {
+    "value": "navigate_motion",
+    "label": "本体移动",
+    "meaning": "本体移动，机器人底盘本体移动、不带操作物体。",
+    "start_frame_definition": "底盘或机器人本体开始移动的第一帧。",
+    "end_frame_definition": "底盘或机器人本体停止移动的第一帧。"
+  },
+  {
+    "value": "retreat",
+    "label": "离开目标",
+    "meaning": "末端从目标对象、接触区域或危险区域主动移开。",
+    "start_frame_definition": "紧接上一动作结束，主体开始远离目标区域。",
+    "end_frame_definition": "末端达到预定安全间距并停止远离，或开始其他动作之前。"
+  },
+  {
+    "value": "idle",
+    "label": "无任务动作",
+    "meaning": "无任务动作",
+    "start_frame_definition": "无任务相关动作开始",
+    "end_frame_definition": "开始其他有效操作的第一帧。"
+  }
+]
