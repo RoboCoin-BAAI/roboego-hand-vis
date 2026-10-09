@@ -19,7 +19,7 @@ parameters:
   preview_near_min_m: 0.15
   preview_near_max_m: 3.0
   preview_contrast_percentile: 2.0
-  preview_codec: mp4v
+  preview_codec: h264
   ffv1_container: avi
   dry_run_avi: false
   delete_npy: false

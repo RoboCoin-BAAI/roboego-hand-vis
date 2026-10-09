@@ -32,7 +32,7 @@ class DepthArchiveConfig:
     preview_near_min_m: float = 0.15
     preview_near_max_m: float = 3.0
     preview_contrast_percentile: float | None = 2.0
-    preview_codec: str = "mp4v"
+    preview_codec: str = "h264"
     ffv1_container: str = "avi"
     dry_run_avi: bool = False
     delete_npy: bool = False
@@ -120,6 +120,8 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
     frames: list[dict[str, Any]] = []
     preview_writer: cv2.VideoWriter | None = None
     preview_path = output_dir / "depth_preview.mp4"
+    preview_command: list[str] = []
+    preview_proc: subprocess.Popen | None = None
     hevc12_path = output_dir / "depth_hevc12.mkv"
     hevc12_command: list[str] = []
     hevc12_proc: subprocess.Popen | None = None
@@ -158,14 +160,47 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
                 near_min_m=config.preview_near_min_m,
                 near_max_m=config.preview_near_max_m,
             )
-            if preview_writer is None:
+            if preview_writer is None and preview_proc is None:
                 output_dir.mkdir(parents=True, exist_ok=True)
                 height, width = preview_frame.shape[:2]
-                fourcc = cv2.VideoWriter_fourcc(*config.preview_codec)
-                preview_writer = cv2.VideoWriter(str(preview_path), fourcc, float(config.fps), (width, height))
-                if not preview_writer.isOpened():
-                    raise RuntimeError(f"Failed to open preview video writer: {preview_path}")
-            preview_writer.write(preview_frame)
+                if _use_h264_preview(config.preview_codec):
+                    preview_command = build_preview_h264_command(
+                        width=width,
+                        height=height,
+                        output_video=preview_path,
+                        fps=config.fps,
+                        ffmpeg_bin=config.ffmpeg_bin,
+                    )
+                    try:
+                        preview_proc = subprocess.Popen(
+                            preview_command,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                        )
+                    except FileNotFoundError:
+                        preview_command = []
+                if preview_proc is None:
+                    fallback_codec = "mp4v" if _use_h264_preview(config.preview_codec) else config.preview_codec
+                    fourcc = cv2.VideoWriter_fourcc(*fallback_codec)
+                    preview_writer = cv2.VideoWriter(str(preview_path), fourcc, float(config.fps), (width, height))
+                    if not preview_writer.isOpened():
+                        raise RuntimeError(f"Failed to open preview video writer: {preview_path}")
+            if preview_proc is not None:
+                if preview_proc.stdin is None:
+                    raise RuntimeError("Failed to open preview encoder stdin")
+                try:
+                    preview_proc.stdin.write(preview_frame.tobytes())
+                except BrokenPipeError as exc:
+                    _raise_encoder_failure(
+                        label="Preview",
+                        proc=preview_proc,
+                        command=preview_command,
+                        context=f"while writing frame {frame_idx}",
+                        cause=exc,
+                    )
+            elif preview_writer is not None:
+                preview_writer.write(preview_frame)
         if config.write_hevc12:
             hevc12_frame = np.clip(encoded, 0, max_depth_mm).astype(np.uint16)
             if hevc12_proc is None:
@@ -240,6 +275,8 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
         )
     if preview_writer is not None:
         preview_writer.release()
+    if preview_proc is not None:
+        _finish_encoder_process(label="Preview", proc=preview_proc, command=preview_command)
     if hevc12_proc is not None:
         _finish_encoder_process(label="HEVC12", proc=hevc12_proc, command=hevc12_command)
     if valid_mask_proc is not None:
@@ -314,6 +351,17 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
             "metadata_json": str(output_dir / "depth_archive_meta.json"),
         },
         "ffmpeg_command": ffmpeg_command,
+        "preview_command": preview_command,
+        "preview": {
+            "enabled": bool(config.write_preview),
+            "codec": "libx264" if preview_command else config.preview_codec,
+            "container": "mp4",
+            "pixel_format": "yuv420p" if preview_command else "",
+            "frame_count": len(frames),
+            "fps": float(config.fps),
+            "width": int(frame_width or 0),
+            "height": int(frame_height or 0),
+        },
         "ffv1": {
             "enabled": bool(config.write_avi),
             "codec": "ffv1",
@@ -525,6 +573,48 @@ def build_hevc12_command(
     ]
 
 
+def build_preview_h264_command(
+    *,
+    width: int,
+    height: int,
+    output_video: Path,
+    fps: float,
+    ffmpeg_bin: str = "ffmpeg",
+) -> list[str]:
+    fps_value = f"{float(fps):g}"
+    return [
+        ffmpeg_bin,
+        "-y",
+        "-f",
+        "rawvideo",
+        "-vcodec",
+        "rawvideo",
+        "-s",
+        f"{int(width)}x{int(height)}",
+        "-pix_fmt",
+        "bgr24",
+        "-r",
+        fps_value,
+        "-i",
+        "-",
+        "-r",
+        fps_value,
+        "-vsync",
+        "cfr",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-preset",
+        "medium",
+        "-crf",
+        "18",
+        "-movflags",
+        "+faststart",
+        str(output_video),
+    ]
+
+
 def build_valid_mask_command(
     *,
     width: int,
@@ -561,6 +651,10 @@ def build_valid_mask_command(
         "gray",
         str(output_video),
     ]
+
+
+def _use_h264_preview(preview_codec: str) -> bool:
+    return preview_codec.lower() in {"h264", "libx264", "avc1"}
 
 
 def _compression_report(

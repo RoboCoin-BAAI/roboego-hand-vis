@@ -122,7 +122,7 @@ def config_from_yaml(data: dict[str, Any]) -> DepthArchiveConfig:
         ),
         preview_contrast_percentile=contrast,
         preview_codec=str(
-            parameters.get("preview_codec", "mp4v")
+            parameters.get("preview_codec", "h264")
         ),
 
         ffv1_container=str(
