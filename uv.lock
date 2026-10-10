@@ -1866,6 +1866,7 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
+    { name = "pyarrow" },
     { name = "pytest" },
 ]
 privacy = [
@@ -1883,6 +1884,7 @@ requires-dist = [
     { name = "numpy", marker = "extra == 'privacy'", specifier = ">=1.26" },
     { name = "opencv-python" },
     { name = "opencv-python", marker = "extra == 'privacy'", specifier = ">=4.9.0" },
+    { name = "pyarrow", marker = "extra == 'dev'" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "pyyaml" },
     { name = "rerun-sdk" },
