@@ -14,7 +14,7 @@ parameters:
   fps: 30
   write_png: true
   write_avi: true
-  write_preview: true
+  write_preview: false
   preview_mode: near
   preview_near_min_m: 0.15
   preview_near_max_m: 3.0
@@ -38,6 +38,3 @@ notes:
 io:
   depth_dir: "{unit}/depth"
   output_dir: "{unit}/depth"
-
-
-# python roboego_hand_vis/archive_depth_cache/run.py --depth_dir "/home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/depth" --output_dir "/home/liuyou/Documents/roboego-hand-vis/data/session_20260819_170710/divide/good/session_20260819_170710_收银_12345725577/hand_windows/handwin_0002_t000160_000187_pick_place_put_into_operate/depth"

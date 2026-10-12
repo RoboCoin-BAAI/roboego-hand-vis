@@ -11,7 +11,7 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import cv2
 import numpy as np
@@ -85,7 +85,7 @@ def _messages_with_validation_feedback(messages: list[dict[str, Any]], parsed: d
         "Previous response failed schema validation. "
         f"Failure status: {status}. "
         f"Validation error: {error}. "
-        "Return the full annotation again as strict JSON only, preserving the requested schema and timestamps."
+        "Return the full response again as strict JSON only, preserving the requested schema and any timestamps."
     )
     for message in retry_messages:
         if message.get("role") != "user":
@@ -502,6 +502,7 @@ def call_qwen_frame_annotations(
     timeout_s: float = 120.0,
     max_retries: int = 0,
     retry_sleep_s: float = 1.0,
+    response_parser: Callable[[str], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     api_key = os.environ.get(api_key_env)
     if not api_key:
@@ -569,7 +570,7 @@ def call_qwen_frame_annotations(
                 time.sleep(float(retry_sleep_s))
             continue
         content = payload["choices"][0]["message"]["content"]
-        parsed = parse_qwen_frame_annotation_response(content)
+        parsed = (response_parser or parse_qwen_frame_annotation_response)(content)
         parsed["provider"] = "qwen"
         parsed["model"] = model
         parsed["raw_response"] = content
@@ -795,6 +796,7 @@ def write_qwen_frame_annotation_output(
     sampling_fps: float,
     usage: dict[str, Any] | None = None,
     failed_batches: list[dict[str, Any]] | None = None,
+    task_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     failed_batches = failed_batches or []
     status = "complete"
@@ -813,6 +815,8 @@ def write_qwen_frame_annotation_output(
         "failed_batches": failed_batches,
         "frames": parsed_frames,
     }
+    if task_metadata is not None:
+        payload["task_metadata"] = task_metadata
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return payload
@@ -830,6 +834,7 @@ def write_batch_annotation(
     usage: dict[str, Any] | None = None,
     retry_count: int = 0,
     attempt_count: int = 1,
+    task_metadata: dict[str, Any] | None = None,
 ) -> Path:
     validate_frame_annotations(frames)
     sorted_frames = sorted(frames, key=lambda frame: float(frame["t"]))
@@ -848,6 +853,8 @@ def write_batch_annotation(
         "attempt_count": int(attempt_count),
         "frames": sorted_frames,
     }
+    if task_metadata is not None:
+        payload["task_metadata"] = task_metadata
     batch_output_dir.mkdir(parents=True, exist_ok=True)
     output_path = batch_output_dir / f"batch_{batch_idx:04d}_t{int(t_start):06d}_{int(t_end):06d}.json"
     output_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -888,6 +895,11 @@ def write_chunk_annotations(
             "usage_summary": summarize_qwen_usage(usage, frames),
             "frames": frames,
         }
+        task_metadata = batch_payloads[0].get("task_metadata")
+        if any(item.get("task_metadata") != task_metadata for item in batch_payloads):
+            raise ValueError("Cannot combine batches with different task metadata")
+        if task_metadata is not None:
+            chunk_payload["task_metadata"] = task_metadata
         output_path = (
             chunk_output_dir
             / f"chunk_{chunk_idx:04d}_batches_{batch_indices[0]:04d}_{batch_indices[-1]:04d}_t{int(t_start):06d}_{int(t_end):06d}.json"
@@ -918,6 +930,7 @@ def write_checkpoint(
     sampling_fps: float,
     usage: dict[str, Any] | None = None,
     failed_batches: list[dict[str, Any]] | None = None,
+    task_metadata: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     failed_batches = failed_batches or []
     status = "complete"
@@ -937,6 +950,8 @@ def write_checkpoint(
         "completed_batches": sorted({int(idx) for idx in completed_batches}),
         "frames": sorted(frames, key=lambda frame: float(frame["t"])),
     }
+    if task_metadata is not None:
+        payload["task_metadata"] = task_metadata
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = checkpoint_path.with_suffix(checkpoint_path.suffix + ".tmp")
     tmp_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -970,6 +985,8 @@ def recover_checkpoint_from_raw(
     prompt_path: Path,
     model: str,
     sampling_fps: float,
+    task_metadata: dict[str, Any] | None = None,
+    response_parser: Callable[[str], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     frames: list[dict[str, Any]] = []
     completed_batches: list[int] = []
@@ -977,7 +994,7 @@ def recover_checkpoint_from_raw(
         match = re.search(r"batch_(\d+)\.raw\.txt$", raw_path.name)
         if match is None:
             continue
-        parsed = parse_qwen_frame_annotation_response(raw_path.read_text(encoding="utf-8"))
+        parsed = (response_parser or parse_qwen_frame_annotation_response)(raw_path.read_text(encoding="utf-8"))
         if parsed.get("status") != "ok":
             continue
         completed_batches.append(int(match.group(1)))
@@ -985,6 +1002,7 @@ def recover_checkpoint_from_raw(
     return write_checkpoint(
         checkpoint_path=checkpoint_path,
         frames=_deduplicate_frames(frames),
+        task_metadata=task_metadata,
         completed_batches=completed_batches,
         video_path=video_path,
         prompt_path=prompt_path,
@@ -1001,6 +1019,8 @@ def recover_batches_from_raw(
     prompt_path: Path,
     model: str,
     sampling_fps: float,
+    task_metadata: dict[str, Any] | None = None,
+    response_parser: Callable[[str], dict[str, Any]] | None = None,
 ) -> list[Path]:
     outputs: list[Path] = []
     for raw_path in sorted(Path(raw_output_dir).glob("batch_*.raw.txt")):
@@ -1008,7 +1028,7 @@ def recover_batches_from_raw(
         if match is None:
             continue
         batch_idx = int(match.group(1))
-        parsed = parse_qwen_frame_annotation_response(raw_path.read_text(encoding="utf-8"))
+        parsed = (response_parser or parse_qwen_frame_annotation_response)(raw_path.read_text(encoding="utf-8"))
         if parsed.get("status") != "ok":
             continue
         outputs.append(
@@ -1016,6 +1036,7 @@ def recover_batches_from_raw(
                 batch_output_dir=batch_output_dir,
                 batch_idx=batch_idx,
                 frames=parsed["frames"],
+                task_metadata=task_metadata,
                 video_path=video_path,
                 prompt_path=prompt_path,
                 model=model,

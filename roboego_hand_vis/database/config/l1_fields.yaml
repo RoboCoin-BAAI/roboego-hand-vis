@@ -1,0 +1,74 @@
+# L1 环节状态字段配置。name 唯一，并对应 roboego_hand_vis 下的模块目录。
+# depends_on 为直接前置阶段名。
+# threshold_gate 仅标记该环节可能作为质量/阈值门禁，不定义具体放行规则。
+# 此文件仅描述字段与依赖，不创建数据库列，也不自动执行或阻断任务。
+# 所有环节执行前，数据须已下载到共享目录。
+table: l1data
+
+stages:
+  - name: raw_headband_integrity
+    status_field: raw_headband_integrity_status
+    depends_on: []
+    threshold_gate: true
+
+  - name: video_simple_quality
+    status_field: video_simple_quality_status
+    depends_on: [raw_headband_integrity]
+    threshold_gate: true
+
+  # 可选阶段；手部出现比例 80% 仅作参考，尚不作为硬性门禁。
+  - name: detect_hand
+    status_field: detect_hand_status
+    depends_on: [video_simple_quality]
+    threshold_gate: false
+
+  - name: stereo_rectification
+    status_field: stereo_rectification_status
+    depends_on: [video_simple_quality]
+    threshold_gate: false
+
+  # 使用原始左目视频，不要求等待立体矫正。
+  - name: qwen_annotation
+    status_field: qwen_annotation_status
+    depends_on: [video_simple_quality]
+    threshold_gate: false
+
+  - name: post_annotation_actions
+    status_field: post_annotation_actions_status
+    depends_on: [qwen_annotation]
+    threshold_gate: false
+
+  # 深度估计前的双目质量检查。
+  - name: stereo_depth_gate
+    status_field: stereo_depth_gate_status
+    depends_on: [stereo_rectification]
+    threshold_gate: true
+
+  - name: fast_foundation_depth
+    status_field: fast_foundation_depth_status
+    depends_on: [stereo_depth_gate]
+    threshold_gate: false
+
+  # 包含 MINT 推理和后续手部处理，使用矫正视频和逐帧深度。
+  - name: hand
+    status_field: hand_status
+    depends_on: [fast_foundation_depth]
+    threshold_gate: false
+
+  # 即使深度已就绪，也必须等待手部估计结束后才能归档。
+  - name: archive_depth_cache
+    status_field: archive_depth_cache_status
+    depends_on: [fast_foundation_depth, hand]
+    threshold_gate: false
+
+  # 当前流程使用 rectified 输入，不依赖深度或手部估计。
+  - name: vio
+    status_field: vio_status
+    depends_on: [stereo_rectification]
+    threshold_gate: false
+
+  # 等待矫正视频生成后，再处理 videos 目录中的视频。
+  - name: video_privacy_blur
+    status_field: video_privacy_blur_status
+    depends_on: [stereo_rectification]
+    threshold_gate: false

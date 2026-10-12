@@ -1,0 +1,7 @@
+# Fill in the database password once; all database CLI entries read this file.
+postgresql:
+  host: 127.0.0.1
+  port: 5432
+  database: roboego
+  username: roboego
+  password: "7sK9$pR2!g"

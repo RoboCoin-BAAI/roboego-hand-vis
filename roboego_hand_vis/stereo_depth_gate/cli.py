@@ -11,6 +11,7 @@ import yaml
 try:
     from .compute import (
         SummaryQualityConfig,
+        DepthUsableThresholds,
         build_sample_row,
         inspect_video,
         load_manifest_video_paths,
@@ -21,6 +22,7 @@ try:
 except ImportError:
     from compute import (
         SummaryQualityConfig,
+        DepthUsableThresholds,
         build_sample_row,
         inspect_video,
         load_manifest_video_paths,
@@ -69,6 +71,7 @@ def config_from_yaml_and_args(data: dict[str, Any], args: argparse.Namespace) ->
     io_config = data.get("io", {})
     summary_config = data.get("summary", {})
     thresholds = data.get("thresholds", {})
+    depth_thresholds = data.get("depth_usable_thresholds", {})
 
     manifest_path = (
         Path(args.manifest).expanduser().resolve()
@@ -95,6 +98,10 @@ def config_from_yaml_and_args(data: dict[str, Any], args: argparse.Namespace) ->
         manifest_path=manifest_path,
         output_dir=output_dir,
         summary=SummaryQualityConfig(
+            depth_usable_thresholds=DepthUsableThresholds(
+                max_median_abs_dy=float(depth_thresholds.get("max_median_abs_dy", 8.0)),
+                max_p90_abs_dy=float(depth_thresholds.get("max_p90_abs_dy", 70.0)),
+            ),
             sample_count=int(args.sample_count if args.sample_count is not None else summary_config.get("sample_count", 12)),
             dark_threshold=int(summary_config.get("dark_threshold", 10)),
             bright_threshold=int(summary_config.get("bright_threshold", 245)),
@@ -167,6 +174,32 @@ def run_stereo_depth_gate(config: StereoDepthGateRunConfig) -> dict[str, Any]:
         },
         "outputs": {
             "gate_report": str(config.output_dir / "stereo_depth_gate_report.json"),
+        },
+    }
+    # Keep the original fields while making the actual release policy explicit.
+    gate_report["strict_thresholds"] = dict(gate_report["thresholds"])
+    gate_report["depth_usable_thresholds"] = {
+        **gate_report["thresholds"], **summary["usable_for_depth_thresholds"],
+    }
+    gate_report["depth_usable_checks"] = summary["depth_usable_checks"]
+    gate_report["strict_passed"] = bool(summary["passed"])
+    if summary["passed"] and summary["usable_for_depth"]:
+        explanation = "严格质检与深度可用性检查均通过，允许继续深度估计，风险等级为 low。"
+    elif summary["usable_for_depth"]:
+        explanation = ("严格几何阈值未通过，但满足宽松几何阈值，且亮度、清晰度、曝光和匹配数量检查均通过。"
+                       "允许继续深度估计，风险等级为 high_risk；门禁放行不代表深度结果质量可靠。")
+    else:
+        explanation = "深度可用性检查未通过，阻止继续深度估计；失败项见 depth_usable_checks。"
+    gate_report["gate_decision"] = {
+        "based_on": "usable_for_depth",
+        "passed": bool(summary["usable_for_depth"]),
+        "database_status": "completed" if summary["usable_for_depth"] else "block",
+        "explanation": explanation,
+        "strict_thresholds_source": "config.thresholds",
+        "depth_usable_thresholds_source": "config.depth_usable_thresholds（几何）；其他项目继承 config.thresholds",
+        "metric_definitions": {
+            "median_abs_dy_avg": "各抽样帧 ORB 匹配点垂直误差绝对值中位数的平均值，单位像素。",
+            "p90_abs_dy_max": "各抽样帧 ORB 匹配点垂直误差绝对值 P90 的最大值，单位像素。",
         },
     }
     (config.output_dir / "stereo_depth_gate_report.json").write_text(

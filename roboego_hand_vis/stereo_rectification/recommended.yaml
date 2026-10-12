@@ -12,6 +12,7 @@ parameters:
   overwrite: false
   dry_run: false
 notes:
+  - 当前仅支持 camera_model=pinhole 与 distortion_model=equidistant；双球面模型暂不支持，检测到后报错停止。
   - session 是本阶段唯一数据输入目录。
   - session 下需要包含 videos/left.mp4、videos/right.mp4 和 calibrations。
   - --roboegopipe_root 是旧参数兼容占位，新实现不再依赖外部 RoboEgoPipe 仓库。

@@ -13,6 +13,7 @@ import yaml
 
 from roboego_hand_vis.common.video_paths import find_named_video
 from roboego_hand_vis.datasets.manifest import ResolveConfig, resolve_dataset_manifest, write_manifest
+from roboego_hand_vis.stereo_rectification.cammodel import load_camchain, validate_stereo_camchain
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 STAGE_DIR = Path(__file__).resolve().parent
@@ -114,6 +115,7 @@ def prepare_segment(
         "rectified_right": str(rectified / "videos/right_rectified.mp4"),
         "manifest": str(manifest_dir / "dataset_manifest.json"),
     }
+    _validate_calibration(segment_dir, session_dir, model)
     if dry_run:
         out["status"] = "dry_run"
         return out
@@ -164,6 +166,7 @@ def prepare_stereo_unit(
         "rectified_right": str(unit_root / "videos/right_rectified.mp4"),
         "manifest": str(manifest_dir / "dataset_manifest.json"),
     }
+    _validate_calibration(unit_root, session_dir, model)
     if dry_run:
         out["status"] = "dry_run"
         return out
@@ -204,6 +207,18 @@ def _selected_segment_dirs(segments_root: Path, segment_ids: list[str] | None) -
 def _validate_segment(segment_dir: Path) -> None:
     for stream in ("left", "right"):
         find_named_video(segment_dir / "videos", stream)
+
+
+def _validate_calibration(unit_root: Path, session_dir: Path, model: str) -> None:
+    calibration_dir = unit_root / "calibrations"
+    if not calibration_dir.exists():
+        calibration_dir = session_dir / "calibrations"
+    for name in ("camera01-camchain.yaml", "camera-camchain.yaml"):
+        path = calibration_dir / name
+        if path.is_file():
+            validate_stereo_camchain(load_camchain(str(path)), model)
+            return
+    raise FileNotFoundError(f"Missing stereo camchain calibration: {calibration_dir}")
 
 
 def _remove_known_outputs(processed: Path) -> None:

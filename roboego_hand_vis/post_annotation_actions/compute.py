@@ -19,6 +19,9 @@ from roboego_hand_vis.post_annotation_actions.model_subtasks import (
 )
 
 
+DEFAULT_POST_ANNOTATION_BASE_URL = "https://llm-g3o8d3j71xbf6prc.cn-beijing.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
+
+
 @dataclass(frozen=True)
 class PostAnnotationActionsConfig:
     qwen_chunk_dir: Path
@@ -41,6 +44,7 @@ class PostAnnotationActionsConfig:
     api_key_env: str
     timeout_s: float
     overwrite: bool
+    base_url: str = DEFAULT_POST_ANNOTATION_BASE_URL
 
 
 def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str, Any]:
@@ -67,6 +71,7 @@ def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str
                 review_payload=review_payload,
                 model=config.text_model,
                 api_key_env=config.api_key_env,
+                base_url=config.base_url,
                 timeout_s=config.timeout_s,
             )
             if parsed.get("status") != "ok":
@@ -79,6 +84,7 @@ def run_post_annotation_actions(config: PostAnnotationActionsConfig) -> dict[str
             use_vl_object_resolver=config.use_vl_object_resolver,
             vl_model=config.vl_object_model,
             api_key_env=config.api_key_env,
+            base_url=config.base_url,
             timeout_s=config.timeout_s,
             max_vl_frames=config.max_vl_frames_per_chunk,
         )
@@ -118,6 +124,7 @@ def _write_subtasks(config: PostAnnotationActionsConfig) -> dict[str, Any]:
             prompt_path=config.subtask_prompt,
             model=config.subtask_model,
             api_key_env=config.api_key_env,
+            base_url=config.base_url,
             timeout_s=config.timeout_s,
         )
 
@@ -127,6 +134,7 @@ def _write_subtasks(config: PostAnnotationActionsConfig) -> dict[str, Any]:
             prompt_path=config.subtask_object_prompt,
             model=config.subtask_model,
             api_key_env=config.api_key_env,
+            base_url=config.base_url,
             timeout_s=config.timeout_s,
         )
 

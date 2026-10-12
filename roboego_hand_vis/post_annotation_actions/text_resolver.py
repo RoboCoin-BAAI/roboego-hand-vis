@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL, resolve_qwen_base_url
+from roboego_hand_vis.post_annotation_actions.http_client import request_json
 from roboego_hand_vis.post_annotation_actions.stage1_actions import ACTION_PATTERNS
 
 
@@ -83,8 +84,7 @@ def call_qwen_text_resolver(
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-        payload = json.loads(resp.read().decode("utf-8"))
+    payload = request_json(req, timeout_s=timeout_s, stage="text_resolver", model=model)
     content = payload["choices"][0]["message"]["content"]
     parsed = parse_text_resolver_response(content)
     parsed["provider"] = "qwen"

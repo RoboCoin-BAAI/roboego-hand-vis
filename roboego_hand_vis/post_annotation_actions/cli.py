@@ -2,15 +2,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 try:
-    from .compute import PostAnnotationActionsConfig, run_post_annotation_actions
+    from .compute import DEFAULT_POST_ANNOTATION_BASE_URL, PostAnnotationActionsConfig, run_post_annotation_actions
 except ImportError:
-    from compute import PostAnnotationActionsConfig, run_post_annotation_actions
+    from compute import DEFAULT_POST_ANNOTATION_BASE_URL, PostAnnotationActionsConfig, run_post_annotation_actions
 
 
 DEFAULT_CONFIG = Path(__file__).with_name("recommended.yaml")
@@ -43,6 +44,9 @@ def config_from_yaml(
     overwrite: bool | None = None,
 ) -> PostAnnotationActionsConfig:
     parameters = data.get("parameters", {})
+    base_url = (str(parameters.get("base_url") or "").strip()
+                or os.environ.get("DASHSCOPE_BASE_URL", "").strip()
+                or DEFAULT_POST_ANNOTATION_BASE_URL)
     qwen_chunk_dir = _path(qwen_chunk_dir)
     base_dir = _path(output_dir) if output_dir is not None else qwen_chunk_dir.parent
     return PostAnnotationActionsConfig(
@@ -53,8 +57,9 @@ def config_from_yaml(
         merged_output_json=_path(parameters.get("merged_output_json") or base_dir / "stage1_actions_left_v1_resolved.json"),
         subtask_output_json=_path(parameters.get("subtask_output_json") or base_dir / "stage1_subtasks_left_v1.json"),
         frames_dir=_optional_path(parameters.get("frames_dir") or base_dir / "qwen_frame_annotation_frames"),
-        text_model=str(parameters.get("text_model", "qwen-plus")),
-        subtask_model=str(parameters.get("subtask_model", parameters.get("text_model", "qwen-plus"))),
+        base_url=base_url,
+        text_model=str(parameters.get("text_model", "qwen3.8-27b")),
+        subtask_model=str(parameters.get("subtask_model", parameters.get("text_model", "qwen3.8-27b"))),
         subtask_prompt=_path(parameters.get("subtask_prompt", "docs/prompts/stage1_subtask_segmentation_en.md")),
         subtask_object_prompt=_path(
             parameters.get("subtask_object_prompt", "docs/prompts/stage1_subtask_object_resolution_en.md")
@@ -63,7 +68,7 @@ def config_from_yaml(
         subtask_overlap=int(parameters.get("subtask_overlap", 1)),
         generate_subtasks=bool(parameters.get("generate_subtasks", True)),
         use_vl_object_resolver=bool(parameters.get("use_vl_object_resolver", True)),
-        vl_object_model=str(parameters.get("vl_object_model", "qwen-vl-plus")),
+        vl_object_model=str(parameters.get("vl_object_model", "qwen3.8-27b")),
         max_vl_frames_per_chunk=int(parameters.get("max_vl_frames_per_chunk", 30)),
         api_key_env=str(parameters.get("api_key_env", "DASHSCOPE_API_KEY")),
         timeout_s=float(parameters.get("timeout_s", 120.0)),

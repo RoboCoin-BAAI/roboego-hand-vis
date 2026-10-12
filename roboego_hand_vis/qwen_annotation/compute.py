@@ -5,6 +5,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from .context_run import prepare_task_metadata
+from .task_context import context_prompts, parse_context_frame_response, validate_task_objects
 from roboego_hand_vis.qwen_annotation.frame_annotation import (
     build_data_inspection_placeholder_frames,
     build_qwen_frame_annotation_messages,
@@ -54,9 +56,14 @@ class QwenAnnotationConfig:
 
 
 def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
-    config.raw_output_dir.mkdir(parents=True, exist_ok=True)
-
     system_prompt, user_prompt = read_prompt_markdown(config.prompt)
+    task_metadata = prepare_task_metadata(config)
+    context_options = {"task_metadata": task_metadata} if task_metadata is not None else {}
+    parser_options = {}
+    if task_metadata is not None:
+        system_prompt, user_prompt = context_prompts(system_prompt, user_prompt, task_metadata)
+        parser_options["response_parser"] = lambda text: parse_context_frame_response(text, task_metadata)
+    config.raw_output_dir.mkdir(parents=True, exist_ok=True)
     if config.windows_json is not None:
         windows_payload = json.loads(config.windows_json.read_text(encoding="utf-8"))
         frame_paths, timestamps_s = extract_video_frames_from_windows(
@@ -80,6 +87,8 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
 
     if config.recover_from_raw:
         recover_checkpoint_from_raw(
+            **context_options,
+            **parser_options,
             raw_output_dir=config.raw_output_dir,
             checkpoint_path=config.checkpoint_json,
             video_path=config.video,
@@ -88,6 +97,8 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
             sampling_fps=config.fps,
         )
         recover_batches_from_raw(
+            **context_options,
+            **parser_options,
             raw_output_dir=config.raw_output_dir,
             batch_output_dir=config.batch_output_dir,
             video_path=config.video,
@@ -105,6 +116,8 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
     if config.resume and config.checkpoint_json.exists():
         checkpoint_usage = json.loads(config.checkpoint_json.read_text(encoding="utf-8")).get("usage", {})
     all_frames: list[dict[str, Any]] = load_checkpoint_frames(config.checkpoint_json) if config.resume else []
+    if task_metadata is not None:
+        validate_task_objects(all_frames, task_metadata)
     completed_batches = completed_batch_indices(config.checkpoint_json) if config.resume else set()
     failed_batches: list[dict[str, Any]] = []
     usage_by_batch: dict[int, dict[str, Any]] = {}
@@ -129,6 +142,7 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
             timestamps_s=batch_times,
         )
         parsed = call_qwen_frame_annotations(
+            **parser_options,
             messages=messages,
             model=config.model,
             api_key_env=config.api_key_env,
@@ -162,6 +176,7 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
                 )
                 total_usage = merge_qwen_usage(list(usage_by_batch.values()) or [checkpoint_usage])
                 write_checkpoint(
+                    **context_options,
                     checkpoint_path=config.checkpoint_json,
                     frames=all_frames,
                     completed_batches=sorted(completed_batches),
@@ -174,6 +189,7 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
                 )
                 continue
         write_batch_annotation(
+            **context_options,
             batch_output_dir=config.batch_output_dir,
             batch_idx=batch_idx,
             frames=parsed["frames"],
@@ -190,6 +206,7 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
         usage_by_batch[batch_idx] = parsed.get("usage", {})
         total_usage = merge_qwen_usage(list(usage_by_batch.values()) or [checkpoint_usage])
         write_checkpoint(
+            **context_options,
             checkpoint_path=config.checkpoint_json,
             frames=all_frames,
             completed_batches=sorted(completed_batches),
@@ -208,6 +225,7 @@ def run_qwen_annotation(config: QwenAnnotationConfig) -> dict[str, Any]:
 
     total_usage = merge_qwen_usage(list(usage_by_batch.values()) or [checkpoint_usage])
     payload = write_qwen_frame_annotation_output(
+        **context_options,
         output_json=config.output_json,
         parsed_frames=all_frames,
         video_path=config.video,

@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL, resolve_qwen_base_url
+from roboego_hand_vis.post_annotation_actions.http_client import request_json
 from roboego_hand_vis.post_annotation_actions.robolabel_actions import ACTION_TO_PHASE, ACTION_TO_SKILL, PHASE_ACTIONS
 
 
@@ -447,7 +448,7 @@ def call_qwen_subtask_resolver(
     review_payload: dict[str, Any],
     *,
     prompt_path: Path = DEFAULT_PROMPT,
-    model: str = "qwen-plus",
+    model: str = "qwen3.8-27b",
     api_key_env: str = "DASHSCOPE_API_KEY",
     base_url: str = DEFAULT_QWEN_BASE_URL,
     timeout_s: float = 120.0,
@@ -475,7 +476,7 @@ def call_qwen_object_resolver(
     review_payload: dict[str, Any],
     *,
     prompt_path: Path = DEFAULT_OBJECT_PROMPT,
-    model: str = "qwen-plus",
+    model: str = "qwen3.8-27b",
     api_key_env: str = "DASHSCOPE_API_KEY",
     base_url: str = DEFAULT_QWEN_BASE_URL,
     timeout_s: float = 120.0,
@@ -489,6 +490,7 @@ def call_qwen_object_resolver(
         api_key_env=api_key_env,
         base_url=base_url,
         timeout_s=timeout_s,
+        stage="subtask_object_resolver",
     )
     if isinstance(content, dict):
         return content
@@ -508,6 +510,7 @@ def _call_qwen_json_resolver(
     api_key_env: str,
     base_url: str,
     timeout_s: float,
+    stage: str = "subtask_resolver",
 ) -> str | dict[str, Any]:
     api_key = os.environ.get(api_key_env)
     if not api_key:
@@ -528,8 +531,7 @@ def _call_qwen_json_resolver(
         method="POST",
     )
     try:
-        with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
+        payload = request_json(req, timeout_s=timeout_s, stage=stage, model=model)
     except (TimeoutError, socket.timeout, urllib.error.URLError) as exc:
         return {"status": "request_failed", "error": f"{type(exc).__name__}: {exc}"}
     return payload["choices"][0]["message"]["content"]
@@ -617,7 +619,7 @@ def _parse_args() -> argparse.Namespace:
         default=str(DEFAULT_OBJECT_PROMPT),
         help="Prompt markdown for per-subtask object alias resolution.",
     )
-    parser.add_argument("--model", default="qwen-plus", help="Qwen/OpenAI-compatible text model.")
+    parser.add_argument("--model", default="qwen3.8-27b", help="Qwen/OpenAI-compatible text model.")
     parser.add_argument("--api_key_env", default="DASHSCOPE_API_KEY", help="Environment variable containing API key.")
     parser.add_argument("--base_url", default=DEFAULT_QWEN_BASE_URL, help="OpenAI-compatible chat completions URL.")
     parser.add_argument("--timeout_s", type=float, default=120.0, help="HTTP timeout in seconds.")

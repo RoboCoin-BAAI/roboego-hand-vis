@@ -19,6 +19,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "pyarrow"]
+database = ["SQLAlchemy>=2.0,<3", "psycopg[binary]>=3.2,<4"]
 privacy = ["ultralytics>=8.2.0", "opencv-python>=4.9.0", "numpy>=1.26"]
 
 [tool.setuptools.packages.find]

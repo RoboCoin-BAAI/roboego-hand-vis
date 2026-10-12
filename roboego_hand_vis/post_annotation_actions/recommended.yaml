@@ -9,13 +9,14 @@ runtime:
   api_key_env: DASHSCOPE_API_KEY
 
 parameters:
-  text_model: qwen-plus
+  base_url: https://llm-g3o8d3j71xbf6prc.cn-beijing.maas.aliyuncs.com/compatible-mode/v1/chat/completions
+  text_model: qwen3.8-27b
   generate_subtasks: true
-  subtask_model: qwen-plus
+  subtask_model: qwen3.8-27b
   subtask_chunk_size: 8
   subtask_overlap: 1
   use_vl_object_resolver: true
-  vl_object_model: qwen-vl-plus
+  vl_object_model: qwen3.8-27b
   max_vl_frames_per_chunk: 30
   api_key_env: DASHSCOPE_API_KEY
   timeout_s: 120.0
@@ -36,4 +37,4 @@ io:
 notes:
   - This file records recommended parameters only; it does not create or modify environments.
   - The stage converts legacy frame actions to robolabel phase actions.
-  - qwen-vl-plus is used to check adjacent-second object identity when frame images are available.
+  - qwen3.8-27b is used to check adjacent-second object identity when frame images are available.

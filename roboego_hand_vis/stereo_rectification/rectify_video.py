@@ -7,8 +7,8 @@
 3. 输出立体校正后的视频
 4. 保存校正参数到 YAML 文件
 
-支持的相机模型：
-- Double Sphere (双球面模型)
+相机模型实现：
+- Double Sphere (双球面模型，尚未完成，当前入口禁止运行)
   - 使用虚拟针孔 + cv2.stereoRectify()
   - 需要 --fov 参数指定虚拟针孔视场角
 - Equidistant (等距投影 / OpenCV fisheye 模型)
@@ -55,6 +55,7 @@ try:
         create_camera_model,
         load_camchain,
         get_model_type_name,
+        validate_stereo_camchain,
     )
 except ImportError:
     from cammodel import (
@@ -63,6 +64,7 @@ except ImportError:
         create_camera_model,
         load_camchain,
         get_model_type_name,
+        validate_stereo_camchain,
     )
 
 
@@ -790,6 +792,7 @@ def main():
     
     print(f"\n加载标定文件: {camchain_path}")
     camchain = load_camchain(str(camchain_path))
+    validate_stereo_camchain(camchain, args.model)
     
     # 获取模型类型
     model_type = args.model

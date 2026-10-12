@@ -46,3 +46,6 @@ wandb/
 /conf/models/*
 !/conf/models/yolov8n-face.pt
 !/conf/models/yolov8n-face.pt.source.json
+
+# Local KS3 tools, configuration, and runtime logs
+/roboego_hand_vis/download_data/ks3/

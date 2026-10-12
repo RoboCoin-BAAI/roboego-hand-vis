@@ -30,12 +30,53 @@ def load_camchain(camchain_path: str) -> dict:
     return camchain
 
 
+def validate_camera_model(cam_info: dict, model_type: str = None) -> str:
+    """Reject unsupported calibration before constructing a remap model."""
+    if not isinstance(cam_info, dict):
+        raise ValueError("相机标定必须是字典")
+    camera = str(cam_info.get('camera_model', '')).lower().strip()
+    distortion = str(cam_info.get('distortion_model', '')).lower().strip()
+    requested = str(model_type).lower().strip() if model_type is not None else None
+    ds_names = {'ds', 'double_sphere', 'doublesphere', 'double-sphere'}
+    if camera in ds_names or distortion in ds_names or requested in ds_names:
+        raise ValueError("双球面模型的去畸变/立体矫正实现尚未完成，当前不支持运行")
+    if camera != 'pinhole' or distortion != 'equidistant':
+        raise ValueError(
+            f"当前仅支持 camera_model=pinhole + distortion_model=equidistant，"
+            f"实际为 camera_model={camera!r}, distortion_model={distortion!r}"
+        )
+    if requested not in (None, 'equidistant', 'fisheye', 'kannala_brandt'):
+        raise ValueError(f"指定模型 {requested!r} 与标定 pinhole + equidistant 不匹配")
+    intrinsics = cam_info.get('intrinsics')
+    coeffs = cam_info.get('distortion_coeffs')
+    if not isinstance(intrinsics, (list, tuple)) or len(intrinsics) != 4:
+        raise ValueError("pinhole + equidistant 需要 4 个内参 [fx, fy, cx, cy]")
+    if not isinstance(coeffs, (list, tuple)) or len(coeffs) != 4:
+        raise ValueError("equidistant 需要 4 个畸变系数 [k1, k2, k3, k4]")
+    return 'equidistant'
+
+
+def validate_stereo_camchain(camchain: dict, model_type: str = None) -> str:
+    """Check both stereo cameras; unsupported models must not fall back."""
+    if not isinstance(camchain, dict):
+        raise ValueError("camchain 标定必须是字典")
+    for name in ('cam0', 'cam1'):
+        try:
+            validate_camera_model(camchain.get(name), model_type)
+        except ValueError as exc:
+            raise ValueError(f"{name}: {exc}") from exc
+    return 'equidistant'
+
+
 def create_camera_model(
     cam_info: dict, 
     model_type: str = None
 ) -> Union[DoubleSphereCameraModel, EquidistantCameraModel]:
     """
     根据 camchain 配置自动创建相机模型
+
+    当前入口先严格校验 camera_model=pinhole 与 distortion_model=equidistant。
+    双球面实现尚未完成，下面保留的双球面/旧推断分支暂不开放。
     
     支持的模型类型:
     - 'double_sphere': 双球面模型 (Double Sphere)
@@ -60,6 +101,9 @@ def create_camera_model(
     Raises:
         ValueError: 无法识别的模型类型
     """
+    # The double-sphere implementation is unfinished. Never infer/override an
+    # unsupported calibration from parameter counts alone.
+    model_type = validate_camera_model(cam_info, model_type)
     intrinsics = cam_info.get('intrinsics', [])
     distortion_model = cam_info.get('distortion_model', '')
     distortion_coeffs = cam_info.get('distortion_coeffs', [])

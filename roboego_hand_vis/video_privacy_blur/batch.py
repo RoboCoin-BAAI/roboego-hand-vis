@@ -13,6 +13,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from .resources import AdaptiveLimiter, GPUOutOfMemory
+from roboego_hand_vis.common.processes import group_has_live_processes, stop_process_group
 
 VIDEO_SUFFIXES = {'.mp4', '.mov', '.mkv', '.avi', '.m4v'}
 
@@ -75,16 +76,21 @@ def process_file(source, output, config, log, lock_fd=None, cancelled=None):
                 except subprocess.TimeoutExpired:
                     pass
         except BaseException:
-            try:
-                os.killpg(worker.pid, signal.SIGTERM)
-            except ProcessLookupError:
-                pass
-            try:
-                worker.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                os.killpg(worker.pid, signal.SIGKILL)
-                worker.wait()
+            if sys.platform.startswith('linux'):
+                stop_process_group(worker)
+            else:
+                try:
+                    os.killpg(worker.pid, signal.SIGTERM)
+                except ProcessLookupError:
+                    pass
+                try:
+                    worker.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(worker.pid, signal.SIGKILL)
+                    worker.wait()
             raise
+    if sys.platform.startswith("linux") and group_has_live_processes(worker.pid):
+        stop_process_group(worker)
     if code == 75:
         raise GPUOutOfMemory(f'CUDA out of memory; see {log}')
     if code:
@@ -282,7 +288,7 @@ def positive_float(value):
     return number
 
 
-def main():
+def main(argv=None):
     from .temporal import add_temporal_arguments, validate_temporal_arguments
     parser = argparse.ArgumentParser(description='Batch face blur with file-level recovery (Linux/macOS).')
     parser.add_argument('input', nargs='?', help='Video file or directory (recursive)')
@@ -303,7 +309,7 @@ def main():
     parser.add_argument('--threads', type=int, default=2, help='CPU threads per worker')
     parser.add_argument('--dry-run', action='store_true', help='Show resource plan without processing videos')
     add_temporal_arguments(parser)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     validate_temporal_arguments(parser, args)
     if bool(args.input) == bool(args.input_dir):
         parser.error('Pass one video/directory, or --input-dir, not both')

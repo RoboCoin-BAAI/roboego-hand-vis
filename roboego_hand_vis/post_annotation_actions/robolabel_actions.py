@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from roboego_hand_vis.objects.semantic_qwen import DEFAULT_QWEN_BASE_URL, resolve_qwen_base_url
+from roboego_hand_vis.post_annotation_actions.http_client import request_json
 
 
 PHASE_ACTIONS = {
@@ -150,10 +151,11 @@ def standardize_stage1_actions(
     frames_dir: Path | None = None,
     use_vl_object_resolver: bool = False,
     vl_object_resolver: Any | None = None,
-    vl_model: str = "qwen-vl-plus",
+    vl_model: str = "qwen3.8-27b",
     api_key_env: str = "DASHSCOPE_API_KEY",
     timeout_s: float = 120.0,
     max_vl_frames: int = 30,
+    base_url: str | None = None,
 ) -> dict[str, Any]:
     out = dict(payload)
     out["stage"] = "robolabel_stage1_actions"
@@ -172,6 +174,7 @@ def standardize_stage1_actions(
                 model=vl_model,
                 api_key_env=api_key_env,
                 timeout_s=timeout_s,
+                **({"base_url": base_url} if base_url is not None else {}),
             )
             out = merge_vl_object_resolver_results(out, resolved)
             out["vl_object_resolver_status"] = resolved.get("status", "unknown")
@@ -227,7 +230,7 @@ def build_vl_object_resolver_payload(
 def call_qwen_vl_object_resolver(
     *,
     review_payload: dict[str, Any],
-    model: str = "qwen-vl-plus",
+    model: str = "qwen3.8-27b",
     api_key_env: str = "DASHSCOPE_API_KEY",
     base_url: str = DEFAULT_QWEN_BASE_URL,
     timeout_s: float = 120.0,
@@ -246,8 +249,7 @@ def call_qwen_vl_object_resolver(
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-        response_payload = json.loads(resp.read().decode("utf-8"))
+    response_payload = request_json(req, timeout_s=timeout_s, stage="vl_object_resolver", model=model)
     content = response_payload["choices"][0]["message"]["content"]
     parsed = parse_vl_object_resolver_response(content)
     parsed["provider"] = "qwen"

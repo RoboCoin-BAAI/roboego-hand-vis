@@ -10,6 +10,30 @@ quality -> semantic -> datasets -> restoration -> depth -> egohand -> objects ->
 
 主要用途是将原始头带采集会话处理为筛选后的手物交互时间窗口，输出双目视频、校正后的数据集清单、深度、HaMeR 手部网格、过滤后的 21 关节手部轨迹，以及 SAM3 物体掩码。
 
+L1/L2/L3 数据登记和共享目录下载状态使用系统 PostgreSQL。固定的建用户、建库、配置连接和建表步骤见[数据库初始化说明](roboego_hand_vis/database/README.md#初始化步骤系统-postgresql)。
+
+L1 的直接 KS3 下载和数据库任务下载见[数据下载说明](roboego_hand_vis/download_data/README.md)。
+
+头环基础质检的原有命令和独立数据库批处理入口见[基础质检说明](roboego_hand_vis/raw_headband_integrity/README.md)。
+
+左右目视频粗质检的原有命令和独立数据库批处理入口见[视频粗质检说明](roboego_hand_vis/video_simple_quality/README.md)。
+
+可选的手部采样检测及独立数据库批处理入口见[手部检测说明](roboego_hand_vis/detect_hand/README.md)。
+
+去畸变、立体矫正和独立数据库批处理入口见[立体矫正说明](roboego_hand_vis/stereo_rectification/README.md)。
+
+千问逐帧标注和独立数据库批处理入口见[千问标注说明](roboego_hand_vis/qwen_annotation/README.md)。
+
+标注后字段整理和独立数据库批处理入口见[字段整理说明](roboego_hand_vis/post_annotation_actions/README.md)。
+
+深度前质量门禁和数据库批处理入口见[深度门禁说明](roboego_hand_vis/stereo_depth_gate/README.md)。
+
+Fast-FoundationStereo 深度估计和数据库批处理入口见[深度估计说明](roboego_hand_vis/fast_foundation_depth/README.md)。
+
+深度缓存归档和数据库批处理入口见[深度归档说明](roboego_hand_vis/archive_depth_cache/README.md)。
+
+视频人脸打码和数据库批处理入口见[视频打码说明](roboego_hand_vis/video_privacy_blur/README.md)。
+
 ## 环境配置
 
 项目通常在 `ego` 环境中运行：
@@ -930,7 +954,7 @@ PYTHONPATH=. python scripts/datasets/resolve_dataset.py \
 运行测试：
 
 ```bash
-PYTHONPATH=. python -m pytest -q
+PYTHONPATH=. python -m pytest --import-mode=importlib -q
 ```
 
 运行部分测试：
