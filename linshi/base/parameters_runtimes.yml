@@ -1,9 +1,0 @@
-runtimes:
-  ego:
-    python: python
-  py312:
-    python: python
-  realvdeblur:
-    python: python
-  hamer:
-    python: python

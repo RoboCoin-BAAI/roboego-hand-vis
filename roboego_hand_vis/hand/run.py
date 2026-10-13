@@ -22,6 +22,7 @@ if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from roboego_hand_vis.hand import outputs
+from roboego_hand_vis.common.processes import group_has_live_processes, stop_process_group
 from roboego_hand_vis.hand.state import (
     SCHEMA_VERSION, atomic_json, checked_path, digest_file, fingerprint, load_state,
 )
@@ -101,9 +102,14 @@ def run_stage(stage, environment, log_path, *, lock_fds=()):
                                    stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
                                    pass_fds=lock_fds)
         try:
-            return process.wait()
+            code = process.wait()
+            if sys.platform.startswith("linux") and group_has_live_processes(process.pid):
+                stop_process_group(process)
+            return code
         except BaseException:
-            if process.poll() is None:
+            if sys.platform.startswith("linux"):
+                stop_process_group(process)
+            elif process.poll() is None:
                 try:
                     os.killpg(process.pid, signal.SIGTERM)
                 except ProcessLookupError:

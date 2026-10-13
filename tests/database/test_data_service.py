@@ -883,3 +883,65 @@ def test_privacy_runner_releases_connection_and_writes_failed(db,tmp_path):
     result=run_pending(db,tmp_path,{'paths':{'face_weights':str(weights)}},runner=process)
     assert result[0]['status']=='failed'
     assert db.get('l1data',row['id'])['video_privacy_blur_status']=='failed'
+
+
+def test_hand_waits_for_depth_and_concurrent_claim_is_unique(db):
+    for status in ('pending','processing','block','failed','completed'):
+        row=db.register('l1data',f'ks3://bucket/hand/{status}')
+        db.claim('l1data',row['id'])
+        db.complete('l1data',row['id'],status)
+        with db.engine.begin() as conn:
+            conn.execute(text("UPDATE l1data SET raw_headband_integrity_status='completed', "
+                              "video_simple_quality_status='completed', stereo_rectification_status='completed', "
+                              "stereo_depth_gate_status='completed', fast_foundation_depth_status=:status WHERE id=:id"),
+                         dict(status=status,id=row['id']))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        claims=list(pool.map(lambda _:db.claim_hand(),range(8)))
+    winners=[r for r in claims if r is not None]
+    assert len(winners)==1
+    row=winners[0]
+    assert row['local_path']=='completed'
+    assert row['hand_status']=='processing'
+    assert db.engine.pool.checkedout()==0
+    assert db.finish_hand(row['id'],succeeded=False)
+    assert not db.finish_hand(row['id'],succeeded=True)
+    assert db.get('l1data',row['id'])['hand_status']=='failed'
+    assert db.claim_archive_depth_cache() is None
+
+
+def test_hand_success_unlocks_archive(db):
+    row=db.register('l1data','ks3://bucket/hand-ready')
+    db.claim('l1data',row['id'])
+    db.complete('l1data',row['id'],'session')
+    with db.engine.begin() as conn:
+        conn.execute(text("UPDATE l1data SET raw_headband_integrity_status='completed', "
+                          "video_simple_quality_status='completed', stereo_rectification_status='completed', "
+                          "stereo_depth_gate_status='completed', fast_foundation_depth_status='completed' WHERE id=:id"),row)
+    assert db.claim_archive_depth_cache() is None
+    assert db.claim_hand()['id']==row['id']
+    assert db.finish_hand(row['id'],succeeded=True)
+    assert db.claim_archive_depth_cache()['id']==row['id']
+
+
+def test_vio_waits_for_rectification_and_claims_once_without_depth(db):
+    for status in ('pending','processing','block','failed','completed'):
+        row=db.register('l1data',f'ks3://bucket/vio/{status}')
+        db.claim('l1data',row['id'])
+        db.complete('l1data',row['id'],status)
+        with db.engine.begin() as conn:
+            conn.execute(text("UPDATE l1data SET raw_headband_integrity_status='completed', "
+                              "video_simple_quality_status='completed',stereo_rectification_status=:status WHERE id=:id"),
+                         dict(status=status,id=row['id']))
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        claims=list(pool.map(lambda _:db.claim_vio(),range(8)))
+    winners=[r for r in claims if r is not None]
+    assert len(winners)==1
+    row=winners[0]
+    assert row['local_path']=='completed'
+    assert row['vio_status']=='processing'
+    assert db.engine.pool.checkedout()==0
+    assert row['fast_foundation_depth_status']=='pending'
+    assert row['hand_status']=='pending'
+    assert db.finish_vio(row['id'],succeeded=True)
+    assert not db.finish_vio(row['id'],succeeded=False)
+    assert db.get('l1data',row['id'])['vio_status']=='completed'

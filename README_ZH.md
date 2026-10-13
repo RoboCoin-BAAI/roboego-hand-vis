@@ -30,9 +30,13 @@ L1 的直接 KS3 下载和数据库任务下载见[数据下载说明](roboego_h
 
 Fast-FoundationStereo 深度估计和数据库批处理入口见[深度估计说明](roboego_hand_vis/fast_foundation_depth/README.md)。
 
+MINT 与 EgoHandKit 手部估计和数据库批处理入口见[手部估计说明](roboego_hand_vis/hand/README.md#l1-数据库入口)。
+
 深度缓存归档和数据库批处理入口见[深度归档说明](roboego_hand_vis/archive_depth_cache/README.md)。
 
 视频人脸打码和数据库批处理入口见[视频打码说明](roboego_hand_vis/video_privacy_blur/README.md)。
+
+OpenVINS 头部轨迹估计和数据库批处理入口见[VIO 说明](roboego_hand_vis/vio/README.md)。
 
 ## 环境配置
 

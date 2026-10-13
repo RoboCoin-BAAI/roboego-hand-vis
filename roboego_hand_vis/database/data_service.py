@@ -409,3 +409,67 @@ class DataService:
         ).values(video_privacy_blur_status=target).returning(table.c.id))
         with self.database.with_session() as session:
             return session.execute(stmt).first() is not None
+
+
+    def claim_hand(self) -> dict | None:
+        """Claim native hand estimation only after depth estimation has completed."""
+        table = get_table("l1data")
+        candidate = (select(table.c.id).where(
+            table.c.download_status == TaskStatus.COMPLETED.value,
+            table.c.local_path.is_not(None), table.c.local_path != "",
+            table.c.raw_headband_integrity_status == TaskStatus.COMPLETED.value,
+            table.c.video_simple_quality_status == TaskStatus.COMPLETED.value,
+            table.c.stereo_rectification_status == TaskStatus.COMPLETED.value,
+            table.c.stereo_depth_gate_status == TaskStatus.COMPLETED.value,
+            table.c.fast_foundation_depth_status == TaskStatus.COMPLETED.value,
+            table.c.hand_status == TaskStatus.PENDING.value,
+        ).order_by(table.c.id).limit(1).with_for_update(skip_locked=True).cte())
+        stmt = (update(table).where(table.c.id == candidate.c.id)
+                .values(hand_status=TaskStatus.PROCESSING.value).returning(table))
+        with self.database.with_session() as session:
+            row = session.execute(stmt).mappings().first()
+            return dict(row) if row is not None else None
+
+    def finish_hand(self, data_id: int, *, succeeded: bool) -> bool:
+        """Record this stage's outcome only while it is processing."""
+        if succeeded is not True and succeeded is not False:
+            raise ValueError("succeeded must be True or False")
+        table = get_table("l1data")
+        target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
+        stmt = (update(table).where(
+            table.c.id == data_id,
+            table.c.hand_status == TaskStatus.PROCESSING.value,
+        ).values(hand_status=target).returning(table.c.id))
+        with self.database.with_session() as session:
+            return session.execute(stmt).first() is not None
+
+
+    def claim_vio(self) -> dict | None:
+        """Claim rectified VIO after rectification and required quality gates."""
+        table = get_table("l1data")
+        candidate = (select(table.c.id).where(
+            table.c.download_status == TaskStatus.COMPLETED.value,
+            table.c.local_path.is_not(None), table.c.local_path != "",
+            table.c.raw_headband_integrity_status == TaskStatus.COMPLETED.value,
+            table.c.video_simple_quality_status == TaskStatus.COMPLETED.value,
+            table.c.stereo_rectification_status == TaskStatus.COMPLETED.value,
+            table.c.vio_status == TaskStatus.PENDING.value,
+        ).order_by(table.c.id).limit(1).with_for_update(skip_locked=True).cte())
+        stmt = (update(table).where(table.c.id == candidate.c.id)
+                .values(vio_status=TaskStatus.PROCESSING.value).returning(table))
+        with self.database.with_session() as session:
+            row = session.execute(stmt).mappings().first()
+            return dict(row) if row is not None else None
+
+    def finish_vio(self, data_id: int, *, succeeded: bool) -> bool:
+        """Record VIO execution outcome; this stage is not a quality gate."""
+        if succeeded is not True and succeeded is not False:
+            raise ValueError("succeeded must be True or False")
+        table = get_table("l1data")
+        target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
+        stmt = (update(table).where(
+            table.c.id == data_id,
+            table.c.vio_status == TaskStatus.PROCESSING.value,
+        ).values(vio_status=target).returning(table.c.id))
+        with self.database.with_session() as session:
+            return session.execute(stmt).first() is not None

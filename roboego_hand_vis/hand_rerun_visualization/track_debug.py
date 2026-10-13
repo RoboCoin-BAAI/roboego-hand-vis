@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 
 from roboego_hand_vis.hand_rerun_visualization.temporal_tracking import SIDES
-from linshi.scripts.export_depth_pointcloud import read_rgb_frame
+from roboego_hand_vis.hand_rerun_visualization.export_depth_pointcloud import read_rgb_frame
 
 
 def status_color_rgba(side: str, status: str, has_anomaly: bool) -> List[int]:

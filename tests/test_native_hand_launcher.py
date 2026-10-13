@@ -166,14 +166,16 @@ def test_subprocess_cwd_environment_and_log(tmp_path):
 
 def test_interrupt_stops_child_process_group(tmp_path):
     process = MagicMock(pid=12345)
-    process.wait.side_effect = [KeyboardInterrupt, 0]
+    from itertools import chain, repeat
+    process.wait.side_effect = chain([KeyboardInterrupt], repeat(0))
     process.poll.return_value = None
     with patch.object(hand.subprocess, 'Popen', return_value=process), \
-            patch.object(hand.os, 'killpg') as kill:
+            patch.object(hand.os, 'killpg') as kill, \
+            patch('roboego_hand_vis.common.processes.group_has_live_processes', return_value=False):
         with pytest.raises(KeyboardInterrupt):
             hand.run_stage({'command': ['fake'], 'cwd': str(tmp_path)}, {}, tmp_path / 'log')
-    kill.assert_called_once_with(12345, hand.signal.SIGTERM)
-    assert process.wait.call_count == 2
+    kill.assert_any_call(12345, hand.signal.SIGTERM)
+    assert process.wait.call_count >= 2
 
 
 def test_same_checkout_lock_refuses_second_launch(plan):

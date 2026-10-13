@@ -152,3 +152,36 @@ subprocess execution. They cover compact/full delivery, restart boundaries,
 identity changes, invalid artifacts, interrupted publication/cleanup and locks.
 Install the project's `dev` extra for the test dependencies (including PyArrow).
 No full native GPU run or visual quality acceptance is implied by these tests.
+
+## L1 数据库入口
+
+完成[数据库连接配置](../database/README.md)，并按本页说明配置 MINT、EgoHandKit 及各自 Python 环境后，在项目根目录执行：
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m roboego_hand_vis.hand.database_run \
+  --shared-root ./data/l1 \
+  --limit 3
+```
+
+数据库入口使用当前环境的项目 `database` 依赖；算法及最终交付校验仍使用 `recommended.yaml` 中配置的独立 Python，不自动切换或安装环境。GPU 设置由子进程继承。
+
+只领取下载、基础质检、视频粗质检、立体矫正、深度前门禁和深度估计均为 `completed`，且 `hand_status=pending` 的 L1 数据。必须等待 `fast_foundation_depth_status=completed`，不依赖可选手部采样检测或千问标注。省略 `--limit` 或设为 `0` 时处理当前所有可领取 session；`--config` 指定手部 YAML。
+
+输入根目录由数据库 `local_path` 与共享根目录拼接；视频和逐帧深度按原配置读取，必须位于该 session 内。输出固定为每个 session 的 `hand/`：
+
+```text
+session/hand/
+  hand_tracking.parquet
+  render.mp4
+  run.log
+```
+
+领取后写 `processing`。原 MINT → EgoHandKit 流程成功，最终 Parquet 行数、渲染视频帧数与输入视频帧数一致，交付文件校验通过后写 `completed`；执行异常、缺少输出或帧数不一致写 `failed`。此阶段不作为质量门禁，`quality_status` 仍为 `not_validated`，不自动写入 `block`。
+
+数据库入口自动恢复已有 `.work/state.json`，校验原 checkpoint 的 plan 和 fingerprint；拒绝覆盖没有对应 checkpoint/数据库完成记录的已有 `hand/` 目录。失败记录不会自动重新领取，修正问题并将其 `hand_status` 从 `failed` 改回 `pending` 后，重新运行同一数据库命令。
+
+完成记录存放在 `annotation/hand_database_receipt.json`，数据库运行及额外交付校验日志为 `annotation/hand_database.log`。记录保存 plan、输入/模型/代码 fingerprint、交付哈希和帧数校验；若计算已完成但数据库回写失败，重试可验证已有交付并补写状态，避免重复推理。输入、配置或交付文件发生变化时会拒绝复用。
+
+默认最终输出仍为 compact。数据库模式先保留 native checkpoint，完成交付验证和数据库完成记录落盘之后，再清理 `.work/`；清理中断时可据完成记录继续恢复。加 `--full-output` 可保留中间结果，重试时保持原来的输出模式。
+
+沿用原 launcher 的共享缓存锁：同一个 EgoHandKit checkout 需串行使用，不应同时启动多个手部数据库进程。数据库领取本身是并发安全的；推理期间不持有数据库事务。手部状态为 `completed` 后，深度归档数据库入口即可领取该数据。字段已存在，不需要数据库迁移。

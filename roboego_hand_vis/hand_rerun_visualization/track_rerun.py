@@ -21,8 +21,8 @@ from roboego_hand_vis.hand_depth_alignment.orientation import apply_orientation_
 from roboego_hand_vis.hand_rerun_visualization.rerun_logging import log_mesh3d, log_points2d, rgb_overlay_entity, side_mesh_entity
 from roboego_hand_vis.hand_rerun_visualization.temporal_tracking import SIDES
 from roboego_hand_vis.hand_rerun_visualization.tracking_interface import status_layer
-from linshi.scripts.export_depth_pointcloud import depth_to_pointcloud, read_rgb_frame
-from linshi.scripts.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path
+from roboego_hand_vis.hand_rerun_visualization.export_depth_pointcloud import depth_to_pointcloud, read_rgb_frame
+from roboego_hand_vis.hand_depth_alignment.rerun_utils import depth_to_vis, log_pinhole, resolve_existing_artifact_path
 
 from .track_debug import status_color_rgba
 

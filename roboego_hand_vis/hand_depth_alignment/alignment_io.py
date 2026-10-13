@@ -13,7 +13,7 @@ from roboego_hand_vis.hand_depth_alignment.depth_mesh import (
     translate_points,
 )
 from roboego_hand_vis.hand_rerun_visualization.temporal_tracking import build_recovered_depth_overrides_from_frames
-from linshi.scripts.rerun_utils import resolve_existing_artifact_path
+from roboego_hand_vis.hand_depth_alignment.rerun_utils import resolve_existing_artifact_path
 
 
 def resolve_path(path: str, base_dir: Path) -> Path:
