@@ -38,6 +38,10 @@ MINT 与 EgoHandKit 手部估计和数据库批处理入口见[手部估计说�
 
 OpenVINS 头部轨迹估计和数据库批处理入口见[VIO 说明](roboego_hand_vis/vio/README.md)。
 
+各数据库入口支持 `--table l1data|l2data|l3data`，默认 `l1data`。目标表需要具备相应阶段字段，见[选表说明](roboego_hand_vis/database/README.md#数据库入口选表)。
+
+需要在本地盘处理并按阶段回传共享盘时，使用 `--local-root`（基础质检自动复制缺失数据），见[本地工作目录说明](roboego_hand_vis/database/WORKSPACE.md)。
+
 ## 环境配置
 
 项目通常在 `ego` 环境中运行：

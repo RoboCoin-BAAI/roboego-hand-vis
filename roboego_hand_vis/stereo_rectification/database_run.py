@@ -135,7 +135,7 @@ def run_pending(service, shared_root, options, *, limit=0, runner=None) -> list[
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取视频质检已通过的数据，进行去畸变和立体矫正。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取视频质检已通过的数据，进行去畸变和立体矫正。")
     parser.add_argument("--shared-root", required=True)
     parser.add_argument("--limit", type=int, default=0, help="最多处理条数；0 表示所有待处理数据。")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
@@ -145,6 +145,8 @@ def main() -> None:
     parser.add_argument("--width", type=int, default=None)
     parser.add_argument("--height", type=int, default=None)
     parser.add_argument("--overwrite", action=argparse.BooleanOptionalAction, default=None)
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     args.dry_run = None
     from roboego_hand_vis.database.connection_config import database_url_or_error
@@ -154,12 +156,11 @@ def main() -> None:
         _validate(args.shared_root, options, args.limit)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
-    from roboego_hand_vis.database import DataService
 
     def interrupted(_signum, _frame):
         raise SystemExit(143)
 
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'stereo_rectification', args=args)
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
         results = run_pending(service, args.shared_root, options, limit=args.limit)
@@ -168,6 +169,8 @@ def main() -> None:
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

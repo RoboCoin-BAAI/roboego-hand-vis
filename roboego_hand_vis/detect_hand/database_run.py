@@ -64,7 +64,7 @@ def run_pending(service, shared_root, config, *, limit=0, runner=None) -> list[d
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取视频质检已通过的数据，检测左目手部出现比例。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取视频质检已通过的数据，检测左目手部出现比例。")
     parser.add_argument("--shared-root", required=True, help="下载时使用的共享目录根路径。")
     parser.add_argument("--limit", type=int, default=0, help="最多处理条数；0 表示所有待检测数据。")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
@@ -74,6 +74,8 @@ def main() -> None:
     parser.add_argument("--conf", type=float, default=None)
     parser.add_argument("--imgsz", type=int, default=None)
     parser.add_argument("--batch_size", type=int, default=None)
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
     url = database_url_or_error(parser)
@@ -83,12 +85,11 @@ def main() -> None:
         _validate(args.shared_root, config, args.limit)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
-    from roboego_hand_vis.database import DataService
 
     def interrupted(_signum, _frame):
         raise SystemExit(143)
 
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'detect_hand', args=args)
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
         results = run_pending(service, args.shared_root, config, limit=args.limit)
@@ -97,6 +98,8 @@ def main() -> None:
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

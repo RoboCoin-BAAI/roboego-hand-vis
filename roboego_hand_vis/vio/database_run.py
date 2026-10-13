@@ -156,21 +156,22 @@ def run_pending(service,shared_root,data,*,limit=0,runner=None):
 
 
 def main():
-    parser=argparse.ArgumentParser(description='从 L1 数据库领取立体矫正已完成的数据，运行 rectified VIO。')
+    parser=argparse.ArgumentParser(description='从所选数据表领取立体矫正已完成的数据，运行 rectified VIO。')
     parser.add_argument('--shared-root',required=True)
     parser.add_argument('--limit',type=int,default=0)
     parser.add_argument('--config',default=str(DEFAULT_CONFIG))
     parser.add_argument('--input_mode',choices=('rectified',),default='rectified')
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args=parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
-    from roboego_hand_vis.database import DataService
     url=database_url_or_error(parser)
     try:
         data=load_yaml(Path(args.config).expanduser())
         _validate(args.shared_root,data,args.limit)
     except (ValueError,OSError,TypeError) as exc:
         parser.error(str(exc))
-    service=DataService.from_url(url)
+    service=stage_service_or_error(parser, url, args.table, 'vio', args=args)
     def interrupted(_signum,_frame):
         raise KeyboardInterrupt
     previous=signal.signal(signal.SIGTERM,interrupted)
@@ -181,6 +182,8 @@ def main():
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM,previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

@@ -106,11 +106,13 @@ def run_pending(service, shared_root, data, *, limit=0, overwrite=None, runner=N
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取千问标注已完成的数据，整理标准字段。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取千问标注已完成的数据，整理标准字段。")
     parser.add_argument("--shared-root", required=True)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
     parser.add_argument("--overwrite", action=argparse.BooleanOptionalAction, default=None)
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
     url = database_url_or_error(parser)
@@ -119,12 +121,11 @@ def main() -> None:
         _validate(args.shared_root, data, args.limit, args.overwrite)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
-    from roboego_hand_vis.database import DataService
 
     def interrupted(_signum, _frame):
         raise SystemExit(143)
 
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'post_annotation_actions', args=args)
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
         results = run_pending(service, args.shared_root, data, limit=args.limit, overwrite=args.overwrite)
@@ -133,6 +134,8 @@ def main() -> None:
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

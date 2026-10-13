@@ -137,13 +137,14 @@ def run_pending(service, shared_root, data, *, limit=0, runner=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取深度前门禁已通过的数据，运行 Fast-FoundationStereo。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取深度前门禁已通过的数据，运行 Fast-FoundationStereo。")
     parser.add_argument("--shared-root", required=True)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
-    from roboego_hand_vis.database import DataService
     url = database_url_or_error(parser)
     try:
         data = load_yaml(Path(args.config).expanduser())
@@ -153,7 +154,7 @@ def main():
             parser.error("Fast-FoundationStereo requires CUDA; check CUDA_VISIBLE_DEVICES and your environment")
     except (ValueError, OSError, ImportError) as exc:
         parser.error(str(exc))
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'fast_foundation_depth', args=args)
     def interrupted(_signum, _frame):
         raise SystemExit(143)
     previous = signal.signal(signal.SIGTERM, interrupted)
@@ -164,6 +165,8 @@ def main():
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

@@ -1,11 +1,12 @@
 """Transactional registration and download task operations."""
 
-from sqlalchemy import select, update
+from sqlalchemy import MetaData, Table, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 
 from .database import Database
 from .model import TaskStatus, get_table
+from .stage_schema import STAGE_REQUIRED_COLUMNS
 from .validators import validate_ks3_path, validate_relative_path
 
 
@@ -17,8 +18,10 @@ class DataService:
     claims because the four-column schema has no ownership or lease fields.
     """
 
-    def __init__(self, engine: Engine | Database):
+    def __init__(self, engine: Engine | Database, *, table_name: str = "l1data"):
+        self.table_name = get_table(table_name).name
         self.database = engine if isinstance(engine, Database) else Database(engine)
+        self._reflected_stage_table = None
 
     @property
     def engine(self) -> Engine:
@@ -26,9 +29,30 @@ class DataService:
         return self.database.engine
 
     @classmethod
-    def from_url(cls, url: str) -> "DataService":
+    def from_url(cls, url: str, *, table_name: str = "l1data") -> "DataService":
         """Create a service using a postgresql+psycopg:// connection URL."""
-        return cls(Database.from_url(url))
+        get_table(table_name)
+        return cls(Database.from_url(url), table_name=table_name)
+
+    def _stage_table(self, stage: str) -> Table:
+        """Validate real columns before a stage can claim or update any row."""
+        required = STAGE_REQUIRED_COLUMNS[stage]
+        if self._reflected_stage_table is None:
+            self._reflected_stage_table = Table(
+                self.table_name, MetaData(), autoload_with=self.engine
+            )
+        table = self._reflected_stage_table
+        missing = sorted(set(required) - set(table.c.keys()))
+        if missing:
+            raise ValueError(
+                f"表 {self.table_name} 无法运行 {stage}，缺少字段：{', '.join(missing)}；"
+                "请先更新目标表结构。"
+            )
+        return table
+
+    def validate_stage(self, stage: str) -> None:
+        """Preflight only; does not claim tasks or change schema."""
+        self._stage_table(stage)
 
     def initialize(self) -> None:
         """Delegate explicit schema initialization to the connection layer."""
@@ -90,7 +114,7 @@ class DataService:
 
     def claim_raw_headband_integrity(self) -> dict | None:
         """Claim an already downloaded L1 session for its first quality gate."""
-        table = get_table("l1data")
+        table = self._stage_table('raw_headband_integrity')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None),
@@ -107,7 +131,7 @@ class DataService:
         """True completes, False blocks, None records execution failure."""
         if passed is not True and passed is not False and passed is not None:
             raise ValueError("passed must be True, False or None")
-        table = get_table("l1data")
+        table = self._stage_table('raw_headband_integrity')
         target = (TaskStatus.COMPLETED.value if passed is True else
                   TaskStatus.BLOCK.value if passed is False else TaskStatus.FAILED.value)
         stmt = (update(table).where(
@@ -123,7 +147,7 @@ class DataService:
 
     def claim_video_simple_quality(self) -> dict | None:
         """Claim a downloaded L1 session that passed raw integrity checking."""
-        table = get_table("l1data")
+        table = self._stage_table('video_simple_quality')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None),
@@ -141,7 +165,7 @@ class DataService:
         """True completes, False blocks, None records execution failure."""
         if passed is not True and passed is not False and passed is not None:
             raise ValueError("passed must be True, False or None")
-        table = get_table("l1data")
+        table = self._stage_table('video_simple_quality')
         target = (TaskStatus.COMPLETED.value if passed is True else
                   TaskStatus.BLOCK.value if passed is False else TaskStatus.FAILED.value)
         stmt = (update(table).where(
@@ -157,7 +181,7 @@ class DataService:
 
     def claim_detect_hand(self) -> dict | None:
         """Claim optional hand detection after both preceding quality gates."""
-        table = get_table("l1data")
+        table = self._stage_table('detect_hand')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None),
@@ -176,7 +200,7 @@ class DataService:
         """Record execution outcome only; hand presence is not a quality gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('detect_hand')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -195,7 +219,7 @@ class DataService:
 
     def claim_stereo_rectification(self) -> dict | None:
         """Claim rectification after the two required gates; hand is optional."""
-        table = get_table("l1data")
+        table = self._stage_table('stereo_rectification')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -213,7 +237,7 @@ class DataService:
         """Record processing outcome; rectification is not a quality gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('stereo_rectification')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -224,7 +248,7 @@ class DataService:
 
     def claim_qwen_annotation(self) -> dict | None:
         """Claim original-left annotation after the two required quality gates."""
-        table = get_table("l1data")
+        table = self._stage_table('qwen_annotation')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -242,7 +266,7 @@ class DataService:
         """Record annotation completeness; semantic contents are not a gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('qwen_annotation')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -253,7 +277,7 @@ class DataService:
 
     def claim_post_annotation_actions(self) -> dict | None:
         """Claim action standardization only after complete Qwen annotation."""
-        table = get_table("l1data")
+        table = self._stage_table('post_annotation_actions')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -272,7 +296,7 @@ class DataService:
         """Record standardization outcome; this stage is not a gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('post_annotation_actions')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -284,7 +308,7 @@ class DataService:
 
     def claim_stereo_depth_gate(self) -> dict | None:
         """Claim a downloaded session after required quality gates and stereo_rectification."""
-        table = get_table("l1data")
+        table = self._stage_table('stereo_depth_gate')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -303,7 +327,7 @@ class DataService:
         """Record this stage's outcome only while it is processing."""
         if passed is not True and passed is not False and passed is not None:
             raise ValueError("passed must be True, False or None")
-        table = get_table("l1data")
+        table = self._stage_table('stereo_depth_gate')
         target = (TaskStatus.COMPLETED.value if passed is True else
                   TaskStatus.BLOCK.value if passed is False else TaskStatus.FAILED.value)
         stmt = (update(table).where(
@@ -316,7 +340,7 @@ class DataService:
 
     def claim_fast_foundation_depth(self) -> dict | None:
         """Claim a downloaded session after required quality gates and stereo_depth_gate."""
-        table = get_table("l1data")
+        table = self._stage_table('fast_foundation_depth')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -336,7 +360,7 @@ class DataService:
         """Record this stage's outcome only while it is processing."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('fast_foundation_depth')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -348,7 +372,7 @@ class DataService:
 
     def claim_archive_depth_cache(self) -> dict | None:
         """Claim archive only after depth and hand estimation have completed."""
-        table = get_table("l1data")
+        table = self._stage_table('archive_depth_cache')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -370,7 +394,7 @@ class DataService:
         """Record this stage's outcome only while it is processing."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('archive_depth_cache')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -382,7 +406,7 @@ class DataService:
 
     def claim_video_privacy_blur(self) -> dict | None:
         """Claim privacy blur after rectification and required quality gates."""
-        table = get_table("l1data")
+        table = self._stage_table('video_privacy_blur')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -401,7 +425,7 @@ class DataService:
         """Record privacy processing outcome; this stage is not a quality gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('video_privacy_blur')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -413,7 +437,7 @@ class DataService:
 
     def claim_hand(self) -> dict | None:
         """Claim native hand estimation only after depth estimation has completed."""
-        table = get_table("l1data")
+        table = self._stage_table('hand')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -434,7 +458,7 @@ class DataService:
         """Record this stage's outcome only while it is processing."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('hand')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,
@@ -446,7 +470,7 @@ class DataService:
 
     def claim_vio(self) -> dict | None:
         """Claim rectified VIO after rectification and required quality gates."""
-        table = get_table("l1data")
+        table = self._stage_table('vio')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
             table.c.local_path.is_not(None), table.c.local_path != "",
@@ -465,7 +489,7 @@ class DataService:
         """Record VIO execution outcome; this stage is not a quality gate."""
         if succeeded is not True and succeeded is not False:
             raise ValueError("succeeded must be True or False")
-        table = get_table("l1data")
+        table = self._stage_table('vio')
         target = TaskStatus.COMPLETED.value if succeeded else TaskStatus.FAILED.value
         stmt = (update(table).where(
             table.c.id == data_id,

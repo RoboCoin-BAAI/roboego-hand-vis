@@ -55,18 +55,19 @@ def run_pending(service, shared_root, data, *, limit=0, runner=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取立体矫正已完成的数据，运行深度前门禁。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取立体矫正已完成的数据，运行深度前门禁。")
     parser.add_argument("--shared-root", required=True)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
-    from roboego_hand_vis.database import DataService
     url = database_url_or_error(parser)
     data = load_yaml(Path(args.config).expanduser())
     if args.limit < 0 or not Path(args.shared_root).expanduser().is_dir():
         parser.error("Need a valid shared root and nonnegative limit")
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'stereo_depth_gate', args=args)
     def interrupted(_signum, _frame):
         raise SystemExit(143)
     previous = signal.signal(signal.SIGTERM, interrupted)
@@ -77,6 +78,8 @@ def main():
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

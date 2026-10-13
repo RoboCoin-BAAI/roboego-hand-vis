@@ -66,10 +66,12 @@ def run_pending(service, config, *, limit=0, runner=None) -> list[dict]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取基础质检已通过的数据，执行视频粗质检。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取基础质检已通过的数据，执行视频粗质检。")
     parser.add_argument("--shared-root", required=True, help="下载时使用的共享目录根路径。")
     parser.add_argument("--limit", type=int, default=0, help="最多处理条数；0 表示所有待质检数据。")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
     url = database_url_or_error(parser)
@@ -79,12 +81,12 @@ def main() -> None:
         _shared_root(config, args.limit)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
-    from roboego_hand_vis.database import DataService
 
     def interrupted(_signum, _frame):
         raise SystemExit(143)
 
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'video_simple_quality', args=args)
+    config = replace(config, session=service.work_root)
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
         results = run_pending(service, config, limit=args.limit)
@@ -94,6 +96,8 @@ def main() -> None:
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

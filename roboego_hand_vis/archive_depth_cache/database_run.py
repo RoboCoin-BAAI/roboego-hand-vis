@@ -194,20 +194,21 @@ def run_pending(service, shared_root, config, *, limit=0, runner=None, probe=Non
 
 
 def main():
-    parser = argparse.ArgumentParser(description='从 L1 数据库领取深度和手部估计均完成的数据，归档深度缓存。')
+    parser = argparse.ArgumentParser(description='从所选数据表领取深度和手部估计均完成的数据，归档深度缓存。')
     parser.add_argument('--shared-root', required=True)
     parser.add_argument('--limit', type=int, default=0)
     parser.add_argument('--config', default=str(DEFAULT_CONFIG))
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
-    from roboego_hand_vis.database import DataService
     url = database_url_or_error(parser)
     try:
         config = config_from_yaml(load_yaml(Path(args.config).expanduser()))
         _validate(args.shared_root, config, args.limit)
     except (ValueError, OSError) as exc:
         parser.error(str(exc))
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'archive_depth_cache', args=args)
     def interrupted(_signum, _frame):
         raise SystemExit(143)
     previous = signal.signal(signal.SIGTERM, interrupted)
@@ -218,6 +219,8 @@ def main():
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

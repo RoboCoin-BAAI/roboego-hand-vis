@@ -58,11 +58,13 @@ def run_pending(service, config, *, limit=0, runner=None) -> list[dict]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="从 L1 数据库领取已下载的数据，执行头环基础质检。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取已下载的数据，执行头环基础质检。")
     parser.add_argument("--shared-root", required=True, help="下载时使用的共享目录根路径。")
     parser.add_argument("--limit", type=int, default=0, help="最多处理条数；0 表示处理所有待质检数据。")
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
     parser.add_argument("--overwrite", action="store_true")
+    from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
+    add_table_argument(parser)
     args = parser.parse_args()
     from roboego_hand_vis.database.connection_config import database_url_or_error
     url = database_url_or_error(parser)
@@ -70,12 +72,12 @@ def main() -> None:
     config = config_from_yaml(load_yaml(Path(args.config).expanduser()), args)
     if args.limit < 0 or not config.gate_enabled or not config.session.is_dir():
         parser.error("需要有效的共享目录、非负 limit 和 gate.enabled=true")
-    from roboego_hand_vis.database import DataService
 
     def interrupted(_signum, _frame):
         raise SystemExit(143)
 
-    service = DataService.from_url(url)
+    service = stage_service_or_error(parser, url, args.table, 'raw_headband_integrity', args=args)
+    config = replace(config, session=service.work_root)
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
         results = run_pending(service, config, limit=args.limit)
@@ -85,6 +87,8 @@ def main() -> None:
             raise SystemExit(1)
     finally:
         signal.signal(signal.SIGTERM, previous)
+        if hasattr(service, "workspace"):
+            service.workspace.release()
         service.database.close()
 
 

@@ -17,14 +17,19 @@ def _terminate(signum, frame):
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download L1 sessions from KS3 or the database queue")
     parser.add_argument("paths", nargs="*", help="Direct mode: KS3 session directory paths")
-    parser.add_argument("--database", action="store_true", help="Claim pending l1data records using the configured database")
+    parser.add_argument("--database", action="store_true", help="Claim pending records from the selected table using the configured database")
     parser.add_argument("--output-dir", type=Path, required=True, help="Shared download root")
     parser.add_argument("--limit", type=int, default=0, help="Database mode: maximum records, 0 = all pending")
     parser.add_argument("--jobs", type=int, default=8, help="Concurrent files per session")
     assets = Path(__file__).parent / "ks3"
     parser.add_argument("--ks3-tool", type=Path, default=assets / "ks3util-linux-amd64")
     parser.add_argument("--ks3-config", type=Path, default=assets / "ks3util-config")
+    # Keep direct mode independent of database packages (including SQLAlchemy).
+    parser.add_argument("--table", type=str.lower, choices=("l1data", "l2data", "l3data"),
+                        default="l1data", help="Database mode: table to claim and update, default l1data")
     args = parser.parse_args()
+    if not args.database and args.table != "l1data":
+        parser.error("--table is available only in database mode")
     if args.database and args.paths:
         parser.error("Cannot supply KS3 paths in database mode")
     if not args.database and not args.paths:
@@ -62,7 +67,7 @@ def _run(args, downloader):
 
         service = DataService.from_url(args.database_url)
         try:
-            records = download_pending_l1(service, downloader, args.limit)
+            records = download_pending_l1(service, downloader, args.limit, table_name=args.table)
         finally:
             service.database.close()
     else:

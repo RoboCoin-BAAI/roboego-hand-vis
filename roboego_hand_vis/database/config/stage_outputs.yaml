@@ -1,0 +1,42 @@
+# 所有路径相对于 session。
+# paths：环节原本的产出目录/文件，仅作为说明，不控制复制。
+# required：选择需要复制回共享目录的产出，支持文件、目录和通配符。
+# required: [] 表示不回传产出；completed/block 时清单每项须至少匹配一个文件。
+# failed 时只复制清单中已经存在的文件。
+stages:
+  raw_headband_integrity:
+    paths: [annotation/quality_report.json, timestamps, audio/audio.wav]
+    required: [annotation/quality_report.json]
+  video_simple_quality:
+    paths: [annotation/video_simple_quality*.json]
+    required: [annotation/video_simple_quality.json]
+  detect_hand:
+    paths: [annotation/detect_hand_left.json]
+    required: [annotation/detect_hand_left.json]
+  stereo_rectification:
+    paths: [videos/left_rectified.mp4, videos/right_rectified.mp4, calibrations, timestamps, meta.json, dataset_manifest, annotation/stereo_rectification.log]
+    required: [videos/left_rectified.mp4, videos/right_rectified.mp4, dataset_manifest/dataset_manifest.json]
+  qwen_annotation:
+    paths: [annotation/qwen_frame_annotations_left.json*, annotation/qwen_frame_annotation_chunks, annotation/qwen_frame_annotation_frames, annotation/qwen_frame_annotation_batches, annotation/qwen_frame_annotation_raw]
+    required: [annotation/qwen_frame_annotations_left.json]
+  post_annotation_actions:
+    paths: [annotation/stage1_action_chunks, annotation/stage1_action_text_review_chunks, annotation/stage1_action_resolved_chunks, annotation/stage1_actions_left_v1_resolved.json, annotation/stage1_subtasks_left_v1*, annotation/qwen_frame_annotation_frames]
+    required: [annotation/stage1_actions_left_v1_resolved.json, annotation/stage1_subtasks_left_v1.json]
+  stereo_depth_gate:
+    paths: [quality/stereo_depth_gate]
+    required: [quality/stereo_depth_gate/stereo_depth_gate_report.json]
+  fast_foundation_depth:
+    paths: [depth/depth_uint16_png, depth/frame_*_foundation_depth_m.npy, depth/fast_foundation_stereo_video_meta.json, depth/vis, annotation/fast_foundation_depth.log, annotation/fast_foundation_depth.database.yaml]
+    required: [depth/fast_foundation_stereo_video_meta.json,depth/vis/depth_preview.mp4]
+  hand:
+    paths: [hand/hand_tracking.parquet, hand/render.mp4, hand/run.log, annotation/hand_database_receipt.json, annotation/hand_database.log]
+    required: [hand/hand_tracking.parquet, hand/render.mp4, annotation/hand_database_receipt.json]
+  archive_depth_cache:
+    paths: [depth/depth_archive_meta.json, depth/depth_hevc12.mkv, depth/valid_mask_ffv1.mkv, depth/depth_uint16_ffv1.avi, depth/depth_ffv1.mkv, depth/depth_preview.mp4, depth/depth_uint16_png, annotation/archive_depth_cache.log, annotation/archive_depth_cache.database.yaml, annotation/archive_probe_*.json]
+    required: [depth/depth_archive_meta.json,depth/depth_hevc12.mkv,depth/valid_mask_ffv1.mkv]
+  vio:
+    paths: [vio/run_manifest.json, vio/input, vio/config, vio/kalibr_imucam_chain.yaml, vio/kalibr_imu_chain.yaml, vio/estimator_config.yaml, vio/trajectory, vio/openvins_state_estimate.txt, vio/openvins_state_deviation.txt, vio/openvins_groundtruth.txt, vio/openvins_timing.txt, annotation/vio_database.log]
+    required: [vio/run_manifest.json, vio/trajectory/run_report.json, vio/trajectory/trajectory.jsonl]
+  video_privacy_blur:
+    paths: [privacy/video_privacy_blur]
+    required: []

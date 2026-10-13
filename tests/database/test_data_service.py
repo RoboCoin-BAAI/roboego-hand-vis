@@ -945,3 +945,110 @@ def test_vio_waits_for_rectification_and_claims_once_without_depth(db):
     assert db.finish_vio(row['id'],succeeded=True)
     assert not db.finish_vio(row['id'],succeeded=False)
     assert db.get('l1data',row['id'])['vio_status']=='completed'
+
+
+@pytest.mark.parametrize("table_name", ["l2data", "l3data"])
+def test_selected_stage_table_missing_columns_leaves_tasks_untouched(db, table_name):
+    from roboego_hand_vis.database import DataService
+    row = db.register(table_name, "ks3://bucket/selected")
+    db.claim(table_name, row["id"])
+    db.complete(table_name, row["id"], "selected")
+    selected = DataService(db.database, table_name=table_name.upper())
+    with pytest.raises(ValueError, match=table_name + ".*raw_headband_integrity_status"):
+        selected.claim_raw_headband_integrity()
+    assert db.get(table_name, row["id"])["download_status"] == "completed"
+    assert db.claim_raw_headband_integrity() is None
+
+
+@pytest.mark.parametrize("table_name", ["l2data", "l3data"])
+@pytest.mark.parametrize("stage", [
+    "raw_headband_integrity", "video_simple_quality", "detect_hand", "stereo_rectification",
+    "qwen_annotation", "post_annotation_actions", "stereo_depth_gate", "fast_foundation_depth",
+    "hand", "archive_depth_cache", "vio", "video_privacy_blur",
+])
+def test_selected_stage_claim_and_finish_are_isolated(db, table_name, stage):
+    from roboego_hand_vis.database import DataService
+    from roboego_hand_vis.database.model import L1_STAGE_STATUS_FIELDS
+    with db.engine.begin() as conn:
+        for field in L1_STAGE_STATUS_FIELDS:
+            conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {field} TEXT NOT NULL DEFAULT 'pending'"))
+        assignments = ', '.join(f"{field}='completed'" for field in L1_STAGE_STATUS_FIELDS
+                                if field != stage + '_status')
+        conn.execute(text(f"INSERT INTO {table_name} (ks3_path, download_status, local_path) "
+                          "VALUES ('ks3://bucket/selected', 'completed', 'selected')"))
+        conn.execute(text(f"UPDATE {table_name} SET {assignments}"))
+    sentinel = db.register("l1data", "ks3://bucket/sentinel")
+    selected = DataService(db.database, table_name=table_name)
+    row = getattr(selected, 'claim_' + stage)()
+    assert row['id'] == sentinel['id']
+    assert row[stage + '_status'] == 'processing'
+    assert getattr(selected, 'claim_' + stage)() is None
+    kw = {'passed': False} if stage in {
+        'raw_headband_integrity', 'video_simple_quality', 'stereo_depth_gate'
+    } else {'succeeded': True}
+    assert getattr(selected, 'finish_' + stage)(row['id'], **kw)
+    with db.engine.connect() as conn:
+        status = conn.execute(text(f"SELECT {stage}_status FROM {table_name} WHERE id=:id"), {'id': row['id']}).scalar_one()
+    assert status == ('block' if 'passed' in kw else 'completed')
+    assert db.get('l1data', sentinel['id']) == sentinel
+
+
+@pytest.mark.parametrize('table_name', ['l2data', 'l3data'])
+def test_download_queue_uses_selected_table(db, table_name):
+    from types import SimpleNamespace
+    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    row = db.register(table_name, 'ks3://bucket/session')
+    class Downloader:
+        def download(self, source):
+            return SimpleNamespace(relative_path='session', reused=False)
+    records = download_pending_l1(db, Downloader(), table_name=table_name)
+    assert records[0]['id'] == row['id']
+    assert db.get(table_name, row['id'])['download_status'] == 'completed'
+    assert db.get('l1data', row['id']) is None
+
+
+def _subprocess_database_url(db):
+    with db.engine.connect() as conn:
+        schema = conn.execute(text('SELECT current_schema()')).scalar_one()
+    return db.engine.url.update_query_dict({'options': f'-csearch_path={schema}'}).render_as_string(hide_password=False)
+
+
+def test_selected_table_cli_rejects_missing_schema_before_claim(db, tmp_path):
+    import subprocess
+    import sys
+    row = db.register('l2data', 'ks3://bucket/session')
+    db.claim('l2data', row['id'])
+    db.complete('l2data', row['id'], 'session')
+    result = subprocess.run([
+        sys.executable, '-m', 'roboego_hand_vis.raw_headband_integrity.database_run',
+        '--shared-root', str(tmp_path), '--table', 'L2data', '--limit', '1',
+    ], capture_output=True, text=True, env=dict(
+        os.environ, DATABASE_URL=_subprocess_database_url(db)
+    ))
+    assert result.returncode == 2
+    assert 'l2data' in result.stderr
+    assert 'raw_headband_integrity_status' in result.stderr
+    assert db.get('l2data', row['id'])['download_status'] == 'completed'
+
+
+def test_real_integrity_cli_caches_and_publishes_block_before_status(db, tmp_path):
+    import subprocess
+    import sys
+    shared, local = tmp_path / 'shared', tmp_path / 'cache'
+    (shared / 'session').mkdir(parents=True)
+    row = db.register('l1data', 'ks3://bucket/empty-session')
+    db.claim('l1data', row['id'])
+    db.complete('l1data', row['id'], 'session')
+    result = subprocess.run([
+        sys.executable, '-m', 'roboego_hand_vis.raw_headband_integrity.database_run',
+        '--shared-root', str(shared), '--local-root', str(local),
+        '--limit', '1', '--overwrite',
+    ], capture_output=True, text=True, env=dict(
+        os.environ, DATABASE_URL=_subprocess_database_url(db)))
+    assert result.returncode == 1, result.stderr
+    assert db.get('l1data', row['id'])['raw_headband_integrity_status'] == 'block', result.stdout
+    assert (local / 'session/annotation/quality_report.json').exists()
+    assert (shared / 'session/annotation/quality_report.json').exists()
+    import json
+    assert json.loads((shared / 'session/annotation/quality_report.json').read_text())['raw_headband_quality_gate']['passed'] is False
+    assert (shared / 'session/annotation/quality_report.json').read_bytes() == (local / 'session/annotation/quality_report.json').read_bytes()

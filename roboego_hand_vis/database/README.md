@@ -28,6 +28,37 @@ L2、L3 目前各有 4 列。阶段状态字段均为 `TEXT NOT NULL DEFAULT 'pe
 数据库只保存元数据，不保存视频等文件，也不负责实际访问 KS3。
 不同层级的 ID 没有隐含关联，定位记录需要同时使用表名和 ID。
 
+共享盘保存数据、本地盘处理的参数与各阶段回传清单见[本地工作目录说明](WORKSPACE.md)。
+
+## 数据库入口选表
+
+所有处理环节的 `database_run` 都支持 `--table l1data|l2data|l3data`，
+省略时使用 `l1data`。领取任务和结果写回始终使用同一张表；`--shared-root`
+只决定本地数据根目录，不决定表名。
+
+```bash
+python -m roboego_hand_vis.qwen_annotation.database_run \
+  --table l1data \
+  --shared-root ./data/l1 \
+  --limit 1
+```
+
+数据库下载也支持选表：
+
+```bash
+python -m roboego_hand_vis.download_data.l1 \
+  --database --table l2data --output-dir ./data/l2 --limit 3
+```
+
+L2、L3 当前只有四个基础字段，因此可以登记和下载，但还不能直接运行处理阶段。
+阶段入口会检查目标表真实结构；缺少当前阶段或其前置状态字段时，列出缺失字段并退出，
+不会领取任务，也不会自动新增字段。补齐所需字段后重新启动入口即可，领取条件、
+五种状态及各阶段门禁规则沿用现有流程。状态字段应使用
+`TEXT NOT NULL DEFAULT 'pending'` 并添加五种状态的约束。
+
+Python 阶段接口用 `DataService.from_url(url, table_name="l2data")` 选表；
+登记、查询和下载的底层方法仍保留显式 `table_name` 参数。原来的手动 `run` 不受影响。
+
 ## 代码结构
 
 ```text
@@ -36,6 +67,8 @@ database/
 ├── database.py     # 连接池、Session、事务提交与回滚、显式建表
 ├── data_service.py # 数据登记、查询、并发领取和状态流转
 ├── ingest.py       # 批量入库命令，识别新增与已存在记录
+├── cli.py          # 公共选表参数和阶段入口结构检查
+├── stage_schema.py # 各阶段及其前置状态所需字段
 ├── validators.py   # KS3 路径和共享相对路径校验
 ├── config/         # L1 阶段字段、依赖和可能的门禁标记
 ├── migrations/     # 已有表的显式 SQL 迁移
