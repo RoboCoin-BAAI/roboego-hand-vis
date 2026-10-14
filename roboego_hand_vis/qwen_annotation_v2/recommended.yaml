@@ -1,0 +1,31 @@
+schema_version: "1.0"
+stage: qwen_annotation_v2
+
+parameters:
+  prompt: docs/prompts/qwen_frame_annotation_v5_en.md
+  model: qwen3.8-27b
+  fps: 1.0
+  start_s: 0.0
+  duration_s:
+  windows_json:
+  max_width: 768
+  batch_size: 10
+  overlap_frames: 2
+  max_concurrency: 3
+  # individual：独立图片；grid：连续帧带时间标签的拼图。
+  image_mode: individual
+  grid_columns: 4
+  grid_cell_width: 512
+  batches_per_chunk: 5
+  api_key_env: DASHSCOPE_API_KEY
+  base_url: https://llm-g3o8d3j71xbf6prc.cn-beijing.maas.aliyuncs.com/compatible-mode/v1/chat/completions
+  timeout_s: 120.0
+  max_retries: 3
+  retry_sleep_s: 5.0
+  frames_dir:
+  checkpoint_json:
+  raw_output_dir:
+  batch_output_dir:
+  chunk_output_dir:
+  resume: true
+  recover_from_raw: false

@@ -77,3 +77,60 @@ def test_redacts_encoded_and_decoded_url_credentials(monkeypatch):
         call_qwen_text_resolver(review_payload={'frames': []}, model='qwen-plus', base_url=url)
     for secret in ('p@ss', 'p%40ss', 'secret+value', 'secret%2Bvalue'):
         assert secret not in str(caught.value)
+
+
+def test_timeout_identifies_model_stage_wait_phase_and_keeps_exception_type(monkeypatch, capsys):
+    monkeypatch.setenv('DASHSCOPE_API_KEY', 'private-test-key')
+    def fail(req, **kwargs):
+        raise TimeoutError('The read operation timed out')
+    monkeypatch.setattr(urllib.request, 'urlopen', fail)
+    from roboego_hand_vis.post_annotation_actions.robolabel_actions import call_qwen_vl_object_resolver
+    with pytest.raises(TimeoutError) as caught:
+        call_qwen_vl_object_resolver(review_payload={'frames': []}, model='qwen3.8-27b',
+                                    timeout_s=120, base_url='https://user:password@example.test/v1/chat/completions?key=secret')
+    message = str(caught.value)
+    assert 'vl_object_resolver' in message
+    assert 'qwen3.8-27b' in message
+    assert '120' in message and 'urlopen' in message
+    captured = capsys.readouterr()
+    assert 'request_start' in captured.err and 'request_timeout' in captured.err
+    for secret in ('private-test-key', 'password', 'key=secret'):
+        assert secret not in message + captured.err
+
+
+def test_response_read_timeout_is_distinguished_from_urlopen_timeout(monkeypatch, capsys):
+    monkeypatch.setenv('DASHSCOPE_API_KEY', 'private-test-key')
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def read(self):
+            raise TimeoutError('The read operation timed out')
+    monkeypatch.setattr(urllib.request, 'urlopen', lambda *args, **kwargs: Response())
+    with pytest.raises(TimeoutError, match='response_read'):
+        call_qwen_text_resolver(review_payload={'frames': []}, model='qwen3.8-27b')
+    assert 'request_timeout' in capsys.readouterr().err
+
+
+def test_success_logs_safe_request_metrics_without_payload_or_key(monkeypatch, capsys):
+    from roboego_hand_vis.post_annotation_actions.http_client import request_json
+    class Response:
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def read(self):
+            return b'{"ok": true}'
+    body = json.dumps({'messages': [{'content': [{'type': 'image_url', 'image_url': {'url': 'private-image-data'}}]}]}).encode()
+    req = urllib.request.Request('https://example.test/v1/chat/completions', data=body,
+                                 headers={'Authorization': 'Bearer private-test-key'})
+    monkeypatch.setattr(urllib.request, 'urlopen', lambda *args, **kwargs: Response())
+    assert request_json(req, timeout_s=120, stage='vl_object_resolver', model='qwen3.8-27b') == {'ok': True}
+    captured = capsys.readouterr()
+    assert captured.out == ''
+    events = [json.loads(line) for line in captured.err.splitlines()]
+    assert [event['event'] for event in events] == ['request_start', 'request_complete']
+    assert events[0]['image_count'] == 1 and events[0]['request_bytes'] == len(body)
+    assert 'elapsed_s' in events[-1]
+    assert 'private-test-key' not in captured.err and 'private-image-data' not in captured.err

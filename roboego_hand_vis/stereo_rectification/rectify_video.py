@@ -239,11 +239,36 @@ def run_double_sphere_pipeline(
 # Equidistant (Fisheye) 管线
 # ============================================================
 
+def _calibration_resolution(calibration_resolution):
+    if (not isinstance(calibration_resolution, (list, tuple))
+            or len(calibration_resolution) != 2
+            or any(type(value) is not int or value <= 0 for value in calibration_resolution)):
+        raise ValueError('标定 resolution 必须是两个正整数 [width, height]')
+    return tuple(calibration_resolution)
+
+
+def calibration_crop_roi(source_resolution, calibration_resolution):
+    """Return the centered input ROI; K/D already refer to this cropped image.
+
+    Unlike cropping an image with full-frame calibration, the calibration
+    principal point must NOT be shifted here. Odd excess pixels go right/down.
+    """
+    width, height = _calibration_resolution(calibration_resolution)
+    source_width, source_height = source_resolution
+    if source_width < width or source_height < height:
+        raise ValueError(
+            f'视频分辨率 {source_resolution} 小于标定 resolution {calibration_resolution}，'
+            '无法居中裁剪；请提供对应采集模式的标定')
+    x = (source_width - width) // 2
+    y = (source_height - height) // 2
+    return x, y, x + width, y + height
+
+
 def run_equidistant_pipeline(
     camera_model_left, camera_model_right,
     R, t,
     output_width, output_height, balance,
-    input_dir, output_session_dir, fps
+    input_dir, output_session_dir, fps, *, calibration_resolutions
 ):
     """
     运行 Equidistant 管线的立体校正
@@ -253,41 +278,51 @@ def run_equidistant_pipeline(
     2. cv2.fisheye.initUndistortRectifyMap(K, D, R, P) 生成映射
     3. 处理视频
     
-    注意：Equidistant 模型始终使用原始图像分辨率，--width/--height 被忽略。
-    原因：与 Double Sphere 不同，Equidistant 是重映射而非裁剪虚拟针孔。
-    如果 newImageSize 比原始分辨率小，OpenCV 会按比例缩小焦距，
-    导致图像质量下降并产生黑边。
+    输入先居中裁剪到标定分辨率，保持标定 K/D 不变。
+    校正使用标定分辨率，--width/--height 被忽略；之后继续裁剪输出黑边。
     """
     print(f"\n{'='*60}")
     print(f"Equidistant (Fisheye) 管线")
     print(f"{'='*60}")
     
-    # 获取原始图像尺寸（Equidistant 始终使用原始分辨率）
-    orig_resolution = None
-    left_video = find_named_video(input_dir / 'videos', 'left')
-    if left_video.exists():
-        cap = cv2.VideoCapture(str(left_video))
-        if cap.isOpened():
-            orig_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-            orig_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            orig_resolution = (orig_w, orig_h)
+    # Validate calibration even before attempting video I/O.
+    calibration_resolutions = tuple(_calibration_resolution(r) for r in calibration_resolutions)
+    if len(calibration_resolutions) != 2 or calibration_resolutions[0] != calibration_resolutions[1]:
+        raise ValueError('左右相机标定分辨率必须一致')
+    orig_resolution = tuple(calibration_resolutions[0])
+    input_rois = []
+    input_crops = {}
+    for stream, resolution in zip(('left', 'right'), calibration_resolutions):
+        video = find_named_video(input_dir / 'videos', stream)
+        cap = cv2.VideoCapture(str(video))
+        try:
+            ok, frame = cap.read()
+            if not ok:
+                raise RuntimeError(f'无法读取视频首帧: {video}')
+            source_resolution = (frame.shape[1], frame.shape[0])
+        finally:
             cap.release()
-    
-    if orig_resolution is None:
-        raise RuntimeError(
-            "Equidistant 管线需要读取原始视频获取分辨率。"
-            f"无法打开视频: {left_video}"
-        )
+        try:
+            input_roi = calibration_crop_roi(source_resolution, resolution)
+        except ValueError as exc:
+            raise ValueError(f'{stream}: {exc}') from exc
+        input_rois.append(input_roi)
+        input_crops[stream] = {
+            'source_resolution': list(source_resolution),
+            'calibration_resolution': list(resolution),
+            'roi': list(input_roi),
+        }
+        print(f'  {stream}: 输入 {source_resolution} → 标定 {resolution}，居中裁剪 ROI={input_roi}')
     
     orig_w, orig_h = orig_resolution
-    print(f"\n原始图像尺寸: {orig_w}x{orig_h}")
+    print(f"\n标定/裁剪后图像尺寸: {orig_w}x{orig_h}")
     
     if (orig_w, orig_h) != (output_width, output_height):
-        print(f"注意: Equidistant 管线始终使用原始分辨率 {orig_w}x{orig_h}，")
+        print(f"注意: Equidistant 管线使用标定分辨率 {orig_w}x{orig_h}，")
         print(f"      --width {output_width} --height {output_height} 被忽略。")
     
     # 1. 立体校正（使用 cv2.fisheye.stereoRectify）
-    # image_size 和 newImageSize 都使用原始分辨率
+    # image_size 和 newImageSize 都使用标定分辨率
     print(f"\n计算立体校正参数 (cv2.fisheye.stereoRectify)...")
     rect_params = EquidistantCameraModel.stereo_rectify(
         camera_model_left, camera_model_right,
@@ -358,14 +393,15 @@ def run_equidistant_pipeline(
     
     # 4. 处理视频
     _process_videos(input_dir, output_session_dir,
-                    map_x_left, map_y_left, map_x_right, map_y_right, fps)
+                    map_x_left, map_y_left, map_x_right, map_y_right, fps,
+                    input_rois=input_rois)
     
     # 5. 保存参数（记录裁剪后的尺寸和更新后的 P/Q）
     _save_rectify_params_equidistant(
         output_session_dir / 'calibrations' / 'rectify_params.yaml',
         camera_model_left, camera_model_right, rect_params,
         (crop_w, crop_h),
-        crop_roi=roi
+        crop_roi=roi, input_crops=input_crops
     )
     
     return rect_params, (crop_w, crop_h)
@@ -464,7 +500,7 @@ def crop_remap_maps(map_x, map_y, roi):
 def process_video(
     input_path: str, output_path: str,
     map_x: np.ndarray, map_y: np.ndarray,
-    fps: float
+    fps: float, input_roi=None
 ) -> int:
     """
     处理视频：应用 remap 并通过 ffmpeg 管道输出 H.264 编码视频。
@@ -515,6 +551,10 @@ def process_video(
         if not ret:
             break
 
+        if input_roi is not None:
+            x0, y0, x1, y1 = input_roi
+            frame = frame[y0:y1, x0:x1]
+
         rectified_frame = cv2.remap(
             frame, map_x, map_y, cv2.INTER_LINEAR,
             borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0)
@@ -537,8 +577,11 @@ def process_video(
 
 
 def _process_videos(input_dir, output_session_dir,
-                    map_x_left, map_y_left, map_x_right, map_y_right, fps):
+                    map_x_left, map_y_left, map_x_right, map_y_right, fps,
+                    input_rois=None):
     """处理左右视频"""
+    if input_rois is None:
+        input_rois = (None, None)
     # 创建输出目录
     os.makedirs(output_session_dir / 'videos', exist_ok=True)
     
@@ -547,7 +590,7 @@ def _process_videos(input_dir, output_session_dir,
     left_output = output_session_dir / 'videos' / 'left_rectified.mp4'
     print(f"\n处理左相机视频: {left_input} -> {left_output}")
     left_frames = process_video(str(left_input), str(left_output),
-                                map_x_left, map_y_left, fps)
+                                map_x_left, map_y_left, fps, input_roi=input_rois[0])
     print(f"  处理帧数: {left_frames}")
     
     # 处理 right 视频
@@ -555,7 +598,7 @@ def _process_videos(input_dir, output_session_dir,
     right_output = output_session_dir / 'videos' / 'right_rectified.mp4'
     print(f"\n处理右相机视频: {right_input} -> {right_output}")
     right_frames = process_video(str(right_input), str(right_output),
-                                 map_x_right, map_y_right, fps)
+                                 map_x_right, map_y_right, fps, input_roi=input_rois[1])
     print(f"  处理帧数: {right_frames}")
 
 
@@ -607,7 +650,7 @@ def _save_rectify_params_ds(
 
 def _save_rectify_params_equidistant(
     output_path, model_left, model_right, rect_params, image_size,
-    crop_roi=None
+    crop_roi=None, input_crops=None
 ):
     """保存 Equidistant 管线的校正参数"""
     K1_rect = rect_params['P1'][:3, :3]
@@ -643,6 +686,8 @@ def _save_rectify_params_equidistant(
         }
     }
     
+    if input_crops is not None:
+        params['input_crops'] = input_crops
     if crop_roi is not None:
         params['crop_roi'] = {
             'x_min': int(crop_roi[0]),
@@ -848,12 +893,13 @@ def main():
     
     # ================= 2. 选择管线并运行 =================
     if isinstance(camera_model_left, EquidistantCameraModel):
-        # Equidistant 管线 (使用 --balance 参数, 始终用原始分辨率)
+        # Equidistant 管线：先裁剪输入到标定分辨率，再进行校正。
         rect_params, actual_size = run_equidistant_pipeline(
             camera_model_left, camera_model_right,
             R, t,
             output_width, output_height, args.balance,
-            input_dir, output_session_dir, fps
+            input_dir, output_session_dir, fps,
+            calibration_resolutions=(cam0_info.get('resolution'), cam1_info.get('resolution'))
         )
         actual_model_type = 'equidistant'
     else:
