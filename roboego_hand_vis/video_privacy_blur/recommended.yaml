@@ -23,7 +23,9 @@ parameters:
   threads: 2
   track_gap: 0
   track_scale: 1.25
-  videos: []
+  videos:
+    - left_rectified.mp4
+    - right_rectified.mp4
   dry_run: false
 
 io:

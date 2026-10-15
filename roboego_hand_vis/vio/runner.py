@@ -28,7 +28,7 @@ def _quote(value: str | Path | float | int) -> str:
 
 
 def build_openvins_command(config: OpenVinsRunConfig, *, stage_dir: Path) -> str:
-    output = config.output_dir
+    output = config.output_dir if config.prepare_only else config.output_dir / '.work' / 'run'
     manifest = output / "run_manifest.json"
     timing = output / "openvins_timing.txt"
     report = output / "trajectory" / "run_report.json"
@@ -84,6 +84,7 @@ def build_openvins_command(config: OpenVinsRunConfig, *, stage_dir: Path) -> str
                 f"--report {_quote(report)}; "
                 "fi"
             ),
+            f"{py} {_quote(stage / 'export_entry.py')} --work {_quote(output)} --output {_quote(config.output_dir)}",
         ]
     )
     return "\n".join(commands)

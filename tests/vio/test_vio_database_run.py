@@ -39,15 +39,19 @@ def setup(root):
 
 def publish(config):
     assert config.input_mode=='rectified' and not config.prepare_only
+    import numpy as np
     out=config.output_dir
-    trajectory=out/'trajectory'
-    trajectory.mkdir(parents=True,exist_ok=True)
-    (out/'run_manifest.json').write_text(json.dumps({'session_dir':str(config.session_dir),'output_dir':str(out),'input_mode':'rectified'}))
-    (trajectory/'run_report.json').write_text(json.dumps({'initialized':True,'pose_count':2,'published_stereo_pairs':3,
-        'artifacts':{'trajectory_jsonl':str(trajectory/'trajectory.jsonl')}}))
-    rows=[{'timestamp_camera':1000+i*.03,'timestamp_imu':1000+i*.03,'frame_index':i+1,'right_frame_index':i+1,
-           'orientation_world_imu_xyzw':[0,0,0,1],'position_world_imu':[0,0,0],'velocity_world_imu':[0,0,0]} for i in range(2)]
-    (trajectory/'trajectory.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
+    out.mkdir(parents=True, exist_ok=True)
+    report = {'schema_version': 'roboego.vio.delivery.v2', 'status': 'complete',
+              'execution_status': 'complete', 'returncode': 0, 'quality_status': 'not_validated',
+              'pose_count': 2, 'input': {'session': str(config.session_dir), 'arguments': ['--input_mode', 'rectified']},
+              'artifacts': {'trajectory': 'trajectory.npz'}, 'offline': {'status': 'completed', 'pose_count': 2}}
+    (out/'report.json').write_text(json.dumps(report))
+    np.savez(out/'trajectory.npz', schema_version=np.array('openvins.frame_aligned.v2'),
+             quality_status=np.array('not_validated'), frame_index=np.arange(2, dtype=np.int64),
+             right_frame_index=np.arange(2, dtype=np.int64), timestamp_camera=np.array([1.,2.]),
+             timestamp_imu=np.array([1.,2.]), status=np.array(['valid','valid']),
+             T_world_imu=np.repeat(np.eye(4)[None],2,axis=0), T_world_camera=np.repeat(np.eye(4)[None],2,axis=0))
 
 
 def test_success_does_not_require_pose_for_every_video_frame(tmp_path):
@@ -65,17 +69,18 @@ def test_invalid_trajectory_fails(tmp_path,failure):
     service=Service(['session'])
     def broken(config):
         publish(config)
-        trajectory=config.output_dir/'trajectory'
+        import numpy as np
         if failure=='uninitialized':
-            (trajectory/'run_report.json').write_text('{"initialized":false,"pose_count":0}')
+            (config.output_dir/'report.json').write_text('{"status":"failed"}')
         else:
-            p=trajectory/'trajectory.jsonl'
-            lines=p.read_text().splitlines()
+            p=config.output_dir/'trajectory.npz'
+            with np.load(p) as archive:
+                arrays={key:archive[key] for key in archive.files}
             if failure=='truncated':
-                p.write_text(lines[0]+'\n')
+                arrays['T_world_camera']=arrays['T_world_camera'][:1]
             else:
-                row=json.loads(lines[0]);row['position_world_imu'][0]=float('nan')
-                p.write_text(json.dumps(row)+'\n'+lines[1]+'\n')
+                arrays['T_world_camera'][0,0,3]=np.nan
+            np.savez(p,**arrays)
     assert run_pending(service,tmp_path,data,runner=broken)[0]['status']=='failed'
     assert service.results==[(0,False)]
 
@@ -129,15 +134,13 @@ session, output = map(Path, sys.argv[1:3])
 assert not list(output.iterdir()), 'wrapper requires empty output'
 assert sys.argv[3:6] == ['run', '--input_mode', 'rectified']
 publish(SimpleNamespace(session_dir=session, output_dir=output, input_mode='rectified', prepare_only=False))
-for path in [output/'run_manifest.json', output/'trajectory/run_report.json']:
-    path.write_text(path.read_text().replace(str(output), '/data/output'))
 ''')
     if failure == 'exit':
         code += '\nsys.exit(7)\n'
     elif failure == 'wrong_session':
-        code += "\np=output/'run_manifest.json'; d=json.loads(p.read_text()); d['session_dir']='/other'; p.write_text(json.dumps(d))\n"
+        code += "\np=output/'report.json'; d=json.loads(p.read_text()); d['input']['session']='/other'; p.write_text(json.dumps(d))\n"
     elif failure == 'uninitialized':
-        code += "\n(output/'trajectory/run_report.json').write_text('{\"initialized\":false,\"pose_count\":0}')\n"
+        code += "\n(output/'report.json').write_text('{\"initialized\":false,\"pose_count\":0}')\n"
     elif failure == 'symlink':
         code += "\n(output/'external').symlink_to(session/'imu/imu0.csv')\n"
     script.write_text('exec ' + shlex.quote(sys.executable) + ' -c ' + shlex.quote(code) + ' "$@"\n')
@@ -155,8 +158,8 @@ def test_chroot_runner_without_host_dependencies_and_retry(tmp_path):
         assert result[0]['status'] == 'completed', result
         assert service.results == [(0, True)]
     out = tmp_path/'session/vio'
-    assert json.loads((out/'run_manifest.json').read_text())['output_dir'] == str(out)
-    assert json.loads((out/'trajectory/run_report.json').read_text())['artifacts']['trajectory_jsonl'] == str(out/'trajectory/trajectory.jsonl')
+    assert json.loads((out/'report.json').read_text())['input']['session'] == str(tmp_path/'session')
+    assert json.loads((out/'report.json').read_text())['artifacts']['trajectory'] == 'trajectory.npz'
     assert list((tmp_path/'session').glob('.vio-previous-*'))
 
 
@@ -164,13 +167,13 @@ def test_chroot_runner_without_host_dependencies_and_retry(tmp_path):
 def test_chroot_failure_preserves_previous_output(tmp_path, failure):
     data = setup(tmp_path)
     run_pending(Service(['session']), tmp_path, data, runner=publish)
-    old = (tmp_path/'session/vio/run_manifest.json').read_bytes()
+    old = (tmp_path/'session/vio/report.json').read_bytes()
     script = make_chroot_runner(tmp_path, failure=failure)
     service = Service(['session'])
     result = run_pending(service, tmp_path, data, chroot_runner=script)
     assert result[0]['status'] == 'failed', result
     assert service.results == [(0, False)]
-    assert (tmp_path/'session/vio/run_manifest.json').read_bytes() == old
+    assert (tmp_path/'session/vio/report.json').read_bytes() == old
     assert list((tmp_path/'session').glob('.vio-chroot-*'))
 
 

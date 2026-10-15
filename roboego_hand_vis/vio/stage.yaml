@@ -21,9 +21,8 @@ inputs:
       - calibrations/camera_imu-imu.yaml
 
 outputs:
-  manifest: "{output_dir}/run_manifest.json"
-  trajectory_report: "{output_dir}/trajectory/run_report.json"
-  trajectory_jsonl: "{output_dir}/trajectory/trajectory.jsonl"
+  report: "{output_dir}/report.json"
+  trajectory_npz: "{output_dir}/trajectory.npz"
 
 steps:
   - name: prepare
@@ -35,3 +34,6 @@ steps:
   - name: summarize
     script: summarize.py
     description: 将 OpenVINS timing 写入轨迹报告。
+  - name: export
+    script: export_entry.py
+    description: 将内部轨迹导出为逐帧对齐的 trajectory.npz 和 report.json。

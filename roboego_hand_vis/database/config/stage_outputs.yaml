@@ -35,8 +35,8 @@ stages:
     paths: [depth/depth_archive_meta.json, depth/depth_hevc12.mkv, depth/valid_mask_ffv1.mkv, depth/depth_uint16_ffv1.avi, depth/depth_ffv1.mkv, depth/depth_preview.mp4, depth/depth_uint16_png, annotation/archive_depth_cache.log, annotation/archive_depth_cache.database.yaml, annotation/archive_probe_*.json]
     required: [depth/depth_archive_meta.json,depth/depth_hevc12.mkv,depth/valid_mask_ffv1.mkv]
   vio:
-    paths: [vio/run_manifest.json, vio/input, vio/config, vio/kalibr_imucam_chain.yaml, vio/kalibr_imu_chain.yaml, vio/estimator_config.yaml, vio/trajectory, vio/openvins_state_estimate.txt, vio/openvins_state_deviation.txt, vio/openvins_groundtruth.txt, vio/openvins_timing.txt, annotation/vio_database.log]
-    required: [vio/run_manifest.json, vio/trajectory/run_report.json, vio/trajectory/trajectory.jsonl]
+    paths: [vio/report.json, vio/trajectory.npz, annotation/vio_database.log]
+    required: [vio/report.json, vio/trajectory.npz]
   video_privacy_blur:
     paths: [privacy/video_privacy_blur]
-    required: []
+    required: [privacy/video_privacy_blur/left_rectified_blurred.mp4, privacy/video_privacy_blur/right_rectified_blurred.mp4]

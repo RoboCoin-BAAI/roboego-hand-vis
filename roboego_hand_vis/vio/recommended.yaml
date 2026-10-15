@@ -25,6 +25,5 @@ openvins:
   binary: "{openvins_root}/ov_msckf/build/roboego_openvins_offline"
 
 outputs:
-  manifest: "{output_dir}/run_manifest.json"
-  trajectory_report: "{output_dir}/trajectory/run_report.json"
-  trajectory_jsonl: "{output_dir}/trajectory/trajectory.jsonl"
+  report: "{output_dir}/report.json"
+  trajectory_npz: "{output_dir}/trajectory.npz"

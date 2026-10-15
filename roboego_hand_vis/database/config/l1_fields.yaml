@@ -46,7 +46,7 @@ stages:
 
   - name: fast_foundation_depth
     status_field: fast_foundation_depth_status
-    depends_on: [stereo_depth_gate]
+    depends_on: [stereo_rectification]
     threshold_gate: false
 
   # 包含 MINT 推理和后续手部处理，使用矫正视频和逐帧深度。

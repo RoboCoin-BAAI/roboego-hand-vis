@@ -39,6 +39,9 @@ def main() -> None:
     ]
     if args.duration_s is not None:
         command.extend(["--duration_s", str(args.duration_s)])
+    # A successful exit without fresh artifacts must not reuse an earlier trajectory.
+    for name in ('run_report.json', 'trajectory.jsonl'):
+        (output_dir / name).unlink(missing_ok=True)
     subprocess.run(command, check=True)
 
 

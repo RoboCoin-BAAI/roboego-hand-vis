@@ -42,7 +42,9 @@ python -m roboego_hand_vis.vio.database_run \
 
 脚本接口为 `bash SCRIPT SESSION EMPTY_OUTPUT run --input_mode rectified [参数...]`，须返回实际运行退出码，并将本次结果复制到 `EMPTY_OUTPUT`。还会传入 YAML 中的 `--start_s`、`--duration_s`（设置时）、`--stereo_tolerance_s`、`--max_imu_gap_s`、`--max_imu_boundary_gap_s`，以及禁用下采样时的 `--no-downsample_cameras`；rootfs 内的 `vio-runtime` 必须支持这些选项。宿主机 YAML 的环境路径不会覆盖 rootfs 内部配置。
 
-每次运行使用 session 内新的 `.vio-chroot-*` 空目录。清单中的 `session_dir` 必须仍为传入的绝对 session 路径；清单及报告中的输出路径可以是 `/data/output` 或该临时目录。适配器转换这两个 JSON 文件中的输出路径，检查初始化、轨迹数量和有效性，成功后才替换 `session/vio`。原 `vio` 保留为 `.vio-previous-*`；失败时保留临时结果及原 `vio`，数据库写入 `failed`。其他配置文件保留运行时的路径记录。结果仍按现有本地工作区规则同步回共享盘，无需手动写库。
+每次 chroot 运行使用 session 内新的 `.vio-chroot-*` 空目录。脚本须复制出 `report.json` 和 `trajectory.npz`，使用 `roboego.vio.delivery.v2` 报告和 `openvins.frame_aligned.v2` NPZ。报告的 `input.session` 必须与当前 session 一致，`artifacts.trajectory` 为相对文件名 `trajectory.npz`。校验通过后才替换 `session/vio`，不再要求导出内部 `run_manifest.json` 或 JSONL。
+
+原 `vio` 保留为 `.vio-previous-*`；失败时保留临时结果及原 `vio`，数据库写入 `failed`。结果按本地工作区规则同步回共享盘，无需手动写库。
 
 宿主机需要 `flock`，且脚本所在目录需允许创建 `SCRIPT.database.lock`。使用同一个脚本绝对路径的数据库任务会串行执行，避免共用 rootfs 的 `/data/output` 冲突；手动运行脚本或使用其他脚本访问同一 rootfs 时，也必须协调使用该锁。
 
@@ -52,13 +54,18 @@ python -m roboego_hand_vis.vio.database_run \
 
 每条数据使用自己的 session，输出固定为 `vio/`：
 
-- `run_manifest.json`：本次输入与准备结果。
-- `trajectory/run_report.json`：初始化及位姿数量报告。
-- `trajectory/trajectory.jsonl`：轨迹记录。
+- `report.json`：执行状态、输入身份、有效位姿数量和质量状态。
+- `trajectory.npz`：按原视频帧对齐的轨迹。
+
+NPZ 字段为标量 `schema_version`、`quality_status`，逐帧向量 `frame_index`、`right_frame_index`、`timestamp_camera`、`timestamp_imu`、`status`，以及形状为 `(N, 4, 4)` 的 `T_world_imu`、`T_world_camera`。`status=valid` 表示有位姿；无效帧保留原帧号，位姿允许为 NaN。NPZ 总行数不等于有效位姿数量。
+
+宿主机运行时，准备配置和原始 JSONL 仅作为 `vio/.work/run/` 内部中间文件，结束后导出上述两个公开文件。没有位姿的同步帧标记为 `not_estimated`，不猜测具体失败原因。`prepare_only` 仍只生成准备文件，不生成成功交付。
+
+共享盘只回传 `vio/report.json` 和 `vio/trajectory.npz`，不回传内部中间文件。
 
 运行日志为 `annotation/vio_database.log`。时间戳、IMU、标定与视频准备仍使用原算法；起始时间、时长、双目时间匹配容差、IMU 内部/首尾覆盖容差及相机下采样配置仍读取原 YAML。不会自动裁减视频、放宽 IMU 阈值或补充位姿。
 
-领取后写 `processing`。实际 OpenVINS 执行成功，本次重新生成的清单与 session 匹配、报告 `initialized=true`、`pose_count>0`，且轨迹数量与报告一致、记录结构及数值有效后写 `completed`。初始化失败、执行异常、空轨迹或输出不完整写 `failed`，不自动写 `block`。
+领取后写 `processing`。执行成功且两个交付文件为本次新生成，报告中的 session、输入模式和执行状态匹配、有效位姿数大于零、NPZ 帧索引/形状/时间顺序/有效位姿矩阵均正确且数量与报告一致后，才写 `completed`。无效帧不参与位姿矩阵检查。执行异常、空轨迹、输出不完整或校验不一致写 `failed`，不自动写 `block`。`quality_status` 保留原值，文件通过校验不表示轨迹精度合格。
 
 VIO 初始化前可能没有位姿，因此 `completed` 不表示每个视频帧都有位姿，也不代表轨迹精度已经通过质量评估。仅完成输入准备不会标记成功；数据库入口不提供 `prepare_only`。
 

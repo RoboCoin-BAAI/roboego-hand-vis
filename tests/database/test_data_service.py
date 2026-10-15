@@ -742,7 +742,7 @@ def test_database_download_limit_leaves_remaining_tasks_pending(db, tmp_path):
 
 @pytest.mark.parametrize('stage,dependency', [
     ('stereo_depth_gate', 'stereo_rectification'),
-    ('fast_foundation_depth', 'stereo_depth_gate'),
+    ('fast_foundation_depth', 'stereo_rectification'),
 ])
 def test_depth_stages_dependencies_concurrent_claim_and_finish(db, stage, dependency):
     for status in ('pending', 'processing', 'block', 'failed', 'completed'):
@@ -770,7 +770,7 @@ def test_depth_stages_dependencies_concurrent_claim_and_finish(db, stage, depend
     assert db.get('l1data', winner['id'])[stage + '_status'] == ('block' if stage == 'stereo_depth_gate' else 'failed')
 
 
-def test_depth_gate_outcomes_and_depth_blocking(db):
+def test_depth_gate_outcomes_do_not_block_depth(db):
     for index, passed in enumerate((True, False, None)):
         row = db.register('l1data', f'ks3://bucket/{index}')
         db.claim('l1data', row['id'])
@@ -782,11 +782,25 @@ def test_depth_gate_outcomes_and_depth_blocking(db):
         assert db.finish_stereo_depth_gate(row['id'], passed=passed)
         assert db.get('l1data', row['id'])['stereo_depth_gate_status'] == ('completed' if passed is True else 'block' if passed is False else 'failed')
         claimed = db.claim_fast_foundation_depth()
-        if passed is True:
-            assert claimed['id'] == row['id']
-            assert db.finish_fast_foundation_depth(row['id'], succeeded=True)
-        else:
-            assert claimed is None
+        assert claimed['id'] == row['id']
+        assert db.finish_fast_foundation_depth(row['id'], succeeded=True)
+
+
+@pytest.mark.parametrize('status', ['pending', 'processing', 'block', 'failed', 'completed'])
+def test_depth_claim_is_independent_of_depth_gate_status(db, status):
+    row = db.register('l1data', 'ks3://bucket/depth-independent')
+    db.claim('l1data', row['id'])
+    db.complete('l1data', row['id'], 'depth-independent')
+    with db.engine.begin() as conn:
+        conn.execute(text("UPDATE l1data SET raw_headband_integrity_status='completed', "
+                          "video_simple_quality_status='completed', stereo_rectification_status='completed', "
+                          "stereo_depth_gate_status=:status WHERE id=:id"), dict(id=row['id'], status=status))
+    claimed = db.claim_fast_foundation_depth()
+    assert claimed is not None
+    assert claimed['id'] == row['id']
+    assert claimed['stereo_depth_gate_status'] == status
+    assert claimed['fast_foundation_depth_status'] == 'processing'
+    assert db.claim_fast_foundation_depth() is None
 
 
 def test_archive_requires_hand_and_depth_completed_and_claims_once(db):

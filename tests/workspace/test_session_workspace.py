@@ -139,3 +139,17 @@ def test_empty_required_means_no_output_copy(tmp_path):
     ws.prepare('session')
     ws.rules = {'paths': ['videos'], 'required': []}
     assert ws.publish('completed') == []
+
+
+def test_vio_publication_uses_delivery_files_only(tmp_path):
+    ws = workspace(tmp_path)
+    import yaml
+    from roboego_hand_vis.common.session_workspace import DEFAULT_OUTPUTS
+    ws.rules = yaml.safe_load(DEFAULT_OUTPUTS.read_text())['stages']['vio']
+    local = ws.prepare('session')
+    (local/'vio/.work/run').mkdir(parents=True)
+    (local/'vio/report.json').write_text('{}')
+    (local/'vio/trajectory.npz').write_bytes(b'npz placeholder for copy test')
+    (local/'vio/.work/run/run_manifest.json').write_text('{}')
+    assert ws.publish('completed') == ['vio/report.json', 'vio/trajectory.npz']
+    assert not (ws.shared_root/'session/vio/.work').exists()

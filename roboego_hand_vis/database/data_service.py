@@ -339,7 +339,7 @@ class DataService:
 
 
     def claim_fast_foundation_depth(self) -> dict | None:
-        """Claim a downloaded session after required quality gates and stereo_depth_gate."""
+        """Claim a rectified session after basic quality checks, independently of the depth gate."""
         table = self._stage_table('fast_foundation_depth')
         candidate = (select(table.c.id).where(
             table.c.download_status == TaskStatus.COMPLETED.value,
@@ -347,7 +347,6 @@ class DataService:
             table.c.raw_headband_integrity_status == TaskStatus.COMPLETED.value,
             table.c.video_simple_quality_status == TaskStatus.COMPLETED.value,
             table.c.stereo_rectification_status == TaskStatus.COMPLETED.value,
-            table.c.stereo_depth_gate_status == TaskStatus.COMPLETED.value,
             table.c.fast_foundation_depth_status == TaskStatus.PENDING.value,
         ).order_by(table.c.id).limit(1).with_for_update(skip_locked=True).cte())
         stmt = (update(table).where(table.c.id == candidate.c.id)

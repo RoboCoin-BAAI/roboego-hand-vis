@@ -242,6 +242,7 @@ def call_qwen_vl_object_resolver(
         "model": model,
         "messages": build_vl_object_resolver_messages(review_payload),
         "temperature": 0,
+        "enable_thinking": False,
     }
     req = urllib.request.Request(
         resolve_qwen_base_url(base_url),

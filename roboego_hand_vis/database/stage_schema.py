@@ -70,7 +70,6 @@ STAGE_REQUIRED_COLUMNS = {
         'ks3_path',
         'local_path',
         'raw_headband_integrity_status',
-        'stereo_depth_gate_status',
         'stereo_rectification_status',
         'video_simple_quality_status',
     ),

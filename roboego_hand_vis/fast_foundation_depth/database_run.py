@@ -137,7 +137,7 @@ def run_pending(service, shared_root, data, *, limit=0, runner=None):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="从所选数据表领取深度前门禁已通过的数据，运行 Fast-FoundationStereo。")
+    parser = argparse.ArgumentParser(description="从所选数据表领取基础质检和立体矫正已完成的数据，运行 Fast-FoundationStereo（不要求深度前门禁通过）。")
     parser.add_argument("--shared-root", required=True)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--config", default=str(DEFAULT_CONFIG))
