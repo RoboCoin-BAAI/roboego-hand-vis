@@ -116,3 +116,106 @@ def test_default_runner_uses_logged_subprocess(tmp_path,monkeypatch):
     result=run_pending(Service(['session']),tmp_path,data)
     assert result[0]['status']=='completed',result
     assert (tmp_path/'session/annotation/vio_database.log').exists()
+
+
+def make_chroot_runner(root, *, failure=None):
+    import inspect
+    import shlex
+    # Exercise an actual shell subprocess with the same interface as vio-run.sh.
+    script = root / 'vio runner.sh'
+    source = inspect.getsource(publish)
+    code = ("import json, sys\nfrom pathlib import Path\nfrom types import SimpleNamespace\n" + source + '''
+session, output = map(Path, sys.argv[1:3])
+assert not list(output.iterdir()), 'wrapper requires empty output'
+assert sys.argv[3:6] == ['run', '--input_mode', 'rectified']
+publish(SimpleNamespace(session_dir=session, output_dir=output, input_mode='rectified', prepare_only=False))
+for path in [output/'run_manifest.json', output/'trajectory/run_report.json']:
+    path.write_text(path.read_text().replace(str(output), '/data/output'))
+''')
+    if failure == 'exit':
+        code += '\nsys.exit(7)\n'
+    elif failure == 'wrong_session':
+        code += "\np=output/'run_manifest.json'; d=json.loads(p.read_text()); d['session_dir']='/other'; p.write_text(json.dumps(d))\n"
+    elif failure == 'uninitialized':
+        code += "\n(output/'trajectory/run_report.json').write_text('{\"initialized\":false,\"pose_count\":0}')\n"
+    elif failure == 'symlink':
+        code += "\n(output/'external').symlink_to(session/'imu/imu0.csv')\n"
+    script.write_text('exec ' + shlex.quote(sys.executable) + ' -c ' + shlex.quote(code) + ' "$@"\n')
+    return script
+
+
+def test_chroot_runner_without_host_dependencies_and_retry(tmp_path):
+    data = setup(tmp_path)
+    (tmp_path/'openvins/bin').unlink()
+    data['runtime']['system_python'] = '/missing/python'
+    script = make_chroot_runner(tmp_path)
+    for _ in range(2):
+        service = Service(['session'])
+        result = run_pending(service, tmp_path, data, chroot_runner=script)
+        assert result[0]['status'] == 'completed', result
+        assert service.results == [(0, True)]
+    out = tmp_path/'session/vio'
+    assert json.loads((out/'run_manifest.json').read_text())['output_dir'] == str(out)
+    assert json.loads((out/'trajectory/run_report.json').read_text())['artifacts']['trajectory_jsonl'] == str(out/'trajectory/trajectory.jsonl')
+    assert list((tmp_path/'session').glob('.vio-previous-*'))
+
+
+@pytest.mark.parametrize('failure', ['exit', 'wrong_session', 'uninitialized', 'symlink'])
+def test_chroot_failure_preserves_previous_output(tmp_path, failure):
+    data = setup(tmp_path)
+    run_pending(Service(['session']), tmp_path, data, runner=publish)
+    old = (tmp_path/'session/vio/run_manifest.json').read_bytes()
+    script = make_chroot_runner(tmp_path, failure=failure)
+    service = Service(['session'])
+    result = run_pending(service, tmp_path, data, chroot_runner=script)
+    assert result[0]['status'] == 'failed', result
+    assert service.results == [(0, False)]
+    assert (tmp_path/'session/vio/run_manifest.json').read_bytes() == old
+    assert list((tmp_path/'session').glob('.vio-chroot-*'))
+
+
+def test_missing_chroot_runner_fails_before_claim(tmp_path):
+    data = setup(tmp_path)
+    service = Service(['session'])
+    with pytest.raises(ValueError, match='runner'):
+        run_pending(service, tmp_path, data, chroot_runner=tmp_path/'missing.sh')
+    assert len(service.rows) == 1
+
+
+def test_chroot_forwards_vio_settings(tmp_path):
+    data = setup(tmp_path)
+    data['run'] = {'start_s': 2.5, 'duration_s': 8}
+    data['prepare'] = {'stereo_tolerance_s': 0.002, 'max_imu_gap_s': 0.07,
+                       'max_imu_boundary_gap_s': 0.2, 'rectified_downsample_cameras': False}
+    script = make_chroot_runner(tmp_path)
+    import shlex
+    capture = tmp_path/'args.txt'
+    script.write_text('printf "%s\\n" "$@" > ' + shlex.quote(str(capture)) + '\n' + script.read_text())
+    result = run_pending(Service(['session']), tmp_path, data, chroot_runner=script)
+    assert result[0]['status'] == 'completed', result
+    args = capture.read_text().splitlines()
+    for key, value in [('start_s', '2.5'), ('duration_s', '8.0'),
+                       ('stereo_tolerance_s', '0.002'), ('max_imu_gap_s', '0.07'),
+                       ('max_imu_boundary_gap_s', '0.2')]:
+        assert float(args[args.index('--' + key) + 1]) == float(value)
+    assert '--no-downsample_cameras' in args
+
+
+def test_chroot_serializes_sessions_sharing_script(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    import shlex
+    import shutil
+    data = setup(tmp_path)
+    shutil.copytree(tmp_path/'session', tmp_path/'session2')
+    manifest = tmp_path/'session2/dataset_manifest/dataset_manifest.json'
+    manifest.write_text(manifest.read_text().replace('/session/', '/session2/'))
+    script = make_chroot_runner(tmp_path)
+    # mkdir fails if two wrappers enter the shared-rootfs critical section together.
+    marker = shlex.quote(str(tmp_path/'rootfs-busy'))
+    script.write_text('set -e\nmkdir ' + marker + '\nsleep 0.15\nrmdir ' + marker + '\n' + script.read_text())
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(run_pending, Service([name]), tmp_path, data, chroot_runner=script)
+                   for name in ('session', 'session2')]
+        for future in futures:
+            result = future.result(timeout=10)
+            assert result[0]['status'] == 'completed', result

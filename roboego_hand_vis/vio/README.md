@@ -25,6 +25,29 @@ python -m roboego_hand_vis.vio.database_run \
 
 省略 `--limit` 或设为 `0` 时处理当前所有可领取 session。可用 `--config` 指定其他 VIO YAML。数据库模式固定使用 `rectified`，省略 `--input_mode` 也一样；原手动入口的 raw 模式保留。
 
+### 通过 chroot 脚本运行
+
+如果 OpenVINS 和准备阶段的 Python 依赖仅安装在 rootfs 中，增加 `--chroot-runner`：
+
+```bash
+python -m roboego_hand_vis.vio.database_run \
+  --shared-root /share/project/liuyou/data/EGOL1/data \
+  --local-root /home/humancoindata/EGOL1 \
+  --limit 3 \
+  --input_mode rectified \
+  --chroot-runner /share/project/liuyou/vio-run.sh
+```
+
+该模式跳过宿主机的 `runtime.system_python` 和 `openvins.binary` 文件检查，由脚本负责进入 chroot、使用其中的环境和代码。宿主机仍需能运行数据库入口及其依赖。省略参数时保持原来的宿主机执行方式。
+
+脚本接口为 `bash SCRIPT SESSION EMPTY_OUTPUT run --input_mode rectified [参数...]`，须返回实际运行退出码，并将本次结果复制到 `EMPTY_OUTPUT`。还会传入 YAML 中的 `--start_s`、`--duration_s`（设置时）、`--stereo_tolerance_s`、`--max_imu_gap_s`、`--max_imu_boundary_gap_s`，以及禁用下采样时的 `--no-downsample_cameras`；rootfs 内的 `vio-runtime` 必须支持这些选项。宿主机 YAML 的环境路径不会覆盖 rootfs 内部配置。
+
+每次运行使用 session 内新的 `.vio-chroot-*` 空目录。清单中的 `session_dir` 必须仍为传入的绝对 session 路径；清单及报告中的输出路径可以是 `/data/output` 或该临时目录。适配器转换这两个 JSON 文件中的输出路径，检查初始化、轨迹数量和有效性，成功后才替换 `session/vio`。原 `vio` 保留为 `.vio-previous-*`；失败时保留临时结果及原 `vio`，数据库写入 `failed`。其他配置文件保留运行时的路径记录。结果仍按现有本地工作区规则同步回共享盘，无需手动写库。
+
+宿主机需要 `flock`，且脚本所在目录需允许创建 `SCRIPT.database.lock`。使用同一个脚本绝对路径的数据库任务会串行执行，避免共用 rootfs 的 `/data/output` 冲突；手动运行脚本或使用其他脚本访问同一 rootfs 时，也必须协调使用该锁。
+
+`--chroot-runner` 不改变脚本的数据映射方式。如果脚本使用 `cp -al`，本地 session 与 rootfs 必须在同一文件系统；跨文件系统时需要先调整脚本或 rootfs 部署方式。仅增加此参数不能解除硬链接限制。
+
 只领取下载、头环基础质检、视频粗质检和立体矫正均已 `completed`，且 `vio_status=pending` 的数据。不依赖深度估计、手部估计、深度前门禁或千问标注。
 
 每条数据使用自己的 session，输出固定为 `vio/`：

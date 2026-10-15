@@ -11,6 +11,7 @@ from roboego_hand_vis.common.processes import run_logged_command
 from roboego_hand_vis.database.validators import resolve_session
 from .cli import DEFAULT_CONFIG, config_from_yaml_and_args, load_yaml, parse_args
 from .runner import build_openvins_command
+from .chroot_runner import validate_runner, run_chroot_session
 
 PROJECT_ROOT=Path(__file__).resolve().parents[2]
 
@@ -20,12 +21,15 @@ def _config(data,session):
         '--session',str(session),'--output_dir',str(session/'vio'),'--input_mode','rectified']))
 
 
-def _validate(shared_root,data,limit):
+def _validate(shared_root,data,limit,*,chroot_runner=None):
     root=Path(shared_root).expanduser().resolve()
     if limit<0 or not root.is_dir():
         raise ValueError('Need a valid shared root and nonnegative limit')
     config=_config(data,root)
-    for path,name in ((config.openvins_binary,'OpenVINS binary'),(config.system_python,'System Python')):
+    if chroot_runner is not None:
+        validate_runner(chroot_runner)
+    for path,name in (() if chroot_runner is not None else
+                      ((config.openvins_binary,'OpenVINS binary'),(config.system_python,'System Python'))):
         if not path.is_file() or not os.access(path,os.X_OK):
             raise ValueError(f'{name} is missing or not executable: {path}')
     if (not math.isfinite(config.start_s) or config.start_s<0
@@ -125,8 +129,8 @@ def _check_outputs(config,before):
     return count
 
 
-def run_pending(service,shared_root,data,*,limit=0,runner=None):
-    root=_validate(shared_root,data,limit)
+def run_pending(service,shared_root,data,*,limit=0,runner=None,chroot_runner=None):
+    root=_validate(shared_root,data,limit,chroot_runner=chroot_runner)
     results=[]
     while not limit or len(results)<limit:
         row=service.claim_vio()
@@ -137,7 +141,10 @@ def run_pending(service,shared_root,data,*,limit=0,runner=None):
         try:
             config,log,before=_task(data,resolve_session(root,row['local_path']))
             if runner is None:
-                _run_session(config,log)
+                if chroot_runner is None:
+                    _run_session(config,log)
+                else:
+                    run_chroot_session(config,log,chroot_runner,check_outputs=_check_outputs)
             else:
                 runner(config)
             count=_check_outputs(config,before)
@@ -161,6 +168,8 @@ def main():
     parser.add_argument('--limit',type=int,default=0)
     parser.add_argument('--config',default=str(DEFAULT_CONFIG))
     parser.add_argument('--input_mode',choices=('rectified',),default='rectified')
+    parser.add_argument('--chroot-runner',type=Path,
+                        help='通过指定的 vio-run.sh 在 chroot 内运行，跳过宿主机 OpenVINS/Python 检查。')
     from roboego_hand_vis.database.cli import add_table_argument, stage_service_or_error
     add_table_argument(parser)
     args=parser.parse_args()
@@ -168,7 +177,7 @@ def main():
     url=database_url_or_error(parser)
     try:
         data=load_yaml(Path(args.config).expanduser())
-        _validate(args.shared_root,data,args.limit)
+        _validate(args.shared_root,data,args.limit,chroot_runner=args.chroot_runner)
     except (ValueError,OSError,TypeError) as exc:
         parser.error(str(exc))
     service=stage_service_or_error(parser, url, args.table, 'vio', args=args)
@@ -176,7 +185,7 @@ def main():
         raise KeyboardInterrupt
     previous=signal.signal(signal.SIGTERM,interrupted)
     try:
-        results=run_pending(service,args.shared_root,data,limit=args.limit)
+        results=run_pending(service,args.shared_root,data,limit=args.limit,chroot_runner=args.chroot_runner)
         print(json.dumps({'stage':'vio','records':results},indent=2,ensure_ascii=False))
         if any(r['status']!='completed' for r in results):
             raise SystemExit(1)
