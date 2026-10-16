@@ -70,3 +70,60 @@ NPZ 字段为标量 `schema_version`、`quality_status`，逐帧向量 `frame_in
 VIO 初始化前可能没有位姿，因此 `completed` 不表示每个视频帧都有位姿，也不代表轨迹精度已经通过质量评估。仅完成输入准备不会标记成功；数据库入口不提供 `prepare_only`。
 
 多终端原子领取，运行期间不持有数据库事务。失败数据需将其 `vio_status` 从 `failed` 改回 `pending` 后再运行；重试沿用原流程重新执行，已有成功文件不能代替本次结果。状态字段已存在，不需要数据库迁移。
+
+## 统一服务器入口（替换旧 runtime-output 包装）
+
+仓库提供 `deploy/vio-run.sh`，保持数据库要求的 `SESSION EMPTY_OUTPUT run` 接口。
+调用链为 `database_run → vio-run.sh → chroot → vio.run → OpenVINS`；手动运行从
+`vio-run.sh` 开始。新脚本不调用 `/usr/local/bin/vio-runtime` 或 `runtime-output.py`，
+项目的 `export_entry.py` 唯一负责交付报告和轨迹。OpenVINS 二进制无需因本次入口调整而重编译。
+
+在服务器上更新宿主仓库后，暂停正在运行的 VIO 任务，再部署同一版本的 VIO 目录和脚本：
+
+```bash
+cd /share/project/liuyou/code/roboego-hand-vis
+R=/home/humancoindata/vio-rootfs
+BACKUP=$(mktemp -d /home/humancoindata/vio-deploy-backup-XXXXXX)
+cp -a "$R/opt/roboego-hand-vis/roboego_hand_vis/vio" "$BACKUP/vio"
+cp -a /share/project/liuyou/vio-run.sh "$BACKUP/vio-run.sh"
+cp -a roboego_hand_vis/vio/. "$R/opt/roboego-hand-vis/roboego_hand_vis/vio/"
+install -m 755 roboego_hand_vis/vio/deploy/vio-run.sh /share/project/liuyou/vio-run.sh
+printf '备份目录：%s\n' "$BACKUP"
+```
+
+rootfs 内仍需现有 Python 依赖和 `/opt/open_vins/ov_msckf/build/roboego_openvins_offline`。
+部署前检查同步的 YAML 中 `runtime.system_python` 指向 rootfs 内实际存在的 Python。
+脚本默认 rootfs 为 `/home/humancoindata/vio-rootfs`，可通过宿主环境变量 `VIO_ROOTFS` 覆盖。
+旧 `vio-runtime doctor/test/prepare` 不属于新入口，直接调用它们仍使用旧脚本逻辑。
+
+单条重跑，无需数据库：
+
+```bash
+SESSION=/home/humancoindata/EGOL1/cp_0001_session_20261010_103736
+OUT=$(mktemp -d "$SESSION/.vio-manual-XXXXXX")
+bash /share/project/liuyou/vio-run.sh "$SESSION" "$OUT" run \
+  --input_mode rectified --max_imu_boundary_gap_s 0.3
+cat "$OUT/console.log"
+```
+
+数据库命令保持原样。数据库任务的算法参数来自**宿主** `--config` 指定的 YAML
+（默认宿主 VIO 的 `recommended.yaml`），解析后显式传入 chroot。
+手动命令中的参数优先于 rootfs 的 YAML；未传的参数采用 **rootfs** 中的配置。
+手动使用 `--config` 时，路径必须能在 rootfs 内访问。
+`console.log` 的 `VIO effective config:` 行记录最终生效参数和路径，用它确认容差。
+
+新脚本固定输入、输出和 OpenVINS 安装路径，其余项目 CLI 参数原样传递。
+保留原包装的算法环境默认值 `OPENVINS_TIME_OFFSET_MODE=estimate` 和
+`OPENVINS_TIMING_BOOTSTRAP=auto`，可用同名宿主环境变量覆盖。
+旧包装专用的 `--debug`、`--time-offset-mode`、`--timing-bootstrap` 不再是新入口参数；
+调试中间文件默认保留在输出的 `.work/` 中，不再清除。
+
+成功时输出项目原生 `report.json`、`trajectory.npz` 和 `console.log`；失败时保留
+`console.log`、`error.log` 及已生成的中间文件，并返回真实退出码。准备阶段失败可能没有
+`report.json`，此时直接查看 `error.log`。手动结果不自动写库或替换 session/vio。
+
+脚本增加 rootfs 级 `.vio-run.lock`，新脚本的手动任务和数据库任务会串行运行；旧脚本
+不认识此锁，因此切换部署时必须停止旧任务。输入仍用硬链接，要求 session 和 rootfs
+位于同一文件系统；输入必须只读。脚本拒绝覆盖已有的 rootfs 输入映射或非空
+`data/output`；若异常中断留下这些目录，先检查并备份，再清理后重试。
+结果复制失败时保留 rootfs 中的数据；复制成功后清理本次映射和 rootfs 输出。

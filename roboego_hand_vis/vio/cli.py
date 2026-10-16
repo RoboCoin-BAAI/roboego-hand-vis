@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import asdict
+import json
 from pathlib import Path
 from typing import Any, Sequence
 
@@ -93,4 +95,5 @@ def config_from_yaml_and_args(data: dict[str, Any], args: argparse.Namespace) ->
 def main() -> None:
     args = parse_args()
     config = config_from_yaml_and_args(load_yaml(Path(args.config)), args)
+    print("VIO effective config: " + json.dumps(asdict(config), default=str), flush=True)
     run_openvins(config)

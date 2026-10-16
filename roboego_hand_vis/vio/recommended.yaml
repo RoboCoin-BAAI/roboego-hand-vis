@@ -12,7 +12,7 @@ prepare:
   input_mode: raw
   stereo_tolerance_s: 0.001
   max_imu_gap_s: 0.05
-  max_imu_boundary_gap_s: 0.1
+  max_imu_boundary_gap_s: 0.3
   downsample_cameras: true
   rectified_downsample_cameras: false
 
