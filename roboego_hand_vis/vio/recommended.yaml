@@ -3,7 +3,7 @@ stage: vio
 runtime:
   recommended_env: openvins_offline
   requires_ros2: false
-  system_python: /usr/bin/python3
+  system_python: /share/project/liuyou/humancoin/envs/ego/bin/python
 
 io:
   output_dir: "{session}/vio"
@@ -21,7 +21,7 @@ run:
   duration_s:
 
 openvins:
-  root: /home/liuyou/Documents/open_vins
+  root: ./open_vins
   binary: "{openvins_root}/ov_msckf/build/roboego_openvins_offline"
 
 outputs:

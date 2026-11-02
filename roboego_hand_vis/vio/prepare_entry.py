@@ -27,6 +27,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max_imu_gap_s", type=float, default=0.05)
     parser.add_argument("--max_imu_boundary_gap_s", type=float, default=0.1)
     parser.add_argument("--downsample_cameras", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--zupt", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--init-window-time", type=float, default=2.0)
+    parser.add_argument("--init-dyn-use", action=argparse.BooleanOptionalAction, default=True)
     return parser
 
 
@@ -41,6 +44,22 @@ def main() -> None:
         max_imu_gap_s=args.max_imu_gap_s,
         max_imu_boundary_gap_s=args.max_imu_boundary_gap_s,
     )
+    import math
+    import yaml
+    if not math.isfinite(args.init_window_time) or args.init_window_time <= 0:
+        raise ValueError("init-window-time must be finite and positive")
+    manifest = json.loads(Path(result.manifest_path).read_text(encoding="utf-8"))
+    config_path = Path(manifest["estimator_config_path"])
+    try:
+        from .calibration import _write_opencv_yaml
+    except ImportError:
+        from calibration import _write_opencv_yaml
+    text = config_path.read_text(encoding="utf-8")
+    if text.startswith("%YAML:"):
+        text = text.split("\n", 1)[1]
+    settings = yaml.safe_load(text)
+    settings.update(try_zupt=args.zupt, init_window_time=args.init_window_time, init_dyn_use=args.init_dyn_use)
+    _write_opencv_yaml(config_path, settings)
     print(json.dumps({"manifest_path": str(Path(result.manifest_path))}, indent=2))
 
 

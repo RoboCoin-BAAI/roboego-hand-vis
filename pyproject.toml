@@ -9,18 +9,18 @@ description = "Ropedia ego-hand mesh/depth visualization pipeline"
 readme = "README.md"
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "numpy",
-    "opencv-python",
-    "PyYAML",
-    "rerun-sdk",
-    "scipy",
-    "torch",
+    "numpy==2.4.6",
+    "opencv-python==5.0.0.93",
+    "PyYAML==6.0.3",
+    "rerun-sdk==0.22.1",
+    "scipy==1.17.1",
+    "torch==2.7.1",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "pyarrow"]
+dev = ["pytest", "pyarrow==26.0.0"]
 database = ["SQLAlchemy>=2.0,<3", "psycopg[binary]>=3.2,<4"]
-privacy = ["ultralytics>=8.2.0", "opencv-python>=4.9.0", "numpy>=1.26"]
+privacy = ["ultralytics>=8.2.0", "opencv-python==5.0.0.93", "numpy==2.4.6"]
 
 [tool.setuptools.packages.find]
 where = ["."]

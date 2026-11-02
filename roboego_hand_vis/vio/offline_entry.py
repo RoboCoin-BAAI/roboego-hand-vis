@@ -12,6 +12,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", required=True, type=Path)
     parser.add_argument("--start_s", type=float, default=0.0)
     parser.add_argument("--duration_s", type=float, default=None)
+    parser.add_argument("--time-offset-mode", choices=("estimate", "config"))
+    parser.add_argument("--timing-bootstrap", choices=("auto", "off"))
     return parser.parse_args()
 
 
@@ -42,7 +44,13 @@ def main() -> None:
     # A successful exit without fresh artifacts must not reuse an earlier trajectory.
     for name in ('run_report.json', 'trajectory.jsonl'):
         (output_dir / name).unlink(missing_ok=True)
-    subprocess.run(command, check=True)
+    import os
+    environment = os.environ.copy()
+    if args.time_offset_mode is not None:
+        environment["OPENVINS_TIME_OFFSET_MODE"] = args.time_offset_mode
+    if args.timing_bootstrap is not None:
+        environment["OPENVINS_TIMING_BOOTSTRAP"] = args.timing_bootstrap
+    subprocess.run(command, check=True, env=environment)
 
 
 if __name__ == "__main__":

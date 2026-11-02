@@ -31,6 +31,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--openvins_binary", default=None, help="可选覆盖 OpenVINS offline runner 二进制路径。")
     parser.add_argument("--no-downsample_cameras", action="store_true", help="不让 OpenVINS 下采样相机图像。")
     parser.add_argument("--prepare_only", action="store_true", help="只生成 OpenVINS 输入和配置，不启动 offline runner。")
+    parser.add_argument("--time-offset-mode", choices=("estimate", "config"), default=None)
+    parser.add_argument("--timing-bootstrap", choices=("auto", "off"), default=None)
+    parser.add_argument("--zupt", action=argparse.BooleanOptionalAction, default=None)
+    parser.add_argument("--init-window-time", type=float, default=None)
+    parser.add_argument("--init-dyn-use", action=argparse.BooleanOptionalAction, default=None)
     return parser.parse_args(argv)
 
 
@@ -89,6 +94,11 @@ def config_from_yaml_and_args(data: dict[str, Any], args: argparse.Namespace) ->
             else prepare.get("max_imu_boundary_gap_s", 0.1)
         ),
         prepare_only=bool(args.prepare_only),
+        time_offset_mode=getattr(args, "time_offset_mode", None) or run.get("time_offset_mode"),
+        timing_bootstrap=getattr(args, "timing_bootstrap", None) or run.get("timing_bootstrap"),
+        zupt=getattr(args, "zupt", None) if getattr(args, "zupt", None) is not None else run.get("zupt", False),
+        init_window_time=getattr(args, "init_window_time", None) if getattr(args, "init_window_time", None) is not None else run.get("init_window_time", 2.0),
+        init_dyn_use=getattr(args, "init_dyn_use", None) if getattr(args, "init_dyn_use", None) is not None else run.get("init_dyn_use", True),
     )
 
 

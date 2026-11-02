@@ -2,7 +2,7 @@ import pytest
 
 
 def test_completion_writeback_failure_stops_claiming(tmp_path):
-    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    from roboego_hand_vis.download_data.L1.database_adapter import download_pending_l1
     from roboego_hand_vis.download_data.downloader import DownloadResult
 
     class Service:

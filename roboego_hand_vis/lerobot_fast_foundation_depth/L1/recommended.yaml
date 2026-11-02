@@ -1,0 +1,20 @@
+stage: lerobot_fast_foundation_depth
+paths:
+  fast_foundation_root: /share/project/liuyou/humancoin/code/Fast-FoundationStereo
+  ckpt: /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+parameters:
+  start: 0
+  num_frames: auto
+  scale: 0.5
+  hiera: 0
+  valid_iters: 4
+  max_disp: 192
+  min_disp: 1.0e-3
+  max_depth_m: 4.0
+  save_depth_png: true
+  save_npy: false
+  save_vis: false
+  preview_every_n_frames: 5
+  progress_every_n_frames: 300
+  verbose: false
+  overwrite: true

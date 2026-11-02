@@ -30,3 +30,11 @@ __all__ = [
 
 if __name__ == "__main__":
     main()
+
+'''
+cd /share/project/liuyou/humancoin/code/roboego-hand-vis
+
+/share/project/liuyou/humancoin/envs/ego/bin/python \
+  -m roboego_hand_vis.stereo_rectification.run \
+  --session "/share/project/liuyou/humancoin/data/L1/batch_0000001/cp_0001_session_20261009_172052"
+'''

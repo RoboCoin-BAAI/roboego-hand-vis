@@ -66,7 +66,7 @@ def checked_import(name, *args, **kwargs):
         raise AssertionError('Direct downloads must not import database dependencies')
     return original_import(name, *args, **kwargs)
 builtins.__import__ = checked_import
-from roboego_hand_vis.download_data.l1 import main
+from roboego_hand_vis.download_data.L1.cli import main
 main()
 '''
     command = [sys.executable, "-c", script, "--output-dir", str(tmp_path / "output"),
@@ -81,7 +81,7 @@ def test_cli_rejects_paths_in_database_mode(tmp_path):
     import sys
 
     result = subprocess.run([
-        sys.executable, "-m", "roboego_hand_vis.download_data.l1", "--database",
+        sys.executable, "-m", "roboego_hand_vis.download_data.L1.cli", "--database",
         "--output-dir", str(tmp_path), "ks3://bucket/session",
     ], capture_output=True, text=True, timeout=15)
     assert result.returncode != 0
@@ -97,7 +97,7 @@ def test_sigterm_stops_cli_and_its_download_subprocess(tmp_path, ks3_tool):
 
     tool, config = ks3_tool
     config.write_text("sleep")
-    command = [sys.executable, "-m", "roboego_hand_vis.download_data.l1",
+    command = [sys.executable, "-m", "roboego_hand_vis.download_data.L1.cli",
                "--output-dir", str(tmp_path / "output"), "--ks3-tool", str(tool),
                "--ks3-config", str(config), "ks3://bucket/session001"]
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

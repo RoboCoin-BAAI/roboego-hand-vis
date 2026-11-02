@@ -8,7 +8,7 @@
 | `--local-root` | 可选，本地运行根目录；省略时直接在共享目录运行 |
 | `--table` | 数据表，默认 `l1data` |
 
-下载仍使用 `download_data.l1 --database --output-dir` 指定共享目录。
+下载仍使用 `download_data.L1.cli --database --output-dir` 指定共享目录。
 数据库里的 `local_path` 始终是 session 相对于共享根目录的路径，不因本地处理改变。
 
 ## 第一环节

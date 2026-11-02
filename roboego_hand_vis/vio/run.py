@@ -23,3 +23,17 @@ __all__ = [
 
 if __name__ == "__main__":
     main()
+
+
+'''
+python -m roboego_hand_vis.vio.run \
+  --session /path/to/session \
+  --openvins_root /path/to/open_vins \
+  --input_mode rectified \
+  --time-offset-mode estimate \
+  --timing-bootstrap auto \
+  --no-zupt \
+  --init-window-time 2.0 \
+  --init-dyn-use
+
+'''

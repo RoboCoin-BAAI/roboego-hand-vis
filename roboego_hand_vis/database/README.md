@@ -46,7 +46,7 @@ python -m roboego_hand_vis.qwen_annotation.database_run \
 数据库下载也支持选表：
 
 ```bash
-python -m roboego_hand_vis.download_data.l1 \
+python -m roboego_hand_vis.download_data.L1.cli \
   --database --table l2data --output-dir ./data/l2 --limit 3
 ```
 
@@ -338,7 +338,7 @@ python -m roboego_hand_vis.database.ingest --table l1data --file ks3_paths.txt
 已经提供独立的 [L1 下载入口](../download_data/README.md)。从数据库下载前三条：
 
 ```bash
-python -m roboego_hand_vis.download_data.l1 --database --output-dir ./data/l1 --limit 3
+python -m roboego_hand_vis.download_data.L1.cli --database --output-dir ./data/l1 --limit 3
 ```
 
 ## Python 使用

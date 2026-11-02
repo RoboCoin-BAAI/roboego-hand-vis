@@ -21,6 +21,20 @@ class OpenVinsRunConfig:
     max_imu_gap_s: float
     max_imu_boundary_gap_s: float
     prepare_only: bool = False
+    time_offset_mode: str | None = None
+    timing_bootstrap: str | None = None
+    zupt: bool = False
+    init_window_time: float = 2.0
+    init_dyn_use: bool = True
+
+    def __post_init__(self):
+        import math
+        if self.time_offset_mode not in (None, "estimate", "config"):
+            raise ValueError("Invalid time_offset_mode")
+        if self.timing_bootstrap not in (None, "auto", "off"):
+            raise ValueError("Invalid timing_bootstrap")
+        if not math.isfinite(self.init_window_time) or self.init_window_time <= 0:
+            raise ValueError("init_window_time must be finite and positive")
 
 
 def _quote(value: str | Path | float | int) -> str:
@@ -53,6 +67,9 @@ def build_openvins_command(config: OpenVinsRunConfig, *, stage_dir: Path) -> str
     ]
     if not config.downsample_cameras:
         prepare_parts.append("--no-downsample_cameras")
+    prepare_parts.extend(["--init-window-time", _quote(config.init_window_time)])
+    prepare_parts.append("--zupt" if config.zupt else "--no-zupt")
+    prepare_parts.append("--init-dyn-use" if config.init_dyn_use else "--no-init-dyn-use")
     commands = [
         "set -euo pipefail",
         f"mkdir -p {_quote(output)}",
@@ -71,6 +88,10 @@ def build_openvins_command(config: OpenVinsRunConfig, *, stage_dir: Path) -> str
         "--start_s",
         _quote(config.start_s),
     ]
+    if config.time_offset_mode is not None:
+        offline_parts.extend(["--time-offset-mode", config.time_offset_mode])
+    if config.timing_bootstrap is not None:
+        offline_parts.extend(["--timing-bootstrap", config.timing_bootstrap])
     if config.duration_s is not None:
         offline_parts.extend(["--duration_s", _quote(config.duration_s)])
 

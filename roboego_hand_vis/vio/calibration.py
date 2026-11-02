@@ -28,9 +28,9 @@ class OpenVinsCalibration:
     estimator_config_path: Path
     transform_imu_camera: np.ndarray
     timeshift_cam_imu_s: float
-    camera_resolutions: tuple[tuple[int, int], tuple[int, int]]
-    camera_models: tuple[str, str]
-    distortion_models: tuple[str, str]
+    camera_resolutions: tuple[tuple[int, int], ...]
+    camera_models: tuple[str, ...]
+    distortion_models: tuple[str, ...]
 
 
 def _estimator_config(output_dir: Path, *, downsample_cameras: bool) -> dict[str, Any]:
@@ -193,7 +193,7 @@ def prepare_openvins_calibration(
     imu_path: str | Path,
     output_dir: str | Path,
     *,
-    camera_ids: tuple[int, int] = (0, 1),
+    camera_ids: tuple[int, ...] = (0, 1),
     downsample_cameras: bool = True,
 ) -> OpenVinsCalibration:
     """Write an OpenVINS config set for two raw Kalibr cameras."""
@@ -210,6 +210,10 @@ def prepare_openvins_calibration(
         cameras[f"cam{output_id}"] = camera
         transforms.append(transform)
 
+    if len(camera_ids) not in (1, 2):
+        raise ValueError("Expected one or two cameras")
+    if len(camera_ids) == 1:
+        cameras["cam0"]["cam_overlaps"] = []
     if "imu0" not in imu_source:
         raise KeyError("IMU calibration does not contain imu0")
     imu = dict(imu_source["imu0"])
@@ -227,10 +231,9 @@ def prepare_openvins_calibration(
     estimator_config_path = output / "estimator_config.yaml"
     _write_opencv_yaml(camera_config_path, cameras)
     _write_opencv_yaml(imu_config_path, {"imu0": imu})
-    _write_opencv_yaml(
-        estimator_config_path,
-        _estimator_config(output.parent, downsample_cameras=downsample_cameras),
-    )
+    estimator = _estimator_config(output.parent, downsample_cameras=downsample_cameras)
+    estimator.update(max_cameras=len(camera_ids), use_stereo=len(camera_ids) == 2)
+    _write_opencv_yaml(estimator_config_path, estimator)
     return OpenVinsCalibration(
         output_dir=output,
         camera_config_path=camera_config_path,
@@ -240,14 +243,14 @@ def prepare_openvins_calibration(
         timeshift_cam_imu_s=float(cameras["cam0"]["timeshift_cam_imu"]),
         camera_resolutions=tuple(
             tuple(int(value) for value in cameras[f"cam{camera_id}"]["resolution"])
-            for camera_id in range(2)
+            for camera_id in range(len(camera_ids))
         ),
         camera_models=tuple(
-            str(cameras[f"cam{camera_id}"]["camera_model"]) for camera_id in range(2)
+            str(cameras[f"cam{camera_id}"]["camera_model"]) for camera_id in range(len(camera_ids))
         ),
         distortion_models=tuple(
             str(cameras[f"cam{camera_id}"]["distortion_model"])
-            for camera_id in range(2)
+            for camera_id in range(len(camera_ids))
         ),
     )
 
@@ -260,17 +263,21 @@ def prepare_rectified_openvins_calibration(
     output_dir: str | Path,
     *,
     stereo_camera_path: str | Path | None = None,
-    camera_ids: tuple[int, int] = (0, 1),
+    camera_ids: tuple[int, ...] = (0, 1),
     downsample_cameras: bool = True,
 ) -> OpenVinsCalibration:
-    """Write OpenVINS configs for undistorted and stereo-rectified cameras."""
+    """Write OpenVINS configs for rectified left mono or stereo cameras."""
+    if camera_ids not in ((0,), (0, 1)):
+        raise ValueError("Rectified calibration supports left mono (0,) or stereo (0, 1)")
     manifest = _load_json(Path(manifest_path).expanduser().resolve())
     camera_source = _load_yaml(Path(camera_imu_path).expanduser().resolve())
     imu_source = _load_yaml(Path(imu_path).expanduser().resolve())
     rectify_source_path = Path(rectify_params_path).expanduser().resolve()
     rectify = _load_yaml(rectify_source_path)
     stereo_source = None
-    if stereo_camera_path is None:
+    if len(camera_ids) == 1:
+        pass  # Left mono does not require or consume stereo geometry.
+    elif stereo_camera_path is None:
         inferred_stereo_path = rectify_source_path.parent / "camera-camchain.yaml"
         if inferred_stereo_path.exists():
             stereo_source = _load_yaml(inferred_stereo_path)
@@ -317,7 +324,7 @@ def prepare_rectified_openvins_calibration(
         transform_imu_rect_cam = np.linalg.inv(transform_rect_cam_imu)
         transforms.append(transform_imu_rect_cam)
         cameras[f"cam{output_id}"] = {
-            "cam_overlaps": [1 - output_id],
+            "cam_overlaps": [1 - output_id] if len(camera_ids) == 2 else [],
             "camera_model": "pinhole",
             "distortion_coeffs": [0.0, 0.0, 0.0, 0.0],
             "distortion_model": "radtan",
@@ -355,10 +362,9 @@ def prepare_rectified_openvins_calibration(
     estimator_config_path = output / "estimator_config.yaml"
     _write_opencv_yaml(camera_config_path, cameras)
     _write_opencv_yaml(imu_config_path, {"imu0": imu})
-    _write_opencv_yaml(
-        estimator_config_path,
-        _estimator_config(output.parent, downsample_cameras=downsample_cameras),
-    )
+    estimator = _estimator_config(output.parent, downsample_cameras=downsample_cameras)
+    estimator.update(max_cameras=len(camera_ids), use_stereo=len(camera_ids) == 2)
+    _write_opencv_yaml(estimator_config_path, estimator)
     return OpenVinsCalibration(
         output_dir=output,
         camera_config_path=camera_config_path,
@@ -368,13 +374,13 @@ def prepare_rectified_openvins_calibration(
         timeshift_cam_imu_s=float(cameras["cam0"]["timeshift_cam_imu"]),
         camera_resolutions=tuple(
             tuple(int(value) for value in cameras[f"cam{camera_id}"]["resolution"])
-            for camera_id in range(2)
+            for camera_id in range(len(camera_ids))
         ),
         camera_models=tuple(
-            str(cameras[f"cam{camera_id}"]["camera_model"]) for camera_id in range(2)
+            str(cameras[f"cam{camera_id}"]["camera_model"]) for camera_id in range(len(camera_ids))
         ),
         distortion_models=tuple(
             str(cameras[f"cam{camera_id}"]["distortion_model"])
-            for camera_id in range(2)
+            for camera_id in range(len(camera_ids))
         ),
     )

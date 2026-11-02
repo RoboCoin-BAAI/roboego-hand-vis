@@ -1,0 +1,265 @@
+dataset: L1
+level: L1
+start_at: download
+paths:
+  python: /share/project/liuyou/humancoin/envs/ego/bin/python
+  repo: /share/project/liuyou/humancoin/code/roboego-hand-vis
+  code_root: /share/project/liuyou/humancoin/code
+  input_root: /share/project/liuyou/humancoin/data/L1
+  output_root: /share/project/liuyou/humancoin/data/L1_lerobot
+  state_root: /share/project/liuyou/humancoin/data/pipeline_tasks
+  ffmpeg: /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg
+  ffprobe: /share/project/liuyou/humancoin/envs/ego/bin/ffprobe
+  ks3_tool: /share/project/liuyou/humancoin/utils/ks3/ks3util-linux-amd64
+  ks3_config: /share/project/liuyou/humancoin/utils/ks3/ks3util-config
+  model_root: /share/project/liuyou/humancoin/code/Fast-FoundationStereo
+  checkpoint: /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+  openvins_root: /share/project/liuyou/humancoin/code/open_vins
+  hand_model_root: /share/project/liuyou/humancoin/code/ego_hands_pose/video_reconstruction
+  hand_python: /share/project/liuyou/humancoin/envs/ego/bin/python
+run_stages:
+- download
+- convert
+- qc
+- rectify
+- review
+- vio
+- depth
+- hand
+force_stages: []
+stages:
+  download:
+    role: cpu
+    depends: []
+    command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/download.py'
+    - --level
+    - L1
+    - --source
+    - '{source}'
+    - --output
+    - '{input_root}/{batch}'
+    - --tool
+    - '{ks3_tool}'
+    - --config
+    - '{ks3_config}'
+    backup_paths:
+    - '{raw_session}'
+  convert:
+    role: cpu
+    depends:
+    - download
+    command:
+    - '{python}'
+    - '{code_root}/Multi-Frequency-LeRobot/format_convert/L1/convert_l1.py'
+    - '{raw_session}'
+    - --out
+    - '{session}'
+    - --ffmpeg
+    - '{ffmpeg}'
+    - --ffprobe
+    - '{ffprobe}'
+    adopt_command: &id001
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L1
+    - --stage
+    - convert
+    - --session
+    - '{session}'
+    - --source
+    - '{raw_session}'
+    validate_command: *id001
+    backup_paths:
+    - '{session}'
+    outputs:
+    - meta/l1_source.json
+  qc:
+    role: cpu
+    depends:
+    - convert
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_headband_integrity/L1/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --ffprobe
+    - '{ffprobe}'
+    - --repair-calibration-root
+    - '{output_root}'
+    inputs:
+    - videos/chunk-*/observation.images.head*/*
+    - data/chunk-*/episode_*/observation.images.head*.parquet
+    - data/chunk-*/episode_*/observation.*imu*.parquet
+    - audios/**/*.wav
+    - meta/calibrations.jsonl
+    - meta/collect_info.jsonl
+    - calibrations/camera*.yaml
+    adopt_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L1
+    - --stage
+    - qc
+    - --session
+    - '{session}'
+    validate_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L1
+    - --stage
+    - qc
+    - --session
+    - '{session}'
+    outputs:
+    - annotation/quality_report.json
+  rectify:
+    role: cpu
+    depends:
+    - qc
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_stereo_rectification/L1/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --ffmpeg
+    - '{ffmpeg}'
+    force_args:
+    - --no-skip-existing
+    adopt_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L1
+    - --stage
+    - rectify
+    - --session
+    - '{session}'
+    validate_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L1
+    - --stage
+    - rectify
+    - --session
+    - '{session}'
+    outputs:
+    - calibrations/*dataset_manifest.json
+    - calibrations/*rectify_params.yaml
+    - videos/chunk-*/observation.images.*_rectified/episode_*.mp4
+  review:
+    role: cpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{code_root}/argus/review/L1/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --rig
+    - ego_head
+    - --jobs
+    - '1'
+    - --no-board
+    - --model
+    - qwen3.6-plus
+    - --reasoning
+    - none
+    - --sample-fps
+    - '2'
+    - --max-tokens
+    - '16384'
+    - --concurrency
+    - '1'
+    - --cap
+    - '0'
+    backup_paths:
+    - '{session}/annotation/argus'
+    outputs:
+    - annotation/argus/**/run_final/out/episode_*.json
+  vio:
+    role: cpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_vio/L1/run.py'
+    - --source
+    - '{session}'
+    - --openvins-root
+    - '{openvins_root}'
+    - --workers
+    - '1'
+    - --init-mode
+    - static-then-dynamic
+    outputs:
+    - data/chunk-*/episode_*/observation.relative_head_pose.parquet
+  depth:
+    role: gpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_fast_foundation_depth/L1/run.py'
+    - --source
+    - '{session}'
+    - --model-root
+    - '{model_root}'
+    - --ckpt
+    - '{checkpoint}'
+    - --engine
+    - throughput
+    - --gpus
+    - '{gpu}'
+    - --num-frames
+    - auto
+    - --depth-format
+    - hevc12
+    - --ffmpeg
+    - '{ffmpeg}'
+    backup_paths:
+    - '{session}/depth'
+    outputs:
+    - depth/chunk-*/episode_*/lerobot_depth.json
+  hand:
+    role: gpu
+    enabled: true
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_hand_pose/L1/run.py'
+    - --source
+    - '{session}'
+    - --model-root
+    - '{hand_model_root}'
+    - --model-python
+    - '{hand_python}'
+    - --gpu
+    - '{gpu}'
+    - --window-batch-size
+    - '1'
+    - --ffmpeg-dir
+    - /share/project/liuyou/humancoin/envs/ego/bin
+    force_args:
+    - --no-skip-existing
+    backup_paths:
+    - '{session}/hand'
+    outputs:
+    - hand/chunk-*/episode_*/lerobot_hand.json
+    - hand/chunk-*/episode_*/prediction.npz

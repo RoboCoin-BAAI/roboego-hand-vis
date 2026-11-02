@@ -676,7 +676,7 @@ def test_ingest_cli_paths_and_file(db, tmp_path):
 
 
 def test_database_download_adapter_writes_status_without_holding_connection(db, tmp_path):
-    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    from roboego_hand_vis.download_data.L1.database_adapter import download_pending_l1
     from roboego_hand_vis.download_data.downloader import DownloadError, DownloadResult
 
     good = db.register("l1data", "ks3://bucket/data/good")
@@ -702,7 +702,7 @@ def test_database_download_adapter_writes_status_without_holding_connection(db, 
 def test_database_download_workers_never_download_same_task_twice(db, tmp_path):
     from collections import Counter
     from threading import Lock
-    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    from roboego_hand_vis.download_data.L1.database_adapter import download_pending_l1
     from roboego_hand_vis.download_data.downloader import DownloadResult
 
     for i in range(16):
@@ -725,7 +725,7 @@ def test_database_download_workers_never_download_same_task_twice(db, tmp_path):
 
 
 def test_database_download_limit_leaves_remaining_tasks_pending(db, tmp_path):
-    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    from roboego_hand_vis.download_data.L1.database_adapter import download_pending_l1
     from roboego_hand_vis.download_data.downloader import DownloadResult
 
     first = db.register("l1data", "ks3://bucket/first")
@@ -1010,7 +1010,7 @@ def test_selected_stage_claim_and_finish_are_isolated(db, table_name, stage):
 @pytest.mark.parametrize('table_name', ['l2data', 'l3data'])
 def test_download_queue_uses_selected_table(db, table_name):
     from types import SimpleNamespace
-    from roboego_hand_vis.download_data.database_adapter import download_pending_l1
+    from roboego_hand_vis.download_data.L1.database_adapter import download_pending_l1
     row = db.register(table_name, 'ks3://bucket/session')
     class Downloader:
         def download(self, source):

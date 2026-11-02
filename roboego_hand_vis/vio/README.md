@@ -127,3 +127,26 @@ cat "$OUT/console.log"
 位于同一文件系统；输入必须只读。脚本拒绝覆盖已有的 rootfs 输入映射或非空
 `data/output`；若异常中断留下这些目录，先检查并备份，再清理后重试。
 结果复制失败时保留 rootfs 中的数据；复制成功后清理本次映射和 rootfs 输出。
+
+## Explicit estimator options
+
+```bash
+python -m roboego_hand_vis.vio.run \
+  --session /path/to/session --input_mode rectified \
+  --openvins_root /path/to/open_vins \
+  --time-offset-mode estimate --timing-bootstrap auto \
+  --zupt --init-window-time 2.0 --init-dyn-use
+```
+
+`--no-zupt` disables ZUPT (the default). `--no-init-dyn-use` disables dynamic
+initialization; it is enabled by default. The initialization window must be
+finite and positive. ZUPT enables one run; automatic fallback is not provided.
+
+Time modes are `estimate` / `config`; bootstrap modes are `auto` / `off`.
+Explicit CLI options override the `run` YAML keys `time_offset_mode`,
+`timing_bootstrap`, `zupt`, `init_window_time`, and `init_dyn_use`.
+When time options are omitted from both CLI and YAML, the existing backend
+launcher environment/defaults apply. Use the `roboego_openvins_offline` Python
+launcher configured by default, which reads the time-option environment.
+These options apply to the direct `vio.run` entry; database/chroot forwarding
+of these new options is not provided.

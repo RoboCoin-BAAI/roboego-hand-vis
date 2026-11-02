@@ -1,0 +1,34 @@
+# 光轮常驻深度消费者
+
+从转换端的 `batch_*/rectification_done.json` 读取 KS3 前缀，只处理对应 `records/*.json` 中 `uploaded` 的对象。使用上传收据的相对文件名和大小下载完整 LeRobot 会话。输入侧与转换任务共用 `/share` 清单；两个流程分别使用 `runner.lock` 和 `depth_runner.lock`，可以同时运行。
+
+```bash
+cd /share/project/liuyou/humancoin/code/roboego-hand-vis
+export PATH="/share/project/liuyou/humancoin/envs/ego/bin:$PATH"
+
+python -u scripts/guanglun/depth.py \
+  --state-root /share/project/liuyou/humancoin/data/guanglun_batches \
+  --download-root /share/project/liuyou/humancoin/data/guanglun_depth \
+  --model-root /share/project/liuyou/humancoin/code/Fast-FoundationStereo \
+  --ckpt /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/model_best_bp2_serialize.pth \
+  --ks3-tool /share/project/liuyou/humancoin/utils/ks3/ks3util-linux-amd64 \
+  --ks3-config /share/project/liuyou/humancoin/utils/ks3/ks3util-config-team \
+  --gpus 0,1,2,3,4,5,6,7 --depth-workers-per-gpu 1 \
+  --first-batch 1 --last-batch 574 \
+  --execute
+```
+
+模型 checkpoint 旁边需要配套的 `cfg.yaml`，模型文件沿用 L1 的部署方式。新服务器必须能访问该共享目录，并有 CUDA、模型依赖和 ffmpeg/ffprobe。每卡默认一个常驻模型，可按显存改为 `--depth-workers-per-gpu 2`。首个会话下载完成后加载模型，此后跨会话、跨批次及空闲轮询期间都保持加载，不运行手部估计。
+
+不带 `--execute` 只统计待处理条目，不下载、不加载模型。默认每 60 秒扫描一次并持续等待新增数据；`--once` 仅处理当前扫描到的条目后退出。批次按编号排列投递，多 GPU 会交错完成。下载和推理由各个 lane 顺序执行，不预先下载全部 574 批；队列最多容纳 lane 数量的两倍任务。
+
+输出与恢复：
+
+- 数据集位于 `download-root/batch_N/<KS3前缀SHA256>/`，深度结果在会话的 `depth/` 下，采用 HEVC12。
+- 只有 resident 返回成功且深度完整性检查通过，才写入 `state-root/batch_N/depth_done.json`，格式为已完成的源 KS3 前缀字符串数组。
+- `state-root/batch_N/depth_records/<hash>.json` 保存本机目录、GPU、处理状态、诊断与日志路径。
+- `download-root/logs/` 保存各会话及 resident 日志。
+- 重启时跳过 `depth_done.json` 中的会话。失败会话保留数据，同一次运行不反复重试；重新启动后重试。
+- 仅一个深度协调器可以消费同一个 state-root。意外退出留下锁时，确认原协调器已结束后再删除 `depth_runner.lock`。
+
+不会自动上传深度或删除输入/输出。因此共享盘使用量会持续增加；默认每个下载前要求剩余空间大于该会话大小加 50 GiB，可用 `--min-free-gb` 调整。它是预检查，不是跨进程的硬空间配额。磁盘不足的会话会记录失败，需释放空间后重启重试。

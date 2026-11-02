@@ -1,0 +1,201 @@
+dataset: L3
+level: L3
+start_at: download
+paths:
+  python: /share/project/liuyou/humancoin/envs/ego/bin/python
+  repo: /share/project/liuyou/humancoin/code/roboego-hand-vis
+  code_root: /share/project/liuyou/humancoin/code
+  input_root: /share/project/liuyou/humancoin/data/L3_lerobot
+  output_root: /share/project/liuyou/humancoin/data/L3_lerobot
+  state_root: /share/project/liuyou/humancoin/data/pipeline_tasks
+  ffmpeg: /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg
+  ffprobe: /share/project/liuyou/humancoin/envs/ego/bin/ffprobe
+  ks3_tool: /share/project/liuyou/humancoin/utils/ks3/ks3util-linux-amd64
+  ks3_config: /share/project/liuyou/humancoin/utils/ks3/ks3util-config
+  model_root: /share/project/liuyou/humancoin/code/Fast-FoundationStereo
+  checkpoint: /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+  openvins_root: /share/project/liuyou/humancoin/code/open_vins
+run_stages:
+- download
+- qc
+- rectify
+- review
+- vio
+- depth
+force_stages: []
+stages:
+  download:
+    role: cpu
+    depends: []
+    command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/download.py'
+    - --level
+    - L3
+    - --source
+    - '{source}'
+    - --output
+    - '{output_root}/{batch}'
+    - --tool
+    - '{ks3_tool}'
+    - --config
+    - '{ks3_config}'
+    backup_paths:
+    - '{session}'
+  qc:
+    role: cpu
+    depends:
+    - download
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_headband_integrity/L3/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --ffprobe
+    - '{ffprobe}'
+    - --calibration-root
+    - '{output_root}'
+    inputs:
+    - videos/chunk-*/observation.images.head*/*
+    - data/chunk-*/episode_*/observation.images.head*.parquet
+    - data/chunk-*/episode_*/observation.*imu*.parquet
+    - audios/**/*.wav
+    - meta/calibrations.jsonl
+    - meta/collect_info.jsonl
+    - calibrations/camera*.yaml
+    adopt_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L3
+    - --stage
+    - qc
+    - --session
+    - '{session}'
+    validate_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L3
+    - --stage
+    - qc
+    - --session
+    - '{session}'
+    outputs:
+    - annotation/quality_report.json
+  rectify:
+    role: cpu
+    depends:
+    - qc
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_stereo_rectification/L3/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --ffmpeg
+    - '{ffmpeg}'
+    force_args:
+    - --no-skip-existing
+    adopt_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L3
+    - --stage
+    - rectify
+    - --session
+    - '{session}'
+    validate_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L3
+    - --stage
+    - rectify
+    - --session
+    - '{session}'
+    outputs:
+    - calibrations/*dataset_manifest.json
+    - calibrations/*rectify_params.yaml
+    - videos/chunk-*/observation.images.*_rectified/episode_*.mp4
+  review:
+    role: cpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{code_root}/argus/review/L3/run.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --jobs
+    - '1'
+    - --no-board
+    - --model
+    - qwen3.6-plus
+    - --reasoning
+    - none
+    - --sample-fps
+    - '2'
+    - --max-tokens
+    - '16384'
+    - --concurrency
+    - '1'
+    - --cap
+    - '0'
+    backup_paths:
+    - '{session}/annotation/argus'
+    outputs:
+    - annotation/argus/**/run_final/out/episode_*.json
+  vio:
+    role: cpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_vio/L3/run.py'
+    - --source
+    - '{session}'
+    - --openvins-root
+    - '{openvins_root}'
+    - --workers
+    - '1'
+    - --init-mode
+    - static-then-dynamic
+    outputs:
+    - data/chunk-*/episode_*/observation.relative_head_pose.parquet
+  depth:
+    role: gpu
+    depends:
+    - qc
+    - rectify
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_fast_foundation_depth/L3/run.py'
+    - --source
+    - '{session}'
+    - --model-root
+    - '{model_root}'
+    - --ckpt
+    - '{checkpoint}'
+    - --engine
+    - throughput
+    - --gpus
+    - '{gpu}'
+    - --num-frames
+    - auto
+    - --depth-format
+    - hevc12
+    - --ffmpeg
+    - '{ffmpeg}'
+    backup_paths:
+    - '{session}/depth'
+    outputs:
+    - depth/chunk-*/episode_*/lerobot_depth.json
