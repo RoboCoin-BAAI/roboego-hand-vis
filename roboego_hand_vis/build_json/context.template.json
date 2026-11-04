@@ -1,0 +1,12 @@
+{
+  "level": "L3",
+  "scene": {
+    "type": "unknown",
+    "name": null
+  },
+  "task_name": null,
+  "task_description": null,
+  "primary_camera": "observation.images.headband_left_rgb_rectified",
+  "view_count": null,
+  "bare_hand_features": []
+}

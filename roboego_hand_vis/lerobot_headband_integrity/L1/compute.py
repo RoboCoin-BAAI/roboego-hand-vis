@@ -6,11 +6,12 @@ import time
 from pathlib import Path
 from uuid import uuid4
 
-from . import audio, calibration, imu, timestamps, video
+from . import audio, calibration, imu, timestamps, video, stereo
 from ..common import CAMERAS, Context, guarded, result
 
 MODALITIES = {"timestamps": timestamps.check, "video": video.check,
-              "imu": imu.check, "audio": audio.check, "calibration": calibration.check}
+              "imu": imu.check, "audio": audio.check, "calibration": calibration.check,
+              "stereo_first_frame": stereo.check}
 
 
 def build_report(session, validate_vio_calibration=True, **options):

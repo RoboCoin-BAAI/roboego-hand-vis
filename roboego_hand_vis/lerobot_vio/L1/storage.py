@@ -25,11 +25,14 @@ def stage_features(plan, data, staging, quality):
     import pyarrow as pa
     import pyarrow.parquet as pq
 
+    camera_pose = plan.get('publish_left_camera_pose', False)
+    feature_key = 'observation.left_camera_pose' if camera_pose else FEATURE
+    status_key = 'observation.left_camera_pose_status' if camera_pose else STATUS_FEATURE
     session = plan['session']
     source = pq.read_table(plan['left_timestamps'])
     times = source['timestamp'].to_numpy()
     valid = data['status'] == 'valid'
-    matrices = data['T_world_imu']
+    matrices = data['T_world_camera' if camera_pose else 'T_world_imu']
     origin = matrices[np.flatnonzero(valid)[0]]
     values = np.full((len(times), 7), np.nan)
     previous = None
@@ -45,20 +48,20 @@ def stage_features(plan, data, staging, quality):
     folder.mkdir(parents=True)
     base = dict(timestamp=pa.array(times, type=pa.float64()), episode_index=source['episode_index'])
     pq.write_table(pa.table({**base, **{name: pa.array(values[:, i], type=pa.float64()) for i, name in enumerate(NAMES)}}),
-                   folder / f'{FEATURE}.parquet')
+                   folder / f'{feature_key}.parquet')
     statuses = ['valid', 'initializing', 'imu_unavailable', 'state_not_advanced',
                 'invalid_state', 'not_processed', 'not_requested', 'no_stereo_pair', 'not_estimated']
     codes = {name: i for i, name in enumerate(statuses)}
     if not set(data['status'].tolist()).issubset(codes):
         raise ValueError('Unknown trajectory status')
     pq.write_table(pa.table({**base, 'status': pa.array([codes[s] for s in data['status']], type=pa.int64())}),
-                   folder / f'{STATUS_FEATURE}.parquet')
+                   folder / f'{status_key}.parquet')
     info = json.loads((session / 'meta/info.json').read_text(encoding='utf-8'))
     feature = dict(dtype='float64', shape=[7], names=NAMES, fps=info['fps'],
-                   frame_convention='T_first_valid_imu_current_imu', translation_unit='m',
+                   frame_convention='T_first_valid_left_camera_current_left_camera' if camera_pose else 'T_first_valid_imu_current_imu', translation_unit='m',
                    quaternion_convention='Hamilton xyzw', source='OpenVINS',
-                   invalid_value='NaN', reference='per-episode first valid IMU pose')
-    for key, spec in [(FEATURE, feature), (STATUS_FEATURE, dict(dtype='int64', shape=[1], names=['status'], fps=info['fps'], status_codes=codes))]:
+                   invalid_value='NaN', reference='per-episode first valid left camera pose' if camera_pose else 'per-episode first valid IMU pose')
+    for key, spec in [(feature_key, feature), (status_key, dict(dtype='int64', shape=[1], names=['status'], fps=info['fps'], status_codes=codes))]:
         existing = info['features'].get(key)
         if existing is not None and existing != spec:
             raise ValueError(f'Existing feature has a different definition: {key}')
@@ -76,12 +79,15 @@ def stage_features(plan, data, staging, quality):
     def statistics(v):
         return dict(min=v.min(axis=0).tolist(), max=v.max(axis=0).tolist(),
                     mean=v.mean(axis=0).tolist(), std=v.std(axis=0).tolist(), count=[len(v)])
-    record['stats'][FEATURE] = statistics(values[valid])
-    record['stats'][STATUS_FEATURE] = statistics(np.array([codes[s] for s in data['status']])[:, None])
+    record['stats'][feature_key] = statistics(values[valid])
+    record['stats'][status_key] = statistics(np.array([codes[s] for s in data['status']])[:, None])
     (staging / 'meta/episodes_stats.jsonl').write_text(''.join(json.dumps(row, allow_nan=False) + '\n' for row in records), encoding='utf-8')
-    metadata = dict(feature=FEATURE, source_camera=plan.get('source_camera', 'observation.images.head_left_rectified'),
-                    device_frame='IMU (head-mounted device); no anatomical head transform assumed',
+    metadata = dict(feature=feature_key, source_camera=plan.get('source_camera', 'observation.images.head_left_rectified'),
+                    device_frame='rectified left camera' if camera_pose else 'IMU (head-mounted device); no anatomical head transform assumed',
                     reference_frame_index=int(np.flatnonzero(valid)[0]), reference_T_world_imu=origin.tolist(),
                     status_codes=codes, quality=quality,
                     timestamp='left camera acquisition time in dataset seconds; pose is camera-aligned IMU state')
+    if camera_pose:
+        metadata['reference_T_world_camera'] = metadata.pop('reference_T_world_imu')
+        metadata['timestamp'] = 'left camera acquisition time; left camera pose from T_world_camera'
     return metadata

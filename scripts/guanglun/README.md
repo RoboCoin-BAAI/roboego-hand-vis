@@ -32,3 +32,21 @@ python -u scripts/guanglun/depth.py \
 - 仅一个深度协调器可以消费同一个 state-root。意外退出留下锁时，确认原协调器已结束后再删除 `depth_runner.lock`。
 
 不会自动上传深度或删除输入/输出。因此共享盘使用量会持续增加；默认每个下载前要求剩余空间大于该会话大小加 50 GiB，可用 `--min-free-gb` 调整。它是预检查，不是跨进程的硬空间配额。磁盘不足的会话会记录失败，需释放空间后重启重试。
+
+## 批量回传
+
+`upload.py` 一次扫描当前已完成的会话（同时要求 `depth_done.json` 包含源 URI 且深度记录状态为 `done`），将整个会话目录回传到记录中的原 KS3 前缀。沿用 `ks3util -r -u`，会话依次上传，每个会话默认 64 个传输任务。失败后继续其他会话，最终以非零状态退出；不删除本地数据，也不修改深度处理记录。再次执行仍会调用工具，由 `-u` 决定哪些文件需要传输。
+
+```bash
+cd /share/project/liuyou/humancoin/code/roboego-hand-vis
+
+/share/project/liuyou/humancoin/envs/ego/bin/python -u \
+  scripts/guanglun/upload.py \
+  --state-root /share/project/liuyou/humancoin/data/guanglun_batches \
+  --ks3-tool /share/project/liuyou/humancoin/utils/ks3/ks3util-linux-amd64 \
+  --ks3-config /share/project/liuyou/humancoin/utils/ks3/ks3util-config-team \
+  --jobs 64 \
+  --execute
+```
+
+去掉 `--execute` 只列出回传源目录和目标。可用 `--first-batch 1 --last-batch 1` 限定批次。该脚本处理本次扫描到的结果后退出，新增完成的数据需要再次运行。job 必须能访问记录中 `session` 指向的共享目录。

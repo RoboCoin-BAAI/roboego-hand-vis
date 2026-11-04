@@ -102,6 +102,19 @@ class IntegrityTests(unittest.TestCase):
         self.assertFalse(self.report()['passed'])
 
     def setUp(self):
+        # These modality fixtures use placeholder videos; stereo image behavior
+        # is exercised with actual image arrays in test_stereo_alignment.py.
+        stereo_patch = patch(
+            'roboego_hand_vis.lerobot_headband_integrity.L1.stereo.check_stereo_alignment',
+            return_value=[dict(name='horizontal_alignment', passed=True,
+                               level='fail', detail=None, statistics={})])
+        stereo_patch.start()
+        self.addCleanup(stereo_patch.stop)
+        geometry_patch = patch(
+            'roboego_hand_vis.lerobot_stereo_rectification.L1.compute.load_geometry',
+            return_value=None)
+        geometry_patch.start()
+        self.addCleanup(geometry_patch.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / "batch/session"

@@ -75,3 +75,9 @@ Finite repeated/backward video and master timestamps are warnings. Empty or nonf
 Front headband stereo boundary QC: absolute first-frame and last-frame timestamp differences, multiplied by left-camera FPS, must each be <= 2 frames. Either exceeding 2 fails QC. Uses actual frame order, without sorting timestamps.
 
 Batch pipeline shares an immutable calibration donor snapshot per invocation (--calibration-donor-cache). Discovery scans only batch/session annotation directories, without descending into videos or intermediate outputs.
+
+## First-frame horizontal stereo alignment
+
+Requires OpenCV with SIFT and NumPy. For each episode, read frame zero from head_left and head_right. Load L1 calibration from calibrations/camera-camchain.yaml, then rectify in memory using the same center crop, balance=0 and common valid ROI as stereo rectification. No precomputed rectified videos are required. L3 separately loads its episode calibration from meta/calibrations.jsonl.
+
+Both levels use the depth gate metrics: at least 30 mutual SIFT matches, at least 4 occupied cells in a 4-by-3 grid, median vertical error <=20 pixels and P95 <=40 pixels. Excessive error, insufficient matches, invalid calibration or unreadable first frames fail QC. Metrics appear under stereo_first_frame/<chunk>/<episode>/horizontal_alignment in quality_report.json. Only frame zero is assessed.

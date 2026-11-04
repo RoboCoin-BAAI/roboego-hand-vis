@@ -18,6 +18,11 @@ def validate(stage, session, level, source=None):
         # Download receipts are intentionally not imported blindly: legacy data
         # has no verifiable receipt. Run download normally or start at QC.
         raise ValueError('Download adoption is unsupported; configure run_stages to start at QC for existing data')
+    elif stage == 'points':
+        from roboego_hand_vis.lerobot_hand_pose.L3.convert_world_points import reusable
+        from roboego_hand_vis.lerobot_hand_pose.L3.world_points import DEFAULT_MAX_GAP_S
+        if level != 'L3' or not reusable(session, 'both', DEFAULT_MAX_GAP_S):
+            raise ValueError('World hand points failed source/output/extrinsic verification')
     elif stage == 'qc':
         report = json.loads((session / 'annotation/quality_report.json').read_text(encoding='utf-8'))
         assert report['passed'] is True and report['gate']['passed'] is True, 'QC did not pass'
@@ -58,7 +63,7 @@ def validate(stage, session, level, source=None):
 
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--stage',required=True,choices=('qc','rectify','convert'))
+    p.add_argument('--stage',required=True,choices=('qc','rectify','convert','points'))
     p.add_argument('--session',required=True,type=Path)
     p.add_argument('--level',required=True,choices=('L1','L3'))
     p.add_argument('--source',type=Path)

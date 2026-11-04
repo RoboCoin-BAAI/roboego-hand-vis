@@ -72,3 +72,7 @@ signal checks, not proof of hardware failure.
 Finite repeated/backward video and master timestamps are warnings. Empty or nonfinite timestamps still fail. VIO independently requires strictly increasing camera timestamps.
 
 Front headband stereo boundary QC: absolute first-frame and last-frame timestamp differences, multiplied by left-camera FPS, must each be <= 2 frames. Either exceeding 2 fails QC. Uses actual frame order, without sorting timestamps.
+
+左右水平对齐质检：每个 episode 只读取 headband_left_rgb / headband_right_rgb 的首帧，使用与 L3 双目校正、深度输入相同的标定、居中裁剪、balance=0 和公共有效区域裁剪，在内存中完成去畸变和双目校正，无需先生成完整校正视频。复用深度模块的 SIFT 双向特征匹配指标：至少 30 对匹配、覆盖至少 4 个网格，垂直误差中位数不超过 20 像素、P95 不超过 40 像素。指标和标定来源写入 quality_report.json 的 stereo_frame_10/horizontal_alignment 检查；超限、匹配不足或首帧/标定不可读均不通过。此检查仅覆盖首帧。
+
+L3 QC ?????? 10 ??frame_index=9??P95 ????????????????max_p95_px=null??????? 30 ???????? 4 ?????????? ?20px?L1 ?????????????

@@ -143,6 +143,17 @@ def check_calibration(ctx):
     return checks
 
 
+def check_stereo_alignment(ctx, episode):
+    from ..stereo_alignment import check_stereo_alignment as check
+    from roboego_hand_vis.lerobot_stereo_rectification.L3.compute import load_geometry
+    from roboego_hand_vis.common.stereo_quality import POLICY
+
+    geometry, provenance = load_geometry(ctx.root, episode)
+    return check(ctx, episode, geometry=geometry, provenance=provenance,
+                 camera_names=('headband_left_rgb', 'headband_right_rgb'),
+                 frame_index=9, policy=dict(POLICY, version=3, max_p95_px=None))
+
+
 def build_report(session, calibration_donors=(), **options):
     checks = []
     repair = None
@@ -182,6 +193,10 @@ def build_report(session, calibration_donors=(), **options):
         total = 0
         for episode in ctx.episodes:
             prefix = f'{episode.parent.name}/{episode.name}'
+            alignment = guarded('readable', lambda: check_stereo_alignment(ctx, episode))
+            for item in alignment:
+                item['name'] = f'{prefix}/stereo_frame_10/{item["name"]}'
+            checks.extend(alignment)
             boundaries = guarded('readable', lambda: stereo_boundary_checks(
                 ctx, episode, 'headband_left_rgb', 'headband_right_rgb'))
             for item in boundaries:

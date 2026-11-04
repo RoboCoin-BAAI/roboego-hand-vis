@@ -1,6 +1,7 @@
 dataset: L3
 level: L3
 start_at: download
+cpu_failure_policy: continue_passed
 paths:
   python: /share/project/liuyou/humancoin/envs/ego/bin/python
   repo: /share/project/liuyou/humancoin/code/roboego-hand-vis
@@ -20,7 +21,7 @@ run_stages:
 - qc
 - rectify
 - review
-- vio
+- points
 - depth
 force_stages: []
 stages:
@@ -85,6 +86,38 @@ stages:
     - '{session}'
     outputs:
     - annotation/quality_report.json
+  points:
+    role: cpu
+    depends:
+    - qc
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/lerobot_hand_pose/L3/convert_world_points.py'
+    - --source
+    - '{session}'
+    - --workers
+    - '1'
+    - --side
+    - both
+    - --overwrite
+    inputs:
+    - data/chunk-*/episode_*/observation.hand_skeleton.parquet
+    - data/chunk-*/episode_*/observation.left_wrist_pose.parquet
+    - data/chunk-*/episode_*/observation.right_wrist_pose.parquet
+    validate_command:
+    - '{python}'
+    - '{repo}/scripts/pipeline/check.py'
+    - --level
+    - L3
+    - --stage
+    - points
+    - --session
+    - '{session}'
+    outputs:
+    - data/chunk-*/episode_*/observation.hand_left_points.parquet
+    - data/chunk-*/episode_*/observation.hand_right_points.parquet
+    - data/chunk-*/episode_*/hand_left_points_provenance.json
+    - data/chunk-*/episode_*/hand_right_points_provenance.json
   rectify:
     role: cpu
     depends:
@@ -124,12 +157,17 @@ stages:
     - videos/chunk-*/observation.images.*_rectified/episode_*.mp4
   review:
     role: cpu
+    inputs:
+    - meta/qc_reports.jsonl
+    force_args:
+    - --force
     depends:
     - qc
     - rectify
     command:
     - '{python}'
     - '{code_root}/argus/review/L3/run.py'
+    - --structured-only
     - --source
     - '{session}'
     - --workers
@@ -138,11 +176,15 @@ stages:
     - '1'
     - --no-board
     - --model
-    - qwen3.6-plus
+    - qwen3.8-27b
+    - --structured-model
+    - qwen3.8-27b
+    - --structured-timeout
+    - '120'
     - --reasoning
     - none
     - --sample-fps
-    - '2'
+    - '1'
     - --max-tokens
     - '16384'
     - --concurrency
@@ -152,7 +194,7 @@ stages:
     backup_paths:
     - '{session}/annotation/argus'
     outputs:
-    - annotation/argus/**/run_final/out/episode_*.json
+    - annotation/episode_*_structured.json
   vio:
     role: cpu
     depends:
@@ -170,7 +212,7 @@ stages:
     - --init-mode
     - static-then-dynamic
     outputs:
-    - data/chunk-*/episode_*/observation.relative_head_pose.parquet
+    - data/chunk-*/episode_*/observation.left_camera_pose.parquet
   depth:
     role: gpu
     depends:

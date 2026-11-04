@@ -2,11 +2,36 @@
 
 CPU freezes its session selection at startup and runs CPU stages in `run_stages` order.
 L1: download ALL -> convert ALL -> QC ALL -> rectify ALL -> Argus ALL -> VIO ALL.
-L3: download ALL -> QC ALL -> rectify ALL -> Argus ALL -> VIO ALL.
-`--workers` controls concurrency within each stage. Every selected session must
-complete and validate before the next stage starts. On failure, finish other
-sessions in this stage, report the blocked batch/session list, and exit nonzero.
-No sessions are silently excluded from downstream processing.
+L3: download ALL -> QC ALL -> rectify ALL -> Argus ALL -> world hand points ALL.
+`--workers` controls concurrency within each stage. Each stage drains the fixed
+selection before the next stage starts. L3 uses `cpu_failure_policy: continue_passed`:
+failed sessions are reported and excluded from all later CPU phases; successful
+sessions continue. The final exit code is nonzero if any session failed, even when
+all survivors finish. L1 retains the default `stop` policy: one failed session
+blocks the next phase for the entire selection.
+
+L3 `points` generates both world-space 21-point hands from MANUS + VIVE using the
+confirmed mounting transform. Output hashes, source hashes and mounting parameters
+are validated before success is recorded. `points` runs last and depends only on QC. Rectification depends on QC, and review depends on rectification; points failures do not block them. The default pose interpolation bracket is 30 ms; larger gaps produce NaN samples.
+L3 review uses official `qwen3.8-27b` for labeling and structured completion,
+1 FPS sampling, and `--structured-only`. Configure `DASHSCOPE_API_KEY` and
+`DASHSCOPE_BASE_URL`, and unset `XMSXB_API_KEY`. VIO is available as an explicit
+stage but is no longer in the default L3 CPU sequence.
+
+L3 review now requires the episode's unique EXEC_START marker from
+`meta/qc_reports.jsonl` (`qc_report.streams.marker.stats.markers.items[].t_offset`).
+Only execution frames at/after that offset are sent; annotation times remain on
+the original RUN_START/video clock. Missing or invalid markers fail explicitly.
+Sync Argus `review/L3/run.py`, `review/__main__.py`, and `label/episode.py` together.
+To replace earlier full-video annotations after configuring the API environment:
+
+```bash
+bash scripts/L3/pipeline_cpu.sh --batch-range 1:9 --workers 4 \
+  --run-stages review --force-stages review
+```
+
+Force archives the previous annotation and makes new model calls. QC marker
+changes are included in the review stage's input signature.
 
 ```bash
 # L1 batches 1 through 12, inclusive
@@ -19,8 +44,8 @@ bash scripts/L3/pipeline_cpu.sh --batch-range 1:12 --workers 4 --retry-failed
 
 `--batch-range` is CPU only and cannot be combined with `--batches`. Without either,
 CPU selects all batches discovered at startup. CPU `--watch` waits for externally
-locked work within that fixed selection; it does not discover new sessions and
-still exits on failed tasks. `--run-stages` must respect dependency order; omitted
+locked work within that fixed selection; it does not discover new sessions.
+Failed-session handling follows `cpu_failure_policy`. `--run-stages` must respect dependency order; omitted
 prerequisites still require valid existing state. Use `--dry-run` to inspect the
 selection without launching work. Existing `--force-stages`, state validation,
 backup/restore, and dependency checks remain in effect.
@@ -57,7 +82,8 @@ bash scripts/L3/pipeline_gpu.sh --batches batch_0000001 --gpus 0,1,2,3 --watch
 PIPELINE_CONFIG 覆盖 YAML 路径，PIPELINE_PYTHON 覆盖启动解释器；YAML 的 paths.python 是实际子任务解释器。
 先设置好模型接口环境变量、依赖与 OpenVINS 二进制，新调度器不自动 apt 安装或编译。
 
-CPU：download → convert（仅 L1）→ qc → rectify → review / vio。
+CPU L1：download → convert → qc → rectify → review → vio。
+CPU L3：download → qc → points → rectify → review。
 GPU：depth、hand 都要求 qc 和 rectify 有效完成，不能绕过门禁。
 下载按 session 执行；配置的输出仍为 batch/session。
 
@@ -65,7 +91,7 @@ GPU：depth、hand 都要求 qc 和 rectify 有效完成，不能绕过门禁。
 
 ```yaml
 start_at: download
-run_stages: [download, qc, rectify, review, vio, depth, hand]  # L3；L1 另含 convert
+run_stages: [download, qc, rectify, review, points, depth]  # L3；depth 为 GPU 阶段
 force_stages: []
 ```
 

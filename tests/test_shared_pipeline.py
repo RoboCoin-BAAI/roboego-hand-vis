@@ -246,6 +246,52 @@ def test_cpu_failed_phase_finishes_peers_and_blocks_next(tmp_path, portable_exec
     assert 'rectify' not in bad and 'rectify' not in good
 
 
+def test_l3_stage_barriers_filter_failures_without_running_their_downstream(tmp_path,portable_execution):
+    from types import SimpleNamespace
+    c=config(tmp_path)
+    names=['download','qc','points','rectify','review']
+    c.update(start_at='download',run_stages=names,cpu_failure_policy='continue_passed',stages={})
+    events=tmp_path/'events.txt'
+    for i,name in enumerate(names):
+        program=('from pathlib import Path;import sys;'
+                 's=Path(sys.argv[1]);s.mkdir(parents=True,exist_ok=True);'
+                 'name=sys.argv[2];f=open(sys.argv[3],"a");f.write(name+":"+s.name+"\\n");f.close();'
+                 'sys.exit(1) if s.name=="bad_"+name else (s/(name+".ok")).write_text("done")')
+        c['stages'][name]=dict(role='cpu',depends=names[i-1:i],
+            command=[sys.executable,'-c',program,'{session}',name,str(events)],outputs=[name+'.ok'])
+    selected=[dict(batch='batch_1',name='bad_'+name,source=name) for name in names]
+    selected.append(dict(batch='batch_1',name='good',source='good'))
+    runner=pipeline.Runner(c,'cpu')
+    assert pipeline.run_cpu_phases(runner,selected,['0'],SimpleNamespace(watch=False,poll_s=1))==1
+    expected=[]
+    active=list(selected)
+    for name in names:
+        expected.extend(name+':'+t['name'] for t in active)
+        active=[t for t in active if t['name']!='bad_'+name]
+    assert events.read_text().splitlines()==expected
+    for index,task in enumerate(selected[:-1]):
+        states=pipeline.read(runner.folder(task)/'state.json')
+        assert states[names[index]]['status']=='failed'
+        assert all(n not in states for n in names[index+1:])
+    good=pipeline.read(runner.folder(selected[-1])/'state.json')
+    assert all(good[n]['status']=='done' for n in names)
+
+
+def test_actual_l3_cpu_config_has_points_last_and_current_review_settings():
+    import yaml
+    c=yaml.safe_load((Path(__file__).parents[1]/'scripts/L3/pipeline.yaml').read_text(encoding='utf-8'))
+    pipeline.validate_config(c)
+    cpu=[n for n in c['run_stages'] if c['stages'][n]['role']=='cpu']
+    assert cpu==['download','qc','rectify','review','points']
+    assert c['cpu_failure_policy']=='continue_passed'
+    assert c['stages']['points']['depends']==['qc']
+    assert c['stages']['rectify']['depends']==['qc']
+    assert 'rectify' in c['stages']['review']['depends']
+    cmd=c['stages']['review']['command']
+    for key,value in [('--model','qwen3.8-27b'),('--structured-model','qwen3.8-27b'),('--sample-fps','1')]:
+        assert cmd[cmd.index(key)+1]==value
+
+
 @pytest.mark.parametrize('level', ['L1', 'L3'])
 def test_cpu_batch_range_dry_run(tmp_path, capsys, level):
     import yaml

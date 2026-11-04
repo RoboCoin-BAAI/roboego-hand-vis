@@ -290,7 +290,8 @@ def run_episode(plan, *, openvins_root, start_s=0., duration_s=None,
                 else stage_features(plan, arrays, staging, quality))
     if not comparison_only:
         metadata.update(published_to_lerobot=True, zupt_enabled=bool(zupt))
-        provenance = staging / plan['episode'].relative_to(plan['session']) / 'relative_head_pose_provenance.json'
+        provenance = staging / plan['episode'].relative_to(plan['session']) / (
+            'left_camera_pose_provenance.json' if plan.get('publish_left_camera_pose') else 'relative_head_pose_provenance.json')
         provenance.write_text(json.dumps(dict(**metadata, report=str((output / 'report.json').relative_to(plan['session'])),
                                               zupt_settings=report['zupt_settings']), indent=2, allow_nan=False), encoding='utf-8')
     relative_output = output.relative_to(plan['session'])

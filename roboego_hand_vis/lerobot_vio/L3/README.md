@@ -1,5 +1,19 @@
 > Default: `--init-mode static-then-dynamic`. Other policies: `static-zupt`, `dynamic`, `dynamic-then-static`. See [initialization policy](../INITIALIZATION.md). The ZUPT flags below are retained for legacy commands.
 
+L3 rectified runs publish `data/<chunk>/<episode>/observation.left_camera_pose.parquet`
+and `observation.left_camera_pose_status.parquet`. Pose columns are x, y, z
+(meters), qx, qy, qz, qw (Hamilton). Poses use the rectified left camera frame,
+relative to the episode's first valid left camera pose. OpenVINS supplies
+`T_world_camera = T_world_imu @ T_imu_camera`; the stored relative pose is
+`inverse(T_world_camera_first) @ T_world_camera_current`. Missing poses remain NaN
+with explicit status codes. This is not an IMU pose or a global absolute pose.
+
+After success, compact reports and initialization selection are retained under
+`annotation/vio/<chunk>/<episode>/`, with `left_camera_pose_provenance.json` beside
+the feature. The completed episode's `vio` and `vio_zupt` work directories are
+removed; failures and raw comparison runs retain diagnostics. Other episodes are
+not removed. Existing legacy relative-head-pose files are not migrated automatically.
+
 # L3 头环 VIO
 
 默认读取 headband_left_rgb_rectified / headband_right_rgb_rectified，先执行 L3 双目矫正。

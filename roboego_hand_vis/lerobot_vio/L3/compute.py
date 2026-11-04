@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from roboego_hand_vis.lerobot_vio.L1.compute import run_session
+from roboego_hand_vis.lerobot_vio.L1.compute import run_session as shared_run_session
 from roboego_hand_vis.lerobot_stereo_rectification.L1.compute import geometry_from_mapping
 
 
@@ -69,11 +69,60 @@ def plan_session(session, input_mode='rectified', zupt=False):
             if not path.is_file():
                 raise ValueError(f'Missing {key}: {path}')
         folder = ('vio_raw' if input_mode == 'raw' else 'vio') + ('_zupt' if zupt else '')
-        plans.append(dict(session=session, episode=episode, input_mode=input_mode, **paths,
+        plans.append(dict(session=session, episode=episode, input_mode=input_mode,
+                          publish_left_camera_pose=True, **paths,
                           source_camera='observation.images.headband_left_rgb' + ('_rectified' if input_mode == 'rectified' else ''),
                           source_imu='observation.headband_imu0',
                           output=session / folder / episode.parent.name / episode.name))
     return plans
+
+
+def run_session(plans, options):
+    """Keep final camera features and compact reports after successful runs."""
+    import shutil
+    from roboego_hand_vis.lerobot_stereo_rectification.L1.compute import publish_files
+    from uuid import uuid4
+
+    results = shared_run_session(plans, options)
+    for plan, result in zip(plans, results):
+        if result['status'] != 'done' or plan.get('input_mode') == 'raw':
+            continue
+        root = plan['session'].resolve()
+        episode = plan['episode']
+        report_dir = Path('annotation/vio') / episode.parent.name / episode.name
+        staging = root / f'.vio-final-{uuid4().hex}'
+        targets = [root / name / episode.parent.name / episode.name
+                   for name in ('vio', 'vio_zupt')]
+        for target in targets:
+            if target.is_symlink() or not target.resolve().is_relative_to(root):
+                raise ValueError(f'Unsafe VIO cleanup target: {target}')
+            if target.exists() and any(p.is_symlink() for p in target.rglob('*')):
+                raise ValueError(f'Symlink inside VIO cleanup target: {target}')
+        destination = staging / report_dir
+        destination.mkdir(parents=True)
+        selected = Path(result['output'])
+        shutil.copy2(selected / 'report.json', destination / 'report.json')
+        selection = result.get('selection_report')
+        if selection:
+            shutil.copy2(selection, destination / 'fallback_selection.json')
+        provenance = episode / 'left_camera_pose_provenance.json'
+        value = json.loads(provenance.read_text(encoding='utf-8'))
+        value['report'] = (report_dir / 'report.json').as_posix()
+        staged_provenance = staging / provenance.relative_to(root)
+        staged_provenance.parent.mkdir(parents=True, exist_ok=True)
+        staged_provenance.write_text(json.dumps(value, indent=2, allow_nan=False), encoding='utf-8')
+        publish_files(staging, root)
+        for target in targets:
+            if target.exists():
+                shutil.rmtree(target)
+            for parent in (target.parent, target.parent.parent):
+                if parent.is_dir() and not any(parent.iterdir()):
+                    parent.rmdir()
+        result['output'] = str(episode / 'observation.left_camera_pose.parquet')
+        result.pop('log', None)
+        if selection:
+            result['selection_report'] = str(root / report_dir / 'fallback_selection.json')
+    return results
 
 
 def materialize_calibration(plan, work):

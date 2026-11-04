@@ -47,6 +47,8 @@ def claim(path):
 
 
 def validate_config(config):
+    if config.get('cpu_failure_policy','stop') not in ('stop','continue_passed'):
+        raise ValueError('cpu_failure_policy must be stop or continue_passed')
     stages = config['stages']
     start = config.get('start_at', 'download')
     if start not in ('download', 'convert', 'qc'):
@@ -523,6 +525,9 @@ def run_cpu_phases(runner, selected, devices, args):
             if parent in stages and stages.index(parent) >= stages.index(name):
                 raise ValueError('CPU stages must follow dependency order: ' + parent + ' before ' + name)
     print(json.dumps(dict(status='selection', sessions=len(selected), phases=stages)), flush=True)
+    selected=list(selected)
+    excluded=[]
+    continue_passed=runner.config.get('cpu_failure_policy','stop')=='continue_passed'
     for name in stages:
         print(json.dumps(dict(phase=name, status='started', sessions=len(selected))), flush=True)
         while True:
@@ -532,6 +537,8 @@ def run_cpu_phases(runner, selected, devices, args):
                 changed = sum(pool.map(lane, devices))
             incomplete = []
             failed = False
+            passed_tasks=[]
+            failed_tasks=[]
             for task in selected:
                 states = read(runner.folder(task) / 'state.json')
                 record = states.get(name, {})
@@ -541,17 +548,32 @@ def run_cpu_phases(runner, selected, devices, args):
                     incomplete.append(dict(batch=task['batch'], session=task['name'],
                                            status=record.get('status', 'pending')))
                     failed |= record.get('status') == 'failed'
+                    if record.get('status') == 'failed':
+                        failed_tasks.append(task)
+                else:
+                    passed_tasks.append(task)
             if not incomplete:
                 print(json.dumps(dict(phase=name, status='complete', sessions=len(selected))), flush=True)
                 break
             if changed:
                 continue
             print(json.dumps(dict(phase=name, status='blocked', incomplete=incomplete)), flush=True)
-            if failed or not args.watch:
+            if continue_passed and failed_tasks and len(failed_tasks)==len(incomplete):
+                excluded.extend(dict(batch=t['batch'],session=t['name'],failed_stage=name) for t in failed_tasks)
+                selected=passed_tasks
+                print(json.dumps(dict(phase=name,status='filtered',passed=len(selected),
+                                      excluded=len(failed_tasks))),flush=True)
+                if not selected:
+                    print(json.dumps(dict(status='finished',excluded=excluded,passed=0)),flush=True)
+                    return 1
+                break
+            if (failed and not continue_passed) or not args.watch:
                 return 1
             # Wait for externally locked work, without expanding the selected range.
             time.sleep(min(args.poll_s, 30))
-    return 0
+    if continue_passed:
+        print(json.dumps(dict(status='finished',passed=len(selected),excluded=excluded)),flush=True)
+    return int(bool(excluded))
 
 
 def main(argv=None):
