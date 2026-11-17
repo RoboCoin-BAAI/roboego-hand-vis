@@ -88,31 +88,27 @@ PNG 为 uint16 毫米深度，0 无效；开启 `save_npy` 后另存米制 float
 目前深度以单独 PNG/NPY 模态附件保存，不冒充普通 RGB 视频特征，
 不修改原 `meta/info.json`、视频或标定。旧模型缺乏 CUDA 时会报错，未做 CPU 回退。
 
-## 直接保存 HEVC 12-bit，避免逐帧文件
+## Compressed HEVC12 MP4 (default)
 
-高吞吐模式可在原命令中增加：
+L1/L3 throughput defaults to `--depth-format hevc12 --hevc12-preset slow`.
+Encoding matches archive_depth_cache: CRF 0, slow, lossless=false, gray12le,
+plus a lossless FFV1 validity mask. Valid depth values can have coding error.
+Maximum depth is 4.095 meters; default is 4.0 meters. No new PNG/NPY files are written.
+Preview remains opt-in with --save-vis.
 
-```bash
---depth-format hevc12 \
---ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg \
---hevc12-preset ultrafast \
---encode-threads 2
+```text
+<session>/videos/chunk-000/observation.images.depth_head_left_rectified/episode_000000.mp4
+<session>/annotation/chunk-000/observation.images.depth_head_left_rectified/episode_000000/valid_mask_ffv1.mkv
+<session>/annotation/chunk-000/observation.images.depth_head_left_rectified/episode_000000/lerobot_depth.json
 ```
 
-深度在后台写入线程直接送给 FFmpeg，不落地 PNG/NPY，输出一个
-`depth_hevc12.mkv`。此模式覆盖配置中的 save_depth_png/save_npy，
-预览仅在显式传入 `--save-vis` 时开启。要求 FFmpeg 的 libx265 支持 gray12le。
-采用真正的 `lossless=1`、gray12le 输入输出，不经过 gray16 色阶缩放，
-0 无效、1 至 4095 表示毫米，故 max_depth_m 不得超过 4.095（默认 4.0）。
-使用 scale=0.5、valid_iters=8；与现有 PNG 的毫米量化一致，
-不是对浮点 NPY 深度的无损保存。此模式不需要额外有效性 mask，0 已可精确保留。
-
-每个 episode 只保存一个深度 MKV、时间戳、元数据、编码日志和可选预览。
-`lerobot_depth.json` 的 depth_storage 包含单位、无效值、帧数、尺寸、FPS 及索引映射。
-读取使用 `depth_video.read_depth_video(path, size=(width, height), ffmpeg=...)`，
-解码为 float32 米深度，0 恢复为 NaN；不要使用普通 RGB 视频读取器读取毫米值。
-
-libx265 使用 CPU 编码，可能成为高吞吐流水线的新瓶颈。preset 影响压缩率和速度，
-不改变 lossless=1 的毫米整数精度；默认 ultrafast 优先编码速度，文件可能更大，
-再按 CPU 资源调整线程数。
-旧归档模块及其默认配置不变；其 hevc12_lossless=false 与本模式的显式无损不同。
+Timestamps are saved under data/chunk-*/episode_*/<depth_feature>.parquet.
+Metadata, logs and optional preview are saved beside the mask in annotation.
+New compressed outputs do not create a depth directory.
+Metadata depth_storage.file and mask_file are relative to the session (path_base=session).
+Use `depth_video.read_episode_depth(output_dir, ffmpeg=...)` to decode float32 meters
+and restore invalid pixels to NaN using the mask. Explicit decoding requires
+`read_depth_video(..., mask_path=...)`; ordinary RGB readers cannot recover depth.
+Video, mask and metadata publish together with rollback. Old PNG/NPY/MKV files are retained.
+Frame-offset trials use separate video and mask paths. Explicit --depth-format files
+keeps the per-frame mode; legacy requires files.

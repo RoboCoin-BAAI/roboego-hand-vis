@@ -5,7 +5,7 @@ from pathlib import Path
 
 def validate_existing(ctx, episode, *, manifest_path, params_path, mapping_path,
                       video_relative, timestamp_relative, params, size, crops,
-                      output_roi, transform, balance, camera_names=None, calibration_source=None):
+                      output_roi, transform, balance, camera_names=None, calibration_source=None, full_decode_validation=True):
     import cv2
     import numpy as np
     import pyarrow.parquet as pq
@@ -28,7 +28,7 @@ def validate_existing(ctx, episode, *, manifest_path, params_path, mapping_path,
         require(actual.shape == value.shape and np.allclose(actual, value, rtol=1e-7, atol=1e-9), f'{key} changed')
     if calibration_source is not None:
         require(manifest.get('calibration_source') == calibration_source, 'calibration source changed')
-    mapping = pq.read_table(mapping_path).to_pydict()
+    mapping = pq.read_table(mapping_path).to_pydict() if mapping_path is not None else None
     counts = {}
     for side in ('left', 'right'):
         video = ctx.root / video_relative[side]
@@ -51,12 +51,15 @@ def validate_existing(ctx, episode, *, manifest_path, params_path, mapping_path,
             require(cap.isOpened(), f'{side} output unreadable')
             require((int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))) == size, f'{side} video size')
             require(abs(cap.get(cv2.CAP_PROP_FPS) - meta['fps']) < .001, f'{side} video fps')
-            count = 0
-            while True:
-                ok, _ = cap.read()
-                if not ok:
-                    break
-                count += 1
+            if full_decode_validation:
+                count = 0
+                while True:
+                    ok, _ = cap.read()
+                    if not ok:
+                        break
+                    count += 1
+            else:
+                count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             require(count > 0 and count == meta['frame_count'] == original.num_rows, f'{side} decoded frame count')
             counts[side] = count
         finally:
@@ -67,12 +70,16 @@ def validate_existing(ctx, episode, *, manifest_path, params_path, mapping_path,
                             [projection[0, 0], projection[1, 1], projection[0, 2], projection[1, 2]]), f'{side} intrinsics')
     require(np.isclose(manifest['extrinsics']['baseline_m'], -params['P2'][0, 3] / params['P2'][0, 0]), 'baseline changed')
     length = max(counts.values())
-    require(mapping['frame_index'] == list(range(length)), 'mapping frame indices')
-    for side in ('left', 'right'):
-        require(mapping[f'{side}_source_index'] == [i if i < counts[side] else None for i in range(length)], f'{side} mapping')
+    if mapping is not None:
+        require(mapping['frame_index'] == list(range(length)), 'mapping frame indices')
+        for side in ('left', 'right'):
+            require(mapping[f'{side}_source_index'] == [i if i < counts[side] else None for i in range(length)], f'{side} mapping')
     # Paths are derived from this dataset layout, never followed from the old manifest.
     manifest['source_episode'] = str(episode)
-    manifest['frame_mapping'] = str(mapping_path)
+    if mapping_path is not None:
+        manifest['frame_mapping'] = str(mapping_path)
+    else:
+        manifest.pop('frame_mapping', None)
     manifest['dataset_name'] = ctx.root.name
     for side in ('left', 'right'):
         manifest['videos'][side]['path'] = str(ctx.root / video_relative[side])

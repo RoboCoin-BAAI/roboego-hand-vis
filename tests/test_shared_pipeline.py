@@ -47,6 +47,22 @@ def task():
     return dict(batch='batch_1',name='session',source='ks3://bucket/session')
 
 
+def test_successful_l3_stage_discards_work_and_logs(tmp_path, portable_execution):
+    c = config(tmp_path)
+    c['stages']['review'] = dict(c['stages']['qc'])
+    c['run_stages'] = ['review']
+    runner = pipeline.Runner(c, 'cpu')
+    folder = runner.folder(task())
+    work = folder / 'review_work'
+    work.mkdir(parents=True)
+    (work / 'temporary.json').write_text('{}')
+    assert runner.step(task(), stages=['review'])
+    assert not work.exists()
+    assert not list((folder / 'runs').iterdir())
+    assert pipeline.read(folder / 'state.json')['review']['log'] is None
+    assert (tmp_path / 'data/batch_1/session/qc.txt').read_text() == 'done'
+
+
 def test_role_gates_force_and_artifact_changes(tmp_path, portable_execution):
     c=config(tmp_path)
     cpu=pipeline.Runner(c,'cpu');gpu=pipeline.Runner(c,'gpu')
@@ -277,12 +293,61 @@ def test_l3_stage_barriers_filter_failures_without_running_their_downstream(tmp_
     assert all(good[n]['status']=='done' for n in names)
 
 
-def test_actual_l3_cpu_config_has_points_last_and_current_review_settings():
+@pytest.mark.parametrize('upstream_status', ['failed', 'missing', 'running'])
+@pytest.mark.parametrize('watch', [False, True])
+def test_cpu_subset_filters_only_failed_upstream(tmp_path, portable_execution, monkeypatch,
+                                               upstream_status, watch, capsys):
+    from types import SimpleNamespace
+    c = config(tmp_path)
+    c.update(run_stages=['rectify', 'review'], force_stages=['rectify', 'review'],
+             cpu_failure_policy='continue_passed')
+    for name, deps in [('qc', []), ('rectify', ['qc']), ('review', ['qc', 'rectify'])]:
+        c['stages'][name] = dict(role='cpu', depends=deps,
+            command=[sys.executable, '-c',
+                'from pathlib import Path;import sys;s=Path(sys.argv[1]);'
+                's.mkdir(parents=True,exist_ok=True);(s/sys.argv[2]).write_text("done")',
+                '{session}', name+'.txt'], outputs=[name+'.txt'])
+    selected = [dict(batch='batch_1', name=n, source=n) for n in ['bad', 'good']]
+    runner = pipeline.Runner(c, 'cpu')
+    assert runner.step(selected[1], stages=['qc'])
+    if upstream_status != 'missing':
+        pipeline.write(runner.folder(selected[0])/'state.json', {'qc': {'status': upstream_status}})
+    if upstream_status == 'running':
+        # A live upstream worker holds the session lock; step cannot claim it.
+        original_step = runner.step
+        monkeypatch.setattr(runner, 'step', lambda task, *a, **kw:
+                            False if task['name'] == 'bad' else original_step(task, *a, **kw))
+    def stop_waiting(seconds):
+        raise RuntimeError('waiting for upstream')
+    # Keep subprocess.wait's Linux polling sleep intact.
+    monkeypatch.setattr(pipeline, 'time', SimpleNamespace(time=pipeline.time.time, sleep=stop_waiting))
+    args = SimpleNamespace(watch=watch, poll_s=1)
+    if watch and upstream_status != 'failed':
+        with pytest.raises(RuntimeError, match='waiting for upstream'):
+            pipeline.run_cpu_phases(runner, selected, ['0'], args)
+    else:
+        assert pipeline.run_cpu_phases(runner, selected, ['0'], args) == 1
+    good = pipeline.read(runner.folder(selected[1])/'state.json')
+    bad = pipeline.read(runner.folder(selected[0])/'state.json')
+    assert good['rectify']['status'] == 'done'
+    assert ('review' in good) == (upstream_status == 'failed')
+    assert 'rectify' not in bad and 'review' not in bad
+    if upstream_status == 'failed':
+        assert '"failed_stage": "qc", "blocked_stage": "rectify"' in capsys.readouterr().out
+
+
+def test_actual_l3_cpu_config_has_readme_last_and_current_review_settings():
     import yaml
     c=yaml.safe_load((Path(__file__).parents[1]/'scripts/L3/pipeline.yaml').read_text(encoding='utf-8'))
     pipeline.validate_config(c)
     cpu=[n for n in c['run_stages'] if c['stages'][n]['role']=='cpu']
-    assert cpu==['download','qc','rectify','review','points']
+    assert cpu==['download','qc','rectify','review','points','readme']
+    readme = c['stages']['readme']
+    assert readme['depends'] == ['rectify', 'review', 'points']
+    assert readme['command'] == ['{python}', '{repo}/roboego_hand_vis/build_json/L3/build_readme.py',
+                                 '--root', '{session}']
+    assert readme['outputs'] == ['meta/readme.json']
+    assert 'depth' not in readme['depends']
     assert c['cpu_failure_policy']=='continue_passed'
     assert c['stages']['points']['depends']==['qc']
     assert c['stages']['rectify']['depends']==['qc']

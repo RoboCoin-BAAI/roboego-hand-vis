@@ -1,5 +1,7 @@
 # 自采数据 JSON 字段定义（v1）
 
+精简版 `meta/readme.json` 共用入口已整理至 [base/build_readme.py](base/build_readme.py)，使用方式见 [base/README.md](base/README.md)。原光轮入口保持兼容；下文描述的 build_metadata.py 是另一套较完整的 manifest 格式。
+
 先固定字段语义，再从 L1/L2/L3 提取。`build_metadata.py` 读取 LeRobot session，生成描述整条数据的 manifest，不把逐帧数组塞入 JSON，也不修改输入。依赖 Python 3.10+、`pyarrow`。目前验证的是给定 L3；其他布局需另加适配。
 
 ## 基本约定

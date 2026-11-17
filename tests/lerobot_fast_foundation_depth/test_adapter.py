@@ -50,7 +50,7 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(main(["--source", str(self.root), "--dry-run"]), 0)
         self.assertFalse((self.root / "depth").exists())
 
-    @patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality')
+    @patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality', side_effect=AssertionError('Runtime first-frame quality gate must not run'))
     def test_backend_adapter_copies_timestamps_and_overrides_range(self, quality_gate):
         config = self.root / "depth.yaml"
         config.write_text("paths: {}\nparameters:\n  num_frames: 600\n")

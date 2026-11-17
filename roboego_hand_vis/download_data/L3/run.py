@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 
 if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
-from roboego_hand_vis.download_data.L1.run import read_batch
+from roboego_hand_vis.download_data.base.run import read_batch
 
 
 BASE = Path('/share/project/liuyou/humancoin')

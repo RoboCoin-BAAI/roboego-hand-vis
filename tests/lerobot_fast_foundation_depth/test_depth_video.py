@@ -27,6 +27,7 @@ class DepthVideoTests(unittest.TestCase):
             with patch("roboego_hand_vis.lerobot_fast_foundation_depth.L1.depth_video.subprocess.Popen", return_value=process) as popen:
                 writer = HEVC12Writer(Path(directory) / "depth.mkv", size=(64, 64), fps=30)
                 writer.close()
+                self.assertFalse(writer.log_path.exists())
             command = popen.call_args.args[0]
             self.assertNotIn("-vsync", command)
             self.assertEqual(command[command.index("-fps_mode") + 1], "cfr")
@@ -39,7 +40,7 @@ class DepthVideoTests(unittest.TestCase):
             second = first[::-1].copy()
             second[0, :4] = [0., .001, 4., 4.095]
             encoder = HEVC12Writer(path, size=(64, 64), fps=30, ffmpeg=FFMPEG,
-                                   max_depth_m=4.095, preset="ultrafast", threads=1)
+                                   max_depth_m=4.095, preset="ultrafast", threads=1, lossless=True)
             try:
                 encoder.write(first)
                 encoder.write(second)

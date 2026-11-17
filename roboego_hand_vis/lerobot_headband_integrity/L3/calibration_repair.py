@@ -67,11 +67,7 @@ def repair_missing(ctx, donors):
                                      session=ctx.root.name[7:], calibrations=copy.deepcopy(payloads[0])))
             receipt = dict(status='copied', donor=str(donor), device=identifier, headband_model=headband,
                            created_at=datetime.now(timezone.utc).isoformat())
-            # Persist provenance before publishing calibration; never overwrite existing calibration.
-            annotation = ctx.root / 'annotation'
-            annotation.mkdir(exist_ok=True)
-            (annotation / 'l3_calibration_repair.json').write_text(
-                json.dumps(receipt, ensure_ascii=False, indent=2), encoding='utf-8')
+            # Return repair details to the final QC report; no separate receipt file.
             tmp = destination.with_name(f'.{destination.name}.{uuid4().hex}.tmp')
             try:
                 tmp.write_text(''.join(json.dumps(row, ensure_ascii=False, allow_nan=False) + '\n'

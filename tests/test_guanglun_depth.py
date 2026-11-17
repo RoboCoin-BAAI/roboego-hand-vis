@@ -13,6 +13,8 @@ def test_resident_depth_worker_accepts_batch_size():
     args = worker_options(['worker.py', 'depth', '--source', '/tmp/session',
         '--model-root', '/tmp/model', '--batch-size', '6'])
     assert args.batch_size == 6
+    assert args.depth_format == 'hevc12'
+    assert args.hevc12_preset == 'slow'
 
 
 def prepare(root, number):
@@ -75,6 +77,10 @@ def test_resident_spans_batches_and_marks_only_success(tmp_path, monkeypatch, re
     assert result == returncode
     assert len(created) == 1 and len(created[0].commands) == 2 and created[0].closed
     assert all(command[command.index('--batch-size') + 1] == '3' for command in created[0].commands)
+    for command in created[0].commands:
+        parsed = worker_options(command)
+        assert parsed.depth_format == 'hevc12'
+        assert parsed.hevc12_preset == 'slow'
     for batch, uri in batches:
         assert depth.load(batch/'depth_done.json', []) == ([] if returncode else [uri])
     assert not (root/'depth_runner.lock').exists()

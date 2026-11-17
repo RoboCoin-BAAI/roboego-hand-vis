@@ -1,7 +1,7 @@
 """L3 camera-name adapter; reuse the GPU inference and storage implementation."""
 from pathlib import Path
 
-from roboego_hand_vis.lerobot_fast_foundation_depth.L1 import compute as shared
+from roboego_hand_vis.lerobot_fast_foundation_depth.base import compute as shared
 
 CAMERAS = {'left': 'headband_left_rgb_rectified', 'right': 'headband_right_rgb_rectified'}
 DEFAULT_CONFIG = Path(__file__).with_name("recommended.yaml")

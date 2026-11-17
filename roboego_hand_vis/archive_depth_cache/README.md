@@ -29,7 +29,7 @@ python -m roboego_hand_vis.archive_depth_cache.database_run \
 
 每条数据使用自己的 `depth` 目录，归档输出仍放在此目录。默认输出包括：
 
-- `depth_hevc12.mkv`：12-bit HEVC 深度视频。
+- `depth_hevc12.mp4`：12-bit HEVC 深度视频。
 - `valid_mask_ffv1.mkv`：有效深度 mask。
 - `depth_uint16_ffv1.avi`：16-bit FFV1 深度视频。
 - `depth_preview.mp4`：深度预览。

@@ -86,7 +86,7 @@ class KS3:
             raise RuntimeError(f"Downloaded size mismatch: expected={item['size']}, actual={actual}: " + item["source_uri"])
         partial.replace(target)
 
-    def upload_directory(self, local, destination):
+    def upload_directory(self, local, destination, *, recursive_copy=False):
         local, destination = Path(local).resolve(), prefix(destination)
         files = {}
         for path in sorted(local.rglob("*")):
@@ -96,9 +96,15 @@ class KS3:
                 files[path.relative_to(local).as_posix()] = path.stat().st_size
         if not files or "meta/info.json" not in files:
             raise ValueError("No converted dataset to upload")
-        # Exact keys avoid recursive-copy source-directory nesting ambiguities.
-        for name in files:
-            self.copy(str(local/name), destination+name)
+        if recursive_copy:
+            # Same cp/update/jobs convention as download_data.base. The trailing
+            # slash copies the session contents into the exact destination prefix.
+            self._run(['-r', '-u', '--read-timeout', '6', '--jobs=64',
+                       'cp', str(local) + '/', destination])
+        else:
+            # Other workflows retain their existing per-object transfer policy.
+            for name in files:
+                self.copy(str(local/name), destination+name)
         actual = {x["uri"][len(destination):]: x["size"] for x in self.objects(destination)
                   if x["uri"].startswith(destination) and not x["uri"].endswith("/")}
         mismatched = [name for name, size in files.items() if actual.get(name) != size]

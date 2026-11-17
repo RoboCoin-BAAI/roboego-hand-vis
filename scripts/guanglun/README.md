@@ -24,7 +24,6 @@ python -u scripts/guanglun/depth.py \
 
 输出与恢复：
 
-- 数据集位于 `download-root/batch_N/<KS3前缀SHA256>/`，深度结果在会话的 `depth/` 下，采用 HEVC12。
 - 只有 resident 返回成功且深度完整性检查通过，才写入 `state-root/batch_N/depth_done.json`，格式为已完成的源 KS3 前缀字符串数组。
 - `state-root/batch_N/depth_records/<hash>.json` 保存本机目录、GPU、处理状态、诊断与日志路径。
 - `download-root/logs/` 保存各会话及 resident 日志。
@@ -50,3 +49,47 @@ cd /share/project/liuyou/humancoin/code/roboego-hand-vis
 ```
 
 去掉 `--execute` 只列出回传源目录和目标。可用 `--first-batch 1 --last-batch 1` 限定批次。该脚本处理本次扫描到的结果后退出，新增完成的数据需要再次运行。job 必须能访问记录中 `session` 指向的共享目录。
+
+## Depth output layout
+
+New Lightwheel jobs use shared L1 compressed HEVC12 MP4 output (CRF 0, slow,
+lossless=false), with an exact FFV1 validity mask:
+
+```text
+<session>/videos/chunk-000/observation.images.depth_head_left_rectified/episode_000000.mp4
+<session>/data/chunk-000/episode_000000/observation.images.depth_head_left_rectified.parquet
+<session>/annotation/chunk-000/observation.images.depth_head_left_rectified/episode_000000/valid_mask_ffv1.mkv
+<session>/annotation/chunk-000/observation.images.depth_head_left_rectified/episode_000000/lerobot_depth.json
+```
+
+No standalone depth directory is created. Metadata/logs remain under annotation.
+Restart existing resident workers to load the changes. Existing completed datasets
+are retained; this does not migrate files or reset depth_done.json.
+normalize_depth.py is a legacy-layout migration utility and is not part of new jobs;
+do not use it to normalize the new output layout.
+
+## Re-encode previously normalized MKVs
+
+Stop old normalization and depth producers before running. This command supports
+the existing `depth/chunk-*/observation.images.depth_head_left_rectified/episode_*.mkv`
+layout (one metadata/parquet pair per feature directory). It does not run the GPU model.
+
+```bash
+python scripts/guanglun/reencode_depth.py \
+  --root /share/project/liuyou/humancoin/data/guanglun_depth \
+  --first-batch 242 --last-batch 242
+```
+
+Preview is the default. Add `--execute --workers 2 --encode-threads 2` to encode.
+Add `--delete-source` to remove recognized old files after output verification;
+otherwise old files remain. A rerun verifies and reuses already migrated outputs.
+Remove the batch limits to process all batches. Use --ffmpeg /absolute/path/ffmpeg
+if FFmpeg with libx265/gray12le support is not on PATH. No ffprobe is required.
+
+The script checks source frame count, decodes the new video and mask, verifies
+the exact validity pattern and copied timestamp table, and publishes with rollback.
+Legacy lossless millimeter values are decoded directly; the new HEVC encoding
+uses CRF 0, slow, lossless=false. Valid depth values may change during compression.
+Source timestamps were already selected by normalize_depth.py: they are copied
+unchanged, indexed by depth video frame; processed_frames retains original indices.
+Unknown legacy files prevent cleanup, and failed encoding leaves sources intact.

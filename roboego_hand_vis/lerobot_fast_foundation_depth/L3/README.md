@@ -4,12 +4,25 @@
 
 - observation.images.headband_left_rgb_rectified / headband_right_rgb_rectified 视频。
 - 当前 episode 的 calibrations/[chunk_episode_]dataset_manifest.json 中的矫正内参与基线。
-- 左目矫正 Parquet，原样保存为 depth/chunk-*/episode_*/source_timestamps.parquet。
+- 左目矫正 Parquet，时间戳及列值保留，按 episode_index 汇入下述深度特征 Parquet。
 
 不直接用原始 JSONL 鱼眼内参估计矫正图像深度，不把原始与矫正坐标系混用。
 视频路径按当前 session 重建，支持跨机器移动；原始文件不修改。
-输出沿用 L1 depth/chunk-*/episode_* 格式及 lerobot_depth.json，来源特征记录为 L3 名称。
-本阶段不自动注册新的 LeRobot 深度 feature。
+L3 输出采用与视频类似的 chunk/feature 布局（L1 原有计算输出布局不变）：
+
+```text
+<session>/videos/chunk-000/observation.images.depth_headband_left_rectified/episode_000000.mp4
+<session>/annotation/chunk-000/observation.images.depth_headband_left_rectified/episode_000000/valid_mask_ffv1.mkv
+<session>/annotation/chunk-000/observation.images.depth_headband_left_rectified/episode_000000/lerobot_depth.json
+```
+
+Throughput defaults to HEVC12 MP4: CRF 0, slow, lossless=false, with a lossless validity mask.
+Full source timestamps are saved under data/chunk-*/episode_*/<depth_feature>.parquet.
+Metadata and logs are saved beside the mask in annotation; no depth directory is created.
+Video and mask are isolated by episode; metadata describes the latest published episode.
+Use L1.depth_video.read_episode_depth(output_dir) to decode video with its mask.
+Source row indices retain the original left frame numbers; consult processed_frames.
+Publication rolls back on failure; previous-format files are retained.
 
 ```bash
 /share/project/liuyou/humancoin/envs/ego/bin/python \

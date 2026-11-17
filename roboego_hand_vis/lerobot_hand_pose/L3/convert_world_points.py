@@ -33,35 +33,25 @@ def discover(source):
 
 
 def reusable(session,side,max_gap_s):
-    """Reuse only complete, unchanged outputs produced by this converter."""
-    hands=('left','right') if side=='both' else (side,)
-    episodes=sorted(p for p in (session/'data').glob('chunk-*/episode_*') if p.is_dir())
+    """Check final point files only; do not require or create provenance records."""
+    import pyarrow.parquet as pq
+    from roboego_hand_vis.lerobot_hand_pose.L3.world_points import NAMES
+    hands = ('left', 'right') if side == 'both' else (side,)
+    episodes = sorted(p for p in (session/'data').glob('chunk-*/episode_*') if p.is_dir())
     if not episodes:
         return False
-    info=json.loads((session/'meta/info.json').read_text(encoding='utf-8-sig'))
-    for ep in episodes:
-        for hand in hands:
-            feature=f'observation.hand_{hand}_points'
-            output=ep/f'{feature}.parquet'
-            try:
-                p=json.loads((ep/f'hand_{hand}_points_provenance.json').read_text(encoding='utf-8'))
-                nodes=[n+(25 if hand=='right' else 0) for n in NODES]
-                rotation=R_TRACKER_SKELETON if hand=='left' else R_TRACKER_SKELETON_RIGHT
-                if (output.is_symlink() or p.get('converter')!='lerobot_hand_pose.L3.world_points'
-                        or p.get('converter_version')!=CONVERTER_VERSION or p.get('feature')!=feature
-                        or p.get('source_nodes')!=nodes or p.get('max_gap_s')!=max_gap_s
-                        or p.get('R_tracker_skeleton')!=rotation.tolist()
-                        or p.get('t_tracker_wrist_m')!=T_TRACKER_WRIST.tolist()
-                        or p.get('output_sha256')!=hashlib.sha256(output.read_bytes()).hexdigest()
-                        or info.get('features',{}).get(feature,{}).get('coordinate_frame')
-                           !='OpenVR TrackingUniverseStanding world'):
+    try:
+        for episode in episodes:
+            for hand in hands:
+                output = episode/f'observation.hand_{hand}_points.parquet'
+                if output.is_symlink():
                     return False
-                for name in ('observation.hand_skeleton.parquet',f'observation.{hand}_wrist_pose.parquet'):
-                    if p.get('source_sha256',{}).get(name)!=hashlib.sha256((ep/name).read_bytes()).hexdigest():
-                        return False
-            except (OSError,ValueError,TypeError,AttributeError):
-                return False
-    return True
+                schema = pq.read_schema(output)
+                if not set(['timestamp', 'episode_index', *NAMES]).issubset(schema.names):
+                    return False
+        return True
+    except (OSError, ValueError):
+        return False
 
 
 def worker(session,side,max_gap_s,overwrite):

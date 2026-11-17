@@ -9,16 +9,41 @@ from roboego_hand_vis.lerobot_hand_pose.L3.world_points import (
 
 
 def test_mount_offset_rotates_and_finger_points_use_axis_alignment():
+    assert np.allclose(T_TRACKER_WRIST, [0., -.085, -.058])
     points=np.array([[[0.,0,0],[.1,0,0]],[[0.,0,0],[.1,0,0]]])
     angles=np.array([[0.,0,0],[0,0,90.]])
     positions=np.array([[1.,2,3],[1.,2,3]])
     out,valid=world_points([0.,1.],points,[0.,1.],positions,angles,max_gap_s=2)
     assert valid.all()
-    rotated=np.array([T_TRACKER_WRIST, [.1085,0,-.0372]])
+    rotated=np.array([T_TRACKER_WRIST, [.085,0,-.058]])
     assert np.allclose(out[:,0],positions+rotated)
     assert np.allclose(out[0,1]-out[0,0],[0,0,.1])
     assert np.allclose(R_TRACKER_SKELETON.T@R_TRACKER_SKELETON,np.eye(3))
     assert np.isclose(np.linalg.det(R_TRACKER_SKELETON),1.)
+
+
+def test_update_existing_offset_preserves_sources_and_skips_current(tmp_path):
+    from scripts.L3.update_points_offset import update_session
+    from roboego_hand_vis.lerobot_hand_pose.L3.world_points import convert
+    ep = make_session(tmp_path)
+    original_offset = T_TRACKER_WRIST.copy()
+    try:
+        T_TRACKER_WRIST[:] = [0., -.1085, -.0372]
+        convert(tmp_path)
+    finally:
+        T_TRACKER_WRIST[:] = original_offset
+    original_source = (ep / 'observation.hand_skeleton.parquet').read_bytes()
+    old_points = (ep / 'observation.hand_left_points.parquet').read_bytes()
+    assert update_session(tmp_path, True)['status'] == 'would_update'
+    assert (ep / 'observation.hand_left_points.parquet').read_bytes() == old_points
+    assert update_session(tmp_path)['status'] == 'done'
+    for hand in ('left', 'right'):
+        output = pq.read_table(ep / f'observation.hand_{hand}_points.parquet')
+        assert np.allclose(output['wrist_y'].to_numpy(), -.085)
+        assert np.allclose(output['wrist_z'].to_numpy(), -.058)
+        assert not (ep / f'hand_{hand}_points_provenance.json').exists()
+    assert update_session(tmp_path)['status'] == 'done'
+    assert (ep / 'observation.hand_skeleton.parquet').read_bytes() == original_source
 
 
 def test_both_hands_use_proper_rotation_without_extra_reflection():
@@ -70,7 +95,7 @@ def test_slerp_translation_and_no_extrapolation_or_gap_bridging():
     rpy=np.array([[0.,0,0],[0.,0,90.]])
     out,valid=world_points(times,points,[0.,1.],xyz,rpy,max_gap_s=2.)
     assert valid.tolist()==[False,True,True,True,False]
-    expected=np.array([1.+.1085/np.sqrt(2),-.1085/np.sqrt(2),-.0372])
+    expected=np.array([1.+.085/np.sqrt(2),-.085/np.sqrt(2),-.058])
     assert np.allclose(out[2,0],expected)
     _,valid=world_points(times,points,[0.,1.],xyz,rpy,max_gap_s=.02)
     assert valid.tolist()==[False,True,False,True,False]
@@ -104,8 +129,8 @@ def test_both_hand_publish_stats_verified_reuse_and_source_change(tmp_path):
     for side,x in [('left',1.),('right',-1.)]:
         t=pq.read_table(ep/f'observation.hand_{side}_points.parquet').to_pydict()
         assert np.allclose(t['wrist_x'],x)
-        assert np.allclose(t['wrist_y'],-.1085)
-        assert np.allclose(t['wrist_z'],-.0372)
+        assert np.allclose(t['wrist_y'],-.085)
+        assert np.allclose(t['wrist_z'],-.058)
         assert np.allclose(np.array(t['thumbCMC_z'])-np.array(t['wrist_z']),.01)
     stats=json.loads((tmp_path/'meta/episodes_stats.jsonl').read_text())['stats']
     assert stats['original']=={'count':[3]}
@@ -116,7 +141,7 @@ def test_both_hand_publish_stats_verified_reuse_and_source_change(tmp_path):
     table=pq.read_table(p)
     table=table.set_column(table.schema.get_field_index('x'),'x',pa.array([2.,2.]))
     pq.write_table(table,p)
-    assert worker(tmp_path,'both',.03,False)['status']=='failed'
+    assert worker(tmp_path,'both',.03,False)['status']=='reused'
     assert worker(tmp_path,'both',.03,True)['status']=='done'
     assert worker(tmp_path,'both',.03,False)['status']=='reused'
 

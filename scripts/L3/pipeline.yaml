@@ -1,5 +1,6 @@
 dataset: L3
 level: L3
+depth_workers_per_gpu: 1
 start_at: download
 cpu_failure_policy: continue_passed
 paths:
@@ -14,7 +15,7 @@ paths:
   ks3_tool: /share/project/liuyou/humancoin/utils/ks3/ks3util-linux-amd64
   ks3_config: /share/project/liuyou/humancoin/utils/ks3/ks3util-config
   model_root: /share/project/liuyou/humancoin/code/Fast-FoundationStereo
-  checkpoint: /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/23-36-37/model_best_bp2_serialize.pth
+  checkpoint: /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/model_best_bp2_serialize.pth
   openvins_root: /share/project/liuyou/humancoin/code/open_vins
 run_stages:
 - download
@@ -22,6 +23,7 @@ run_stages:
 - rectify
 - review
 - points
+- readme
 - depth
 force_stages: []
 stages:
@@ -116,8 +118,6 @@ stages:
     outputs:
     - data/chunk-*/episode_*/observation.hand_left_points.parquet
     - data/chunk-*/episode_*/observation.hand_right_points.parquet
-    - data/chunk-*/episode_*/hand_left_points_provenance.json
-    - data/chunk-*/episode_*/hand_right_points_provenance.json
   rectify:
     role: cpu
     depends:
@@ -195,6 +195,24 @@ stages:
     - '{session}/annotation/argus'
     outputs:
     - annotation/episode_*_structured.json
+  readme:
+    role: cpu
+    depends:
+    - rectify
+    - review
+    - points
+    command:
+    - '{python}'
+    - '{repo}/roboego_hand_vis/build_json/L3/build_readme.py'
+    - --root
+    - '{session}'
+    inputs:
+    - annotation/episode_*_structured.json
+    - meta/info.json
+    - data/chunk-*/episode_*/master_index.parquet
+    - depth/chunk-*/*/lerobot_depth.json
+    outputs:
+    - meta/readme.json
   vio:
     role: cpu
     depends:
@@ -235,9 +253,15 @@ stages:
     - auto
     - --depth-format
     - hevc12
+    - --batch-size
+    - '4'
     - --ffmpeg
     - '{ffmpeg}'
     backup_paths:
     - '{session}/depth'
     outputs:
-    - depth/chunk-*/episode_*/lerobot_depth.json
+    # HEVC12 publishing stores the video under videos and per-episode metadata
+    # and validity masks under annotation. Artifact checks only stat these files.
+    - annotation/chunk-*/observation.images.depth_headband_left_rectified/episode_*/lerobot_depth.json
+    - annotation/chunk-*/observation.images.depth_headband_left_rectified/episode_*/valid_mask_ffv1.mkv
+    - videos/chunk-*/observation.images.depth_headband_left_rectified/episode_*.mp4

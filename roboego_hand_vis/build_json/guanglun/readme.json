@@ -1,0 +1,214 @@
+{
+  "dataset_name": "L1_office_area_Organize documents into a stack_left_1920x1456_30FPS_2views_EEG0_EMG0_018b12e72adf9160e7ddc4c95cf7e45976fbf09d5ed280cb4bacba0e90c7b25a",
+  "hand_capture_type": "bare_hand",
+  "scene": {
+    "type": "indoor",
+    "category": "commercial_service",
+    "name": "office_area"
+  },
+  "task_name": "Organize documents into a stack",
+  "task_description": "The person organizes the scattered documents on the desk into a stack to complete the document organization.",
+  "actions": [
+    "align",
+    "continue",
+    "organize",
+    "place"
+  ],
+  "objects": [
+    {
+      "name": "documents",
+      "attributes": {
+        "color": null,
+        "material": null,
+        "shape": null
+      }
+    }
+  ],
+  "duration_s": 178.66666666666666,
+  "frame_count": 5360,
+  "master_fps": 30.0,
+  "size_bytes": 4043531178,
+  "file_count": 36,
+  "cameras": {
+    "count": 2,
+    "primary_camera": "observation.images.head_left_rectified",
+    "synchronization_master": "observation.images.head_left_rectified",
+    "items": [
+      {
+        "id": "observation.images.head_left_rectified",
+        "width": 1920,
+        "height": 1456,
+        "fps": 30.0
+      },
+      {
+        "id": "observation.images.head_right_rectified",
+        "width": 1920,
+        "height": 1456,
+        "fps": 30.0
+      }
+    ]
+  },
+  "eeg": 0,
+  "emg": 0,
+  "modalities": {
+    "eye_gaze": {
+      "streams": [
+        {
+          "feature_key": "eye_gaze_predict",
+          "shape": [
+            2
+          ],
+          "sample_count": 5340,
+          "sample_rate_hz": 30.0,
+          "coordinate_frame": "observation.images.head_left_rectified pixels"
+        }
+      ]
+    },
+    "quality_flags": {
+      "streams": [
+        {
+          "feature_key": "observation.bad_frame_pose_hand",
+          "shape": [
+            1
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        },
+        {
+          "feature_key": "observation.bad_frame_pose_lower_body",
+          "shape": [
+            1
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        },
+        {
+          "feature_key": "observation.bad_frame_pose_upper_body",
+          "shape": [
+            1
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        }
+      ]
+    },
+    "body_trajectory": {
+      "streams": [
+        {
+          "feature_key": "observation.body_pose",
+          "shape": [
+            154
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        },
+        {
+          "feature_key": "observation.lower_body_pose",
+          "shape": [
+            56
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        },
+        {
+          "feature_key": "observation.upper_body_pose",
+          "shape": [
+            98
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        }
+      ]
+    },
+    "hand_estimation": {
+      "streams": [
+        {
+          "feature_key": "observation.hand_left_points",
+          "shape": [
+            63
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593,
+          "coordinate_frame": "world"
+        },
+        {
+          "feature_key": "observation.hand_left_quaternions",
+          "shape": [
+            84
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593,
+          "quaternion_order": "xyzw"
+        },
+        {
+          "feature_key": "observation.hand_right_points",
+          "shape": [
+            63
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593,
+          "coordinate_frame": "world"
+        },
+        {
+          "feature_key": "observation.hand_right_quaternions",
+          "shape": [
+            84
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593,
+          "quaternion_order": "xyzw"
+        }
+      ]
+    },
+    "camera_trajectory": {
+      "streams": [
+        {
+          "feature_key": "observation.head_camera_pose",
+          "shape": [
+            7
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        },
+        {
+          "feature_key": "observation.right_eye_camera_pose",
+          "shape": [
+            7
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        }
+      ]
+    },
+    "head_trajectory": {
+      "streams": [
+        {
+          "feature_key": "observation.head_pose",
+          "shape": [
+            7
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.000000055980593
+        }
+      ]
+    },
+    "depth": {
+      "streams": [
+        {
+          "feature_key": "observation.images.depth_head_left_rectified",
+          "shape": [
+            1456,
+            1920,
+            1
+          ],
+          "sample_count": 5360,
+          "sample_rate_hz": 30.0,
+          "coordinate_frame": "rectified_left_camera",
+          "unit": "millimeter",
+          "invalid_value": 0,
+          "format": "hevc12"
+        }
+      ]
+    }
+  }
+}

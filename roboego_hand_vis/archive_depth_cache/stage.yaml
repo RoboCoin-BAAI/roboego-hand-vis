@@ -48,7 +48,7 @@ outputs:
     - path: "{output_dir}/depth_preview.mp4"
       type: preview_video
       optional: true
-    - path: "{output_dir}/depth_hevc12.mkv"
+    - path: "{output_dir}/depth_hevc12.mp4"
       type: depth_hevc12_video
       optional: true
     - path: "{output_dir}/valid_mask_ffv1.mkv"

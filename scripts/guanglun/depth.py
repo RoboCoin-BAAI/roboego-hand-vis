@@ -57,7 +57,8 @@ def download_dataset(client, row, target):
 def command(args, session):
     return [sys.executable, 'depth', '--source', str(session), '--model-root', str(args.model_root),
             '--ckpt', str(args.ckpt), '--engine', 'throughput', '--num-frames', 'auto',
-            '--batch-size', str(args.batch_size), '--depth-format', 'hevc12', '--ffmpeg', args.ffmpeg]
+            '--batch-size', str(args.batch_size), '--depth-format', 'hevc12',
+            '--hevc12-preset', 'slow', '--ffmpeg', args.ffmpeg]
 
 
 def main(argv=None):

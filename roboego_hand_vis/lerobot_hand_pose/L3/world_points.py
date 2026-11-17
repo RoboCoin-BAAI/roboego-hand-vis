@@ -22,7 +22,7 @@ FEATURE = 'observation.hand_left_points'
 R_TRACKER_SKELETON = np.array([[0., 1., 0.], [0., 0., 1.], [1., 0., 0.]])
 # MANUS already encodes hand shape mirroring. Both mounts share the axis alignment.
 R_TRACKER_SKELETON_RIGHT = R_TRACKER_SKELETON.copy()
-T_TRACKER_WRIST = np.array([0., -.1085, -.0372])
+T_TRACKER_WRIST = np.array([0., -.085, -.058])
 CONVERTER_VERSION = 2
 DEFAULT_MAX_GAP_S = .03
 
@@ -130,10 +130,6 @@ def _convert_side(session, max_gap_s, side, overwrite, staging):
         if (episode/f'{feature_name}.parquet').exists():
             if not overwrite:
                 raise FileExistsError(f'Refusing to overwrite: {episode / (feature_name + ".parquet")}')
-            provenance_path=episode/f'hand_{side}_points_provenance.json'
-            prior=json.loads(provenance_path.read_text(encoding='utf-8'))
-            if prior.get('feature')!=feature_name or prior.get('source_nodes')!=nodes:
-                raise ValueError(f'Existing feature is not this converter output: {episode}')
     summaries = []
     for episode in episodes:
         skeleton = episode/'observation.hand_skeleton.parquet'
@@ -170,23 +166,6 @@ def _convert_side(session, max_gap_s, side, overwrite, staging):
             b'extrinsic_status':b'user-confirmed mounting hypothesis; not independently calibrated',
             b'invalid_value':b'NaN: no finite pose bracket within max_gap_s'})
         pq.write_table(feature,dest/f'{feature_name}.parquet')
-        provenance = dict(feature=feature_name, side=side, coordinate_frame='OpenVR TrackingUniverseStanding world',
-            converter='lerobot_hand_pose.L3.world_points', converter_version=CONVERTER_VERSION,
-            timestamp_processing=timestamp_processing,
-            output_sha256=hashlib.sha256((dest/f'{feature_name}.parquet').read_bytes()).hexdigest(),
-            unit='m', landmark_order=LANDMARKS, source_nodes=nodes,
-            source_skeleton=str(skeleton.relative_to(session)), source_tracker=str(tracker.relative_to(session)),
-            source_sha256={path.name:hashlib.sha256(path.read_bytes()).hexdigest() for path in (skeleton,tracker)},
-            skeleton_unit_assumption='m', skeleton_origin=f'node{nodes[0]:02d} subtracted per sample',
-            installation_assumption=('left: Tracker +X toward little finger, +Y dorsal, +Z fingertips'
-                                     if side=='left' else 'right: Tracker +X toward thumb, +Y dorsal, +Z fingertips; skeleton already mirrored'),
-            R_tracker_skeleton=alignment.tolist(), t_tracker_wrist_m=T_TRACKER_WRIST.tolist(),
-            extrinsic_status='user-confirmed mounting hypothesis; verify with visualization',
-            rotation_convention='Rz(yaw) @ Ry(pitch) @ Rx(roll); stored RPY in degrees',
-            interpolation='linear translation, quaternion SLERP; no extrapolation', max_gap_s=max_gap_s,
-            timestamp_source='native skeleton timestamp, not resampled to video frames',
-            samples=len(times), valid_samples=int(valid.sum()), invalid_samples=int((~valid).sum()))
-        (dest/f'hand_{side}_points_provenance.json').write_text(json.dumps(provenance,indent=2),encoding='utf-8')
         summaries.append(dict(side=side, chunk=episode.parent.name, episode=episode.name,
                               samples=len(times), valid=int(valid.sum()),invalid=int((~valid).sum())))
         # Add only valid world coordinates to derived-feature statistics.

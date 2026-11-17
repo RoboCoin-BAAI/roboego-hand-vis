@@ -64,7 +64,7 @@ def test_l3_loaders_and_prepare(tmp_path):
     assert depth['timestamps'].stem == 'observation.images.headband_left_rgb_rectified'
     plan, = plan_session(tmp_path)
     from unittest.mock import patch
-    with patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality'):
+    with patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality', side_effect=AssertionError('Runtime first-frame quality gate must not run')):
         prepared = prepare(plan, tmp_path / 'work')
     assert prepared['config'].is_file()
     assert prepared['stereo_pairs'].read_text().count('\n') == 4

@@ -26,7 +26,10 @@ def options(argv):
     p.add_argument('--num-frames',default='auto')
     p.add_argument('--engine',default='throughput')
     p.add_argument('--batch-size',type=int,default=1)
-    p.add_argument('--depth-format',default='files')
+    p.add_argument('--valid-iters',type=int)
+    p.add_argument('--work-root',type=Path)
+    p.add_argument('--depth-format',default='hevc12')
+    p.add_argument('--hevc12-preset',default='slow')
     p.add_argument('--no-skip-existing',action='store_true')
     return p.parse_args(argv[2:])
 
@@ -57,7 +60,10 @@ def main():
                             model=DepthEngine(dict(config=str(a.config or DEFAULT_CONFIG),model_root=str(a.model_root),
                                 ckpt=str(a.ckpt) if a.ckpt else None,start=0,num_frames=a.num_frames,
                                 camera_names=cameras,cpu_threads=2,prefetch=4,write_queue=4,
-                                batch_size=a.batch_size,depth_format=a.depth_format,ffmpeg=a.ffmpeg,save_vis=False))
+                                batch_size=a.batch_size,depth_format=a.depth_format,hevc12_preset=a.hevc12_preset,
+                                valid_iters=a.valid_iters,
+                                work_root=str(a.work_root) if a.work_root else None,
+                                ffmpeg=a.ffmpeg,save_vis=False))
                             print(f'[resident-load] gpu={device} model_load_s={time.perf_counter()-started:.3f}',flush=True)
                         print(json.dumps(model.process(dict(session=str(a.source),episode=plan['episode']))),flush=True)
                 else:

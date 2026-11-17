@@ -3,6 +3,9 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import json
 import math
+import os
+import hashlib
+import shutil
 from pathlib import Path
 import sys
 
@@ -24,6 +27,7 @@ def main(argv=None):
     parser.add_argument("--skip-existing", action=argparse.BooleanOptionalAction, default=True,
                         help="Validate and reuse complete rectification (default); --no-skip-existing forces recompute")
     parser.add_argument("--sessions-file", type=Path, help="JSON list of selected session paths")
+    parser.add_argument("--work-root", type=Path, help="Work files and encoder logs outside the dataset")
     args = parser.parse_args(argv)
     if (args.workers < 1 or not math.isfinite(args.balance) or not 0 <= args.balance <= 1):
         parser.error("Invalid worker count or balance")
@@ -35,11 +39,17 @@ def main(argv=None):
                    skip_existing=args.skip_existing)
     failed = 0
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        futures = {pool.submit(process_session, s, options): s for s in sessions}
+        work_root = args.work_root or Path(os.environ.get('L3_RECTIFY_WORK_ROOT') or Path.home()/'.cache/roboego/L3/rectify')
+        futures = {pool.submit(process_session, s, dict(options, work_root=work_root/hashlib.sha256(str(s).encode()).hexdigest())): s for s in sessions}
         for future in as_completed(futures):
             session = futures[future]
             try:
-                print(json.dumps(dict(session=str(session), status="dry_run" if args.dry_run else "done", results=future.result())), flush=True)
+                results = future.result()
+                if not args.dry_run:
+                    work = work_root/hashlib.sha256(str(session).encode()).hexdigest()
+                    if work.exists():
+                        shutil.rmtree(work)
+                print(json.dumps(dict(session=str(session), status="dry_run" if args.dry_run else "done", results=results)), flush=True)
             except Exception as exc:
                 failed += 1
                 print(json.dumps(dict(session=str(session), status="failed", error=str(exc))), flush=True)

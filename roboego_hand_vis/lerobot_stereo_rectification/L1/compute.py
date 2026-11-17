@@ -79,15 +79,17 @@ def crop_roi(actual, calibrated, allow_center_crop=True):
 
 
 class Encoder:
-    def __init__(self, path, size, fps, ffmpeg):
+    def __init__(self, path, size, fps, ffmpeg, *, preset="medium", threads=2, log_path=None):
         w, h = size
         path.parent.mkdir(parents=True, exist_ok=True)
-        self.log = path.with_suffix(".ffmpeg.log").open("wb")
+        log_path = Path(log_path) if log_path is not None else path.with_suffix(".ffmpeg.log")
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log = log_path.open("wb")
         self.process = None
         try:
             self.process = subprocess.Popen([ffmpeg, "-nostdin", "-v", "error", "-f", "rawvideo",
                 "-pix_fmt", "bgr24", "-s", f"{w}x{h}", "-r", str(fps), "-i", "pipe:0",
-                "-an", "-c:v", "libx264", "-threads", "2", "-crf", "18", "-bf", "0", "-pix_fmt", "yuv420p",
+                "-an", "-c:v", "libx264", "-preset", preset, "-threads", str(threads), "-crf", "18", "-bf", "0", "-pix_fmt", "yuv420p",
                 "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=self.log)
         except BaseException:
             self.log.close()
@@ -106,6 +108,8 @@ class Encoder:
             code = self.process.wait()
             if code:
                 raise RuntimeError(f"ffmpeg exited with code {code}; see encoder log")
+            self.log.close()
+            Path(self.log.name).unlink(missing_ok=True)
         finally:
             self.log.close()
 
@@ -133,7 +137,17 @@ def crop_output_maps(maps, params, size):
     return maps, params, (width, height), roi
 
 
-def publish_files(staging, root):
+def move_published_file(source, target):
+    import errno
+    try:
+        source.rename(target)
+    except OSError as exc:
+        if exc.errno != errno.EXDEV:
+            raise
+        shutil.move(str(source), str(target))
+
+
+def publish_files(staging, root, staging_base=None):
     """Publish staged features and metadata, restoring old files on failure."""
     files = sorted(p for p in staging.rglob("*") if p.is_file())
     # Publish info last, after its feature files are in place.
@@ -151,17 +165,18 @@ def publish_files(staging, root):
             if target.exists():
                 backup = staging / ".previous" / target.relative_to(root)
                 backup.parent.mkdir(parents=True, exist_ok=True)
-                target.rename(backup)
+                move_published_file(target, backup)
                 backups.append((backup, target))
-            source.rename(target)
+            move_published_file(source, target)
             published.append(target)
     except BaseException:
         for target in reversed(published):
             target.unlink()
         for backup, target in reversed(backups):
-            backup.rename(target)
+            move_published_file(backup, target)
         raise
-    if staging.is_symlink() or not staging.resolve().is_relative_to(root.resolve()):
+    cleanup_base = Path(staging_base).resolve() if staging_base is not None else root.resolve()
+    if staging.is_symlink() or not staging.resolve().is_relative_to(cleanup_base):
         raise ValueError("Refusing to clean staging outside dataset")
     try:
         shutil.rmtree(staging)
@@ -171,7 +186,7 @@ def publish_files(staging, root):
 
 def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
                     center_crop_calibration=True, dry_run=False, skip_existing=True,
-                    camera_names=None, geometry=None, calibration_source=None):
+                    camera_names=None, geometry=None, calibration_source=None, work_root=None, write_frame_mapping=True, full_decode_validation=True):
     import cv2
     import pyarrow as pa
     import pyarrow.parquet as pq
@@ -183,6 +198,9 @@ def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
     left, right, transform = (geometry if geometry is not None else
                               load_geometry(ctx.root / "calibrations/camera-camchain.yaml"))
     output = ctx.root
+    staging_base = Path(work_root).resolve() if work_root is not None else ctx.root
+    if work_root is not None and (staging_base.is_relative_to(ctx.root) or ctx.root.is_relative_to(staging_base)):
+        raise ValueError("Runtime work directory must be separate from dataset")
     cal_relative = Path("calibrations")
     cal_output = ctx.root / cal_relative
     prefix = f"{episode.parent.name}_{episode.name}_" if len(ctx.episodes) > 1 else ""
@@ -231,27 +249,29 @@ def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
             try:
                 manifest, counts = validate_existing(ctx, episode,
                     manifest_path=cal_output / manifest_name, params_path=cal_output / params_name,
-                    mapping_path=cal_output / mapping_name, video_relative=video_relative,
+                    mapping_path=(cal_output / mapping_name if write_frame_mapping else None), video_relative=video_relative,
                     timestamp_relative=timestamp_relative, params=params, size=size,
                     crops=crops, output_roi=output_roi, transform=transform, balance=balance,
-                    camera_names=camera_names, calibration_source=calibration_source)
+                    camera_names=camera_names, calibration_source=calibration_source,
+                    full_decode_validation=full_decode_validation)
             except (OSError, ValueError, KeyError, TypeError, AttributeError, yaml.YAMLError, cv2.error) as exc:
                 print(f"[recompute] {ctx.root.name}/{episode.name}: {exc}", flush=True)
             else:
                 old = json.loads((cal_output / manifest_name).read_text(encoding='utf-8'))
                 if old != manifest:
-                    staging = ctx.root / f'.rectification.partial-{uuid4().hex}'
+                    staging = staging_base / f'.rectification.partial-{uuid4().hex}'
                     (staging / cal_relative).mkdir(parents=True)
                     (staging / cal_relative / manifest_name).write_text(json.dumps(manifest, indent=2), encoding='utf-8')
-                    publish_files(staging, ctx.root)
+                    publish_files(staging, ctx.root, staging_base=staging_base)
                     staging = None
                 print(f"[skip-existing] {ctx.root.name}/{episode.name}: validated rectification", flush=True)
                 return dict(**plan, frame_counts=counts, skipped_existing=True)
-        staging = ctx.root / f".rectification.partial-{uuid4().hex}"
-        staging.mkdir()
+        staging = staging_base / f".rectification.partial-{uuid4().hex}"
+        staging.mkdir(parents=True)
         counts = {}
         for side, cap, crop, maps_side in zip(("left", "right"), captures, crops, maps):
-            encoder = Encoder(staging / video_relative[side], size, ctx.fps(camera_names[side]), ffmpeg)
+            encoder = Encoder(staging / video_relative[side], size, ctx.fps(camera_names[side]), ffmpeg,
+                              **({"log_path": staging_base / "logs" / f"{prefix}{episode.name}_{side}.ffmpeg.log"} if work_root is not None else {}))
             encoders.append(encoder)
             count = 0
             while True:
@@ -279,9 +299,10 @@ def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
             shutil.copy2(timestamps, destination)
         (staging / cal_relative).mkdir(parents=True, exist_ok=True)
         length = max(counts.values())
-        pq.write_table(pa.table(dict(frame_index=list(range(length)),
-            left_source_index=[i if i < counts["left"] else None for i in range(length)],
-            right_source_index=[i if i < counts["right"] else None for i in range(length)])), staging / cal_relative / mapping_name)
+        if write_frame_mapping:
+            pq.write_table(pa.table(dict(frame_index=list(range(length)),
+                left_source_index=[i if i < counts["left"] else None for i in range(length)],
+                right_source_index=[i if i < counts["right"] else None for i in range(length)])), staging / cal_relative / mapping_name)
         plan["frame_counts"] = counts
         intrinsics = {side: dict(fx=float(p[0, 0]), fy=float(p[1, 1]), cx=float(p[0, 2]), cy=float(p[1, 2]))
                       for side, p in (("left", p1), ("right", p2))}
@@ -290,6 +311,8 @@ def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
             intrinsics=intrinsics, extrinsics=dict(baseline_m=float(-p2[0, 3] / p2[0, 0])),
             frame_mapping=str(cal_output / mapping_name), source_episode=str(episode),
             stereo_pair=[camera_names["left"], camera_names["right"]], frame_policy="source_order", synchronization_checked=False)
+        if not write_frame_mapping:
+            manifest.pop("frame_mapping", None)
         if calibration_source is not None:
             manifest["calibration_source"] = calibration_source
         manifest["camera_features"] = {side: f"observation.images.{camera_names[side]}_rectified" for side in ("left", "right")}
@@ -324,7 +347,7 @@ def rectify_episode(ctx, episode, *, balance=0., ffmpeg="ffmpeg",
         info["total_videos"] = len(existing | {p.as_posix() for p in video_relative.values()})
         (staging / "meta").mkdir()
         (staging / "meta/info.json").write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding="utf-8")
-        publish_files(staging, ctx.root)
+        publish_files(staging, ctx.root, staging_base=staging_base)
         ctx.info = info
         return plan
     finally:

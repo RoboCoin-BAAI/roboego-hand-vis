@@ -49,14 +49,5 @@ sample counts, removed duplicates and original backward steps.
 Video timestamps need not be strictly increasing. Runtime stereo pairing keeps original frame order and indices, skipping repeated/backward timestamps until time advances. Source videos/Parquet remain unchanged; skipped indices are recorded in .work/<run>/camera_timestamp_handling.json. Skipped frames have no estimated pose and still count toward the trajectory valid-pose ratio.
 
 
-Before rectified stereo inference, L1/L3 share a first-frame quality gate.
-SIFT ratio-test matches must be mutual, with >=30 matches spread over >=4 cells
-of a 4x3 grid. Median absolute vertical error must be <=1.5 pixels and P95 <=3
-pixels at the rectified image resolution. These are initial heuristic thresholds,
-not calibrated guarantees. No vertical-error filtering is applied before measuring.
-Reports are cached at annotation/stereo_quality/<chunk>_<episode>.json and reused
-when video paths, sizes, mtimes and policy match. Warning/inconclusive results
-block depth/VIO with a nonzero exit, leaving rectification and semantic annotation
-unaffected. Only frame 0 is assessed; later frame quality is not certified.
+L1/L3 depth and VIO do not repeat first-frame stereo quality assessment before runtime. Upstream quality control owns that assessment. Required input, calibration, timestamp and file checks remain; VIO trajectory quality is still evaluated after estimation.
 
-First-frame quality thresholds now default to median <=20 px, P95 <=40 px. Thresholds are fixed in code and cannot be overridden by environment variables. Policy changes invalidate the cached gate result. These relaxed thresholds are not accuracy guarantees.

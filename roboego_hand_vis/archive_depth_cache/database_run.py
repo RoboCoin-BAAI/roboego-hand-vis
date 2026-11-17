@@ -48,7 +48,7 @@ def _videos(depth, config):
     if config.write_avi:
         result.append(depth / ('depth_ffv1.mkv' if config.ffv1_container == 'mkv' else 'depth_uint16_ffv1.avi'))
     if config.write_hevc12:
-        result.append(depth / 'depth_hevc12.mkv')
+        result.append(depth / 'depth_hevc12.mp4')
     if config.write_valid_mask:
         result.append(depth / 'valid_mask_ffv1.mkv')
     if config.write_preview:

@@ -29,6 +29,18 @@ def read(path):
     return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
 
 
+def cleanup_success_work(folder, stage):
+    """Discard successful L3 work files, retaining only final data and stage state."""
+    names = {'review': ['review_work'], 'rectify': ['rectify_work', 'encoder_logs'],
+             'depth': ['depth_work']}.get(stage, [])
+    for name in names:
+        path = folder / name
+        if path.is_symlink():
+            path.unlink()
+        elif path.exists():
+            shutil.rmtree(path)
+
+
 @contextmanager
 def claim(path):
     """OS releases the lock on crash; never steal work based on elapsed time."""
@@ -131,7 +143,9 @@ def tasks(config, batches):
 def rectified_index(config, batch):
     if not batch.startswith('batch_') or not batch[6:].isdigit():
         raise ValueError('Invalid batch: ' + batch)
-    return Path(config['paths']['output_root']) / batch / 'rectification_done.json'
+    root = (Path(config['paths']['state_root']) / config['dataset']
+            if config.get('level') == 'L3' else Path(config['paths']['output_root']))
+    return root / batch / 'rectification_done.json'
 
 
 def update_rectified_index(config, session, done):
@@ -160,7 +174,8 @@ def update_rectified_index(config, session, done):
 def gpu_tasks(config, batches):
     root = Path(config['paths']['output_root']).resolve()
     indices = ([rectified_index(config, b) for b in dict.fromkeys(batches)] if batches
-               else sorted(root.glob('batch_*/rectification_done.json')))
+               else sorted((Path(config['paths']['state_root']) / config['dataset']
+                            if config.get('level') == 'L3' else root).glob('batch_*/rectification_done.json')))
     paths = []
     for index in indices:
         if not index.exists():
@@ -170,7 +185,7 @@ def gpu_tasks(config, batches):
             raise ValueError('Invalid rectification index: ' + str(index))
         for value in values:
             session = Path(value).resolve()
-            if session.parent != index.parent.resolve():
+            if session.parent != (root / index.parent.name).resolve():
                 raise ValueError('Session does not belong to indexed batch: ' + value)
         paths.extend(values)
     selected = []
@@ -350,6 +365,10 @@ class Runner:
                     if not adopted:
                         env = os.environ.copy()
                         env.update(PYTHONUNBUFFERED='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
+                        if self.config.get('level') == 'L3':
+                            env['ARGUS_L3_WORK_ROOT'] = str(Path(values['state_root']) / 'L3' / task['batch'] / task['name'] / 'review_work')
+                            env['L3_RECTIFY_WORK_ROOT'] = str(Path(values['state_root']) / 'L3' / task['batch'] / task['name'] / 'rectify_work')
+                            env['L3_DEPTH_WORK_ROOT'] = str(Path(values['state_root']) / 'L3' / task['batch'] / task['name'] / 'depth_work')
                         if getattr(self, 'gpu_executor', None) is not None:
                             code = self.gpu_executor(command, history / 'console.log')
                         else:
@@ -396,7 +415,12 @@ class Runner:
                     if running['status'] == 'done':
                         self.registered_rectifications.add(str(folder))
                 write(history / 'result.json', running)
+                if self.config.get('level') == 'L3' and running['status'] == 'done':
+                    running['log'] = None
                 write(folder / 'state.json', states)
+                if self.config.get('level') == 'L3' and running['status'] == 'done':
+                    cleanup_success_work(folder, name)
+                    shutil.rmtree(history)
                 print(json.dumps(dict(batch=task['batch'], task=task['name'], stage=name,
                                       status=running['status'], log=running['log'], **location)), flush=True)
                 return True
@@ -528,6 +552,18 @@ def run_cpu_phases(runner, selected, devices, args):
     selected=list(selected)
     excluded=[]
     continue_passed=runner.config.get('cpu_failure_policy','stop')=='continue_passed'
+
+    def failed_dependency(name, task, states):
+        for parent in runner.config['stages'][name].get('depends', []):
+            if runner.current(parent, task, states):
+                continue
+            if states.get(parent, {}).get('status') == 'failed':
+                return parent
+            upstream = failed_dependency(parent, task, states)
+            if upstream:
+                return upstream
+        return None
+
     for name in stages:
         print(json.dumps(dict(phase=name, status='started', sessions=len(selected))), flush=True)
         while True:
@@ -539,6 +575,7 @@ def run_cpu_phases(runner, selected, devices, args):
             failed = False
             passed_tasks=[]
             failed_tasks=[]
+            failure_reasons=[]
             for task in selected:
                 states = read(runner.folder(task) / 'state.json')
                 record = states.get(name, {})
@@ -548,8 +585,12 @@ def run_cpu_phases(runner, selected, devices, args):
                     incomplete.append(dict(batch=task['batch'], session=task['name'],
                                            status=record.get('status', 'pending')))
                     failed |= record.get('status') == 'failed'
-                    if record.get('status') == 'failed':
+                    cause = (name if record.get('status') == 'failed'
+                             else failed_dependency(name, task, states))
+                    if cause:
                         failed_tasks.append(task)
+                        failure_reasons.append(dict(batch=task['batch'], session=task['name'],
+                                                    failed_stage=cause, blocked_stage=name))
                 else:
                     passed_tasks.append(task)
             if not incomplete:
@@ -559,7 +600,7 @@ def run_cpu_phases(runner, selected, devices, args):
                 continue
             print(json.dumps(dict(phase=name, status='blocked', incomplete=incomplete)), flush=True)
             if continue_passed and failed_tasks and len(failed_tasks)==len(incomplete):
-                excluded.extend(dict(batch=t['batch'],session=t['name'],failed_stage=name) for t in failed_tasks)
+                excluded.extend(failure_reasons)
                 selected=passed_tasks
                 print(json.dumps(dict(phase=name,status='filtered',passed=len(selected),
                                       excluded=len(failed_tasks))),flush=True)
@@ -587,7 +628,7 @@ def main(argv=None):
     parser.add_argument('--force-stages', help='Comma-separated override')
     parser.add_argument('--workers', type=int, default=1)
     parser.add_argument('--gpus', default='0,1,2,3,4,5,6,7', help='Physical GPU IDs')
-    parser.add_argument('--depth-workers-per-gpu', type=int, default=2)
+    parser.add_argument('--depth-workers-per-gpu', type=int, default=None)
     parser.add_argument('--watch', action='store_true')
     parser.add_argument('--poll-s', type=float, default=5)
     parser.add_argument('--retry-failed', action='store_true')
@@ -605,6 +646,8 @@ def main(argv=None):
             parser.error('--batch-range must be a positive inclusive range, e.g. 1:12')
         args.batches = [f'batch_{i:07d}' for i in range(first, last + 1)]
     config = yaml.safe_load(args.config.read_text(encoding='utf-8'))
+    if args.depth_workers_per_gpu is None:
+        args.depth_workers_per_gpu = config.get('depth_workers_per_gpu', 2)
     for key in ('run_stages', 'force_stages'):
         value = getattr(args, key)
         if value is not None:

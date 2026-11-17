@@ -124,9 +124,6 @@ def prepare(plan, work, *, stereo_tolerance_s=.001, downsample_cameras=False, ra
     work.mkdir(parents=True, exist_ok=True)
     if plan.get('camera_mode', 'stereo') != 'stereo':
         raise ValueError('Only stereo VIO is supported')
-    if plan.get('input_mode', 'rectified') == 'rectified':
-        from roboego_hand_vis.common.stereo_quality import require_stereo_quality
-        require_stereo_quality(plan['session'], plan['episode'], plan['left_video'], plan['right_video'])
     if 'calibration_jsonl' in plan:
         from roboego_hand_vis.lerobot_vio.L3.compute import materialize_calibration
         plan = materialize_calibration(plan, work)

@@ -31,18 +31,20 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
 
-def build(source: Path, context: dict):
+def build(source: Path, context: dict, *, read_collection_metadata=True, use_info_total_frames=False):
     import pyarrow.parquet as pq
 
     source = source.resolve()
     info = read_json(source / "meta/info.json")
     features = info["features"]
-    files = sorted(p for p in source.rglob("*") if p.is_file())
+    files = sorted(p for p in source.rglob("*") if p.is_file()
+                   and p != source / "meta/readme.json"
+                   and not (p.parent == source / "meta" and p.name.startswith(".readme.json.")))
     relative = lambda p: p.relative_to(source).as_posix()
     warnings = []
     annotations = [{"path": relative(p), "data": read_json(p)} for p in files if p.name.endswith("_structured.json")]
-    collect = read_lines(source / "meta/collect_info.jsonl")
-    tasks = read_lines(source / "meta/tasks.jsonl")
+    collect = read_lines(source / "meta/collect_info.jsonl") if read_collection_metadata else []
+    tasks = read_lines(source / "meta/tasks.jsonl") if read_collection_metadata else []
     streams = {}
     for key, feature in features.items():
         if not key.startswith("observation.") and key != "action":
@@ -63,11 +65,20 @@ def build(source: Path, context: dict):
             streams[key]["provenance_paths"] = [relative(p) for p in files if p.name == f"hand_{side}_points_provenance.json"]
 
     cameras = []
+    episode_rows = read_lines(source / "meta/episodes.jsonl")
+    episode_indices = ([row['episode_index'] for row in episode_rows] if episode_rows
+                       else range(info.get('total_episodes', 0)))
     primary = context.get("primary_camera") or DEFAULT_PRIMARY_CAMERA
     for key, feature in features.items():
         if feature.get("dtype") != "video":
             continue
-        video_paths = [relative(p) for p in files if p.suffix == ".mp4" and p.parent.name == key]
+        video_paths = []
+        for episode_index in episode_indices:
+            path = source / info['video_path'].format(
+                episode_chunk=episode_index // info.get('chunks_size', 1000),
+                episode_index=episode_index, video_key=key, feature_key=key)
+            if path.is_file():
+                video_paths.append(relative(path))
         h, w = feature["shape"][:2]
         cameras.append({"id": key, "is_primary": key == primary, "width": w, "height": h,
                         "fps": feature.get("fps", info.get("fps")), "video_paths": video_paths,
@@ -103,7 +114,7 @@ def build(source: Path, context: dict):
     eeg = next((s for s in modalities["eeg"]["streams"] if s["feature_key"] == "observation.eeg" and s["status"] == "present"), None)
     eeg_count = eeg["eeg_channel_count"] if eeg else 0
     emg_count = sum(s["definition"]["shape"][0] for s in modalities["emg"]["streams"] if s["status"] == "present")
-    indexes = [p for p in files if p.name == "master_index.parquet"]
+    indexes = [] if use_info_total_frames else [p for p in files if p.name == "master_index.parquet"]
     episodes = []
     for p in indexes:
         t = pq.read_table(p, columns=["timestamp"])["timestamp"].to_pylist()
@@ -134,6 +145,8 @@ def build(source: Path, context: dict):
     if len(collection_scenes) > 1:
         warnings.append("collect_info 中存在多个场景名称；请通过 context.scene 指定本条数据的场景。")
     task_name = context.get("task_name") or (tasks[0].get("task") if len(tasks) == 1 else None)
+    if task_name:
+        task_name = re.sub(r"[\W_]+", "_", task_name).strip("_")
     actions = sorted({v for a in annotations for s in a["data"].get("subtask", []) for v in s.get("action", [])})
     main = next((c for c in cameras if c["is_primary"]), None)
     level = context.get("level") or (source.name.split("-")[0] if re.match(r"L[123]-", source.name) else None)
@@ -141,8 +154,8 @@ def build(source: Path, context: dict):
              f"{main['width']}x{main['height']}" if main else None,
              f"{main['fps']:g}FPS" if main else None,
              f"{context['view_count']}目" if context.get("view_count") is not None else None,
-             f"EEG{eeg_count}" if eeg_count is not None else None, f"EMG{emg_count}", source.name]
-    display = "_".join(str(v) if v is not None else "待确认" for v in parts)
+             f"EEG{eeg_count}" if eeg_count is not None else None, f"EMG{emg_count}"]
+    display = re.sub(r"[\W_]+", "_", "_".join(str(v) if v is not None else "待确认" for v in parts)).strip("_")
     if not primary:
         warnings.append("主视角未指定；info.master_feature 仅作为同步主流，不作为主视角。")
     return {

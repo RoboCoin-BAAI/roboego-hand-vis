@@ -7,7 +7,7 @@ parameters:
   num_frames: auto
   scale: 0.5
   hiera: 0
-  valid_iters: 8
+  valid_iters: 16
   max_disp: 192
   min_disp: 1.0e-3
   max_depth_m: 4.0

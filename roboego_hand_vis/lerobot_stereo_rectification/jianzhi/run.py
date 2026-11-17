@@ -1,0 +1,51 @@
+"""Run Jianzhi front stereo rectification using DS calibration and body poses."""
+import argparse
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import json
+import math
+from pathlib import Path
+import sys
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from roboego_hand_vis.lerobot_headband_integrity.L1.run import discover
+from roboego_hand_vis.lerobot_stereo_rectification.jianzhi.compute import process_session
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--workers", type=int, default=2)
+    parser.add_argument("--balance", type=float, default=0.)
+    parser.add_argument("--ffmpeg", default="ffmpeg")
+    parser.add_argument("--center-crop-calibration", action=argparse.BooleanOptionalAction,
+                        default=False, help="Explicitly allow a center crop when video exceeds calibration resolution")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--skip-existing", action=argparse.BooleanOptionalAction, default=True,
+                        help="Validate and reuse complete rectification (default); --no-skip-existing forces recompute")
+    parser.add_argument("--sessions-file", type=Path, help="JSON list of selected session paths")
+    args = parser.parse_args(argv)
+    if (args.workers < 1 or not math.isfinite(args.balance) or not 0 <= args.balance <= 1):
+        parser.error("Invalid worker count or balance")
+    sessions = discover(args.source, args.sessions_file)
+    if not sessions:
+        parser.error("No datasets with meta/info.json found")
+    options = dict(balance=args.balance, ffmpeg=args.ffmpeg,
+                   center_crop_calibration=args.center_crop_calibration, dry_run=args.dry_run,
+                   skip_existing=args.skip_existing)
+    failed = 0
+    with ProcessPoolExecutor(max_workers=args.workers) as pool:
+        futures = {pool.submit(process_session, s, options): s for s in sessions}
+        for future in as_completed(futures):
+            session = futures[future]
+            try:
+                print(json.dumps(dict(session=str(session), status="dry_run" if args.dry_run else "done", results=future.result())), flush=True)
+            except Exception as exc:
+                failed += 1
+                print(json.dumps(dict(session=str(session), status="failed", error=str(exc))), flush=True)
+    print(json.dumps(dict(total=len(sessions), failed=failed)))
+    return int(bool(failed))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

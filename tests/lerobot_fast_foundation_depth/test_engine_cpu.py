@@ -37,7 +37,7 @@ class EngineCPUTests(unittest.TestCase):
             "cuDNN error: CUDNN_STATUS_NOT_SUPPORTED for non-contiguous input")))
         self.assertFalse(_is_unsupported_grid_sample_batch(RuntimeError("CUDA out of memory")))
 
-    @patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality')
+    @patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality', side_effect=AssertionError('Runtime first-frame quality gate must not run'))
     def test_decode_preprocess_save_and_depth_math(self, quality_gate):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -76,7 +76,7 @@ class EngineCPUTests(unittest.TestCase):
                     self.assertEqual(left.shape, right.shape)
                 return [np.full(left.shape[:2], 2., dtype=np.float32) for left, _ in pairs], .001
             engine.infer_batch = infer_batch
-            with patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality'):
+            with patch('roboego_hand_vis.common.stereo_quality.require_stereo_quality', side_effect=AssertionError('Runtime first-frame quality gate must not run')):
                 report = engine.process(dict(session=str(root), episode=str(episode)))
             self.assertEqual(report["frames"], 4)
             self.assertEqual(batches, [3, 1])
@@ -110,15 +110,19 @@ class EngineCPUTests(unittest.TestCase):
                     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
                 except ImportError:
                     return
-            from roboego_hand_vis.lerobot_fast_foundation_depth.L1.depth_video import read_depth_video
+            from roboego_hand_vis.lerobot_fast_foundation_depth.L1.depth_video import read_episode_depth
             engine.options.update(depth_format="hevc12", ffmpeg=ffmpeg, hevc12_preset="ultrafast", encode_threads=1)
-            engine.process(dict(session=str(root), episode=str(episode)))
-            self.assertFalse((output / "depth_uint16_png").exists())
-            decoded = list(read_depth_video(output / "depth_hevc12.mkv", size=(64, 48), ffmpeg=ffmpeg))
+            video_result = engine.process(dict(session=str(root), episode=str(episode)))
+            output = Path(video_result["output"])
+            # Existing per-frame results are preserved; the new run writes video and mask.
+            decoded = list(read_episode_depth(output, ffmpeg=ffmpeg))
             self.assertEqual(len(decoded), 4)
-            np.testing.assert_allclose(decoded[0], .8)
+            np.testing.assert_allclose(decoded[0], .8, atol=.01)
             video_metadata = json.loads((output / "lerobot_depth.json").read_text())["depth_storage"]
-            self.assertTrue(video_metadata["lossless"])
+            self.assertFalse(video_metadata["lossless"])
+            self.assertTrue((root / video_metadata["file"]).is_file())
+            self.assertTrue(video_metadata["file"].startswith("videos/"))
+            self.assertTrue(video_metadata["mask_file"].startswith("annotation/"))
             self.assertEqual(video_metadata["frames"], 4)
 
 

@@ -122,7 +122,7 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
     preview_path = output_dir / "depth_preview.mp4"
     preview_command: list[str] = []
     preview_proc: subprocess.Popen | None = None
-    hevc12_path = output_dir / "depth_hevc12.mkv"
+    hevc12_path = output_dir / "depth_hevc12.mp4"
     hevc12_command: list[str] = []
     hevc12_proc: subprocess.Popen | None = None
     valid_mask_path = output_dir / "valid_mask_ffv1.mkv"
@@ -381,7 +381,7 @@ def archive_depth_cache(*, depth_dir: Path, output_dir: Path, config: DepthArchi
         "hevc12": {
             "enabled": bool(config.write_hevc12),
             "codec": "libx265",
-            "container": "mkv",
+            "container": "mp4",
             "pixel_format": "gray12le",
             "bit_depth": 12,
             "depth_unit": "millimeter",

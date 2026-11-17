@@ -38,12 +38,12 @@ def config():
 def publish(task, cfg):
     assert not cfg.delete_png and not cfg.delete_npy
     depth = task['depth_dir']
-    for name in ('depth_hevc12.mkv', 'valid_mask_ffv1.mkv'):
+    for name in ('depth_hevc12.mp4', 'valid_mask_ffv1.mkv'):
         (depth/name).write_bytes(b'video')
     report = dict(source_depth_dir=str(depth), output_dir=str(depth), frame_count=3,
                   deleted_source_npy=False, deleted_uint16_png=False,
                   frames=[{'frame_idx': i} for i in range(3)],
-                  outputs={'hevc12_video': str(depth/'depth_hevc12.mkv'),
+                  outputs={'hevc12_video': str(depth/'depth_hevc12.mp4'),
                            'valid_mask_video': str(depth/'valid_mask_ffv1.mkv'),
                            'png_dir': str(depth/'depth_uint16_png')})
     (depth/'depth_archive_meta.json').write_text(json.dumps(report))

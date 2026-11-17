@@ -30,9 +30,9 @@ def main(argv=None):
     p.add_argument("--prefetch", type=int, default=4, help="Decoded stereo frames queued per GPU")
     p.add_argument("--write-queue", type=int, default=4, help="Pending output frames per GPU")
     p.add_argument("--cpu-threads", type=int, default=2, help="CPU and decode threads per GPU worker")
-    p.add_argument("--depth-format", choices=("files", "hevc12"), default="files")
+    p.add_argument("--depth-format", choices=("files", "hevc12"), default="hevc12")
     p.add_argument("--ffmpeg", default="ffmpeg")
-    p.add_argument("--hevc12-preset", default="ultrafast")
+    p.add_argument("--hevc12-preset", default="slow")
     p.add_argument("--encode-threads", type=int, default=2)
     p.add_argument("--save-vis", action=argparse.BooleanOptionalAction, default=False,
                    help="Enable preview video explicitly (default: disabled); overrides YAML")
@@ -43,7 +43,10 @@ def main(argv=None):
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     p.add_argument("--sessions-file", type=Path, help="JSON list of selected session paths")
+    p.add_argument("--valid-iters", type=int, default=None, help="Inference iterations; overrides YAML")
     args = p.parse_args(argv)
+    if args.valid_iters is not None and args.valid_iters < 1:
+        p.error("valid-iters must be positive")
     if args.start < 0 or (args.num_frames != "auto" and (not args.num_frames.isdigit() or int(args.num_frames) < 1)):
         p.error("start must be nonnegative; num-frames must be auto or a positive integer")
     if min(args.prefetch, args.write_queue, args.cpu_threads, args.encode_threads) < 1:
@@ -73,7 +76,7 @@ def main(argv=None):
             p.error("Worker expects exactly one dataset")
         print(json.dumps(run_session(sessions[0], config=args.config, model_root=args.model_root,
               ckpt=args.ckpt, start=args.start, num_frames=args.num_frames,
-              save_vis=args.save_vis, preview_every_n_frames=args.preview_every_n_frames)), flush=True)
+              save_vis=args.save_vis, valid_iters=args.valid_iters, preview_every_n_frames=args.preview_every_n_frames)), flush=True)
         return 0
     if args.dry_run:
         failed = 0
@@ -86,7 +89,7 @@ def main(argv=None):
         return int(bool(failed))
 
     if args.engine == "throughput":
-        from roboego_hand_vis.lerobot_fast_foundation_depth.L1.throughput import run_jobs
+        from roboego_hand_vis.lerobot_fast_foundation_depth.base.throughput import run_jobs
         jobs, invalid = [], 0
         for session in sessions:
             try:
@@ -100,7 +103,7 @@ def main(argv=None):
             batch_size=args.batch_size, prefetch=args.prefetch, write_queue=args.write_queue, cpu_threads=args.cpu_threads,
             depth_format=args.depth_format, ffmpeg=args.ffmpeg, hevc12_preset=args.hevc12_preset,
             encode_threads=args.encode_threads, save_vis=args.save_vis,
-            preview_every_n_frames=args.preview_every_n_frames,
+            valid_iters=args.valid_iters, preview_every_n_frames=args.preview_every_n_frames,
             vis_min_depth=args.vis_min_depth, vis_max_depth=args.vis_max_depth, vis_mode=args.vis_mode,
             right_frame_offset=args.right_frame_offset)
         reports = run_jobs(jobs, devices, options)
@@ -113,13 +116,15 @@ def main(argv=None):
         for session in sessions[index::len(devices)]:
             log = session / "annotation/lerobot_fast_foundation_depth.log"
             log.parent.mkdir(parents=True, exist_ok=True)
-            command = [sys.executable, str(Path(__file__).resolve()), "--worker", "--source", str(session),
+            command = [sys.executable, str(Path(__file__).resolve()), "--worker", "--depth-format", "files", "--source", str(session),
                        "--config", str(args.config.resolve()), "--start", str(args.start), "--num-frames", args.num_frames]
             for flag, value in (("--model-root", args.model_root), ("--ckpt", args.ckpt)):
                 if value is not None:
                     command.extend([flag, str(value.resolve())])
             if args.save_vis is not None:
                 command.append("--save-vis" if args.save_vis else "--no-save-vis")
+            if args.valid_iters is not None:
+                command.extend(["--valid-iters", str(args.valid_iters)])
             if args.preview_every_n_frames is not None:
                 command.extend(["--preview-every-n-frames", str(args.preview_every_n_frames)])
             env = os.environ.copy()
@@ -157,7 +162,7 @@ if __name__ == "__main__":
   --num-frames auto \
   --depth-format hevc12 \
   --ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg \
-  --hevc12-preset ultrafast \
+  --hevc12-preset slow \
   --encode-threads 2
 
 
@@ -171,7 +176,7 @@ if __name__ == "__main__":
   --num-frames auto \
   --depth-format hevc12 \
   --ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg \
-  --hevc12-preset ultrafast \
+  --hevc12-preset slow \
   --encode-threads 2
 
 /share/project/liuyou/humancoin/envs/ego/bin/python \
@@ -184,10 +189,10 @@ if __name__ == "__main__":
   --num-frames auto \
   --depth-format hevc12 \
   --ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg \
-  --hevc12-preset ultrafast \
+  --hevc12-preset slow \
   --encode-threads 2 \
   --save-vis \
   --preview-every-n-frames 1
 
- /share/project/liuyou/humancoin/envs/ego/bin/python   /share/project/liuyou/humancoin/code/roboego-hand-vis/roboego_hand_vis/lerobot_fast_foundation_depth/L1/run.py   --source /share/project/liuyou/humancoin/data/L1_lerobot/batch_0000001/cp_0001_session_20261009_172052   --model-root /share/project/liuyou/humancoin/code/Fast-FoundationStereo   --ckpt /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/model_best_bp2_serialize.pth   --engine throughput   --gpus 0   --num-frames auto   --right-frame-offset -1   --depth-format hevc12   --ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg   --hevc12-preset ultrafast   --encode-threads 2   --save-vis   --preview-every-n-frames 1
+ /share/project/liuyou/humancoin/envs/ego/bin/python   /share/project/liuyou/humancoin/code/roboego-hand-vis/roboego_hand_vis/lerobot_fast_foundation_depth/L1/run.py   --source /share/project/liuyou/humancoin/data/L1_lerobot/batch_0000001/cp_0001_session_20261009_172052   --model-root /share/project/liuyou/humancoin/code/Fast-FoundationStereo   --ckpt /share/project/liuyou/humancoin/code/Fast-FoundationStereo/weights/model_best_bp2_serialize.pth   --engine throughput   --gpus 0   --num-frames auto   --right-frame-offset -1   --depth-format hevc12   --ffmpeg /share/project/liuyou/humancoin/envs/ego/bin/ffmpeg   --hevc12-preset slow   --encode-threads 2   --save-vis   --preview-every-n-frames 1
 '''

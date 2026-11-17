@@ -1,0 +1,67 @@
+{
+  "version": "HumanCOIN scene taxonomy V1",
+  "category_policy": "fixed",
+  "area_policy": "open_snake_case",
+  "categories": {
+    "household": [
+      "kitchen",
+      "dining_area",
+      "living_room",
+      "bedroom",
+      "bathroom",
+      "household_storage"
+    ],
+    "commercial_service": [
+      "retail_store",
+      "restaurant",
+      "cafe",
+      "hotel",
+      "hair_salon",
+      "beauty_salon",
+      "warehouse",
+      "sorting_area",
+      "packing_area",
+      "shelving_area",
+      "loading_area",
+      "delivery_area"
+    ],
+    "industrial_production": [
+      "assembly",
+      "machining",
+      "inspection",
+      "maintenance",
+      "workshop",
+      "construction"
+    ],
+    "professional_work": [
+      "office",
+      "laboratory",
+      "classroom",
+      "medical_area",
+      "care_area",
+      "studio"
+    ],
+    "public_outdoor": [
+      "street",
+      "transportation",
+      "public_facility",
+      "garden",
+      "farm",
+      "sports_area"
+    ],
+    "leisure_social": [
+      "sports_venue",
+      "gaming_area",
+      "music_venue",
+      "entertainment_area",
+      "social_gathering",
+      "pet_service"
+    ],
+    "other": [
+      "other"
+    ],
+    "unknown": [
+      "unknown"
+    ]
+  }
+}
