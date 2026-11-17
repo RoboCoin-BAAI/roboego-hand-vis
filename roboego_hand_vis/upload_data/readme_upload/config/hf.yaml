@@ -1,0 +1,9 @@
+hub: huggingface
+namespace: HumanCOIN
+# Add local dataset directories or supply --folders on the command line.
+folders: []
+create_repo: false
+private: false
+readme_only: false
+max_retries: 3
+skip_errors: false

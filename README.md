@@ -14,6 +14,8 @@ The main use case is processing a raw headband session into selected hand-object
 interaction windows with stereo videos, rectified dataset manifests, depth,
 HaMeR hand meshes, filtered 21-joint hand tracks, and SAM3 object masks.
 
+HumanCOIN load checks, dataset cards, Hugging Face / ModelScope uploads and remote deletion: see the [dataset publishing guide](roboego_hand_vis/upload_data/readme_upload/README.md).
+
 ## Environment
 
 The project is usually run from the `ego` environment:

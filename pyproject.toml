@@ -25,3 +25,6 @@ privacy = ["ultralytics>=8.2.0", "opencv-python==5.0.0.93", "numpy==2.4.6"]
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["roboego_hand_vis*", "scripts*"]
+
+[tool.setuptools.package-data]
+"roboego_hand_vis.upload_data.readme_upload" = ["config/*.json", "config/*.yaml", "requirements*.txt", "README.md"]

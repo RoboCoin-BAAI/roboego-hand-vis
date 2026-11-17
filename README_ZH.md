@@ -42,6 +42,8 @@ OpenVINS 头部轨迹估计和数据库批处理入口见[VIO 说明](roboego_ha
 
 需要在本地盘处理并按阶段回传共享盘时，使用 `--local-root`（基础质检自动复制缺失数据），见[本地工作目录说明](roboego_hand_vis/database/WORKSPACE.md)。
 
+HumanCOIN 数据加载检查、README 生成、Hugging Face / 魔搭上传及远端删除见[数据集发布说明](roboego_hand_vis/upload_data/readme_upload/README.md)。
+
 ## 环境配置
 
 项目通常在 `ego` 环境中运行：

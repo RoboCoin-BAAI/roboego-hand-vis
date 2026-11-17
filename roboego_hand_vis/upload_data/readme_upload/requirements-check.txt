@@ -1,0 +1,2 @@
+# Optional: needed only for check_load.py
+humancoin>=0.1.1

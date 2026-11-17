@@ -1,0 +1,9 @@
+hub: modelscope
+namespace: HumanCOIN
+folders: []
+create_repo: false
+private: false
+readme_only: false
+max_workers: 8
+max_retries: 3
+skip_errors: false
