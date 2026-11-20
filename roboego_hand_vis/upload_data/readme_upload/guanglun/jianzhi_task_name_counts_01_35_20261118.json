@@ -1,0 +1,3699 @@
+{
+  "dataset": "jianzhi",
+  "batches": "1-35",
+  "samples": 3492,
+  "with_task_name": 3492,
+  "missing_or_empty": 0,
+  "unique_task_names": 922,
+  "errors": [],
+  "task_names": [
+    {
+      "task_name": "Adjust grill and prepare meat",
+      "count": 1
+    },
+    {
+      "task_name": "Apply cream to mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Apply essential oil and knead abdomen",
+      "count": 1
+    },
+    {
+      "task_name": "Apply essential oil and massage back",
+      "count": 1
+    },
+    {
+      "task_name": "Apply essential oil and roll abdomen",
+      "count": 1
+    },
+    {
+      "task_name": "Apply eye mask and massage face",
+      "count": 1
+    },
+    {
+      "task_name": "Apply eye patches and perform head massage",
+      "count": 1
+    },
+    {
+      "task_name": "Apply facial skincare treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Apply hair dye to customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Apply hair rollers to mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Apply nail polish and decorate nails",
+      "count": 1
+    },
+    {
+      "task_name": "Apply nail polish and organize manicure tools",
+      "count": 1
+    },
+    {
+      "task_name": "Apply nail polish and trim nails",
+      "count": 1
+    },
+    {
+      "task_name": "Apply neck mask and massage customer",
+      "count": 1
+    },
+    {
+      "task_name": "Apply neck patch and massage customer",
+      "count": 1
+    },
+    {
+      "task_name": "Apply product and comb hair",
+      "count": 1
+    },
+    {
+      "task_name": "Apply scalp care essence and massage scalp",
+      "count": 1
+    },
+    {
+      "task_name": "Apply skin care products and massage customer",
+      "count": 1
+    },
+    {
+      "task_name": "Assemble bottle and sweep floor",
+      "count": 1
+    },
+    {
+      "task_name": "Assemble spray bottle and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Attach hair extensions and braid hair",
+      "count": 1
+    },
+    {
+      "task_name": "Bend and adjust sticks",
+      "count": 1
+    },
+    {
+      "task_name": "Blow dry hair and tidy mannequin wig",
+      "count": 1
+    },
+    {
+      "task_name": "Braid and comb customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Braid and smooth hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Braid hair and organize wig",
+      "count": 1
+    },
+    {
+      "task_name": "Braid hair extension wefts",
+      "count": 1
+    },
+    {
+      "task_name": "Braid hair on mannequin head",
+      "count": 2
+    },
+    {
+      "task_name": "Braid hair on wig mannequin",
+      "count": 2
+    },
+    {
+      "task_name": "Braid hair with extensions",
+      "count": 1
+    },
+    {
+      "task_name": "Braid mannequin hair",
+      "count": 3
+    },
+    {
+      "task_name": "Braid wig hair",
+      "count": 1
+    },
+    {
+      "task_name": "Braid wig hair and secure with hair tie",
+      "count": 1
+    },
+    {
+      "task_name": "Braid wig hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Braid wig model hair",
+      "count": 1
+    },
+    {
+      "task_name": "Braid wig strands",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and organize hair clippers",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and organize salon supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and tidy the salon room",
+      "count": 1
+    },
+    {
+      "task_name": "Clean barber tools and organize sink items",
+      "count": 1
+    },
+    {
+      "task_name": "Clean barbershop and hairdressing tools",
+      "count": 1
+    },
+    {
+      "task_name": "Clean chair and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Clean counter and wash bottles",
+      "count": 1
+    },
+    {
+      "task_name": "Clean customer ear and organize nursing supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Clean ears and comb hair",
+      "count": 1
+    },
+    {
+      "task_name": "Clean face and apply face cream",
+      "count": 1
+    },
+    {
+      "task_name": "Clean face and trim eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "Clean facial acne and apply skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Clean floor and stock shelves with boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Clean floor and store boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Clean hair dryer and wash cloths",
+      "count": 1
+    },
+    {
+      "task_name": "Clean salon and organize equipment",
+      "count": 1
+    },
+    {
+      "task_name": "Clean salon and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Clean shelf and boxes and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Clean shelf, sweep floor, and store boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Clean tray and prepare beauty paste",
+      "count": 1
+    },
+    {
+      "task_name": "Clean tray and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Cleanse customer face and retrieve remote control",
+      "count": 1
+    },
+    {
+      "task_name": "Comb and braid wig",
+      "count": 1
+    },
+    {
+      "task_name": "Comb and prepare hair for haircut",
+      "count": 1
+    },
+    {
+      "task_name": "Comb and roll wig hair",
+      "count": 1
+    },
+    {
+      "task_name": "Comb customer hair and remove glove",
+      "count": 1
+    },
+    {
+      "task_name": "Comb hair and apply essential oil for head care",
+      "count": 1
+    },
+    {
+      "task_name": "Comb hair and apply eye mask",
+      "count": 1
+    },
+    {
+      "task_name": "Comb hair and arrange towel",
+      "count": 1
+    },
+    {
+      "task_name": "Comb hair and massage head",
+      "count": 2
+    },
+    {
+      "task_name": "Comb hair to spread dye",
+      "count": 1
+    },
+    {
+      "task_name": "Curl and comb customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Cut and blow dry customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Cut and wash customer hair",
+      "count": 2
+    },
+    {
+      "task_name": "Cut customer hair and clean clippings",
+      "count": 1
+    },
+    {
+      "task_name": "Cut customer hair and open shop door",
+      "count": 1
+    },
+    {
+      "task_name": "Cut customer hair and place tools on cart",
+      "count": 1
+    },
+    {
+      "task_name": "Dye customer hair",
+      "count": 2
+    },
+    {
+      "task_name": "Dye customer hair and organize tools",
+      "count": 1
+    },
+    {
+      "task_name": "Dye customer hair and store towels",
+      "count": 1
+    },
+    {
+      "task_name": "Dye customer hair and wipe stains",
+      "count": 1
+    },
+    {
+      "task_name": "Dye mannequin hair and clean tools",
+      "count": 1
+    },
+    {
+      "task_name": "Enter product information and organize shelf",
+      "count": 1
+    },
+    {
+      "task_name": "File customer fingernails",
+      "count": 1
+    },
+    {
+      "task_name": "File customer nails",
+      "count": 1
+    },
+    {
+      "task_name": "File fingernails",
+      "count": 1
+    },
+    {
+      "task_name": "Fill disinfection register and wipe trolley",
+      "count": 1
+    },
+    {
+      "task_name": "Fill registration book and arrange flowers",
+      "count": 1
+    },
+    {
+      "task_name": "Fix perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Fold towel and wash boy's hair",
+      "count": 1
+    },
+    {
+      "task_name": "Fold towels and heat food",
+      "count": 1
+    },
+    {
+      "task_name": "Give facial massage",
+      "count": 1
+    },
+    {
+      "task_name": "Give facial massage and clean hands",
+      "count": 1
+    },
+    {
+      "task_name": "Give facial massage and organize beauty supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Give head massage",
+      "count": 1
+    },
+    {
+      "task_name": "Install nail tips and apply nail polish",
+      "count": 1
+    },
+    {
+      "task_name": "Make beauty bed and clean utensils",
+      "count": 1
+    },
+    {
+      "task_name": "Massage abdomen and apply hot compress",
+      "count": 1
+    },
+    {
+      "task_name": "Massage abdomen and arrange cover cloth",
+      "count": 1
+    },
+    {
+      "task_name": "Massage abdomen and tidy clothes",
+      "count": 1
+    },
+    {
+      "task_name": "Massage and clean customer face",
+      "count": 2
+    },
+    {
+      "task_name": "Massage and comb hair",
+      "count": 1
+    },
+    {
+      "task_name": "Massage and scrape customer legs",
+      "count": 1
+    },
+    {
+      "task_name": "Massage arm and apply facial essence",
+      "count": 1
+    },
+    {
+      "task_name": "Massage back and braid hair",
+      "count": 1
+    },
+    {
+      "task_name": "Massage back with roller",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen",
+      "count": 5
+    },
+    {
+      "task_name": "Massage customer abdomen and adjust air conditioner",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen and apply essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen and replenish oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen and straighten clothes",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen with essential oil",
+      "count": 3
+    },
+    {
+      "task_name": "Massage customer abdomen with oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer abdomen with physiotherapy device",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer and arrange hair",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer and pick up items",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer arm",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer arm and leg",
+      "count": 2
+    },
+    {
+      "task_name": "Massage customer arms and move treatment cart",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back",
+      "count": 6
+    },
+    {
+      "task_name": "Massage customer back and adjust towel",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back and apply oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back and arms",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back and head",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back and organize cart",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back and shoulders",
+      "count": 2
+    },
+    {
+      "task_name": "Massage customer back and waist",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back with cushion assistance",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back with essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back with oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer back with rolling stick and essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer body",
+      "count": 4
+    },
+    {
+      "task_name": "Massage customer buttocks and calf",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer calves and adjust equipment",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer face",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer face and apply skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer face and apply skincare product",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer face and prepare eye patch",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer face and store beauty supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer hand",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head",
+      "count": 3
+    },
+    {
+      "task_name": "Massage customer head and adjust beauty instrument",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and adjust eye patch",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and apply essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and apply facial skincare",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and arm",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and arrange hair",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head and face",
+      "count": 2
+    },
+    {
+      "task_name": "Massage customer head and shoulders",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head neck and shoulders",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer head with tendon stick",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer left arm",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer leg",
+      "count": 2
+    },
+    {
+      "task_name": "Massage customer legs",
+      "count": 7
+    },
+    {
+      "task_name": "Massage customer legs and apply essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer legs and buttocks",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer legs with essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer legs with hands and massage hammer",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer legs with massage hammer",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer muscles",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer neck and shoulders",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer on massage bed",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer shoulder and arm",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer shoulder and hand",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer shoulders and arrange hair",
+      "count": 1
+    },
+    {
+      "task_name": "Massage customer shoulders and head",
+      "count": 2
+    },
+    {
+      "task_name": "Massage customer shoulders and neck",
+      "count": 1
+    },
+    {
+      "task_name": "Massage eyes and apply eye drops",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and apply care solution",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and apply facial mask",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and apply skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and clean hands",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and organize beauty supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and prepare mask supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and store skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and trim eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face and wash hands",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face with beauty bar",
+      "count": 1
+    },
+    {
+      "task_name": "Massage face with beauty device",
+      "count": 1
+    },
+    {
+      "task_name": "Massage head and apply facial essence",
+      "count": 1
+    },
+    {
+      "task_name": "Massage leg",
+      "count": 1
+    },
+    {
+      "task_name": "Massage person back and legs",
+      "count": 1
+    },
+    {
+      "task_name": "Mix hair dye",
+      "count": 1
+    },
+    {
+      "task_name": "Mop floor and organize shelf goods",
+      "count": 1
+    },
+    {
+      "task_name": "Mop floor and place boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Mop floor and store boxes on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Mop floor and store packaging bags",
+      "count": 1
+    },
+    {
+      "task_name": "Mop floor, wipe packing boxes, and sweep floor",
+      "count": 1
+    },
+    {
+      "task_name": "Move bags and boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Move boxes and discard trash",
+      "count": 1
+    },
+    {
+      "task_name": "Organize and clean beauty salon workspace",
+      "count": 1
+    },
+    {
+      "task_name": "Organize and straighten wig strands",
+      "count": 1
+    },
+    {
+      "task_name": "Organize beauty tools and perform essential oil back massage",
+      "count": 1
+    },
+    {
+      "task_name": "Organize cosmetics and fill forms",
+      "count": 1
+    },
+    {
+      "task_name": "Organize hair dryer and sweep hair clippings",
+      "count": 1
+    },
+    {
+      "task_name": "Organize hairdressing tools and clean hair clipper",
+      "count": 1
+    },
+    {
+      "task_name": "Organize nail polish and store boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Organize packaging boxes and clean floor",
+      "count": 1
+    },
+    {
+      "task_name": "Organize shelf and wash rubber bands",
+      "count": 1
+    },
+    {
+      "task_name": "Organize storage shelf and assemble shower head",
+      "count": 1
+    },
+    {
+      "task_name": "Organize sundries and sort straws",
+      "count": 1
+    },
+    {
+      "task_name": "Pack items, organize sundries, and repair chair",
+      "count": 1
+    },
+    {
+      "task_name": "Pack skin care products and wash hands",
+      "count": 1
+    },
+    {
+      "task_name": "Paint and cure nail pieces",
+      "count": 1
+    },
+    {
+      "task_name": "Paint and place nail pieces",
+      "count": 1
+    },
+    {
+      "task_name": "Paint nail plates",
+      "count": 1
+    },
+    {
+      "task_name": "Pass dustpan and place boxes on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Peel grapes and adjust tripod",
+      "count": 1
+    },
+    {
+      "task_name": "Perform abdominal massage",
+      "count": 3
+    },
+    {
+      "task_name": "Perform abdominal massage with essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Perform arm massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform back massage",
+      "count": 2
+    },
+    {
+      "task_name": "Perform back rolling massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform calf massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform calf massage with probes",
+      "count": 1
+    },
+    {
+      "task_name": "Perform calf scraping and massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform customer manicure treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Perform customer massage",
+      "count": 2
+    },
+    {
+      "task_name": "Perform essential oil back massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform eye care treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial and hair care",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial beauty care",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial care",
+      "count": 2
+    },
+    {
+      "task_name": "Perform facial care and massage",
+      "count": 2
+    },
+    {
+      "task_name": "Perform facial care and organize beauty supplies",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial care massage",
+      "count": 2
+    },
+    {
+      "task_name": "Perform facial care procedure",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial massage",
+      "count": 11
+    },
+    {
+      "task_name": "Perform facial massage and apply eye mask",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial massage and apply skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial massage and clean face",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial massage and skin care",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial massage for customer",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial scraping and massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial skin care",
+      "count": 1
+    },
+    {
+      "task_name": "Perform facial treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Perform fire cupping on customer abdomen",
+      "count": 1
+    },
+    {
+      "task_name": "Perform head massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform leg physiotherapy",
+      "count": 1
+    },
+    {
+      "task_name": "Perform percussive massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perform perm rolling operation",
+      "count": 2
+    },
+    {
+      "task_name": "Perform scraping massage treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Perform shoulder and neck massage",
+      "count": 1
+    },
+    {
+      "task_name": "Perm and style mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Perm customer hair",
+      "count": 5
+    },
+    {
+      "task_name": "Perm hair and remove perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Perm hair on mannequin head",
+      "count": 2
+    },
+    {
+      "task_name": "Perm hair on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Perm hair on wig model",
+      "count": 1
+    },
+    {
+      "task_name": "Perm hair strands on practice mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Perm mannequin head hair",
+      "count": 1
+    },
+    {
+      "task_name": "Place box, mop floor, and store boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Place boxes and mop floor",
+      "count": 1
+    },
+    {
+      "task_name": "Place boxes on bed and hand car",
+      "count": 1
+    },
+    {
+      "task_name": "Place boxes on shelf and enter bathroom",
+      "count": 1
+    },
+    {
+      "task_name": "Place boxes on shelf and mop floor",
+      "count": 1
+    },
+    {
+      "task_name": "Place cotton rolls, boxes, and nail polishes",
+      "count": 1
+    },
+    {
+      "task_name": "Place items and sweep floor",
+      "count": 1
+    },
+    {
+      "task_name": "Place nail polishes and boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Place product boxes and clean floor",
+      "count": 1
+    },
+    {
+      "task_name": "Place skincare products and sweep floor",
+      "count": 1
+    },
+    {
+      "task_name": "Polish nail plates and operate phone",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water and organize cart",
+      "count": 1
+    },
+    {
+      "task_name": "Practice hair rolling on mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Practice hair sectioning on mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rod rolling",
+      "count": 3
+    },
+    {
+      "task_name": "Practice perm rod rolling on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rolling",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rolling on mannequin",
+      "count": 3
+    },
+    {
+      "task_name": "Practice perm rolling on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rolling on wig hair",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rolling on wig head",
+      "count": 3
+    },
+    {
+      "task_name": "Practice perm rolling on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm rolling on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perm sectioning on wig head",
+      "count": 1
+    },
+    {
+      "task_name": "Practice perming a wig",
+      "count": 1
+    },
+    {
+      "task_name": "Practice rolling perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare and perm customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare and roll hair onto perm rod",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare mannequin head with perm paper",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare wig and barber chair",
+      "count": 1
+    },
+    {
+      "task_name": "Provide back massage service",
+      "count": 1
+    },
+    {
+      "task_name": "Provide customer hair care",
+      "count": 1
+    },
+    {
+      "task_name": "Provide facial care",
+      "count": 2
+    },
+    {
+      "task_name": "Provide facial care and trim towel threads",
+      "count": 1
+    },
+    {
+      "task_name": "Provide facial care treatment",
+      "count": 1
+    },
+    {
+      "task_name": "Provide facial massage and clean tools",
+      "count": 1
+    },
+    {
+      "task_name": "Provide facial skincare and massage",
+      "count": 1
+    },
+    {
+      "task_name": "Provide head care",
+      "count": 2
+    },
+    {
+      "task_name": "Remove and apply hair rollers",
+      "count": 1
+    },
+    {
+      "task_name": "Repair eyelashes and clean eye area",
+      "count": 1
+    },
+    {
+      "task_name": "Rinse customer hair and prepare instrument",
+      "count": 1
+    },
+    {
+      "task_name": "Rinse dry hair and organize products",
+      "count": 1
+    },
+    {
+      "task_name": "Roll and fix hair on mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Roll and fix hair sections",
+      "count": 1
+    },
+    {
+      "task_name": "Roll and secure hair strands",
+      "count": 1
+    },
+    {
+      "task_name": "Roll and secure perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Roll customer back and tidy clothes",
+      "count": 1
+    },
+    {
+      "task_name": "Roll customer back with rolling stick",
+      "count": 1
+    },
+    {
+      "task_name": "Roll customer hair and wash hands",
+      "count": 1
+    },
+    {
+      "task_name": "Roll customer waist and apply essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair and operate mobile phone",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair for perm",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair for wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair on mannequin head",
+      "count": 3
+    },
+    {
+      "task_name": "Roll hair on practice mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair on practice mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair onto perm rods",
+      "count": 2
+    },
+    {
+      "task_name": "Roll hair rods on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair sections",
+      "count": 1
+    },
+    {
+      "task_name": "Roll hair sections onto perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Roll lower back with rolling stick",
+      "count": 1
+    },
+    {
+      "task_name": "Roll mannequin hair sections with perm paper",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rod",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rod on wig mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods",
+      "count": 2
+    },
+    {
+      "task_name": "Roll perm rods for customer",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods on hair",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods on head model",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods on mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods on mannequin head",
+      "count": 4
+    },
+    {
+      "task_name": "Roll perm rods on practice mannequin",
+      "count": 4
+    },
+    {
+      "task_name": "Roll perm rods on wig head",
+      "count": 1
+    },
+    {
+      "task_name": "Roll perm rods on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Roll wig hair for perming",
+      "count": 1
+    },
+    {
+      "task_name": "Scrape face and tidy towel",
+      "count": 1
+    },
+    {
+      "task_name": "Scrub fabrics and wipe table",
+      "count": 1
+    },
+    {
+      "task_name": "Scrub shoe and toilet seat cover",
+      "count": 1
+    },
+    {
+      "task_name": "Section and fix hair pieces",
+      "count": 1
+    },
+    {
+      "task_name": "Section and perm hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "Section and perm wig hair pieces",
+      "count": 1
+    },
+    {
+      "task_name": "Section and roll hair for perm",
+      "count": 1
+    },
+    {
+      "task_name": "Section and straighten hair",
+      "count": 2
+    },
+    {
+      "task_name": "Section and straighten mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Section and wrap hair for perm",
+      "count": 1
+    },
+    {
+      "task_name": "Section hair strands and roll perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "Section hair strands and secure with curling rods",
+      "count": 1
+    },
+    {
+      "task_name": "Secure perm rollers for customer",
+      "count": 1
+    },
+    {
+      "task_name": "Set hair with perm rods on mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Set perm rods on mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Set perm rods on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Set perm rods on practice mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Set perm rods on wig head",
+      "count": 1
+    },
+    {
+      "task_name": "Shave customer face and manage towels",
+      "count": 1
+    },
+    {
+      "task_name": "Shave customer face and neck",
+      "count": 1
+    },
+    {
+      "task_name": "Shave face and wash hair",
+      "count": 1
+    },
+    {
+      "task_name": "Sort perm rods and rinse customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Spray perm lotion and prepare hair dryer",
+      "count": 1
+    },
+    {
+      "task_name": "Stock shelf, clean floor, and wash towel",
+      "count": 1
+    },
+    {
+      "task_name": "Store boxes into carton and place goods on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Store cotton rolls and place boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Store hair dryer and apply perm lotion",
+      "count": 1
+    },
+    {
+      "task_name": "Store haircut tools and clean barber chairs",
+      "count": 1
+    },
+    {
+      "task_name": "Store nail polish bottles and place boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Store nail polishes and packaging boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Store packaging boxes and clean store floor",
+      "count": 1
+    },
+    {
+      "task_name": "Store tools and wipe cuticle pusher",
+      "count": 1
+    },
+    {
+      "task_name": "Store towels and boxes and wipe cart",
+      "count": 1
+    },
+    {
+      "task_name": "Store towels and boxes on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten and blow-dry customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten and section hair",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten and section mannequin hair",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten and style customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten and style wig",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten customer hair",
+      "count": 17
+    },
+    {
+      "task_name": "Straighten hair and store tools",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten hair on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten wig and store hair straightener",
+      "count": 1
+    },
+    {
+      "task_name": "Straighten wig on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Style mannequin hair and relocate phone",
+      "count": 1
+    },
+    {
+      "task_name": "Style wig on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep floor and fold towels",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep floor and organize skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep floor and organize trolley",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep floor, make bed and arrange items",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep floor, store boxes, and mop floor",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep garbage and mop floor",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep garbage and place cleaning tools",
+      "count": 1
+    },
+    {
+      "task_name": "Sweep hair clippings and tidy floor wire",
+      "count": 1
+    },
+    {
+      "task_name": "Tattoo customer eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "Tidy beauty bed and perform facial care",
+      "count": 1
+    },
+    {
+      "task_name": "Tie and braid wig",
+      "count": 1
+    },
+    {
+      "task_name": "Transfer boxes to table",
+      "count": 1
+    },
+    {
+      "task_name": "Treat customer leg with beauty device",
+      "count": 1
+    },
+    {
+      "task_name": "Treat face with beauty infusion device",
+      "count": 1
+    },
+    {
+      "task_name": "Trim and dye wig",
+      "count": 1
+    },
+    {
+      "task_name": "Trim and wash customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Trim customer hair and organize tools",
+      "count": 1
+    },
+    {
+      "task_name": "Trim wig and take item",
+      "count": 1
+    },
+    {
+      "task_name": "Trim wig model and wash child hair",
+      "count": 1
+    },
+    {
+      "task_name": "Wash and blow dry customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "Wash hair and apply facial mask",
+      "count": 1
+    },
+    {
+      "task_name": "Wash mannequin head hair",
+      "count": 1
+    },
+    {
+      "task_name": "Wash towel and shave customer",
+      "count": 1
+    },
+    {
+      "task_name": "Wash towels and organize ear covers",
+      "count": 1
+    },
+    {
+      "task_name": "Weave and comb wig",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe and arrange skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe boxes and clean floor",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe customer face and clean room",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe ears, organize perm rods, and wash hair",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe face and massage head",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe fan, tables, chairs and floor",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe faucet and wash towels",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe makeup brushes and organize storage basket",
+      "count": 1
+    },
+    {
+      "task_name": "Wipe shelf and arrange packaging boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Wrap and secure perm rods on mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "Wrap grinding pen and store tools",
+      "count": 1
+    },
+    {
+      "task_name": "Wrap towel and shave customer face",
+      "count": 1
+    },
+    {
+      "task_name": "Write price tags and process cashier information",
+      "count": 1
+    },
+    {
+      "task_name": "apply care solution",
+      "count": 4
+    },
+    {
+      "task_name": "apply contour and draw eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "apply cosmetics",
+      "count": 13
+    },
+    {
+      "task_name": "apply cream",
+      "count": 33
+    },
+    {
+      "task_name": "apply dressing",
+      "count": 1
+    },
+    {
+      "task_name": "apply dye",
+      "count": 28
+    },
+    {
+      "task_name": "apply essence",
+      "count": 6
+    },
+    {
+      "task_name": "apply eyelash",
+      "count": 2
+    },
+    {
+      "task_name": "apply eyeshadow",
+      "count": 1
+    },
+    {
+      "task_name": "apply face",
+      "count": 1
+    },
+    {
+      "task_name": "apply facial mask and massage forehead",
+      "count": 1
+    },
+    {
+      "task_name": "apply foundation",
+      "count": 2
+    },
+    {
+      "task_name": "apply gel",
+      "count": 6
+    },
+    {
+      "task_name": "apply glue",
+      "count": 1
+    },
+    {
+      "task_name": "apply hair",
+      "count": 3
+    },
+    {
+      "task_name": "apply hair dye",
+      "count": 104
+    },
+    {
+      "task_name": "apply hair dye and cut hair",
+      "count": 2
+    },
+    {
+      "task_name": "apply hair dye cream to wig",
+      "count": 1
+    },
+    {
+      "task_name": "apply hair product",
+      "count": 1
+    },
+    {
+      "task_name": "apply liquid",
+      "count": 2
+    },
+    {
+      "task_name": "apply lotion",
+      "count": 6
+    },
+    {
+      "task_name": "apply makeup",
+      "count": 7
+    },
+    {
+      "task_name": "apply mask",
+      "count": 18
+    },
+    {
+      "task_name": "apply mixture",
+      "count": 1
+    },
+    {
+      "task_name": "apply nail",
+      "count": 2
+    },
+    {
+      "task_name": "apply nail polish",
+      "count": 33
+    },
+    {
+      "task_name": "apply ointment",
+      "count": 3
+    },
+    {
+      "task_name": "apply paint",
+      "count": 1
+    },
+    {
+      "task_name": "apply perm lotion and curl hair",
+      "count": 1
+    },
+    {
+      "task_name": "apply pigment",
+      "count": 1
+    },
+    {
+      "task_name": "apply plastic wrap",
+      "count": 1
+    },
+    {
+      "task_name": "apply polish",
+      "count": 8
+    },
+    {
+      "task_name": "apply product",
+      "count": 2
+    },
+    {
+      "task_name": "apply products",
+      "count": 1
+    },
+    {
+      "task_name": "apply rhinestone",
+      "count": 1
+    },
+    {
+      "task_name": "apply serum",
+      "count": 1
+    },
+    {
+      "task_name": "apply skincare product",
+      "count": 1
+    },
+    {
+      "task_name": "apply solution",
+      "count": 1
+    },
+    {
+      "task_name": "arrange bag",
+      "count": 2
+    },
+    {
+      "task_name": "arrange bedding",
+      "count": 2
+    },
+    {
+      "task_name": "arrange bottle",
+      "count": 7
+    },
+    {
+      "task_name": "arrange box",
+      "count": 64
+    },
+    {
+      "task_name": "arrange clip",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cloth",
+      "count": 2
+    },
+    {
+      "task_name": "arrange cosmetics",
+      "count": 5
+    },
+    {
+      "task_name": "arrange cotton roll",
+      "count": 2
+    },
+    {
+      "task_name": "arrange equipment",
+      "count": 1
+    },
+    {
+      "task_name": "arrange eyelash",
+      "count": 1
+    },
+    {
+      "task_name": "arrange goods",
+      "count": 2
+    },
+    {
+      "task_name": "arrange goods and sweep store floor",
+      "count": 1
+    },
+    {
+      "task_name": "arrange hair",
+      "count": 15
+    },
+    {
+      "task_name": "arrange items",
+      "count": 1
+    },
+    {
+      "task_name": "arrange items on table and place box on bed",
+      "count": 1
+    },
+    {
+      "task_name": "arrange jar",
+      "count": 1
+    },
+    {
+      "task_name": "arrange kit",
+      "count": 1
+    },
+    {
+      "task_name": "arrange nail polish",
+      "count": 22
+    },
+    {
+      "task_name": "arrange plant",
+      "count": 1
+    },
+    {
+      "task_name": "arrange plastic strips",
+      "count": 1
+    },
+    {
+      "task_name": "arrange product",
+      "count": 3
+    },
+    {
+      "task_name": "arrange rod",
+      "count": 5
+    },
+    {
+      "task_name": "arrange samples",
+      "count": 1
+    },
+    {
+      "task_name": "arrange skin care products and sweep floor",
+      "count": 1
+    },
+    {
+      "task_name": "arrange skincare product",
+      "count": 1
+    },
+    {
+      "task_name": "arrange soap",
+      "count": 2
+    },
+    {
+      "task_name": "arrange strip",
+      "count": 1
+    },
+    {
+      "task_name": "arrange toiletries",
+      "count": 1
+    },
+    {
+      "task_name": "arrange toiletry",
+      "count": 1
+    },
+    {
+      "task_name": "arrange towel",
+      "count": 1
+    },
+    {
+      "task_name": "arrange wig",
+      "count": 6
+    },
+    {
+      "task_name": "assemble block",
+      "count": 1
+    },
+    {
+      "task_name": "assemble headband",
+      "count": 1
+    },
+    {
+      "task_name": "assemble rack",
+      "count": 1
+    },
+    {
+      "task_name": "assemble stand",
+      "count": 1
+    },
+    {
+      "task_name": "attach and braid hair extensions",
+      "count": 1
+    },
+    {
+      "task_name": "attach bag",
+      "count": 1
+    },
+    {
+      "task_name": "attach cupping tool",
+      "count": 1
+    },
+    {
+      "task_name": "attach eyelash",
+      "count": 10
+    },
+    {
+      "task_name": "attach hair",
+      "count": 7
+    },
+    {
+      "task_name": "attach hair extension",
+      "count": 10
+    },
+    {
+      "task_name": "attach hairpin",
+      "count": 1
+    },
+    {
+      "task_name": "attach rod",
+      "count": 1
+    },
+    {
+      "task_name": "braid hair",
+      "count": 3
+    },
+    {
+      "task_name": "braid hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "braid hair on wig model",
+      "count": 1
+    },
+    {
+      "task_name": "brush hair",
+      "count": 28
+    },
+    {
+      "task_name": "brush wig",
+      "count": 9
+    },
+    {
+      "task_name": "care customer forehead",
+      "count": 1
+    },
+    {
+      "task_name": "check clock",
+      "count": 1
+    },
+    {
+      "task_name": "check cosmetic",
+      "count": 1
+    },
+    {
+      "task_name": "check goods",
+      "count": 1
+    },
+    {
+      "task_name": "clean acne",
+      "count": 2
+    },
+    {
+      "task_name": "clean and organize beauty salon",
+      "count": 1
+    },
+    {
+      "task_name": "clean barbershop",
+      "count": 1
+    },
+    {
+      "task_name": "clean cart",
+      "count": 2
+    },
+    {
+      "task_name": "clean clipper",
+      "count": 1
+    },
+    {
+      "task_name": "clean counter",
+      "count": 1
+    },
+    {
+      "task_name": "clean customer",
+      "count": 1
+    },
+    {
+      "task_name": "clean device",
+      "count": 1
+    },
+    {
+      "task_name": "clean ear",
+      "count": 1
+    },
+    {
+      "task_name": "clean ear and massage head",
+      "count": 1
+    },
+    {
+      "task_name": "clean ear canal",
+      "count": 1
+    },
+    {
+      "task_name": "clean eyelash",
+      "count": 1
+    },
+    {
+      "task_name": "clean face",
+      "count": 15
+    },
+    {
+      "task_name": "clean finger",
+      "count": 1
+    },
+    {
+      "task_name": "clean floor",
+      "count": 17
+    },
+    {
+      "task_name": "clean floor and place boxes",
+      "count": 1
+    },
+    {
+      "task_name": "clean hair",
+      "count": 2
+    },
+    {
+      "task_name": "clean hair clipper",
+      "count": 2
+    },
+    {
+      "task_name": "clean hair roller",
+      "count": 1
+    },
+    {
+      "task_name": "clean hairdressing tool",
+      "count": 3
+    },
+    {
+      "task_name": "clean manicure tool",
+      "count": 1
+    },
+    {
+      "task_name": "clean mirror",
+      "count": 1
+    },
+    {
+      "task_name": "clean pimples",
+      "count": 1
+    },
+    {
+      "task_name": "clean rod",
+      "count": 3
+    },
+    {
+      "task_name": "clean roller",
+      "count": 1
+    },
+    {
+      "task_name": "clean scissors",
+      "count": 1
+    },
+    {
+      "task_name": "clean shelf",
+      "count": 1
+    },
+    {
+      "task_name": "clean shop",
+      "count": 1
+    },
+    {
+      "task_name": "clean sink",
+      "count": 5
+    },
+    {
+      "task_name": "clean sink and rinse drain filter",
+      "count": 1
+    },
+    {
+      "task_name": "clean skin",
+      "count": 1
+    },
+    {
+      "task_name": "clean tool",
+      "count": 3
+    },
+    {
+      "task_name": "clean towel",
+      "count": 1
+    },
+    {
+      "task_name": "clean tray",
+      "count": 1
+    },
+    {
+      "task_name": "clean wall",
+      "count": 1
+    },
+    {
+      "task_name": "collect hair",
+      "count": 2
+    },
+    {
+      "task_name": "comb and roll hair sections",
+      "count": 1
+    },
+    {
+      "task_name": "comb hair and complete perm rolling",
+      "count": 1
+    },
+    {
+      "task_name": "comb hair and massage head",
+      "count": 2
+    },
+    {
+      "task_name": "connect rod",
+      "count": 1
+    },
+    {
+      "task_name": "cover bin",
+      "count": 1
+    },
+    {
+      "task_name": "curl client hair",
+      "count": 1
+    },
+    {
+      "task_name": "curl customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "curl customer hair with curling iron",
+      "count": 1
+    },
+    {
+      "task_name": "curl hair on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "curl wig hair",
+      "count": 1
+    },
+    {
+      "task_name": "cut and style hair",
+      "count": 1
+    },
+    {
+      "task_name": "cut customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "cut customer hair and clean clippings",
+      "count": 1
+    },
+    {
+      "task_name": "cut hair",
+      "count": 864
+    },
+    {
+      "task_name": "cut hair with clipper",
+      "count": 1
+    },
+    {
+      "task_name": "disinfect hands and massage face",
+      "count": 1
+    },
+    {
+      "task_name": "draw eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "draw object",
+      "count": 1
+    },
+    {
+      "task_name": "dry customer hair and store tools",
+      "count": 1
+    },
+    {
+      "task_name": "dry hair",
+      "count": 91
+    },
+    {
+      "task_name": "dry hair and trim eyebrows",
+      "count": 1
+    },
+    {
+      "task_name": "dry wig",
+      "count": 1
+    },
+    {
+      "task_name": "dye customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "dye customer hair and wash hands",
+      "count": 1
+    },
+    {
+      "task_name": "extract facial acne",
+      "count": 1
+    },
+    {
+      "task_name": "file fingernails",
+      "count": 1
+    },
+    {
+      "task_name": "fill bottle",
+      "count": 2
+    },
+    {
+      "task_name": "fill form",
+      "count": 1
+    },
+    {
+      "task_name": "fill registration books",
+      "count": 1
+    },
+    {
+      "task_name": "fix perm rods on hair",
+      "count": 1
+    },
+    {
+      "task_name": "fold bag",
+      "count": 8
+    },
+    {
+      "task_name": "fold cloth",
+      "count": 5
+    },
+    {
+      "task_name": "fold clothes",
+      "count": 1
+    },
+    {
+      "task_name": "fold clothing",
+      "count": 1
+    },
+    {
+      "task_name": "fold gauze",
+      "count": 1
+    },
+    {
+      "task_name": "fold mask",
+      "count": 1
+    },
+    {
+      "task_name": "fold pad",
+      "count": 1
+    },
+    {
+      "task_name": "fold shirt",
+      "count": 1
+    },
+    {
+      "task_name": "fold tissue",
+      "count": 1
+    },
+    {
+      "task_name": "fold towel",
+      "count": 173
+    },
+    {
+      "task_name": "fold towels and clean towel",
+      "count": 1
+    },
+    {
+      "task_name": "fold towels and organize beauty cart",
+      "count": 1
+    },
+    {
+      "task_name": "fold towels and pack boxes",
+      "count": 1
+    },
+    {
+      "task_name": "fold towels and prepare beauty bed",
+      "count": 1
+    },
+    {
+      "task_name": "fold towels and remove phone case",
+      "count": 1
+    },
+    {
+      "task_name": "gather cowpeas and organize tissues",
+      "count": 1
+    },
+    {
+      "task_name": "give back massage",
+      "count": 2
+    },
+    {
+      "task_name": "give essential oil back massage",
+      "count": 1
+    },
+    {
+      "task_name": "give facial massage",
+      "count": 9
+    },
+    {
+      "task_name": "give head massage",
+      "count": 1
+    },
+    {
+      "task_name": "inspect charger and cushion",
+      "count": 1
+    },
+    {
+      "task_name": "install buckle",
+      "count": 1
+    },
+    {
+      "task_name": "mark points on back",
+      "count": 1
+    },
+    {
+      "task_name": "massage abdomen",
+      "count": 2
+    },
+    {
+      "task_name": "massage and care customer face",
+      "count": 1
+    },
+    {
+      "task_name": "massage back and apply care products",
+      "count": 1
+    },
+    {
+      "task_name": "massage back and prepare alcohol",
+      "count": 1
+    },
+    {
+      "task_name": "massage back with roller",
+      "count": 2
+    },
+    {
+      "task_name": "massage customer abdomen",
+      "count": 7
+    },
+    {
+      "task_name": "massage customer and apply essential oil",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer arm",
+      "count": 4
+    },
+    {
+      "task_name": "massage customer arm and back",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer arm and leg",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer back",
+      "count": 25
+    },
+    {
+      "task_name": "massage customer back and adjust covering",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer back and adjust towel",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer back with tendon rolling stick",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer body",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer calf",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer face",
+      "count": 12
+    },
+    {
+      "task_name": "massage customer face and apply skincare products",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer face and neck",
+      "count": 2
+    },
+    {
+      "task_name": "massage customer head",
+      "count": 7
+    },
+    {
+      "task_name": "massage customer head and face",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer left arm",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer leg",
+      "count": 2
+    },
+    {
+      "task_name": "massage customer leg muscles",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer legs",
+      "count": 3
+    },
+    {
+      "task_name": "massage customer neck and shoulders",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer scalp",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer shoulder and neck",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer shoulders and back",
+      "count": 1
+    },
+    {
+      "task_name": "massage customer shoulders and neck",
+      "count": 1
+    },
+    {
+      "task_name": "massage face and apply foundation",
+      "count": 1
+    },
+    {
+      "task_name": "massage face and prepare aloe vera gel",
+      "count": 1
+    },
+    {
+      "task_name": "massage face with gua sha board",
+      "count": 1
+    },
+    {
+      "task_name": "massage head with scraping plates",
+      "count": 1
+    },
+    {
+      "task_name": "massage leg with beauty instrument",
+      "count": 1
+    },
+    {
+      "task_name": "massage leg with physiotherapy instrument",
+      "count": 1
+    },
+    {
+      "task_name": "massage person's back",
+      "count": 1
+    },
+    {
+      "task_name": "massage scalp and perform hair hydrotherapy",
+      "count": 1
+    },
+    {
+      "task_name": "move boxes",
+      "count": 1
+    },
+    {
+      "task_name": "move tissues and place nail polish",
+      "count": 1
+    },
+    {
+      "task_name": "organize accessory",
+      "count": 2
+    },
+    {
+      "task_name": "organize bag",
+      "count": 4
+    },
+    {
+      "task_name": "organize band",
+      "count": 3
+    },
+    {
+      "task_name": "organize beauty supply",
+      "count": 1
+    },
+    {
+      "task_name": "organize bedding",
+      "count": 2
+    },
+    {
+      "task_name": "organize bottle",
+      "count": 4
+    },
+    {
+      "task_name": "organize box",
+      "count": 58
+    },
+    {
+      "task_name": "organize cabinet items",
+      "count": 1
+    },
+    {
+      "task_name": "organize cart",
+      "count": 1
+    },
+    {
+      "task_name": "organize cloth",
+      "count": 1
+    },
+    {
+      "task_name": "organize conditioner",
+      "count": 1
+    },
+    {
+      "task_name": "organize cosmetic",
+      "count": 1
+    },
+    {
+      "task_name": "organize cosmetics",
+      "count": 16
+    },
+    {
+      "task_name": "organize cosmetics and apply nail polish",
+      "count": 1
+    },
+    {
+      "task_name": "organize cotton roll",
+      "count": 1
+    },
+    {
+      "task_name": "organize facial mask",
+      "count": 1
+    },
+    {
+      "task_name": "organize goods",
+      "count": 3
+    },
+    {
+      "task_name": "organize hair",
+      "count": 6
+    },
+    {
+      "task_name": "organize hair clip",
+      "count": 1
+    },
+    {
+      "task_name": "organize hair tool",
+      "count": 1
+    },
+    {
+      "task_name": "organize hairband",
+      "count": 1
+    },
+    {
+      "task_name": "organize hairdressing tool",
+      "count": 4
+    },
+    {
+      "task_name": "organize hairdressing tools",
+      "count": 1
+    },
+    {
+      "task_name": "organize hairpin",
+      "count": 1
+    },
+    {
+      "task_name": "organize item",
+      "count": 4
+    },
+    {
+      "task_name": "organize items",
+      "count": 6
+    },
+    {
+      "task_name": "organize jar",
+      "count": 2
+    },
+    {
+      "task_name": "organize mask",
+      "count": 1
+    },
+    {
+      "task_name": "organize medicine",
+      "count": 1
+    },
+    {
+      "task_name": "organize nail",
+      "count": 1
+    },
+    {
+      "task_name": "organize nail polish",
+      "count": 17
+    },
+    {
+      "task_name": "organize nail tips",
+      "count": 1
+    },
+    {
+      "task_name": "organize object",
+      "count": 2
+    },
+    {
+      "task_name": "organize objects",
+      "count": 1
+    },
+    {
+      "task_name": "organize paper",
+      "count": 4
+    },
+    {
+      "task_name": "organize paper packaging",
+      "count": 1
+    },
+    {
+      "task_name": "organize perm rod",
+      "count": 3
+    },
+    {
+      "task_name": "organize perm supplies",
+      "count": 1
+    },
+    {
+      "task_name": "organize perm tool",
+      "count": 1
+    },
+    {
+      "task_name": "organize personal care product",
+      "count": 1
+    },
+    {
+      "task_name": "organize plastic wrap",
+      "count": 1
+    },
+    {
+      "task_name": "organize product",
+      "count": 5
+    },
+    {
+      "task_name": "organize products",
+      "count": 4
+    },
+    {
+      "task_name": "organize rod",
+      "count": 23
+    },
+    {
+      "task_name": "organize roller",
+      "count": 2
+    },
+    {
+      "task_name": "organize sanitary pad",
+      "count": 1
+    },
+    {
+      "task_name": "organize shelf",
+      "count": 5
+    },
+    {
+      "task_name": "organize skin care product",
+      "count": 3
+    },
+    {
+      "task_name": "organize skin care products",
+      "count": 1
+    },
+    {
+      "task_name": "organize skin care products and cotton rolls",
+      "count": 1
+    },
+    {
+      "task_name": "organize skincare product",
+      "count": 1
+    },
+    {
+      "task_name": "organize stationery",
+      "count": 2
+    },
+    {
+      "task_name": "organize straw",
+      "count": 1
+    },
+    {
+      "task_name": "organize sundries",
+      "count": 2
+    },
+    {
+      "task_name": "organize supplies",
+      "count": 1
+    },
+    {
+      "task_name": "organize toiletries",
+      "count": 1
+    },
+    {
+      "task_name": "organize toiletry",
+      "count": 1
+    },
+    {
+      "task_name": "organize tool",
+      "count": 1
+    },
+    {
+      "task_name": "organize tools",
+      "count": 4
+    },
+    {
+      "task_name": "organize towel",
+      "count": 4
+    },
+    {
+      "task_name": "organize tube",
+      "count": 1
+    },
+    {
+      "task_name": "organize vial",
+      "count": 1
+    },
+    {
+      "task_name": "organize wig",
+      "count": 2
+    },
+    {
+      "task_name": "organize wig and interact with customer",
+      "count": 1
+    },
+    {
+      "task_name": "pack bottle",
+      "count": 3
+    },
+    {
+      "task_name": "pack box",
+      "count": 33
+    },
+    {
+      "task_name": "pack goods",
+      "count": 1
+    },
+    {
+      "task_name": "pack nail polish",
+      "count": 14
+    },
+    {
+      "task_name": "pack straw",
+      "count": 1
+    },
+    {
+      "task_name": "paint nail art on customer fingernails",
+      "count": 1
+    },
+    {
+      "task_name": "paint nail pieces",
+      "count": 1
+    },
+    {
+      "task_name": "peel garlic",
+      "count": 2
+    },
+    {
+      "task_name": "perform abdominal massage",
+      "count": 3
+    },
+    {
+      "task_name": "perform back massage",
+      "count": 8
+    },
+    {
+      "task_name": "perform back tendon rolling massage",
+      "count": 1
+    },
+    {
+      "task_name": "perform eyebrow tattooing",
+      "count": 2
+    },
+    {
+      "task_name": "perform facial and neck massage",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial beauty device treatment",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial care",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial care treatment",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial massage",
+      "count": 25
+    },
+    {
+      "task_name": "perform facial massage and skincare",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial massage care",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial massage treatment",
+      "count": 1
+    },
+    {
+      "task_name": "perform facial scraping and massage",
+      "count": 1
+    },
+    {
+      "task_name": "perform head massage",
+      "count": 1
+    },
+    {
+      "task_name": "perform manicure",
+      "count": 2
+    },
+    {
+      "task_name": "perform manicure and paint nails",
+      "count": 1
+    },
+    {
+      "task_name": "perform manicure on fingernails",
+      "count": 1
+    },
+    {
+      "task_name": "perform moxibustion care",
+      "count": 2
+    },
+    {
+      "task_name": "perform perm rod rolling",
+      "count": 1
+    },
+    {
+      "task_name": "perform perm rolling",
+      "count": 1
+    },
+    {
+      "task_name": "perform perm rolling on wig",
+      "count": 1
+    },
+    {
+      "task_name": "perm customer hair with rods",
+      "count": 1
+    },
+    {
+      "task_name": "perm hair and rinse customer",
+      "count": 1
+    },
+    {
+      "task_name": "perm hair on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "perm roll mannequin hair strands",
+      "count": 1
+    },
+    {
+      "task_name": "place hair paper",
+      "count": 1
+    },
+    {
+      "task_name": "place nail polishes and boxes",
+      "count": 1
+    },
+    {
+      "task_name": "place package box on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "place skincare products and adjust air conditioner",
+      "count": 1
+    },
+    {
+      "task_name": "polish fingernail",
+      "count": 1
+    },
+    {
+      "task_name": "polish lid",
+      "count": 1
+    },
+    {
+      "task_name": "polish nail",
+      "count": 23
+    },
+    {
+      "task_name": "polish nail piece",
+      "count": 1
+    },
+    {
+      "task_name": "polish nail tips",
+      "count": 1
+    },
+    {
+      "task_name": "practice braiding hair",
+      "count": 1
+    },
+    {
+      "task_name": "practice hair rolling",
+      "count": 2
+    },
+    {
+      "task_name": "practice perm rod rolling",
+      "count": 1
+    },
+    {
+      "task_name": "practice perm rolling on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "practice perming on wig head model",
+      "count": 1
+    },
+    {
+      "task_name": "practice rolling hair",
+      "count": 1
+    },
+    {
+      "task_name": "prepare and graft eyelashes",
+      "count": 1
+    },
+    {
+      "task_name": "prepare artificial nails",
+      "count": 1
+    },
+    {
+      "task_name": "prepare beauty agent",
+      "count": 1
+    },
+    {
+      "task_name": "prepare beauty materials",
+      "count": 1
+    },
+    {
+      "task_name": "prepare essential oil and massage abdomen",
+      "count": 1
+    },
+    {
+      "task_name": "prepare for facial care",
+      "count": 1
+    },
+    {
+      "task_name": "prepare hair dye",
+      "count": 1
+    },
+    {
+      "task_name": "prepare hair dye mixture",
+      "count": 1
+    },
+    {
+      "task_name": "provide facial care",
+      "count": 4
+    },
+    {
+      "task_name": "provide facial care and neck massage",
+      "count": 1
+    },
+    {
+      "task_name": "provide hair and facial care",
+      "count": 1
+    },
+    {
+      "task_name": "remove acne",
+      "count": 5
+    },
+    {
+      "task_name": "remove box",
+      "count": 2
+    },
+    {
+      "task_name": "remove clip",
+      "count": 1
+    },
+    {
+      "task_name": "remove comedone",
+      "count": 1
+    },
+    {
+      "task_name": "remove comedones",
+      "count": 2
+    },
+    {
+      "task_name": "remove glue",
+      "count": 1
+    },
+    {
+      "task_name": "remove hair",
+      "count": 1
+    },
+    {
+      "task_name": "remove hair rollers",
+      "count": 1
+    },
+    {
+      "task_name": "remove ornament",
+      "count": 1
+    },
+    {
+      "task_name": "remove rod",
+      "count": 14
+    },
+    {
+      "task_name": "remove rubber band",
+      "count": 1
+    },
+    {
+      "task_name": "rinse floor",
+      "count": 1
+    },
+    {
+      "task_name": "rinse hair",
+      "count": 12
+    },
+    {
+      "task_name": "roll and massage customer back",
+      "count": 1
+    },
+    {
+      "task_name": "roll hair for perm",
+      "count": 1
+    },
+    {
+      "task_name": "roll hair on perm rods",
+      "count": 2
+    },
+    {
+      "task_name": "roll hair onto perm rod",
+      "count": 1
+    },
+    {
+      "task_name": "roll hair onto perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "roll hair with perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "roll perm rods",
+      "count": 3
+    },
+    {
+      "task_name": "roll perm rods on mannequin head",
+      "count": 1
+    },
+    {
+      "task_name": "roll perm rods on wig head",
+      "count": 3
+    },
+    {
+      "task_name": "scrape and massage back",
+      "count": 1
+    },
+    {
+      "task_name": "scrape back",
+      "count": 1
+    },
+    {
+      "task_name": "scrape customer",
+      "count": 1
+    },
+    {
+      "task_name": "scrape customer back",
+      "count": 1
+    },
+    {
+      "task_name": "scrape face",
+      "count": 12
+    },
+    {
+      "task_name": "scrape forehead",
+      "count": 1
+    },
+    {
+      "task_name": "scrape leg",
+      "count": 2
+    },
+    {
+      "task_name": "scrape neck",
+      "count": 1
+    },
+    {
+      "task_name": "scrub basin",
+      "count": 1
+    },
+    {
+      "task_name": "scrub clothes",
+      "count": 1
+    },
+    {
+      "task_name": "scrub clothing",
+      "count": 1
+    },
+    {
+      "task_name": "scrub faucet",
+      "count": 1
+    },
+    {
+      "task_name": "section and perm hair",
+      "count": 1
+    },
+    {
+      "task_name": "secure hair",
+      "count": 2
+    },
+    {
+      "task_name": "secure roller",
+      "count": 1
+    },
+    {
+      "task_name": "separate hair",
+      "count": 1
+    },
+    {
+      "task_name": "set perm rods on wig mannequin",
+      "count": 1
+    },
+    {
+      "task_name": "sew hat",
+      "count": 1
+    },
+    {
+      "task_name": "shave customer face",
+      "count": 2
+    },
+    {
+      "task_name": "shave stray hair and wash hair",
+      "count": 1
+    },
+    {
+      "task_name": "sort accessory",
+      "count": 1
+    },
+    {
+      "task_name": "sort box",
+      "count": 2
+    },
+    {
+      "task_name": "sort hair",
+      "count": 1
+    },
+    {
+      "task_name": "sort hairpin",
+      "count": 1
+    },
+    {
+      "task_name": "sort item",
+      "count": 1
+    },
+    {
+      "task_name": "sort perm rod",
+      "count": 1
+    },
+    {
+      "task_name": "sort rod",
+      "count": 8
+    },
+    {
+      "task_name": "sort straw",
+      "count": 1
+    },
+    {
+      "task_name": "splice green perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "spray customer",
+      "count": 1
+    },
+    {
+      "task_name": "stack bag",
+      "count": 1
+    },
+    {
+      "task_name": "stack box",
+      "count": 58
+    },
+    {
+      "task_name": "stack paper",
+      "count": 1
+    },
+    {
+      "task_name": "stack rod",
+      "count": 1
+    },
+    {
+      "task_name": "stack shoe cover",
+      "count": 1
+    },
+    {
+      "task_name": "stack tissue",
+      "count": 1
+    },
+    {
+      "task_name": "stack towel",
+      "count": 7
+    },
+    {
+      "task_name": "stick eyelash",
+      "count": 5
+    },
+    {
+      "task_name": "stick hairpin",
+      "count": 1
+    },
+    {
+      "task_name": "stick label",
+      "count": 8
+    },
+    {
+      "task_name": "stick nail tip",
+      "count": 1
+    },
+    {
+      "task_name": "stick patch",
+      "count": 1
+    },
+    {
+      "task_name": "stick pattern",
+      "count": 1
+    },
+    {
+      "task_name": "stick tag",
+      "count": 3
+    },
+    {
+      "task_name": "stir cream",
+      "count": 1
+    },
+    {
+      "task_name": "stir mask",
+      "count": 2
+    },
+    {
+      "task_name": "stir paste",
+      "count": 1
+    },
+    {
+      "task_name": "store boxes and bottles",
+      "count": 1
+    },
+    {
+      "task_name": "store boxes and nail polish",
+      "count": 1
+    },
+    {
+      "task_name": "store boxes and place goods",
+      "count": 1
+    },
+    {
+      "task_name": "store boxes and transfer mask bags",
+      "count": 1
+    },
+    {
+      "task_name": "store facial masks and nail polish",
+      "count": 1
+    },
+    {
+      "task_name": "store nail polish and stack product boxes",
+      "count": 1
+    },
+    {
+      "task_name": "straighten and connect perm rods",
+      "count": 1
+    },
+    {
+      "task_name": "straighten and section hair",
+      "count": 1
+    },
+    {
+      "task_name": "straighten and style customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "straighten customer hair",
+      "count": 10
+    },
+    {
+      "task_name": "straighten hair",
+      "count": 6
+    },
+    {
+      "task_name": "style hair",
+      "count": 1
+    },
+    {
+      "task_name": "style hair with wax",
+      "count": 1
+    },
+    {
+      "task_name": "sweep floor",
+      "count": 28
+    },
+    {
+      "task_name": "sweep garbage",
+      "count": 2
+    },
+    {
+      "task_name": "sweep hair",
+      "count": 12
+    },
+    {
+      "task_name": "sweep trash",
+      "count": 1
+    },
+    {
+      "task_name": "tap back with massage hammer",
+      "count": 1
+    },
+    {
+      "task_name": "tear plastic wrap",
+      "count": 1
+    },
+    {
+      "task_name": "tie hair",
+      "count": 2
+    },
+    {
+      "task_name": "trim and rinse hair",
+      "count": 1
+    },
+    {
+      "task_name": "trim beard",
+      "count": 2
+    },
+    {
+      "task_name": "trim customer hair",
+      "count": 1
+    },
+    {
+      "task_name": "trim eyebrow",
+      "count": 2
+    },
+    {
+      "task_name": "trim fingernail",
+      "count": 1
+    },
+    {
+      "task_name": "trim hair",
+      "count": 11
+    },
+    {
+      "task_name": "trim long black hair",
+      "count": 1
+    },
+    {
+      "task_name": "trim nail",
+      "count": 9
+    },
+    {
+      "task_name": "trim stray hair and clean clippings",
+      "count": 1
+    },
+    {
+      "task_name": "trim thread",
+      "count": 2
+    },
+    {
+      "task_name": "trim wig",
+      "count": 25
+    },
+    {
+      "task_name": "untangle band",
+      "count": 1
+    },
+    {
+      "task_name": "wash and install wig",
+      "count": 1
+    },
+    {
+      "task_name": "wash bag",
+      "count": 1
+    },
+    {
+      "task_name": "wash basin",
+      "count": 1
+    },
+    {
+      "task_name": "wash brush",
+      "count": 2
+    },
+    {
+      "task_name": "wash cloth",
+      "count": 6
+    },
+    {
+      "task_name": "wash clothes",
+      "count": 15
+    },
+    {
+      "task_name": "wash clothing",
+      "count": 2
+    },
+    {
+      "task_name": "wash container",
+      "count": 1
+    },
+    {
+      "task_name": "wash cover",
+      "count": 1
+    },
+    {
+      "task_name": "wash customer",
+      "count": 1
+    },
+    {
+      "task_name": "wash customer hair",
+      "count": 3
+    },
+    {
+      "task_name": "wash dummy",
+      "count": 1
+    },
+    {
+      "task_name": "wash face",
+      "count": 1
+    },
+    {
+      "task_name": "wash hair",
+      "count": 118
+    },
+    {
+      "task_name": "wash mat",
+      "count": 1
+    },
+    {
+      "task_name": "wash paper",
+      "count": 1
+    },
+    {
+      "task_name": "wash perm rod",
+      "count": 1
+    },
+    {
+      "task_name": "wash roller",
+      "count": 1
+    },
+    {
+      "task_name": "wash tool",
+      "count": 1
+    },
+    {
+      "task_name": "wash towel",
+      "count": 8
+    },
+    {
+      "task_name": "wash wig",
+      "count": 1
+    },
+    {
+      "task_name": "wet hair",
+      "count": 2
+    },
+    {
+      "task_name": "wind hair",
+      "count": 1
+    },
+    {
+      "task_name": "wipe back",
+      "count": 1
+    },
+    {
+      "task_name": "wipe beauty tool",
+      "count": 1
+    },
+    {
+      "task_name": "wipe bottle",
+      "count": 7
+    },
+    {
+      "task_name": "wipe bowl",
+      "count": 1
+    },
+    {
+      "task_name": "wipe box",
+      "count": 13
+    },
+    {
+      "task_name": "wipe chair",
+      "count": 1
+    },
+    {
+      "task_name": "wipe container",
+      "count": 1
+    },
+    {
+      "task_name": "wipe cosmetics",
+      "count": 5
+    },
+    {
+      "task_name": "wipe counter",
+      "count": 3
+    },
+    {
+      "task_name": "wipe cup",
+      "count": 6
+    },
+    {
+      "task_name": "wipe cupping jar",
+      "count": 1
+    },
+    {
+      "task_name": "wipe cushion",
+      "count": 1
+    },
+    {
+      "task_name": "wipe device",
+      "count": 1
+    },
+    {
+      "task_name": "wipe door",
+      "count": 1
+    },
+    {
+      "task_name": "wipe face",
+      "count": 15
+    },
+    {
+      "task_name": "wipe facial cleanser",
+      "count": 1
+    },
+    {
+      "task_name": "wipe floor",
+      "count": 3
+    },
+    {
+      "task_name": "wipe foam",
+      "count": 1
+    },
+    {
+      "task_name": "wipe furniture",
+      "count": 1
+    },
+    {
+      "task_name": "wipe glasses",
+      "count": 1
+    },
+    {
+      "task_name": "wipe hair",
+      "count": 1
+    },
+    {
+      "task_name": "wipe hair care products",
+      "count": 1
+    },
+    {
+      "task_name": "wipe item",
+      "count": 6
+    },
+    {
+      "task_name": "wipe jar",
+      "count": 44
+    },
+    {
+      "task_name": "wipe machine",
+      "count": 1
+    },
+    {
+      "task_name": "wipe ornament",
+      "count": 1
+    },
+    {
+      "task_name": "wipe product",
+      "count": 1
+    },
+    {
+      "task_name": "wipe rack",
+      "count": 3
+    },
+    {
+      "task_name": "wipe rod",
+      "count": 4
+    },
+    {
+      "task_name": "wipe shampoo",
+      "count": 1
+    },
+    {
+      "task_name": "wipe shelf",
+      "count": 5
+    },
+    {
+      "task_name": "wipe sink",
+      "count": 2
+    },
+    {
+      "task_name": "wipe stool",
+      "count": 1
+    },
+    {
+      "task_name": "wipe surface",
+      "count": 1
+    },
+    {
+      "task_name": "wipe table",
+      "count": 1
+    },
+    {
+      "task_name": "wipe toiletries",
+      "count": 2
+    },
+    {
+      "task_name": "wipe tool",
+      "count": 1
+    },
+    {
+      "task_name": "wipe tray",
+      "count": 1
+    },
+    {
+      "task_name": "wipe wall",
+      "count": 1
+    },
+    {
+      "task_name": "wrap cable",
+      "count": 1
+    },
+    {
+      "task_name": "wrap device",
+      "count": 1
+    },
+    {
+      "task_name": "wrap hair",
+      "count": 9
+    },
+    {
+      "task_name": "wrap head",
+      "count": 2
+    },
+    {
+      "task_name": "wrap mannequin hair for perming",
+      "count": 1
+    },
+    {
+      "task_name": "wrap perm cotton",
+      "count": 1
+    },
+    {
+      "task_name": "wring cloth",
+      "count": 2
+    },
+    {
+      "task_name": "wring towel",
+      "count": 4
+    },
+    {
+      "task_name": "write notebook",
+      "count": 4
+    },
+    {
+      "task_name": "write paper",
+      "count": 1
+    }
+  ]
+}

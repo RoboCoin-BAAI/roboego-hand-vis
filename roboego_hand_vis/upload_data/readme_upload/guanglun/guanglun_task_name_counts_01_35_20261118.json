@@ -1,0 +1,3807 @@
+{
+  "dataset": "guanglun",
+  "batches": "1-35",
+  "samples": 3170,
+  "with_task_name": 3166,
+  "missing_or_empty": 4,
+  "unique_task_names": 949,
+  "errors": [],
+  "task_names": [
+    {
+      "task_name": "Assemble pens and store in cup",
+      "count": 1
+    },
+    {
+      "task_name": "Assemble pump heads on bottles and clean workspace",
+      "count": 1
+    },
+    {
+      "task_name": "Brew coffee and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Brewing tea",
+      "count": 1
+    },
+    {
+      "task_name": "Brewing tea and cleaning the tea set",
+      "count": 1
+    },
+    {
+      "task_name": "Charging electronic devices and organizing desk items",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and organize bookshelf",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and organize the desktop",
+      "count": 1
+    },
+    {
+      "task_name": "Clean and store glasses",
+      "count": 2
+    },
+    {
+      "task_name": "Clean bathroom mirror and shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Clean countertop and dispose of trash",
+      "count": 2
+    },
+    {
+      "task_name": "Clean desk waste and wipe surface",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop and organize paper cups",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop by clearing clutter and wiping",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop by removing debris and wiping surface",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop by removing paper scraps and wiping surface",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop trash and stack paper cups",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop trash and wipe surface",
+      "count": 1
+    },
+    {
+      "task_name": "Clean desktop waste and wipe surface",
+      "count": 1
+    },
+    {
+      "task_name": "Clean dining table and store milk",
+      "count": 1
+    },
+    {
+      "task_name": "Clean shredded paper scraps and wipe desktop",
+      "count": 1
+    },
+    {
+      "task_name": "Clean sink and dry cloth",
+      "count": 1
+    },
+    {
+      "task_name": "Clean table and safe, collect water bottles",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up desktop trash and restock paper cups",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up floor debris and organize stationery",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up paper scraps and organize pens",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up paper scraps and organize stationery",
+      "count": 2
+    },
+    {
+      "task_name": "Clean up paper scraps and stationery",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up shredded paper and pens",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up tableware and stack paper cups",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up torn paper and organize stationery",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up torn paper and pen",
+      "count": 1
+    },
+    {
+      "task_name": "Clean up trash and tidy furniture",
+      "count": 1
+    },
+    {
+      "task_name": "Cut packing straps and reseal cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "Cut staples and reseal cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "Decanting liquid into small bottles",
+      "count": 1
+    },
+    {
+      "task_name": "Desktop cleanup and organization",
+      "count": 1
+    },
+    {
+      "task_name": "Disassemble computer case and remove internal components",
+      "count": 1
+    },
+    {
+      "task_name": "Dispense liquid and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Distribute and weigh hay portions",
+      "count": 1
+    },
+    {
+      "task_name": "Draw curtains and open window",
+      "count": 1
+    },
+    {
+      "task_name": "Fold clothing and pack into backpack",
+      "count": 1
+    },
+    {
+      "task_name": "Fold paper, punch holes, and clean up scraps",
+      "count": 1
+    },
+    {
+      "task_name": "Fold towels and clean towel rack",
+      "count": 1
+    },
+    {
+      "task_name": "Grind garlic and clean utensils",
+      "count": 1
+    },
+    {
+      "task_name": "Handling and storing a black mat",
+      "count": 1
+    },
+    {
+      "task_name": "Heat bread in microwave",
+      "count": 1
+    },
+    {
+      "task_name": "Heat packaged food in microwave",
+      "count": 2
+    },
+    {
+      "task_name": "Heat packaged food in microwave and serve on plate",
+      "count": 2
+    },
+    {
+      "task_name": "Iron and fold a black T-shirt",
+      "count": 1
+    },
+    {
+      "task_name": "Iron and fold suit jacket",
+      "count": 1
+    },
+    {
+      "task_name": "Kitchen cleanup and organization",
+      "count": 1
+    },
+    {
+      "task_name": "Labeling spice jars",
+      "count": 1
+    },
+    {
+      "task_name": "Load dishwasher and clean countertop",
+      "count": 7
+    },
+    {
+      "task_name": "Loading staples and binding papers",
+      "count": 1
+    },
+    {
+      "task_name": "Make bed and fold towels",
+      "count": 1
+    },
+    {
+      "task_name": "Make tea and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Mix detergent into soap bottle and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Mixing liquids from small bottles into a large bottle",
+      "count": 1
+    },
+    {
+      "task_name": "Move box, remove label, and dispose of waste",
+      "count": 1
+    },
+    {
+      "task_name": "Move cardboard box from pallet to conveyor belt",
+      "count": 1
+    },
+    {
+      "task_name": "Move cardboard box from pallet to table",
+      "count": 2
+    },
+    {
+      "task_name": "Move paper and complete record with marker",
+      "count": 1
+    },
+    {
+      "task_name": "Move tray, wipe cart, and push cart to position",
+      "count": 1
+    },
+    {
+      "task_name": "Move trays to countertop, clean cart, and reposition it",
+      "count": 1
+    },
+    {
+      "task_name": "Move water bottles from wooden table to small table",
+      "count": 1
+    },
+    {
+      "task_name": "Organize and bind papers, then clean desk debris",
+      "count": 1
+    },
+    {
+      "task_name": "Organize bedroom items and charge phone",
+      "count": 1
+    },
+    {
+      "task_name": "Organize black sticks into a blue cup",
+      "count": 1
+    },
+    {
+      "task_name": "Organize candy wrapper and fold cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "Organize desk items and store cleaned shoes",
+      "count": 1
+    },
+    {
+      "task_name": "Organize fitness equipment and clean the room",
+      "count": 2
+    },
+    {
+      "task_name": "Organize foam rollers and medicine balls on a rack",
+      "count": 1
+    },
+    {
+      "task_name": "Organize hangers into wardrobe",
+      "count": 1
+    },
+    {
+      "task_name": "Organize pens and stack cardboard boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Organize room items and wipe floor",
+      "count": 1
+    },
+    {
+      "task_name": "Organize scattered plastic bottles and markers",
+      "count": 1
+    },
+    {
+      "task_name": "Organize shoe box and clean up shredded paper",
+      "count": 1
+    },
+    {
+      "task_name": "Organize shoe boxes into cabinet and clean up paper scraps",
+      "count": 1
+    },
+    {
+      "task_name": "Organize shoe boxes into cabinet and clean up waste paper",
+      "count": 1
+    },
+    {
+      "task_name": "Organize tableware and clean dining area",
+      "count": 1
+    },
+    {
+      "task_name": "Peel onions and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Plating pastries from plastic boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Pour green tea and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Pour liquid and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water and tidy table",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water and wipe countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water and wipe table",
+      "count": 4
+    },
+    {
+      "task_name": "Pour water from teapot into glass",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water into cups and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Pour water into cups and wipe countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Pre-meeting preparation with office supplies and cups",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare a beverage for drinking",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare a glass of water",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare baby formula",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare baby milk formula",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare dip pen for writing",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare infant formula",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare salted cola and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare straw for drinking",
+      "count": 1
+    },
+    {
+      "task_name": "Prepare tea and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Refill and clean fountain pen",
+      "count": 1
+    },
+    {
+      "task_name": "Refill fountain pen with ink",
+      "count": 1
+    },
+    {
+      "task_name": "Refill hand sanitizer bottle",
+      "count": 1
+    },
+    {
+      "task_name": "Refill hand soap and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Refill jar and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Refill pen and clean desk",
+      "count": 1
+    },
+    {
+      "task_name": "Refill pen with ink",
+      "count": 3
+    },
+    {
+      "task_name": "Refill soap dispenser and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Refill soap dispenser and clean sink",
+      "count": 1
+    },
+    {
+      "task_name": "Refill soap dispenser and clean sink countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Refill soap dispenser and wipe sink",
+      "count": 1
+    },
+    {
+      "task_name": "Remove label and dispose of cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "Replace toy car battery and store plush toy",
+      "count": 1
+    },
+    {
+      "task_name": "Retrieve beverage and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Retrieve cola, pour into cup, and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Retrieve drink and clean countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Retrieve drink, pour into cup, and clean table",
+      "count": 1
+    },
+    {
+      "task_name": "Retrieve remote control from storage box",
+      "count": 1
+    },
+    {
+      "task_name": "Rinse cups and wipe countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Roll and store towels in a basket",
+      "count": 1
+    },
+    {
+      "task_name": "Rolling and organizing towels",
+      "count": 1
+    },
+    {
+      "task_name": "Secure and store white woven bags",
+      "count": 1
+    },
+    {
+      "task_name": "Selecting and returning drinks",
+      "count": 1
+    },
+    {
+      "task_name": "Selecting snacks and moving a cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "Selecting sunflower seeds from shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Shred documents with a manual paper shredder",
+      "count": 1
+    },
+    {
+      "task_name": "Shred paper in batches",
+      "count": 1
+    },
+    {
+      "task_name": "Sort and organize lettered items into colored baskets",
+      "count": 1
+    },
+    {
+      "task_name": "Sort drawer items into storage boxes",
+      "count": 1
+    },
+    {
+      "task_name": "Stack and store cups and trays, then clean up tissues",
+      "count": 1
+    },
+    {
+      "task_name": "Stack boxes on pallet and wipe table",
+      "count": 1
+    },
+    {
+      "task_name": "Staple papers and organize in pen holder",
+      "count": 1
+    },
+    {
+      "task_name": "Stapling and organizing papers",
+      "count": 1
+    },
+    {
+      "task_name": "Stocking cola bottles and cans on shelf",
+      "count": 1
+    },
+    {
+      "task_name": "Store umbrellas and organize cleaning tools",
+      "count": 1
+    },
+    {
+      "task_name": "Store water bottle in refrigerator",
+      "count": 1
+    },
+    {
+      "task_name": "Tidy room by organizing pens, stacking boxes, and clearing waste",
+      "count": 1
+    },
+    {
+      "task_name": "Tidy umbrellas and clean floor",
+      "count": 2
+    },
+    {
+      "task_name": "Tidying shoes and pen",
+      "count": 1
+    },
+    {
+      "task_name": "Tidying towels by rolling and storing them in a basket",
+      "count": 1
+    },
+    {
+      "task_name": "Transfer cardboard box from pallet to conveyor belt",
+      "count": 1
+    },
+    {
+      "task_name": "Transfer mouthwash and clean desk",
+      "count": 1
+    },
+    {
+      "task_name": "Transport water bottles from cabinet to cart",
+      "count": 1
+    },
+    {
+      "task_name": "Vacuuming the floor",
+      "count": 1
+    },
+    {
+      "task_name": "Vacuuming the room floor",
+      "count": 1
+    },
+    {
+      "task_name": "Wash cup and items, wipe countertop",
+      "count": 1
+    },
+    {
+      "task_name": "Writing on paper and organizing pens",
+      "count": 1
+    },
+    {
+      "task_name": "Writing practice with pen and paper",
+      "count": 1
+    },
+    {
+      "task_name": "arrange badge",
+      "count": 1
+    },
+    {
+      "task_name": "arrange bag",
+      "count": 5
+    },
+    {
+      "task_name": "arrange ball",
+      "count": 1
+    },
+    {
+      "task_name": "arrange bedding",
+      "count": 11
+    },
+    {
+      "task_name": "arrange beverage",
+      "count": 11
+    },
+    {
+      "task_name": "arrange beverage container",
+      "count": 6
+    },
+    {
+      "task_name": "arrange blanket",
+      "count": 6
+    },
+    {
+      "task_name": "arrange board game",
+      "count": 1
+    },
+    {
+      "task_name": "arrange book",
+      "count": 3
+    },
+    {
+      "task_name": "arrange bottle",
+      "count": 32
+    },
+    {
+      "task_name": "arrange box",
+      "count": 18
+    },
+    {
+      "task_name": "arrange bread",
+      "count": 4
+    },
+    {
+      "task_name": "arrange cake",
+      "count": 1
+    },
+    {
+      "task_name": "arrange can",
+      "count": 4
+    },
+    {
+      "task_name": "arrange candy",
+      "count": 9
+    },
+    {
+      "task_name": "arrange chair",
+      "count": 5
+    },
+    {
+      "task_name": "arrange chess pieces",
+      "count": 3
+    },
+    {
+      "task_name": "arrange cloth",
+      "count": 2
+    },
+    {
+      "task_name": "arrange cola",
+      "count": 4
+    },
+    {
+      "task_name": "arrange container",
+      "count": 2
+    },
+    {
+      "task_name": "arrange correction fluid",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cosmetics",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cotton swab",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cotton swab box",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cotton swab product",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cream",
+      "count": 2
+    },
+    {
+      "task_name": "arrange cup",
+      "count": 19
+    },
+    {
+      "task_name": "arrange cutlery",
+      "count": 1
+    },
+    {
+      "task_name": "arrange cylindrical object",
+      "count": 1
+    },
+    {
+      "task_name": "arrange detergent",
+      "count": 3
+    },
+    {
+      "task_name": "arrange drink",
+      "count": 4
+    },
+    {
+      "task_name": "arrange fitness equipment",
+      "count": 1
+    },
+    {
+      "task_name": "arrange food",
+      "count": 3
+    },
+    {
+      "task_name": "arrange hygiene product",
+      "count": 1
+    },
+    {
+      "task_name": "arrange item",
+      "count": 5
+    },
+    {
+      "task_name": "arrange jar",
+      "count": 2
+    },
+    {
+      "task_name": "arrange jelly",
+      "count": 1
+    },
+    {
+      "task_name": "arrange ketchup",
+      "count": 1
+    },
+    {
+      "task_name": "arrange kitchen supply",
+      "count": 1
+    },
+    {
+      "task_name": "arrange lighter",
+      "count": 2
+    },
+    {
+      "task_name": "arrange makeup tool",
+      "count": 1
+    },
+    {
+      "task_name": "arrange milk",
+      "count": 1
+    },
+    {
+      "task_name": "arrange noodle",
+      "count": 1
+    },
+    {
+      "task_name": "arrange nut",
+      "count": 2
+    },
+    {
+      "task_name": "arrange package",
+      "count": 2
+    },
+    {
+      "task_name": "arrange pad",
+      "count": 1
+    },
+    {
+      "task_name": "arrange paper",
+      "count": 3
+    },
+    {
+      "task_name": "arrange pastry",
+      "count": 1
+    },
+    {
+      "task_name": "arrange pen",
+      "count": 4
+    },
+    {
+      "task_name": "arrange piece",
+      "count": 1
+    },
+    {
+      "task_name": "arrange placemat",
+      "count": 2
+    },
+    {
+      "task_name": "arrange plant",
+      "count": 1
+    },
+    {
+      "task_name": "arrange product",
+      "count": 1
+    },
+    {
+      "task_name": "arrange roll",
+      "count": 1
+    },
+    {
+      "task_name": "arrange ruler",
+      "count": 4
+    },
+    {
+      "task_name": "arrange sausage",
+      "count": 1
+    },
+    {
+      "task_name": "arrange scissors",
+      "count": 1
+    },
+    {
+      "task_name": "arrange sheet",
+      "count": 1
+    },
+    {
+      "task_name": "arrange shirt",
+      "count": 2
+    },
+    {
+      "task_name": "arrange snack",
+      "count": 8
+    },
+    {
+      "task_name": "arrange soap",
+      "count": 1
+    },
+    {
+      "task_name": "arrange stationery",
+      "count": 2
+    },
+    {
+      "task_name": "arrange strip object",
+      "count": 1
+    },
+    {
+      "task_name": "arrange table",
+      "count": 2
+    },
+    {
+      "task_name": "arrange tableware",
+      "count": 15
+    },
+    {
+      "task_name": "arrange tag",
+      "count": 2
+    },
+    {
+      "task_name": "arrange tea bag",
+      "count": 1
+    },
+    {
+      "task_name": "arrange tea set",
+      "count": 2
+    },
+    {
+      "task_name": "arrange toiletries",
+      "count": 1
+    },
+    {
+      "task_name": "arrange toiletry",
+      "count": 2
+    },
+    {
+      "task_name": "arrange toothbrush",
+      "count": 1
+    },
+    {
+      "task_name": "arrange toothpaste",
+      "count": 1
+    },
+    {
+      "task_name": "arrange tray",
+      "count": 2
+    },
+    {
+      "task_name": "arrange tubular item",
+      "count": 1
+    },
+    {
+      "task_name": "arrange wet wipes",
+      "count": 1
+    },
+    {
+      "task_name": "arrange wooden stick",
+      "count": 1
+    },
+    {
+      "task_name": "arrange wooden sticks",
+      "count": 1
+    },
+    {
+      "task_name": "arrange yogurt",
+      "count": 1
+    },
+    {
+      "task_name": "assemble badge",
+      "count": 2
+    },
+    {
+      "task_name": "assemble barbell",
+      "count": 2
+    },
+    {
+      "task_name": "assemble blender",
+      "count": 1
+    },
+    {
+      "task_name": "assemble box",
+      "count": 6
+    },
+    {
+      "task_name": "assemble car starter motor",
+      "count": 1
+    },
+    {
+      "task_name": "assemble cardboard",
+      "count": 2
+    },
+    {
+      "task_name": "assemble compressor",
+      "count": 3
+    },
+    {
+      "task_name": "assemble frame",
+      "count": 1
+    },
+    {
+      "task_name": "assemble long object",
+      "count": 1
+    },
+    {
+      "task_name": "assemble motor",
+      "count": 2
+    },
+    {
+      "task_name": "assemble paper",
+      "count": 1
+    },
+    {
+      "task_name": "assemble part",
+      "count": 14
+    },
+    {
+      "task_name": "assemble pen",
+      "count": 10
+    },
+    {
+      "task_name": "assemble sandwich",
+      "count": 1
+    },
+    {
+      "task_name": "assemble shelf",
+      "count": 1
+    },
+    {
+      "task_name": "assemble starter",
+      "count": 2
+    },
+    {
+      "task_name": "assemble starter motor",
+      "count": 1
+    },
+    {
+      "task_name": "assemble strip",
+      "count": 1
+    },
+    {
+      "task_name": "assemble turn signal",
+      "count": 1
+    },
+    {
+      "task_name": "attach label",
+      "count": 1
+    },
+    {
+      "task_name": "bind bag",
+      "count": 1
+    },
+    {
+      "task_name": "bind cable",
+      "count": 1
+    },
+    {
+      "task_name": "bind cardstock",
+      "count": 1
+    },
+    {
+      "task_name": "bind paper",
+      "count": 9
+    },
+    {
+      "task_name": "bind rope",
+      "count": 1
+    },
+    {
+      "task_name": "button shirt",
+      "count": 1
+    },
+    {
+      "task_name": "check bottle",
+      "count": 1
+    },
+    {
+      "task_name": "check item",
+      "count": 1
+    },
+    {
+      "task_name": "check seasoning",
+      "count": 1
+    },
+    {
+      "task_name": "check soap",
+      "count": 1
+    },
+    {
+      "task_name": "clean ashtray",
+      "count": 3
+    },
+    {
+      "task_name": "clean basin",
+      "count": 3
+    },
+    {
+      "task_name": "clean bathroom surface",
+      "count": 1
+    },
+    {
+      "task_name": "clean bed sheet",
+      "count": 1
+    },
+    {
+      "task_name": "clean bin",
+      "count": 1
+    },
+    {
+      "task_name": "clean bottle",
+      "count": 3
+    },
+    {
+      "task_name": "clean box",
+      "count": 1
+    },
+    {
+      "task_name": "clean carpet",
+      "count": 1
+    },
+    {
+      "task_name": "clean cat litter",
+      "count": 1
+    },
+    {
+      "task_name": "clean clip",
+      "count": 1
+    },
+    {
+      "task_name": "clean coffee",
+      "count": 1
+    },
+    {
+      "task_name": "clean coffee machine",
+      "count": 1
+    },
+    {
+      "task_name": "clean compact",
+      "count": 1
+    },
+    {
+      "task_name": "clean contact lens",
+      "count": 1
+    },
+    {
+      "task_name": "clean container",
+      "count": 1
+    },
+    {
+      "task_name": "clean countertop",
+      "count": 3
+    },
+    {
+      "task_name": "clean crumb",
+      "count": 1
+    },
+    {
+      "task_name": "clean cup",
+      "count": 1
+    },
+    {
+      "task_name": "clean debris",
+      "count": 3
+    },
+    {
+      "task_name": "clean desk",
+      "count": 4
+    },
+    {
+      "task_name": "clean desktop",
+      "count": 5
+    },
+    {
+      "task_name": "clean equipment",
+      "count": 2
+    },
+    {
+      "task_name": "clean floor",
+      "count": 3
+    },
+    {
+      "task_name": "clean glasses",
+      "count": 8
+    },
+    {
+      "task_name": "clean grille",
+      "count": 1
+    },
+    {
+      "task_name": "clean humidifier",
+      "count": 1
+    },
+    {
+      "task_name": "clean kettle",
+      "count": 1
+    },
+    {
+      "task_name": "clean keyboard",
+      "count": 14
+    },
+    {
+      "task_name": "clean lipstick",
+      "count": 1
+    },
+    {
+      "task_name": "clean mirror",
+      "count": 1
+    },
+    {
+      "task_name": "clean mouse",
+      "count": 2
+    },
+    {
+      "task_name": "clean palette",
+      "count": 3
+    },
+    {
+      "task_name": "clean pen",
+      "count": 1
+    },
+    {
+      "task_name": "clean scissors",
+      "count": 6
+    },
+    {
+      "task_name": "clean shelf",
+      "count": 3
+    },
+    {
+      "task_name": "clean shower head",
+      "count": 1
+    },
+    {
+      "task_name": "clean sink",
+      "count": 4
+    },
+    {
+      "task_name": "clean sofa",
+      "count": 1
+    },
+    {
+      "task_name": "clean table",
+      "count": 3
+    },
+    {
+      "task_name": "clean toy",
+      "count": 1
+    },
+    {
+      "task_name": "clean tray",
+      "count": 4
+    },
+    {
+      "task_name": "clean washing machine",
+      "count": 1
+    },
+    {
+      "task_name": "clean water dispenser",
+      "count": 1
+    },
+    {
+      "task_name": "coil cable",
+      "count": 19
+    },
+    {
+      "task_name": "coil rope",
+      "count": 6
+    },
+    {
+      "task_name": "collect bag",
+      "count": 1
+    },
+    {
+      "task_name": "collect ball",
+      "count": 1
+    },
+    {
+      "task_name": "collect block",
+      "count": 2
+    },
+    {
+      "task_name": "collect bottle",
+      "count": 4
+    },
+    {
+      "task_name": "collect bowl",
+      "count": 2
+    },
+    {
+      "task_name": "collect box",
+      "count": 10
+    },
+    {
+      "task_name": "collect bucket",
+      "count": 1
+    },
+    {
+      "task_name": "collect can",
+      "count": 1
+    },
+    {
+      "task_name": "collect clothes",
+      "count": 1
+    },
+    {
+      "task_name": "collect clothing",
+      "count": 1
+    },
+    {
+      "task_name": "collect container",
+      "count": 1
+    },
+    {
+      "task_name": "collect cup",
+      "count": 2
+    },
+    {
+      "task_name": "collect food",
+      "count": 1
+    },
+    {
+      "task_name": "collect fruit",
+      "count": 1
+    },
+    {
+      "task_name": "collect object",
+      "count": 1
+    },
+    {
+      "task_name": "collect package",
+      "count": 1
+    },
+    {
+      "task_name": "collect paper",
+      "count": 26
+    },
+    {
+      "task_name": "collect pepper",
+      "count": 1
+    },
+    {
+      "task_name": "collect shuttlecock",
+      "count": 1
+    },
+    {
+      "task_name": "collect sign",
+      "count": 1
+    },
+    {
+      "task_name": "collect snack",
+      "count": 7
+    },
+    {
+      "task_name": "collect steel wool balls",
+      "count": 1
+    },
+    {
+      "task_name": "collect stick",
+      "count": 2
+    },
+    {
+      "task_name": "collect sticks",
+      "count": 1
+    },
+    {
+      "task_name": "collect straw",
+      "count": 6
+    },
+    {
+      "task_name": "collect tableware",
+      "count": 1
+    },
+    {
+      "task_name": "collect thin sticks",
+      "count": 2
+    },
+    {
+      "task_name": "collect toothpick",
+      "count": 1
+    },
+    {
+      "task_name": "collect towel",
+      "count": 1
+    },
+    {
+      "task_name": "collect trash",
+      "count": 3
+    },
+    {
+      "task_name": "collect waste",
+      "count": 1
+    },
+    {
+      "task_name": "collect wool",
+      "count": 2
+    },
+    {
+      "task_name": "collect wrapper",
+      "count": 1
+    },
+    {
+      "task_name": "connect cable",
+      "count": 4
+    },
+    {
+      "task_name": "connect charger",
+      "count": 1
+    },
+    {
+      "task_name": "cover bowl",
+      "count": 2
+    },
+    {
+      "task_name": "cover box",
+      "count": 1
+    },
+    {
+      "task_name": "cover jar",
+      "count": 1
+    },
+    {
+      "task_name": "cover sofa",
+      "count": 1
+    },
+    {
+      "task_name": "cut bubble wrap",
+      "count": 2
+    },
+    {
+      "task_name": "cut carrot",
+      "count": 2
+    },
+    {
+      "task_name": "cut ginger",
+      "count": 2
+    },
+    {
+      "task_name": "cut ingredient",
+      "count": 1
+    },
+    {
+      "task_name": "cut part",
+      "count": 1
+    },
+    {
+      "task_name": "cut pepper",
+      "count": 1
+    },
+    {
+      "task_name": "cut potato",
+      "count": 2
+    },
+    {
+      "task_name": "cut sausage",
+      "count": 1
+    },
+    {
+      "task_name": "cut tomato",
+      "count": 1
+    },
+    {
+      "task_name": "cut vegetable",
+      "count": 3
+    },
+    {
+      "task_name": "dice carrot",
+      "count": 1
+    },
+    {
+      "task_name": "dice potato",
+      "count": 2
+    },
+    {
+      "task_name": "dice vegetable",
+      "count": 1
+    },
+    {
+      "task_name": "disassemble box",
+      "count": 9
+    },
+    {
+      "task_name": "disassemble compressor",
+      "count": 3
+    },
+    {
+      "task_name": "disassemble computer tower",
+      "count": 1
+    },
+    {
+      "task_name": "disassemble cylinder head",
+      "count": 1
+    },
+    {
+      "task_name": "disassemble engine",
+      "count": 1
+    },
+    {
+      "task_name": "disassemble generator",
+      "count": 3
+    },
+    {
+      "task_name": "disassemble starter",
+      "count": 1
+    },
+    {
+      "task_name": "discard bottle",
+      "count": 1
+    },
+    {
+      "task_name": "discard cup",
+      "count": 1
+    },
+    {
+      "task_name": "discard paper",
+      "count": 5
+    },
+    {
+      "task_name": "discard trash",
+      "count": 6
+    },
+    {
+      "task_name": "discard waste",
+      "count": 1
+    },
+    {
+      "task_name": "divide paper",
+      "count": 1
+    },
+    {
+      "task_name": "draw card",
+      "count": 1
+    },
+    {
+      "task_name": "draw whiteboard",
+      "count": 1
+    },
+    {
+      "task_name": "dry container",
+      "count": 1
+    },
+    {
+      "task_name": "dry cup",
+      "count": 2
+    },
+    {
+      "task_name": "erase paper",
+      "count": 1
+    },
+    {
+      "task_name": "fill bottle",
+      "count": 25
+    },
+    {
+      "task_name": "fill bowl",
+      "count": 2
+    },
+    {
+      "task_name": "fill box",
+      "count": 9
+    },
+    {
+      "task_name": "fill container",
+      "count": 1
+    },
+    {
+      "task_name": "fill cup",
+      "count": 4
+    },
+    {
+      "task_name": "fill diffuser",
+      "count": 1
+    },
+    {
+      "task_name": "fill jar",
+      "count": 3
+    },
+    {
+      "task_name": "fill kettle",
+      "count": 7
+    },
+    {
+      "task_name": "fill pen",
+      "count": 4
+    },
+    {
+      "task_name": "fill soap dispenser",
+      "count": 1
+    },
+    {
+      "task_name": "fill tissue box",
+      "count": 1
+    },
+    {
+      "task_name": "fold apron",
+      "count": 5
+    },
+    {
+      "task_name": "fold bag",
+      "count": 4
+    },
+    {
+      "task_name": "fold bed sheet",
+      "count": 2
+    },
+    {
+      "task_name": "fold blanket",
+      "count": 7
+    },
+    {
+      "task_name": "fold box",
+      "count": 22
+    },
+    {
+      "task_name": "fold bubble wrap",
+      "count": 2
+    },
+    {
+      "task_name": "fold cardboard",
+      "count": 1
+    },
+    {
+      "task_name": "fold cloth",
+      "count": 4
+    },
+    {
+      "task_name": "fold clothes",
+      "count": 1
+    },
+    {
+      "task_name": "fold clothing",
+      "count": 1
+    },
+    {
+      "task_name": "fold mat",
+      "count": 1
+    },
+    {
+      "task_name": "fold napkin",
+      "count": 1
+    },
+    {
+      "task_name": "fold paper",
+      "count": 7
+    },
+    {
+      "task_name": "fold shirt",
+      "count": 6
+    },
+    {
+      "task_name": "fold shower cap",
+      "count": 1
+    },
+    {
+      "task_name": "fold sign",
+      "count": 1
+    },
+    {
+      "task_name": "fold sock",
+      "count": 1
+    },
+    {
+      "task_name": "fold tissue",
+      "count": 3
+    },
+    {
+      "task_name": "fold towel",
+      "count": 67
+    },
+    {
+      "task_name": "hang apron",
+      "count": 3
+    },
+    {
+      "task_name": "hang bag",
+      "count": 2
+    },
+    {
+      "task_name": "hang band",
+      "count": 1
+    },
+    {
+      "task_name": "hang bathrobe",
+      "count": 1
+    },
+    {
+      "task_name": "hang bed sheet",
+      "count": 2
+    },
+    {
+      "task_name": "hang belt",
+      "count": 9
+    },
+    {
+      "task_name": "hang cable",
+      "count": 3
+    },
+    {
+      "task_name": "hang cloth",
+      "count": 1
+    },
+    {
+      "task_name": "hang clothes",
+      "count": 1
+    },
+    {
+      "task_name": "hang clothing",
+      "count": 1
+    },
+    {
+      "task_name": "hang correction fluid",
+      "count": 6
+    },
+    {
+      "task_name": "hang hanger",
+      "count": 4
+    },
+    {
+      "task_name": "hang hula hoop",
+      "count": 1
+    },
+    {
+      "task_name": "hang item",
+      "count": 3
+    },
+    {
+      "task_name": "hang kitchen tool",
+      "count": 1
+    },
+    {
+      "task_name": "hang kitchen utensil",
+      "count": 1
+    },
+    {
+      "task_name": "hang kitchenware",
+      "count": 1
+    },
+    {
+      "task_name": "hang knife",
+      "count": 1
+    },
+    {
+      "task_name": "hang mop",
+      "count": 1
+    },
+    {
+      "task_name": "hang mop handle",
+      "count": 1
+    },
+    {
+      "task_name": "hang necklace",
+      "count": 2
+    },
+    {
+      "task_name": "hang package",
+      "count": 1
+    },
+    {
+      "task_name": "hang rope",
+      "count": 3
+    },
+    {
+      "task_name": "hang scissors",
+      "count": 5
+    },
+    {
+      "task_name": "hang shirt",
+      "count": 5
+    },
+    {
+      "task_name": "hang snack",
+      "count": 4
+    },
+    {
+      "task_name": "hang spoon",
+      "count": 2
+    },
+    {
+      "task_name": "hang towel",
+      "count": 15
+    },
+    {
+      "task_name": "hang utensil",
+      "count": 3
+    },
+    {
+      "task_name": "insert bag",
+      "count": 1
+    },
+    {
+      "task_name": "insert battery",
+      "count": 1
+    },
+    {
+      "task_name": "insert blanket",
+      "count": 1
+    },
+    {
+      "task_name": "insert bottle",
+      "count": 2
+    },
+    {
+      "task_name": "insert cable",
+      "count": 1
+    },
+    {
+      "task_name": "insert cup",
+      "count": 2
+    },
+    {
+      "task_name": "insert fastener",
+      "count": 1
+    },
+    {
+      "task_name": "insert ink cartridge",
+      "count": 1
+    },
+    {
+      "task_name": "insert paper",
+      "count": 2
+    },
+    {
+      "task_name": "insert pillow",
+      "count": 4
+    },
+    {
+      "task_name": "insert straw",
+      "count": 3
+    },
+    {
+      "task_name": "install alarm",
+      "count": 1
+    },
+    {
+      "task_name": "install barbell",
+      "count": 1
+    },
+    {
+      "task_name": "install battery",
+      "count": 2
+    },
+    {
+      "task_name": "install bottle",
+      "count": 1
+    },
+    {
+      "task_name": "install buckle",
+      "count": 1
+    },
+    {
+      "task_name": "install case",
+      "count": 1
+    },
+    {
+      "task_name": "install cylinder head",
+      "count": 1
+    },
+    {
+      "task_name": "install fan",
+      "count": 1
+    },
+    {
+      "task_name": "install fastener",
+      "count": 2
+    },
+    {
+      "task_name": "install foil",
+      "count": 1
+    },
+    {
+      "task_name": "install ink cartridge",
+      "count": 1
+    },
+    {
+      "task_name": "install label",
+      "count": 2
+    },
+    {
+      "task_name": "install net",
+      "count": 1
+    },
+    {
+      "task_name": "install nib",
+      "count": 1
+    },
+    {
+      "task_name": "install paper",
+      "count": 4
+    },
+    {
+      "task_name": "install tape",
+      "count": 1
+    },
+    {
+      "task_name": "install water reservoir",
+      "count": 1
+    },
+    {
+      "task_name": "install water tank",
+      "count": 1
+    },
+    {
+      "task_name": "install weight plate",
+      "count": 7
+    },
+    {
+      "task_name": "load bottle",
+      "count": 2
+    },
+    {
+      "task_name": "load box",
+      "count": 1
+    },
+    {
+      "task_name": "load bucket",
+      "count": 3
+    },
+    {
+      "task_name": "load cargo",
+      "count": 1
+    },
+    {
+      "task_name": "load cup",
+      "count": 4
+    },
+    {
+      "task_name": "load dishwasher",
+      "count": 1
+    },
+    {
+      "task_name": "load food",
+      "count": 4
+    },
+    {
+      "task_name": "load package",
+      "count": 2
+    },
+    {
+      "task_name": "load staple",
+      "count": 1
+    },
+    {
+      "task_name": "open box",
+      "count": 3
+    },
+    {
+      "task_name": "open paper",
+      "count": 1
+    },
+    {
+      "task_name": "organize art supply",
+      "count": 1
+    },
+    {
+      "task_name": "organize badge",
+      "count": 1
+    },
+    {
+      "task_name": "organize bag",
+      "count": 18
+    },
+    {
+      "task_name": "organize ball",
+      "count": 1
+    },
+    {
+      "task_name": "organize band",
+      "count": 3
+    },
+    {
+      "task_name": "organize basin",
+      "count": 6
+    },
+    {
+      "task_name": "organize bath product",
+      "count": 1
+    },
+    {
+      "task_name": "organize bathing product",
+      "count": 1
+    },
+    {
+      "task_name": "organize bedding",
+      "count": 2
+    },
+    {
+      "task_name": "organize beer",
+      "count": 1
+    },
+    {
+      "task_name": "organize beverage",
+      "count": 5
+    },
+    {
+      "task_name": "organize beverage container",
+      "count": 2
+    },
+    {
+      "task_name": "organize blanket",
+      "count": 1
+    },
+    {
+      "task_name": "organize block",
+      "count": 5
+    },
+    {
+      "task_name": "organize board game",
+      "count": 1
+    },
+    {
+      "task_name": "organize book",
+      "count": 6
+    },
+    {
+      "task_name": "organize bookshelf",
+      "count": 1
+    },
+    {
+      "task_name": "organize bottle",
+      "count": 54
+    },
+    {
+      "task_name": "organize bowl",
+      "count": 1
+    },
+    {
+      "task_name": "organize box",
+      "count": 54
+    },
+    {
+      "task_name": "organize bread",
+      "count": 3
+    },
+    {
+      "task_name": "organize cable",
+      "count": 54
+    },
+    {
+      "task_name": "organize can",
+      "count": 2
+    },
+    {
+      "task_name": "organize candy",
+      "count": 1
+    },
+    {
+      "task_name": "organize card",
+      "count": 2
+    },
+    {
+      "task_name": "organize cargo",
+      "count": 2
+    },
+    {
+      "task_name": "organize carton",
+      "count": 1
+    },
+    {
+      "task_name": "organize chair",
+      "count": 1
+    },
+    {
+      "task_name": "organize charger",
+      "count": 2
+    },
+    {
+      "task_name": "organize chopstick",
+      "count": 1
+    },
+    {
+      "task_name": "organize chopsticks",
+      "count": 2
+    },
+    {
+      "task_name": "organize cleaning agent",
+      "count": 2
+    },
+    {
+      "task_name": "organize cleaning supply",
+      "count": 2
+    },
+    {
+      "task_name": "organize cleaning tool",
+      "count": 2
+    },
+    {
+      "task_name": "organize clip",
+      "count": 3
+    },
+    {
+      "task_name": "organize cloth",
+      "count": 3
+    },
+    {
+      "task_name": "organize clothes",
+      "count": 1
+    },
+    {
+      "task_name": "organize clothing",
+      "count": 43
+    },
+    {
+      "task_name": "organize clutter",
+      "count": 8
+    },
+    {
+      "task_name": "organize coffee",
+      "count": 2
+    },
+    {
+      "task_name": "organize coffee equipment",
+      "count": 1
+    },
+    {
+      "task_name": "organize colored pencils",
+      "count": 1
+    },
+    {
+      "task_name": "organize container",
+      "count": 6
+    },
+    {
+      "task_name": "organize cosmetics",
+      "count": 6
+    },
+    {
+      "task_name": "organize cotton swab",
+      "count": 4
+    },
+    {
+      "task_name": "organize cotton swab box",
+      "count": 1
+    },
+    {
+      "task_name": "organize countertop",
+      "count": 1
+    },
+    {
+      "task_name": "organize cup",
+      "count": 11
+    },
+    {
+      "task_name": "organize cushion",
+      "count": 1
+    },
+    {
+      "task_name": "organize cutlery",
+      "count": 2
+    },
+    {
+      "task_name": "organize cutter",
+      "count": 1
+    },
+    {
+      "task_name": "organize daily necessity",
+      "count": 1
+    },
+    {
+      "task_name": "organize dairy product",
+      "count": 1
+    },
+    {
+      "task_name": "organize data cable",
+      "count": 1
+    },
+    {
+      "task_name": "organize debris",
+      "count": 1
+    },
+    {
+      "task_name": "organize delivery items",
+      "count": 1
+    },
+    {
+      "task_name": "organize desk",
+      "count": 5
+    },
+    {
+      "task_name": "organize desk item",
+      "count": 2
+    },
+    {
+      "task_name": "organize desk supply",
+      "count": 1
+    },
+    {
+      "task_name": "organize desktop",
+      "count": 1
+    },
+    {
+      "task_name": "organize detergent",
+      "count": 6
+    },
+    {
+      "task_name": "organize dish",
+      "count": 1
+    },
+    {
+      "task_name": "organize dish soap",
+      "count": 1
+    },
+    {
+      "task_name": "organize divider",
+      "count": 1
+    },
+    {
+      "task_name": "organize document",
+      "count": 1
+    },
+    {
+      "task_name": "organize drink",
+      "count": 6
+    },
+    {
+      "task_name": "organize dumbbell",
+      "count": 4
+    },
+    {
+      "task_name": "organize facial cleanser",
+      "count": 1
+    },
+    {
+      "task_name": "organize file",
+      "count": 1
+    },
+    {
+      "task_name": "organize fitness equipment",
+      "count": 2
+    },
+    {
+      "task_name": "organize fitness gear",
+      "count": 1
+    },
+    {
+      "task_name": "organize folder",
+      "count": 2
+    },
+    {
+      "task_name": "organize food",
+      "count": 4
+    },
+    {
+      "task_name": "organize fork",
+      "count": 1
+    },
+    {
+      "task_name": "organize frame",
+      "count": 1
+    },
+    {
+      "task_name": "organize game component",
+      "count": 4
+    },
+    {
+      "task_name": "organize gardening tool",
+      "count": 1
+    },
+    {
+      "task_name": "organize glass",
+      "count": 1
+    },
+    {
+      "task_name": "organize glasses",
+      "count": 1
+    },
+    {
+      "task_name": "organize granules",
+      "count": 1
+    },
+    {
+      "task_name": "organize grocery",
+      "count": 1
+    },
+    {
+      "task_name": "organize hand sanitizer",
+      "count": 2
+    },
+    {
+      "task_name": "organize hanger",
+      "count": 4
+    },
+    {
+      "task_name": "organize hat",
+      "count": 1
+    },
+    {
+      "task_name": "organize headphones",
+      "count": 1
+    },
+    {
+      "task_name": "organize household item",
+      "count": 1
+    },
+    {
+      "task_name": "organize ingredient",
+      "count": 1
+    },
+    {
+      "task_name": "organize ink cartridge",
+      "count": 1
+    },
+    {
+      "task_name": "organize item",
+      "count": 53
+    },
+    {
+      "task_name": "organize items",
+      "count": 6
+    },
+    {
+      "task_name": "organize jar",
+      "count": 3
+    },
+    {
+      "task_name": "organize jelly",
+      "count": 1
+    },
+    {
+      "task_name": "organize jewelry",
+      "count": 15
+    },
+    {
+      "task_name": "organize juice",
+      "count": 1
+    },
+    {
+      "task_name": "organize jump rope",
+      "count": 7
+    },
+    {
+      "task_name": "organize kitchen item",
+      "count": 1
+    },
+    {
+      "task_name": "organize kitchenware",
+      "count": 1
+    },
+    {
+      "task_name": "organize knee pad",
+      "count": 1
+    },
+    {
+      "task_name": "organize knot",
+      "count": 1
+    },
+    {
+      "task_name": "organize label",
+      "count": 4
+    },
+    {
+      "task_name": "organize lanyard",
+      "count": 2
+    },
+    {
+      "task_name": "organize lid",
+      "count": 3
+    },
+    {
+      "task_name": "organize light string",
+      "count": 2
+    },
+    {
+      "task_name": "organize lighter",
+      "count": 2
+    },
+    {
+      "task_name": "organize lip gloss",
+      "count": 1
+    },
+    {
+      "task_name": "organize long items",
+      "count": 1
+    },
+    {
+      "task_name": "organize magazine",
+      "count": 1
+    },
+    {
+      "task_name": "organize marker",
+      "count": 4
+    },
+    {
+      "task_name": "organize mask",
+      "count": 1
+    },
+    {
+      "task_name": "organize mat",
+      "count": 1
+    },
+    {
+      "task_name": "organize medicine",
+      "count": 2
+    },
+    {
+      "task_name": "organize milk",
+      "count": 1
+    },
+    {
+      "task_name": "organize miscellaneous items",
+      "count": 2
+    },
+    {
+      "task_name": "organize necklace",
+      "count": 1
+    },
+    {
+      "task_name": "organize nut",
+      "count": 2
+    },
+    {
+      "task_name": "organize object",
+      "count": 1
+    },
+    {
+      "task_name": "organize office supply",
+      "count": 2
+    },
+    {
+      "task_name": "organize package",
+      "count": 20
+    },
+    {
+      "task_name": "organize paper",
+      "count": 67
+    },
+    {
+      "task_name": "organize pen",
+      "count": 25
+    },
+    {
+      "task_name": "organize plastic wrap",
+      "count": 2
+    },
+    {
+      "task_name": "organize pot",
+      "count": 4
+    },
+    {
+      "task_name": "organize produce",
+      "count": 1
+    },
+    {
+      "task_name": "organize product",
+      "count": 2
+    },
+    {
+      "task_name": "organize racket",
+      "count": 1
+    },
+    {
+      "task_name": "organize refill",
+      "count": 6
+    },
+    {
+      "task_name": "organize refrigerator",
+      "count": 1
+    },
+    {
+      "task_name": "organize remote control",
+      "count": 1
+    },
+    {
+      "task_name": "organize roll",
+      "count": 1
+    },
+    {
+      "task_name": "organize room",
+      "count": 1
+    },
+    {
+      "task_name": "organize rope",
+      "count": 10
+    },
+    {
+      "task_name": "organize ruler",
+      "count": 1
+    },
+    {
+      "task_name": "organize sanitary product",
+      "count": 1
+    },
+    {
+      "task_name": "organize sausage",
+      "count": 2
+    },
+    {
+      "task_name": "organize seasoning",
+      "count": 2
+    },
+    {
+      "task_name": "organize shampoo",
+      "count": 3
+    },
+    {
+      "task_name": "organize shoe",
+      "count": 4
+    },
+    {
+      "task_name": "organize shoebox",
+      "count": 1
+    },
+    {
+      "task_name": "organize shuttlecock",
+      "count": 4
+    },
+    {
+      "task_name": "organize sign",
+      "count": 5
+    },
+    {
+      "task_name": "organize snack",
+      "count": 11
+    },
+    {
+      "task_name": "organize soap",
+      "count": 1
+    },
+    {
+      "task_name": "organize sponge",
+      "count": 1
+    },
+    {
+      "task_name": "organize spoon",
+      "count": 1
+    },
+    {
+      "task_name": "organize sports equipment",
+      "count": 5
+    },
+    {
+      "task_name": "organize stationery",
+      "count": 42
+    },
+    {
+      "task_name": "organize stick",
+      "count": 2
+    },
+    {
+      "task_name": "organize sticks",
+      "count": 1
+    },
+    {
+      "task_name": "organize strap",
+      "count": 3
+    },
+    {
+      "task_name": "organize straw",
+      "count": 3
+    },
+    {
+      "task_name": "organize strip-shaped object",
+      "count": 1
+    },
+    {
+      "task_name": "organize strips",
+      "count": 1
+    },
+    {
+      "task_name": "organize tableware",
+      "count": 9
+    },
+    {
+      "task_name": "organize tag",
+      "count": 4
+    },
+    {
+      "task_name": "organize tea",
+      "count": 1
+    },
+    {
+      "task_name": "organize tea bag",
+      "count": 3
+    },
+    {
+      "task_name": "organize tea supply",
+      "count": 1
+    },
+    {
+      "task_name": "organize tissue",
+      "count": 5
+    },
+    {
+      "task_name": "organize toiletries",
+      "count": 16
+    },
+    {
+      "task_name": "organize toiletry",
+      "count": 12
+    },
+    {
+      "task_name": "organize toothbrush",
+      "count": 1
+    },
+    {
+      "task_name": "organize toothpaste",
+      "count": 2
+    },
+    {
+      "task_name": "organize toothpick",
+      "count": 1
+    },
+    {
+      "task_name": "organize towel",
+      "count": 5
+    },
+    {
+      "task_name": "organize toy",
+      "count": 2
+    },
+    {
+      "task_name": "organize tray",
+      "count": 3
+    },
+    {
+      "task_name": "organize tube",
+      "count": 1
+    },
+    {
+      "task_name": "organize utensil",
+      "count": 3
+    },
+    {
+      "task_name": "organize wardrobe",
+      "count": 1
+    },
+    {
+      "task_name": "organize water bottle",
+      "count": 1
+    },
+    {
+      "task_name": "organize water container",
+      "count": 1
+    },
+    {
+      "task_name": "organize weight plate",
+      "count": 1
+    },
+    {
+      "task_name": "organize wet wipes",
+      "count": 2
+    },
+    {
+      "task_name": "organize whistle",
+      "count": 2
+    },
+    {
+      "task_name": "organize wooden stick",
+      "count": 1
+    },
+    {
+      "task_name": "organize wristband",
+      "count": 2
+    },
+    {
+      "task_name": "pack backpack",
+      "count": 4
+    },
+    {
+      "task_name": "pack badge",
+      "count": 6
+    },
+    {
+      "task_name": "pack bag",
+      "count": 32
+    },
+    {
+      "task_name": "pack bead",
+      "count": 1
+    },
+    {
+      "task_name": "pack bedding",
+      "count": 1
+    },
+    {
+      "task_name": "pack bottle",
+      "count": 2
+    },
+    {
+      "task_name": "pack bowl",
+      "count": 1
+    },
+    {
+      "task_name": "pack box",
+      "count": 38
+    },
+    {
+      "task_name": "pack brace",
+      "count": 1
+    },
+    {
+      "task_name": "pack bubble wrap",
+      "count": 1
+    },
+    {
+      "task_name": "pack cable",
+      "count": 1
+    },
+    {
+      "task_name": "pack camera",
+      "count": 1
+    },
+    {
+      "task_name": "pack can",
+      "count": 1
+    },
+    {
+      "task_name": "pack card",
+      "count": 5
+    },
+    {
+      "task_name": "pack chopsticks",
+      "count": 1
+    },
+    {
+      "task_name": "pack cloth",
+      "count": 5
+    },
+    {
+      "task_name": "pack clothing",
+      "count": 5
+    },
+    {
+      "task_name": "pack coffee",
+      "count": 2
+    },
+    {
+      "task_name": "pack corn kernels",
+      "count": 1
+    },
+    {
+      "task_name": "pack cup",
+      "count": 5
+    },
+    {
+      "task_name": "pack cylindrical object",
+      "count": 1
+    },
+    {
+      "task_name": "pack envelope",
+      "count": 3
+    },
+    {
+      "task_name": "pack first aid kit",
+      "count": 1
+    },
+    {
+      "task_name": "pack foam net sleeve",
+      "count": 1
+    },
+    {
+      "task_name": "pack food",
+      "count": 2
+    },
+    {
+      "task_name": "pack fruit",
+      "count": 1
+    },
+    {
+      "task_name": "pack glass",
+      "count": 4
+    },
+    {
+      "task_name": "pack granules",
+      "count": 2
+    },
+    {
+      "task_name": "pack headphone",
+      "count": 1
+    },
+    {
+      "task_name": "pack item",
+      "count": 3
+    },
+    {
+      "task_name": "pack items",
+      "count": 1
+    },
+    {
+      "task_name": "pack label",
+      "count": 3
+    },
+    {
+      "task_name": "pack lanyard",
+      "count": 1
+    },
+    {
+      "task_name": "pack letter",
+      "count": 1
+    },
+    {
+      "task_name": "pack lighter",
+      "count": 1
+    },
+    {
+      "task_name": "pack mesh",
+      "count": 2
+    },
+    {
+      "task_name": "pack nut",
+      "count": 7
+    },
+    {
+      "task_name": "pack orange",
+      "count": 2
+    },
+    {
+      "task_name": "pack package",
+      "count": 2
+    },
+    {
+      "task_name": "pack paper",
+      "count": 12
+    },
+    {
+      "task_name": "pack peanut",
+      "count": 4
+    },
+    {
+      "task_name": "pack piece",
+      "count": 1
+    },
+    {
+      "task_name": "pack product",
+      "count": 1
+    },
+    {
+      "task_name": "pack puzzle",
+      "count": 2
+    },
+    {
+      "task_name": "pack rope",
+      "count": 6
+    },
+    {
+      "task_name": "pack round object",
+      "count": 1
+    },
+    {
+      "task_name": "pack schoolbag",
+      "count": 1
+    },
+    {
+      "task_name": "pack seed",
+      "count": 1
+    },
+    {
+      "task_name": "pack shower cap",
+      "count": 1
+    },
+    {
+      "task_name": "pack shuttlecock",
+      "count": 1
+    },
+    {
+      "task_name": "pack sign",
+      "count": 3
+    },
+    {
+      "task_name": "pack sports gear",
+      "count": 1
+    },
+    {
+      "task_name": "pack stand",
+      "count": 1
+    },
+    {
+      "task_name": "pack strap",
+      "count": 3
+    },
+    {
+      "task_name": "pack strip",
+      "count": 1
+    },
+    {
+      "task_name": "pack tag",
+      "count": 1
+    },
+    {
+      "task_name": "pack tissue",
+      "count": 1
+    },
+    {
+      "task_name": "pack toiletry",
+      "count": 1
+    },
+    {
+      "task_name": "pack toy",
+      "count": 1
+    },
+    {
+      "task_name": "pack tube",
+      "count": 1
+    },
+    {
+      "task_name": "pack wristband",
+      "count": 3
+    },
+    {
+      "task_name": "peel egg",
+      "count": 4
+    },
+    {
+      "task_name": "peel garlic",
+      "count": 11
+    },
+    {
+      "task_name": "peel onion",
+      "count": 2
+    },
+    {
+      "task_name": "peel orange",
+      "count": 1
+    },
+    {
+      "task_name": "plug charger",
+      "count": 1
+    },
+    {
+      "task_name": "pour bottle",
+      "count": 4
+    },
+    {
+      "task_name": "pour bowl",
+      "count": 1
+    },
+    {
+      "task_name": "pour cleaner",
+      "count": 1
+    },
+    {
+      "task_name": "pour cup",
+      "count": 12
+    },
+    {
+      "task_name": "pour drink",
+      "count": 1
+    },
+    {
+      "task_name": "pour juice",
+      "count": 5
+    },
+    {
+      "task_name": "pour liquid",
+      "count": 4
+    },
+    {
+      "task_name": "pour milk",
+      "count": 1
+    },
+    {
+      "task_name": "pour powder",
+      "count": 2
+    },
+    {
+      "task_name": "pour snack",
+      "count": 1
+    },
+    {
+      "task_name": "pour tea",
+      "count": 2
+    },
+    {
+      "task_name": "pour tea bag",
+      "count": 1
+    },
+    {
+      "task_name": "punch paper",
+      "count": 9
+    },
+    {
+      "task_name": "rearrange beverage container",
+      "count": 1
+    },
+    {
+      "task_name": "reassemble barbell",
+      "count": 1
+    },
+    {
+      "task_name": "reassemble computer host",
+      "count": 1
+    },
+    {
+      "task_name": "reassemble pen",
+      "count": 2
+    },
+    {
+      "task_name": "remove beverage",
+      "count": 1
+    },
+    {
+      "task_name": "remove bottle",
+      "count": 2
+    },
+    {
+      "task_name": "remove bread",
+      "count": 1
+    },
+    {
+      "task_name": "remove hair",
+      "count": 1
+    },
+    {
+      "task_name": "remove jelly",
+      "count": 1
+    },
+    {
+      "task_name": "remove label",
+      "count": 24
+    },
+    {
+      "task_name": "remove nut",
+      "count": 1
+    },
+    {
+      "task_name": "remove snack",
+      "count": 1
+    },
+    {
+      "task_name": "remove suitcase",
+      "count": 1
+    },
+    {
+      "task_name": "remove tape",
+      "count": 2
+    },
+    {
+      "task_name": "remove weight plate",
+      "count": 5
+    },
+    {
+      "task_name": "replace bag",
+      "count": 5
+    },
+    {
+      "task_name": "replace battery",
+      "count": 14
+    },
+    {
+      "task_name": "replace bulb",
+      "count": 1
+    },
+    {
+      "task_name": "replace ink",
+      "count": 1
+    },
+    {
+      "task_name": "replace mat",
+      "count": 1
+    },
+    {
+      "task_name": "replace paper",
+      "count": 1
+    },
+    {
+      "task_name": "replace picture",
+      "count": 2
+    },
+    {
+      "task_name": "replace refill",
+      "count": 1
+    },
+    {
+      "task_name": "replace shoelace",
+      "count": 1
+    },
+    {
+      "task_name": "replace tape",
+      "count": 3
+    },
+    {
+      "task_name": "replace tissue",
+      "count": 2
+    },
+    {
+      "task_name": "replace wheel",
+      "count": 1
+    },
+    {
+      "task_name": "rinse clip",
+      "count": 1
+    },
+    {
+      "task_name": "rinse cup",
+      "count": 1
+    },
+    {
+      "task_name": "rinse filter",
+      "count": 1
+    },
+    {
+      "task_name": "rinse tong",
+      "count": 1
+    },
+    {
+      "task_name": "scan box",
+      "count": 13
+    },
+    {
+      "task_name": "scan label",
+      "count": 4
+    },
+    {
+      "task_name": "scan package",
+      "count": 14
+    },
+    {
+      "task_name": "scoop almond",
+      "count": 1
+    },
+    {
+      "task_name": "scoop candy",
+      "count": 3
+    },
+    {
+      "task_name": "scoop ice",
+      "count": 1
+    },
+    {
+      "task_name": "scoop powder",
+      "count": 1
+    },
+    {
+      "task_name": "seal bag",
+      "count": 1
+    },
+    {
+      "task_name": "seal box",
+      "count": 41
+    },
+    {
+      "task_name": "seal cardboard",
+      "count": 10
+    },
+    {
+      "task_name": "seal envelope",
+      "count": 1
+    },
+    {
+      "task_name": "secure bag",
+      "count": 1
+    },
+    {
+      "task_name": "secure box",
+      "count": 1
+    },
+    {
+      "task_name": "secure rope",
+      "count": 1
+    },
+    {
+      "task_name": "separate bowl",
+      "count": 1
+    },
+    {
+      "task_name": "separate snack",
+      "count": 1
+    },
+    {
+      "task_name": "sew clothes",
+      "count": 1
+    },
+    {
+      "task_name": "sew clothing",
+      "count": 1
+    },
+    {
+      "task_name": "sew pants",
+      "count": 1
+    },
+    {
+      "task_name": "sew shirt",
+      "count": 1
+    },
+    {
+      "task_name": "slice cucumber",
+      "count": 1
+    },
+    {
+      "task_name": "slice ginger",
+      "count": 1
+    },
+    {
+      "task_name": "slice sausage",
+      "count": 1
+    },
+    {
+      "task_name": "slice tomato",
+      "count": 1
+    },
+    {
+      "task_name": "slice vegetable",
+      "count": 1
+    },
+    {
+      "task_name": "sort bag",
+      "count": 1
+    },
+    {
+      "task_name": "sort bean",
+      "count": 1
+    },
+    {
+      "task_name": "sort bottle",
+      "count": 7
+    },
+    {
+      "task_name": "sort box",
+      "count": 14
+    },
+    {
+      "task_name": "sort cable",
+      "count": 1
+    },
+    {
+      "task_name": "sort card",
+      "count": 2
+    },
+    {
+      "task_name": "sort cardboard box",
+      "count": 1
+    },
+    {
+      "task_name": "sort circuit board",
+      "count": 1
+    },
+    {
+      "task_name": "sort clip",
+      "count": 1
+    },
+    {
+      "task_name": "sort clothing",
+      "count": 1
+    },
+    {
+      "task_name": "sort cream",
+      "count": 1
+    },
+    {
+      "task_name": "sort cup",
+      "count": 1
+    },
+    {
+      "task_name": "sort cutlery",
+      "count": 11
+    },
+    {
+      "task_name": "sort document",
+      "count": 2
+    },
+    {
+      "task_name": "sort folder",
+      "count": 2
+    },
+    {
+      "task_name": "sort game component",
+      "count": 1
+    },
+    {
+      "task_name": "sort item",
+      "count": 5
+    },
+    {
+      "task_name": "sort jelly",
+      "count": 1
+    },
+    {
+      "task_name": "sort label",
+      "count": 1
+    },
+    {
+      "task_name": "sort lid",
+      "count": 1
+    },
+    {
+      "task_name": "sort lighter",
+      "count": 5
+    },
+    {
+      "task_name": "sort office supply",
+      "count": 1
+    },
+    {
+      "task_name": "sort package",
+      "count": 23
+    },
+    {
+      "task_name": "sort paper",
+      "count": 7
+    },
+    {
+      "task_name": "sort paperclip",
+      "count": 4
+    },
+    {
+      "task_name": "sort pen",
+      "count": 2
+    },
+    {
+      "task_name": "sort raw material",
+      "count": 1
+    },
+    {
+      "task_name": "sort recyclable",
+      "count": 2
+    },
+    {
+      "task_name": "sort refill",
+      "count": 3
+    },
+    {
+      "task_name": "sort ring",
+      "count": 1
+    },
+    {
+      "task_name": "sort snack",
+      "count": 4
+    },
+    {
+      "task_name": "sort sock",
+      "count": 1
+    },
+    {
+      "task_name": "sort sports equipment",
+      "count": 8
+    },
+    {
+      "task_name": "sort stationery",
+      "count": 5
+    },
+    {
+      "task_name": "sort strip",
+      "count": 1
+    },
+    {
+      "task_name": "sort tableware",
+      "count": 4
+    },
+    {
+      "task_name": "sort toiletry",
+      "count": 2
+    },
+    {
+      "task_name": "sort utensil",
+      "count": 1
+    },
+    {
+      "task_name": "stack bag",
+      "count": 2
+    },
+    {
+      "task_name": "stack basket",
+      "count": 3
+    },
+    {
+      "task_name": "stack blanket",
+      "count": 2
+    },
+    {
+      "task_name": "stack block",
+      "count": 1
+    },
+    {
+      "task_name": "stack book",
+      "count": 1
+    },
+    {
+      "task_name": "stack bowl",
+      "count": 2
+    },
+    {
+      "task_name": "stack box",
+      "count": 40
+    },
+    {
+      "task_name": "stack card",
+      "count": 1
+    },
+    {
+      "task_name": "stack container",
+      "count": 1
+    },
+    {
+      "task_name": "stack cup",
+      "count": 18
+    },
+    {
+      "task_name": "stack envelope",
+      "count": 2
+    },
+    {
+      "task_name": "stack garment",
+      "count": 1
+    },
+    {
+      "task_name": "stack item",
+      "count": 1
+    },
+    {
+      "task_name": "stack lid",
+      "count": 3
+    },
+    {
+      "task_name": "stack package",
+      "count": 6
+    },
+    {
+      "task_name": "stack paper",
+      "count": 18
+    },
+    {
+      "task_name": "stack plate",
+      "count": 1
+    },
+    {
+      "task_name": "stack ruler",
+      "count": 2
+    },
+    {
+      "task_name": "stack towel",
+      "count": 4
+    },
+    {
+      "task_name": "staple paper",
+      "count": 22
+    },
+    {
+      "task_name": "stick card",
+      "count": 1
+    },
+    {
+      "task_name": "stick label",
+      "count": 95
+    },
+    {
+      "task_name": "stick paper",
+      "count": 3
+    },
+    {
+      "task_name": "stick photo",
+      "count": 1
+    },
+    {
+      "task_name": "stick stamp",
+      "count": 1
+    },
+    {
+      "task_name": "stick sticker",
+      "count": 8
+    },
+    {
+      "task_name": "stick tag",
+      "count": 1
+    },
+    {
+      "task_name": "stick tape",
+      "count": 5
+    },
+    {
+      "task_name": "stir egg",
+      "count": 1
+    },
+    {
+      "task_name": "stir potato",
+      "count": 1
+    },
+    {
+      "task_name": "sweep paper",
+      "count": 5
+    },
+    {
+      "task_name": "sweep sofa",
+      "count": 1
+    },
+    {
+      "task_name": "tear label",
+      "count": 5
+    },
+    {
+      "task_name": "tear tape",
+      "count": 1
+    },
+    {
+      "task_name": "thread box",
+      "count": 1
+    },
+    {
+      "task_name": "thread fastener",
+      "count": 1
+    },
+    {
+      "task_name": "thread rope",
+      "count": 1
+    },
+    {
+      "task_name": "thread shoelace",
+      "count": 3
+    },
+    {
+      "task_name": "thread whistle",
+      "count": 1
+    },
+    {
+      "task_name": "thread wire",
+      "count": 1
+    },
+    {
+      "task_name": "throw trash",
+      "count": 2
+    },
+    {
+      "task_name": "tie bag",
+      "count": 2
+    },
+    {
+      "task_name": "tighten bolt",
+      "count": 1
+    },
+    {
+      "task_name": "tighten lid",
+      "count": 1
+    },
+    {
+      "task_name": "trim cloth",
+      "count": 2
+    },
+    {
+      "task_name": "trim part",
+      "count": 1
+    },
+    {
+      "task_name": "trim piece",
+      "count": 1
+    },
+    {
+      "task_name": "trim towel",
+      "count": 1
+    },
+    {
+      "task_name": "unwrap box",
+      "count": 1
+    },
+    {
+      "task_name": "wash bin",
+      "count": 1
+    },
+    {
+      "task_name": "wash clip",
+      "count": 1
+    },
+    {
+      "task_name": "wash container",
+      "count": 1
+    },
+    {
+      "task_name": "wash cup",
+      "count": 8
+    },
+    {
+      "task_name": "wash sponge",
+      "count": 1
+    },
+    {
+      "task_name": "wash spoon",
+      "count": 1
+    },
+    {
+      "task_name": "wash towel",
+      "count": 1
+    },
+    {
+      "task_name": "wind cable",
+      "count": 4
+    },
+    {
+      "task_name": "wipe ashtray",
+      "count": 3
+    },
+    {
+      "task_name": "wipe bar counter",
+      "count": 1
+    },
+    {
+      "task_name": "wipe baseboard",
+      "count": 1
+    },
+    {
+      "task_name": "wipe bathtub",
+      "count": 1
+    },
+    {
+      "task_name": "wipe bench",
+      "count": 7
+    },
+    {
+      "task_name": "wipe bike",
+      "count": 1
+    },
+    {
+      "task_name": "wipe bin",
+      "count": 1
+    },
+    {
+      "task_name": "wipe board",
+      "count": 7
+    },
+    {
+      "task_name": "wipe box",
+      "count": 3
+    },
+    {
+      "task_name": "wipe cabinet",
+      "count": 6
+    },
+    {
+      "task_name": "wipe cart",
+      "count": 1
+    },
+    {
+      "task_name": "wipe chair",
+      "count": 7
+    },
+    {
+      "task_name": "wipe cloth",
+      "count": 12
+    },
+    {
+      "task_name": "wipe computer",
+      "count": 1
+    },
+    {
+      "task_name": "wipe container",
+      "count": 2
+    },
+    {
+      "task_name": "wipe counter",
+      "count": 25
+    },
+    {
+      "task_name": "wipe countertop",
+      "count": 4
+    },
+    {
+      "task_name": "wipe cup",
+      "count": 11
+    },
+    {
+      "task_name": "wipe cylinder",
+      "count": 1
+    },
+    {
+      "task_name": "wipe desk",
+      "count": 5
+    },
+    {
+      "task_name": "wipe desktop",
+      "count": 1
+    },
+    {
+      "task_name": "wipe dishware",
+      "count": 1
+    },
+    {
+      "task_name": "wipe door",
+      "count": 6
+    },
+    {
+      "task_name": "wipe drawer",
+      "count": 1
+    },
+    {
+      "task_name": "wipe dresser",
+      "count": 2
+    },
+    {
+      "task_name": "wipe dumbbell",
+      "count": 5
+    },
+    {
+      "task_name": "wipe equipment",
+      "count": 10
+    },
+    {
+      "task_name": "wipe fitness chair",
+      "count": 1
+    },
+    {
+      "task_name": "wipe fitness equipment",
+      "count": 1
+    },
+    {
+      "task_name": "wipe floor",
+      "count": 4
+    },
+    {
+      "task_name": "wipe furniture",
+      "count": 1
+    },
+    {
+      "task_name": "wipe glasses",
+      "count": 2
+    },
+    {
+      "task_name": "wipe handle",
+      "count": 18
+    },
+    {
+      "task_name": "wipe item",
+      "count": 1
+    },
+    {
+      "task_name": "wipe kettle",
+      "count": 6
+    },
+    {
+      "task_name": "wipe kettlebell",
+      "count": 1
+    },
+    {
+      "task_name": "wipe keyboard",
+      "count": 2
+    },
+    {
+      "task_name": "wipe lipstick",
+      "count": 1
+    },
+    {
+      "task_name": "wipe locker",
+      "count": 1
+    },
+    {
+      "task_name": "wipe machine",
+      "count": 3
+    },
+    {
+      "task_name": "wipe mirror",
+      "count": 1
+    },
+    {
+      "task_name": "wipe mop",
+      "count": 1
+    },
+    {
+      "task_name": "wipe nightstand",
+      "count": 4
+    },
+    {
+      "task_name": "wipe paper",
+      "count": 4
+    },
+    {
+      "task_name": "wipe plate",
+      "count": 3
+    },
+    {
+      "task_name": "wipe railing",
+      "count": 1
+    },
+    {
+      "task_name": "wipe refrigerator",
+      "count": 1
+    },
+    {
+      "task_name": "wipe scissors",
+      "count": 8
+    },
+    {
+      "task_name": "wipe seat",
+      "count": 3
+    },
+    {
+      "task_name": "wipe shelf",
+      "count": 5
+    },
+    {
+      "task_name": "wipe shoe",
+      "count": 1
+    },
+    {
+      "task_name": "wipe sink",
+      "count": 15
+    },
+    {
+      "task_name": "wipe soap dish",
+      "count": 1
+    },
+    {
+      "task_name": "wipe stove",
+      "count": 3
+    },
+    {
+      "task_name": "wipe surface",
+      "count": 3
+    },
+    {
+      "task_name": "wipe table",
+      "count": 52
+    },
+    {
+      "task_name": "wipe tile",
+      "count": 1
+    },
+    {
+      "task_name": "wipe tray",
+      "count": 7
+    },
+    {
+      "task_name": "wipe treadmill",
+      "count": 1
+    },
+    {
+      "task_name": "wipe washing machine",
+      "count": 2
+    },
+    {
+      "task_name": "wipe window",
+      "count": 1
+    },
+    {
+      "task_name": "wrap bowl",
+      "count": 3
+    },
+    {
+      "task_name": "wrap box",
+      "count": 4
+    },
+    {
+      "task_name": "wrap cable",
+      "count": 1
+    },
+    {
+      "task_name": "wrap cardboard",
+      "count": 1
+    },
+    {
+      "task_name": "wrap glass",
+      "count": 1
+    },
+    {
+      "task_name": "wrap item",
+      "count": 2
+    },
+    {
+      "task_name": "wrap jump rope",
+      "count": 1
+    },
+    {
+      "task_name": "wrap rope",
+      "count": 6
+    },
+    {
+      "task_name": "wrap whistle",
+      "count": 1
+    },
+    {
+      "task_name": "write paper",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "classes": {
+    "object_cleaning": {"zh": "物品清洁", "definition": "Wash, rinse, scrub or wipe inanimate objects and fixtures: dishes, textiles, tools, tables, counters, sinks, shelves, appliances. Not human hygiene or floor/room cleanup."},
+    "environment_cleaning": {"zh": "环境清洁", "definition": "Sweep, mop or vacuum floors, collect/dispose of trash, clean an overall room or work area. A small trash-removal step before wiping a table stays object_cleaning."},
+    "object_organizing": {"zh": "物品整理收纳", "definition": "Sort, arrange, store, stack, fold, hang, coil or untangle items for organization. Includes clothes, documents, inventory and personal items; not packaging products for shipment."},
+    "object_packaging": {"zh": "物品包装拆包", "definition": "Pack/unpack goods, assemble packaging around goods, seal boxes/bags or wrap packages. Folding an empty box to make packaging belongs here."},
+    "object_labeling": {"zh": "物品标识贴标", "definition": "Apply/remove identification labels, shipping labels, price tags or markings. Scanning labels belongs to object_inspection."},
+    "object_transport": {"zh": "物品搬运装卸", "definition": "Carry, transfer, load or unload goods between locations. Small picking/placing to sort/store items stays object_organizing."},
+    "object_assembly": {"zh": "物品装配拆装", "definition": "Assemble, disassemble, install or detach product parts or components. Packaging construction stays object_packaging; repairing an existing device stays object_maintenance."},
+    "object_maintenance": {"zh": "物品维护保养", "definition": "Repair, maintain, replace batteries/consumables, charge devices, restore or service equipment. Cosmetic maintenance of people belongs to personal-care classes."},
+    "object_inspection": {"zh": "物品检查核验", "definition": "Inspect, measure, count, test or scan goods as the principal goal, including barcode scanning."},
+    "object_processing": {"zh": "物品加工制作", "definition": "Modify materials or make crafts by cutting, sewing, stapling, binding, punching, threading or shaping. Not food processing, hairstyling or packaging."},
+    "object_filling": {"zh": "物品分装补充", "definition": "Fill, pour, dispense or replenish nonfood materials into containers, e.g. soap or cleaning liquid. Applying products to people is personal care; food/drink portioning is food_preparation."},
+    "object_operation": {"zh": "设备操作设置", "definition": "Operate, switch, connect or configure a device as the main goal without a more specific activity. Do not classify food cooking or hair drying here just because an appliance is used."},
+    "food_preparation": {"zh": "食品饮品制作分装", "definition": "Prepare, cut, peel, cook, heat, portion, plate or serve food/drinks, including brewing tea/coffee. Washing dishes or cleaning kitchen counters stays object_cleaning."},
+    "hair_styling": {"zh": "美发造型", "definition": "Cut, trim, dye, perm, straighten, braid, curl, section, style or attach hair extensions, on customers or mannequin/wig hair. Mixing dye for hair coloring also belongs here."},
+    "hair_care": {"zh": "头发清洁护理", "definition": "Wash, rinse, condition, treat, brush or dry hair for basic care. Drying as a support step in a full haircut does not override hair_styling. Organizing combs/rods is object_organizing."},
+    "nail_care": {"zh": "美甲及指甲护理", "definition": "Trim, file, polish, paint, decorate, clean or extend human nails. Organizing nail-polish bottles is object_organizing."},
+    "skin_care": {"zh": "皮肤清洁护理", "definition": "Cleanse skin/face, apply skincare products, masks, lotions or skin-treatment devices. Massage as a principal goal is body_care, decorative cosmetics is makeup_application."},
+    "makeup_application": {"zh": "化妆修饰", "definition": "Apply/remove decorative makeup, foundation, eye shadow, eyeliner, lipstick or false eyelashes. Skincare lotions/serums without decorative makeup stay skin_care."},
+    "body_care": {"zh": "身体按摩理疗", "definition": "Massage any body region, perform moxibustion, cupping, scraping or physical body treatment, including facial massage as a principal purpose."},
+    "writing_drawing": {"zh": "书写绘画", "definition": "Write, draw, record, complete forms or create written/visual marks as the main goal. Sticking identification labels is object_labeling."},
+    "sports_recreation": {"zh": "运动游戏", "definition": "Exercise, play sports, games or toys as the main goal. Tidying sports/game equipment is object_organizing."},
+    "other": {"zh": "其他待复核", "definition": "Insufficient evidence, no suitable category, or unrelated equally important goals spanning different categories. Multiple objects within ONE broad category should NOT become other."}
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "path": "batch_0000017/3c5e1d46e5ac519394720cf0f2ff539f72a7f015156517ccb5ddef7dc2b21a73/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts the badminton net over the upright posts and tightens the net ropes to complete the installation of the net.",
+    "original_description": "A sports area for setting up a badminton net on posts",
+    "reason": "User location correction: public_space/badminton_court -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/9eaed6fb20df5ac5d124de8c3e6062436a8db250fc3d476526fc6e15f8547e7b/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person picks up the shuttlecocks scattered on the court into a tube and puts it back on the chair to complete the organization.",
+    "original_description": "A badminton court area for collecting and organizing shuttlecocks",
+    "reason": "User location correction: public_space/badminton_court -> public_space/indoor_sports_venue"
+  }
+]

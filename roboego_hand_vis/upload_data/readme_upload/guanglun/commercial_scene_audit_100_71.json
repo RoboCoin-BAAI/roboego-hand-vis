@@ -1,0 +1,129 @@
+{
+  "baseline_commercial_areas": [
+    "retail_store",
+    "restaurant",
+    "beverage_shop",
+    "logistics_facility",
+    "hotel",
+    "hair_salon",
+    "beauty_salon",
+    "entertainment_venue",
+    "pet_shop",
+    "performance_venue",
+    "massage_room"
+  ],
+  "started_at_utc": "2026-11-18T07:58:23.156971+00:00",
+  "datasets": [
+    {
+      "dataset": "guanglun",
+      "root": "/share/project/liuyou/humancoin/data/guanglun_depth",
+      "batch_start": 1,
+      "batch_end": 100,
+      "samples": 9181,
+      "commercial_samples": 2618,
+      "area_counts": {
+        "beauty_salon": 18,
+        "beverage_shop": 183,
+        "entertainment_venue": 9,
+        "hotel": 130,
+        "logistics_facility": 1153,
+        "massage_room": 5,
+        "restaurant": 165,
+        "retail_store": 953,
+        "shelving_area": 2
+      },
+      "errors": [],
+      "missing_batches": [],
+      "empty_batches": [],
+      "outside_baseline_areas": {
+        "shelving_area": [
+          {
+            "path": "batch_0000044/9abb1a7b12b4c1cff582236696152cf08b65d830eeccddd7ee02627af84356dc/annotation/episode_000000_structured.json",
+            "task_name": "Organize and store masks on shelves",
+            "task_description": "The person organizes the mask into the box and moves it to the designated shelf to complete the item placement.",
+            "original_description": "A storage area for organizing and shelving mask packages"
+          },
+          {
+            "path": "batch_0000065/b2a299ac9c912f233620d63a6114d7fc63cfe3750556929cbd7f75ae2f6ad443/annotation/episode_000000_structured.json",
+            "task_name": "Replace shelf column sticker",
+            "task_description": "The person replaces the sticker on the shelf upright to complete the mark update.",
+            "original_description": "A storage area for updating shelf labels"
+          }
+        ]
+      },
+      "verified_new_commercial_areas": [],
+      "legacy_residual_areas": [
+        "shelving_area"
+      ],
+      "current_area_counts_after_corrections": {
+        "beauty_salon": 18,
+        "beverage_shop": 183,
+        "entertainment_venue": 9,
+        "hotel": 130,
+        "logistics_facility": 1155,
+        "restaurant": 165,
+        "retail_store": 953
+      },
+      "current_commercial_samples_after_corrections": 2613
+    },
+    {
+      "dataset": "jianzhi",
+      "root": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish",
+      "batch_start": 1,
+      "batch_end": 71,
+      "samples": 7078,
+      "commercial_samples": 6021,
+      "area_counts": {
+        "beauty_salon": 1718,
+        "beverage_shop": 675,
+        "entertainment_venue": 1,
+        "hair_salon": 1883,
+        "hotel": 2,
+        "logistics_facility": 40,
+        "massage_room": 246,
+        "pet_shop": 1,
+        "restaurant": 87,
+        "retail_store": 1368
+      },
+      "errors": [],
+      "missing_batches": [],
+      "empty_batches": [],
+      "outside_baseline_areas": {},
+      "verified_new_commercial_areas": [],
+      "legacy_residual_areas": [],
+      "current_area_counts_after_corrections": {
+        "beauty_salon": 1718,
+        "beverage_shop": 675,
+        "entertainment_venue": 1,
+        "hair_salon": 1883,
+        "hotel": 2,
+        "logistics_facility": 40,
+        "pet_shop": 1,
+        "restaurant": 87,
+        "retail_store": 1368
+      },
+      "current_commercial_samples_after_corrections": 5775
+    }
+  ],
+  "finished_at_utc": "2026-11-18T08:01:25.712197+00:00",
+  "verification_note": "Both out-of-baseline shelving_area labels are retained legacy labels. Cached scene responses use invalid industrial_production/storage_room and have no completed result.json; not newly accepted categories.",
+  "latest_saved_run_errors": {
+    "guanglun_scene_reports_40_60": 5,
+    "jianzhi_scene_reclassification_reports": 12
+  },
+  "massage_to_conference_correction": {
+    "report": "scene_massage_to_conference_report.json",
+    "verified": 251,
+    "counts": {
+      "guanglun": {
+        "scanned": 9181,
+        "targets": 5
+      },
+      "jianzhi": {
+        "scanned": 7078,
+        "targets": 246
+      }
+    },
+    "completed_at_utc": "2026-11-18T08:10:19.903084+00:00"
+  }
+}

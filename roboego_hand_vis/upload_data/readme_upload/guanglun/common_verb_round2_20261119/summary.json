@@ -1,0 +1,25 @@
+{
+  "sessions": 16259,
+  "annotations": 16259,
+  "changed": 2218,
+  "errors": 0,
+  "backup_created": false,
+  "scope": [
+    "common_task_name"
+  ],
+  "common_types": 87,
+  "datasets": {
+    "jianzhi": {
+      "annotations": 7078,
+      "changed": 501,
+      "errors": 0,
+      "common_types": 64
+    },
+    "guanglun": {
+      "annotations": 9181,
+      "changed": 1717,
+      "errors": 0,
+      "common_types": 61
+    }
+  }
+}

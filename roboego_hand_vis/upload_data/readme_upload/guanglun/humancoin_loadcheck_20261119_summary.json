@@ -1,0 +1,16 @@
+{
+  "samples": 10,
+  "passed": 10,
+  "errors": 0,
+  "humancoin_version": "0.1.1",
+  "datasets": {
+    "jianzhi": {
+      "samples": 5,
+      "passed": 5
+    },
+    "guanglun": {
+      "samples": 5,
+      "passed": 5
+    }
+  }
+}

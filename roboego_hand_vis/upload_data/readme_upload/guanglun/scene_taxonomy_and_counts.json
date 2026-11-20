@@ -1,0 +1,341 @@
+{
+  "source_excel": "D:\\data\\annotation_statistics\\理想\\HumanCOIN_Sence.xlsx",
+  "category_names": {
+    "家庭": "household",
+    "工业生产": "industrial_production",
+    "商业服务": "commercial_service",
+    "专业工作": "professional_work",
+    "公共场所": "public_space",
+    "其他": "other"
+  },
+  "official_areas": [
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "kitchen",
+      "area_zh": "厨房"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "living_room",
+      "area_zh": "客厅"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "dining_room",
+      "area_zh": "餐厅"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "bedroom",
+      "area_zh": "卧室"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "study_room",
+      "area_zh": "书房"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "bathroom",
+      "area_zh": "卫生间"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "storage_room",
+      "area_zh": "储物间"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "laundry_area",
+      "area_zh": "洗衣区"
+    },
+    {
+      "category": "household",
+      "category_zh": "家庭",
+      "area": "balcony",
+      "area_zh": "阳台"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "factory_workshop",
+      "area_zh": "工厂车间"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "workroom",
+      "area_zh": "工作间"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "industrial_warehouse",
+      "area_zh": "工业仓库"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "equipment_room",
+      "area_zh": "设备机房"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "testing_lab",
+      "area_zh": "实验测试室"
+    },
+    {
+      "category": "industrial_production",
+      "category_zh": "工业生产",
+      "area": "construction_site",
+      "area_zh": "建筑工地"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "retail_store",
+      "area_zh": "超市 / 零售店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "restaurant",
+      "area_zh": "餐饮店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "beverage_shop",
+      "area_zh": "饮品店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "logistics_facility",
+      "area_zh": "仓储物流场所"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "hotel",
+      "area_zh": "酒店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "hair_salon",
+      "area_zh": "理发店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "beauty_salon",
+      "area_zh": "美容店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "entertainment_venue",
+      "area_zh": "游戏娱乐场所"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "pet_shop",
+      "area_zh": "宠物店"
+    },
+    {
+      "category": "commercial_service",
+      "category_zh": "商业服务",
+      "area": "performance_venue",
+      "area_zh": "演出场馆"
+    },
+    {
+      "category": "professional_work",
+      "category_zh": "专业工作",
+      "area": "office",
+      "area_zh": "办公室"
+    },
+    {
+      "category": "professional_work",
+      "category_zh": "专业工作",
+      "area": "classroom",
+      "area_zh": "教室"
+    },
+    {
+      "category": "professional_work",
+      "category_zh": "专业工作",
+      "area": "laboratory",
+      "area_zh": "实验室"
+    },
+    {
+      "category": "professional_work",
+      "category_zh": "专业工作",
+      "area": "healthcare_facility",
+      "area_zh": "医疗护理场所"
+    },
+    {
+      "category": "professional_work",
+      "category_zh": "专业工作",
+      "area": "conference_center",
+      "area_zh": "会议中心"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "park_garden",
+      "area_zh": "公园 / 花园"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "street",
+      "area_zh": "城市街道"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "public_facility",
+      "area_zh": "公共设施场所"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "transportation",
+      "area_zh": "交通场所"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "farm",
+      "area_zh": "农场"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "sports_area",
+      "area_zh": "户外运动场地"
+    },
+    {
+      "category": "public_space",
+      "category_zh": "公共场所",
+      "area": "indoor_sports_venue",
+      "area_zh": "室内体育馆"
+    },
+    {
+      "category": "other",
+      "category_zh": "其他",
+      "area": "other",
+      "area_zh": "其他 / 待识别"
+    }
+  ],
+  "added_areas": [],
+  "samples": 3541,
+  "other_samples": 34,
+  "counts": [
+    {
+      "category": "commercial_service",
+      "area": "beverage_shop",
+      "samples": 2
+    },
+    {
+      "category": "commercial_service",
+      "area": "logistics_facility",
+      "samples": 514
+    },
+    {
+      "category": "commercial_service",
+      "area": "restaurant",
+      "samples": 4
+    },
+    {
+      "category": "commercial_service",
+      "area": "retail_store",
+      "samples": 384
+    },
+    {
+      "category": "household",
+      "area": "balcony",
+      "samples": 2
+    },
+    {
+      "category": "household",
+      "area": "bathroom",
+      "samples": 119
+    },
+    {
+      "category": "household",
+      "area": "bedroom",
+      "samples": 167
+    },
+    {
+      "category": "household",
+      "area": "dining_room",
+      "samples": 67
+    },
+    {
+      "category": "household",
+      "area": "kitchen",
+      "samples": 402
+    },
+    {
+      "category": "household",
+      "area": "laundry_area",
+      "samples": 115
+    },
+    {
+      "category": "household",
+      "area": "living_room",
+      "samples": 394
+    },
+    {
+      "category": "household",
+      "area": "storage_room",
+      "samples": 536
+    },
+    {
+      "category": "household",
+      "area": "study_room",
+      "samples": 113
+    },
+    {
+      "category": "industrial_production",
+      "area": "workroom",
+      "samples": 49
+    },
+    {
+      "category": "other",
+      "area": "other",
+      "samples": 34
+    },
+    {
+      "category": "professional_work",
+      "area": "conference_center",
+      "samples": 7
+    },
+    {
+      "category": "professional_work",
+      "area": "laboratory",
+      "samples": 2
+    },
+    {
+      "category": "professional_work",
+      "area": "office",
+      "samples": 533
+    },
+    {
+      "category": "public_space",
+      "area": "indoor_sports_venue",
+      "samples": 97
+    }
+  ]
+}

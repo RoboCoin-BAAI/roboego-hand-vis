@@ -1,0 +1,1230 @@
+{
+  "model_requests": 0,
+  "records": [
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000005/5f548d01c8063371c16c6d0b7203e4de637f863c064be0b85e46fd915bc16c4f/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "paper",
+          "bin",
+          "box",
+          "vase",
+          "cloth"
+        ],
+        "action_vocabulary": [
+          "move",
+          "pick",
+          "place",
+          "wipe"
+        ],
+        "task_description": "The person cleans the trash on the desktop and wipes the table to complete the cleaning.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 23.0,
+            "arm": null,
+            "text": "Pick up the crumpled paper on the table and throw it into the trash can",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 23.0,
+            "end_s": 33.0,
+            "arm": null,
+            "text": "Move the tissue box and the vase on the table to the side",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 33.0,
+            "end_s": 61.0,
+            "arm": null,
+            "text": "Wipe the table surface with the rag",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "wipe"
+            ]
+          },
+          {
+            "start_s": 61.0,
+            "end_s": 70.0,
+            "arm": null,
+            "text": "Put the vase and the tissue box back to the original position on the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Clean desktop and wipe table",
+      "before_present": true,
+      "after": "wipe table",
+      "decision": {
+        "verb": "wipe",
+        "object_name": "table",
+        "object_indices": [],
+        "reason": "Discarding trash and moving objects are preparation for wiping the table; the table is explicitly the principal cleaning target."
+      },
+      "status": "done",
+      "changed": true,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/04212282393f8314519f3b85d5976d30cb36f33ed115943598d760b3d9d6238b/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "bottle",
+          "marker",
+          "box",
+          "pen holder"
+        ],
+        "action_vocabulary": [
+          "pick"
+        ],
+        "task_description": "The person collects the scattered plastic bottles and markers to complete the organization.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 28.4,
+            "arm": null,
+            "text": "Pick up the plastic bottle on the table and put it into the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 28.4,
+            "end_s": 35.3,
+            "arm": null,
+            "text": "Pick up the plastic bottle on the ground and put it into the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 35.3,
+            "end_s": 43.8,
+            "arm": null,
+            "text": "Pick up the marker on the ground and put it into the pen holder",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Organize scattered plastic bottles and markers",
+      "before_present": true,
+      "after": null,
+      "decision": {
+        "verb": null,
+        "object_name": null,
+        "object_indices": [],
+        "reason": "Multiple distinct principal targets or equally important purposes are explicitly stated; selecting only one object would omit a major part of the episode."
+      },
+      "status": "review",
+      "changed": false,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000008/52e1e2a899c46ff4c5b8281063db26868ad7caf04f795da67480d9868add328f/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "paper",
+          "bin",
+          "box",
+          "chair",
+          "cloth"
+        ],
+        "action_vocabulary": [
+          "move",
+          "pick",
+          "wipe"
+        ],
+        "task_description": "The person cleans the trash on the table and wipes the tabletop to complete the cleaning.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 85.0,
+            "arm": null,
+            "text": "Pick up the crumpled paper on the table and throw it into the trash can",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 85.0,
+            "end_s": 95.0,
+            "arm": null,
+            "text": "Move the colored box on the table to the chair",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 95.0,
+            "end_s": 188.0,
+            "arm": null,
+            "text": "Wipe the surface of the table with a rag",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "wipe"
+            ]
+          },
+          {
+            "start_s": 188.0,
+            "end_s": 196.8,
+            "arm": null,
+            "text": "Move the colored box on the chair back to the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Clean table and organize items",
+      "before_present": true,
+      "after": "wipe table",
+      "decision": {
+        "verb": "wipe",
+        "object_name": "table",
+        "object_indices": [],
+        "reason": "Discarding trash and moving objects are preparation for wiping the table; the table is explicitly the principal cleaning target."
+      },
+      "status": "done",
+      "changed": true,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/29313367e64abcb6cec1328af424dde9c0384e8403a5a5c79863affce647b300/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "paper",
+          "bin",
+          "pen",
+          "container"
+        ],
+        "action_vocabulary": [
+          "pick"
+        ],
+        "task_description": "The person picks up the paper ball on the floor and throws it into the trash can, and collects the scattered pens to put them in the pen holder on the desk to organize the desktop.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 9.0,
+            "arm": null,
+            "text": "Pick up the crumpled paper on the floor and throw it into the trash can",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 9.0,
+            "end_s": 27.0,
+            "arm": null,
+            "text": "Pick up the pen on the floor and put it into the pen holder on the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 27.0,
+            "end_s": 35.6,
+            "arm": null,
+            "text": "Pick up the remaining pen on the floor and put it into the pen holder on the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Clean floor and organize pens",
+      "before_present": true,
+      "after": "organize pen",
+      "decision": {
+        "verb": "organize",
+        "object_name": "pen",
+        "object_indices": [
+          2
+        ],
+        "reason": "Removing one paper ball is preliminary cleanup; collecting scattered pens into their holder is the stated principal organization goal."
+      },
+      "status": "done",
+      "changed": true,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3aa632027fa64b87af91f85581c536ed/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "fan",
+          "cloth",
+          "table",
+          "chair",
+          "floor"
+        ],
+        "action_vocabulary": [
+          "wipe",
+          "wash",
+          "move"
+        ],
+        "task_description": "Wipe the fan, then wipe the tables, chairs and the surrounding floor.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 10.5,
+            "text": "Wipe the fan base",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "fan",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 11.0,
+            "end_s": 18.0,
+            "text": "Wash the rag",
+            "arm": null,
+            "action": [
+              "wash"
+            ],
+            "object": "rag",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 18.5,
+            "end_s": 43.0,
+            "text": "Wipe the fan body",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "fan",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 43.0,
+            "end_s": 51.5,
+            "text": "Wash the rag",
+            "arm": null,
+            "action": [
+              "wash"
+            ],
+            "object": "rag",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 52.0,
+            "end_s": 108.0,
+            "text": "Wipe the first set of tables, chairs and surrounding floor",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "tables",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 108.5,
+            "end_s": 125.0,
+            "text": "Move to another set of tables and chairs and wash the rag",
+            "arm": null,
+            "action": [
+              "move",
+              "wash"
+            ],
+            "object": "rag",
+            "destination": "tables",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 125.5,
+            "end_s": 166.5,
+            "text": "Wipe the second set of tables, chairs and surrounding floor",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "tables",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 167.0,
+            "end_s": 171.5,
+            "text": "Wash the rag",
+            "arm": null,
+            "action": [
+              "wash"
+            ],
+            "object": "rag",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 172.0,
+            "end_s": 178.5,
+            "text": "Touch up the corners of the tables and chairs",
+            "arm": null,
+            "action": [
+              "touch_up"
+            ],
+            "object": "tables",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Wipe fan, tables, chairs and floor",
+      "before_present": true,
+      "after": null,
+      "decision": {
+        "verb": null,
+        "object_name": null,
+        "object_indices": [],
+        "reason": "Multiple distinct principal targets or equally important purposes are explicitly stated; selecting only one object would omit a major part of the episode."
+      },
+      "status": "review",
+      "changed": false,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/776962da20d94fcca577de2650f81abe/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "shelf",
+          "box"
+        ],
+        "action_vocabulary": [
+          "wipe",
+          "arrange",
+          "place"
+        ],
+        "task_description": "Wipe the shelf laminate and product packaging boxes, and arrange the packaging boxes one by one neatly.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 5.0,
+            "text": "Wipe the shelf laminate",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "shelf",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 5.0,
+            "end_s": 17.0,
+            "text": "Wipe the packaging box",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "box",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 17.0,
+            "end_s": 19.5,
+            "text": "Move the packaging box to adjust its position",
+            "arm": null,
+            "action": [
+              "move",
+              "adjust"
+            ],
+            "object": "box",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 19.5,
+            "end_s": 22.0,
+            "text": "Move the packaging box to adjust its position",
+            "arm": null,
+            "action": [
+              "move",
+              "adjust"
+            ],
+            "object": "box",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 22.0,
+            "end_s": 25.0,
+            "text": "Move the packaging box to adjust its position",
+            "arm": null,
+            "action": [
+              "move",
+              "adjust"
+            ],
+            "object": "box",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 25.0,
+            "end_s": 30.0,
+            "text": "Wipe the right area of the shelf laminate",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "shelf",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 30.0,
+            "end_s": 41.5,
+            "text": "Wipe the packaging box and place it on the right side of the shelf",
+            "arm": null,
+            "action": [
+              "wipe",
+              "place"
+            ],
+            "object": "box",
+            "destination": "shelf",
+            "spatial_relation": "right side",
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 41.5,
+            "end_s": 51.0,
+            "text": "Wipe the packaging box and place it on the right side of the shelf",
+            "arm": null,
+            "action": [
+              "wipe",
+              "place"
+            ],
+            "object": "box",
+            "destination": "shelf",
+            "spatial_relation": "right side",
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 51.0,
+            "end_s": 55.0,
+            "text": "Wipe the packaging box",
+            "arm": null,
+            "action": [
+              "wipe"
+            ],
+            "object": "box",
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Wipe shelf and arrange packaging boxes",
+      "before_present": true,
+      "after": null,
+      "decision": {
+        "verb": null,
+        "object_name": null,
+        "object_indices": [],
+        "reason": "Multiple distinct principal targets or equally important purposes are explicitly stated; selecting only one object would omit a major part of the episode."
+      },
+      "status": "review",
+      "changed": false,
+      "classifier": "assistant_manual_review"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/9ff748ec72114776aded2e6957631db4/annotation/episode_000000_structured.json",
+      "source": {
+        "object_names": [
+          "towel",
+          "table",
+          "shelf",
+          "box",
+          "bed"
+        ],
+        "action_vocabulary": [
+          "place",
+          "arrange"
+        ],
+        "task_description": "Store the rolled towels from the table on the shelf, then store the paper boxes from the bed on the shelf.",
+        "original_description": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 6.0,
+            "text": "Place the rolled towel from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 6.0,
+            "end_s": 11.5,
+            "text": "Place the rolled towel from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 11.5,
+            "end_s": 16.0,
+            "text": "Place the rolled towel from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 16.0,
+            "end_s": 22.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 22.0,
+            "end_s": 27.5,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 27.5,
+            "end_s": 33.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 33.0,
+            "end_s": 42.0,
+            "text": "Place the rolled towels from the table onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 42.0,
+            "end_s": 48.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 48.0,
+            "end_s": 53.5,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 53.5,
+            "end_s": 61.5,
+            "text": "Place the rolled towels from the table onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 61.5,
+            "end_s": 67.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 67.0,
+            "end_s": 73.5,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 73.5,
+            "end_s": 81.0,
+            "text": "Place the rolled towels from the table onto the upper and middle shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 81.0,
+            "end_s": 87.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 87.0,
+            "end_s": 93.0,
+            "text": "Place the rolled towels from the table onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 93.0,
+            "end_s": 99.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 99.0,
+            "end_s": 105.0,
+            "text": "Place the rolled towels from the table onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 105.0,
+            "end_s": 112.5,
+            "text": "Place the rolled towels from the table onto the upper and middle shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "towels",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 116.0,
+            "end_s": 127.0,
+            "text": "Place the paper boxes from the bed onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 127.0,
+            "end_s": 135.0,
+            "text": "Place the paper boxes from the bed onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 135.0,
+            "end_s": 142.5,
+            "text": "Place the paper boxes from the bed onto the shelf",
+            "arm": null,
+            "action": [
+              "place"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 142.5,
+            "end_s": 149.5,
+            "text": "Place the paper boxes from the bed onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 149.5,
+            "end_s": 157.5,
+            "text": "Place the paper boxes from the bed onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 157.5,
+            "end_s": 164.5,
+            "text": "Place the paper boxes from the bed onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 164.5,
+            "end_s": 172.0,
+            "text": "Place the paper boxes from the bed onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          },
+          {
+            "start_s": 172.0,
+            "end_s": 179.5,
+            "text": "Place the paper boxes from the bed onto the shelf and arrange them",
+            "arm": null,
+            "action": [
+              "place",
+              "arrange"
+            ],
+            "object": "boxes",
+            "destination": "shelf",
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "notes": "Structured from source text; source is_success=True"
+          }
+        ],
+        "subtasks": null
+      },
+      "before": "Store towels and boxes on shelf",
+      "before_present": true,
+      "after": null,
+      "decision": {
+        "verb": null,
+        "object_name": null,
+        "object_indices": [],
+        "reason": "Multiple distinct principal targets or equally important purposes are explicitly stated; selecting only one object would omit a major part of the episode."
+      },
+      "status": "review",
+      "changed": false,
+      "classifier": "assistant_manual_review"
+    }
+  ]
+}

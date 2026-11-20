@@ -1,0 +1,35 @@
+{
+  "jianzhi": {
+    "samples": 7078,
+    "mapped": 6938,
+    "needs_category": 0,
+    "fine_tasks": 838,
+    "common_tasks_preview": 401,
+    "mapped_common_tasks": 313,
+    "main_31_samples": 6753,
+    "retained_independent_samples": 185,
+    "retained_fine_samples": 140
+  },
+  "guanglun": {
+    "samples": 9181,
+    "mapped": 8543,
+    "needs_category": 0,
+    "fine_tasks": 1272,
+    "common_tasks_preview": 680,
+    "mapped_common_tasks": 387,
+    "main_31_samples": 8286,
+    "retained_independent_samples": 257,
+    "retained_fine_samples": 638
+  },
+  "combined": {
+    "samples": 16259,
+    "mapped": 15481,
+    "needs_category": 0,
+    "fine_tasks": 1888,
+    "common_tasks_preview": 903,
+    "mapped_common_tasks": 536,
+    "main_31_samples": 15039,
+    "retained_independent_samples": 442,
+    "retained_fine_samples": 778
+  }
+}

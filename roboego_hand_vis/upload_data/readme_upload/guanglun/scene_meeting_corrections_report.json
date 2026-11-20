@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "mode": "apply",
+    "total": 6,
+    "checked": 6,
+    "changed": 6,
+    "unchanged": 0,
+    "errors": [],
+    "verified": 6,
+    "only_category_area_changed": true,
+    "report_dir": "/share/project/liuyou/humancoin/data/guanglun_scene_cleaning_20261118/meeting_corrections_v6"
+  },
+  "files": [
+    {
+      "path": "batch_0000001/308fe2417d81a72bd217e90f4ae4292131900285705e3055941a9372e5a3c1d5/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "7a18b54f01de7bd21b7a40044a71bb5bab229196d5062423fafa0e9c8f858af6",
+      "after_sha256": "2262a61e522a9917b00e32b495f81cd2ecdba561fb2c3951677ad37cd18c05fe"
+    },
+    {
+      "path": "batch_0000010/f86e35c08ba47cadc6f617b31500a0723454fd462a9ee0a89a2aef223d7d55c7/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "8cd454b7fc64f5874d3af82ad9cbceebc6d4022f3982c115cee606b0ba2a4284",
+      "after_sha256": "07260c44b1a4ecc1b15bcae72d55c5383d5d7263c3206a99fffe7ab7f0c5014e"
+    },
+    {
+      "path": "batch_0000026/65213fd5854b2d507839f152c1c8125ebf2a7cc62bf387e4de365be6ee01ccae/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "56b686fc4f8d49f53ba0dbabd1a436b15f339334639c106259848547f53d3ffd",
+      "after_sha256": "46268cd1b7d97957337bc294ea59e03761c13355236375d7ec649cb6706a381b"
+    },
+    {
+      "path": "batch_0000026/88b5bdfe0ee7982062cf4093498375715c05522102ad4ac8f9de53814391d9e7/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "15151878d6d25b3e2cbe2f9d1f993fde52c0d7d85959e0cf11abca1a0d0231a1",
+      "after_sha256": "1f0fc0286f10c982dd33dc020b5489c3eef22e606928e3be37fb87fe6b1c1471"
+    },
+    {
+      "path": "batch_0000026/d7e1f4a811d9acafce155e18df2141df0ffb682644521e7009d5e7f1b5d796e5/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "b28a5331372a39c33fc3a007f52b73f41ca2e3b2cb8915ccd9d84b56a3a6ffc3",
+      "after_sha256": "5252acc299d3089e41c6598e66e6f9a32d1329eb8ba01ccfef51200a88658b94"
+    },
+    {
+      "path": "batch_0000031/9aaa69160727aac5336eabfa7cd713bb8767f373ba7aacf8c19dac8019942729/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "49d4e53c00f2a55b2adbbc6003298e12500518c5dd22ccddb9ae80b6f47dd124",
+      "after_sha256": "874f053fbe8129ee958e491e83c67157420d3101d4e2bb4c10e708b7d339a828"
+    }
+  ]
+}

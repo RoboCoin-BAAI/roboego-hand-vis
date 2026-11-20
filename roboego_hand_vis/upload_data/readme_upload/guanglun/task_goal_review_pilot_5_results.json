@@ -1,0 +1,181 @@
+{
+  "catalog": {
+    "organize box": {
+      "definition": "Return or arrange boxes into orderly storage for accessibility.",
+      "includes": [
+        "put game boxes into a cabinet",
+        "return boxes to assigned storage"
+      ],
+      "excludes": [
+        "cleaning is the primary goal",
+        "vertical stacking is the explicit end state"
+      ],
+      "positive": "Return scattered board game boxes to a cabinet.",
+      "negative": "Build a vertical pile of boxes: stack box."
+    },
+    "stack box": {
+      "definition": "Form a vertical pile or explicitly layered stack of boxes.",
+      "includes": [
+        "place boxes on top of other boxes"
+      ],
+      "excludes": [
+        "placing boxes on shelf surfaces without clear vertical stacking"
+      ],
+      "positive": "Place each box on top of the previous box.",
+      "negative": "Place boxes side by side on a shelf: organize box."
+    },
+    "clean box": {
+      "definition": "Remove dirt or dust from box surfaces; box cleanliness is the main result.",
+      "includes": [
+        "wipe several product boxes"
+      ],
+      "excludes": [
+        "wiping is subordinate to a clearly stated stocking goal"
+      ],
+      "positive": "Wipe dust off medicine packages.",
+      "negative": "Briefly wipe boxes while restocking a shelf: inspect the overall goal."
+    },
+    "organize shelf": {
+      "definition": "Make a shelf and its contents orderly through arranging or restocking.",
+      "includes": [
+        "move products back to shelf positions",
+        "wipe locally while arranging shelf contents"
+      ],
+      "excludes": [
+        "surface cleanliness is the primary result",
+        "only storing boxes without shelf-level organization"
+      ],
+      "positive": "Arrange products neatly across shelf positions.",
+      "negative": "Remove dust from an otherwise unchanged shelf: clean shelf."
+    },
+    "clean shelf": {
+      "definition": "Remove dirt or dust from shelf surfaces, temporarily moving products as needed.",
+      "includes": [
+        "remove goods, wipe shelf, return goods"
+      ],
+      "excludes": [
+        "primarily sort or restock products"
+      ],
+      "positive": "Move bottles aside to wipe the shelf and return them.",
+      "negative": "Sort products into shelf positions: organize shelf."
+    },
+    "clean bathroom": {
+      "definition": "Clean multiple bathroom fixtures or surfaces as one bathroom-cleaning goal.",
+      "includes": [
+        "clean sink countertop and mirror in one episode"
+      ],
+      "excludes": [
+        "clean only one isolated object",
+        "organize bathroom supplies"
+      ],
+      "positive": "Wipe the bathroom sink counter and mirror.",
+      "negative": "Store toiletries in a cabinet: not bathroom cleaning."
+    }
+  },
+  "records": [
+    {
+      "dataset": "jianzhi",
+      "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000070/3e57fe08bd6540ecb9e9b87c62c1c34b/annotation/episode_000000_structured.json",
+      "old_task_name": "wipe box",
+      "decision": {
+        "id": 0,
+        "status": "matched",
+        "task_name": "organize shelf",
+        "overall_goal": "Restock and arrange medicine boxes on the shelf after cleaning them.",
+        "expected_result": "Medicine boxes are wiped and placed in their corresponding positions on the shelf.",
+        "evidence": [
+          "Wipe the medicine box in hand and place it in the shopping basket",
+          "take out the medicine boxes from the shopping basket one by one, wipe them and place them in the corresponding positions on the shelf"
+        ],
+        "reason": "The primary goal is to stock the shelf with products. Although wiping is performed, the catalog states that if wiping is subordinate to a clearly stated stocking goal, it falls under 'organize shelf'. The action involves placing items into specific shelf positions ('corresponding positions'), which aligns with making the shelf orderly through restocking.",
+        "alternatives": [
+          "clean box"
+        ],
+        "missing_actions": []
+      }
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000037/fd9bf750b47a47e9bd381aa3bdd7b2e5/annotation/episode_000000_structured.json",
+      "old_task_name": "stack box",
+      "decision": {
+        "id": 1,
+        "status": "matched",
+        "task_name": "organize shelf",
+        "overall_goal": "Arrange packaging boxes neatly on the shelf by type.",
+        "expected_result": "Boxes are taken from a carton and aligned neatly on the shelf.",
+        "evidence": [
+          "stack the packaging boxes from the carton onto the shelf one by one, and arrange them neatly by type",
+          "place them on the shelf and align them"
+        ],
+        "reason": "The task involves placing boxes on a shelf and aligning them. The catalog explicitly excludes 'placing boxes on shelf surfaces without clear vertical stacking' from 'stack box'. Since the boxes are arranged side-by-side or in layers but the emphasis is on alignment and organization by type on a shelf surface rather than building a vertical pile, 'organize shelf' is the correct classification. The description mentions 'stack' but the subtasks describe 'place' and 'align', fitting the negative example for stack box.",
+        "alternatives": [
+          "stack box"
+        ],
+        "missing_actions": []
+      }
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000064/f8ce4e045f5848e788fb4f38f0e1f265/annotation/episode_000000_structured.json",
+      "old_task_name": "organize box",
+      "decision": {
+        "id": 2,
+        "status": "matched",
+        "task_name": "clean shelf",
+        "overall_goal": "Clean the shelf surfaces and the product boxes, then reorganize them.",
+        "expected_result": "Shelf areas are wiped, and boxes are cleaned and returned to the shelf.",
+        "evidence": [
+          "Organize the shelf, wipe the shelf layers and product boxes",
+          "Wipe the middle area of the shelf, move the products aside and put them back",
+          "Wipe the right area of the shelf"
+        ],
+        "reason": "This episode involves significant cleaning of the shelf surface itself ('Wipe the middle area of the shelf', 'Wipe the right area of the shelf') in addition to cleaning the boxes. The definition of 'clean shelf' includes removing goods, wiping the shelf, and returning goods. While there is organization, the explicit wiping of the shelf structure distinguishes it from pure organization. The catalog notes that if surface cleanliness is the primary result (or a major co-goal involving the shelf surface), it fits 'clean shelf'. Here, both shelf and boxes are cleaned, but the act of clearing the shelf to wipe it aligns strongly with 'clean shelf'.",
+        "alternatives": [
+          "organize shelf"
+        ],
+        "missing_actions": []
+      }
+    },
+    {
+      "dataset": "guanglun",
+      "path": "/share/project/liuyou/humancoin/data/guanglun_depth/batch_0000046/a238dd56c2ae611ba2f5bd0c311f5c0c8a419a57493d89ef45079effd78b87a4/annotation/episode_000000_structured.json",
+      "old_task_name": "organize box",
+      "decision": {
+        "id": 3,
+        "status": "matched",
+        "task_name": "organize box",
+        "overall_goal": "Return scattered board game boxes to a cabinet for storage.",
+        "expected_result": "Chess and game boxes are picked up from the floor/table and placed inside a cabinet.",
+        "evidence": [
+          "picks up the multiple chess boxes on the floor one by one, puts them into the cabinet",
+          "Pick up the chess box on the floor and put it in the cabinet"
+        ],
+        "reason": "The task matches the positive example for 'organize box': 'Return scattered board game boxes to a cabinet.' The goal is orderly storage/accessibility in a cabinet, not vertical stacking or cleaning.",
+        "alternatives": [],
+        "missing_actions": []
+      }
+    },
+    {
+      "dataset": "guanglun",
+      "path": "/share/project/liuyou/humancoin/data/guanglun_depth/batch_0000094/a8470ee9d79314dc8427506ab61ee6fae0dcb8e11bd594aeec320801d1dec221/annotation/episode_000000_structured.json",
+      "old_task_name": "wipe counter",
+      "decision": {
+        "id": 4,
+        "status": "matched",
+        "task_name": "clean bathroom",
+        "overall_goal": "Clean multiple bathroom fixtures (sink countertop and mirror).",
+        "expected_result": "Sink countertop and mirror are wiped clean.",
+        "evidence": [
+          "wipes the sink and the mirror with a sponge",
+          "Wipe the sink countertop with the sponge",
+          "Wipe the mirror with the sponge"
+        ],
+        "reason": "The task involves cleaning two distinct bathroom surfaces (sink countertop and mirror) as part of one cleaning episode. This matches the definition and positive example of 'clean bathroom' exactly.",
+        "alternatives": [],
+        "missing_actions": []
+      }
+    }
+  ],
+  "cache": "/share/project/liuyou/humancoin/data/task_goal_review_pilot_5/968a4132b29b627e358f9051d937dd04b8950f55afe8d3e590c04fd8a9ac8fb0"
+}

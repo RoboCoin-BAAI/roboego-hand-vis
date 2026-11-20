@@ -1,0 +1,47 @@
+{
+  "summary": {
+    "samples": 7078,
+    "datasets": 190,
+    "errors": 0,
+    "removed_empty_group_directories": 25,
+    "sample_top_entries": {
+      "meta": 7078,
+      "videos": 7078,
+      "annotation": 7078,
+      "data": 7078,
+      "calibrations": 7078
+    },
+    "candidate_count": 0,
+    "candidate_file_bytes": 0,
+    "symlink_count": 0
+  },
+  "candidates": [],
+  "symlinks": [],
+  "removed_empty_dirs": [
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/apply_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/assemble_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/attach_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/braid_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/brush_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/check_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/clean_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/comb_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/curl_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/cut_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/dry_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/fold_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/massage_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/organize_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/other_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/pack_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/peel_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/perm_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/remove_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/roll_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/secure_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/stir_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/straighten_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/style_task",
+    "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/wring_task"
+  ]
+}

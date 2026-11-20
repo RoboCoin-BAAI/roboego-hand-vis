@@ -1,0 +1,20 @@
+{
+  "arrange": "organize",
+  "rearrange": "organize",
+  "reassemble": "assemble",
+  "inspect": "check",
+  "test": "check",
+  "carry": "move",
+  "transfer": "move",
+  "transport": "move",
+  "throw": "discard",
+  "bind": "tie",
+  "coil": "wind",
+  "chop": "cut",
+  "dice": "cut",
+  "slice": "cut",
+  "wash": "clean",
+  "rinse": "clean",
+  "sweep": "clean",
+  "vacuum": "clean"
+}

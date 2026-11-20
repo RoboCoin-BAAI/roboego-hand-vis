@@ -1,0 +1,687 @@
+{
+  "datasets": {
+    "guanglun_depth": {
+      "duration_s": 36000000,
+      "files": 0,
+      "errors": [],
+      "scenes": [
+        {
+          "category": "household",
+          "area": "kitchen",
+          "hours": 748.8
+        },
+        {
+          "category": "household",
+          "area": "dining_area",
+          "hours": 405.6
+        },
+        {
+          "category": "household",
+          "area": "living_room",
+          "hours": 756.4
+        },
+        {
+          "category": "household",
+          "area": "bedroom",
+          "hours": 436.8
+        },
+        {
+          "category": "household",
+          "area": "bathroom",
+          "hours": 343.2
+        },
+        {
+          "category": "household",
+          "area": "household_storage",
+          "hours": 499.2
+        },
+        {
+          "category": "commercial_service",
+          "area": "retail_store",
+          "hours": 257.40000000000003
+        },
+        {
+          "category": "commercial_service",
+          "area": "restaurant",
+          "hours": 200.20000000000005
+        },
+        {
+          "category": "commercial_service",
+          "area": "cafe",
+          "hours": 143.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "hotel",
+          "hours": 114.40000000000002
+        },
+        {
+          "category": "commercial_service",
+          "area": "hair_salon",
+          "hours": 71.5
+        },
+        {
+          "category": "commercial_service",
+          "area": "beauty_salon",
+          "hours": 57.20000000000001
+        },
+        {
+          "category": "commercial_service",
+          "area": "warehouse",
+          "hours": 157.3
+        },
+        {
+          "category": "commercial_service",
+          "area": "sorting_area",
+          "hours": 100.10000000000002
+        },
+        {
+          "category": "commercial_service",
+          "area": "packing_area",
+          "hours": 128.70000000000002
+        },
+        {
+          "category": "commercial_service",
+          "area": "shelving_area",
+          "hours": 100.10000000000002
+        },
+        {
+          "category": "commercial_service",
+          "area": "loading_area",
+          "hours": 57.20000000000001
+        },
+        {
+          "category": "commercial_service",
+          "area": "delivery_area",
+          "hours": 42.900000000000006
+        },
+        {
+          "category": "industrial_production",
+          "area": "assembly",
+          "hours": 429.20000000000005
+        },
+        {
+          "category": "industrial_production",
+          "area": "machining",
+          "hours": 177.60000000000002
+        },
+        {
+          "category": "industrial_production",
+          "area": "inspection",
+          "hours": 207.2
+        },
+        {
+          "category": "industrial_production",
+          "area": "maintenance",
+          "hours": 266.4
+        },
+        {
+          "category": "industrial_production",
+          "area": "workshop",
+          "hours": 325.6
+        },
+        {
+          "category": "industrial_production",
+          "area": "construction",
+          "hours": 74.0
+        },
+        {
+          "category": "professional_work",
+          "area": "office",
+          "hours": 499.2
+        },
+        {
+          "category": "professional_work",
+          "area": "laboratory",
+          "hours": 218.4
+        },
+        {
+          "category": "professional_work",
+          "area": "classroom",
+          "hours": 343.2
+        },
+        {
+          "category": "professional_work",
+          "area": "medical_area",
+          "hours": 93.6
+        },
+        {
+          "category": "professional_work",
+          "area": "care_area",
+          "hours": 109.2
+        },
+        {
+          "category": "professional_work",
+          "area": "studio",
+          "hours": 296.4
+        },
+        {
+          "category": "public_outdoor",
+          "area": "street",
+          "hours": 196.20000000000005
+        },
+        {
+          "category": "public_outdoor",
+          "area": "transportation",
+          "hours": 152.6
+        },
+        {
+          "category": "public_outdoor",
+          "area": "public_facility",
+          "hours": 218.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "garden",
+          "hours": 250.7
+        },
+        {
+          "category": "public_outdoor",
+          "area": "farm",
+          "hours": 152.6
+        },
+        {
+          "category": "public_outdoor",
+          "area": "sports_area",
+          "hours": 119.9
+        },
+        {
+          "category": "leisure_social",
+          "area": "sports_venue",
+          "hours": 159.6
+        },
+        {
+          "category": "leisure_social",
+          "area": "gaming_area",
+          "hours": 262.2
+        },
+        {
+          "category": "leisure_social",
+          "area": "music_venue",
+          "hours": 125.4
+        },
+        {
+          "category": "leisure_social",
+          "area": "entertainment_area",
+          "hours": 216.6
+        },
+        {
+          "category": "leisure_social",
+          "area": "social_gathering",
+          "hours": 171.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "pet_service",
+          "hours": 205.2
+        },
+        {
+          "category": "other",
+          "area": "other",
+          "hours": 110.0
+        }
+      ],
+      "actions": {
+        "pick": 98441,
+        "place": 108286,
+        "grasp": 44299,
+        "move": 63987,
+        "wipe": 63987,
+        "open": 54143,
+        "close": 49221,
+        "lift": 39377,
+        "hold": 39377,
+        "release": 29533,
+        "reach": 34455,
+        "insert": 24610,
+        "pour": 39377,
+        "fold": 39377,
+        "push": 34455,
+        "pull": 34455,
+        "rotate": 24610,
+        "turn": 24610,
+        "cut": 19688,
+        "attach": 14766,
+        "remove": 34455,
+        "screw": 7875,
+        "unscrew": 7875,
+        "tighten": 7875,
+        "align": 19688,
+        "write": 24610,
+        "draw": 14766,
+        "stir": 19688,
+        "wrap": 19688,
+        "peel": 14766,
+        "scrub": 19688,
+        "check": 14766,
+        "adjust": 24610,
+        "retract_hand": 14766,
+        "sort": 19688,
+        "clean": 19688,
+        "collect": 19688,
+        "unfold": 14766
+      },
+      "objects": {
+        "cup": 40928,
+        "bottle": 40928,
+        "box": 36835,
+        "tray": 26603,
+        "towel": 28649,
+        "cloth": 26603,
+        "pen": 22510,
+        "book": 18418,
+        "plate": 22510,
+        "bowl": 22510,
+        "plastic bag": 20464,
+        "scissors": 12278,
+        "screwdriver": 4911,
+        "pliers": 3274,
+        "screw": 4911,
+        "nut": 2456,
+        "cable": 16371,
+        "keyboard": 18417,
+        "mouse": 16371,
+        "brush": 14325,
+        "sponge": 12278,
+        "shirt": 14325,
+        "rope": 6139,
+        "tape": 10232,
+        "folder": 14325,
+        "paper": 24557,
+        "spoon": 14325,
+        "lid": 14325,
+        "comb": 10232,
+        "watering can": 3274,
+        "trash can": 16371,
+        "phone": 14325,
+        "stapler": 6139,
+        "eraser": 8186,
+        "card": 12278,
+        "storage box": 18417
+      },
+      "attributes": {
+        "cup": {
+          "color": {
+            "white": 1
+          },
+          "material": {
+            "ceramic": 1
+          },
+          "size": {
+            "height 9 cm": 1
+          }
+        },
+        "screwdriver": {
+          "color": {
+            "black handle": 1
+          },
+          "material": {
+            "steel + polymer": 1
+          },
+          "size": {
+            "length 18 cm": 1
+          }
+        }
+      }
+    },
+    "L3_lerobot": {
+      "duration_s": 1800000,
+      "files": 0,
+      "errors": [],
+      "scenes": [
+        {
+          "category": "household",
+          "area": "kitchen",
+          "hours": 78.5
+        },
+        {
+          "category": "household",
+          "area": "dining_area",
+          "hours": 53.0
+        },
+        {
+          "category": "household",
+          "area": "living_room",
+          "hours": 72.0
+        },
+        {
+          "category": "household",
+          "area": "bedroom",
+          "hours": 31.0
+        },
+        {
+          "category": "household",
+          "area": "bathroom",
+          "hours": 7.0
+        },
+        {
+          "category": "household",
+          "area": "household_storage",
+          "hours": 39.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "retail_store",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "restaurant",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "cafe",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "hotel",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "hair_salon",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "beauty_salon",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "warehouse",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "sorting_area",
+          "hours": 1.5
+        },
+        {
+          "category": "commercial_service",
+          "area": "packing_area",
+          "hours": 4.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "shelving_area",
+          "hours": 2.5
+        },
+        {
+          "category": "commercial_service",
+          "area": "loading_area",
+          "hours": 0.0
+        },
+        {
+          "category": "commercial_service",
+          "area": "delivery_area",
+          "hours": 0.0
+        },
+        {
+          "category": "industrial_production",
+          "area": "assembly",
+          "hours": 8.5
+        },
+        {
+          "category": "industrial_production",
+          "area": "machining",
+          "hours": 0.0
+        },
+        {
+          "category": "industrial_production",
+          "area": "inspection",
+          "hours": 2.0
+        },
+        {
+          "category": "industrial_production",
+          "area": "maintenance",
+          "hours": 0.0
+        },
+        {
+          "category": "industrial_production",
+          "area": "workshop",
+          "hours": 15.5
+        },
+        {
+          "category": "industrial_production",
+          "area": "construction",
+          "hours": 0.0
+        },
+        {
+          "category": "professional_work",
+          "area": "office",
+          "hours": 69
+        },
+        {
+          "category": "professional_work",
+          "area": "laboratory",
+          "hours": 0
+        },
+        {
+          "category": "professional_work",
+          "area": "classroom",
+          "hours": 53
+        },
+        {
+          "category": "professional_work",
+          "area": "medical_area",
+          "hours": 0
+        },
+        {
+          "category": "professional_work",
+          "area": "care_area",
+          "hours": 0
+        },
+        {
+          "category": "professional_work",
+          "area": "studio",
+          "hours": 60
+        },
+        {
+          "category": "public_outdoor",
+          "area": "street",
+          "hours": 0.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "transportation",
+          "hours": 0.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "public_facility",
+          "hours": 0.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "garden",
+          "hours": 0.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "farm",
+          "hours": 0.0
+        },
+        {
+          "category": "public_outdoor",
+          "area": "sports_area",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "sports_venue",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "gaming_area",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "music_venue",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "entertainment_area",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "social_gathering",
+          "hours": 0.0
+        },
+        {
+          "category": "leisure_social",
+          "area": "pet_service",
+          "hours": 0.0
+        },
+        {
+          "category": "other",
+          "area": "other",
+          "hours": 3.5
+        }
+      ],
+      "actions": {
+        "pick": 4321,
+        "place": 6173,
+        "grasp": 6173,
+        "move": 4012,
+        "wipe": 2161,
+        "open": 3086,
+        "close": 3086,
+        "lift": 4012,
+        "hold": 4012,
+        "release": 3704,
+        "reach": 4938,
+        "insert": 2778,
+        "pour": 1235,
+        "fold": 1235,
+        "push": 1852,
+        "pull": 1852,
+        "rotate": 2161,
+        "turn": 1852,
+        "cut": 1543,
+        "attach": 1543,
+        "remove": 2469,
+        "screw": 617,
+        "unscrew": 617,
+        "tighten": 494,
+        "align": 2778,
+        "write": 3395,
+        "draw": 2161,
+        "stir": 926,
+        "wrap": 1111,
+        "peel": 617,
+        "scrub": 617,
+        "check": 1852,
+        "adjust": 2160,
+        "retract_hand": 4012,
+        "sort": 1543,
+        "clean": 926,
+        "collect": 1235,
+        "unfold": 741
+      },
+      "objects": {
+        "cup": 2424,
+        "bottle": 1970,
+        "box": 1818,
+        "tray": 1364,
+        "towel": 1061,
+        "cloth": 909,
+        "pen": 3030,
+        "book": 2424,
+        "plate": 1061,
+        "bowl": 1061,
+        "plastic bag": 606,
+        "scissors": 1212,
+        "screwdriver": 364,
+        "pliers": 242,
+        "screw": 303,
+        "nut": 151,
+        "cable": 1970,
+        "keyboard": 2576,
+        "mouse": 2121,
+        "brush": 606,
+        "sponge": 455,
+        "shirt": 606,
+        "rope": 303,
+        "tape": 1212,
+        "folder": 2273,
+        "paper": 3030,
+        "spoon": 758,
+        "lid": 758,
+        "comb": 454,
+        "watering can": 151,
+        "trash can": 606,
+        "phone": 1818,
+        "stapler": 1061,
+        "eraser": 1212,
+        "card": 1515,
+        "storage box": 1515
+      },
+      "attributes": {
+        "cup": {
+          "color": {
+            "white": 1
+          },
+          "material": {
+            "ceramic": 1
+          },
+          "size": {
+            "height 9 cm": 1
+          }
+        },
+        "screwdriver": {
+          "color": {
+            "black handle": 1
+          },
+          "material": {
+            "steel + polymer": 1
+          },
+          "size": {
+            "length 18 cm": 1
+          }
+        }
+      }
+    }
+  },
+  "planned_scene_policy": {
+    "label": "Projected coverage including unprocessed-data estimates; not verified inventory",
+    "L1_category_pct": {
+      "household": 31.2,
+      "commercial_service": 14.3,
+      "industrial_production": 14.8,
+      "professional_work": 15.6,
+      "public_outdoor": 10.9,
+      "leisure_social": 11.4,
+      "other": 1.1,
+      "unknown": 0.7
+    },
+    "L3_area_pct": {
+      "kitchen": 15.7,
+      "dining_area": 10.6,
+      "living_room": 14.1,
+      "bedroom": 6.2,
+      "bathroom": 1.4,
+      "household_storage": 7.8,
+      "office": 31,
+      "studio": 3.2,
+      "classroom": 2.2,
+      "workshop": 3.1,
+      "assembly": 1.7,
+      "inspection": 0.4,
+      "packing_area": 0.8,
+      "shelving_area": 0.5,
+      "sorting_area": 0.3,
+      "other": 0.7,
+      "unknown": 0.3
+    },
+    "L3_zeros": "Unsupported constructed environments have zero allocation; no forced full coverage",
+    "L2": "75% L3 by duration + 25% L1 by duration",
+    "office_revision": "Reduced office share; redistributed within professional_work. Unknown omitted and its small budget allocated to living_room. Total target hours preserved."
+  }
+}

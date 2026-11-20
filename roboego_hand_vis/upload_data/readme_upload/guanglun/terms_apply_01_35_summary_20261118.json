@@ -1,0 +1,324 @@
+{
+  "scope": [
+    "objects[].name",
+    "actions.vocabulary"
+  ],
+  "start": 1,
+  "end": 35,
+  "summary": {
+    "jianzhi": {
+      "selected": 3492,
+      "valid": 3457,
+      "pending_preparation": 35,
+      "recovered_from_cache": 96,
+      "changed": 2987,
+      "unchanged": 470,
+      "write_errors": 0,
+      "report_dir": "/share/project/liuyou/humancoin/data/jianzhi/terms_apply_01_35_20261118"
+    },
+    "guanglun": {
+      "selected": 3170,
+      "valid": 3147,
+      "pending_preparation": 23,
+      "recovered_from_cache": 2,
+      "changed": 2835,
+      "unchanged": 312,
+      "write_errors": 0,
+      "report_dir": "/share/project/liuyou/humancoin/data/guanglun_terms_apply_01_35_20261118"
+    }
+  },
+  "pending": [
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/03539f84ec64429e9ab1f0c0a4484533/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_away"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/0b5036c333624e2685242079483ec6b4/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 2402)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/0cbf0186e41749fdae2639f4d55aaeca/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: hand_over"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/24864452c10647e3aedaddbab9ab2d4e/annotation/episode_000000_structured.json",
+      "error": "RuntimeError: Previous request may have been billed; inspect state before --retry-failed: /share/project/liuyou/humancoin/data/jianzhi/cleaned_terms_state/actions/jobs/848d3903eea87d8ca25c6829/5343e7b87c587b92250662a4/b98792c72e57a724e6e24ef2"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/2506930f07cc4164867ba314a2ab0930/annotation/episode_000000_structured.json",
+      "error": "RuntimeError: Previous request may have been billed; inspect state before --retry-failed: /share/project/liuyou/humancoin/data/jianzhi/cleaned_terms_state/objects/jobs/f2c77dc237a03a5e92427c96/be1332c30bbb4e17a493665b/43c1f305b128f3deedfab153"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/253220ee8da3463fb9f3cef3d49a8c0a/annotation/episode_000000_structured.json",
+      "error": "RuntimeError: Previous request may have been billed; inspect state before --retry-failed: /share/project/liuyou/humancoin/data/jianzhi/cleaned_terms_state/objects/jobs/be8ad2805c79d4dcd1d4c444/7801e668cae408425683ca4c/a64f4e65c8ce99f753ec0bc2"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000004/3047a25837d049c8929e304d8378c363/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: turn_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000004/36201e6f2e2f400c8d99d5da8465f899/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: turn_off"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/46fbfd7bc57e4398bc29cfbd2fcbd0df/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 36 column 1 (char 2128)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/4f698ef2194441e983c2fca6b2a834d5/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 41 column 1 (char 3111)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000008/6891a2f468244c33858e5e002a3aee10/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/6a6ecf79b95a43f79e098b45f28449a9/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_away"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/6f7ffbbe10854f92bdc4551c506e06a6/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/74397135783e4c68b9331f558c368ace/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/77f915724bcf4d2a9115fb9f86f55fef/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000010/7e12d6a17d4040b098c86741ee5d3c7c/annotation/episode_000000_structured.json",
+      "error": "Expected a lowercase base verb, not a phrase: blow_off"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000012/9a53aca227d84f979439aefe64eb1abb/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000013/a501c34c6f574156ba7bbd77ffb33ae1/annotation/episode_000000_structured.json",
+      "error": "ValueError: Missing mapping evidence"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000014/b0564246b6d74a4db7c48a6872f69533/annotation/episode_000000_structured.json",
+      "error": "ValueError: Model changed object count or response structure"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000014/b93efd99503343dbad05157b7afa72d2/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 2186)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/bdbfd3aa7e9448e9a83c2de513fc23af/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 21 column 1 (char 1197)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/cdb6d48737794a31b55f5e442b007047/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 2123)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/d61bbf0394c74fdf96c3ac1ab7df97dc/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 41 column 1 (char 1901)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/d81df8e549e541a8be764818cca36351/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: lie_down"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000017/dbb5730640234797aff70a3eccae9238/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000018/ee378cbabde048f19cd3d63aa8dd5bba/annotation/episode_000000_structured.json",
+      "error": "ValueError: Missing mapping evidence"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/1e3ade388f83435191b4a05d24258ec4/annotation/episode_000000_structured.json",
+      "error": "ValueError: Missing mapping evidence"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/23d2a075441f43e7a18304c93bb6afe0/annotation/episode_000000_structured.json",
+      "error": "ValueError: Modifier/execution wording is not an action category: continue"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/40f15ebdbb7c48819d7da4fcd99b4172/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 3187)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/59ad36e6ed324904a3d360bcf512be9f/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: put_on"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/83368ad6bcb048e78a82aff9c01db861/annotation/episode_000000_structured.json",
+      "error": "ValueError: Missing mapping evidence"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/90910009d1dc4430ad4ec173f4053b4a/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: touch_up"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a5bbc0cbb81c41b3aaebbee6bcbc2689/annotation/episode_000000_structured.json",
+      "error": "ValueError: Expected a lowercase base verb, not a phrase: care_for"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b5213ad7513e44c9a7acceb88f17db45/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 16 column 1 (char 1102)"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/de305f5bdfc04e0ab0bb56f06e9c0b7b/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 36 column 1 (char 2217)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000002/7522662d9dc33d624a99785bd550ee91f79c318e8546f31f84780aab90d99ec6/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 1254)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000004/92c8ec3d96780177b8e0c641540325fc96fb5484247e81282a785e315d1196c6/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1208)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000005/9f5dadc868047ec1d0de224715ba36d55eb7d403e789b85ee165b2d7c3fca9ab/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 21 column 1 (char 1541)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/425d1197bc289a1bc0fa071df332d55884f10ea980553a228f6942d355ac791f/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 51 column 1 (char 2685)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000007/4e398873e8f085cd54de8f6d1bcad32c75e0384e8ed4ab6c6ce342006ed89d86/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 2588)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000007/87ff08322e634b4b2b657f2f0b6f96345464c689763197cdf8b301975109890a/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1300)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/303ba82bc9e3efd975430e273a65403d6ae311b8069d1e344872398c625bce26/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1091)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/4f9ade1934f5d702029b975cb6afb73aeb7d2d4b39ce3be6896a27a81abe6f6a/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 871)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/5f865457851f911461941a120eb431f46e75823251adb7d8469fa4ebc7eb85c9/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1153)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/7212907f3d6eefa28eee86e9d7b04ad498d09db978b18dd2637d820b620bf3e1/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 991)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/76dd235c7fc8b3c43bfeed00dc2b4ea676ca7f540461e7307898b857e2611fc6/annotation/episode_000000_structured.json",
+      "error": "TimeoutError: The read operation timed out"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/ca4517b3449b0681d9acb3d7984ef175f25aa71746d9e644d6f2ca6fa9a6ecf9/annotation/episode_000000_structured.json",
+      "error": "TimeoutError: The read operation timed out"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/dc7324aca43458132e69f186875eaf727a1e78969eb2c67ca4f29de2b5769483/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 1283)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000018/21eaafb9c6273e901ea485877d31f64383e5a1e077f71f672f2ebc33b9941e69/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1045)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000024/0669b98158995aa2cf65a699f7b6dff12b9c3caa8e97d6ebd3d36e2a2c25f474/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 16 column 1 (char 588)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000028/05826c1167c27c986c5f6ef5a57426cd84af0753708bb2ceaf630f422fe06b52/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 759)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/80efec64ce7117fe3e0d408d239e99743dc5b4115f48721382706a9b377f623c/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 26 column 1 (char 1714)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/7ba4ef3b9edb7cb0a601d06059220ac39228e9db44d23e58d4c797bdcb131284/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 21 column 1 (char 744)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000033/c0d14f81cf12bde120b072332a56164f10b8c07ba2213fb2a85c863a0f7d30eb/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 1663)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000033/ee02089783b7361d60b2925a0e477017f1cd055836a17abe862d137347cf8c02/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 1446)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000035/29cc89eb95581697049da04057205c36423ef7224183b08730ac4bf34c8d4dcd/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Expecting ',' delimiter: line 16 column 797 (char 1087)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000035/cb3521105cad460fb516b9755a038b12aea6b8da03aec9297061187ae9b5717b/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 1598)"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000035/d732e1ce6ba6814fe4e727492cea10fe71fdcc5981fa38f63b54deea4b61925a/annotation/episode_000000_structured.json",
+      "error": "JSONDecodeError: Extra data: line 31 column 1 (char 2609)"
+    }
+  ],
+  "model_requests": 0,
+  "task_name_modified": false
+}

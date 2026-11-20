@@ -1,0 +1,36 @@
+{
+  "selected": 1058,
+  "additional_candidates": 1058,
+  "user_assigned_fallback": 578,
+  "semantic_candidates": 480,
+  "individually_reviewed": 24,
+  "remaining": 0,
+  "totals": {
+    "jianzhi": {
+      "samples": 7078,
+      "statuses": {
+        "candidate": 7078
+      },
+      "candidate_types": 838
+    },
+    "guanglun": {
+      "samples": 9181,
+      "statuses": {
+        "candidate": 9167,
+        "already_filled": 14
+      },
+      "candidate_types": 1272
+    },
+    "combined": {
+      "samples": 16259,
+      "statuses": {
+        "candidate": 16245,
+        "already_filled": 14
+      },
+      "candidate_types": 1888
+    }
+  },
+  "old_names_with_multiple_targets": 34,
+  "model_called": false,
+  "annotation_modified": false
+}

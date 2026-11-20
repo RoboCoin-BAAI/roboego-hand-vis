@@ -1,0 +1,32 @@
+{
+  "batches": 120,
+  "written": 11539,
+  "failed": 0,
+  "ranges": {
+    "jianzhi": [
+      1,
+      71
+    ],
+    "guanglun": [
+      1,
+      49
+    ]
+  },
+  "expected_samples": 11539,
+  "error_batches": 0,
+  "seconds": 710.93,
+  "level": "L1",
+  "validation": "task_name/common_task_name match current annotations; unique_task_name follows L1 naming; mapping selects paths only",
+  "datasets": {
+    "jianzhi": {
+      "batches": 71,
+      "written": 7078,
+      "error_batches": 0
+    },
+    "guanglun": {
+      "batches": 49,
+      "written": 4461,
+      "error_batches": 0
+    }
+  }
+}

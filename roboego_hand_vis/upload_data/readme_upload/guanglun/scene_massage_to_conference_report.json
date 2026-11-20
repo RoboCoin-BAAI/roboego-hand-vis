@@ -1,0 +1,3530 @@
+{
+  "completed_at_utc": "2026-11-18T08:10:19.903084+00:00",
+  "counts": {
+    "guanglun": {
+      "scanned": 9181,
+      "targets": 5
+    },
+    "jianzhi": {
+      "scanned": 7078,
+      "targets": 246
+    }
+  },
+  "verified": 251,
+  "records": [
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000014/5ea3d387eab5b9d205da791ad012dce4a28ef97a23da55b78a10053493addace/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "A massage room area for folding and organizing towels on a table and in a storage basket"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000061/e47883a16ad187c75f7d6c3bcc6731219af3902807937fa4414cbac1402b301b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "A household area for folding and organizing laundry towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000081/46ae11bd8349d6892609a8180a3085b70906939eff7d3fbb43a0462d91b5bc6b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "A treatment area for preparing a massage table with sheets"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000081/f26251ccbee77c59a6c4f04e3c2445a0e066e5b8214cc8410ac76e461c0f6b9a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "A treatment area for preparing a massage table with sheets"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000082/df7c2ac4bef56ce5bc24882676c29977c325a6f8c6f49f573543dd755e55ed14/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "A treatment area for preparing a massage table with sheets"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000005/38dfd840986f45129e6a6ce7594da5a5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and organizing them in a stack"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/cdbbbe3a26064106be51742fc04f2f25/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding purple towels and placing them on a sofa."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000019/004fafa788fd4140abc8aeb7fb9a33e9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a facial massage on a customer using circular motions and acupoint pressing techniques."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000019/008601f616df4a528fc6517cd78ade1f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/01e910955da44e4881a6c49377074e22/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing an abdominal massage treatment in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/03bfd95de0304170ab2a7ddc48e303d3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage and replenishing massage oil for a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/04ce8e07870047b49cb092d050b34a7e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing cupping therapy and organizing the treatment area"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/07cccd0127e946f2b11da72f2345a32d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0862b1212cd44dd7837269b06f09192d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/093ebfa11d1847708a82c6600661e64e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "giving a head massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/095cfb9ade344504b1e03116b0535e6f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage to a customer lying prone on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0a2a4d71ddc846cc87fe3f48dab85118/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "folding towels on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0ad59f49a39a4c47b4fddbfdfc37270d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back rolling treatment to a customer using a rolling stick and essential oil."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0b16bccb484940798258d0fb502b41f9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a back rolling massage treatment on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0b2545b1b72b4e518c5a6323cf5f855b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing leg scraping treatment on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0c6d04389652479bb86fc889674d5cd4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing leg physiotherapy for a customer using a physiotherapy instrument"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0c7d263c900f42ce925db2093edfd1df/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing percussive massage treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0e9e062263cb427091cd1e4fcd3e735a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage treatment to a customer in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/102f702f8ba74c5893868952f65a0f96/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer using a cushion for support"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1219623b661c4a4fb20c9b92beaa5430/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage to relax the customer's muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/12622f43a26d47b5ae29be3e31180ba4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Washing a container and spoon after use"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/13600040564f4c8f84bb6c206ef57ac8/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's shoulders and head"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1466e98fee474b8988f582f433cef85d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/187832d6d8484ca0a7e2ebd7ef831335/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back scraping and massage services to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/19792e2297e44ce198071897b0aac987/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a head massage for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1a1c689b480445688e1ea4b2dfe29924/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Organizing salon room items, linens, and supplies"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1b57082639504793b3f0a3d44c2a5029/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back, neck, and upper body while arranging their hair."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/1d819f508e1c4c01ae0c732ce8ccdd1d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/1e2b72fd075c470996212c2d32774b84/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage and applying essential oil to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/1e3ade388f83435191b4a05d24258ec4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/2139d9f84eed4acb8f9b8f33910f017d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing facial massage and personal care services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/217de5f08bc74f44934436b11d923630/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's leg"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/235fd2ad9a154a33b134e61cb53c69c0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a back massage with essential oil for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/23c3366909414ef29dbbfe7060544447/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/23c8e24387484ce0afcf7d8159922b75/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/23d2a075441f43e7a18304c93bb6afe0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing fire cupping and massage on a customer's abdomen in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/23f2cba9d83c4c819b43434d1a3a7c3f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a person's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/25e7c531850a4dfaad82c3d8ade7597a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage service to a customer lying prone on a beauty bed to relax muscles."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/27acbc4e06f3457cb2346757655996b0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage and beauty personal care services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/27e42a5328a74184aeaf555d5d03b538/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Applying essential oil and rolling the customer's abdomen"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/28a5bf6c19574fb8b9f3a49acfff8fa5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging the back of a customer lying prone on a bed using various techniques"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/28ba138b427349f1b6c74797d1122e08/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a prone customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/2964a80b087c4bc68b453192658bc0cf/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage and body care services to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2bd0b19392fb425582753324205dee20/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a person's back and shoulders with a roller on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2d20b2523d4b49e6be38602f840808fd/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage and applying essential oil to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2ea316b3584c4ff594411ecaf4e0de32/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's arm in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2f0b07a9e10e42e0be65f419568aafa7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging the back of a customer to relax muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/304dc8e07da54c64b8b4486d260e1497/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and arranging towels on a mat."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/312b4cc4b1264d08abad2c1e00a7f025/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and storing towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3227dfb24da8482180c2f2b92d4c9ffe/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "providing a back massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/32ca3a9d6af0471eacb31054ad263617/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and organizing them into a stack."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/33e73a1e55c94bd18a7057f579123976/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and placing them in designated positions."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/384c338b5b7f47abb790da8fdbf05947/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing an essential oil back massage to a customer using various massage techniques."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/39c7cf46b6eb43f2bf9e0056a22348d4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage to a customer and adjusting a towel"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3a4c96d198f641949349ab7acd337d8a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage and hair braiding services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3af3cb201df94ea9b4eaa5610e81a988/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing a head massage on a customer using a tendon stick and hands"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3b760349edb94a1e9466e62cf89feb13/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing cupping therapy on a customer's back"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/3ceb9ffa3187424e858d90e7a82a18ee/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage and hot compress treatment to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/3dca639332d64de18f3b1c97effa69d0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back with a tendon rolling stick and applying essential oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/3dd7bfcd9b16490f83dca2a53282fcdb/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's legs to relax the muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4014204f1ef94db997e9969a4c9450f1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and placing them on the side of a bed."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/41ee835ebed74d11b5ed5f22344ea894/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer and applying massage oil."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4203aaf373a84dea9228b2b080a063f4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and stacking towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/429302dcd8f24a3cbb2b567169bd9b93/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/43a534b53f534fc2990d04cb66580728/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/43c8f8abf37a4699b32cb472cd1e6c7f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "folding towels and placing them in designated locations"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/45a1b7d803e44368b6b0d6520ef772a2/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's arm and shoulder"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4743f2ce2260475abab33d186a7200bc/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4850e1b4280a454faef01cd056fb8005/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage and adjusting customer positioning and covering"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/4bc828ecfc2649bd9b09385dc6613fa1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's legs to relax the muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/4d9c0679eef340d89d07346217c096d5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/4e35a5a40a154a9fbe411ddc89dcda04/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the back, hips, and legs of a person lying on a bed to relax muscles."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/50d2f96ed8564fb09854b5ac65c13b17/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing back scraping and massage treatments on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/50fac54ac86d42adb2b27a882e2dbf6c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's abdomen and applying massage oil in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/5229da015de14563b9389d143e791390/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's arm in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/52886f9846954a7b9db52db06af72f71/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage to a customer and applying essential oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/52f920da7226421cad2f21c088f56b32/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing back massage for customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/52fbe7b922994819a3b3d02a0c99b605/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer using various techniques."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/539ec36d0fa04179a49ede735f47e46f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging and relaxing the arm of a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/564cf2c613c4456795ed5e444f9a7c30/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving an essential oil back massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/5692a58f0298467eab5c60c8f2bad902/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing massage techniques on a customer's back, shoulders, neck, and arms to relax the muscles."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/572407bf22924dbfbbc84162a60a071a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "providing abdominal hot compress treatment and preparing the customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5743177c53a04e6ab6c9566bb889b3c4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/589a4d22e5e14ee9803b9c1a3b77c1db/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and placing them on a stack beside the bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5a08ec65d26a4719aecf18cb3a75bf57/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "giving a stomach massage to a person"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5b91d199e1904283817b88acae00201b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing beauty and personal care treatments on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5e001e56291d44e68a1631d1cabe07c5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Applying essential oil and massaging a customer's back in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5e8a68088a5a467a985021a5ffc635f1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a person's abdomen using essential oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5f0ee2e3f2024c8197e8d70263ac672b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5fbf6abad6ac499f8dc84e6ed7cf57e5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage and applying essential oil to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5fd2a812579b40158c6fac37c8fa070f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing an abdominal massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/61b73b08c7a44d8a8a2af0881178692a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a full body massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/6285fd10ba0f4a6b822c5039d9e31f9d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's abdomen and applying essential oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/63bf05a6d94f434aad9748c6f030b906/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing physiotherapy and massage cream application to a customer's calf"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/650abe4685a54f489fd37a7efbd2bd7b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back, wiping it, and covering it with a towel."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/653a80a5fdcd4d6e83a184b37602e62c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a leg massage and scraping treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/66cdb0eb9702424b853ca0d751987b5d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer and organizing massage equipment."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/67d98d9a12b3474a8f18542d3fdc6153/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/69708fe8cd1a4b029e1e69e5a12f174d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage and applying essential oil to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6992ebd931ad498dbe4d3a6a7ac5aa94/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6cf96e949e7347428251cd95dd768ef5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing a back massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6eed310129684b9cb5969cb63d672c67/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a calf massage treatment to a customer using massage probes and adjusting equipment settings."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6eee2c1217b743f2a6295fcf1938c74c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a back massage on a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6fdf5ce64514498c9fe9063668279efb/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's arm to relax them."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/71ecc5edc8d24c22924eb2b7c2c067dd/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage and adjusting towels for a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/76a27bc005af457689cc6ff264350770/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to a customer to relax muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/775e5e6110c74eec9573ab891d0bea45/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back to relax muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7a1f62c18b034d44a603b2aafb514979/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage and essential oil treatment to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7a56003b691b4b459ec1f7ae055f67a6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "folding towels and placing them on a pile"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7aabf6b1e770407f973d396cff0b2ed3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Cleaning cupping jars and making a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7b6df5b1af864c2fb058acfe0fd8b14d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "giving a back massage to a customer in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7c31d6502aa54130a5d0aa69ce467445/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's arm and leg"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7f3be19276944a1291654b0119ac7c65/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a back massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/81b19ab9dfec4093a2765bfbe5383d55/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the head of a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/83368ad6bcb048e78a82aff9c01db861/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/83469f01f3894e79b187904623fdbd3b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's hand and arm in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/850a40a725b746978378a9a0d7a4c930/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging the back of a prone customer on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/852fa70659c64267840cbd383ea103f9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the shoulder, arm, back, and waist of a prone customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8870c04d81be4272b56694f2976bb28d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "providing a massage using a massage hammer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/89e17773c8974f848d343258588ae27e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "providing a back massage using a roller"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8a2b887c44d84492bf4de4c3555a33a8/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8cefe614c0074c49acd5b8b168480b91/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8cf5e44272d94085b15c41666a1e732c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and stacking them on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8fcffb2194c7417b8546ff1957146056/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back rolling massage to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/91927b76b89b47138ac73ba141e18b37/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the leg of a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/922ffef51a70456690c219140652805a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage to a customer using essential oil in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/95536dcb6f3943f79f93a72c1bfb1f05/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/955b656873bc4cd992d037e858555913/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "marking treatment points on a customer's back"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/967dfa0993c44799a319450ef1c137f0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Applying massage essential oil and kneading the customer's abdomen in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/97aca43e31de4e80b64057ec9d06f9d5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing eye care and massage treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9845e1a4c57140a79d64c8096b0fa6c6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a facial massage to a customer using skincare products"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/986bbc7999f3484e97242e6f23bdb234/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Wiping and placing jars into a bucket"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/99af82e8de494b58894bdeb447c02379/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "folding towels and stacking them on a pile"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9c1244771dea470baf7369aab2fa1d9d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's leg using a physiotherapy instrument and adjusting its parameters."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9d0ada8de4b54ffc952ed13cb1e43ea7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing a gua sha back massage"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9e654fb6a4014aba99e88b36fc6d9929/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage to a customer to relax their back, shoulders, and neck."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/9f10aa3c525c48878fe5c4f3e45990b5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing leg massage and tapping therapy to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a01fb7d96da846358d4234284dd68ca8/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Applying essential oil and massaging a customer's back"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a0bdb283e37d4110924705775867628d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding towels and placing them into a disinfection cabinet for storage."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a1f70b404de94e0e9b974de3cf725ba6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing beauty and personal care services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a2225643eef6466cb9e6e50d1231f798/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a prone customer to relax muscles."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a44fde6825944b7cbeeb3d70e649a327/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the leg of a person lying on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a48f31b0beed4ba086acfc31879ee4ca/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging a customer's back in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a5484e626e964e629875502b7a75c660/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a558ea0e012e40c19ce8b8b19948d495/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a prone customer using essential oils and towels."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a79a73761f65420db71de98bec41c8b7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage service to a customer lying prone on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a9517f879d7f44b58f0c3df7591dacf9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing head massage services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a9dfc76f346749cc86cf415822cd3d09/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage to a customer lying on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/abaceeb346b042f8b0915c2079e1036b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage and body care service to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ac3297c0345d45aaa260f5214dfb6e91/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "folding towels and stacking them"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ac4f4dd873a642a1988a627ad3ed6e15/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and stacking towels on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/acda443ee8fe48a59b265404c4ded1c3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a head massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ad0cfeddf9224f7d9c6005c97fcecc05/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing head care services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/aeb76166f48f4dad9b52e00a6184c031/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage and meridian scraping treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/afac0c838a304186a408fa8f2144c78d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging the customer's left arm"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/afe1ed9a56294e9db30fe12c333ba0bf/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Making a bed and arranging towels and pillows"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b279f309bd12481cb04c6ab99fd64975/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving an abdominal massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b2f0d295260a424faf8714e42a4a7751/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage and replenishing massage cream for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b3c64865973a41598c36fa251b150722/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the leg of a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b40ae8e78f9e4275b82d3e75c23fdbad/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage to a customer using various massage techniques"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b45029d664b8486d8de1a086a1f793b3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Wiping and organizing cupping jars"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b486a75114b94c168ec39e1c3330cd4e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing massage operations on a customer's arm"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b4ae281d362e469cb50e3b984532a703/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a head, shoulder, and arm massage to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b58cf6a692cd4b44be10b83c125327bf/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b63cd8c6b58c4feaaeb0d2ada0fc98e1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Cleaning cupping jars and arranging them on a table"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b67f1319cb9a4ae7b94eae0c1f21f7c5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a head massage and adjusting an eye patch for a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b89ff0c04f1c46dd9f6fb79574fdf4e7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and rolling towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b8c0b82e76b34d89b9253cc8ba204205/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging customer neck and shoulders"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b90ee6fb6118407fa10dd9b759d841c4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b9f0c7180eda4ce5b2bbc57aca2df3b8/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing calf massage and adjusting massage equipment parameters for a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/bb59e5ec4bdf452d982bb7d7f1db3460/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's buttocks and calf"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/bbd657ae6bec42d3b4175112fdcfe58b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal and waist massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bcba75dc02f345e6b10ef3333bb1f012/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing leg massage and scraping treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bdd46b2e25af49579f1df19f25a7f985/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying on a bed using a massage hammer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bdfac17fad8a4f60aa5a5b86727a6524/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back to relax muscles and applying care products for cleaning."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bf5438d9821547e0a1d28127dce5eb70/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and stacking towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bf93481eca644dc3aca6c89a7f410eb5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage therapy to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c0f3e1decb9141f78aad1a07e39e13a6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing hair care and scalp massage services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c0fab6b36cb24ace8532e481e3475bb7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "giving a back massage to a customer using a tendon rolling stick and essential oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c102dfd41a424b9ca510a772988519fe/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and arranging towels"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c1df1c82975e45c7862669aa5090611e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Back scraping care for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c21fad5925984e1a9104d15dc3253dbf/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage and personal care services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c222888bda924bc5ab26f968fe391a39/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a massage to a customer lying on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c467ff707ce5424bbf8def445ad60a49/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c647b8684b504ed08dd2b63b652180ba/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Packing skin care products and washing hands"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c7510051913242fc898838ada3933cfb/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage and adjusting body position and towels for a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c8518fb4558f4e6c8ae9810886cd1cd3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer for relaxation"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cab160effdc14ababbb7035b262f4c3c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging customer's legs and buttocks"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/caf0a1be8284406d8320bc5b872c6f53/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer using massage oil"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cb5989adbe0d42188e201be42461b9b3/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to a customer to relax muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cc5b8b29fea844508fa0bee555a1a340/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Organizing beauty tools and performing an essential oil back massage for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cea81b4f390845c58ffcff0ea41a29f6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer and picking up items in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cf4ee3a777a74adbbb251c41c311610d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's abdomen and tidying their clothes in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cff15bae61b3476283321fc90adad3e1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and arranging rolled towels for salon use."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d0bd9841ed6f44d98330bd86db56d33d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing an abdominal massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d20d01b9057a43ff8ced82b73896fb3c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing cupping therapy and personal care services to a customer in a salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d2b101e4e74a43248eb6973d1dae97fe/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d3c4f242d24847308f5b17e136aea72a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing a facial massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d68357b9bb814af9943ab5c950ec871b/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging the arm and leg of a prone customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/d776f773984346ab9b5398777804f023/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage and rolling treatment to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/d83b6a0781814d67a0491ea1113da2d2/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing head care and hair combing services to a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/db2032249b6e46eaa27a58b41d8e78ff/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "providing a leg massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/dbed527ebd5c472a8b2ba54dc6e3c06e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Wiping glass jars from an orange basin and placing them into a white square basin."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/dcd112c4d0564a40a7933bbb034b43f7/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging and checking the back of a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/df3a5ed368f94f679de8052b9fe734f1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing an essential oil back massage for a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/e0d929d37c4945d79dbe396d7af6b174/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/e24e546116b043fe9be6a6cbb95d6f6e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the head and scalp of a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e6f65f5389ca49efbf1a0d0b3936924d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing an abdominal massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e71c84fa77904fc8b1c27db73cf8b067/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "performing meridian massage on customer arm"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e748cf3d7b864aee92a21af303ebd861/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing head scraping therapy on a child"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e87b7546cd85442db7d3fa219d1093d1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "giving a back rolling massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e8adf463d0e24e0d99939bbe405730c0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Preparing a bed and providing a back massage"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e923f33650694e1eb7d443736b514dee/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying face down on a bed by pounding with fists"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ea46004d58694822969ae76f78ec3dc9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying prone on a massage table to relax leg muscles."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ea4a3b2641724a6a80e4811305291de4/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing abdominal massage service to a customer in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ea58ca62a2b2469db458e916411a69e1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back massage and scraping therapy to a customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ea9ef2948a3d4d28ab68d7c19b124f66/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back and head massage services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/eac2705168584ec38d17bbe2aeb561fa/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and stacking towels on a bed surface"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ead5680367764cde9c80dcd1d318c8da/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the legs of a customer lying prone on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ec6770a4726646438e028ee6125b0f4f/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a beauty or personal care massage service to a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ec76590bf18e46cfbcbaf540cad72f33/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Practicing massage techniques on a head model and preparing to post a massage diagram."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ef2811668c43470f947be3a3bc6291ef/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing an abdominal massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/f0ba1aec27fb4a0fa72f4e8ff6c4c7a0/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the leg of a customer lying on a bed in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/f0e6d392aefe456ea164f114e44e2f3a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a full body massage to a prone customer in a beauty salon"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/f29ca8ac464c4900b22a446677d6155d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "massaging customer back and shoulders to relax muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f42fcde2d4124263a76e998ed954bb90/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer lying on a beauty bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f4b71ab13614488fa9bde2afb5f019a5/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing back massage and applying essential oil for a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f654ce2f600840989d46d470deb28f4e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to a client"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f839f3dfa1b74725a5f45c62b32d9044/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back scraping and massage services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f847c5bf1770445996c661d2c960d2f1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a back massage and applying essential oil to the customer in a beauty salon."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fa02a2a7ec9641e9a7d9e2d330329412/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the back and shoulders of a customer."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/facd1768e8ab4821ab9036b95340e5ef/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Performing an abdominal massage on a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fd349f4169934f69aa7f7ee3adfc013c/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging a customer's back with a rolling stick and applying essential oil."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fe6d8064889e41c38352336fb4cba780/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a head, shoulder, and neck massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fffcb0e1b60240af858209d49df5df4e/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer using essential oil and various massage techniques."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/016f54f7b95f49a7b82702b0b71826d1/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing back scraping and massage services to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000057/39babc8254524730986353912bc6f088/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Folding and placing towels on a bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000058/45e61ebb31464765a2261016ef324fa9/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging customer legs in a beauty shop"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000058/4aa2bddc04c641e3902bf3e6c38200b6/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Rolling up customer pants and massaging calf"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000060/89af08991fdf44fa9fbd32a67b172c85/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Giving a head massage to a customer lying on a bed."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000060/8c9a205fa33946648366bb21886d4c3a/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the lower back of a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/a2dfa4e7395b412f8b066a9ca87fb5cb/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing massage therapy to relax customer muscles"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/ac8d3ec97e65415c869346d495dc9689/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer using essential oil in a beauty shop."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/b38877993cff4fe39c3cdc3e0aafec45/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing a back massage to a customer and replenishing essential oil."
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/c8edca6bd1c644d09f3720deaea47e45/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Massaging the back and shoulders of a customer lying on a massage bed"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/c98f54ac510344bbb3513cdb7de1127d/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "massage_room",
+        "original_description": "Providing leg massage to a customer"
+      },
+      "after": {
+        "category": "professional_work",
+        "area": "conference_center"
+      },
+      "only_category_area_changed": true
+    }
+  ]
+}

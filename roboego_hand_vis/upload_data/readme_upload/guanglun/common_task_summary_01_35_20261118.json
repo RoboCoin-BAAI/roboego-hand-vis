@@ -1,0 +1,61 @@
+{
+  "samples": 6662,
+  "classification_errors": 0,
+  "other": 153,
+  "changed": 6662,
+  "write_errors": 0,
+  "datasets": {
+    "jianzhi": {
+      "samples": 3492,
+      "classes_including_other": 20,
+      "other": 86,
+      "counts": {
+        "hair_styling": 1441,
+        "hair_care": 216,
+        "object_organizing": 642,
+        "environment_cleaning": 86,
+        "body_care": 377,
+        "other": 86,
+        "object_cleaning": 230,
+        "nail_care": 112,
+        "object_packaging": 44,
+        "skin_care": 154,
+        "object_maintenance": 8,
+        "food_preparation": 4,
+        "object_assembly": 5,
+        "object_processing": 5,
+        "makeup_application": 36,
+        "object_transport": 19,
+        "object_inspection": 3,
+        "object_labeling": 12,
+        "writing_drawing": 10,
+        "object_filling": 2
+      }
+    },
+    "guanglun": {
+      "samples": 3170,
+      "classes_including_other": 15,
+      "other": 67,
+      "counts": {
+        "object_organizing": 1644,
+        "object_labeling": 141,
+        "object_assembly": 103,
+        "object_transport": 54,
+        "object_packaging": 266,
+        "food_preparation": 117,
+        "object_processing": 76,
+        "other": 67,
+        "object_cleaning": 426,
+        "environment_cleaning": 79,
+        "object_inspection": 46,
+        "object_filling": 89,
+        "object_operation": 3,
+        "object_maintenance": 51,
+        "writing_drawing": 8
+      }
+    }
+  },
+  "actual_classes_including_other": 21,
+  "scene_common_task_groups": 171,
+  "task_name_preserved": true
+}

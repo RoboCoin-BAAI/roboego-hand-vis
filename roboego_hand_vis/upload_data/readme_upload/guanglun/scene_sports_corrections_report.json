@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "mode": "apply",
+    "total": 16,
+    "checked": 16,
+    "changed": 16,
+    "unchanged": 0,
+    "errors": [],
+    "verified": 16,
+    "only_category_area_changed": true,
+    "report_dir": "/share/project/liuyou/humancoin/data/guanglun_scene_cleaning_20261118/sports_corrections_v3"
+  },
+  "files": [
+    {
+      "path": "batch_0000003/69889e568dd5497e7d2053719ec3121b200909b8e165d459c3a2504e3d56cfcc/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "7e87128bcaeae3aa19c38eb4128e6ab5fbff9cd29b68555f3d6800bcdabd0778",
+      "after_sha256": "da1952fa6521486ff4c14325329294900d2989f4b9f62ad1f27f8ce09212c210"
+    },
+    {
+      "path": "batch_0000016/9d1b6fe7b41935946b3b8262f81336b314eda74f066163807388c4fe202cb34c/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "08dfaa97919dfc9fe5a6ab147e382470148113833fe209bbdd33979d5c32d540",
+      "after_sha256": "dc41c727861a54d5f8f0699c90efaf389d8bba9a7cd23063c72b0c3855fd5ab7"
+    },
+    {
+      "path": "batch_0000020/1177d0c33e5b0168e9288b4eaa157b3b1f66f3f22063500c37afdaea29ce654e/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "3b9d7f58ac22ef5bdec529b629cb1a2402f54e275603aeb1f337dde062e29645",
+      "after_sha256": "442e2d4e2641f0dd3508d43d076916df521f86c0d1640814e891cdc610973b25"
+    },
+    {
+      "path": "batch_0000020/18c413da8ba3a3d1a4194c6783ea82f225a6dcad1de64ad6a078e25d57328b85/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "6c8a822d8e04252a81241f120a1f9499c40a0dd7bbf84aebdf650c909a291b18",
+      "after_sha256": "6779c5b698a34cd5400355183c473a1fb2d1a95f5fac80f2921d89c3ece6780c"
+    },
+    {
+      "path": "batch_0000020/5ea43d17de00cc3b10c06c74138837452ed55df5a98720d13fe7f884001d2c1e/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "fee71cd3a4aad0a1a6a85865e66a7f35fe14d376e752a7424d7051f2cf1994ab",
+      "after_sha256": "be97ef569784c0003980da52abe7b26d50dfd2003d114f7bfe94c2624e6560e9"
+    },
+    {
+      "path": "batch_0000020/601f246ae946b2b24495722c5ec7307514406564b513c494cb8d4a1f54501e68/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "3181f8e511e76e0e1e598da40fb6ab11e49cf3e49f4e405dabc466d6d3830e3f",
+      "after_sha256": "7acac9dd7c0a8efb2b131eb15db61746328b3921a13c76cab4707b598a2d3673"
+    },
+    {
+      "path": "batch_0000020/b27f826fce10f7cbda44a8c68c1ea9340a1594559667ea216ebe1249bd9f81f4/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "211d85f46b1b4e993fcb6dceb09796294c8450681573b142fddfc8b08ce70d6a",
+      "after_sha256": "293d7a46bf5a533999f26b6ec6024d7dde4b2ad934874a177a6e00f1eb1d84ea"
+    },
+    {
+      "path": "batch_0000020/bb489bf599686d1ddb8107d54c3b0e8427043da212a74e141ce9bb3a66b989db/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "cda3052a407fe9924ccc5b7406ade26043665ff050ef953334ac2fa5c5e220a3",
+      "after_sha256": "64724e43cd0dc1e53db80154c77dc0d664aa1e97d0a2217788998cd1f2fa31df"
+    },
+    {
+      "path": "batch_0000020/e4e8c3bd9295c8e9fd3794d23487dbd55b0d74579172d9f0443e1c79ba29e92b/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "347834dba059415c57dbbae3072810341a4923d3504b4ef9600db40e1904e651",
+      "after_sha256": "2c29eed675f7e45948c8ee52c3ea77521c31ba64e5e42a1c8f6787d9c19d35ad"
+    },
+    {
+      "path": "batch_0000020/eb1388d28635bce4c30d5532746e9a42625cd8a39e8ac170f0f936c844a1e617/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "e5ede92352e12d7c86eaad9dd5a406c54e7771ad41a603bd39c131a5281cf7e4",
+      "after_sha256": "08b5f5d056da24ac186073596f4cc30aa6040014ff305a07f56d1cf65422bfa3"
+    },
+    {
+      "path": "batch_0000020/f734c74bf0edb3600c6f4337fde09ee6056bee11190926c674a3e50ef6cf5681/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "f2fb29b8a7d25dee097aef261071657ccbb1ee45cdf0dfcbc6aff291078d0bb5",
+      "after_sha256": "6292d3be8406ef8bf55f67dbfa7ec5320aaaf6c36207a73f6a481e9d19da2d5c"
+    },
+    {
+      "path": "batch_0000025/829487a70ac40af5ca8c929b9c9a1ac47e34b8bcdab89f095d86ac514f2bfad4/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "3a11d1a5872964c4e903eb9432f0c490322fce39693bbe5200b32e0aaf3cf8a4",
+      "after_sha256": "32e2758504ca7db18af17d8ec0c110d9f75e04e2ce8eb6ce823b8cd863cc417c"
+    },
+    {
+      "path": "batch_0000025/8e531e445f81250d981be91d7f54945f75ef285bd91fc78fddda1bbf5053fb71/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "05e22f2587e825e77572af0536961600dc8b921add6a63d742a32326e6c8648e",
+      "after_sha256": "da9f0fd773b0b8542d73ca36bed9c446c405ef3794844e9037bd2060685bb90e"
+    },
+    {
+      "path": "batch_0000025/ba88de7f4ac66e698ff08ee01216c442fc9eb109ed595219ed289483f1387471/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "3212e8a8e50b8968964d4e3f9990274f12a3579c0083379d2945749b6978a5a4",
+      "after_sha256": "7878a577f8fd31094323f497e267dc85a9a2f9c12be76e0f7667897c84596031"
+    },
+    {
+      "path": "batch_0000025/d1d63f2d3358901b4f95a978950531b6c84dde16b2b13063b90f0afe94601db1/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "9ded05e352b5ec061e199b98def7ccc9369f34c9948d39f5560747661aca1abd",
+      "after_sha256": "0a03cfb2fbdb4abf505854b767da91f6eba2ea5ec8e9d61cdc2e820b39c87810"
+    },
+    {
+      "path": "batch_0000025/e5cdc62956e411bbf3bf768487fc6c9b77c17f717fb88b9ee7777133517ba0cb/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "b007da1e4f70b905303756e981566aec1496e554eb409ff3668576cde91a9882",
+      "after_sha256": "4bd89c2f413c48665b39aeb3f9ef144def55b86bad26d90fd620dc14c6720568"
+    }
+  ]
+}

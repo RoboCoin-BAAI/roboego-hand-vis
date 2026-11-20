@@ -1,0 +1,1368 @@
+[
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000010/d4e3ad5aca69a23f20008bb306a0d0518353a0c503deca31d1a6f7476827ca97/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid from the glass cup into the paper cup and cleans the countertop.",
+    "scene": "A kitchen area for pouring liquid between cups and cleaning the countertop",
+    "provenance": null,
+    "subtasks": [
+      "Open the refrigerator and take out the glass with liquid.",
+      "Place the glass on the countertop and take out the paper cup from the cabinet.",
+      "Pour the liquid from the glass into the paper cup.",
+      "Put the empty glass back into the refrigerator and close the refrigerator door.",
+      "Move the paper cup with liquid to the other side of the countertop.",
+      "Wipe the countertop with a cloth to clean up the spilled liquid."
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000013/309d756f36bc27c1106a0cf8534d54b7523f3be73f925e2cfc8a999f492cf6c1/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wraps the glass with bubble wrap and puts it in the box to complete the packaging.",
+    "scene": "A packing area for wrapping and boxing glass items",
+    "provenance": null,
+    "subtasks": [
+      "Remove the two glasses from the box and place them on the table",
+      "Fold the bubble wrap and put it at the bottom of the box",
+      "Fold the bubble wrap and put it at the bottom of the box again",
+      "Wrap the glass with the bubble wrap and put it in the box",
+      "Wrap the other glass with the bubble wrap and put it in the box",
+      "Fold the bubble wrap and put it in the box to fill the gaps",
+      "Fold the bubble wrap and put it in the box to fill the gaps again",
+      "Fold the bubble wrap and put it in the box to fill the gaps",
+      "Fold the bubble wrap and cover the top of the box",
+      "Fold the bubble wrap and cover the top of the box again",
+      "Close the box lid to complete the packaging"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000013/91bd5b3e0f7fffd4e6d111837d16aae1874bcf1bbc0769d08173f579ff477604/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wraps the glass with bubble wrap and puts it into a cardboard box to complete the packaging.",
+    "scene": "A packing area for wrapping and boxing glass items",
+    "provenance": null,
+    "subtasks": [
+      "Take two glasses out of the cardboard box and place them on the table",
+      "Fold the bubble wrap and put it at the bottom of the cardboard box",
+      "Wrap the glass with the bubble wrap and put it into the cardboard box",
+      "Fold the bubble wrap and cover it over the glass",
+      "Close the lid of the cardboard box to complete the packaging"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000013/9a4f903fd595b818217e870e8c7dd4d4d7aa59425f8af4f077531855c78db513/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wraps the glass with bubble wrap and puts it into the box to complete the packaging.",
+    "scene": "A packing area for wrapping and boxing glassware",
+    "provenance": null,
+    "subtasks": [
+      "Take two glasses out of the box and put them on the table",
+      "Fold the bubble wrap and put it at the bottom of the box",
+      "Wrap the glass with bubble wrap and put it in the box",
+      "Fold the bubble wrap and cover it over the glass",
+      "Close the lid of the box to complete the packaging"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000013/b861c2c1ad103471fd7f0127c1b022f64aec3b017b7fca6bf1fed77393183ead/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wraps the glass with bubble wrap and puts it in a paper box to complete the packaging.",
+    "scene": "A packing area for wrapping and boxing glass items",
+    "provenance": null,
+    "subtasks": [
+      "Remove the two glasses from the cardboard box and place them on the table",
+      "Place the bubble wrap at the bottom of the cardboard box",
+      "Wrap the glass with bubble wrap and put it into the cardboard box",
+      "Continue to wrap the glass with bubble wrap and put it into the cardboard box",
+      "Put the bubble wrap into the cardboard box to cover the glass"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000013/e00633d60cb263db79b8a1e3adb22d7eb973f3f13ba028615d72719a548616ed/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wraps the glass with bubble wrap and puts it into a cardboard box to complete the packaging.",
+    "scene": "A packing area for wrapping and boxing a glass item",
+    "provenance": null,
+    "subtasks": [
+      "Take the glass out of the cardboard box and place it on the table",
+      "Fold the bubble wrap and put it at the bottom of the cardboard box",
+      "Wrap the bubble wrap around the glass",
+      "Put the glass with bubble wrap into the cardboard box",
+      "Cover the top of the glass with bubble wrap and arrange it",
+      "Close the lid of the cardboard box and arrange it"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000022/590cbb83e20d63e4fcb82db3a5ffd8131353c5551dc851cccd8910d55998866e/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts face masks of different colors, stacks them neatly, and puts them into a transparent box to complete the storage.",
+    "scene": "A workspace for sorting, stacking, and storing facial masks in a transparent box",
+    "provenance": null,
+    "subtasks": [
+      "Place the pink facial mask on the table",
+      "Stack the green facial mask on the table",
+      "Stack the yellow facial mask on the table",
+      "Stack the blue facial mask on the table",
+      "Arrange the remaining facial masks neatly and put them into the transparent box"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000025/893e75411020e7493955fe06b9999e4440f9502d268d4a78793ef5e309ab4c71/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person takes the glass out of the packaging and places it on the shower caddy to complete the organization.",
+    "scene": "A bathroom area for organizing glassware and cleaning up packaging",
+    "provenance": null,
+    "subtasks": [
+      "Remove the glass from the plastic packaging and place it on the sink counter.",
+      "Pick up two glasses, walk to the shower area, and place them on the shelf.",
+      "Pick up the plastic packaging on the sink counter, walk to the shower area, and throw it into the trash can."
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000031/57e858aecc50689dff40b5b2c19ed401752768bf764a98f0c8141f208e6d00d1/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid from the cup into the storage box and puts the empty cup into the storage bag to complete the cleanup.",
+    "scene": "A cleanup area for transferring liquids from cups to a storage box and discarding empty cups into a bag",
+    "provenance": null,
+    "subtasks": [
+      "Pour the liquid from the cup into the storage box",
+      "Put the empty cup into the storage bag",
+      "Pour the liquid from the cup into the storage box",
+      "Put the empty cup into the storage bag",
+      "Pour the liquid from the cup into the storage box",
+      "Put the empty cup into the storage bag"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/1e0e02e458d8298918394481d776b6ad79f94bcd8472f22db3f6587920457a3a/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid from multiple small bottles into a large bottle to complete the liquid mixing.",
+    "scene": "A sink area for mixing liquids by pouring from multiple small bottles into a large container",
+    "provenance": null,
+    "subtasks": [
+      "Place the large bottle in the sink.",
+      "Open the small bottle and pour the liquid into the large bottle.",
+      "Cap the small bottle and place it on the edge of the sink.",
+      "Open another small bottle and pour the liquid into the large bottle.",
+      "Cap the small bottle and place it on the edge of the sink.",
+      "Open the third small bottle and pour the liquid into the large bottle.",
+      "Cap the small bottle and place it on the edge of the sink.",
+      "Open the fourth small bottle and pour the liquid into the large bottle.",
+      "Cap the small bottle and place it on the edge of the sink.",
+      "Place the large bottle on the edge of the sink.",
+      "Put the small bottle in the basin nearby."
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/1fc953037fa9a4913e113e6ef248344c71efbf2638cc159098f3d80e22561742/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid into the soap dispenser bottle and wipes the sink countertop to complete the cleaning.",
+    "scene": "A household cleaning area involving a sink countertop for refilling soap and wiping surfaces.",
+    "provenance": null,
+    "subtasks": [
+      "Open the hand soap bottle",
+      "Pour the liquid into the hand soap bottle",
+      "Cover the hand soap bottle and put it back in place",
+      "Cover the liquid bottle and put it back on the tray",
+      "Wipe the sink countertop with a rag"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/36990d45effd0c3ebbcf3107c01901dfd43f186677ae047dcddcb214aa709abf/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person refills the soap dispenser with liquid and wipes the sink to complete the cleaning.",
+    "scene": "A household cleaning area for refilling a soap dispenser and wiping the sink countertop",
+    "provenance": null,
+    "subtasks": [
+      "Open the soap dispenser bottle and remove the pump head",
+      "Open the refill bottle and pour the liquid into the soap dispenser bottle",
+      "Install the pump head back into the soap dispenser bottle and place it in the original position",
+      "Close the refill bottle and place it back in the tray",
+      "Pick up the cloth and wipe the sink countertop"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/89bcbdf8bbf8424707c5bf9e5d1350d1ae417dea660b155c830b47e0d0f57070/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid from multiple small bottles into the soap dispenser bottle to mix the liquids.",
+    "scene": "A household area for mixing liquid ingredients into a soap dispenser bottle",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the hand soap bottle and open the cap",
+      "Pour the liquid from the small bottle into the hand soap bottle",
+      "Pour the liquid from another small bottle into the hand soap bottle",
+      "Pour the liquid from the pink bottle into the hand soap bottle",
+      "Close the cap of the hand soap bottle and put it back in place"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/97c63a186ef69c266a5034d7d890ab74072209a5ef36880d18608661494fb2fb/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid from the transparent bottle into the brown bottle to complete the liquid distribution.",
+    "scene": "A workspace for transferring liquid between bottles and organizing items on a table",
+    "provenance": null,
+    "subtasks": [
+      "Unscrew the cap of the transparent plastic bottle",
+      "Pour the liquid from the transparent plastic bottle into the brown bottle",
+      "Tighten the cap of the transparent plastic bottle and place it on the table",
+      "Screw the pump head back onto the brown bottle and tidy up the table"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000033/c0d14f81cf12bde120b072332a56164f10b8c07ba2213fb2a85c863a0f7d30eb/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the liquid into small bottles to complete the organization.",
+    "scene": "A household area for organizing and decanting liquids from pump bottles into smaller containers",
+    "provenance": null,
+    "subtasks": [
+      "Unscrew the pump head of the pink bottle and pour out the liquid",
+      "Unscrew the pump head of the green bottle and pour out the liquid",
+      "Pour the green liquid into the small green bottle",
+      "Reattach the pump head to the green bottle and tighten it",
+      "Pour the clear liquid into the small pink bottle",
+      "Reattach the pump head to the pink bottle and tighten it",
+      "Wipe the countertop with a paper towel and discard it"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000040/47e229a44eb3e912176dbe91779d89b8d1fd6e0606a84b92bf908d5261dd2ba1/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person rinses multiple glasses from the sink one by one and places them on the drying rack to complete the cleaning.",
+    "scene": "A kitchen sink area for washing and drying glassware",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the glass and rinse it clean in the sink",
+      "Place the clean glass on the dish rack",
+      "Pick up the dark glass and rinse it clean in the sink",
+      "Place the clean dark glass on the dish rack",
+      "Pick up the glass with a handle and rinse it clean in the sink",
+      "Place the clean glass with a handle on the dish rack",
+      "Pick up another glass with a handle and rinse it clean in the sink",
+      "Place the clean glass with a handle on the dish rack",
+      "Pick up the glass and rinse it clean in the sink",
+      "Place the clean glass on the dish rack",
+      "Pick up the last glass and rinse it clean in the sink",
+      "Place the clean glass on the dish rack"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000040/bd0b3ff6ade3c7e8747b1e0004b8bf951460d3d7f0a1a04dbcf3558afed5f912/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person rinses four glasses with orange liquid one by one and places them upside down on the drying rack to complete the cleaning.",
+    "scene": "A kitchen sink area for washing and drying glassware",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the glass with orange liquid, rinse it clean in the sink, and place it upside down on the drying rack",
+      "Pick up the second glass with orange liquid, rinse it clean in the sink, and place it upside down on the drying rack",
+      "Pick up the third glass with orange liquid, rinse it clean in the sink, and place it upside down on the drying rack",
+      "Pick up the fourth glass with orange liquid, rinse it clean in the sink, and place it upside down on the drying rack"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/1ba59a1b36e28d0bc0154104695c5a83c88c4d651b053c315671c32482d5b5ca/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person repeatedly picks up different styles of mask packages in front of the shelf, checks them, and puts them back to choose a suitable mask.",
+    "scene": "A retail area where a person browses and inspects various mask packages on a shelf to make a selection.",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the blue mask package, check it, and put it back on the shelf",
+      "Pick up the light blue mask package, check it, and put it back on the shelf",
+      "Pick up the yellow package with the blue mask, check it, and put it back on the shelf",
+      "Pick up another blue mask package, check it, and put it back on the shelf",
+      "Pick up the dark gray mask package, check it, and put it back on the shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/1d69cae3e38ce31437529380dc0ba852790572ac9108ff44b405390e730ffa2c/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts and arranges the masks on the shelf.",
+    "scene": "A storage area for organizing face masks on shelves",
+    "provenance": null,
+    "subtasks": [
+      "Move the black mask from the right side of the shelf to the left side and organize it",
+      "Move the white mask from the right side of the shelf to the middle and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the black mask from the middle to the left side and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it",
+      "Move the white mask from the right side to the middle and organize it"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/1e0c72e322af974c10c1a9bc4d2af0b3e0bbd88da7da87b16b65ca0cd03fdc12/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person organizes various packaged masks and places them on the shelves to complete the product display.",
+    "scene": "A retail area for organizing and displaying packaged masks on shelves",
+    "provenance": null,
+    "subtasks": [
+      "Arrange the mask in orange packaging and place it on the right side of the shelf",
+      "Arrange the mask in colorful packaging and place it on the right side of the shelf",
+      "Arrange the mask in black packaging and place it on the right side of the shelf",
+      "Arrange the mask in white packaging and place it on the right side of the shelf",
+      "Arrange the remaining mask in orange packaging and place it on the right side of the shelf",
+      "Rearrange the mask in black packaging and the mask in orange packaging",
+      "Rearrange the mask in colorful packaging and the mask in white packaging",
+      "Adjust the position of the mask in black packaging and the mask in colorful packaging",
+      "Adjust the position of the mask in white packaging and arrange it neatly",
+      "Adjust the position of the mask in orange packaging and arrange it neatly",
+      "Arrange the remaining mask in orange packaging and place it on the shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/322696930948b830e0faf9fe2345eef6276613b18a6f3bb35f3b46c56a89ce60/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts various mask packages on the shelf to complete the organization.",
+    "scene": "A shelving area for sorting and organizing various mask packages",
+    "provenance": null,
+    "subtasks": [
+      "Place the black mask package on the right side of the shelf",
+      "Place the pink and blue mask packages next to the black mask package",
+      "Place the white and green mask packages on the shelf",
+      "Place the orange children's mask package on the shelf",
+      "Place the white mask package on the left side of the shelf",
+      "Place the black mask package on the right side of the shelf",
+      "Place the orange children's mask package on the shelf",
+      "Place the orange children's mask package on the shelf",
+      "Place the white mask package on the left side of the shelf",
+      "Place the pink and purple mask packages on the shelf",
+      "Place the black mask package on the right side of the shelf",
+      "Place the orange children's mask package on the shelf",
+      "Place the white mask package on the left side of the shelf",
+      "Place the pink and purple mask packages on the shelf",
+      "Place the black mask package on the right side of the shelf",
+      "Place the white mask package on the left side of the shelf",
+      "Place the orange children's mask package on the shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/47cc577822ece4ee3134874fa1b6cbbf5df98b627a436e66e1f4addd1c66c1ad/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts various mask packages and places them on the shelves to complete the product display.",
+    "scene": "A retail area for sorting and displaying various mask packages on shelves",
+    "provenance": null,
+    "subtasks": [
+      "Organize the white mask package and place it on the right side of the shelf",
+      "Organize the colorful mask package and place it on the right side of the shelf",
+      "Organize the white mask package and place it in the middle of the shelf",
+      "Organize the orange mask package and place it on the right side of the shelf",
+      "Organize the orange mask package and place it on the right side of the shelf",
+      "Organize the orange mask package and place it on the right side of the shelf",
+      "Organize the orange mask package and place it in the middle of the shelf",
+      "Organize the black mask package and place it on the right side of the shelf",
+      "Organize the black mask package and place it in the middle of the shelf",
+      "Organize the orange mask package and place it on the left side of the shelf",
+      "Organize the orange mask package and place it on the right side of the shelf",
+      "Organize the colorful mask package and place it in the middle of the shelf",
+      "Organize the black mask package and place it on the left side of the shelf",
+      "Organize the white mask package and place it on the right side of the shelf",
+      "Organize the black mask package and place it on the left side of the shelf",
+      "Organize the orange mask package and place it in the middle of the shelf",
+      "Organize the colorful and white mask packages and place them on the right side of the shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/62a50edf252eeff5a64270eeb13235c12d0e1b72041973b5afee55d0a530a914/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts the masks on the shelf and places them on the lower shelf to complete the organization.",
+    "scene": "A shelving area for sorting and organizing masks and packages",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the pink and blue masks from the shelf and place them on the lower shelf",
+      "Pick up the white package and the blue mask from the shelf and place them on the lower shelf",
+      "Pick up the pink and blue masks from the shelf and place them on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the white package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the red package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the red package and the blue mask from the shelf and place them on the lower shelf",
+      "Pick up the white package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the white package and the red package from the shelf and place them on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the red package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the red package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the red package from the shelf and place it on the lower shelf",
+      "Pick up the red package and the white package from the shelf and place them on the lower shelf",
+      "Pick up the white package and the red package from the shelf and place them on the lower shelf",
+      "Pick up the red package and the pink mask from the shelf and place them on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the blue mask from the shelf and place it on the lower shelf",
+      "Pick up the red package from the shelf and organize it",
+      "Pick up the blue mask from the shelf and organize it",
+      "Pick up the blue mask from the shelf and organize it",
+      "Pick up the blue mask from the shelf and organize it",
+      "Pick up the pink mask from the shelf and organize it",
+      "Pick up the white package from the shelf and organize it"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/8a1ac61045bcb943bfe20574662a2d1460ffdb9e21b8b786d47e2d8aa5c330ac/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person moves the mask from the upper shelf to the lower shelf to complete the organization.",
+    "scene": "A storage area for organizing face masks on shelves",
+    "provenance": null,
+    "subtasks": [
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf",
+      "Pick up two packs of face masks from the shelf and place them on the lower shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/9abb1a7b12b4c1cff582236696152cf08b65d830eeccddd7ee02627af84356dc/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person organizes the mask into the box and moves it to the designated shelf to complete the item placement.",
+    "scene": "A storage area for organizing and shelving mask packages",
+    "provenance": null,
+    "subtasks": [
+      "Take the mask out of the packaging bag and put it into the box.",
+      "Pick up the box with the mask from the shelf and move it to another shelf layer.",
+      "Pick up the unopened mask packaging bag from the shelf and move it to another shelf layer."
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000044/b758c4c00842b1e65eebe3df397ea238b47fd8299e5d34e2d6cd9002130b39de/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "The person sorts masks with different packages onto the shelf to complete the organization.",
+    "scene": "A retail or storage area for organizing packaged face masks on shelves",
+    "provenance": null,
+    "subtasks": [
+      "Place the mask with pink and green packaging on the right side of the shelf",
+      "Place the mask with white and pink packaging on the right side of the shelf",
+      "Place the mask with blue and pink packaging on the right side of the shelf",
+      "Place the mask with pink and purple packaging on the right side of the shelf",
+      "Place the mask with black packaging on the right side of the shelf",
+      "Place the mask with black packaging on the right side of the shelf",
+      "Place the mask with black and orange packaging on the right side of the shelf",
+      "Place the mask with white and orange packaging on the right side of the shelf",
+      "Place the mask with orange packaging on the right side of the shelf",
+      "Place the mask with orange packaging on the left side of the shelf",
+      "Place the mask with orange packaging on the right side of the shelf",
+      "Place the mask with orange packaging on the left side of the shelf",
+      "Place the mask with black packaging on the left side of the shelf",
+      "Place the mask with black packaging on the right side of the shelf",
+      "Place the mask with black packaging on the left side of the shelf",
+      "Place the mask with pink and purple packaging on the left side of the shelf",
+      "Place the mask with blue and pink packaging on the left side of the shelf",
+      "Place the mask with white packaging on the left side of the shelf",
+      "Place the mask with white packaging on the left side of the shelf",
+      "Place the mask with white packaging on the right side of the shelf",
+      "Place the mask with pink and green packaging on the right side of the shelf",
+      "Place the mask with black packaging on the right side of the shelf",
+      "Place the mask with orange packaging on the left side of the shelf"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000053/05515c82494940696cc9995cd0539cd9788716afd44191c919a8cfe6a2e52f6f/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person dispenses the liquid from the large bottle into four small bottles to complete the dispensing process.",
+    "scene": "A workspace for dispensing liquid from a large container into smaller bottles",
+    "provenance": null,
+    "subtasks": [
+      "Move the large bottle of liquid to the right side and move the four small bottles to the center",
+      "Open the cap of the large bottle and open the first small bottle",
+      "Pour the liquid from the large bottle into the first small bottle and close the cap",
+      "Open the second small bottle, pour the liquid, and close the cap",
+      "Open the third small bottle, pour the liquid, and close the cap",
+      "Open the fourth small bottle, pour the liquid, and close the cap",
+      "Close the cap of the large bottle and return all bottles to their original positions"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000053/582d1fdc2362894d27e6c9e14c6ed84c329be6aeeb67d7dd5e7322b7e385844e/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person distributes the liquid from the large bottle into three small bottles to complete the distribution.",
+    "scene": "A workspace for transferring and organizing liquid containers",
+    "provenance": null,
+    "subtasks": [
+      "Open the cap of the large bottle and place it on the table",
+      "Open the pink small bottle, pour liquid into it, and tighten the cap",
+      "Open the purple small bottle, pour liquid into it, and tighten the cap",
+      "Open the blue small bottle, pour liquid into it, and tighten the cap",
+      "Align the three small bottles neatly and put the cap back on the large bottle"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000055/425f20495a99633e2ebd8fe58ccb921a02d0ef474a59165ac4f62c273520fc4c/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person washes four glasses in sequence and puts them into the draining rack to complete the cleaning.",
+    "scene": "A kitchen area for washing dishes and drying them in a rack",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the sponge and apply dish soap to it",
+      "Clean the first glass with the sponge",
+      "Rinse the first glass under the faucet",
+      "Place the first glass in the drying rack",
+      "Wet the sponge again and apply dish soap to it",
+      "Clean the second glass with the sponge",
+      "Rinse the second glass under the faucet",
+      "Place the second glass in the drying rack",
+      "Wet the sponge again and apply dish soap to it",
+      "Clean the third glass with the sponge",
+      "Rinse the third glass under the faucet",
+      "Place the third glass in the drying rack",
+      "Wet the sponge again and apply dish soap to it",
+      "Clean the fourth glass with the sponge",
+      "Rinse the fourth glass under the faucet",
+      "Place the fourth glass in the drying rack"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000057/af64e4c46f68eb31bda4959cf17f9836c309e4a3f240163c7bc0fb7640bf5bc5/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person wipes the outer surface of the glass with a rag to complete the cleaning.",
+    "scene": "A household cleaning area for wiping a glass with a cloth",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the glass and the cloth",
+      "Wipe the outer surface of the glass with the cloth",
+      "Place the glass back on the countertop and fold the cloth"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000062/03df2fb4cb349c48b7f728a3ca5834045b31a21136c7e7772ce46087d880585a/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the green liquid into six paper cups in sequence and places them on a tray to complete the portioning.",
+    "scene": "A food preparation area for portioning liquids into cups and arranging them on a tray",
+    "provenance": null,
+    "subtasks": [
+      "Pour the green liquid into the first paper cup and place it on the tray",
+      "Pour the green liquid into the second paper cup and place it on the tray",
+      "Pour the green liquid into the third paper cup and place it on the tray",
+      "Pour the green liquid into the fourth paper cup and place it on the tray",
+      "Pour the green liquid into the fifth paper cup and place it on the tray",
+      "Pour the green liquid into the sixth paper cup and place it on the tray"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000063/1c35d638a136a7417c291e0d6c5d2ab453c80a5aad107f2b003ab07201cc46c5/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person opens the bottle and pours the liquid into the plastic box to complete the distribution.",
+    "scene": "A workspace for transferring liquid between containers",
+    "provenance": null,
+    "subtasks": [
+      "Open the lid of the white bottle",
+      "Open the transparent plastic box",
+      "Pour the liquid in the bottle into the plastic box",
+      "Close the lid of the plastic box",
+      "Cover the white bottle with the lid"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000066/3e211edbff15c39591043ef6b4b09603826762a84f6ee68052f7c72e8f5e2162/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours dark liquid into a glass and tightens the lid to complete the portioning.",
+    "scene": "A kitchen countertop area for pouring and sealing liquids",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the glass and the measuring cup with dark liquid",
+      "Pour the dark liquid from the measuring cup into the glass",
+      "Place the empty measuring cup and the glass full of liquid back on the countertop",
+      "Pick up the lid and tighten it on the glass"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000074/5b8844f8ac83f24c58be2815d9116f1548f659c6ba0a470aa9ca7e11d6b0c7d3/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person applies liquid to the nail tips in batches and places them into a UV lamp for curing to complete the manicure.",
+    "scene": "A workspace for applying liquid to nail tips and curing them in a UV lamp",
+    "provenance": null,
+    "subtasks": [
+      "Remove the nail tip from the wooden board and apply liquid to it",
+      "Place the nail tip with liquid into the UV lamp for curing",
+      "Apply liquid to another batch of nail tips",
+      "Place the second batch of nail tips into the UV lamp for curing",
+      "Apply liquid to the third batch of nail tips",
+      "Place the third batch of nail tips into the UV lamp for curing",
+      "Apply liquid to the fourth batch of nail tips",
+      "Place the fourth batch of nail tips into the UV lamp for curing",
+      "Apply liquid to the last batch of nail tips",
+      "Place the last batch of nail tips into the UV lamp for curing"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000077/2f010072b188022f30895de2007d059177c252678563652c1c398d45629509d8/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person places the cup on the tray, pours liquid into it, and carries it to the table.",
+    "scene": "A domestic area for preparing and serving beverages",
+    "provenance": null,
+    "subtasks": [
+      "Place the four cups on the wooden tray in sequence",
+      "Pick up the kettle and pour yellow liquid into the four cups",
+      "Lift the tray with the cups, walk to the table, and put it down"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000077/4e4795e5db3c2db5f146158f0201205e7e44fff8daf8bbd7eaf7aad3d82b88da/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours yellow liquid into the cup and places it on a tray to prepare for distributing drinks.",
+    "scene": "A beverage preparation area for pouring drinks into cups and serving them on a tray.",
+    "provenance": null,
+    "subtasks": [
+      "Move the four cups from the table to the tray",
+      "Move the kettle from the table to the tray",
+      "Pour the yellow liquid in the kettle into the four cups",
+      "Put the kettle back on the table",
+      "Pick up the tray with the four cups and walk toward the round table"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000077/927d955a159f4a80da8ac2194cfe278d6666d21b8ed32587c06a3c455ac45cae/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person pours the transparent liquid and the orange liquid into the small plastic cup in sequence to complete the portioning.",
+    "scene": "A workspace for portioning liquids using cups and wiping the surface",
+    "provenance": null,
+    "subtasks": [
+      "Pour the transparent liquid into the small plastic cup on the tray",
+      "Pour the orange liquid into the measuring cup",
+      "Pour the orange liquid from the measuring cup into the small plastic cup",
+      "Wipe the table with the blue cloth"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000077/f9c1581d20fee64cae4b5ff21246b2dced5275fd2aecdd1e53995d6e6966f831/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "The person puts the cup on the tray, pours orange liquid into it, and carries it to the round table to prepare for serving drinks.",
+    "scene": "A dining area for preparing and serving beverages",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the four transparent cups from the tablecloth and place them upside down on the wooden tray",
+      "Pick up the thermos and pour the orange liquid into the four cups on the tray in sequence",
+      "Lift the wooden tray with the four cups of orange liquid with both hands and walk toward the round table"
+    ]
+  },
+  {
+    "dataset": "guanglun",
+    "path": "batch_0000087/5a4da6b8c6d7a4539ed362cbfa19c592e12c4bd5cbfe8579f8c1180174531738/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "The person puts a wooden lid on the glass and wraps it with bubble wrap to complete the packaging.",
+    "scene": "A packing area for packaging glass containers with lids and protective wrapping",
+    "provenance": null,
+    "subtasks": [
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap",
+      "Pick up the glass and cover it with the wooden lid",
+      "Wrap the glass with bubble wrap"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000010/88de3abfced747fba2a25ccadbde898f/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Fold the masks in the plastic bag one by one, and stack the folded masks on the sofa.",
+    "scene": "folding masks and stacking them on a sofa",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/beauty_personal_care/barber_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Fold the mask and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag, fold it and place it on the sofa",
+      "Take the mask out of the plastic bag and fold it"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000025/50f0a3a235544d9c94f7f8f41a0ab48d/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Store the facial masks on the shelf into the carton, then walk to the manicure area to store the nail polish on the nail rack.",
+    "scene": "Storing facial masks into a carton and organizing nail polish on a nail rack in a beauty salon.",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/beauty_personal_care/beauty_salon/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Put the facial mask in hand into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the stacked facial mask on the counter and put it into the carton",
+      "Pick up the stacked facial mask on the counter and put it into the carton",
+      "Adjust the mask stack and put the mask into the carton",
+      "Pick up the stacked facial mask on the counter and put it into the carton",
+      "Move the stack of masks from the corner to the middle of the counter",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Move the stack of masks from the corner to the middle of the counter",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Arrange the masks in the carton and adjust the carton position",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Move the stack of masks from the corner to the middle of the counter",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Arrange the masks in the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Move the stack of masks from the corner to the middle of the counter",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Arrange the masks in the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Pick up the facial mask on the counter and put it into the carton",
+      "Arrange the masks in the carton",
+      "Pick up the last facial mask on the counter and put it into the carton",
+      "Move items on the table and pull the nail polish carton over",
+      "Pick up the nail polish, check it and put it back into the carton",
+      "Pick up the nail polish and place it on the nail rack"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000030/92f802ad9a114e0383be219a277479a8/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "organize red and white envelopes on a white shelf",
+    "scene": "organizing facial mask sheets and boxes on a shelf in a beauty salon",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/beauty_personal_care/beauty_salon/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "take the red facial mask sheets from the shelf and align them neatly",
+      "place the sorted facial mask sheets on the shelf and adjust their arrangement",
+      "walk to the table and pick up the white facial mask box",
+      "place the white facial mask box on the shelf and adjust its position",
+      "arrange the red facial mask sheets on the shelf neatly",
+      "walk to the table and pick up another white facial mask box",
+      "place the white facial mask box on the shelf and adjust it",
+      "pick up a stack of red facial mask sheets from the shelf and align them",
+      "tie this stack of facial mask sheets with a rubber band",
+      "place the tied facial mask box on the shelf",
+      "pick up another stack of facial masks and tie it with a rubber band",
+      "add the scattered red facial mask sheets to this stack",
+      "place this stack of facial masks on the shelf and arrange them neatly",
+      "arrange all facial mask sheets on the shelf neatly",
+      "walk to the table, pick up the white facial mask box and place it on the shelf",
+      "pick up the last stack of red facial mask sheets from the shelf, align them and tie with a rubber band",
+      "place the last stack of facial masks on the shelf and adjust to align"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000051/2e9fdd9f0a3c4485ad357ae575df0698/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "Filter the soup, clean the soup bucket, and organize the kitchen work area",
+    "scene": "Filtering soup and cleaning a soup bucket in a milk tea shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/restaurant/milk_tea_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Put the pot lid on the tabletop",
+      "Organize the opening of the filter bag",
+      "Pour the liquid from the bucket into the filter bag to filter",
+      "Put the measuring cup under the water outlet of the water heater",
+      "Fill the measuring cup with hot water",
+      "Pour the water into the bucket, and pour the water used to rinse the bucket into the filter bag to filter",
+      "Put the soup bucket in the sink and turn on the faucet",
+      "Scrub the inner wall of the soup bucket",
+      "Pour out the dirty water in the bucket",
+      "Put the soup bucket under the worktable",
+      "Put the pot lid under the worktable",
+      "Move the stool next to the worktable",
+      "Organize the opening of the filter bag"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000053/a253aa0be0b04fa9be7fd92dd290dea2/annotation/episode_000000_structured.json",
+    "noun": "liquid",
+    "description": "Stir the liquid in the measuring cup, clean the countertop, pick up the measuring cup and walk to the front hall",
+    "scene": "Preparing drinks and cleaning the counter in a milk tea shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/restaurant/milk_tea_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Stir the liquid in the measuring cup",
+      "Wipe the countertop",
+      "Throw orange peels into the trash can",
+      "Pick up the measuring cup and walk to the front hall"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000054/d5e0a3d0ef4340d0b923bc5131022957/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Organize the pots and countertop in the stove area, then walk to the adjacent table, wipe it and place a tray, pick up the glasses one by one, wipe them clean and arrange them on the tray.",
+    "scene": "Cleaning and organizing kitchenware and glasses in a milk tea shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/restaurant/milk_tea_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Lift the pot lid and place it on the counter",
+      "Stir the food in the pot and return the spoon",
+      "Cover the pot with the lid",
+      "Turn off the induction cooker and move the pot",
+      "Wipe the induction cooker and countertop",
+      "Place the small pot back on the induction cooker",
+      "Wipe the countertop next to the sink",
+      "Walk to the black table, wipe the tabletop and place the tray",
+      "Wipe the first goblet and place it on the tray",
+      "Wipe the second goblet and place it on the tray",
+      "Wipe the third goblet and arrange it",
+      "Wipe the square glass and place it on the tray",
+      "Wipe the patterned glass and place it on the tray",
+      "Wipe the polygonal glass"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000056/103c7806142646908702f6f005b2912d/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe each glass surface of the glass shelf to clean the dust on the shelf.",
+    "scene": "Wiping glass shelves in a retail beauty shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the glass area of the shelf where bottled skin care products are placed",
+      "Wipe the glass area of the shelf where skin care sets and bouquets are placed",
+      "Wipe the glass area of the shelf where three-color skin care sets are placed",
+      "Wipe the glass area of the shelf where boxed skin care products are placed",
+      "Wipe the glass area of the shelf where honor certificates are placed",
+      "Wipe the glass area of the shelf where antique-style packaged sets are placed"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000056/1456950386f2499da755e08eb094bec2/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Wipe the masks from the box and place them neatly on the shelf",
+    "scene": "wiping and placing masks in a beauty shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000058/4b9ff48ff31a4434be6c73c7f50b776b/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Wipe the masks and stack them neatly on the counter.",
+    "scene": "Cleaning and organizing masks in a beauty shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Take the mask box from the basin, wipe it and stack it on the counter",
+      "Take the mask box from the basin, wipe it and stack it on the counter",
+      "Take the mask box from the basin, wipe it and stack it on the counter",
+      "Take the mask box from the basin, wipe it and stack it on the counter",
+      "Take the bagged mask from the basin, wipe it and arrange the packaging"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000059/6ed14c4d5cd74ee8ac4f78100fef5194/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe the corner glass display cabinet in the store, and clean each layer of glass countertop in turn.",
+    "scene": "Cleaning a glass display cabinet in a retail store",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the uppermost arc-shaped glass of the display cabinet",
+      "Wipe the second layer of arc-shaped glass of the display cabinet",
+      "Wipe the upper glass at the corner of the display cabinet",
+      "Wipe the middle glass at the corner of the display cabinet",
+      "Wipe the lower glass at the corner of the display cabinet",
+      "Wipe the upper glass of the straight section of the display cabinet",
+      "Wipe the middle glass of the straight section of the display cabinet",
+      "Wipe the lower glass of the straight section of the display cabinet"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000059/74ffff8fb258459e81a6f2a20f26ba9d/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Wipe the masks in the shopping basket and place them on the shelf, wipe the shelf layer, then wipe the masks in the bucket and place them on the shelf.",
+    "scene": "Wiping masks and shelves in a retail store",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the mask box and attempt to place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the mask box and place it on the shelf",
+      "Wipe the shelf layer",
+      "Wipe the shelf layer",
+      "Wipe the mask and place it on the shelf",
+      "Wipe the mask and place it on the shelf"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000060/75a584c4d28944d5b4d92a0777bb4e7c/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe the glass display case, then wipe the glass shelf, and organize the product packaging boxes on the shelf",
+    "scene": "Cleaning a glass display case and organizing product packaging boxes on shelves in a retail store.",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the lower glass of the display cabinet",
+      "Wipe the lower glass of the display cabinet",
+      "Organize the small boxes on the display case and wipe the upper glass",
+      "Move the large box on the display case",
+      "Wipe the remaining glass area of the display cabinet",
+      "Wipe the white bottled skincare product on the shelf and put it back in place",
+      "Move the gold square box on the shelf and wipe the glass",
+      "Wipe the glass on the lower area of the shelf board",
+      "Move the blue packaging box on the shelf, wipe the glass, and straighten it",
+      "Wipe the glass on the lower area of the shelf board",
+      "Wipe the glass on the lower area of the shelf board"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000060/7ef5693195c346c6866164a17f1f818c/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Wipe the masks in the basin, place them on the shelf, and arrange the masks on the shelf neatly.",
+    "scene": "Wiping and arranging masks in a beauty shop",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Adjust the position of the masks already placed on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf, align the masks on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf, align the masks on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask from the basin and place it on the shelf, align the masks on the shelf",
+      "Wipe the mask from the basin and place it on the shelf",
+      "Wipe the mask taken from the basin"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000062/b1bd0cc0b5de43c4ae5699a4d301a6b2/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Prepare cleaning supplies, and wipe the glass shelves of each layer of the corner display cabinet in the store.",
+    "scene": "Cleaning glass shelves of a display cabinet in a retail store",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Unscrew the cleaning bottle and place it on the cart",
+      "Soak the cleaning cloth and arrange it",
+      "Wipe the upper glass on the front of the display cabinet",
+      "Wipe the lower glass on the front of the display cabinet",
+      "Wipe the lower glass on the side of the display cabinet",
+      "Wipe the upper glass on the side of the display cabinet"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000062/bba6598ac29749f59bfb92edc5d76a4a/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe the glass display shelf and arrange the skin care products inside, wash the cleaning cloth and then wipe the skin care product bottles on the cart.",
+    "scene": "Wiping a glass display shelf and arranging skin care products in a retail beauty shop.",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the glass on the left side of the shelf and arrange the items inside",
+      "Move the cyan square box, wipe the glass under the box and replace the box",
+      "Wipe the glass around the green square box in the middle of the shelf",
+      "Move the yellow bottle, wipe the glass under the bottle and replace the bottle",
+      "Wipe the glass in the middle of the shelf to the blue square box area",
+      "Move the blue square box, wipe the glass under the box and arrange the box neatly",
+      "Wipe the glass around the packaging boxes on the right side of the shelf",
+      "Wipe the glass around the gift set and in the corner on the far right of the shelf",
+      "Walk to the basin",
+      "Wash the cleaning cloth and wring it dry",
+      "Walk to the cart",
+      "Arrange the position of the tissues on the cart",
+      "Pick up the small bottle with a dark cap, wipe the bottle body and place it back on the cart",
+      "Pick up the white bottle with a blue cap, wipe the bottle body and place it back on the cart",
+      "Arrange the placement of the bottles on the cart"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000063/d08b2d54c47f42a9908fe86efbf71b32/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Place the brown facial masks on the shelf, then take down the green facial masks, wipe them and place them back on the shelf neatly.",
+    "scene": "Organizing and cleaning facial masks in a retail store",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/beauty_shop/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Place the brown facial mask from the shopping basket onto the shelf",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Place the shopping basket on the stool",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the green facial mask and place it into the shopping basket",
+      "Wipe the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf",
+      "Place the green facial mask from the shopping basket onto the shelf"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000065/07bf587b6ad94f91956c7f050b88a5f3/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Place the packaged masks from the tray onto the shelf one by one and arrange them neatly.",
+    "scene": "arranging packaged masks on a shelf in a retail pharmacy",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/pharmacy/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the black-packaged mask from the tray onto the shelf",
+      "Place the blue-white packaged mask from the tray onto the shelf",
+      "Place the blue-white packaged mask from the tray onto the shelf",
+      "Place the blue-white packaged mask from the tray onto the shelf",
+      "Place the blue-white packaged mask from the tray onto the shelf and align them"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000066/0cdd14eb33e6458c8fa00ec654dd84cd/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe the glass counter and clean the counter surface.",
+    "scene": "Cleaning the glass counter in a pharmacy",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/pharmacy/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the glass on the right side of the counter",
+      "Wipe the glass in the middle of the counter, move the blocking medicine boxes away",
+      "Wipe the glass on the left side of the counter"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000067/1e59ea4019be4fc8ab045d378546998a/annotation/episode_000000_structured.json",
+    "noun": "glass",
+    "description": "Wipe the glass counter of the pharmacy",
+    "scene": "Cleaning the glass counter in a pharmacy",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/pharmacy/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the leftmost glass of the counter with a cloth",
+      "Wipe the second glass from the left of the counter with a cloth",
+      "Wipe the third glass from the left of the counter with a cloth",
+      "Wipe the glass of the counter near the corner with a cloth",
+      "Wipe the glass near the corner on the other side of the counter with a cloth",
+      "Wipe the middle glass on the other side of the counter corner with a cloth",
+      "Wipe the rightmost glass on the other side of the counter corner with a cloth"
+    ]
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "batch_0000068/30161516b2fe4abe9f19ba3d7a0cfa48/annotation/episode_000000_structured.json",
+    "noun": "mask",
+    "description": "Organize the shelf, wipe the boxed masks and place them on the shelf, then wipe the bagged masks and put them into the storage basket.",
+    "scene": "Organizing shelves and cleaning masks in a retail pharmacy setting.",
+    "provenance": {
+      "mode": "existing_jianzhi_text_only",
+      "episode_index": 0,
+      "source_sst": "business/retail_business/pharmacy/daily_work",
+      "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+      "missing_information": "Unknown visual fields remain null; no video was inspected."
+    },
+    "subtasks": [
+      "Wipe the first mask box",
+      "Wipe the shelf board",
+      "Place the mask box on the shelf",
+      "Take out the second mask box",
+      "Wipe the second mask box",
+      "Tidy the goods on the lower layer",
+      "Wipe the second mask box",
+      "Wipe the shelf board",
+      "Place the mask box on the shelf",
+      "Wipe the bagged mask and put it into the basket",
+      "Wipe the bagged mask and put it into the basket",
+      "Wipe the bagged mask and put it into the basket",
+      "Wipe the bagged mask and put it into the basket",
+      "Wipe the bagged mask and put it into the basket",
+      "Wipe the bagged mask and put it into the basket"
+    ]
+  }
+]

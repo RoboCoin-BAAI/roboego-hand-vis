@@ -1,0 +1,39 @@
+{
+  "corrected_at_utc": "2026-11-18T08:05:45.165163+00:00",
+  "verified": 2,
+  "report_dir": "/share/project/liuyou/humancoin/data/guanglun_scene_shelving_correction_20261118",
+  "records": [
+    {
+      "path": "batch_0000044/9abb1a7b12b4c1cff582236696152cf08b65d830eeccddd7ee02627af84356dc/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "shelving_area",
+        "original_description": "A storage area for organizing and shelving mask packages"
+      },
+      "after": {
+        "category": "commercial_service",
+        "area": "logistics_facility"
+      },
+      "changed": true,
+      "before_sha256": "b804837047109f571b39df7fd5ad18d570c36c43c5e428fc41229b3e7734fee3",
+      "after_sha256": "ab96bc9570303416dbd744a7dede770f0e78b3e358e2138084f807e22aff6c67",
+      "only_category_area_changed": true
+    },
+    {
+      "path": "batch_0000065/b2a299ac9c912f233620d63a6114d7fc63cfe3750556929cbd7f75ae2f6ad443/annotation/episode_000000_structured.json",
+      "before": {
+        "category": "commercial_service",
+        "area": "shelving_area",
+        "original_description": "A storage area for updating shelf labels"
+      },
+      "after": {
+        "category": "commercial_service",
+        "area": "logistics_facility"
+      },
+      "changed": true,
+      "before_sha256": "ae8df6437a3f7ca288433c38525cf49d49ed8d48dd9725ae3f091ad50b7066bd",
+      "after_sha256": "1f255108e9ae7599dcf44728d309a3a905d24689b65496c76eaa050726ea9bd1",
+      "only_category_area_changed": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "path": "batch_0000001/308fe2417d81a72bd217e90f4ae4292131900285705e3055941a9372e5a3c1d5/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person pushes the chairs in the conference room under the table one by one to organize the desktop.",
+    "original_description": "A conference room where chairs are being pushed under a table to organize the space.",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  },
+  {
+    "path": "batch_0000010/f86e35c08ba47cadc6f617b31500a0723454fd462a9ee0a89a2aef223d7d55c7/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person distributes documents and pens to various positions on the conference table to complete the pre-meeting preparations.",
+    "original_description": "A conference area preparing for a meeting by distributing documents and pens on the table",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  },
+  {
+    "path": "batch_0000026/65213fd5854b2d507839f152c1c8125ebf2a7cc62bf387e4de365be6ee01ccae/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person collects the name tags and places them on the conference table to complete the seating arrangement.",
+    "original_description": "A meeting area for organizing and placing name tags on a conference table",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  },
+  {
+    "path": "batch_0000026/88b5bdfe0ee7982062cf4093498375715c05522102ad4ac8f9de53814391d9e7/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person collects name tags and carries them to the long table in the conference room to complete the arrangement.",
+    "original_description": "A conference room area for organizing and placing name tags on a long table",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  },
+  {
+    "path": "batch_0000026/d7e1f4a811d9acafce155e18df2141df0ffb682644521e7009d5e7f1b5d796e5/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person collects the name tags and places them in sequence at the designated spots on the conference table to complete the venue setup.",
+    "original_description": "A conference area for arranging name tags at designated spots on a table",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  },
+  {
+    "path": "batch_0000031/9aaa69160727aac5336eabfa7cd713bb8767f373ba7aacf8c19dac8019942729/annotation/episode_000000_structured.json",
+    "category": "professional_work",
+    "area": "conference_center",
+    "task_description": "The person puts office supplies on the cabinet and places paper cups in front of each seat at the conference table to complete the pre-meeting preparation.",
+    "original_description": "An office area for organizing supplies and setting up a conference table",
+    "reason": "User location correction: professional_work/meeting_room -> professional_work/conference_center"
+  }
+]

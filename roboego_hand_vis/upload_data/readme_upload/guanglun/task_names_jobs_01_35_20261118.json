@@ -1,0 +1,16 @@
+[
+  {
+    "dataset": "jianzhi",
+    "pid": 2156002,
+    "output": "/share/project/liuyou/humancoin/data/jianzhi/task_names_01_35_20261118.json",
+    "report": "/share/project/liuyou/humancoin/data/jianzhi/task_names_apply_01_35_20261118",
+    "log": "/share/project/liuyou/humancoin/data/jianzhi/task_names_01_35_20261118.run.log"
+  },
+  {
+    "dataset": "guanglun",
+    "pid": 2156003,
+    "output": "/share/project/liuyou/humancoin/data/guanglun_task_names_01_35_20261118.json",
+    "report": "/share/project/liuyou/humancoin/data/guanglun_task_names_apply_01_35_20261118",
+    "log": "/share/project/liuyou/humancoin/data/guanglun_task_names_01_35_20261118.run.log"
+  }
+]

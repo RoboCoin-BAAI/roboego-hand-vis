@@ -1,0 +1,25 @@
+{
+  "selected": 16259,
+  "changed": 16259,
+  "unchanged": 0,
+  "errors": 0,
+  "scope": [
+    "common_task_name"
+  ],
+  "backup_created": false,
+  "common_types": 903,
+  "datasets": {
+    "jianzhi": {
+      "selected": 7078,
+      "changed": 7078,
+      "errors": 0,
+      "common_types": 401
+    },
+    "guanglun": {
+      "selected": 9181,
+      "changed": 9181,
+      "errors": 0,
+      "common_types": 680
+    }
+  }
+}

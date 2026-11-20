@@ -1,0 +1,29 @@
+{
+  "jianzhi": {
+    "original_names": 1777,
+    "mapped_names": 1090,
+    "mapped_task_types": 764,
+    "remaining_names": 687,
+    "mapped_samples": 6359,
+    "retained_review_samples": 719,
+    "total_types_if_reviews_retained": 1450
+  },
+  "guanglun": {
+    "original_names": 1674,
+    "mapped_names": 1418,
+    "mapped_task_types": 1234,
+    "remaining_names": 256,
+    "mapped_samples": 8828,
+    "retained_review_samples": 339,
+    "total_types_if_reviews_retained": 1490
+  },
+  "combined": {
+    "original_names": 3213,
+    "mapped_names": 2271,
+    "mapped_task_types": 1785,
+    "remaining_names": 942,
+    "mapped_samples": 15187,
+    "retained_review_samples": 1058,
+    "total_types_if_reviews_retained": 2726
+  }
+}

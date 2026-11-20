@@ -1,0 +1,19 @@
+{
+  "samples": 7078,
+  "errors": 0,
+  "removed_files": {
+    "alignment_check.jsonl": 5940,
+    "annotations.json": 1
+  },
+  "removed_bytes": 11627820,
+  "readme_count_distribution": {
+    "26": 7077,
+    "27": 1
+  },
+  "scope": [
+    "meta/alignment_check.jsonl",
+    "meta/annotations.json",
+    "meta/readme.json:file_count,size_bytes"
+  ],
+  "backup_created": false
+}

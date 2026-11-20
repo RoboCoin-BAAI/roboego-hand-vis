@@ -1,0 +1,101 @@
+﻿rank,task_name_en,task_name_zh,jianzhi_samples,note
+1,apply cosmetics,涂抹化妆品,17,
+2,apply cream,涂抹乳霜,40,
+3,apply dye,涂抹染料,31,染料用途未明确，不直接翻成染发剂
+4,apply hair dye,涂抹染发剂,107,
+5,apply makeup,上妆,9,
+6,apply mask,敷面膜,21,按美容语境参考翻译，mask 具体类型仍需核实
+7,apply nail polish,涂指甲油,34,
+8,apply polish,涂抹甲油／抛光剂,10,polish 具体含义未明确
+9,arrange goods,摆放商品,13,保留当前英文标签，不在翻译时继续合并
+10,arrange hair,整理头发,15,未直接等同剪发或造型
+11,attach eyelash,粘贴／嫁接睫毛,13,具体操作方式以子任务为准
+12,attach hair extension,安装接发发束,10,
+13,braid hair,编发,14,
+14,brush hair,用刷梳梳理头发,35,保留与 comb 的工具表达区别
+15,brush wig,用刷梳梳理假发,9,
+16,carry tray,端运托盘,13,
+17,clean book,清洁书籍,25,
+18,clean bottle,清洁瓶子,67,
+19,clean box,清洁盒子,193,
+20,clean cabinet,清洁柜子,30,
+21,clean cart,清洁推车,12,
+22,clean chair,清洁椅子,12,
+23,clean cosmetics,清洁化妆品,41,是否指擦拭化妆品外包装，需要核实
+24,clean counter,清洁柜台,51,
+25,clean cup,清洁杯子,23,
+26,clean device,清洁设备,10,
+27,clean face,清洁面部,37,
+28,clean floor,清洁地面,120,
+29,clean furniture,清洁家具,21,
+30,clean item,清洁物品,16,物品类型未细分
+31,clean jar,清洁罐子,59,
+32,clean lid,清洁盖子,13,
+33,clean medicine,清洁药品,26,可能指药品外包装，原名需核实
+34,clean product,清洁产品,11,产品及被清洁部位未细分
+35,clean railing,清洁栏杆,15,
+36,clean shelf,清洁货架,42,
+37,clean sink,清洁水槽,20,
+38,clean stool,清洁凳子,15,
+39,clean surface,清洁表面,16,原名没有明确具体物品
+40,clean table,清洁桌子,56,
+41,clean toy,清洁玩具,10,
+42,comb hair,用梳子梳理头发,12,
+43,cut hair,剪发,870,
+44,dry hair,弄干头发,95,吹干或其他干燥方式以子任务为准
+45,fold towel,折叠毛巾,219,
+46,massage abdomen,按摩腹部,41,
+47,massage arm,按摩手臂,11,
+48,massage back,按摩背部,82,
+49,massage body,身体按摩,12,多部位细节保留在子任务中
+50,massage face,按摩面部,122,
+51,massage head,按摩头部,30,
+52,massage leg,按摩腿部,33,
+53,organize bag,整理袋子,13,
+54,organize book,整理书籍,496,
+55,organize bottle,整理瓶子,39,
+56,organize box,整理盒子,284,
+57,organize brush,整理刷子,14,
+58,organize cosmetics,整理化妆品,125,
+59,organize cup,整理杯子,12,
+60,organize goods,整理商品,19,
+61,organize item,整理物品,38,物品类型未细分
+62,organize medicine,整理药品,149,
+63,organize nail polish,整理指甲油,49,
+64,organize package,整理包装件,15,package 可指包裹或包装件，类型需结合原文
+65,organize paper,整理纸张,11,
+66,organize product,整理产品,39,产品类型未细分
+67,organize rod,整理杆件,28,是否为烫发杠等具体类型，原名未说明
+68,organize skin care product,整理护肤品,21,
+69,organize soap,整理肥皂,12,
+70,organize tag,整理标牌,11,
+71,organize toiletries,整理洗护用品,16,
+72,organize toy,整理玩具,62,
+73,origanize_some_object,整理若干物品（指定兜底）,416,统一兜底，不是对实际动作的逐条判定
+74,pack bag,装袋打包,118,原名未明确是装袋，还是打包袋子本身
+75,pack box,装箱打包,43,原名未明确是装箱，还是打包盒子本身
+76,pack coffee,打包咖啡,13,
+77,pack nail polish,打包指甲油,14,
+78,perm hair,烫发,21,
+79,polish nail,打磨指甲,27,
+80,remove rod,取下杆件,14,杆件具体类型未说明
+81,rinse hair,冲洗头发,14,
+82,roll hair,卷绕头发,57,不直接等同完整烫发过程
+83,roll perm rod,卷绕烫发杠,20,原名未明确头发与卷杠的操作关系
+84,scrape face,面部刮拭,15,是否为刮痧等具体护理方式，需结合原文
+85,stack book,堆叠书籍,19,
+86,stack box,堆叠盒子,84,
+87,stick label,粘贴标签,55,
+88,stick tag,粘贴标牌,19,
+89,straighten hair,拉直头发,43,
+90,sweep garbage,清扫垃圾,14,
+91,sweep hair,清扫头发,12,常见含义为清扫落发，具体以原文为准
+92,trim hair,修剪头发,14,保留与普通 cut hair 的标签区别
+93,trim nail,修剪指甲,12,
+94,trim thread,修剪线头,37,
+95,trim wig,修剪假发,27,
+96,wash cloth,清洗布料,15,
+97,wash clothing,清洗衣物,18,
+98,wash cup,清洗杯子,15,保留 wash 与通用 clean 的表达区别
+99,wash hair,洗发,132,
+100,wrap hair,包裹／缠绕头发,11,包裹与卷绕等具体操作需结合子任务

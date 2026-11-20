@@ -1,0 +1,22 @@
+{
+  "selected": 16259,
+  "changed": 5581,
+  "unchanged": 10678,
+  "errors": 0,
+  "backup_created": false,
+  "scope": [
+    "task_name"
+  ],
+  "datasets": {
+    "jianzhi": {
+      "selected": 7078,
+      "changed": 2822,
+      "errors": 0
+    },
+    "guanglun": {
+      "selected": 9181,
+      "changed": 2759,
+      "errors": 0
+    }
+  }
+}

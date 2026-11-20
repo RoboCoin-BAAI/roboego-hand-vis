@@ -1,0 +1,21 @@
+﻿category,zh,jianzhi,guanglun
+floor,地面,121,46
+ground,地面（ground）,0,0
+sink,水槽,20,98
+mirror,镜子,3,44
+door,门,11,12
+wall,墙面,3,4
+window,窗户,1,1
+ceiling,天花板,0,0
+railing,栏杆,15,3
+handrail,扶手,1,0
+faucet,水龙头,2,0
+showerhead,淋浴喷头,0,13
+bathroom fixture,卫浴设施,0,8
+toilet,马桶,0,4
+bathtub,浴缸,0,3
+washstand,洗手台,0,0
+door frame,门框,2,0
+mask,mask（用途未明确）,6,9
+glass,玻璃制品（用途未明确）,0,2
+liquid,液体（用途未明确）,0,10

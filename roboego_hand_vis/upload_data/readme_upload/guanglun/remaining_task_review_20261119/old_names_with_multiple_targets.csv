@@ -1,0 +1,35 @@
+﻿old_task_name,targets
+Comb hair and massage head,massage head | origanize_some_object
+Heat packaged food in microwave,origanize_some_object | remove food
+Heat packaged food in microwave and serve on plate,origanize_some_object | place food
+Kitchen cleanup and organization,clean countertop | origanize_some_object
+Lay anti-slip mats and clean bathroom floor,press mat | unfold mat
+Lay anti-slip mats and clean floor,clean mat | origanize_some_object | unfold mat
+Lay anti-slip mats and wipe bathroom floor,origanize_some_object | unfold mat
+Load dishwasher and clean countertop,collect paper | load tableware | origanize_some_object
+Make bed and arrange picture frames,organize sheet | origanize_some_object
+Massage customer back and head,massage back | origanize_some_object
+Massage customer shoulders and head,massage shoulders | origanize_some_object
+Organize books and record information,origanize_some_object | write book
+Organize fitness equipment and clean the room,fold mat | roll yoga mat
+Organize plates and clean countertop,collect trash | discard paper | pack bag
+Perform facial care and massage,origanize_some_object | scrape face
+Prepare and serve coffee,origanize_some_object | stir coffee
+Prepare and serve drinks,origanize_some_object | pour liquid
+Provide facial care,massage skin | origanize_some_object
+Roll perm rods on mannequin head,origanize_some_object | roll rod
+Serve cups on tray,carry tray | origanize_some_object
+Store packet and clean table,clean table | origanize_some_object
+Unfold anti-slip mats and clean floor,origanize_some_object | unfold mat
+Wipe books and register information,clean book | write book
+apply hair dye and cut hair,apply hair dye | origanize_some_object
+comb hair and massage head,comb hair | origanize_some_object
+massage customer face and neck,massage face | origanize_some_object
+organize cleaning agent,organize bottle | origanize_some_object
+organize cleaning supply,fold cloth | origanize_some_object
+organize cleaning tool,organize sponge | origanize_some_object
+organize room,move box | spread quilt
+organize workspace,collect paper | discard paper | origanize_some_object
+perform eyebrow tattooing,origanize_some_object | tattoo eyebrow
+perform manicure,grind nail | origanize_some_object
+shave customer face,origanize_some_object | shave beard

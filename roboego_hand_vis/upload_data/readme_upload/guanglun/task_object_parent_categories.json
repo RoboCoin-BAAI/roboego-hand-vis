@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "scope": "Generate common_task_name from fine task_name; never change objects or actions",
+  "common_name_format": "verb_parent (snake_case, compatible with existing schema)",
+  "categories": {
+    "furniture": {
+      "zh": "家具及储物家具",
+      "definition": "Furniture, work surfaces and storage furniture; excludes architectural doors, windows, walls and floors.",
+      "members": ["furniture", "table", "coffee table", "dining table", "desk", "desktop", "tabletop", "counter", "countertop", "bar counter", "front desk", "chair", "exercise chair", "fitness chair", "stool", "bench", "cabinet", "cupboard", "wardrobe", "bookshelf", "bookcase", "shelf", "rack", "storage rack", "bed", "beauty bed", "shampoo bed", "hospital bed", "nightstand", "bedside cabinet", "drawer", "sofa", "workbench"]
+    },
+    "cosmetics": {
+      "zh": "化妆品及美容洗护用品",
+      "definition": "Skincare, makeup and beauty/hair-care products; hair dye and nail polish remain separate. Unqualified medicine, glue or industrial chemicals are excluded.",
+      "members": ["cosmetics", "cosmetic", "makeup", "cream", "essence", "lotion", "serum", "foundation", "eyeshadow", "lipstick", "lip gloss", "skin care product", "skincare product", "skin-care product", "personal care product", "beauty product", "facial cleanser", "facial mask", "face mask", "care solution", "hair care product", "hair product", "conditioner", "shampoo", "body wash", "body washes", "toiletries", "toiletry", "perm lotion"]
+    },
+    "tableware": {
+      "zh": "餐具",
+      "definition": "Eating/drinking vessels and cutlery; cooking appliances, pots and ambiguous general trays are not automatically classified as tableware.",
+      "members": ["tableware", "dishware", "cutlery", "cup", "paper cup", "coffee cup", "tea cup", "teacup", "measuring cup", "glass cup", "glass", "mug", "bowl", "plate", "dish", "saucer", "fork", "spoon", "chopsticks", "table knife", "dinner knife", "butter knife"]
+    },
+    "textile": {
+      "zh": "纺织品",
+      "definition": "Non-garment fabric articles; clothing is separate, ambiguous rubber mats/paper wipes are not assigned here.",
+      "members": ["textile", "fabric", "cloth", "rag", "towel", "blanket", "quilt", "sheet", "bed sheet", "bedsheet", "bedding", "bed linen", "pillow", "pillowcase", "cushion", "curtain", "gauze", "tablecloth", "duvet", "bedspread", "coverlet", "washcloth", "napkin"]
+    },
+    "clothing": {
+      "zh": "衣物及服饰",
+      "definition": "Garments and wearable clothing accessories; bedding and non-garment cloth are textile.",
+      "members": ["clothing", "clothes", "garment", "shirt", "t-shirt", "t shirt", "dress", "skirt", "pants", "trousers", "shorts", "jeans", "underwear", "pajamas", "pajama top", "pajama pants", "jacket", "coat", "suit", "suit jacket", "vest", "sweater", "sock", "hat", "cap", "glove", "scarf", "belt", "apron"]
+    },
+    "stationery": {
+      "zh": "文具及纸本文教用品",
+      "definition": "Writing, filing and paper reading materials; electronic information/spreadsheets are not assigned solely by their label.",
+      "members": ["stationery", "pen", "pencil", "marker", "crayon", "eraser", "ruler", "folder", "file folder", "book", "notebook", "paper", "document", "card", "cardboard", "label", "tag", "price tag", "price tags", "sticker", "leaflet", "flier", "flyer", "registration book", "drawing paper", "coloring book", "exercise book", "envelope", "paperclip", "paper clip", "binder clip", "stapler"]
+    },
+    "container": {
+      "zh": "容器及收纳包装用品",
+      "definition": "General containers, storage/packaging and their closures; dining vessels take tableware precedence.",
+      "members": ["container", "box", "carton", "cardboard box", "packaging box", "storage box", "medicine box", "shoe box", "gift box", "bottle", "spray bottle", "medicine bottle", "medicine container", "water bottle", "beverage bottle", "cola bottle", "beer bottle", "jar", "cupping jar", "jug", "can", "beverage can", "beer can", "soda can", "cola can", "basket", "bin", "trash can", "trash bin", "bucket", "basin", "bag", "paper bag", "plastic bag", "woven bag", "pouch", "sack", "handbag", "handbags", "backpack", "schoolbag", "case", "canister", "vial", "tube", "tray", "storage tray", "package", "packaging", "parcel", "packet", "lid", "cap", "bottle cap", "bottle lid", "jar lid", "jar cap", "cup lid", "bowl lid", "pot lid", "packaging bag"]
+    },
+    "body": {
+      "zh": "身体",
+      "definition": "Human body/regions; hair has a dedicated class for hair work. All existing massage targets group to body as explicitly requested.",
+      "members": ["body", "customer", "person", "client", "abdomen", "arm", "left arm", "right arm", "upper arm", "forearm", "back", "upper back", "lower back", "back muscle", "calf", "chest", "buttock", "face", "cheek", "jaw", "jawline", "chin", "forehead", "finger", "hand", "palm", "foot", "toe", "head", "leg", "leg muscle", "muscle", "neck", "scalp", "shoulder", "shoulders", "skin", "spine", "waist", "eye", "eyes", "ear", "ear canal", "nose", "lip"]
+    },
+    "hair": {
+      "zh": "头发及假发",
+      "definition": "Hair and training/artificial hair targets for cutting/combing/perming etc.; hair dye is a material, not hair. Massage uses body instead.",
+      "members": ["hair", "wig", "wig hair", "wig model hair", "wig strand", "mannequin hair", "mannequin head hair", "hair section", "hair strand", "hair extension", "hair extension weft", "long black hair"]
+    }
+  },
+  "special_classes": {"hair dye": "hair_dye", "nail polish": "nail_polish"},
+  "context_rules": {
+    "apply dye": "hair_dye only with hair/wig/barber evidence; otherwise keep dye",
+    "apply polish": "nail_polish only with nail/manicure evidence; otherwise keep polish",
+    "apply mask": "cosmetics only with facial/skincare evidence; otherwise keep mask",
+    "apply gel or paint": "nail_polish with explicit nail context; cosmetics with skincare context; otherwise preserve the noun"
+  },
+  "fallback": "Unlisted nouns retain their fine concept, encoded as snake_case; never silently map all unknown objects to item",
+  "user_fallback_label": "origanize_some_object"
+}

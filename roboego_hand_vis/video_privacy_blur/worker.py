@@ -60,7 +60,7 @@ def inspect_video(path):
             'rate': f'{numerator}/{denominator}'}
 
 
-def render(source, output, config):
+def render(source, output, config, detector=None):
     import cv2
     import numpy as np
     from .batch import sha256
@@ -76,8 +76,9 @@ def render(source, output, config):
     cv2.setNumThreads(threads)
     import torch
     torch.set_num_threads(threads)
-    detector = FaceDetectorYOLO(config['face_weights'], choose_device(config['device']),
-                                config['conf'], config['imgsz'])
+    if detector is None:
+        detector = FaceDetectorYOLO(config['face_weights'], choose_device(config['device']),
+                                    config['conf'], config['imgsz'])
     cap = cv2.VideoCapture(str(source))
     if not cap.isOpened():
         raise RuntimeError('Cannot open source video')
@@ -152,5 +153,42 @@ def main():
     write_json(output.with_suffix('.report.json'), result)
 
 
+def persistent_main():
+    """Serve sequential requests with one model, keeping stdout for the protocol."""
+    import contextlib
+    import traceback
+    from .batch import sha256, write_json
+    from .detectors import FaceDetectorYOLO
+    from .utils import choose_device
+
+    detector = None
+    model_config = None
+    for line in sys.stdin:
+        try:
+            request = json.loads(Path(json.loads(line)['request']).read_text())
+            config = request['config']
+            selected = tuple(config[k] for k in ('face_weights', 'weights_sha256', 'device', 'conf', 'imgsz'))
+            with contextlib.redirect_stdout(sys.stderr):
+                if detector is None:
+                    if sha256(config['face_weights']) != config['weights_sha256']:
+                        raise RuntimeError('Model weights changed before loading')
+                    detector = FaceDetectorYOLO(config['face_weights'], choose_device(config['device']),
+                                                config['conf'], config['imgsz'])
+                    model_config = selected
+                elif selected != model_config:
+                    raise RuntimeError('Model configuration changed in resident worker')
+                output = Path(request['output'])
+                result = render(Path(request['source']), output, config, detector=detector)
+                write_json(output.with_suffix('.report.json'), result)
+            response = {'ok': True}
+        except Exception as exc:
+            traceback.print_exc(file=sys.stderr)
+            response = {'ok': False, 'error': f'{type(exc).__name__}: {exc}'}
+        print(json.dumps(response), flush=True)
+
+
 if __name__ == '__main__':
-    main()
+    if sys.argv[1:] == ['--persistent']:
+        persistent_main()
+    else:
+        main()

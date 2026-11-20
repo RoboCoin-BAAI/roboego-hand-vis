@@ -1,0 +1,12 @@
+{
+  "moved": 123,
+  "retained": 4338,
+  "retained_fps": {
+    "30.0": 3920,
+    "25.0": 418
+  },
+  "retained_dataset_groups": 273,
+  "moved_dataset_groups": 67,
+  "destination": "/share/project/liuyou/humancoin/data/guanglun_depth/badfps",
+  "errors": 0
+}

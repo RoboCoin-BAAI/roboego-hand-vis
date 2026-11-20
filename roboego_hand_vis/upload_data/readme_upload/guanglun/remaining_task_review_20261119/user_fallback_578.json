@@ -1,0 +1,3475 @@
+{
+  "task_name": "origanize_some_object",
+  "assignment": "explicit_user_request_all_578_supersedes_548",
+  "annotation_modified": false,
+  "records": [
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/074fe9b47860f062d4a1d4027b9d5465da4e34c630c34016447601833ac03aef/annotation/episode_000000_structured.json",
+      "sha256": "33344fa6cf3c6e6d7226c75a8ef5c82144f07fe01720e199cb110c64239e81eb",
+      "old_task_name": "Brewing tea and cleaning the tea set"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000008/c13af6597dcdff2482f3d800f4cd1ea86c897ce49936ff6dd0e2324441d225b0/annotation/episode_000000_structured.json",
+      "sha256": "c72be0e4930bff753275059705ef0eaa20ff4a6892d9fb5bdbfe31be245a0432",
+      "old_task_name": "organize cleaning supply"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/5259a98711160cee64d5e8de23398f1898da5c1d2bcc35b0ec4a392c2d86eb0e/annotation/episode_000000_structured.json",
+      "sha256": "92230a44bf5f82e9d18eb505528489f0296c5b1bf47e75370ce499272e6f689b",
+      "old_task_name": "Load dishwasher and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/66b99eb8261dda773075ebe8d71cf27d49101a68336ed94f61ddbde169f5e8ad/annotation/episode_000000_structured.json",
+      "sha256": "4533ace76e3b1a83ea330dc1a94399364220297b52dc0ee436f9b280fac2429c",
+      "old_task_name": "Load dishwasher and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/76bb661819f3244f4cc5b424ed412b61d43aded313cd8421a6dfa7e58f658b12/annotation/episode_000000_structured.json",
+      "sha256": "84df0ad4c839cddc5bc37523c798f846832cc58090a76944fcfccbdec66da9c9",
+      "old_task_name": "Load dishwasher and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/b629ad8ae45e2fde8f79fbe18216454288ee7dafaebea8d8b90456e5f571e543/annotation/episode_000000_structured.json",
+      "sha256": "733951f961eb76ea3f751897ff72f6091c2439163a7007bf2d21db4a2fcf9e54",
+      "old_task_name": "Load dishwasher and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/b940e882f5a5351546911511e922945de48b945069f4c433432b2cab71d67f6f/annotation/episode_000000_structured.json",
+      "sha256": "b8b116d35ab797db2cb20bd80931c8faeae61f5365dd2bc02f221a3edac53624",
+      "old_task_name": "organize cleaning tool"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/f5dd2197f218a67cf69ae53d3826f41cafd52d1a6428734e408078eb2be77cca/annotation/episode_000000_structured.json",
+      "sha256": "fae61705228a6df548ef1ab61cb4d2df90d93ed485075b07014d94a07aaf6d59",
+      "old_task_name": "Remove label and dispose of cardboard box"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/f861608699e2f15f5a9d07da1dd322a4c2673d1a69b02d794ac1d83dd52c7bf1/annotation/episode_000000_structured.json",
+      "sha256": "3fcb794866114c73acc8921318b96130b9b1675153d7e4e33ef012680a0ec80b",
+      "old_task_name": "Load dishwasher and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000012/aaabecce1f8685cebf1da9ac7acd36b2fba8115802b46b786c7b7664c754c9a2/annotation/episode_000000_structured.json",
+      "sha256": "09975d965f3d6f94502a4f91b2ee8ed306eefd0a55dc301dd64ff02c5585d70b",
+      "old_task_name": "Stack boxes on pallet and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/dc7324aca43458132e69f186875eaf727a1e78969eb2c67ca4f29de2b5769483/annotation/episode_000000_structured.json",
+      "sha256": "7d29793bfc9a999eb560288bfa0a1e9c035784d84b715f1ee28af21200145089",
+      "old_task_name": "Refill and clean fountain pen"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000013/e0b73f7c3ba566cd075028cb3357a055f28e3e89d7083abf58a00463af83a7f1/annotation/episode_000000_structured.json",
+      "sha256": "6ab68b1f370387ac59fe8684fb843a1114a3bf8e4f6a7b1bfcf8b235bbb6cdc9",
+      "old_task_name": "Refill pen and clean desk"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000016/a39e79000ffdd0266bda2f0245fcf02e55f232f27c0e79d7fa0ed1c09251cd53/annotation/episode_000000_structured.json",
+      "sha256": "dee18a3b56ad16619c2718f018d1d69e2c0560548201a236f3ada34fd8b95c69",
+      "old_task_name": "Organize candy wrapper and fold cardboard box"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000017/767b65c0b8ed9c5ab89c1b181f015d38e456f1036c1aefff9fe07fc737d68dcf/annotation/episode_000000_structured.json",
+      "sha256": "c7aa5267a2762366d064578e6d736a474f5f048db31c9dee80b638e01856cb94",
+      "old_task_name": "Organize black sticks into a blue cup"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000018/4786e2bbc9f642c117b1c52deb84c8c4cc449618267e3302d45c9b2e93e2f661/annotation/episode_000000_structured.json",
+      "sha256": "c108e14e80b01ea1aae3336fa9480318438be871fe886f20a91ab422e8657328",
+      "old_task_name": "Organize shoe boxes into cabinet and clean up waste paper"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000019/5f4b077d5c6d9b312a97bd3b7720ba47032f7d04fde1710fecec7aa76b6c6514/annotation/episode_000000_structured.json",
+      "sha256": "598e509ea79268cd25dc39df1569171aac3f110976d566af89213d7df1527229",
+      "old_task_name": "organize cleaning agent"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000021/55aba8ad9439128e1911ec2779d62c23a8eea0362437f7b41a1d707c34f677d1/annotation/episode_000000_structured.json",
+      "sha256": "e1e26cf4b59240b7dac42cfa143ee6c00d528f0e8455b4bdd9697a63f8e29376",
+      "old_task_name": "Organize shoe box and clean up shredded paper"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000022/1a261482f6f6487416f909dc6319373e6f7a46c6598915114bd3f2304ac700b2/annotation/episode_000000_structured.json",
+      "sha256": "bb8897bb6e5eb9310b757a0f15ebdbe42d61b922b676dc3502c186612deca6e5",
+      "old_task_name": "Dispense liquid and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000022/510d2910f5aef628d701d8b0cd6e0016a99118a21fb4ef2d857fb0a4e36a0754/annotation/episode_000000_structured.json",
+      "sha256": "0c35a7b105803f06f8a066292ca5a62fbeced37660f1511c999c3b96bf70e59d",
+      "old_task_name": "Prepare tea and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000022/5caa133492d492fe79bdf8f63524ad63ea874513d4f87d904b021843a0a1678b/annotation/episode_000000_structured.json",
+      "sha256": "a6d28ee0ddb5ab6a47742f1402b129ec8e43f34207a22edb3a65e659da97a528",
+      "old_task_name": "Clean bathroom mirror and shelf"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000022/7c88ad2e57aba208092310fe45350da3d6e9acd0dccb07418c8d42272dfd6a83/annotation/episode_000000_structured.json",
+      "sha256": "f532f9141159d9151f9127d4b6def5254f04641fc6952bc1e2d932117ab1df3b",
+      "old_task_name": "Transfer mouthwash and clean desk"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000023/1a4fb1afc6d9121d67a2697e887b31a48eb323ad1807f92ade4846e1ff2738c3/annotation/episode_000000_structured.json",
+      "sha256": "c6c7294d0d1e1a433716d66b99872f3ece3b3dd6014a43edaf0821e1becc11e5",
+      "old_task_name": "organize cleaning supply"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000023/e3406b3fa6280e0bb9094140f363ae0227530f20946a50a1cc7db76edae05cdd/annotation/episode_000000_structured.json",
+      "sha256": "1bf60c0b79af0199c8c1911d247326c93d4f6a7841003a71ebf84425bcf2622f",
+      "old_task_name": "Draw curtains and open window"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000024/59f5a42cbeaf60a33da24869fc24a7c8821a0bcdca74a447aa6290c7abd1efaf/annotation/episode_000000_structured.json",
+      "sha256": "9cf9a5bf68e6121967f0c86a9125d58bc614df86bd3508a12feb93bb2046133e",
+      "old_task_name": "Move tray, wipe cart, and push cart to position"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000025/a2a5f887ba88192f9dfc8bf0618b771ec57cc89a0ba39441ce7b1b56c072f395/annotation/episode_000000_structured.json",
+      "sha256": "180df50fc5ba9882cf54480ac9081096477165857df0368e089d4ef9b510942c",
+      "old_task_name": "Stack and store cups and trays, then clean up tissues"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000027/74f6cbe885f4447ec8376df3200d2ad5455812a624dc07e2ea2cf8b7dc1349eb/annotation/episode_000000_structured.json",
+      "sha256": "831ab60fb5645299d2c03180d0757396249541491107464995139a22694fc0ab",
+      "old_task_name": "Heat packaged food in microwave"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000027/b3f35c93863033e123f6f71d30ad27933484ebdfe5994f7023ddafa4e1f0e767/annotation/episode_000000_structured.json",
+      "sha256": "2b8d5d5f48bdc1af679e8d903066934b71821f189639479434ce4708336f5bf5",
+      "old_task_name": "Heat packaged food in microwave and serve on plate"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000028/20c1e051aa4dcf4df9aa13a9cd2cc678f2ef1c2321fc1a21867da41aa98f1cb2/annotation/episode_000000_structured.json",
+      "sha256": "6f67598f549bfd983d01b6bdfd04b15170122d45002814735368fe142ec469d6",
+      "old_task_name": "Sort drawer items into storage boxes"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000028/4ef56c3eb17ecded78f5a00b3396924976cf494acb288a0f37d0e18675119c78/annotation/episode_000000_structured.json",
+      "sha256": "b1b303adf585476077127c55041fee00cc2d4bcbef0c92845e64e33b6fcfd6ce",
+      "old_task_name": "Organize shoe boxes into cabinet and clean up paper scraps"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000028/7d0dec5a7dbaa72c8b0023a75f59102a7229b445c389da53aea381ee6bafb873/annotation/episode_000000_structured.json",
+      "sha256": "c74b8bac0a2be4b4b09f34856070229964a395f48cbf0636cc521b8d4ba1ae8d",
+      "old_task_name": "Heat bread in microwave"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000028/8130c55cf5a159604ffec8ade3766b9d7d0729f9917a210911c2611dff523a9a/annotation/episode_000000_structured.json",
+      "sha256": "fe89abadd098fb7f02e3e773efc72831ad1c0418a9582720ecfb25495eeec1c9",
+      "old_task_name": "Replace toy car battery and store plush toy"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/160773f16c3f94cf3eb4af02b5eb0295441262724eeea29b474ba7e5b5c7a0ce/annotation/episode_000000_structured.json",
+      "sha256": "a71f9fef513405bf1e295546861275f783dc6313da42504f7712777b62e97a66",
+      "old_task_name": "Organize pens and stack cardboard boxes"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/3972b3389dc2d5813418031eec1e3aaf187778f19d6d58b1cf311ec1ae3bca22/annotation/episode_000000_structured.json",
+      "sha256": "d49f2a6c010452b9ae514dabde8b92f929f9c88c2c5db496d3cca983948f8426",
+      "old_task_name": "Clean up shredded paper and pens"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/80cf04d92ae7567e762792ad8e8d60130a3e3e56738636d96f42d1d56fac7658/annotation/episode_000000_structured.json",
+      "sha256": "94c9b5094ede4e97b003df57a91378503705705af0b36268a68adab0777bab77",
+      "old_task_name": "Sort and organize lettered items into colored baskets"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000029/d0d273adf5acaf1b986a11dc7ac585d438cbaaaa18891bbff7df0619ab3df53a/annotation/episode_000000_structured.json",
+      "sha256": "7d978811e81764dfdacfa18a5655a81eb4cd4794de73ae870fc927de78e8f2cc",
+      "old_task_name": "Clean up floor debris and organize stationery"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/0af4c97579c0e80f70a45980edcaaad3c281193be7af901503d0e19aeb9275e9/annotation/episode_000000_structured.json",
+      "sha256": "75d8e4e83570cf4404048ea1d44254a40c244feaf8c45d664a84df8c9bcd8066",
+      "old_task_name": "Pour water and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/410868c677c90a9b9266b9dba3d5e37850abc8dcaf1c13e8fd8536922b4f07bc/annotation/episode_000000_structured.json",
+      "sha256": "cc284d8964e76e71e9b414514d16fc03b68e2c9e1ff79b193501f2215e1835c9",
+      "old_task_name": "Organize and bind papers, then clean desk debris"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/4e5dc9eab5f63540c4b053a42d5204dfcc2f0a55b82f5f02eb4e2732c573b669/annotation/episode_000000_structured.json",
+      "sha256": "7fe329eaca3cc969cd98eed196a0ce0bfc11c46c848fb610f663403fdf8d6a6a",
+      "old_task_name": "Pour water and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/7ba4ef3b9edb7cb0a601d06059220ac39228e9db44d23e58d4c797bdcb131284/annotation/episode_000000_structured.json",
+      "sha256": "82c0e67932a79affe92171d1331c8500d563786569622ce3f80a0d4b2d6f958c",
+      "old_task_name": "Fold paper, punch holes, and clean up scraps"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/9aaa69160727aac5336eabfa7cd713bb8767f373ba7aacf8c19dac8019942729/annotation/episode_000000_structured.json",
+      "sha256": "bcac8695766e758e9dfaa4eb396d2ae9ce166d1ba7fb21367f13bb0dfdf9c067",
+      "old_task_name": "Pre-meeting preparation with office supplies and cups"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/acbcce7bff77e5cdc5188f61ff1db4eabd80083d652b136ca5469361d51d681e/annotation/episode_000000_structured.json",
+      "sha256": "6e9433799a8e6e3823d1a591b2c3deb4a84c43b57ab5ebcb8bbf9df42e7c67f8",
+      "old_task_name": "Selecting snacks and moving a cardboard box"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/ad0a3e3cf68352e91279dac0b1f80bc968d12bc60c793cf39ac1fdb142518597/annotation/episode_000000_structured.json",
+      "sha256": "402396fde59da295f4d42cce0990bb1c523da95f53977ab02dab5513667ff589",
+      "old_task_name": "Pour water and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/d0a8a0ad76357898979828bdbde711d6482eb60718449c7fbb7361cbd54f397a/annotation/episode_000000_structured.json",
+      "sha256": "5566365a0a5a2134878368e980cc13c0663fcd098f0db1c8a62cdd03199cc9d2",
+      "old_task_name": "Organize tableware and clean dining area"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/d99037482dc3b9f38c02035532132a72304e4b6e4b9a9d2ea5c92db6b7f3691b/annotation/episode_000000_structured.json",
+      "sha256": "ec31ce956372abf614902ec2432a2e36c1cc83230e63f90f1aba364a5f3f9f29",
+      "old_task_name": "Organize bedroom items and charge phone"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/df2e47d9dd4aba2b1d69cdf7067018aaaa1fb54281d585cb075f3faa287973f0/annotation/episode_000000_structured.json",
+      "sha256": "e3abdeb2b86695f525f7649f0ad4c0a89ef350ec3773126f631beafda38e9b9e",
+      "old_task_name": "Pour water and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000031/e65c89e462ec0f5bc0130bbeeb1e609a2213a719298212579cb273c9d809ec51/annotation/episode_000000_structured.json",
+      "sha256": "b89d992993f07fad484d36f5dfa206ca3dc273de77ab2f353420cb67c75e9e6a",
+      "old_task_name": "Prepare infant formula"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000032/03f53dc7b426a8aa1ed9ca13500ff39967f43c2b52f9e6423eadf214dcf2f1a1/annotation/episode_000000_structured.json",
+      "sha256": "111ab4ed1942f12e344c56af533ceee7e738946a50dc34b4849095c69fe8f463",
+      "old_task_name": "Refill jar and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000032/21724b221de3f8795a2789798e404d92f5a3168e784119b77756d58585f035e2/annotation/episode_000000_structured.json",
+      "sha256": "8a5e279a589919489962accf0c797e9e09fa30f36cb23e2f747dad50735c30d8",
+      "old_task_name": "Clean desktop trash and stack paper cups"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000032/47e2e2b5b522157bdb7968e507c68aa9ccebeb7ccf55c991e458fd649ad6a17c/annotation/episode_000000_structured.json",
+      "sha256": "a06f2aa8761ca89db98f527c49e9031394b12892ba8ed72494f7a95f24d9ca79",
+      "old_task_name": "Refill soap dispenser and clean sink"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000032/8a96324bd27ceeeb4b69b5246955784048e24aa71861e93e1d868ae7499e969c/annotation/episode_000000_structured.json",
+      "sha256": "dd1825c6db3b50f5bb7c052a3afd50d0d13afd1a6a6431f607c3883c6668642f",
+      "old_task_name": "Clean up desktop trash and restock paper cups"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000032/dae2a528478ff78c15371bea7beca09f77cdb725ff3d9a1ab4f43056a8b9f88f/annotation/episode_000000_structured.json",
+      "sha256": "67140e9795d7b3779dcca4b43c7cf532c271c4982b05c3f55e2568edc5025b4b",
+      "old_task_name": "Clean up trash and tidy furniture"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000033/17d63c9fff4a8c73b1fcd2df19b983489ff737d7c4919638c1a47d5d0b987c86/annotation/episode_000000_structured.json",
+      "sha256": "e861c67572824c1086cc1593f6a87bee23652a0475a8168921543a9149ff2c94",
+      "old_task_name": "Refill hand soap and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000033/3576d8e26a048a6842c12b0d311b820e02aacdb9210a75b5881437f5b8aebf9f/annotation/episode_000000_structured.json",
+      "sha256": "5af712a7c35e10b8c5ba0bb4d95a1272ffd4af3518778060bf775dda568e354e",
+      "old_task_name": "Mix detergent into soap bottle and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000033/4a8b4847f72e95f91d24c1e108a356cc833785a74288b3a048e6f79a8b28f496/annotation/episode_000000_structured.json",
+      "sha256": "05d6ad639c0c7681a1e658ce4d74f468c38a8173a16ef9db388de02715cfa060",
+      "old_task_name": "Refill soap dispenser and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000035/ecd1954d9c92a27ae8392ef74a04d7037e57331b7d33843040501a4917fb5b0e/annotation/episode_000000_structured.json",
+      "sha256": "11451a4037d2d3724e5b6f46695c72b093e38699f161f52eb21a328b0f599f5e",
+      "old_task_name": "Handling and storing a black mat"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000036/663e92cbb91f0fed1aaf17b543482ffb5ece4319440705fdeed5af8d80ff4a68/annotation/episode_000000_structured.json",
+      "sha256": "1b69252675bc1d24cbe0adc358e99576900454433b732f12b5884bacb498dac9",
+      "old_task_name": "Tidy up dining room by clearing trash and pushing chairs"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000039/5bdf185f4922d5dc42aefd7158e7549abd5aa4c0d3a187149f45a438d5a194e2/annotation/episode_000000_structured.json",
+      "sha256": "6947971a1d1ead5148ec11ca1f6e15011d42e9c21b0aa32a8adfe3ccf1127483",
+      "old_task_name": "Selecting stationery products from a shelf"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000040/ea1636d1dba3a66bed9d218e2d57eb2b639ff4ab11230c8673dc5d550d788602/annotation/episode_000000_structured.json",
+      "sha256": "870a90c54af7826b82840e5bf3674820940e57dfc01c9b89069647a04bdc9eb7",
+      "old_task_name": "Roll up and store floor mats"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000041/68f156d555ac0ed45b1260c2f04660bea3301bae430d55044c19070f4faf17c1/annotation/episode_000000_structured.json",
+      "sha256": "18ef79dfe5dd329b05e32641c0258a119b334d49bec5dffeb63ce503bae26bfc",
+      "old_task_name": "organize workspace"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000042/7a08c1d098c7c6281db2b15df438b1d81f934112ad029e0632498a4fbdc7b967/annotation/episode_000000_structured.json",
+      "sha256": "cff045ab5cbc774b0a81646db277d27c0a793bab049cff0fcc4a00ac47943672",
+      "old_task_name": "Organize and clean shelf"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000045/21cd55ffc7037535172e77573afe5903ea2386873686cb6d58aeb3d19768a512/annotation/episode_000000_structured.json",
+      "sha256": "5d033d6d152b4b228571a3efd9915cd698006dbfa4485f9305c788e2a68d0cb9",
+      "old_task_name": "Sort and store tape and glue sticks"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000046/a15caa5d40d656c439799b837cb2150c7e436a3df6df9d80efd742404d29ecb9/annotation/episode_000000_structured.json",
+      "sha256": "8755e267aaffb962f2f53c3534364d654b90ffc533e012a861a4ec86d63d9ea5",
+      "old_task_name": "Fill spray bottle and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000046/bb41a1e90b6de3268a3b731f693cc89dc56a8fd5ee5f364677980e809ed8bef2/annotation/episode_000000_structured.json",
+      "sha256": "6ad55f3b0a614bf88c34ae3e950fa5b1042560813a905959b4c462a3abf672fa",
+      "old_task_name": "Divide liquid into small bottles and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000046/c844790547be31c2374eb217b9b5d7cdb770e4690e973ba175135790a74f9dc4/annotation/episode_000000_structured.json",
+      "sha256": "fdc18cd1a4705ff9ec6d3dd3461b3414729e83f9140e72d5616be8ea3f71ad2c",
+      "old_task_name": "Sort and recycle cardboard boxes and plastic bottles"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000047/f1a1fab54754a28d5bc810002acf487263521d9fdadc43493ba5de03dc51dc5d/annotation/episode_000000_structured.json",
+      "sha256": "a534da6eabaaeb87b61450bcde07b4eafc057b26bc630fd2100463f1c71fdfc3",
+      "old_task_name": "Make the bed and organize toys"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000049/a26289dc8d3b9b73f184071db06a0acaf5c063fbbf3df28a8d9aa882784048b9/annotation/episode_000000_structured.json",
+      "sha256": "01c5aa4ab31ce08b810a1804fdfb2ef855e0401709059b7e0dbe8dcf0ab47cc3",
+      "old_task_name": "Stock soy sauce and vinegar bottles on shelf"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000049/a99093fb8b2185a462196d05938190db432d3cb67c47ab9884b43baffdc142cb/annotation/episode_000000_structured.json",
+      "sha256": "2eea828977cd33723070d6b7b3265af7d8a92d56a512d4b3b41e9f4c18f74a07",
+      "old_task_name": "Organize and store small items in a box"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000052/56a64ebb36339ee1c5972eb11a1efc41cbcc6142dbd3fe3f42049df300517ed9/annotation/episode_000000_structured.json",
+      "sha256": "2a2ed724c0584b9fe075ea810359f45c294bcf15a2e0129da946c9d5c86810f7",
+      "old_task_name": "clean room"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000053/244b67af1bb3ff5951fd04dfbbffc5344b339152b056e535be08893c255578c7/annotation/episode_000000_structured.json",
+      "sha256": "d0bb48492d10b9ada28f63b9ee586974054b57e8f6d3bbf52c10060fa09917d1",
+      "old_task_name": "Kitchen cleaning and organization"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000053/7e6d32d6732f1d983d762033cd60492562437c6df8600e9427c24eb521bed9fc/annotation/episode_000000_structured.json",
+      "sha256": "3ad20c3433136f309ab3a068f306e7192def34efb49d2251b21f9827b8dc8228",
+      "old_task_name": "Transfer liquid between bottles and clean sink"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000054/6bfd2c948efeae89c3ccb2066f7b2c80f34ea71dd54e6f364e4623c0619547e5/annotation/episode_000000_structured.json",
+      "sha256": "e16a8400061d063037e5ebd89e66babfa4dc4d3395911c5dc1baa58faa098f3c",
+      "old_task_name": "Browse and select clothes on a rack"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000054/c23484ff4d46d2c8a5b706b34e0f6a0feb293fb8aed7dd9926017b396a89d2d2/annotation/episode_000000_structured.json",
+      "sha256": "d772366cce2af7c773f951a632a8098852703d47a204635adcddb4eec09b0d11",
+      "old_task_name": "Prepare spray bottles and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000054/cbd16ff9ee5efa02dcfcee424a29a362aff7d893d49314eb167c7fc6dcaa1f29/annotation/episode_000000_structured.json",
+      "sha256": "7337ed8b14c4254f72011d0dd3a9024fdf00a13bfb132b7aece92a0ec42e17f2",
+      "old_task_name": "Fill watering cans and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000055/3911b4553878b66907ab8ab376558f842660370d4c569458912a1fd5a7fd805d/annotation/episode_000000_structured.json",
+      "sha256": "3bdbd7015cb0b9e0a193381bfb3a6ca4d23b2dd629b531b7f589b8165ac82a1c",
+      "old_task_name": "Water potted plants and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000055/cfc155f2ff0c210f5de7a0a4e944c7ddd0cdfe4746c8d256f2f6df47fedf9bb1/annotation/episode_000000_structured.json",
+      "sha256": "4c4e6b8e459203af835faf241da022777032f52d13bba3ce21370b753c73b38f",
+      "old_task_name": "Refill soap dispenser and clean sink"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000058/868a0b7f91da535ce761987d1410416d6e38970ed5f27ba0e0f9244ffd46a7c1/annotation/episode_000000_structured.json",
+      "sha256": "a31396afb83e605513d5c6f6fc0383acf97260e230e5e3f8375abe3816ca17bb",
+      "old_task_name": "Packing rackets and cleaning table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/64de23b083672f2dc278e500fc6f5dc64576b792527a833ca9266d5fb9fe8254/annotation/episode_000000_structured.json",
+      "sha256": "cb5036e547cec2dd1942a083371b51fd0ce52be3b330d1bcee376fba38bab784",
+      "old_task_name": "Clean coffee machine and clear table clutter"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/699eb95dd947ec2e1731e155b83a067927412f531ec407d8d62cb50698d45db6/annotation/episode_000000_structured.json",
+      "sha256": "0bf67b1b9f99a34891e7cc758bef60c8b721a09371cf08299daa9680f04b1ea4",
+      "old_task_name": "Clean trash can and fold towel"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/72e8ebb1ccb91a7b28f477686396fe98a0d70665c1e2ce31fbbf0c10b7b05b6d/annotation/episode_000000_structured.json",
+      "sha256": "b042244b8b227047b3e54e47544ddbb8c88b0cd0cdb09a0dfb5b88473c8612c5",
+      "old_task_name": "Store gasket and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/adf9dda1dcd86a7cf4557b32fbe10c96604f2611705c6ed8d6e8e4b0b1d4fd7f/annotation/episode_000000_structured.json",
+      "sha256": "f81dd076b2f90b0f75d289972ab77fbc1c156b73c98a7f1356acafee8dad7bc8",
+      "old_task_name": "Organize tray and clean table surface"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/aedec07e86cdd5aac9e8867d361863e2bd06b0d3def8eeefbd1bca1499be36a1/annotation/episode_000000_structured.json",
+      "sha256": "27fecb3863ceb389bfbdf1c4f05c86bfb6ca7ef74399ebb141f501c7f939e73a",
+      "old_task_name": "Store gasket and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/113dfc3ae4562c67abdc47a5bd2e9ed1fac5855cb73d8fcf3298fda868fb1d74/annotation/episode_000000_structured.json",
+      "sha256": "7b2740a739af061f8bf7027a0e82eb9443557da6caa9faa60eaf6db18e74ed78",
+      "old_task_name": "clean room"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/20435ac2ac17a55f83548d84f45c28d9e330a95b956db249ebfe66735e8c0179/annotation/episode_000000_structured.json",
+      "sha256": "76780ca6eb53ac20aa19c92bbfd324a479d6b2044d74c1d4e7f07a12c45e1653",
+      "old_task_name": "Organize items into storage box and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/2045b4ea9f7e8f4883de2d1536c0791bec47dcfdc868b69048b0db51666a95fc/annotation/episode_000000_structured.json",
+      "sha256": "0f8a7e40ca3159ebf5d6ad3ad382bc1c4a6d0ea188d66d653df5057d34c9393f",
+      "old_task_name": "Store beads and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/22e86e030fed359c1833454ed9b2e528f32eaac002ccce250c1042f95c986d40/annotation/episode_000000_structured.json",
+      "sha256": "fae96fdc681d151ba7783b860b7125abb40f0fd835c2733cea5444e4f0002fc0",
+      "old_task_name": "Store packet and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/24d2b0af4748a691f2bcdbb20c4a156580a2912698697fd093a7963a829f105e/annotation/episode_000000_structured.json",
+      "sha256": "c32d1107831c0da072441253b1192696957bd2a9f4765a311a24be8ac5057be4",
+      "old_task_name": "Organize packet and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/43f965b0213568dc9045b87191fedc6bdf8f09d2bb7d684016224658f43c2601/annotation/episode_000000_structured.json",
+      "sha256": "a08eab6a6f11ae40de17e15afee8e148d32c64c276595ca95cf29cb179d473a6",
+      "old_task_name": "Packaging small items and cleaning the table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/46cf6c6746438c82f5e505744b84a93025cafc4f36ffd9f921d7fec9d361397b/annotation/episode_000000_structured.json",
+      "sha256": "3169bf36f4983635824b9459e3af1ffe30f89ce3c5b34e3c17156ee82c083b1e",
+      "old_task_name": "Store package and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/530d9e950687c429a881068d9fb0fb64fe82c356d02a49eb26a67c867af6df41/annotation/episode_000000_structured.json",
+      "sha256": "eaf5bbe6ecfed9131bfb546b067c201ed59c3877184b62e0ac36383c12121985",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/53d955e858fa5c9f7f5577387e99cb5188d29d9dd09625f10009c5245be91267/annotation/episode_000000_structured.json",
+      "sha256": "0416b76984a40f2fc166c6c69f77eab9c9ea95675ddee5a83b8ffc05a20b33b6",
+      "old_task_name": "Store packet and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/69dc40ac65f7bb20bd82ec26c4b7671c1ac8dcb283c8fce1db97bbcabcbc7eac/annotation/episode_000000_structured.json",
+      "sha256": "36b2ae855aa2eaceb2dc2301f73da51c39871165616e1f799ad6670968de6d41",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/6a54f0c9929f18b2abb1a8c15d72bf89e9d885b7b0acd5497010435c8a9937e8/annotation/episode_000000_structured.json",
+      "sha256": "a509d17febf2a56340c6aabe01e95841ebdc41a5a9f189760367c7355f0d74f9",
+      "old_task_name": "Sort items into storage box and wipe table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/6ea82e332cfb3d87be0b03835d8b768ba6f76e94184639f27f67b77507b4cf2d/annotation/episode_000000_structured.json",
+      "sha256": "f9d1dd21b84228f2d4c801f01ebc3eae2981d895035a64c724b4dc86a5709af0",
+      "old_task_name": "Store package and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/7ff7c7a7b8affe598a56f968b21e0389d82042f91064476bc509838aa754d24b/annotation/episode_000000_structured.json",
+      "sha256": "564646c46992f0b07a71b562b019df3154b260ad0940e883bf2f490d2e20d84a",
+      "old_task_name": "Clean and organize desktop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/88da2805e9d2f0b442fdadc338e7245f9841516cf61d2eab791115247da95306/annotation/episode_000000_structured.json",
+      "sha256": "a9f005ed353deabb7b381786bf71c1577f00cab4253c0cd00960cf088cacf340",
+      "old_task_name": "Clean room floor with vacuum cleaner and store it"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/8f6dd48eaa18b7665f790eba60af595c78b236fe9930acddd8e4b56949a5fdd8/annotation/episode_000000_structured.json",
+      "sha256": "d846b85b00422760fa92cd37464013e9215ecbb91bfe8681a1c79d1974da0331",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/95a7da9b68104e7849f8e32651d5233dd39bac1db39045ae6b51cd971e35886e/annotation/episode_000000_structured.json",
+      "sha256": "dddf672ff5466e1fdafd4e545f2ade284cd7f63fe889daa17d5e9efc173bf858",
+      "old_task_name": "Organize package and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/9cbb7d93eaff2a0e380af56ec2250a46126e6816593b33c6f3f1bbf2191ad3ba/annotation/episode_000000_structured.json",
+      "sha256": "1fdf13c9dce8a36c3ac68b8988340499fcc0e37f828b54ae917859435729fc6b",
+      "old_task_name": "Store packet and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/ac19d879cbb918696a5f2510f32df02810da4ef485f58abdcbcbed7e9006a376/annotation/episode_000000_structured.json",
+      "sha256": "c4958c208ca46e033b0bf10d4f3df9c62f76957e0dbfc3e0476041ead6a55e31",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/c19be5db10a3fadf76212915248ce598083ff0f85c350540f6cdb03fe517e993/annotation/episode_000000_structured.json",
+      "sha256": "4db13943e8dc7106e922ff658a784678e4e2cd9a9a7ac6a8d2ac8c7cc723b53e",
+      "old_task_name": "Prepare and serve coffee with soda water"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/cecf5c7bdcbb8381e1414cc23f80e3d9ef0cc35f84e99d316ade55a0288a9217/annotation/episode_000000_structured.json",
+      "sha256": "eced1195b6eee75998575b08204e026a2ae0aa0bf8d203204bbc6dc6f8911690",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/f0608e8b3b8c65c2b9a0fe7ea66e338e62c358af005c9a4057284fcb46a44794/annotation/episode_000000_structured.json",
+      "sha256": "bd5b0db2158c6497143d9aed635af738d3de195eda195ac33984eefb0441bc05",
+      "old_task_name": "Pack items into box and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/fa0783d27910efd20bcdeade7518469577ba96543d6b95868d15d2218dc1f5a0/annotation/episode_000000_structured.json",
+      "sha256": "8dffaac8b714a5f481df946a81ba2a90ce3204c757cdc48dd7e928829e386248",
+      "old_task_name": "Prepare and serve coffee"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/fa82340023baeb2b808a3916132cf7f499b7f25478f16432cb12dadc6083df5e/annotation/episode_000000_structured.json",
+      "sha256": "1e8f8cacdc7ca7e3a52f88c931e68c39b0e9d27a8c5dccc44be90cfcd6217617",
+      "old_task_name": "Organize package and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000064/7f28925f8a765f9eaad35a8802a8d6c811b62838bce2ff47fc1601e91342c871/annotation/episode_000000_structured.json",
+      "sha256": "d72ee55a3a94f557d60afb4641914fd24cd65cfb9ae12228d2dd68d9a5215042",
+      "old_task_name": "Replace lint roller paper and organize desk items"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000064/b9e059f353defb12b3d2462bc103ba127d255fbc5bfca8bb33bfb3e9b1fce19a/annotation/episode_000000_structured.json",
+      "sha256": "1c8f2945e631e30b331d3c13a0ce0455446e40c5d22f454b88a0b4cf6e8f8b23",
+      "old_task_name": "Grind seasoning using spice bottles"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000069/0a43d328f15eae7b98e6c58352c141facb2ca6937c41148d70db772385ffa4de/annotation/episode_000000_structured.json",
+      "sha256": "3d7adb8f2f686175f004bf8e0996e6f1153b2d9171c9b1552f6505dd91ab7509",
+      "old_task_name": "Organize plates and clear packaging waste"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000069/52927bb61bb8c242a31015b40f4e33bbd4e6f9abeafffd19d100cb4fc7a566cc/annotation/episode_000000_structured.json",
+      "sha256": "1f9890cd7894f75cdd5b9013bb0736d3a6d819c0b473f670822eeec8ff60cb33",
+      "old_task_name": "Organize dishes and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000069/a32e019ff0a7c6a45df27d21a9ea9383927ecd36dee64c3790c195ce295ff51d/annotation/episode_000000_structured.json",
+      "sha256": "587344893a1e6b11c1c0f1ccab0798fea660aa1e21bd932a3f7da26dd2792cb4",
+      "old_task_name": "Drying plate and cleaning countertop trash"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000090/f69a30df636c31642451bc352d749308fbd4b821c6cc25df83dd76fec0ac818b/annotation/episode_000000_structured.json",
+      "sha256": "44642ba86d8b923b4b162ffa795c4cd2335557d8cc7ca16eb0525d63d68d6d28",
+      "old_task_name": "Clean balcony and organize tools"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000091/a67c0136b7a531a0d20d4746d82cb4c590d973bfade830de70d737ac38f0068a/annotation/episode_000000_structured.json",
+      "sha256": "c67996525f568d89286f61a2e2fa23f6ef815a8e1d9946f172c6906141289426",
+      "old_task_name": "Inflate multiple deflated basketballs"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000091/f97068a72da9d1c798f0397a80372af5f062e9711121dc129985e8c6a3d98428/annotation/episode_000000_structured.json",
+      "sha256": "3fd0e23aa78a0566da28adf66416a1fa9633013cbad0bf20b702deab2c958bff",
+      "old_task_name": "Clean and tidy shoes"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/2b5bc4d796b2f680903f8ed014199e5f5b93f37106635c6c0a1db7234bc7c066/annotation/episode_000000_structured.json",
+      "sha256": "6375faaa53b38e81755bf25ddb1a0428346dcd8cdbecb21466683038224b71d2",
+      "old_task_name": "Lay anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/2dd3f9dcab58edf731d513992a949a86b17578e7296403b21ccf4775d5e39a9d/annotation/episode_000000_structured.json",
+      "sha256": "0e6e2d4520485fe7f016bf9d7ab36a2f01eb16549d82524dcc45236c1487704c",
+      "old_task_name": "Unfold anti-slip mats and clean bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/3409320fc6c4dc27bfd179988ae8dadf53f1239d5f97f706a85f919e0aad4344/annotation/episode_000000_structured.json",
+      "sha256": "5e6128cf81ed15fe7d174c96202eaa3a55eb5f84dc497dcdfce9624386bb8d41",
+      "old_task_name": "Lay floor mats and clean bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/3b1bc713eab1edc567472aeae97ddc67e4a152f0561ea2502897ed241be4f56e/annotation/episode_000000_structured.json",
+      "sha256": "87d13c9d9016f139a6cc95f63d464bb9c03970689fe07ab9e4b2aeaa6bb27ad0",
+      "old_task_name": "Lay anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/569ef8420ba19f3b724116b97f8fc36028c7e88818b41e882d3dbfbbeb82760e/annotation/episode_000000_structured.json",
+      "sha256": "4eaabdd3734c281804ca55993842566e385c21618d101125f0cd8db5f612a054",
+      "old_task_name": "Lay anti-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/6675d2080a0be8edd5a1b3ea5b96219c2ae4c11328141adb8a7cbed50fc4f58d/annotation/episode_000000_structured.json",
+      "sha256": "736e15a33e38a591c5a7c365843ec45ede0d9ae75cc45fee8fcd75cf39e0fc02",
+      "old_task_name": "Unfold anti-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/67a85b41b84411f0307ccad5735a294f8dcf2b476c191f7694b7e6004e02b861/annotation/episode_000000_structured.json",
+      "sha256": "99c153d00a827975dcd94e5074ae9e9bc3196924ec1e7af046eed589e80425e3",
+      "old_task_name": "Lay anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/6b0fe06cba120d548fc9cb9c904cd65b19099b182ce2d26d9b2e27b7aa7d1248/annotation/episode_000000_structured.json",
+      "sha256": "b30ec5b21b1b6a47f7df9c3956f7dd31f7024e4cc1fb3a81bcafd780c20f8a1e",
+      "old_task_name": "Unfold non-slip mats and wipe floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/71d099aaae2345565b1ff72772dda3615121c0846211624cc7014edcabd06c61/annotation/episode_000000_structured.json",
+      "sha256": "cb2d0cf8da9b5c600b0de98319bce63ef96ddce0359664592761c8848b52d691",
+      "old_task_name": "Unfold anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/75159c7734ad57f20412bfa5bea5856b8458072f8d4d783ef74faff0a521e3e0/annotation/episode_000000_structured.json",
+      "sha256": "65c543d6da5d2cca02a37f654b3b0b822072dbda33c13dbb7abb9cee28beab9f",
+      "old_task_name": "Lay non-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/9391f37265156ac6ce20e46a8dca1d017ca270c4b608c15dbd89498fd067de3a/annotation/episode_000000_structured.json",
+      "sha256": "bf8ba2440cc7bd6e7e7e99c9a43bf0124cdcbe2f28effd98e44b077ea8b709fb",
+      "old_task_name": "Unfold anti-slip mats and wipe floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/a1daca9208015acf39a9e49c530adc03f86eb7b1eaab1955cb332aa624d6e581/annotation/episode_000000_structured.json",
+      "sha256": "2e3528fbf381e1385f62277023bf72f6e31950389e0bf8756b51ce879beb6f4c",
+      "old_task_name": "Unfold anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/a1ebaf051f0a5ce0c15b63ab7730a32076a4be8224662191448cc29a05ec548b/annotation/episode_000000_structured.json",
+      "sha256": "abe9ae69321b7eaec996a794544f5ebdd062d8e07bd2a0c69678de7b0e6376c2",
+      "old_task_name": "Organize labels and boxes into trays"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/a7c037e3fac98ed2cfa624209835843b1ff97774eddd469f95aa8d9477e1aa35/annotation/episode_000000_structured.json",
+      "sha256": "f81bd438ba562ad324874fe1950e66c60d1fa9430657a820139bca19feb9573d",
+      "old_task_name": "Unfold anti-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/a9949558c2aa5e9feda864a55aa8e28f0ad0b07e1ae2bc341417ac81ff615f89/annotation/episode_000000_structured.json",
+      "sha256": "b634092654756ae78a0bb44ed9d0f07a4fb8bbf237631a2e036d15111c705a34",
+      "old_task_name": "Lay anti-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/b7571cf6d92ddb1ac1214499293eb4bdda3ba83a7f2826637e4ddd2811064adb/annotation/episode_000000_structured.json",
+      "sha256": "5bfac967129af2328b74ab2ef23b486bbb14013205b04750cb4087b0f34729ce",
+      "old_task_name": "Place anti-slip mats and clean bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/baa5b0ab37d7df0aabad688b5decd3a02a6df06c16d78a72d92bf95134c2a3c4/annotation/episode_000000_structured.json",
+      "sha256": "68645315f380e1ed1d2dc444bde6923841dc49cf8bca33251d673c0bbbd4fa10",
+      "old_task_name": "Unfold non-slip mats and wipe bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/bd083ac86768705c66baa8b895e6f5b54f1287a65d6d4fa57962000d19147c90/annotation/episode_000000_structured.json",
+      "sha256": "cad7094b163b90b942e778210bdfa1d0f47c3349fad85e24363d04bfd9968966",
+      "old_task_name": "Spread anti-slip mats and wipe floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/ca7f0f4ae5a965746c8d1ba01c4637e4deed8f66047758e2f97361f9ba0fb182/annotation/episode_000000_structured.json",
+      "sha256": "6979fddc58dcd4baa7cd7a3d5bd92ac26a18d036fa17b23cf853a2d7f42cf0cc",
+      "old_task_name": "Place anti-slip mats and clean bathroom floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/d0dd880e31b0677220a311681195724c58b21e0789f81cbaa4898e3290fb5415/annotation/episode_000000_structured.json",
+      "sha256": "ae44ed1098219f15e7c66ab4dbc98d7c9785b63bfbf9effcfa5857212b9fd70d",
+      "old_task_name": "Unfold anti-slip mats and clean floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/da5f9624a73e8de99d642cfc0f40610f48015911323fbaf819640a7f277371d2/annotation/episode_000000_structured.json",
+      "sha256": "865187a134f507a53ba02938bf9934a2f33deaa4c52e0f0c9bfd014de0097668",
+      "old_task_name": "Install and clean non-slip mats"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000092/f13b218b68d1fb2109106a04885bf1601c8d4e73af1ab273b5312efdaa827cce/annotation/episode_000000_structured.json",
+      "sha256": "07f8c6c08ab737cccb79ed5df4a7867416f5cae1c1057bd91c8d18b2d3f62d33",
+      "old_task_name": "Unfold mats and wipe floor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/1c80fbc45065165ac6391f99d9022bf7f469f8d57b5ee6b37b46110f63a465b8/annotation/episode_000000_structured.json",
+      "sha256": "80edb5894806f251f316ebae7d8982b92be7cc9ca85314a1866948959a72daf7",
+      "old_task_name": "Organize sink counter and hang towels"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/45f69d5da5ef92763239444e38ac66b4a32bf30a518aa0131011eb8ef0a5f0de/annotation/episode_000000_structured.json",
+      "sha256": "9d713dbb16d647d6f55335c1c7dd9584a90923fd7518634985f2238aa2905afd",
+      "old_task_name": "Organize bathroom towels and toiletries and clean trash"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/9a906a12b41390244cf46b993b7459e72ab568cfaca2c9dc569ae936e166f2bd/annotation/episode_000000_structured.json",
+      "sha256": "986a6ec95ce1a2156fe1443b6bbeecdaae84d36b2df3e2b5dd823a4481f0d75f",
+      "old_task_name": "Organize washstand and hang towels"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/a4e0545a57420ffb011b36028ae5377a66e9dcf75c727aefdf8cd3c52b2b4e9c/annotation/episode_000000_structured.json",
+      "sha256": "4228f0b001dd9b8140cf17ecdc38957751c0fb38f9c6119cfcca20068d758fe4",
+      "old_task_name": "Bathroom tidying"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/b7a108d1c52586b592103b2aaddf0b9e2ab763f070404c22207cd06d856c76b8/annotation/episode_000000_structured.json",
+      "sha256": "96ab2fb4ef8a0a54c6408570fc97ffdf103685720a7b5ea21384e015a47dd263",
+      "old_task_name": "Make bed and straighten picture frame"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/bc0dc71edfc227e680a676316559ef54f9d66c5770d5a7396d4f544e0b642548/annotation/episode_000000_structured.json",
+      "sha256": "3999fff8b3a5eb2134dcd9bad645f617533f3e62088b099fb1482d78775ad65c",
+      "old_task_name": "Tidy bedroom bed and nightstand"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/de4bbf028e67ec37d579d32fab118f37ec96837204db13adff37b3d19994e91b/annotation/episode_000000_structured.json",
+      "sha256": "5e26ee65373d71bb792953a09872a7e15fba0f16f7b4f5e464201682fd17dfb8",
+      "old_task_name": "Organize bathroom sink and clean up packaging"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000094/fe606a67fbfc9b615f897ed588977b4692a5b2f81f090ae14d030e8db1da254a/annotation/episode_000000_structured.json",
+      "sha256": "b2a0c3db60595b7b5621394bbcc1e861331466ae9d4d576cd3a04816d4f7a33a",
+      "old_task_name": "Organize bathroom sink and dispose of trash"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/1cb51fe6192227b035f943fb7fcf35f39b0e149125dc1ae1295b6f4051e98a52/annotation/episode_000000_structured.json",
+      "sha256": "b5ca1779cbc642d2751aae0ec2324e2c3ed2ea69671acc504460fc7cf0f6b370",
+      "old_task_name": "Clear and clean table items"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/664dbccbe6021ddd16825bddba422aabe695c065e23eed1c07a3f9745260c9eb/annotation/episode_000000_structured.json",
+      "sha256": "25eb07df5068c66542bfdbaf8f2c754e8b2f8056d9d2f8d7cbdbae465c14fd04",
+      "old_task_name": "Make bed and arrange picture frames"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/710ec91386c66ee17647946d7e74d0ff906ce6eb6872533dbd625d9503830b76/annotation/episode_000000_structured.json",
+      "sha256": "7858341350423b50708c79c9ad59cb4c85e9d0f5b73410a9eb237d579e91898e",
+      "old_task_name": "Make bed and arrange picture frames"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/b2aa2117e8de738c9d70cd932a4f60e2089c2276fe2cf46008b78b537ebfade4/annotation/episode_000000_structured.json",
+      "sha256": "4190adb767e70f903b59257cd17a9b9dfbfb993852a4d63658e0549fd71e1bde",
+      "old_task_name": "Clean desktop and organize items into drawer"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/b41f4a152aa4f2a44beebcfbe78c22c5274d6d0c6e62380402fd18e6de59e860/annotation/episode_000000_structured.json",
+      "sha256": "8911a1a04f7afc2611328f2647a489a5542846b92cd4385d5a36ddaabad2b11d",
+      "old_task_name": "Tidy bedroom bed and nightstand"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/b5377ec7ec0f39d67beb0e8a4f9f6e25db61d7873f1f5b97fd53a5a63bd1be0f/annotation/episode_000000_structured.json",
+      "sha256": "0bc7644be4a351cabd46dbad11cd81f0944e50465b73d6ef126993cd33295c55",
+      "old_task_name": "Make bed and arrange picture frames"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000095/cdc84a15920f95008723fad36388f2951aa2fc6867919fd27de4d47595e75180/annotation/episode_000000_structured.json",
+      "sha256": "9d27cedd9d23d8d4a667f74354d5b85915f8baf55c623b66989472284e988a6c",
+      "old_task_name": "Make bed and arrange photo frames"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000096/14163e851f229af0c48c17fffa6c9fcee1f4d1d3db490e13e7cc69b62d55ed53/annotation/episode_000000_structured.json",
+      "sha256": "3c23e178e8d5d639c67d425ce5c3c7b31a8ca3e570bad15be0f9e138b16269a7",
+      "old_task_name": "Selecting beverages from supermarket shelves"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000098/b79df5a08bd74cb4b2b27a61677cbf08c744affa71b41fc551d1859b4a31175b/annotation/episode_000000_structured.json",
+      "sha256": "b723db8707f43ae040906bceb4a2208d956b11900de5f1b7b5e9d4b91934e253",
+      "old_task_name": "Prepare instant noodles"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000098/c5a5a2f0a5fafa79bba5555eb1ab21a7628abd5808509c7660052e07548455f1/annotation/episode_000000_structured.json",
+      "sha256": "a7f5d01ca157c138f58e56378414baa8706df0ba083507629b55bebae7ad6eff",
+      "old_task_name": "Brew tea and clean table"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000099/2487aae80e8e07bc63907e057aa56c3d2fefe4fdebd497e26a8b4f42b2f1fedf/annotation/episode_000000_structured.json",
+      "sha256": "b5024bcc659db805bc03953af432cf5aa8fff6c8d08e9faf6f0c461e9bbcaafc",
+      "old_task_name": "Straighten and cap bottles on conveyor"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000099/d6c7a200117b6d664f1f9e6963cd9d6b75411a9f3fe787f7fe7d3a0bba84399b/annotation/episode_000000_structured.json",
+      "sha256": "6c7d780229d7fa2ef3fc4fb81fc5de78f787a6e0b83ad11db48b21ec63c4c758",
+      "old_task_name": "Clean up trash and organize pencil"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000099/e131b75f439b19e5ba2b02a11f00a1ac419f3d26cb66f0a131268d38eaeb4a58/annotation/episode_000000_structured.json",
+      "sha256": "968981a685131ee4bec0f41989a67b5a6432cc9e04e83c87750c20f7a896591e",
+      "old_task_name": "Clean desktop and floor by disposing of bottle and organizing pens"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/117b36a7b22ab2a70167e7fd136fa35decef564c762554a1bff5cc5494386b94/annotation/episode_000000_structured.json",
+      "sha256": "402947b28aa52edc5ac9f207014d3e036dd6735a0bc674350b4633ba98044847",
+      "old_task_name": "Store milk and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/412041aec53206200cd8e1114badfce43e389cbb65c619308b98f8b3f61e6790/annotation/episode_000000_structured.json",
+      "sha256": "5426843e955dd6c6ac95893d66ef400ad9f70cdef410da1e3c102117672aa21e",
+      "old_task_name": "Kitchen countertop cleanup and organization"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/9059c5080cfe1b5ae1d5d99118318ad1f488e6db5609f748bfdea4482f9b257e/annotation/episode_000000_structured.json",
+      "sha256": "1f46fd32bdd4a12276d4578429f0bf463a812fb555989a8dc514632caf716c07",
+      "old_task_name": "Store milk and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/946c540e7c923699c814b7a702f391cf59cf2adfb5a6918f0e49d89df775a26a/annotation/episode_000000_structured.json",
+      "sha256": "80bcd6d0687fcf9af9ac9d759b0ff1dd7c62ac73bc3425e603e2b84c4d39c364",
+      "old_task_name": "Kitchen cleanup and organization"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/b15d9df1490cd51a4c568e07669584d92ff498de9cefd88ffb8c2399f177aca9/annotation/episode_000000_structured.json",
+      "sha256": "4cc83c062e8daba5f19af8d048e3a47057ee6d4b28b907230bbb40c619231847",
+      "old_task_name": "Kitchen cleaning and organization"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/b8bbdd78cca185c39989e39b98b51426ed08b106e193d806647b6bbab88ba79e/annotation/episode_000000_structured.json",
+      "sha256": "7c7e6b2cf66837e3b4055302592f2e08c7f1b59028ebdfab85854f7caeffb547",
+      "old_task_name": "Store milk and clean countertop"
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000100/efa079de44b5cdb87fb5a7659e81380a405b308a0bb2ab8a9870828a7a135126/annotation/episode_000000_structured.json",
+      "sha256": "f4ea01bedfe89f168ac141329ca334acc062afd0f118b2b6f6c0ea58d8dd2261",
+      "old_task_name": "Put milk in refrigerator and clean kitchen countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/0b0f77012d144802b3ebf3ece450cce0/annotation/episode_000000_structured.json",
+      "sha256": "85f91cb69d7f0348efa3227e70aaa628340fe46404dced197027177c890d8480",
+      "old_task_name": "perform perm rod rolling"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/0b694e1f72da4b57bf7f291ba1d18588/annotation/episode_000000_structured.json",
+      "sha256": "d24c06abd1a91fd290e38a676450d74a2f4394324031a5b0218aea0196e4aa6d",
+      "old_task_name": "Organize hair dryer and sweep hair clippings"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000001/0c79a62877444dccb07af023b888e921/annotation/episode_000000_structured.json",
+      "sha256": "ed239f6f07e5cb3f59dd83ef90b9d024690778b8675e72b413381507778a0c04",
+      "old_task_name": "Fix perm rods"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000002/0eba65b347d7465183eef363d8bb5180/annotation/episode_000000_structured.json",
+      "sha256": "3f5bd430d95ab4b72633621cd351e5dcc0bd7adf08d38860884a692c7ec55a01",
+      "old_task_name": "perform moxibustion care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000002/115d088448184af6b4e3d355cba42e90/annotation/episode_000000_structured.json",
+      "sha256": "919c7bc91150a63ef685867221fcd94ae704fac96ef7231d16e2ec0f7fecc6a9",
+      "old_task_name": "Store haircut tools and clean barber chairs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000002/184b677a7f6d43f6a49ae2ec976581e8/annotation/episode_000000_structured.json",
+      "sha256": "86f21dbe14694d80c593fc59ed526da6f8b3cd4767cf524eb9fb57c9d96e6e1c",
+      "old_task_name": "Clean counter and wash bottles"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000002/1a75d672438442eb9417410d0f62533e/annotation/episode_000000_structured.json",
+      "sha256": "65ef1f541423fd572c45ff5772d8947cced4d6df7fbba65be4b775d955cf8d10",
+      "old_task_name": "Clean barbershop and hairdressing tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000002/1aa052fec5cb4b41968d1de70fc90798/annotation/episode_000000_structured.json",
+      "sha256": "bb036f53cf5b04b3ecf0d9d0587df1d6f79bc6504ef12a528059e77a102663f8",
+      "old_task_name": "Straighten hair and store tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/1ea8cfaa51c746c4b50739be417ecf29/annotation/episode_000000_structured.json",
+      "sha256": "442fc850cbf5727de93163abce3d7cb798f28d6af3267ace35b70ad146479ff2",
+      "old_task_name": "Shave customer face and manage towels"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/211651c5515a4159bbc5f0dbc69b50c7/annotation/episode_000000_structured.json",
+      "sha256": "c4c4102bbb06e00a4eb3c59d46073220bcda82b80913cb7e6fc35084f8594941",
+      "old_task_name": "wash and install wig"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/215464e6a32f4a84804efb48b885161b/annotation/episode_000000_structured.json",
+      "sha256": "c2c6ea66701f9aba8058ae4df31ba23fff0ff3232e334ebc9c72fd3189f6cbb4",
+      "old_task_name": "Wrap towel and shave customer face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/2679330e33684fa3940aec562d23c8f0/annotation/episode_000000_structured.json",
+      "sha256": "1b0848ce3c9ff90db2308d90d93a5bedc664fa12f4ebcb2afb07d17387dc9b4c",
+      "old_task_name": "Sweep hair clippings and tidy floor wire"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/287e84bacdff4ee5bb442788c0f81fb6/annotation/episode_000000_structured.json",
+      "sha256": "c114757b1037e6c70da8d8d01f22352859a731e93f50f124daf26b6e15474a37",
+      "old_task_name": "Cut and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000003/29e22c498bc3433a892e51a576ef9a30/annotation/episode_000000_structured.json",
+      "sha256": "c91831171c61542224f982e45ee6f087d262991b3f64668253838cace909f980",
+      "old_task_name": "Organize storage shelf and assemble shower head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000004/2d7260f187f942738d9daac372b41085/annotation/episode_000000_structured.json",
+      "sha256": "24860a821c2eb056acd65e3add563725014296dbb74f508a4985efc18cf99bfc",
+      "old_task_name": "Braid and smooth hair on wig head model"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000004/30ea1172de4444468b19ff646a8b4b43/annotation/episode_000000_structured.json",
+      "sha256": "dc89bdcce0c94fe1320f085348543bc0a7c8a7e5075565bfb7cca4d49ab0a5a1",
+      "old_task_name": "massage customer shoulder and neck"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000004/32bf9de58c9e406485e03951dedf0b62/annotation/episode_000000_structured.json",
+      "sha256": "7ce519c42f56ad5742de7b2840cb17a68ce6e3e5b5f178acb918b354c6fff465",
+      "old_task_name": "Roll perm rods on mannequin head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000005/383ee0eb10f544c28d622eca95ea2a3d/annotation/episode_000000_structured.json",
+      "sha256": "af65de9e79876bd80152188db9beaa98d27c0bd357cfdc7ec137c8308c413dad",
+      "old_task_name": "perform moxibustion care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000005/394855950aac44cd96294685df6add0b/annotation/episode_000000_structured.json",
+      "sha256": "277555b19435601fbddd0a0e99e1cf7530ad6d9d2443dfadb0ba655f0a6e1029",
+      "old_task_name": "dry hair and trim eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/47e2000952fd4a0b9649b30a0202bc1c/annotation/episode_000000_structured.json",
+      "sha256": "327a435b4ab83e1c2dd5704028577c6a29811e3f53ecc2656e34d49719d0e220",
+      "old_task_name": "Straighten and blow-dry customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/4f1c232f367c4f64808ad8ceb30ab027/annotation/episode_000000_structured.json",
+      "sha256": "9cfdbb9014820eb5b86ca7cae592fdcfb0ba1c661da9ded6eaa0436f3396bba7",
+      "old_task_name": "Braid hair and organize wig"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/5015c2ee3eb147ca8263d757c915b58e/annotation/episode_000000_structured.json",
+      "sha256": "8d791c66f7302853dd6fca9406e4e45d4ae92ff1554188ac9dd33a06c839a109",
+      "old_task_name": "splice green perm rods"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/5159ad1921514b6aaaf9c0855fd49f5f/annotation/episode_000000_structured.json",
+      "sha256": "a5e7092cd300c9f3020d2bf899263ee633eb39cd0a720f889bcb551697cb0ccb",
+      "old_task_name": "prepare hair dye mixture"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/5515e1fc7c534e3081e3012eaac9aeb5/annotation/episode_000000_structured.json",
+      "sha256": "317d0e0982c300f116bdaeb0c19de9a7cb54170788483ed8ad884ce5538a685c",
+      "old_task_name": "Spray perm lotion and prepare hair dryer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000007/56c540d7b1df474ba6c653deeae7a0c5/annotation/episode_000000_structured.json",
+      "sha256": "98b2e148d327c4f16ee4fd5e67af44cffc68eac786e4f73e3ae4a82a13655e03",
+      "old_task_name": "Clean chair and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000007/573e063e8ab14e19a3ef16df159339c3/annotation/episode_000000_structured.json",
+      "sha256": "8427c90f055ae633456757c9a66db90322e3ed78e2c5a38ab368029342ae5ea7",
+      "old_task_name": "comb hair and complete perm rolling"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000007/5e6d9e2f0eeb4c63b587e79402035754/annotation/episode_000000_structured.json",
+      "sha256": "e1a45d2984c61357a0399168d20c951f9ccbb559e3e71154b7f400bf4edf6c9d",
+      "old_task_name": "Assemble bottle and sweep floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000007/5f69d00c754442578d455531bee3d8e3/annotation/episode_000000_structured.json",
+      "sha256": "474087ea1269bbfefd224ab31e4850bca6b2df2510d0cfea5a1f152bffa7b702",
+      "old_task_name": "Wash towel and shave customer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000008/62b8d895cef44bc982269ebbc85bc647/annotation/episode_000000_structured.json",
+      "sha256": "e8b71e130f4d3670e4d105492b529ca475f40e411a622ea02c5b3d01d1aa92b6",
+      "old_task_name": "Remove and apply hair rollers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/6a6ecf79b95a43f79e098b45f28449a9/annotation/episode_000000_structured.json",
+      "sha256": "0f5f5144d8c6576fe17192ab53807181e0c6a4b5fab7622a0e2fad030e06f6de",
+      "old_task_name": "Trim and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/6c2af2e813f64cfb998c0bce00f9755b/annotation/episode_000000_structured.json",
+      "sha256": "824b8777f217d43b2e04b076fef31b7163ec45255a0b7957e52eefae286f0e0e",
+      "old_task_name": "Adjust grill and prepare meat"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/6f7ffbbe10854f92bdc4551c506e06a6/annotation/episode_000000_structured.json",
+      "sha256": "320f0dc74db765499dc47736a7f7b462d6b75f82c26927e0925ccbb085dc4fc0",
+      "old_task_name": "apply hair dye cream to wig"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000009/76b5f59c96f546b299aadbae0dc83131/annotation/episode_000000_structured.json",
+      "sha256": "7f6d102821a776f9b89df082cc819110db49b87402271b6de7873d0c43e59b51",
+      "old_task_name": "perform perm rolling on wig"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000010/844d149cf44b4ab994738d16f600e0ba/annotation/episode_000000_structured.json",
+      "sha256": "b5646a7d80f2db15b24f5c7734a6242920056f969632e7064a7010dc19fe102b",
+      "old_task_name": "Weave and comb wig"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000011/8d2a39b1ab62423b86edcae7380f3530/annotation/episode_000000_structured.json",
+      "sha256": "491fdd9955f64fc0c7b86679c36b1b7eb8dbd4b3b7854bce22611984f7adce46",
+      "old_task_name": "perform perm rolling"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000011/8e471b6445f64941b3b4d33d47b08dc8/annotation/episode_000000_structured.json",
+      "sha256": "cf8e115a760964aecad00cfc8bdd66411e8f825690eb0707cb57f7a0e4a8b5b1",
+      "old_task_name": "Section and fix hair pieces"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000011/8f6da8ba61b54615b15a5085608ce92e/annotation/episode_000000_structured.json",
+      "sha256": "9b4df3482deef3d71159aa780377861b7aa063c4735490fbcfade6272f920b8b",
+      "old_task_name": "Clean barber tools and organize sink items"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000011/905a8c8ac8734b8ea8638fdc7eaeb16b/annotation/episode_000000_structured.json",
+      "sha256": "6642d3287de61ab1307285acadca3b9dc1cc3ffc9ee06fe3c8cd6d93bc70286f",
+      "old_task_name": "Cut and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000013/ac0bc8fa825748ff9d6c173dc921d0a8/annotation/episode_000000_structured.json",
+      "sha256": "72a96c4e81d19b30677d7f9e76ffb63e308f27cce1c7c9f04a2e6464664d76ae",
+      "old_task_name": "Trim customer hair and organize tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000014/b0564246b6d74a4db7c48a6872f69533/annotation/episode_000000_structured.json",
+      "sha256": "dd4961d7184df1877ecaaca21d87d63a6f8b77b2fcd785857b642b32f11b4d32",
+      "old_task_name": "trim stray hair and clean clippings"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/beae1364ee6d44d7aaeee93e3701c4fa/annotation/episode_000000_structured.json",
+      "sha256": "2e011d510e0b854d15a2379a32453fa94a0f65988ba7555ad9bc86737c9418f4",
+      "old_task_name": "clean shop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/c0f54f7d90c145049c931d5a308b6305/annotation/episode_000000_structured.json",
+      "sha256": "d6f6805b74b9d9d15e1aea31e63c41f356f41048ed84a47ca36be9e2b2f4759f",
+      "old_task_name": "Massage customer shoulders and arrange hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/c4f8cc362de84f93bda393dec386e8d6/annotation/episode_000000_structured.json",
+      "sha256": "9b59ece0bce75bca0b2ae31db1143840a9053d78e430e51e4fd1fc68a442fe42",
+      "old_task_name": "Clean and organize hair clippers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/c5fd01da02be4ace8d6da6c1e6ce64af/annotation/episode_000000_structured.json",
+      "sha256": "1d91e6dd24e433cc3faa2b4c95818e252259ba1cad2804fd178075b1a6f1c1d7",
+      "old_task_name": "Sort perm rods and rinse customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/c812e0b89eb44bcda23f895a40847a85/annotation/episode_000000_structured.json",
+      "sha256": "a5123ed90ca77b6cf9a4b10bf08c05c6b2a80b55ff21e144efa7e3570d12ab30",
+      "old_task_name": "shave customer face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000015/ca65661aab114f5eb54c12ca72607833/annotation/episode_000000_structured.json",
+      "sha256": "23df35d5a68efe488cb85f51a6505cfc91921398c8bdb397ef4afd4556f1ee81",
+      "old_task_name": "Dye customer hair and organize tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/d06f48eeb94348a8b9bc9cfcc2937a9b/annotation/episode_000000_structured.json",
+      "sha256": "58d08cec9492ad4649f6db27d92e14841cf13480dcd3b46ccc2db8ddcbc7d403",
+      "old_task_name": "Organize sundries and sort straws"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000016/d5aba52cbaaa4623b5472b7661488434/annotation/episode_000000_structured.json",
+      "sha256": "e43b9be9103af66fdcdeb92407329f78dc1b882f696a9e92031e9297b1d8e740",
+      "old_task_name": "Clean shelf and boxes and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000017/e31a92dbbd7c40e99e2a624befc5267f/annotation/episode_000000_structured.json",
+      "sha256": "b1fbba86238aae3ea212ee8b354f143f2036e0d63e297a7d7be6998659f079d8",
+      "old_task_name": "gather cowpeas and organize tissues"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000017/e54c33a84dc641bba99168cf47899349/annotation/episode_000000_structured.json",
+      "sha256": "a51d2207a220d4a8144448edd7779afd07d0972abcdd881327da89f8c7447688",
+      "old_task_name": "Clean hair dryer and wash cloths"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000018/e7eb9c5869144fdf95aa90318934db7e/annotation/episode_000000_structured.json",
+      "sha256": "f9bd14e61e8e5e95266372b5a8332c8454b784a9c0cc0661de8bec4dd97de474",
+      "old_task_name": "prepare beauty agent"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000018/e8fb7bfa124645849d25f06342b3b6cb/annotation/episode_000000_structured.json",
+      "sha256": "48a62658b78243f304543600e31d97c18a98c5eddf936a31e12e3e1c1ec384f7",
+      "old_task_name": "Perm hair and remove perm rods"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000018/ee378cbabde048f19cd3d63aa8dd5bba/annotation/episode_000000_structured.json",
+      "sha256": "42322ba7b97b6715fb55125112ac66364811fc8f28169cc480008cfb8a4923a9",
+      "old_task_name": "Rinse dry hair and organize products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000018/f1bac65d59f246a2bdb63076a400102d/annotation/episode_000000_structured.json",
+      "sha256": "837858b00e180fdc9960b1e708f26691d5332d1eadb9b9a035adb61ded2ecdfd",
+      "old_task_name": "Roll customer hair and wash hands"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000019/f49d1822a80540eda5791de8a0227116/annotation/episode_000000_structured.json",
+      "sha256": "e6c1fb759fc898d9c4735235667cb3157ecf2fcf44b94077ec9420af6036bc10",
+      "old_task_name": "Massage customer shoulders and neck"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000019/f58ffec40e154f609e40122fd1fa6e9e/annotation/episode_000000_structured.json",
+      "sha256": "121829a70cc1080095e080c595db7a0f747af222ab0d4b471d17b7cc4002ada0",
+      "old_task_name": "apply hair dye and cut hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000019/fd2cf2097b504cd68cc46cbb73a06828/annotation/episode_000000_structured.json",
+      "sha256": "0175d1e60fdfe4b855405b8c69fa7b1a6ec26efd9ca9bb2d53682d50cce566b6",
+      "old_task_name": "Clean salon and wash customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/069fb4a2f4e94086afab5dc48b1f2858/annotation/episode_000000_structured.json",
+      "sha256": "1be62332af2875f7f3c85b6213764cc6476114b3c29ebfd8bb1351b0a60bd85d",
+      "old_task_name": "paint nail art on customer fingernails"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0928ecb798e54a349520abd5a9036389/annotation/episode_000000_structured.json",
+      "sha256": "6f399e97bbc88d44555a7bb568853ccd44187bcbc9602b29586e9cfeeb3ee7f3",
+      "old_task_name": "inspect charger and cushion"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0b81a71bcf734b88806abc84dc8a5249/annotation/episode_000000_structured.json",
+      "sha256": "306fc76cd124a124affb689be5baf450fce0bb628789209b317aaff888e91249",
+      "old_task_name": "perform eyebrow tattooing"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0c3a58eb717c4b339ebd530d1e85e4d5/annotation/episode_000000_structured.json",
+      "sha256": "e8df6d783d1922575583ab4c9ffd85541ecb550ad1fcd7208e22de362b9fc4a0",
+      "old_task_name": "perform facial scraping and massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/0dd125fa06eb40409bb97e4b2cc8394d/annotation/episode_000000_structured.json",
+      "sha256": "c83b7134bec27379efa281efd49b743b9000e86a8106c50ed0a0438d2d901eed",
+      "old_task_name": "Massage customer arms and move treatment cart"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000020/104d79680463417399dcf8f212530a8d/annotation/episode_000000_structured.json",
+      "sha256": "10afe2bd21652c9c50b4ba5f4eddb2a5c238001c2c625f396cfb0b2e83eb86a9",
+      "old_task_name": "Stock shelf, clean floor, and wash towel"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1196e4d914d74c2dbba7fb8dd181e1de/annotation/episode_000000_structured.json",
+      "sha256": "2a571c51d9b0c09507bcef34688985fa87b5a9077fbd991f78458adc53b00f32",
+      "old_task_name": "fold towels and clean towel"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/13600040564f4c8f84bb6c206ef57ac8/annotation/episode_000000_structured.json",
+      "sha256": "cf5363446f667b0de171602eea1085e09c99f9315db791a14bd32cd0228a1f6a",
+      "old_task_name": "Massage customer shoulders and head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/163582b649a24159831d5d7b02959dac/annotation/episode_000000_structured.json",
+      "sha256": "4e489bc605287bf78cabc9cd3af38466e74511ec2e0611862daef87c379826da",
+      "old_task_name": "prepare and graft eyelashes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/17ce21de0b8b4601a268f33645db4507/annotation/episode_000000_structured.json",
+      "sha256": "dfb6f320b0a832ac6055484b43781aa5e46dfaece823908c9cd9c997e66e64aa",
+      "old_task_name": "Wash hair and apply facial mask"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1922d465a71a4aa5bb55e6acc31c8a43/annotation/episode_000000_structured.json",
+      "sha256": "8cb3f6786d0bedf7ce02c0c5f15b0bad3215b389a24a8ab0da9957b7d88de4db",
+      "old_task_name": "fold towels and remove phone case"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/19287ea75360459597e1aeaac62751fd/annotation/episode_000000_structured.json",
+      "sha256": "fe6246b731003a4e9ba81e7d0dfb03fc31e324a1af710f6dc1a87255a6bde27e",
+      "old_task_name": "Perform facial care and organize beauty supplies"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1b9651cc2f2a43fa9d46ad216ece4d48/annotation/episode_000000_structured.json",
+      "sha256": "bc49d8b2768ceef8f1edfccf6bfdf94f162da0eb97b72d4ac74dbfd0cee826cd",
+      "old_task_name": "Massage customer back and apply oil"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000021/1c5320c85e77427fba81d72c862d1702/annotation/episode_000000_structured.json",
+      "sha256": "bcc81b4409568c99b26519b924ef97816da3627cfffc53e81ae4ee495e4cc46d",
+      "old_task_name": "Clean and tidy the salon room"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/1e4c6b13c2f84f40adb25d009d854b3c/annotation/episode_000000_structured.json",
+      "sha256": "0c2522cda0d8deb80c2e29d4657691e3ae633df3b9bc0c546c1f920c42f48a02",
+      "old_task_name": "Perform facial beauty care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/2262de45c9a046b6a5b64e84369faf50/annotation/episode_000000_structured.json",
+      "sha256": "a97d1a23914d808d2b45e92c7bb853a0ff32d20b918daf854f660be189ebefc0",
+      "old_task_name": "Store towels and boxes and wipe cart"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/25e7c531850a4dfaad82c3d8ade7597a/annotation/episode_000000_structured.json",
+      "sha256": "6d0d8a0dd909d8bfb26c0e34cb176394e37738e1c156a7a6ad99ce37040f9ddb",
+      "old_task_name": "Provide back massage service"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/2947a1546aef4f2082f914d7847cb764/annotation/episode_000000_structured.json",
+      "sha256": "82be51b41334cda7f03c72953e41a5015fc525320d58ead94ba38f67c097c9f6",
+      "old_task_name": "Provide facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000022/2abbe354f1f345bf87656ba05e732942/annotation/episode_000000_structured.json",
+      "sha256": "822237e40edcbd1df592f24ba0c19eb3f38b1484e1cc4877825ac84195545656",
+      "old_task_name": "arrange items on table and place box on bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2bf706df3fc1448a9ac4717623277900/annotation/episode_000000_structured.json",
+      "sha256": "d4df40c6c1203df25b1e2a6a83fb0dbbc000b00c714aa2213843cd19ebc2aefd",
+      "old_task_name": "Wipe customer face and clean room"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2cc655da3b204de184d7b6997f582db9/annotation/episode_000000_structured.json",
+      "sha256": "9804aa94b910579985c0c10a4e8d055f1dfcd64b5683250d1772cbf42854d288",
+      "old_task_name": "Massage customer head and shoulders"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2dcad500dceb4d078aeee3c1528c4eb6/annotation/episode_000000_structured.json",
+      "sha256": "97fd1b6f9c7a20d2540d5adeedd99d80a8a59484f6abbd2ea6025af825346635",
+      "old_task_name": "Apply nail polish and decorate nails"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/2f33b4216cdb46029b856b6cdf2a9ebf/annotation/episode_000000_structured.json",
+      "sha256": "66e43d77648f826893e18675e7117633d56deece62a020708d8b6317d72d22a3",
+      "old_task_name": "prepare essential oil and massage abdomen"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/30ed6c42ad6b493a840f6952c8bc13ac/annotation/episode_000000_structured.json",
+      "sha256": "c1a610c68aab7cbc134377373a870a9e9314777f0e0b89804b45b5f10ac29283",
+      "old_task_name": "Perform facial skin care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/314eb8fcf1964e2cb707294e286fde70/annotation/episode_000000_structured.json",
+      "sha256": "26366f6d01ba0e11f62e7a7d00868bba4507fd5700a616a06736435ca8995fd3",
+      "old_task_name": "Apply nail polish and trim nails"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/3253d8ca0fdc4fa5afece72ef92d2e56/annotation/episode_000000_structured.json",
+      "sha256": "e9142975b440a19294a07e3b9a50a7a8e265bebbcc1e23febbbbeccd1c3f1990",
+      "old_task_name": "massage back and prepare alcohol"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/32fc9b22e694404381ebdbbdf71f1230/annotation/episode_000000_structured.json",
+      "sha256": "6924da0233a0174849e1b0f35dc1fea142d47d3c69e57c6a666283cb408de0f1",
+      "old_task_name": "Massage and clean customer face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/352cdd99ba0641cd9cda40f81d9d3875/annotation/episode_000000_structured.json",
+      "sha256": "44bdc8905ca2bd0b0953992cf367c143dc46dabe7a37587adf6d5ed124f77ae6",
+      "old_task_name": "Organize and clean beauty salon workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/38bf73581f734ed7bfb709d410e2830a/annotation/episode_000000_structured.json",
+      "sha256": "b3381bb4f9f596c203ef59c627512bf7c134975903bf3647fb748f657be2bc8d",
+      "old_task_name": "Treat customer leg with beauty device"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000023/38f471f3fe7748d596a0c3328aad448b/annotation/episode_000000_structured.json",
+      "sha256": "4c73913493a6f5b467eaef895151e108fa0f650017f28247c4428718e04972a9",
+      "old_task_name": "prepare beauty materials"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/3eab364f0a814b99bea9b6ffa0d98df9/annotation/episode_000000_structured.json",
+      "sha256": "6b0b965a2de1d9218455e9ced21428a0b26285151c2c811fb85641d5d6421adf",
+      "old_task_name": "Paint and cure nail pieces"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/401d4eabb6bb4e4c982955b0485039ea/annotation/episode_000000_structured.json",
+      "sha256": "077710cca04e86d0fb4d722a3adace6c4fc5fe0db97591b02531ffdfb6ac1e32",
+      "old_task_name": "Massage arm and apply facial essence"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4180661f23bc4777a7743be9eb853673/annotation/episode_000000_structured.json",
+      "sha256": "871d6e612ff8966101412120e35e97f4ae8817c30b55c468c03c59d5921edb04",
+      "old_task_name": "Sweep garbage and mop floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/44fec836367c4e199aa6400bf8282ea2/annotation/episode_000000_structured.json",
+      "sha256": "9bbfc1511a05cc0595ab6c97356b3e47dd0c7989807707e76ac11046e1bc132b",
+      "old_task_name": "Apply eye patches and perform head massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4843a4d404ce4294b63c1f3a3ba9c5ce/annotation/episode_000000_structured.json",
+      "sha256": "1c9aeaf28b718978e2918f4b1592992afc15c8b92de00f6a12d962d4edb20255",
+      "old_task_name": "Organize cosmetics and fill forms"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/4850e1b4280a454faef01cd056fb8005/annotation/episode_000000_structured.json",
+      "sha256": "c4e08fd0eaf950e0163821322dbe3d005007070851caec6f38cc9a915e041e49",
+      "old_task_name": "massage customer back and adjust covering"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/490eafe0c6c34302a4e68e729ebfbd27/annotation/episode_000000_structured.json",
+      "sha256": "7594cb676f28a760f2a80ff453229ccf890aa49d10d9cf355159a75f2c311c1c",
+      "old_task_name": "Provide facial care and trim towel threads"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000024/494cb7934758434297caf9cb982dac1f/annotation/episode_000000_structured.json",
+      "sha256": "9afd731512660b1e0c1b8a26f55a9b80e50446179ec6d944fff820be2bf5743b",
+      "old_task_name": "Perform facial scraping and massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/4c3097c84af04660a52aa16882476f96/annotation/episode_000000_structured.json",
+      "sha256": "d6b0027ea1de5bc22cfaf434adc2732e274a30e7880a450e2e2a9acdc71814e2",
+      "old_task_name": "Sweep floor, make bed and arrange items"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/4f54d5d092b74127b4550975f463b89e/annotation/episode_000000_structured.json",
+      "sha256": "e5e17d060a2ad06857b483c9811438c2462b4e1f94d0f5b60476af4903af206c",
+      "old_task_name": "Massage customer face and prepare eye patch"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/502dd450fb4544d49cc4545858ab0fbb/annotation/episode_000000_structured.json",
+      "sha256": "01f6acf47bb1f269fde986765468b54f3afecf85110442a4067064d39885dd02",
+      "old_task_name": "Wipe makeup brushes and organize storage basket"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000025/51897bcd45394ab4b54763d904280a24/annotation/episode_000000_structured.json",
+      "sha256": "75f35dfcb3323db220dd804705f8d485539959fb0cb872b875acb268f6d8c5c2",
+      "old_task_name": "Perform facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5a48b99f079a4650a790f292ca27a7fd/annotation/episode_000000_structured.json",
+      "sha256": "1ce702d72bc4297c753d8e1eb3793f3f62b4ff37018c25bcc0cfd9004c530d7b",
+      "old_task_name": "Sweep garbage and place cleaning tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5b97aad4e7564e718c2918c8845bd1a0/annotation/episode_000000_structured.json",
+      "sha256": "ff0353f755822f76295e6e893b899cf59d3b5007368a62feb7bc5340b0a11322",
+      "old_task_name": "Tattoo customer eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5c9793ab41f3485b8a248671adeac23f/annotation/episode_000000_structured.json",
+      "sha256": "a2d43b073eb9fe727ee2b00a99964858d40752f526ce63c81816fac55fcf7365",
+      "old_task_name": "massage face and apply foundation"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/5fbf6abad6ac499f8dc84e6ed7cf57e5/annotation/episode_000000_structured.json",
+      "sha256": "6141c8c3df48dc86d7fbd54b9652c43c1e06db1e83af66e635ee065dc2ea57b3",
+      "old_task_name": "Massage customer legs and apply essential oil"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/60039c1de652489db5ab17415415aae3/annotation/episode_000000_structured.json",
+      "sha256": "7921fc68c33e7316d276a985af694f17f6e430e8793b1e388ee9cab286568d3d",
+      "old_task_name": "fold towels and organize beauty cart"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/60e9d814a76c473c8a4b414f5ac31e51/annotation/episode_000000_structured.json",
+      "sha256": "05612273bd78f9206cb9924c4c8c75fd5b9466fcfcac74f3c95d2f2cafe0d107",
+      "old_task_name": "care customer forehead"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/62addadb7ff34016ad6d014bd90600bb/annotation/episode_000000_structured.json",
+      "sha256": "b67e3d9c85958e84629804dfcd9665a8caf662188d9c61b2e724e9172198546b",
+      "old_task_name": "Massage customer head and apply essential oil"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/63bff6370bfd414b8b7848022caea741/annotation/episode_000000_structured.json",
+      "sha256": "78ce9a668fafed9216d12f8612d68b2c11934da68ba2589c3d37f16ebac4045d",
+      "old_task_name": "arrange goods and sweep store floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000026/66054419885541c48982a2f6a3fea458/annotation/episode_000000_structured.json",
+      "sha256": "fad16d7859f5958b28d2ed893f6f91398b5e5cd14b9870436c29ce210f4fe444",
+      "old_task_name": "Sweep floor and organize skin care products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6ae641433dc64c76825502c831be9b6d/annotation/episode_000000_structured.json",
+      "sha256": "26b23efe7535fd30b5f04ce41c5a5851baf998accd01eb1761518b888e222b7c",
+      "old_task_name": "Fill registration book and arrange flowers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/6eb649f47b504cc49508e10fadd7959a/annotation/episode_000000_structured.json",
+      "sha256": "e498a5c09c971cd5d42b4f7a62079a0bb55c1005e08a84f23fb661312b3a2dc9",
+      "old_task_name": "Treat face with beauty infusion device"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/71b7338821fa4757aec4cf02df58f38d/annotation/episode_000000_structured.json",
+      "sha256": "d26852f2b703961d5f8f264dcea2025e070a7b5104bcc49ec57ba3f4c812c045",
+      "old_task_name": "fold towels and prepare beauty bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/71ecc5edc8d24c22924eb2b7c2c067dd/annotation/episode_000000_structured.json",
+      "sha256": "f93eb819447f09aa8e1a89e14a786d3de83d642c1830dd279f2d749456fee2c2",
+      "old_task_name": "Massage customer back and adjust towel"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/73ef095c9507401ba5f144332a3b9be1/annotation/episode_000000_structured.json",
+      "sha256": "de85082b08ecefa0a2a52759b82befedca044430841352eceb1bba5b9e87ab27",
+      "old_task_name": "perform facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000027/75fcd623b1f24fae864eb0844a47e8a1/annotation/episode_000000_structured.json",
+      "sha256": "9ea99d698f5fef69e7b5ff3499bc13d516da53b5049b76da9ac56b04dbdad97b",
+      "old_task_name": "Clean tray and prepare beauty paste"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7aa7739f618f49a591435a9939115ac3/annotation/episode_000000_structured.json",
+      "sha256": "2dad65586128ab7b1c0c2dd70d789dd0edb3451bfbb43c00459947896f3193c8",
+      "old_task_name": "Write price tags and process cashier information"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7ae4575aa0054ea6a4179135648b26da/annotation/episode_000000_structured.json",
+      "sha256": "ce96af9379651112c8be1bc68b602088aa8ef5667209b07ee3e913102ed82a06",
+      "old_task_name": "Provide head care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7c9f33ba80cc4d8b97d8d9d9ee2add84/annotation/episode_000000_structured.json",
+      "sha256": "898149c45cad07823bf804a190c0ba6a055deb9b487218a66cbf00abdb97e1ff",
+      "old_task_name": "Organize nail polish and store boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7d84617438a5494bb25cb63666b2bc58/annotation/episode_000000_structured.json",
+      "sha256": "92584cc34e21960eb7a2e6dc7b0396e8b4e2154b0ad57ae4e3f5bbf12c7e7cd2",
+      "old_task_name": "Fill disinfection register and wipe trolley"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000028/7f9a6fc80a59496b8914a109ddd54394/annotation/episode_000000_structured.json",
+      "sha256": "16a38c133208fa82f61045e015988b6499d9102fbb814a360c674cf02c694970",
+      "old_task_name": "fold towels and pack boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/86462d168d2a4528823ad25b99ee6efb/annotation/episode_000000_structured.json",
+      "sha256": "efd3ac90408ec8a2d343e3cfe0a80e61123f405dfde275d0ae9e09a88feef1ea",
+      "old_task_name": "Massage and clean customer face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/8b6210fe17bc43cdb009f450850ae5f4/annotation/episode_000000_structured.json",
+      "sha256": "c182964e7ddfa57772d28d277fa7429d3c9c26ffa6b9ed9f4c13c9491d167fea",
+      "old_task_name": "Massage customer head and apply facial skincare"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000029/90910009d1dc4430ad4ec173f4053b4a/annotation/episode_000000_structured.json",
+      "sha256": "94c236f66ba7456875697454bdcfa14ae87d7b15be3a663ff354e9be428ef3bc",
+      "old_task_name": "Clean face and trim eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/91461abd7d7643d8b86fa5316cad0433/annotation/episode_000000_structured.json",
+      "sha256": "c6beb5a594c1ba966937b7cf19dcce4c3cfad5d345df236e1ff6091d3b8358d4",
+      "old_task_name": "Massage customer head and face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/954e03a6cc494151b93cd71cc502914f/annotation/episode_000000_structured.json",
+      "sha256": "07d3c01bae3d8fa5726be2a36b6a392851f95705e0f7453960c45c273ac51629",
+      "old_task_name": "clean ear and massage head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/955b656873bc4cd992d037e858555913/annotation/episode_000000_structured.json",
+      "sha256": "a5696a2d1f932587b16cb9e61a64d3a2a43726768caf7b27d417eb4a35728600",
+      "old_task_name": "mark points on back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/96982a23d7e3496497aa4e81b68f7484/annotation/episode_000000_structured.json",
+      "sha256": "b9770fb91743e187d5bcd16036b1fce62a5dc2449f7ffdbbc00c46900c1163a7",
+      "old_task_name": "Provide facial skincare and massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9788f0ccfbec4cc398e5bc7c44f9b673/annotation/episode_000000_structured.json",
+      "sha256": "481e84d39272ed86731a8f583651eb4b44eacfc773f88546b5930bad27075ebd",
+      "old_task_name": "Provide facial massage and clean tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9b336d9633714bc0b72d52c694e773d2/annotation/episode_000000_structured.json",
+      "sha256": "6747dcce7f9c2634c10f77b48357632b01450d246c857436a0e4181491a006aa",
+      "old_task_name": "Perform facial massage and apply eye mask"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000030/9b62afe5723b489f978a32d17b266207/annotation/episode_000000_structured.json",
+      "sha256": "7edb1455cd336f89d61840567b36c90e232ea6cc15b0bfc51a9767f1bc921755",
+      "old_task_name": "Comb hair and massage head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a0bdf762c9334a9c8deb6d5c225ae9d0/annotation/episode_000000_structured.json",
+      "sha256": "d51a8f512a5aaf9ab49adf9ce88c49dffe4b493d1b6478b6e62ed99f99b7245f",
+      "old_task_name": "apply contour and draw eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a0e74897f7e4409f8e6c42721c3d003d/annotation/episode_000000_structured.json",
+      "sha256": "fd7a7f942be702bbbfc7793aa4ac6e9eea6152d72a28bd5a09d865c09196597a",
+      "old_task_name": "Place boxes and mop floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a10901e871324aa3a64cb80f09508c48/annotation/episode_000000_structured.json",
+      "sha256": "6e92dd34ba6db631cff1171b3dbbc105a0d575ab3a60610748c1f9a6d613418e",
+      "old_task_name": "Install nail tips and apply nail polish"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a3b7fdd597c642a68ef79ecfb845b50e/annotation/episode_000000_structured.json",
+      "sha256": "320b6de79462b566a2d6c8e59416d18f654dc110267068eb66fefe35289f25c9",
+      "old_task_name": "Massage face and trim eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a40da0bf82c14f8ab576beac15c1a6e7/annotation/episode_000000_structured.json",
+      "sha256": "de3a33f033a9bc093da11b3fd8e9c051a44221a8e336d5cd29bfe1b4cbc04193",
+      "old_task_name": "organize cotton roll"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a5bbc0cbb81c41b3aaebbee6bcbc2689/annotation/episode_000000_structured.json",
+      "sha256": "298945f5c1eb38651c2cf243db6cca3209985754d8c8f641f86e52fd4ebfd5c0",
+      "old_task_name": "Tidy beauty bed and perform facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a934d946d8804f188202de135ddea00e/annotation/episode_000000_structured.json",
+      "sha256": "e8bdd5cbcf35c782b56ad339a79ab280795ecadfb0a03e3393248905adbc6af6",
+      "old_task_name": "Apply neck patch and massage customer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/a9af858cb1604d55b1bea3e872b092eb/annotation/episode_000000_structured.json",
+      "sha256": "13042ff743470f2d5d308925e5bc062742055b699682640b07f2ed13ae2e6bf9",
+      "old_task_name": "Massage face and apply facial mask"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/aaf1ca86ee744f47ad7c377b867ee229/annotation/episode_000000_structured.json",
+      "sha256": "e4b96e70d32177830985558e0d33049ffeee6b6a0e212f58e3fe6622b2021737",
+      "old_task_name": "Perform facial and hair care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ab01cc901ff4433993084b7df32bac30/annotation/episode_000000_structured.json",
+      "sha256": "27e660fa64d98c296e991a88d38dca30efff31a1e38256930a704a49f5deff8d",
+      "old_task_name": "organize cosmetics and apply nail polish"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ab0439fdd706462f909d4a3da7660969/annotation/episode_000000_structured.json",
+      "sha256": "7f5968708afdc0b3e1bd52db6cb5d63bc2fa4fc91e133f4c7e0a9e530ae54fe7",
+      "old_task_name": "Mop floor and place boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000031/ad0cfeddf9224f7d9c6005c97fcecc05/annotation/episode_000000_structured.json",
+      "sha256": "b30d641945cf4794bd2e3fa8fb78cf1d526cc0ebaa742ad6503e6195c2713ebc",
+      "old_task_name": "Provide head care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b07c3eef89de4e649dc17499c9687fb6/annotation/episode_000000_structured.json",
+      "sha256": "f6889e14238d956ebc36672c9896200e484d125a301f7433f4917cdb277e66c0",
+      "old_task_name": "Clean salon and organize equipment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b0977d929e514baca6f56d39f132da1b/annotation/episode_000000_structured.json",
+      "sha256": "e8633e5788f3d7f9bcf0c885a07c0b1503fc1351303d2743a2739291d6cdb6c1",
+      "old_task_name": "Massage face and prepare mask supplies"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b131982b364244cdbdc4087c9c4cd6c8/annotation/episode_000000_structured.json",
+      "sha256": "2384ce88b1da86615e2b1f604f5b59feb0fd10f1cf4cb0ad4a402add63ca010a",
+      "old_task_name": "Clean and organize salon supplies"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b2924980656d4fa69da035d9ab51f382/annotation/episode_000000_structured.json",
+      "sha256": "5a15002e80b410a6b983cc4c7899397bd2c03c550e2fe4e934f1539b64b06296",
+      "old_task_name": "Massage customer face and store beauty supplies"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b5882dce85cd40c88d5372c9a5011b6f/annotation/episode_000000_structured.json",
+      "sha256": "5676d8c546ab7ce1e72b22d0cbc3712d7756bc4447d14668acfe39a64816dac7",
+      "old_task_name": "Wipe boxes and clean floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b8a71a7b132f43eb96eeb0cbdb806e47/annotation/episode_000000_structured.json",
+      "sha256": "406f14ea242ef898de15868486d002310a9afaf919ca88a82f943c81176be631",
+      "old_task_name": "arrange skin care products and sweep floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b8c0b82e76b34d89b9253cc8ba204205/annotation/episode_000000_structured.json",
+      "sha256": "b81b3753bf474bdc1a7d4b364dda620aa4977e3d4cb9bc1cfaaf54b72cfa0822",
+      "old_task_name": "Massage customer neck and shoulders"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/b9500447ae774134a3d381259ee1bfe4/annotation/episode_000000_structured.json",
+      "sha256": "4c453bcce7907bb56a21bb1fa202c1959b07c7944a2bfe9c1d20b8b0ea6d1bb9",
+      "old_task_name": "Provide customer hair care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/bbb83fc4e19448e7945fe6f6652664fd/annotation/episode_000000_structured.json",
+      "sha256": "043585f658511edac72f1e3914026e1d24244127433b18200a166068a5b91ad5",
+      "old_task_name": "Perform facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000032/bc1519ac6d07459999a3501c794c9158/annotation/episode_000000_structured.json",
+      "sha256": "7387931722068ce2e71b21bbe1c53aae83d3ed28062d2c203be84182b4474070",
+      "old_task_name": "Perform facial care and massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bd47efa514b447a8a8a739cde4c4edf0/annotation/episode_000000_structured.json",
+      "sha256": "b110bedf39aa05b08219cca414ac99b77cc9775e03c8b314772c85c93ab944f7",
+      "old_task_name": "Apply skin care products and massage customer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bdfac17fad8a4f60aa5a5b86727a6524/annotation/episode_000000_structured.json",
+      "sha256": "d84f49f507114a05c240ee498f4eddcf215530b4fe527dafdaeb9f11810a771e",
+      "old_task_name": "massage back and apply care products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/bfda6f9158014c819d2b30971deff31a/annotation/episode_000000_structured.json",
+      "sha256": "642ba660afd53968a2bae70b3fff8426b68278266309d711c62bfe17916d4433",
+      "old_task_name": "Sweep floor and organize trolley"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c045bd6aec084663a5a2c170dda80003/annotation/episode_000000_structured.json",
+      "sha256": "ee87b4f10ebda9665b672b408fc09c615523c41a66372414f1f556d237fcfe30",
+      "old_task_name": "Pour water and organize cart"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c2547614381b455494af877602490ee9/annotation/episode_000000_structured.json",
+      "sha256": "9492a332e47ed1eb715ce78fe413e2c120713504c462fe3fe5beecf7f0127d42",
+      "old_task_name": "Apply neck mask and massage customer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c307238025834205a6e019c10ebab212/annotation/episode_000000_structured.json",
+      "sha256": "6a8a15d2f2f8f53ba4a9d4204a86492b2b753b16f0a35fa7e16bc7b200698eec",
+      "old_task_name": "store boxes and nail polish"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c467ff707ce5424bbf8def445ad60a49/annotation/episode_000000_structured.json",
+      "sha256": "865493e790a371eb4a96d831f723a949e9ed5a964703e1b2143809cc3ce97a63",
+      "old_task_name": "massage customer arm and back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c647b8684b504ed08dd2b63b652180ba/annotation/episode_000000_structured.json",
+      "sha256": "46466a468932fd5bdde27a449e841a0d88effd5b71b0900e79d826920b7cdb0b",
+      "old_task_name": "Pack skin care products and wash hands"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c64b4b47a4404faab91ebabc66ce4165/annotation/episode_000000_structured.json",
+      "sha256": "5c0ffb17a31803156681d83af9abfd42f09beef0a373d4d3c8ab06e01f3c234e",
+      "old_task_name": "Pack items, organize sundries, and repair chair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000033/c8c1bc75fb56461aa481e6981a4c598d/annotation/episode_000000_structured.json",
+      "sha256": "8355b1c9b840e7bc57bd85b373be110caff3c2e4390da34f99d1686a9a528e8e",
+      "old_task_name": "Comb hair and apply essential oil for head care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cb5b0ec5688249989ded2e8a5bd7837f/annotation/episode_000000_structured.json",
+      "sha256": "4d034b3ace9887a5d128eafa847490209cbb25764291489a9b4015387f4f5016",
+      "old_task_name": "Scrub fabrics and wipe table"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cea81b4f390845c58ffcff0ea41a29f6/annotation/episode_000000_structured.json",
+      "sha256": "448bf9c12da44c769aecc37ccb8c0fdf15fd7bc2e491c4274916e1f8d18e0506",
+      "old_task_name": "Massage customer and pick up items"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/cecd6fda0c344c80a22264fd17a83c41/annotation/episode_000000_structured.json",
+      "sha256": "a65e1beb74f08be7c294c38a3f24e96891541bbd55cfa8aaba7acdfe7198b1e3",
+      "old_task_name": "massage customer face and neck"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d5743aa13e54434ba6852038a8fb7063/annotation/episode_000000_structured.json",
+      "sha256": "e486ef84d83bc420ff3712fa58ce20f8574653949c7b8dff6abeeea3c94f8594",
+      "old_task_name": "extract facial acne"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d67fbfd717514d4aa490dd3d2e886a5b/annotation/episode_000000_structured.json",
+      "sha256": "e35d30a5a1c416e541a808560cdb371d86eb280ed40d98f7e9bbc44819e41239",
+      "old_task_name": "Perform facial massage and clean face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000034/d6c7427b4cff4edc9a0c7424ef7bbbed/annotation/episode_000000_structured.json",
+      "sha256": "9d46593e54a2b96178c763174c0b0b1b5a6566ee57c136d87be108ae436f1f7b",
+      "old_task_name": "clean and organize beauty salon"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/d83b6a0781814d67a0491ea1113da2d2/annotation/episode_000000_structured.json",
+      "sha256": "4b7c0a9e678362834751eda4bf3e69994881e0eccd7c36c7e3231b4b58b2f665",
+      "old_task_name": "comb hair and massage head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/dca8a5f305e64f8ca9b2c5991ad358b2/annotation/episode_000000_structured.json",
+      "sha256": "4c887983a7061da76c33e26cb405e0e4901e47d6fdcef6333c8af7fd85b03a90",
+      "old_task_name": "clean floor and place boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/dfe4b64d98374541a87ac4a526d40863/annotation/episode_000000_structured.json",
+      "sha256": "4a87f4bd757309974e37b463160a2c9d9f5123bf9432bbb972ff7223fb20f947",
+      "old_task_name": "Massage customer head and face"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/e0754351463f45b2a6ca3ded76fc213a/annotation/episode_000000_structured.json",
+      "sha256": "f3a8034e9109fb15a2078217ab5eda47e581fac3ced34868a882eb68994aefdd",
+      "old_task_name": "perform manicure"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000035/e4abf1b0d0a34597a740d4e1fbe8ebee/annotation/episode_000000_structured.json",
+      "sha256": "2a0fbaa614b7198f066f51570d8b6afd7d038d1390a3790197f7e89a284774d4",
+      "old_task_name": "Enter product information and organize shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e8adf463d0e24e0d99939bbe405730c0/annotation/episode_000000_structured.json",
+      "sha256": "00128230c49724d34b1a7897a795bb8c61cd5cb77cec7502473e9644d9846a06",
+      "old_task_name": "Tidy bed and massage back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/e8be52ae67d946a1aff29f653704f7fe/annotation/episode_000000_structured.json",
+      "sha256": "86a7168d6d332f4915557fc6b467673cac208948f70958983faa7ddf5f28d880",
+      "old_task_name": "perform facial care"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ea58ca62a2b2469db458e916411a69e1/annotation/episode_000000_structured.json",
+      "sha256": "7caff82d918770a955aa1068a2409189b3f4e31e0476ff8bca2a73174722937b",
+      "old_task_name": "massage and scrape customer back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/eb274b17559c4ec5829bbe41a4919c34/annotation/episode_000000_structured.json",
+      "sha256": "d21208a272195206302fea26ae2f3d68dc195c41589f159c19f9d616690f6591",
+      "old_task_name": "Mop floor and place boxes on counter"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ebb8cbb891614458b9f4cd762911ecf6/annotation/episode_000000_structured.json",
+      "sha256": "fea7780ed7d2164ec1932ab239325487bc4f1f8da37f51b65e8c9c0b68f09579",
+      "old_task_name": "Tattoo customer eyebrows"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ec76590bf18e46cfbcbaf540cad72f33/annotation/episode_000000_structured.json",
+      "sha256": "4d1b63286b2caa3c56f78859a910e7f63b364679aa56556d1da68c859be5cf6f",
+      "old_task_name": "Massage head model and post diagram"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ecd0bbd634234d0bb064455e9a1f6cff/annotation/episode_000000_structured.json",
+      "sha256": "e44395bbd6d7cfc36813a586727cf65b533d37ebb0a94e5bad8237cde1c51482",
+      "old_task_name": "Store boxes and sweep garbage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ef68199b89ee4a8e89aef6d195bacf66/annotation/episode_000000_structured.json",
+      "sha256": "557dd1ed45019605d95aeae13a11c5f9ee82a8f28375e06cc2134ee89ee418b9",
+      "old_task_name": "Massage head and apply skin care products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/ef83bcdc0d154558b9e548426572125b/annotation/episode_000000_structured.json",
+      "sha256": "1e4b2cef3ea5199b5f52c49762c7322ebbc5c03e90c1de9262e940c02330adb4",
+      "old_task_name": "perform facial care for customer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000036/f0e6d392aefe456ea164f114e44e2f3a/annotation/episode_000000_structured.json",
+      "sha256": "7f9d2423ba8385fd7294a60dd06ff47ad5c3a0ebb7647279474e3ec80ceb5553",
+      "old_task_name": "Massage customer back and head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/3bfc472e1ebf4cbdb1ce811750cd3e2e/annotation/episode_000000_structured.json",
+      "sha256": "11b0530489fe96dde5cb9c58890287f19dae37b96c828c2ecf611de39a06a008",
+      "old_task_name": "Drill lock holes in wooden door"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/f792ed68bdea436a99248cc405fa6996/annotation/episode_000000_structured.json",
+      "sha256": "0688448d21d193504c5fe54c018c6e1acc140e391bc891a1b6438af6bed5c0aa",
+      "old_task_name": "Prepare supplies and perform facial treatment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fa28976fe98a4548818e7ddfd04a67ae/annotation/episode_000000_structured.json",
+      "sha256": "e1a6d5e502d54b696fc2c3b9e6c56f6b020b405ae0f8400f3a68c7ab7ba66041",
+      "old_task_name": "comb hair and massage head"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000037/fef4e35f568a47b1aa38748082dfdb70/annotation/episode_000000_structured.json",
+      "sha256": "aa76d8c6fbde83728b88309493a05ea75da96599f11e229e5249407b3b8aff62",
+      "old_task_name": "perform facial massage and treatment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/5ae3c31fd6ce4a0daff2f3b8b5bf4a85/annotation/episode_000000_structured.json",
+      "sha256": "8e2840d8c96d5a602af3b0e14c2d59edf3fe5bc66e3120501d7889418e7949dc",
+      "old_task_name": "Assemble board bracket and organize light strip accessories"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/6556591daae64c54b5569d08593108b0/annotation/episode_000000_structured.json",
+      "sha256": "eb53e3b50cff84680095bd4a96cd1aa7dc31262991eb234ebb8a0dd6af888a46",
+      "old_task_name": "Drill holes and mill square hole on board"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/704f812b351b4a6c8281935170788e28/annotation/episode_000000_structured.json",
+      "sha256": "1ad826d9c95022bff492482cd7921953bb99f5615fd164e0ab5e8fbcc0e0552e",
+      "old_task_name": "Drill lock groove on wooden door"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/7835bc58dfdb45a7b7968e999cc35059/annotation/episode_000000_structured.json",
+      "sha256": "604eee572b468eec28109be2efdd1fe572b8aa51c442a23a2d945e8e2671bfe2",
+      "old_task_name": "Drill door frame slots for lock installation"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/af635a53120f464e8732679221d87997/annotation/episode_000000_structured.json",
+      "sha256": "e3f988d93c948c387eefd42ad6eda953c778ceb42f4f35ba1cf7e79ee9f7deb8",
+      "old_task_name": "unpack light strip and repair power strip"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/ba6ebea29f6248869dca962eed453782/annotation/episode_000000_structured.json",
+      "sha256": "0d230baa2742816f1ff680474dbf774a1b30ae8823296220a906e290b40e8a0c",
+      "old_task_name": "Measure elderly blood pressure"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/e0b25e32aa514c73a805837a615b6215/annotation/episode_000000_structured.json",
+      "sha256": "4a432ff3f2e6e309aeb0ba0901cfbe4de104ca48a26ac71f736dcb3edc8b8c74",
+      "old_task_name": "View assembly instructions"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/ec2ab793ed824e5b952285b81823c58a/annotation/episode_000000_structured.json",
+      "sha256": "9c875efe30146f456522a4825b8230b2a4e6d5236bacc9fb8a4a4482f862e70c",
+      "old_task_name": "Repair nail gun and install skirting line"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/f7560592633b4defbe83cb7cd5e88e51/annotation/episode_000000_structured.json",
+      "sha256": "41c30c7c2156d6404e3358136be8911cc718b4d21807d8d282a1eba3b1584494",
+      "old_task_name": "Adjust door and unpack accessory box"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000038/fbd0f098f662420099ebb5c88d718043/annotation/episode_000000_structured.json",
+      "sha256": "7be524085407d9bb325e4bc39fb586f3d59a5217527f6afb8cc387fd134fa74f",
+      "old_task_name": "Process door frame"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000039/2edfee562f4e45938efd24940ab09980/annotation/episode_000000_structured.json",
+      "sha256": "246dfc2ce76b0f7a0610917ac3bd20a7b543c955ab5123637044bea4c704d633",
+      "old_task_name": "Move bedding and clean bedside cabinet"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000039/332177a36e7746bb90b43506dcbcff94/annotation/episode_000000_structured.json",
+      "sha256": "36a4f162d097c4fea491d4dbca5ff141b90deccc56e91f741f47156e0a5f809d",
+      "old_task_name": "Wipe furniture and level sand"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000039/505f4ba67422443e9a6ff0f9abf26c34/annotation/episode_000000_structured.json",
+      "sha256": "a684adc500cf017b47eacbc33acce7a136defb505be851be98f487ce3f31ba3f",
+      "old_task_name": "prepare hospital bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000039/6d44d923ecc24190be5aa84fe9990262/annotation/episode_000000_structured.json",
+      "sha256": "bfcd39207739698328d18415e72ab911d2c18b6c5d21d596ccd848f1d9131f82",
+      "old_task_name": "Fold cloths and make hospital bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000040/b317cea141fb4cccb9bb9c74dc7c1b4a/annotation/episode_000000_structured.json",
+      "sha256": "6920f0dbdccad5c19961239fbdbd277fefbd3fb4d04856080c5840a08a1c10e5",
+      "old_task_name": "Wipe objects and sort building blocks and pencils"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000040/c9842bae11e644fd9f96ac44bcf9d7bd/annotation/episode_000000_structured.json",
+      "sha256": "6ac56e41ada486c893a5d5d18228d76614bb363de581dc6fd9fa46c45e5d4e85",
+      "old_task_name": "store toys and level sand"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000040/cf02cf5a0db342ef94799f34f7c29aa1/annotation/episode_000000_structured.json",
+      "sha256": "253d4b6ef2664055e906bf412486a2ac425e8f0f1edd6d893a9f4405673a16b2",
+      "old_task_name": "Store books and wipe furniture"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/3c4c60874cf34e57970d4d255417f5fa/annotation/episode_000000_structured.json",
+      "sha256": "943bfd670fa7e2396bcf7804343d8b722b61f739ce37e00512bb27134396f51b",
+      "old_task_name": "Enter toll information into system"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/3e7717a9db044c569ffdf9a96d649b1a/annotation/episode_000000_structured.json",
+      "sha256": "ae2869759b3283651d9ea7d798d6d425e5b84942d3069e8fce38b05428726382",
+      "old_task_name": "Make and disinfect hospital beds"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/8238a25602ee4717b5c0fa9cf1bb63cf/annotation/episode_000000_structured.json",
+      "sha256": "5540201f7d9b6da9ff36d059ad92f7856373c7bd1fe1280abc896a7c1e5df002",
+      "old_task_name": "process and dispense medicines"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/9157b268db3840cab225468eed96795c/annotation/episode_000000_structured.json",
+      "sha256": "8f91433c6e8790647c3708aafe5f2c504834bf1511e5a40964210f7218df417c",
+      "old_task_name": "Process and test medical samples"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/9d21f66aa83248ff8b14697a581b40b5/annotation/episode_000000_structured.json",
+      "sha256": "65c1406d5a292a39416f866950505e4301c9c052a8da2a6b902662222f580386",
+      "old_task_name": "Process medicine documents and enter data"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/b50aa5ffe6c14ea898b99bf769a91b05/annotation/episode_000000_structured.json",
+      "sha256": "73f068d3124e31b0b9d315c82e3986947858e743410ddc51526b9f61567de8cc",
+      "old_task_name": "Fill in register and check computer records"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/bae6929a189843848d393ee58c26ede5/annotation/episode_000000_structured.json",
+      "sha256": "cdce0350615fe92f6d481d7fd11c07cef824b9effd49198fe90c73ba55bdfb89",
+      "old_task_name": "Fill registration form and enter information"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/ddf666c4d15f45819e097e9c8d900f07/annotation/episode_000000_structured.json",
+      "sha256": "3ed3906b1068a0fbcb8e65954eb4d39d3bb7bd0f521d5cf15978265f18429e73",
+      "old_task_name": "fill in registration book"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/eb4f96ab9d444a5f9a2a23c1e5c3c8ed/annotation/episode_000000_structured.json",
+      "sha256": "c646399b545b8b9eeeea0e3c912f58a585e152258ae053f72701cda5ee1d231a",
+      "old_task_name": "Input toll information into computer system"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000041/fa73e2d4660748938837f7e29955abba/annotation/episode_000000_structured.json",
+      "sha256": "157a76d923fad4b2827e7172c2b68c59753ed979f7f88ae5ab9691a0f600e463",
+      "old_task_name": "Wipe and organize books and toys"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000042/15a6ba62c9634bf0b5c893f141917b0f/annotation/episode_000000_structured.json",
+      "sha256": "83f11fa7ac44b1732b0ccddca2a7c1d17c9cb4b70baacf979a1fdbba938d0981",
+      "old_task_name": "Organize books and record information"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000042/1f4acbf291c24173a205897e23cc4d5f/annotation/episode_000000_structured.json",
+      "sha256": "59aaa0c93ea54dc7b21bf5083acd833d88c95c212d314fc260044c87a93eb28b",
+      "old_task_name": "bake and deliver bread"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000042/2b8ef9cde6e44546b3da724377250f36/annotation/episode_000000_structured.json",
+      "sha256": "6efbde0606dbf6a5bc3cf6b1ad211d52d7e011857ddd33adb7cdfa8fed640b89",
+      "old_task_name": "Bake and transport bread portions"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000043/5950df280ce44caf8b82cd07712b802c/annotation/episode_000000_structured.json",
+      "sha256": "048c6246dc517b78c741a6f01aa920de3fc0456fdddcbcdc80cd36d72dec9b05",
+      "old_task_name": "Write bibliography and organize books"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000043/5e313648058a4f9b9a79bb55f67f9515/annotation/episode_000000_structured.json",
+      "sha256": "69016f6344573cb3c6800b86aa3fe73d8eb448b86d2ff4c4f0df8164819bfc49",
+      "old_task_name": "Wipe table and arrange chairs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000044/771d7d4588e24fd0b9715c4b0b62ca1f/annotation/episode_000000_structured.json",
+      "sha256": "ba8f688c27e5e857af350753a33546276b73760c91696a1f83d600bf3638ca0b",
+      "old_task_name": "Bake and serve bread"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000044/7888aa607efe4311b76bf013b1539798/annotation/episode_000000_structured.json",
+      "sha256": "db13112581062b446c6972cd463502a864deae1c63d4b8b66500bd518379fe32",
+      "old_task_name": "Wipe table and push chairs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000044/8946ce2aafa74636a2e9bfbd9abb8e1f/annotation/episode_000000_structured.json",
+      "sha256": "ecfb57d046495a24293a38e2d91f7caace22f37fd282c159546ab8a923b9f514",
+      "old_task_name": "Bake decorate and serve bread"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000045/ad49da7802a0463aa2761f5c408d8f84/annotation/episode_000000_structured.json",
+      "sha256": "5b9e4f0946d593ff7bee2bafcd376d0f6d26943570edd186e24153960b50170e",
+      "old_task_name": "Bake and deliver bread portions"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000046/bd78c40da5094cf786bb1e80a98448ec/annotation/episode_000000_structured.json",
+      "sha256": "cdc30d076b659f8c64c56243e7456b14f91f87effff9f14f440d8df53105cebb",
+      "old_task_name": "Bake and deliver bread"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000046/c753782c81b1499ba8d38e2e6ce684f1/annotation/episode_000000_structured.json",
+      "sha256": "d0da59cac6778603769eb85bb4791510b20a58f49ad047c71eb2c3f7b2eac71b",
+      "old_task_name": "Bake bread and desserts"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000047/098d6b58dde7421cbac7595985eddc7a/annotation/episode_000000_structured.json",
+      "sha256": "8c541adcfcb508db81eee4c3f01b0827890a946c5c9cfca0037d5a50953952d9",
+      "old_task_name": "Pack takeaway drink and clean utensils"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000047/15088625f5854ae3afe1f19d616eae19/annotation/episode_000000_structured.json",
+      "sha256": "b5a4473b823cd666a6e540d6c5e17d18fec2100f07366ff4d2d82f55072500b0",
+      "old_task_name": "Serve cups on tray"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000047/1b6712c76f164703a7e788bade415d4c/annotation/episode_000000_structured.json",
+      "sha256": "4c2b927bdb9aa6ef5ed0756970720783ac7cc744f7177eb19724b45cd7744347",
+      "old_task_name": "Wash containers and wipe countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000047/f1c03fe978ac48ed9ad05ae351eca257/annotation/episode_000000_structured.json",
+      "sha256": "6e5fe9b069bc3e0f6c7e285bed8f3355f2d2888c81947ac8f9d7cc1f25a673b0",
+      "old_task_name": "Bake bread and deliver trays"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000048/48ed5a586c444907b71ef9b6eb2d32df/annotation/episode_000000_structured.json",
+      "sha256": "7fed1aa47999382ccd780f50401fe28e8e1c81872851af8b920d5985a8a848e5",
+      "old_task_name": "Wash glasses and clean sink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000048/59421f041f0b456d8ff8296efd41ea1f/annotation/episode_000000_structured.json",
+      "sha256": "b318cef734f06602f0faea3dca241952e73589377fe78015e08021222c6e9cb4",
+      "old_task_name": "Organize trash and wipe tables"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000048/6578262a93374054afd40ca2caed8602/annotation/episode_000000_structured.json",
+      "sha256": "0ef11c037ccd58fd4d3733e3b1ea64470b4b4ecf91206b4ee2003febd619dbe9",
+      "old_task_name": "Process receipts and wash glass"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000049/7dc8f78c947347d9a677336e1363982d/annotation/episode_000000_structured.json",
+      "sha256": "5074af909482e792c672e687b017427bbe87a4b48abafe09178ec0f891118141",
+      "old_task_name": "Clean measuring cups and wipe front desk"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000049/93e0202afacf40559cd6f5470fff8be1/annotation/episode_000000_structured.json",
+      "sha256": "90a25d80427380ccec2cf0c195e375cd79ebda76407bc0045e9d3a64b6aa6818",
+      "old_task_name": "Prepare and pack drinks for delivery"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000049/9d6ba48c093341a781ccb76eff0a6f58/annotation/episode_000000_structured.json",
+      "sha256": "b2ae5baeb1dca93d5b22bd98c7a87ad6745167dfb3838a090efb557f0065d41d",
+      "old_task_name": "Wash tableware and clean surfaces"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000049/bea67eab13ff4a6ca3f7360a5f0c4f1d/annotation/episode_000000_structured.json",
+      "sha256": "0074d2affbef2b481f61bebee0d2f11413c8de59a7e48adae914637ffba32ebe",
+      "old_task_name": "Wash containers, wipe counter, transfer ice cubes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000049/bfbd750d384447ec9cbe07d28118717a/annotation/episode_000000_structured.json",
+      "sha256": "ce3aad38c4504549b680ad79904953ee388cf01237f7edc58fbe81638135bd17",
+      "old_task_name": "Prepare melon pieces"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/0346da43af9842d5b843afe4e9fc4767/annotation/episode_000000_structured.json",
+      "sha256": "039eccaf1ae3925a3f9b9ceef0455a1fd093ac9edaad24ce749438c90c332c09",
+      "old_task_name": "prepare milk tea and clean counter"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/03bb7ef9a4fd4bc88f578d5b116c69a2/annotation/episode_000000_structured.json",
+      "sha256": "5255505b17d6747a87a717dfd49d1a238fd828dd90bebcbc6414682f21df2f1a",
+      "old_task_name": "prepare stew and portion food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/0669891b7f474a66bda436c22e9e0177/annotation/episode_000000_structured.json",
+      "sha256": "33b46d15e42a8e3f4a4d295ed0d4d54a931e7ecebd9f73f5cf2d04159eaea79b",
+      "old_task_name": "Pack food delivery and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/068426d51b424b2ba9c7ac27c26b0658/annotation/episode_000000_structured.json",
+      "sha256": "5e5d7ca50f5223d6325ec142447317868b1846f8b75fd61d3ad04477e55ab49e",
+      "old_task_name": "prepare and serve drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/07a6c97f767f47dfb034f80960a0538c/annotation/episode_000000_structured.json",
+      "sha256": "1f201c77d7faf179c99da859e754c989660520cd96692ca29222e0f3e5f7933c",
+      "old_task_name": "Scoop taro balls and check ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/0c37cc4606184f54bfd3b8a2d0b49c21/annotation/episode_000000_structured.json",
+      "sha256": "33bb50a556378059177931a392c19e3d48ff79f8f099100ae0a7e5012038b558",
+      "old_task_name": "Mash ingredients and place cutting board"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/cb83f8c70c3143a8ba3adaf87b11f313/annotation/episode_000000_structured.json",
+      "sha256": "666e6d324d42cb051b8ccf1ba8e65daf1712a2539d008ed32eb15b21198d0294",
+      "old_task_name": "discard waste cups and wipe tabletops"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000050/e65c82b3bd9240128025b2429716334d/annotation/episode_000000_structured.json",
+      "sha256": "6e53719336d420bbeb02b7cdaca4324b27f228a808df46e5fe37cb4a1f03b4f3",
+      "old_task_name": "discard waste and clean tables"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/0dface81a32d430eb5e358e691d241a9/annotation/episode_000000_structured.json",
+      "sha256": "94380fef1e8c6d1af5b2f1547b5562458a5844b11d5dc73a0333cd306950bced",
+      "old_task_name": "Stir ingredients and wash measuring cup"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/0f1dc228027d41c59ce1d9b1d8328276/annotation/episode_000000_structured.json",
+      "sha256": "ba5d28b80be109856e447cf4493afea907d6f0f541acbdf8516929a3704dbafb",
+      "old_task_name": "Prepare sauce and clean kitchen equipment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/10af4ec0f83a48fa881e2c52760cb833/annotation/episode_000000_structured.json",
+      "sha256": "3e9891ba8166a13f972b0d12af8fd0ba88293dd53edac9ce33083977e10a8770",
+      "old_task_name": "Clean utensils and prepare ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1157d18bd79541648de806e839f06fc0/annotation/episode_000000_structured.json",
+      "sha256": "5b6b65a2d2849d2b27abeef10866daec3370c5b8b710a9c09a13c1e08b1ca9c5",
+      "old_task_name": "Prepare and package watermelon iced drink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/11ba8b2d5ab540d0b70ca3f34371de9e/annotation/episode_000000_structured.json",
+      "sha256": "c8ec703fe3631ee88cbd579dae6911d45aaa512b844324660d36938a5a5f4b58",
+      "old_task_name": "Prepare milk tea drinks and clean tools"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/131915d8b34845838a02e36a48f637fe/annotation/episode_000000_structured.json",
+      "sha256": "3d8584aab5234e7d5b01c3be81a464719bb2d7f127f85eb9f89e1fd7d7dd66d8",
+      "old_task_name": "prepare waffles and pack meal boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/13bf2b59b9dc41b9ac7c55f7d832b564/annotation/episode_000000_structured.json",
+      "sha256": "4f53976dad3a9f8dad34d30668acb6da96b904910285d207f17908a606b9df25",
+      "old_task_name": "portion pack and deliver dessert"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1556de0041f44751b984256f4ad89661/annotation/episode_000000_structured.json",
+      "sha256": "4edd911b6f215a49d7f871ccd8957aed8ed499cfca981bcf03c0d410f9e697ef",
+      "old_task_name": "Clean bucket, wash utensils, and weigh powder"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/17f758b222a24f949e7543f0e23c5513/annotation/episode_000000_structured.json",
+      "sha256": "b330cb32f41ea90e8b65486202fb30cf9de759d767ebdb7ff73ee7a94f900b29",
+      "old_task_name": "make drink and prepare ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1aa68c48e5584d138d0fc8bea911bffc/annotation/episode_000000_structured.json",
+      "sha256": "b759793bcc1edd56400f1fdd4092236439a8c5579fb115d10aa1e23f1fd44978",
+      "old_task_name": "Sort rosebuds and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1af8148acd7341aea640a54030d29f26/annotation/episode_000000_structured.json",
+      "sha256": "9bb94f2652fa7b90b0bafe3364a787c7548e6b3e3bb43551b33dda53da934232",
+      "old_task_name": "Prepare ingredients and clean kitchenware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1bb5223b8946488793d728a3403f74b7/annotation/episode_000000_structured.json",
+      "sha256": "f64e67e7ee9405f02229774fdb8bdd78cf3071c6565d9bbf81d1e42370e821db",
+      "old_task_name": "clean blender and package drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1bec1acd0cfe429ea2371e1683ea544d/annotation/episode_000000_structured.json",
+      "sha256": "4ae5b95379da752a32637f3e482ff349fb35a6d0d9363d60b699ba07903f379f",
+      "old_task_name": "Store food and portion desserts"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/1e356b09fe634a879bf7e7653ace291a/annotation/episode_000000_structured.json",
+      "sha256": "f2d1e8d1d777a219ef7d8994bf8d600a6c604a52d52c504e717e051808c9e76e",
+      "old_task_name": "Process customer order and prepare dragon fruit juice"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/2002563ba4c14e1cb65d4248a22ac29a/annotation/episode_000000_structured.json",
+      "sha256": "9bdb91ca7a6bfd96ae452181430090b9bb7ce9871678df1f566e44702e6a5288",
+      "old_task_name": "Organize cups and prepare dessert"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/20c29a0f9f8f4deabb5a456f75850a36/annotation/episode_000000_structured.json",
+      "sha256": "b66657242af0a1453f3d1cc29e36e2a9629a53a9ce4e53e5e2ad9b8f5e8fdf5c",
+      "old_task_name": "Cook ingredients, clean counter, and operate cash register"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/21c6df3898ff4c7c888eb84c78226d1c/annotation/episode_000000_structured.json",
+      "sha256": "e4b01fb1496de301cdad1789b61dd394d135382ca35a1a9b87afb5aef591e6d2",
+      "old_task_name": "Prepare chicken and clean kitchen"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/22a1300a31544e3fa1de903a3568d942/annotation/episode_000000_structured.json",
+      "sha256": "69ccc27a6bad433042f7876dae5f244588bc8f5b3fce63da5525970bb5910ef3",
+      "old_task_name": "dice mango and cook food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/239145049a2f4088817e6491d060b589/annotation/episode_000000_structured.json",
+      "sha256": "384f7734356fffb338b66b31785f5f1d93b973075637791d21611e69b8c6e3dc",
+      "old_task_name": "Process payment and pack drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/27ddb08252be4910907b8bf0db42a61e/annotation/episode_000000_structured.json",
+      "sha256": "774f513d47f2b5a7cd010efb9ce28386788f61dd530fa1544e1f5dc7b35ff7ac",
+      "old_task_name": "Assemble juicer and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/296bbc9d1f344d0a939134e0a2d6f3e0/annotation/episode_000000_structured.json",
+      "sha256": "67b8c5f2190fbefa8fe6762ae49142a52c3b75cc46b60774cc0fab9d717f78d3",
+      "old_task_name": "Wash kitchen utensils and organize countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/31dc17cf796647cd9d95101a0ebb046d/annotation/episode_000000_structured.json",
+      "sha256": "a13edb30498221a1bd6716fb2dee703d85f815cbeddace9adc7a6b3ca8f719ec",
+      "old_task_name": "Cook and filter food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/3274cd7ae2c64f188daddfd3295fda2d/annotation/episode_000000_structured.json",
+      "sha256": "82915c7b7184e6aec03da745cbcd94885d581078a6fdc10a9a2eac5663a93b08",
+      "old_task_name": "perform daily shop tasks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/35cf541c9bb24b8da9bcdb033e040bee/annotation/episode_000000_structured.json",
+      "sha256": "20b506f33e0669e80a2c032f7e3d151963c2f943be33052e61c2a6c5629273e8",
+      "old_task_name": "Prepare fruits and cook ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/3b613142808841bbb8c09421a88ffcff/annotation/episode_000000_structured.json",
+      "sha256": "dd473aa7fe34abc429227eff5b1b80d77393ce6b4ba0149e447de069a2782b12",
+      "old_task_name": "Prepare lemon tea and clean utensils"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/45b7f7452e284b0fa5839f94fdfe3a45/annotation/episode_000000_structured.json",
+      "sha256": "3e5b31b8d6cf856ec726d28719a49cff15b639851096123a7cb10f991d1c7629",
+      "old_task_name": "Brew tea and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000051/4995054b8cce4079bedd1e6e11061b2a/annotation/episode_000000_structured.json",
+      "sha256": "c83b42c9fedd71a7259d419d7030cbde9747f756158c0a800bf3efade188af43",
+      "old_task_name": "Prepare and pack milk tea orders"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/4d7e725560a84f37baf3b5e6b58fe233/annotation/episode_000000_structured.json",
+      "sha256": "71d7a4b6cb07dc107a9f59a2e7403721be379d121eefa4a31dea21f3155f71da",
+      "old_task_name": "Clean displays and boil beans"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/4d80420e5385488b876918f66edfdd39/annotation/episode_000000_structured.json",
+      "sha256": "0471acfe7988f530f01950fedc64be80447d4f41992d78c32918d5a956d68924",
+      "old_task_name": "Prepare shop equipment and wash tableware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/4d998d87d2ae4eb495fc461f0976118e/annotation/episode_000000_structured.json",
+      "sha256": "254d99c0167dec4afabb345e596bc3b270329bde27c98066b81c8002fa51319d",
+      "old_task_name": "Organize restaurant supplies and wipe counters"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/50983795eff2433eb6b71b176c4b0311/annotation/episode_000000_structured.json",
+      "sha256": "1ce3828f59e1b8ca9508cb2b6878ce5ea6cd04a364664ed6f71adc2d6364c607",
+      "old_task_name": "prepare and pack milk tea"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/50c551d8c7fc40ba98249047b2c8d63b/annotation/episode_000000_structured.json",
+      "sha256": "a97a7ebf53a8d2245168c53e11ac3206b921fa1bace937c86f95ec339d7eb8e6",
+      "old_task_name": "Clean kitchen equipment and portion sweet soup"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/518a38a7a5414d9abd555cb40846d49c/annotation/episode_000000_structured.json",
+      "sha256": "4d7d9644344b3a9d20a5fba9125cc4e7a75429ed1b04d85778364525e2975461",
+      "old_task_name": "Process takeout order and prepare meal"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/519256885de243349e071c47802bf801/annotation/episode_000000_structured.json",
+      "sha256": "1a62a95ca5dc048d1199cb877f43fd3352f83c699e7e89e6eea294ca98979efb",
+      "old_task_name": "Prepare ingredients and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/52be8edfe91746798bc552a384257b3c/annotation/episode_000000_structured.json",
+      "sha256": "d3944a782d784025b2de1823b0abec2392aca42aeee9a2b6d2d5af62d4031a7f",
+      "old_task_name": "Process watermelon and mango"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/55197e7c21514cf6b339f70de80be4a9/annotation/episode_000000_structured.json",
+      "sha256": "787b5ca45780205840ef1477ebec2b992500cc040a67dde072fe2a8caec567c2",
+      "old_task_name": "Package drinks and clean kitchenware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/5999fc529c9c4e46935d75cb81b0bc26/annotation/episode_000000_structured.json",
+      "sha256": "bdb7c895ee1386214c9d4bd6c5bf1018f94f93644fa6582c324b257370c5f535",
+      "old_task_name": "Store containers and portion cooked food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/59a561a3db834f34ad945daf168d3628/annotation/episode_000000_structured.json",
+      "sha256": "a9d0f4600ab36a6978469bbca93db7cddcdfd3036ff1f2b7686a82e667a8f517",
+      "old_task_name": "Prepare fruit and label storage jar"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/5a22c8e50f4b4a56a5e1c0d98a8349d6/annotation/episode_000000_structured.json",
+      "sha256": "50df372ca29189844511ac40c5bd49ec5159ba159fba1719230044617347749b",
+      "old_task_name": "clean shop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/5cd8e3eb8ec04f5388d9bd149f030dc3/annotation/episode_000000_structured.json",
+      "sha256": "1cf787b4ddca3ff2bdb45f0bdd48107321ede743f752f49d28050a559e82f845",
+      "old_task_name": "Prepare pear soup and canned fruit"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/6012eda5eceb4400b39bf2e3d6e9efdd/annotation/episode_000000_structured.json",
+      "sha256": "c471b29e79267853ffa857a76b9306b8d5350436376c27bc042004d81ed2e0db",
+      "old_task_name": "Prepare and serve drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/62e3d08acb7b4a07ad91b68f79408cbc/annotation/episode_000000_structured.json",
+      "sha256": "47914ba4353e3abc8a2f8488a50baf87b6a87c5914541efc352eb7f21bc278ea",
+      "old_task_name": "Prepare tea and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/63dbbd3bdefc45d1aa8fb4edb085572b/annotation/episode_000000_structured.json",
+      "sha256": "1c074e4f24753a2bcb99bd5e69c00e05ac821753ede790b332a962b88bd97520",
+      "old_task_name": "Prepare drink and clean kitchen utensils"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/698f1e1e96f74aee9dec167292085100/annotation/episode_000000_structured.json",
+      "sha256": "e21184d312d34d9b208b96280ae883f28b4da8979a32b0306aec8a5a07124450",
+      "old_task_name": "Prepare dessert and ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/6aa449228ce343a3b0b390c7316ed555/annotation/episode_000000_structured.json",
+      "sha256": "b76df95eda9a4a6997c591ec6ddde0ba8d26b36d9e14ffc83bf8d1b39ed0fe82",
+      "old_task_name": "Sweep floor and prepare ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/6cfb62785f8441e7aa371fe51bc3dd97/annotation/episode_000000_structured.json",
+      "sha256": "9d774c59706e176fe762b2b17c2231e84611b41fa6d7c57472f6d38e33ba302c",
+      "old_task_name": "Organize countertop, prepare drinks, and wash eggs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/70ef54402f7a44d38fa5ff0c8b932590/annotation/episode_000000_structured.json",
+      "sha256": "c9fbb083370646144ff5efd25d15c9e7fe7a03e336612c8ef5c12a5aa0db8b3f",
+      "old_task_name": "Cut watermelon and stir ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/736529f4f705432f8d00da50a370235f/annotation/episode_000000_structured.json",
+      "sha256": "032a1dcd68b597714de991a3764656d6dbfdf2ea0d4ec842e10f26ee16cd2a2d",
+      "old_task_name": "Process orders and prepare food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/77ee7416daba47fc9282a6e950ed1282/annotation/episode_000000_structured.json",
+      "sha256": "d99ee1a0f6a33df09b5801360971c1c4aae19d4967af075ea5f04f34c2d0346a",
+      "old_task_name": "Organize cabinet, process oranges, and clean countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/7d656c35b1df4ce1a00b41204b2cfb22/annotation/episode_000000_structured.json",
+      "sha256": "89e47d6f807384fcb0ba08b5ef5c174c40e2a6ce459530415cada8fd1c18b96a",
+      "old_task_name": "Organize bowls and wipe countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/7dc29512d7e24e338d44ac5ce8199025/annotation/episode_000000_structured.json",
+      "sha256": "1b66ee7cc810195ef20e14acf19326a5054069a3282160ac96af25184919dd44",
+      "old_task_name": "Prepare tea drink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/7dc2fa25621443d0bf95e3d7e3e73496/annotation/episode_000000_structured.json",
+      "sha256": "26f568c946c2fa0aa81e0d8f959f813f37f8e88b558bbe48e2eca4067f018602",
+      "old_task_name": "prepare sweet soup"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/7df2991b239248758cc555911c48687d/annotation/episode_000000_structured.json",
+      "sha256": "524087c90c1ad2f94605118940199191463957492afc91c255fd4d8d312c720b",
+      "old_task_name": "clean sink and prepare ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/7eacbd81b6384fcd868dcf8adb37abd8/annotation/episode_000000_structured.json",
+      "sha256": "5b22ce03643e5324418cd75e31c12eedb12875c38c0e19ad3ae57e818797ef80",
+      "old_task_name": "clean container and retrieve cup"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000052/803c1da9e96844068eecd91a0ad7c221/annotation/episode_000000_structured.json",
+      "sha256": "66d1c9c82795356b4e939cb05dccfccac4e47a9037e75254fca8a94fb4de8be6",
+      "old_task_name": "Sort nuts, check food doneness, and arrange seats"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8147882c44e848b5815ee2954e3c82bd/annotation/episode_000000_structured.json",
+      "sha256": "e8b9e850c9112d346a99f700b7d8ad99fcd640edba1ef926ee7f8a8599ad210f",
+      "old_task_name": "Wash and cut watermelon"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/816713b173c54e41b8dfd1f7a9e6fd08/annotation/episode_000000_structured.json",
+      "sha256": "f4a980c37a796887112b4dadc7730cce8cc5e2a38a373747756c7820b210388f",
+      "old_task_name": "Clean and arrange drink bottles"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/825910c0d85a4d81ba7c5187d520c19d/annotation/episode_000000_structured.json",
+      "sha256": "0b3d0aac2aa2f4bcf2304cb6f897781913bc09c644769b40268d13b6c14d6e1f",
+      "old_task_name": "Pack goods and prepare drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/82f140c63ca64872b07296b917f58bfb/annotation/episode_000000_structured.json",
+      "sha256": "c9069f83d1057ccf17507d9da803d2635b6f74e8da4ec207953ceaaba2de7ee5",
+      "old_task_name": "Organize containers and open material packaging"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8304037b19e0438e979b9dcfa7b4504d/annotation/episode_000000_structured.json",
+      "sha256": "feb49837212415076759364acac16639d0b128136c421eab96665b515f3212c3",
+      "old_task_name": "Cook dessert and clean kitchenware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8459c1b69ed24f859363adbaa8155049/annotation/episode_000000_structured.json",
+      "sha256": "866d5d9978f15a8c7bf321540b16d5b8630d378399211cc981fde234fa5af101",
+      "old_task_name": "Store seasonings and clean countertops"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/853b73776bd34be08a40e4c4b8e4372a/annotation/episode_000000_structured.json",
+      "sha256": "9016f0d9061a922a64238fba9f866d0f39940067adfa2592231908a26bbe39fb",
+      "old_task_name": "pack sugar and prepare takeout meal"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8544a27bea2f47b9a86c91b8511ac6b8/annotation/episode_000000_structured.json",
+      "sha256": "d775a9524098de8cb807b29fae8b6e5592e41aa72a466cb48e88fbd67592fd33",
+      "old_task_name": "Store meal bags and prepare stew"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/894b2a4cff7846c1bda357e64f2fbeab/annotation/episode_000000_structured.json",
+      "sha256": "33e03ad7f44549e7ae909d8b34937b33efd37552099e1b20ceeece45297e7b73",
+      "old_task_name": "Sort longans, check beans, filter tea, and clean tea set"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8b416fb0799b45048af969a66fad5f8e/annotation/episode_000000_structured.json",
+      "sha256": "6fc02cffc25e889c3496702d5d8584fb056b006adfe3a03088c7079f1acacd47",
+      "old_task_name": "Wash rag and organize countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8dba202e910a475e97b8fdbe3c57a2ed/annotation/episode_000000_structured.json",
+      "sha256": "b77233865766f7c67a2c83b5c46c33a31840f42c3ed315a547eeee2a09f0d072",
+      "old_task_name": "Clean kitchenware and organize restaurant workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8e657a8697114c4ebd9c5d941dc3cd8d/annotation/episode_000000_structured.json",
+      "sha256": "70548f11995f033a88e1506506566073d264289ac75099284c6b1d78965df431",
+      "old_task_name": "prepare avocado milkshake"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/8fc90087ebc848d9ad9841a9a5040b96/annotation/episode_000000_structured.json",
+      "sha256": "850ecbe4c9181ecc226c64a068058c05dc1f9dc2e242280f06a87847a9c6c9cd",
+      "old_task_name": "Process and deliver food order"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/914a677d25df41f7b96cc9bfd985b088/annotation/episode_000000_structured.json",
+      "sha256": "119dcb2244b40ad8d02de3632e83d76bf1b0120c5becb0ff266fe8c04780727b",
+      "old_task_name": "prepare and heat food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/944359544c0a45af9571e19f308ee2ae/annotation/episode_000000_structured.json",
+      "sha256": "9c9ea2bc617d2652307f981a4137cd57978bd917f689ea1cad2c2cd2e65bdf2f",
+      "old_task_name": "prepare meal and process receipt"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/945b288093744fdf94e248f0db96396c/annotation/episode_000000_structured.json",
+      "sha256": "d3d99d9cc4013e9043251bf266eba3cf28df1945a4fbd648843197d5082b6374",
+      "old_task_name": "Clean kettle and wipe tabletop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/968114e7ecb5459b9223b6f244665aca/annotation/episode_000000_structured.json",
+      "sha256": "045cb599d9bc6bd7a85cdd970f8c96736e3446b72b36890ae08a40eadf90192c",
+      "old_task_name": "Prepare ice dessert"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/99fc90c86034498fb98096e67c191899/annotation/episode_000000_structured.json",
+      "sha256": "525996f82b333ec27b8bf19d82907d8062113c172c4907d882d61d8e26e1a50b",
+      "old_task_name": "prepare drink and clean equipment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/9bc77989129b4a298efc0140a9a1e94e/annotation/episode_000000_structured.json",
+      "sha256": "8dc5a0e188b7f522054f287458c17d0cc6c490f707b500b95d05f968ef89f323",
+      "old_task_name": "Prepare milk tea ingredients and fruit"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/9d791c72670f4dc98a05511cca4b1d63/annotation/episode_000000_structured.json",
+      "sha256": "aac3ff221f646d8b46374817ae6612ee21d52e939b6053c2ab729a3120e2ca07",
+      "old_task_name": "prepare mangoes and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/9db06e694a5544859223dab0f6b6cb68/annotation/episode_000000_structured.json",
+      "sha256": "ef16a6587327a89b7e33330a63b5525df4bbfb2a47f026c239cb9e69d813b96a",
+      "old_task_name": "prepare pears and clean juicer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/9fd750dd46dc42f39321fe32252748a5/annotation/episode_000000_structured.json",
+      "sha256": "6683252eb39488e2978d23f02135eed9cc13d81d45d19acad9ada56e022e8b31",
+      "old_task_name": "Cook dessert and add ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a01de95d6da54051b1dc03ea34f74398/annotation/episode_000000_structured.json",
+      "sha256": "0192c13dfdc0517c561d36650f0432c51797a73c7c30f2459701e5a7d7308d64",
+      "old_task_name": "Store container and wipe countertops"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a0bff362901c41f783f3d6c5cc849e9e/annotation/episode_000000_structured.json",
+      "sha256": "f6ef86e3b89728ed695a2187a71e331b766e786eca2fa504a8921e491cc8489f",
+      "old_task_name": "Seal drinks and pack takeout orders"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a29bb0f4fab54d21bdc515b65c8fa480/annotation/episode_000000_structured.json",
+      "sha256": "e69af95715cf037fc2e6098b7e9a87492fd233ef344b26f0883a12a5f81f8b5b",
+      "old_task_name": "Clean and organize workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a3f31f0f8fdf487a9330c1d8d386b45f/annotation/episode_000000_structured.json",
+      "sha256": "3e77e912130b100fa71c3ed129e517ce8fd59dd3ef8a8eb5f7696095877f6bb6",
+      "old_task_name": "organize containers and clean surfaces"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a432defe492e4ec48e007bcc2eaf60d2/annotation/episode_000000_structured.json",
+      "sha256": "d16a0a42921a084290f58d85ec3b1390d7a8a91149e2d555d06a0a438c82a891",
+      "old_task_name": "Organize tabletop tools and clean countertop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a4e9a54ab39c4db2a552eba1329cd587/annotation/episode_000000_structured.json",
+      "sha256": "a3154015a409c14727191b0e9f2dd2af6874569db0d0e0a0bbee114339e11a6c",
+      "old_task_name": "prepare ingredients and clean cookware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/a8824e1c6a054d5989e0f3e58c8485bb/annotation/episode_000000_structured.json",
+      "sha256": "f20f8c5dce692a6ea5ec8240df3160d0e846ae36d5620def18b0f6e641be6fcd",
+      "old_task_name": "Clean kitchenware and weigh tea leaves"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/af0151dfb8c44a11beae7d5a7205586e/annotation/episode_000000_structured.json",
+      "sha256": "7079bc470e93163c55373296048dcc7a5ca05b5e7e9d5e1a71f6363a75350e0f",
+      "old_task_name": "prepare meal boxes and clean shop equipment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000053/af4646e660934480a05f1bf879efeb66/annotation/episode_000000_structured.json",
+      "sha256": "f2c1cfdb1fcad0f9d43136200cbed92bf74c7faadf344a8642e19f07175cf13d",
+      "old_task_name": "Clean utensils and prepare ice"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/b166433595e346aaaf8df8510f391fd7/annotation/episode_000000_structured.json",
+      "sha256": "420a9d831288ac6bbf2429562917068ca3d6203f47248800b58b7830533cf642",
+      "old_task_name": "Prepare watermelon and wash kitchenware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/b210fb3da1d940a99ebf9b121a4b9f08/annotation/episode_000000_structured.json",
+      "sha256": "35bc1529608654a2009260670dad1d6fea96bb4f99af318948f0075f1dfe2d87",
+      "old_task_name": "Prepare and cook drink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/b4f16e93c6dc418e83d22e4813122c5d/annotation/episode_000000_structured.json",
+      "sha256": "0c16569e41184ccb33dcc394557ecf7e32770ff7d4b787fc0d2d5c4f370cfcfb",
+      "old_task_name": "prepare milk tea and clean counter"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/b5cefd35de22414aa6af59e4e4337160/annotation/episode_000000_structured.json",
+      "sha256": "782a3e0d0d65a6de01b85847706a97194fbe484ef3f14eca85abe6c79b375ced",
+      "old_task_name": "Steam dessert, clean workspace, and cook porridge"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/badacd7e90d34e5c96b8cb849c4dec41/annotation/episode_000000_structured.json",
+      "sha256": "2430c54964a680030fcf08f0db3fd11cf6062ea7e25e3fead95fd937149fd0af",
+      "old_task_name": "Clean juicer accessories and sink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/bbed7430c1dc42cbbe170abebb073365/annotation/episode_000000_structured.json",
+      "sha256": "ca02a63c2fc55de7d1a7ad5eb286a70ecad864e724086f1dc1f4ad15112789be",
+      "old_task_name": "Clean juicer accessories and cutting board"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/be9ba3bc9dc6489bb04779bb72b808fb/annotation/episode_000000_structured.json",
+      "sha256": "c92e3ecde12567c63884ef92e651b341e11a70ddf1adb43cd7e0d2bc81c1edaf",
+      "old_task_name": "prepare drink order and ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/bfea0666779f4744b829ae5b13b2ea24/annotation/episode_000000_structured.json",
+      "sha256": "5a9a44eb320c0f0ce6b0c96db23d9da3d0ed5d7f759285bb37724c6ece214e5f",
+      "old_task_name": "Process order and prepare drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/c077bb0992454854ad9af93ce2661540/annotation/episode_000000_structured.json",
+      "sha256": "b58987e984de6af070cb635879f0fd15755efe4cb4117f425df13fa9c4376c6b",
+      "old_task_name": "Clean juicer, wipe counter, and prepare fruits"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/c406093ffa524f51bdfc48810f140db4/annotation/episode_000000_structured.json",
+      "sha256": "85888dc313fbb9bb7af453c5d8bde0db4ab710b4e70ebcd13b687083b44b7f6b",
+      "old_task_name": "Wash filter basin and fill insulation bucket"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/c7bca53558ab47eaa2f27c61dd3c580c/annotation/episode_000000_structured.json",
+      "sha256": "e5960f347be1005355d78d44a087266545f90ab45c432c0fbf57cfaae9a84261",
+      "old_task_name": "Process customer payment and organize counter"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/cc1494d91ef04a9f8d844b676a27aedf/annotation/episode_000000_structured.json",
+      "sha256": "b9eca136153e0b04006d2c249de5b1a387e979c28c74a3fd5af7dc32a5917911",
+      "old_task_name": "Clean shop floor and prepare ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/d00e711cc63246e18cb134b51d83043c/annotation/episode_000000_structured.json",
+      "sha256": "bb68944ca741e1341409e33f7825783ed916d9b235807761dde457972b1fbb3c",
+      "old_task_name": "prepare and deliver milk tea drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/d27b643f98b047668d45f8ee8067706b/annotation/episode_000000_structured.json",
+      "sha256": "d76f671c25ae5960889c51d8bc595fbf0497ee849533534447baa1ef85856031",
+      "old_task_name": "prepare drinks and clean workspace"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/d634d2cfa819455c8a3b6ed0fe94cb38/annotation/episode_000000_structured.json",
+      "sha256": "4137faa890af1195f4b5039055837592099c80da3ac82174066d346e66aa9762",
+      "old_task_name": "prepare ingredients and clean microwave"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/d9e4964386f84e83a55022a79a90d495/annotation/episode_000000_structured.json",
+      "sha256": "2120849aa627374baef70a9dd7ca1aace7a0f502416ea79d22eae0d28b4a8827",
+      "old_task_name": "Process customer order and weigh food"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/da2752b1202f411ebb984cb695f86b3b/annotation/episode_000000_structured.json",
+      "sha256": "b50fd6ce861aef4fa69ebdde664d78cd394269a31dc99a3cc5bd1d68460df725",
+      "old_task_name": "prepare scallions and cucumbers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/de08717dde984d34837cc12cde887088/annotation/episode_000000_structured.json",
+      "sha256": "df7aff706439a0f7463a8ddbeec4ff877beae58e0381bda93a23004acfc089ef",
+      "old_task_name": "Clean utensils and prepare beans"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/df4a67c7a0d0496fa269ce59fc1cab46/annotation/episode_000000_structured.json",
+      "sha256": "cf329decc44c31f97c340bb6d58b5104d906b33e6313d5eefd3b0a65a00a7a69",
+      "old_task_name": "prepare ingredients and clean tableware"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/e0c5d841c54747cb9b149af6c9fad6c7/annotation/episode_000000_structured.json",
+      "sha256": "622d3db8bcf28facadb9baf0b24b1f7b77ac7df4ab57254c9624657d82b8f8bd",
+      "old_task_name": "prepare ingredients and record order"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/e198480e989446d6a2cfa7d9b17a2726/annotation/episode_000000_structured.json",
+      "sha256": "81278f22722c716c03468fe2cf35695619ffc652ebbd36b2008a72a5e284e0ee",
+      "old_task_name": "Prepare food ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/e49e7326f3144f28b9c7dc3c744abb52/annotation/episode_000000_structured.json",
+      "sha256": "0d788e2bf23d4a49a1712d871f4c42eaf6d87be56b7d6acde98b034c996d1935",
+      "old_task_name": "make iced drink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/e616608715984df09e74e667872cda75/annotation/episode_000000_structured.json",
+      "sha256": "93a381be5f23ffd4873d7c80ea1d6f75b1d0e97de3614bb8222c0cc0d4809016",
+      "old_task_name": "Prepare soup and tea ingredients"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000054/e72f0d5b363d44a5b8bab12b280770a2/annotation/episode_000000_structured.json",
+      "sha256": "28743d1b3447e52a78d5abed05c54079a9871ba318cb73186279504a0c076220",
+      "old_task_name": "Tidy entrance and subpackage drinks"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/0163210c92024c359a9001e8fb45be1a/annotation/episode_000000_structured.json",
+      "sha256": "0ee645a7030ee51a8e2c2b0cb9716626e52247c2d470fc0cb900631e8564f4d9",
+      "old_task_name": "arrange cosmetics and wash towel"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/016f54f7b95f49a7b82702b0b71826d1/annotation/episode_000000_structured.json",
+      "sha256": "07759f6c6707b9f48f7c2cdbc5b7582cbba362b39c727987b0762e514c2d34d8",
+      "old_task_name": "Perform back scraping and massage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/e914bb0d7a8d494da6cb3f09c5875bce/annotation/episode_000000_structured.json",
+      "sha256": "f585b5b5dc5ac5face84bddd55a629042916985284fdbc6704e9508b09177382",
+      "old_task_name": "Fix ice machine, wash rag, and wipe table"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/ef35d582a529495684f42f34f5e47b93/annotation/episode_000000_structured.json",
+      "sha256": "ef9c38c648581bf9fa8c33533719bfe775ab3f97fb144a39ca8b5531a83f39e6",
+      "old_task_name": "store cut fruit and peel new fruit"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/f034eb0cd6ae455da299aa31bcf11e5d/annotation/episode_000000_structured.json",
+      "sha256": "fc8c8aacd78013c121a06a532e9e47d0b7866dd42086d9a6f28c16250c69fa37",
+      "old_task_name": "Clean pot, process beans, prepare drink"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/f5b8ff771f7141f5951089325815194d/annotation/episode_000000_structured.json",
+      "sha256": "4f29f2dbc2bcc7162ca282f010156dfc24ec24ba15480d34d53a3fb137adc35a",
+      "old_task_name": "heat peaches, sort red beans, and portion sweet soup"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/f71882a87ac54674b79882cf79f4c2d2/annotation/episode_000000_structured.json",
+      "sha256": "ecb1884b0529981407adafcf775cdc09332baad742e4793f60c0da5cd74a3243",
+      "old_task_name": "Prepare porridge and eggs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/faad391a81514c2d9094769df01a9134/annotation/episode_000000_structured.json",
+      "sha256": "cfdc1e577ebe757643d4da8c532ad1994d61957432647a9e9c648ae9bc29edf0",
+      "old_task_name": "Pack meals and process orders"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000055/fb86f89adc2d45ca8479a31557a25c32/annotation/episode_000000_structured.json",
+      "sha256": "9c9b88eb72da8f5ca8f83e745c9c81aaab1b2bc7cfdd2b83090b2851cceaa8ab",
+      "old_task_name": "Clean kitchen tools and assemble juicer"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000056/0ef8e18bd3084e1d8923af1d721fc3f9/annotation/episode_000000_structured.json",
+      "sha256": "81a9ccd5181788d04aac04623edf709ce8255383648e7666e82768a70b009d3a",
+      "old_task_name": "Wipe skin care containers and shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000056/25b9058bd7c44965a3e09bd03361a637/annotation/episode_000000_structured.json",
+      "sha256": "87c7a0d5dc17ae1105c104ceb2bba7ea28251548547b9ef675db3dc724d2790f",
+      "old_task_name": "Clean and organize beauty shop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000057/3902c88b14dd49aba74415591b5bbf93/annotation/episode_000000_structured.json",
+      "sha256": "f3f2905df15aea2bfb9097b1145eb290d52dcc12c9a53fffd7f9575e04e9466b",
+      "old_task_name": "massage head and apply facial mask"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000057/419cd1ea709645b0bc68a361cfb032b3/annotation/episode_000000_structured.json",
+      "sha256": "6cd2cf1ce156942e002d99536ff48c7196ce6f769832d5352ee777d6d028ec53",
+      "old_task_name": "Select face puffs and arrange misplaced goods"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000057/432ff05d123747d2b03f62dc6edf6661/annotation/episode_000000_structured.json",
+      "sha256": "0bbf0d3dab8fc1a40d8a14514e3275125199734cacf084c4f4d320cf3fd187e5",
+      "old_task_name": "Wipe shelf, organize towels, and arrange gift box"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000058/50a103b2940b4a67a52ccb6b54c9d371/annotation/episode_000000_structured.json",
+      "sha256": "e6a56661e192d23a5afaff7ebd681595a5cceff8a894978e9ce7df0637533fb8",
+      "old_task_name": "Clean boxes, store bags and make beauty bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000059/5d82a756bc9b4f2e8def76030591fd7b/annotation/episode_000000_structured.json",
+      "sha256": "7d6674b4d7f43271ec2564f971e7eecb5dfd96969057a15e120990cf3e8cba2d",
+      "old_task_name": "Wipe and place cosmetics on shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000059/614876fb09d34b9fa78d1acfc6d0efc4/annotation/episode_000000_structured.json",
+      "sha256": "c3b78ca03cf4590c06edb0de2e736bf6303431b8e8e131ddca3ae41558913e10",
+      "old_task_name": "Wipe and hang beauty products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000059/6367b5b774774cf295db9ac882815f1b/annotation/episode_000000_structured.json",
+      "sha256": "60f21e1c3f512a2c076a3e785b5118c0b5cfe83a694d94afed382e3b2da635a8",
+      "old_task_name": "Braid hair and store boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000059/74bc3024efef4798a56411ea6737ad82/annotation/episode_000000_structured.json",
+      "sha256": "dd32a17fa2600dd7920691d9569d8cb344e4add58fa7d00fdf027fecaa9a3b32",
+      "old_task_name": "Wipe bottles and stack boxes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000060/8052ce86f22b462c9a123bc4a237e274/annotation/episode_000000_structured.json",
+      "sha256": "485a169555b1a84ea651b61ef563ac8e667b9af630522fe607a879164096f74e",
+      "old_task_name": "wipe beauty instrument and cart items"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000060/8b0041bd622e49218b35ed798d711820/annotation/episode_000000_structured.json",
+      "sha256": "0aee9e71924de41537ba19ca43100d026e4c0dc02ee716fe7decc270ae987c4b",
+      "old_task_name": "Wipe instruments, faucet, and food processor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000060/8e6a4156e0114f6da33381fee3fc8db9/annotation/episode_000000_structured.json",
+      "sha256": "fd7957d4f24ed8b189fb2700084d743ccf386d1010d02722bbc97084e66f9151",
+      "old_task_name": "Clean and organize salon equipment and storage"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/95a946378a804876a5c9b0ec0ddc370d/annotation/episode_000000_structured.json",
+      "sha256": "8c9efadee76cc9fd97dce5f925e02e82635c762b5db5def9e6e2dedd6988f512",
+      "old_task_name": "Clean shop and sweep floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/95e7be8a8b9d4358ab6bcc821e6ffa8f/annotation/episode_000000_structured.json",
+      "sha256": "9b0e4df57df98556784a0fff8dee8e96f49569d1d4275875365a48e1d948c63f",
+      "old_task_name": "Clean storage shelf and shampoo area facilities"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/99675fe4eaea46749e368a3241fdbdf9/annotation/episode_000000_structured.json",
+      "sha256": "ec4d5cd51d699ce282ff48e803d2413657ded31b71dcf51ce1e742725faacd93",
+      "old_task_name": "Wipe skincare products and tidy bed"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/9a1b25ec3d7846a0875cfb08a520efc6/annotation/episode_000000_structured.json",
+      "sha256": "ab7ff3f05afa6d001f2d1cf2eab70a8b0eb18d22a95cb10f6fda42d97f4fcd4f",
+      "old_task_name": "Wipe skincare bottles and massage customer hair"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/9d6a90c1becf481fb4ecf605724efcb3/annotation/episode_000000_structured.json",
+      "sha256": "55a6bdc02d6913462dfb259786626ec2b409d59bb1965aab402d03d031da64ac",
+      "old_task_name": "Make beds and clean bottles"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/a2dfa4e7395b412f8b066a9ca87fb5cb/annotation/episode_000000_structured.json",
+      "sha256": "7452fdb5ef45dcaf5bef40c2d0d0450964135f9584b3cdee11990cf5ec22cc41",
+      "old_task_name": "Massage customer shoulders and back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/a319b31832ce4c14b2077db1068b03f8/annotation/episode_000000_structured.json",
+      "sha256": "580ae498c8014629f3f7fc0d6bd5b3111e2d6f53054fcee1d56837b37bc0ef3a",
+      "old_task_name": "Clean and organize retail store"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000061/a7237e35e7cf411599026176fe1edc29/annotation/episode_000000_structured.json",
+      "sha256": "a41ea38498b86348157778526d75300ba838a3646ea87313d7ba8d1b77e784b0",
+      "old_task_name": "Wash rag and wipe equipment"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/b11bdf7636cd46c3ac57c18510e4c165/annotation/episode_000000_structured.json",
+      "sha256": "a6a5133b9a7a4338102e6afef4650c2ee53aba6da1622fbd67c5e7d2b3730abf",
+      "old_task_name": "Wash fabrics and wipe tabletop"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/b38877993cff4fe39c3cdc3e0aafec45/annotation/episode_000000_structured.json",
+      "sha256": "906d56571dcc07e2c6ad8f9530e40089a0027fd18a9f3fd2e7b8cde3923a5b24",
+      "old_task_name": "Massage customer back and replenish essential oil"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/ba4f59249eab4c469591ad3a2fd9a245/annotation/episode_000000_structured.json",
+      "sha256": "bf77ff79f62a8e993914290cd3db8f79f7629d4b92925de738f5b1d71a6b210c",
+      "old_task_name": "Organize packaging bags and cotton swabs"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/ba81b4d3c9bb429eb80b918e236a6a4e/annotation/episode_000000_structured.json",
+      "sha256": "1765ac1663266d5c64aa47413736ac9f9fea0ae1bfc57c413935ab39a5c7a25e",
+      "old_task_name": "massage and scrape customer back"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/be3ddd95c1b94519b4ce0fd056459c3b/annotation/episode_000000_structured.json",
+      "sha256": "89b3ed31c8fd5bee0874c9f12d3494272ef60a8af43ff8bfc630dbf6867f9c6a",
+      "old_task_name": "Clean shampoo bed and organize tool cart"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/c3832d9dd92e4e5c9c82fd6545e8a3d8/annotation/episode_000000_structured.json",
+      "sha256": "7667abb17098a77b7762c1f2c7982c5175a267605643b92dcc5c36aed7e9ef09",
+      "old_task_name": "Wipe cosmetics display shelf and place storage box"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000062/c49a1a9f34394002951e7a8b63f078bc/annotation/episode_000000_structured.json",
+      "sha256": "ef290f0cda2dcc1ce27493ef095a12c8671ed3ed53ecd38708b169ada336d2a1",
+      "old_task_name": "Clean and stock retail shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/c9c764a5129340b49f22ffed0f183f75/annotation/episode_000000_structured.json",
+      "sha256": "edf64d207b37900014d6ebbde1ebc3ce77b78f7095de2f06809941b95801006b",
+      "old_task_name": "Sweep floor and replace trash bag"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/cd4a59696a0444568610c7e8b38e8f7c/annotation/episode_000000_structured.json",
+      "sha256": "d5ff1daf759ea0a01a861905eae31c7d891ef764e43ef6226588a28c7a7243e3",
+      "old_task_name": "Clean and arrange objects"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/cddef04b96ee42ecbeb235df94c37dd7/annotation/episode_000000_structured.json",
+      "sha256": "d19478f425e6f43ee1bf2b9bc727184f6ebc7dd7216b5692832dc48a69b85115",
+      "old_task_name": "arrange cosmetics and select oral care products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/ce9371f2e1de4aa996cff1e9ce1a8117/annotation/episode_000000_structured.json",
+      "sha256": "16a618606c8d6a1f451f023dd826646d154394a411325048b47ffb957ba1fcf8",
+      "old_task_name": "Tidy bed, wipe bottles, store skin care products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/d3b412579ebb4fd5a7e9e85b86a14a78/annotation/episode_000000_structured.json",
+      "sha256": "410996949735c0e55803ee4810d83ff6e2c948b6c70a7633779e8f95d810e24f",
+      "old_task_name": "Pack skincare products and fold clothes"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000063/dc0dcf33680f405da8586520c98e391b/annotation/episode_000000_structured.json",
+      "sha256": "988398ca883bcf36c4979b45d098a0e41269da9d113e7f27ad3c622f70ed7ea9",
+      "old_task_name": "Wipe counter and display cabinet"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000064/e3a2301c07d94c6c86c7300e4052c71b/annotation/episode_000000_structured.json",
+      "sha256": "51608ccd65d034109a2c0d230df6a774b44390a830ecd6e806157427811574b5",
+      "old_task_name": "store toothpaste and wipe shelves"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000064/eb72a48db04946d4b3a74a7c72ebd585/annotation/episode_000000_structured.json",
+      "sha256": "c2fd8e74c78a4cbdee947c68640aa2fb7576ab56ab8f8b54c2a84938b00ca2f5",
+      "old_task_name": "Wipe and pack paper bags and organize store items"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000064/fa43a6fc1e764475892972ed4c8310b8/annotation/episode_000000_structured.json",
+      "sha256": "d78dcbcbf50e3b4ef713a47d16ec71eeb79c48ed5f980eee562cba1b4641c372",
+      "old_task_name": "Organize cosmetics store shelves and products"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000066/0c8eca3b4900418288c63525205c0c1f/annotation/episode_000000_structured.json",
+      "sha256": "5a0706f5df96c9810fd6304ca01ecb87b7cf2a52b38b8156abc695721c65caff",
+      "old_task_name": "Deliver and return express parcels"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000066/0f524574b37a43e187d298b13157d8e4/annotation/episode_000000_structured.json",
+      "sha256": "32c16bd983c3fddb425cf8c1f0e88d6309c3deca223d8c8694ab366f63553c11",
+      "old_task_name": "Process parcels and mark shelf layers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000066/101d1c8d3368461f84f1e7ddf8f553c3/annotation/episode_000000_structured.json",
+      "sha256": "dfba077b5e810759dd8e403e629ce3831f6bb0e70b546e56254481615859766f",
+      "old_task_name": "Organize medicines and clean shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000067/1a90fbf7e5b042b9b38197608b3e695c/annotation/episode_000000_structured.json",
+      "sha256": "716055f632c1804f37f3433c66f9bb1af3a8aaa3348ef1a17a8c3e2686cf188c",
+      "old_task_name": "Sort and deliver express packages"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000067/1aa04e65037b4ff6afc91e33e0c593fd/annotation/episode_000000_structured.json",
+      "sha256": "85fc14e4c21f09d0f8ff3eb08a661315656b90f008d9528463575f97e782b945",
+      "old_task_name": "Wipe medicines and arrange price tags"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000067/2012e64de025493e999a5a1206e4fbd6/annotation/episode_000000_structured.json",
+      "sha256": "a2570bdf499b09f3625be0de359a9cdbc830b73262af021a2a117fa8ba549778",
+      "old_task_name": "Enter sphygmomanometer product information and arrange medicines"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000068/242f278ab2bb45c09fb377f9bfbf99ba/annotation/episode_000000_structured.json",
+      "sha256": "cd75b72215a6e6c615a5d90d100b3acc636e23ce021b68aef3e8842344d9f6b7",
+      "old_task_name": "Fix counter pressing strip and wipe floor"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000068/2d6cf49460f84a8aa6b22a487bc49ac9/annotation/episode_000000_structured.json",
+      "sha256": "b4b22f4634d8b1f552c0b0c912db901e1be716bdd57223d08bc04036f3bf73d2",
+      "old_task_name": "operate computer system"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000070/406f4b757bee4fc5b83a48259e4fe082/annotation/episode_000000_structured.json",
+      "sha256": "7332f4d9b47cc1262e245c28a9a0384ca3b38d0683a0be00b5a60e1c7d14c84d",
+      "old_task_name": "Sweep floor and clean pharmacy"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000070/409c6d0968b94e92876946003ec14eb2/annotation/episode_000000_structured.json",
+      "sha256": "5b698925d12ddf713ee528d849e9afceb72dcc7762c5971813a5c6ef33def5b4",
+      "old_task_name": "Check and arrange medicine inventory"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/4eb1b7253a6a455895d14fe8a9bd9ca8/annotation/episode_000000_structured.json",
+      "sha256": "f1e323d40c61a18325f9150fa1c83b1bb7fee51d617ac11ff116897248b5f7ad",
+      "old_task_name": "Store chair and deliver parcels"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/4f0c0be0688e43b0a7d880e65ec962f8/annotation/episode_000000_structured.json",
+      "sha256": "aa3b8a5b72a26068cf9ed1e09dbc5c67dbf52837bfe6cd07b49efbcd210130ab",
+      "old_task_name": "Process medicines and greet customers"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/502db41f9bf1475fabe6e2381c439ec9/annotation/episode_000000_structured.json",
+      "sha256": "a3f66734d6628b141859ba0e95d0c9118418c8afdd546fd3ddc0abed07826d19",
+      "old_task_name": "Distribute parcels and check phone"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/5052ee8bcf5b46c5a542fc4f855aaefb/annotation/episode_000000_structured.json",
+      "sha256": "5f6eabfc38f94ec6bba5488bbb0d1ae311cd6b58dfd04f50e5ee021702bf42ff",
+      "old_task_name": "Organize medicines and wipe shelves"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/56cf7e47d0964138a399377c0f309335/annotation/episode_000000_structured.json",
+      "sha256": "194b66ed9706f26dd3ca33e801508db3c498ef26e5c8b6c5d82101a18b1b6f77",
+      "old_task_name": "arrange medicines and wipe shelf"
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000071/576eb87fca4244199b75ef66e64051a6/annotation/episode_000000_structured.json",
+      "sha256": "b0c16d000c9cb45b873c35de467767a7a6e5ce5ad6563f0708660abffe577695",
+      "old_task_name": "Wipe and organize medicines on shelf"
+    }
+  ]
+}

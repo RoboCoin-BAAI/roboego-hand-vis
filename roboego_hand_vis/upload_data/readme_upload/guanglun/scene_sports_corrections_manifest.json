@@ -1,0 +1,130 @@
+[
+  {
+    "path": "batch_0000003/69889e568dd5497e7d2053719ec3121b200909b8e165d459c3a2504e3d56cfcc/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person hangs the hula hoops on the floor onto the rack one by one to complete the organization.",
+    "original_description": "A storage area for organizing and hanging hula hoops on a rack",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000016/9d1b6fe7b41935946b3b8262f81336b314eda74f066163807388c4fe202cb34c/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person hangs multiple belts on the wall hooks in sequence to complete the organization.",
+    "original_description": "A storage area for organizing and hanging martial arts belts on wall hooks",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/1177d0c33e5b0168e9288b4eaa157b3b1f66f3f22063500c37afdaea29ce654e/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts the badminton shuttlecocks, colored discs, and table tennis rackets into the storage box to complete the organization.",
+    "original_description": "A storage area for organizing badminton shuttlecocks, colored discs, and table tennis rackets into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/18c413da8ba3a3d1a4194c6783ea82f225a6dcad1de64ad6a078e25d57328b85/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts the badminton shuttlecocks, discs, and rackets into the storage box to complete the organization.",
+    "original_description": "A storage area for organizing badminton shuttlecocks, discs, and rackets into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/5ea43d17de00cc3b10c06c74138837452ed55df5a98720d13fe7f884001d2c1e/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts badminton shuttlecocks, colored discs, table tennis rackets, and marker cones into storage boxes to complete the organization.",
+    "original_description": "A storage area for organizing and boxing sports equipment like shuttlecocks, rackets, and cones.",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/601f246ae946b2b24495722c5ec7307514406564b513c494cb8d4a1f54501e68/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts the table tennis balls, badminton shuttlecocks, colored discs, and table tennis rackets into a storage basket and covers it with a lid to complete the organization.",
+    "original_description": "A storage area for organizing sports equipment into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/b27f826fce10f7cbda44a8c68c1ea9340a1594559667ea216ebe1249bd9f81f4/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts table tennis balls, badminton shuttlecocks, rackets, and marker pads into the storage box to complete the organization.",
+    "original_description": "A storage area for organizing table tennis and badminton equipment into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/bb489bf599686d1ddb8107d54c3b0e8427043da212a74e141ce9bb3a66b989db/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts table tennis balls, badminton shuttlecocks, colored discs, and table tennis rackets into storage boxes to complete the organization.",
+    "original_description": "A storage area for organizing sports equipment into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/e4e8c3bd9295c8e9fd3794d23487dbd55b0d74579172d9f0443e1c79ba29e92b/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts badminton shuttlecocks, discs, and table tennis rackets into storage boxes of different colors and covers the lids to complete the organization.",
+    "original_description": null,
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/eb1388d28635bce4c30d5532746e9a42625cd8a39e8ac170f0f936c844a1e617/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts badminton shuttlecocks, marker cones, and table tennis rackets into storage boxes to complete the organization.",
+    "original_description": "A storage area for organizing and boxing sports equipment like shuttlecocks, cones, and rackets",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000020/f734c74bf0edb3600c6f4337fde09ee6056bee11190926c674a3e50ef6cf5681/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person sorts badminton shuttlecocks, marker cones, and table tennis rackets into a storage box to complete the organization.",
+    "original_description": "A storage area for organizing and sorting sports equipment like shuttlecocks, cones, and rackets into boxes",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/829487a70ac40af5ca8c929b9c9a1ac47e34b8bcdab89f095d86ac514f2bfad4/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts scattered shuttlecocks into multiple tubes to complete the organization.",
+    "original_description": "A storage area for organizing badminton equipment",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/8e531e445f81250d981be91d7f54945f75ef285bd91fc78fddda1bbf5053fb71/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts the scattered shuttlecocks into four shuttlecock tubes respectively to complete the organization.",
+    "original_description": null,
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/ba88de7f4ac66e698ff08ee01216c442fc9eb109ed595219ed289483f1387471/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts the scattered shuttlecocks into four separate shuttlecock tubes to complete the storage.",
+    "original_description": "A storage area for organizing badminton equipment",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/d1d63f2d3358901b4f95a978950531b6c84dde16b2b13063b90f0afe94601db1/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts the scattered shuttlecocks into multiple shuttlecock tubes to complete the storage.",
+    "original_description": "A storage area for organizing badminton equipment",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  },
+  {
+    "path": "batch_0000025/e5cdc62956e411bbf3bf768487fc6c9b77c17f717fb88b9ee7777133517ba0cb/annotation/episode_000000_structured.json",
+    "category": "public_space",
+    "area": "indoor_sports_venue",
+    "task_description": "The person puts the scattered badminton shuttlecocks into four separate tube containers to complete the storage.",
+    "original_description": "A storage area for organizing badminton equipment into tube containers",
+    "reason": "User location correction: public_space/sports_equipment_area -> public_space/indoor_sports_venue"
+  }
+]

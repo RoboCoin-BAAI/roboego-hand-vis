@@ -1,0 +1,594 @@
+{
+  "source": "D:\\data\\annotation_statistics\\理想\\HumanCOIN_Subtask_Atomic.xlsx",
+  "policy": "reference_not_closed_enum",
+  "groups": {
+    "Subtask_100": [
+      {
+        "verb": "wipe",
+        "verb_zh": "擦拭"
+      },
+      {
+        "verb": "open",
+        "verb_zh": "打开"
+      },
+      {
+        "verb": "fold",
+        "verb_zh": "折叠"
+      },
+      {
+        "verb": "arrange",
+        "verb_zh": "摆放整理"
+      },
+      {
+        "verb": "throw",
+        "verb_zh": "丢弃"
+      },
+      {
+        "verb": "remove",
+        "verb_zh": "移除"
+      },
+      {
+        "verb": "close",
+        "verb_zh": "关闭"
+      },
+      {
+        "verb": "organize",
+        "verb_zh": "整理归置"
+      },
+      {
+        "verb": "pour",
+        "verb_zh": "倾倒"
+      },
+      {
+        "verb": "hang",
+        "verb_zh": "悬挂"
+      },
+      {
+        "verb": "unfold",
+        "verb_zh": "展开"
+      },
+      {
+        "verb": "collect",
+        "verb_zh": "收集"
+      },
+      {
+        "verb": "clean",
+        "verb_zh": "清洁"
+      },
+      {
+        "verb": "stack",
+        "verb_zh": "堆叠"
+      },
+      {
+        "verb": "insert",
+        "verb_zh": "插入"
+      },
+      {
+        "verb": "cover",
+        "verb_zh": "覆盖"
+      },
+      {
+        "verb": "cut",
+        "verb_zh": "切割"
+      },
+      {
+        "verb": "tear",
+        "verb_zh": "撕开"
+      },
+      {
+        "verb": "install",
+        "verb_zh": "安装"
+      },
+      {
+        "verb": "spray",
+        "verb_zh": "喷洒"
+      },
+      {
+        "verb": "rinse",
+        "verb_zh": "冲洗"
+      },
+      {
+        "verb": "secure",
+        "verb_zh": "固定"
+      },
+      {
+        "verb": "wrap",
+        "verb_zh": "包裹"
+      },
+      {
+        "verb": "tighten",
+        "verb_zh": "拧紧"
+      },
+      {
+        "verb": "tie",
+        "verb_zh": "系紧"
+      },
+      {
+        "verb": "seal",
+        "verb_zh": "密封"
+      },
+      {
+        "verb": "sweep",
+        "verb_zh": "清扫"
+      },
+      {
+        "verb": "unscrew",
+        "verb_zh": "拧松螺丝"
+      },
+      {
+        "verb": "attach",
+        "verb_zh": "附着安装"
+      },
+      {
+        "verb": "sort",
+        "verb_zh": "分类"
+      },
+      {
+        "verb": "stick",
+        "verb_zh": "粘贴"
+      },
+      {
+        "verb": "screw",
+        "verb_zh": "拧入螺丝"
+      },
+      {
+        "verb": "disassemble",
+        "verb_zh": "拆解"
+      },
+      {
+        "verb": "coil",
+        "verb_zh": "盘绕"
+      },
+      {
+        "verb": "wash",
+        "verb_zh": "清洗"
+      },
+      {
+        "verb": "assemble",
+        "verb_zh": "组装"
+      },
+      {
+        "verb": "connect",
+        "verb_zh": "连接"
+      },
+      {
+        "verb": "check",
+        "verb_zh": "检查"
+      },
+      {
+        "verb": "dry",
+        "verb_zh": "晾干／擦干"
+      },
+      {
+        "verb": "thread",
+        "verb_zh": "穿线"
+      },
+      {
+        "verb": "replace",
+        "verb_zh": "更换"
+      },
+      {
+        "verb": "untie",
+        "verb_zh": "解开绳结"
+      },
+      {
+        "verb": "peel",
+        "verb_zh": "剥离"
+      },
+      {
+        "verb": "rearrange",
+        "verb_zh": "重新整理"
+      },
+      {
+        "verb": "apply",
+        "verb_zh": "涂抹／施加"
+      },
+      {
+        "verb": "button",
+        "verb_zh": "扣纽扣"
+      },
+      {
+        "verb": "untangle",
+        "verb_zh": "解开缠绕"
+      },
+      {
+        "verb": "scrape",
+        "verb_zh": "刮除"
+      },
+      {
+        "verb": "reassemble",
+        "verb_zh": "重新组装"
+      },
+      {
+        "verb": "separate",
+        "verb_zh": "分离"
+      },
+      {
+        "verb": "scoop",
+        "verb_zh": "舀取"
+      },
+      {
+        "verb": "scrub",
+        "verb_zh": "刷洗"
+      },
+      {
+        "verb": "write",
+        "verb_zh": "书写"
+      },
+      {
+        "verb": "wind",
+        "verb_zh": "缠绕"
+      },
+      {
+        "verb": "crumple",
+        "verb_zh": "揉皱"
+      },
+      {
+        "verb": "bind",
+        "verb_zh": "捆绑"
+      },
+      {
+        "verb": "draw",
+        "verb_zh": "绘画"
+      },
+      {
+        "verb": "unzip",
+        "verb_zh": "拉开拉链"
+      },
+      {
+        "verb": "staple",
+        "verb_zh": "装订"
+      },
+      {
+        "verb": "zip",
+        "verb_zh": "拉上拉链"
+      },
+      {
+        "verb": "erase",
+        "verb_zh": "擦除"
+      },
+      {
+        "verb": "cap",
+        "verb_zh": "盖盖"
+      },
+      {
+        "verb": "fill",
+        "verb_zh": "填充"
+      },
+      {
+        "verb": "unplug",
+        "verb_zh": "拔掉插头"
+      },
+      {
+        "verb": "test",
+        "verb_zh": "测试"
+      },
+      {
+        "verb": "stamp",
+        "verb_zh": "盖章"
+      },
+      {
+        "verb": "slice",
+        "verb_zh": "切片"
+      },
+      {
+        "verb": "wring",
+        "verb_zh": "拧干"
+      },
+      {
+        "verb": "loosen",
+        "verb_zh": "旋松"
+      },
+      {
+        "verb": "stir",
+        "verb_zh": "搅拌"
+      },
+      {
+        "verb": "drape",
+        "verb_zh": "披挂／覆盖"
+      },
+      {
+        "verb": "discard",
+        "verb_zh": "弃置"
+      },
+      {
+        "verb": "tuck",
+        "verb_zh": "塞入／掖好"
+      },
+      {
+        "verb": "unwrap",
+        "verb_zh": "拆开包裹"
+      },
+      {
+        "verb": "trim",
+        "verb_zh": "修剪"
+      },
+      {
+        "verb": "punch",
+        "verb_zh": "打孔"
+      },
+      {
+        "verb": "load",
+        "verb_zh": "装载"
+      },
+      {
+        "verb": "reattach",
+        "verb_zh": "重新固定"
+      },
+      {
+        "verb": "detach",
+        "verb_zh": "拆卸／分离"
+      },
+      {
+        "verb": "divide",
+        "verb_zh": "分成若干份"
+      },
+      {
+        "verb": "scan",
+        "verb_zh": "扫描"
+      },
+      {
+        "verb": "unroll",
+        "verb_zh": "展开卷材"
+      },
+      {
+        "verb": "plug",
+        "verb_zh": "插接电源"
+      },
+      {
+        "verb": "disconnect",
+        "verb_zh": "断开连接"
+      },
+      {
+        "verb": "pry",
+        "verb_zh": "撬开"
+      },
+      {
+        "verb": "tape",
+        "verb_zh": "贴胶带"
+      },
+      {
+        "verb": "wet",
+        "verb_zh": "润湿"
+      },
+      {
+        "verb": "reinsert",
+        "verb_zh": "重新插入"
+      },
+      {
+        "verb": "switch",
+        "verb_zh": "切换"
+      },
+      {
+        "verb": "clamp",
+        "verb_zh": "夹紧"
+      },
+      {
+        "verb": "brush",
+        "verb_zh": "刷拭"
+      },
+      {
+        "verb": "pair",
+        "verb_zh": "配对"
+      },
+      {
+        "verb": "dice",
+        "verb_zh": "切丁"
+      },
+      {
+        "verb": "dispense",
+        "verb_zh": "分配／挤出"
+      },
+      {
+        "verb": "pack",
+        "verb_zh": "打包"
+      },
+      {
+        "verb": "polish",
+        "verb_zh": "抛光"
+      },
+      {
+        "verb": "sew",
+        "verb_zh": "缝制"
+      },
+      {
+        "verb": "soak",
+        "verb_zh": "浸泡"
+      },
+      {
+        "verb": "uncap",
+        "verb_zh": "取下盖子"
+      }
+    ],
+    "Atomic_50": [
+      {
+        "verb": "place",
+        "verb_zh": "放置"
+      },
+      {
+        "verb": "pick",
+        "verb_zh": "拿起"
+      },
+      {
+        "verb": "move",
+        "verb_zh": "移动"
+      },
+      {
+        "verb": "push",
+        "verb_zh": "推动"
+      },
+      {
+        "verb": "pull",
+        "verb_zh": "拉动"
+      },
+      {
+        "verb": "grasp",
+        "verb_zh": "抓握"
+      },
+      {
+        "verb": "adjust",
+        "verb_zh": "调整"
+      },
+      {
+        "verb": "turn",
+        "verb_zh": "转动"
+      },
+      {
+        "verb": "reach",
+        "verb_zh": "伸手接近"
+      },
+      {
+        "verb": "lift",
+        "verb_zh": "抬起"
+      },
+      {
+        "verb": "transport",
+        "verb_zh": "搬运／转移"
+      },
+      {
+        "verb": "lay",
+        "verb_zh": "平放"
+      },
+      {
+        "verb": "align",
+        "verb_zh": "对齐"
+      },
+      {
+        "verb": "straighten",
+        "verb_zh": "摆正"
+      },
+      {
+        "verb": "spread",
+        "verb_zh": "展开铺开"
+      },
+      {
+        "verb": "roll",
+        "verb_zh": "滚动／卷动"
+      },
+      {
+        "verb": "flip",
+        "verb_zh": "翻转"
+      },
+      {
+        "verb": "release",
+        "verb_zh": "松开"
+      },
+      {
+        "verb": "squeeze",
+        "verb_zh": "挤压"
+      },
+      {
+        "verb": "hold",
+        "verb_zh": "握持"
+      },
+      {
+        "verb": "stand",
+        "verb_zh": "立起"
+      },
+      {
+        "verb": "press",
+        "verb_zh": "按压"
+      },
+      {
+        "verb": "carry",
+        "verb_zh": "携带"
+      },
+      {
+        "verb": "dip",
+        "verb_zh": "蘸取"
+      },
+      {
+        "verb": "rotate",
+        "verb_zh": "旋转"
+      },
+      {
+        "verb": "position",
+        "verb_zh": "定位"
+      },
+      {
+        "verb": "reposition",
+        "verb_zh": "重新定位"
+      },
+      {
+        "verb": "drop",
+        "verb_zh": "松手落下"
+      },
+      {
+        "verb": "shake",
+        "verb_zh": "摇晃"
+      },
+      {
+        "verb": "bring",
+        "verb_zh": "拿到近处"
+      },
+      {
+        "verb": "drag",
+        "verb_zh": "拖动"
+      },
+      {
+        "verb": "tilt",
+        "verb_zh": "倾斜"
+      },
+      {
+        "verb": "slide",
+        "verb_zh": "滑动"
+      },
+      {
+        "verb": "lower",
+        "verb_zh": "降低／放下"
+      },
+      {
+        "verb": "retract",
+        "verb_zh": "撤回"
+      },
+      {
+        "verb": "tap",
+        "verb_zh": "轻敲"
+      },
+      {
+        "verb": "transfer",
+        "verb_zh": "转移"
+      },
+      {
+        "verb": "lean",
+        "verb_zh": "倾靠"
+      },
+      {
+        "verb": "adjust_grip",
+        "verb_zh": "调整握姿"
+      },
+      {
+        "verb": "bend",
+        "verb_zh": "弯曲"
+      },
+      {
+        "verb": "orient",
+        "verb_zh": "调整朝向"
+      },
+      {
+        "verb": "rub",
+        "verb_zh": "摩擦"
+      },
+      {
+        "verb": "extend",
+        "verb_zh": "伸展"
+      },
+      {
+        "verb": "feel",
+        "verb_zh": "触摸感知"
+      },
+      {
+        "verb": "pinch",
+        "verb_zh": "捏取"
+      },
+      {
+        "verb": "poke",
+        "verb_zh": "戳碰"
+      }
+    ]
+  },
+  "counts": {
+    "Subtask_100": 99,
+    "Atomic_50": 46
+  }
+}

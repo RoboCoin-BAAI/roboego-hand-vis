@@ -1,0 +1,230 @@
+﻿noun,category,category_zh,rule,jianzhi,guanglun
+acne,acne,acne（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,8,0
+adapter,adapter,adapter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+alarm,alarm,alarm（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+almond,almond,almond（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+aloe vera,aloe_vera,aloe vera（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+alternator,alternator,alternator（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+armchair,armchair,armchair（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+ashtray,ashtray,ashtray（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,6
+badge,badge,badge（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,14
+bamboo stick,bamboo_stick,bamboo stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+band,band,band（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,20
+bandage,bandage,bandage（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,2
+barbell weight,barbell_weight,barbell weight（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+barbershop,barbershop,barbershop（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+barcode,barcode,barcode（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+base,base,base（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+bathrobe,bathrobe,bathrobe（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+bathroom surface,bathroom_surface,bathroom surface（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+bead,bead,bead（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+bike,bike,bike（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,11
+block,block,block（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,19
+board,board,board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,12,12
+box base,box_base,box base（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+brace,brace,brace（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+brush,brush,brush（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,0
+bulb,bulb,bulb（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+button,button,button（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+cable tie,cable_tie,cable tie（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cage,cage,cage（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cake,cake,cake（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+car starter motor,car_starter_motor,car starter motor（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cardboard piece,cardboard_piece,cardboard piece（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cardstock,cardstock,cardstock（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cargo,cargo,cargo（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,7
+carpet,carpet,carpet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+carrot,carrot,carrot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+cart,cart,cart（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,17,9
+casing,casing,casing（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+cat litter,cat_litter,cat litter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cement,cement,cement（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+chair cover,chair_cover,chair cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+circuit board,circuit_board,circuit board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+cleaner,cleaner,cleaner（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+clip,clip,clip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,25
+clock,clock,clock（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+coffee equipment,coffee_equipment,coffee equipment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+colander,colander,colander（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+comedone,comedone,comedone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+compact,compact,compact（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+computer host,computer_host,computer host（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+computer tower,computer_tower,computer tower（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+condiment,condiment,condiment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+cone,cone,cone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+contact lens,contact_lens,contact lens（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+control panel,control_panel,control panel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+corn kernel,corn_kernel,corn kernel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+corner guard,corner_guard,corner guard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+cover,cover,cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+crate,crate,crate（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+crumb,crumb,crumb（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cylinder,cylinder,cylinder（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+data cable,data_cable,data cable（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+diffuser,diffuser,diffuser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+display stand,display_stand,display stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+divider,divider,divider（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+doormat,doormat,doormat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,5
+drawer contents,drawer_contents,drawer contents（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+dresser,dresser,dresser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+dressing,dressing,dressing（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+dummy,dummy,dummy（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+earplug,earplug,earplug（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+engine,engine,engine（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+fastener,fastener,fastener（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+fire extinguisher,fire_extinguisher,fire extinguisher（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+first aid kit,first_aid_kit,first aid kit（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+fitness gear,fitness_gear,fitness gear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+floss,floss,floss（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+flower,flower,flower（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,10
+flowerpot,flowerpot,flowerpot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+foam,foam,foam（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+foam net sleeve,foam_net_sleeve,foam net sleeve（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+foil,foil,foil（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+foot pad,foot_pad,foot pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+footwear,footwear,footwear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+french fries,french_fries,french fries（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+fries,fries,fries（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+game accessory,game_accessory,game accessory（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+gardening tool,gardening_tool,gardening tool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+gel,gel,gel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+generator,generator,generator（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+glassware,glassware,glassware（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+glue,glue,glue（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,5
+granule,granule,granule（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,3
+grille,grille,grille（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,1
+grip strengthener,grip_strengthener,grip strengthener（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+grocery,grocery,grocery（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+groove,groove,groove（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+hair accessory,hair_accessory,hair accessory（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+hand sanitizer,hand_sanitizer,hand sanitizer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+handkerchief,handkerchief,handkerchief（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hanger,hanger,hanger（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,51
+harness,harness,harness（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+headband,headband,headband（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+helmet,helmet,helmet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hoodie,hoodie,hoodie（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hook,hook,hook（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+humidifier,humidifier,humidifier（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+impurities,impurities,impurities（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+information,information,information（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+ink,ink,ink（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+insole,insole,insole（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+instrument,instrument,instrument（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+iron stand,iron_stand,iron stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+ketchup,ketchup,ketchup（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+key,key,key（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+keychain,keychain,keychain（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+knee pad,knee_pad,knee pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+knot,knot,knot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+lamp,lamp,lamp（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+lanyard,lanyard,lanyard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,12
+lead,lead,lead（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+leaf,leaf,leaf（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+lens,lens,lens（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+letter,letter,letter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+light string,light_string,light string（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+lighter,lighter,lighter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,10
+line,line,line（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+locker,locker,locker（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+mat,mat,mat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,34
+mattress,mattress,mattress（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+merchandise,merchandise,merchandise（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+mesh,mesh,mesh（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+metal tool,metal_tool,metal tool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+model,model,model（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+mop handle,mop_handle,mop handle（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+mud,mud,mud（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+net,net,net（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+nib,nib,nib（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+note,note,note（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+notepad,notepad,notepad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+pad,pad,pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,2
+palette,palette,palette（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+panel,panel,panel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+patch,patch,patch（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+pattern,pattern,pattern（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+peach,peach,peach（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+pedal,pedal,pedal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+peel,peel,peel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+peeler,peeler,peeler（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+photo,photo,photo（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+picture,picture,picture（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+pigment,pigment,pigment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+pimple,pimple,pimple（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+plant,plant,plant（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,5,5
+plastic strip,plastic_strip,plastic strip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+powder,powder,powder（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,6
+price tags,price_tags,price tags（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+produce,produce,produce（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+puff,puff,puff（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+pulp mold,pulp_mold,pulp mold（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,1
+pump,pump,pump（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+puzzle board,puzzle_board,puzzle board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+recyclable,recyclable,recyclable（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+refill,refill,refill（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,11
+ribbon,ribbon,ribbon（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+ring,ring,ring（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+rod,rod,rod（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,6,0
+roll,roll,roll（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+rope,rope,rope（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,62
+rubber bands,rubber_bands,rubber bands（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+safe,safe,safe（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sand,sand,sand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,5,0
+scanner,scanner,scanner（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+screen,screen,screen（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+seal,seal,seal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+seat,seat,seat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,6
+shelf board,shelf_board,shelf board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shelf layer,shelf_layer,shelf layer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shoe cover,shoe_cover,shoe cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+shoebox,shoebox,shoebox（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shopping cart,shopping_cart,shopping cart（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sign,sign,sign（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,12
+skeleton,skeleton,skeleton（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+skewer,skewer,skewer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+slippers,slippers,slippers（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+slot,slot,slot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+sneaker laces,sneaker_laces,sneaker laces（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+soap dispenser,soap_dispenser,soap dispenser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+sports gear,sports_gear,sports gear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sportswear,sportswear,sportswear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+spray,spray,spray（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+spreadsheet,spreadsheet,spreadsheet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+stain,stain,stain（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+stamp,stamp,stamp（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+stand,stand,stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,1
+staple,staple,staple（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+stem,stem,stem（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+stick,stick,stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,7
+string,string,string（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+strip,strip,strip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,6,6
+structure,structure,structure（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+substance,substance,substance（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+suitcase,suitcase,suitcase（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+support,support,support（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+table setting,table_setting,table setting（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+telephone,telephone,telephone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+thin stick,thin_stick,thin stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+tile,tile,tile（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,1
+toilet paper roll,toilet_paper_roll,toilet paper roll（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+toilet seat cover,toilet_seat_cover,toilet seat cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+tong,tong,tong（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+toothpick,toothpick,toothpick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+transparent hemispherical covers,transparent_hemispherical_covers,transparent hemispherical covers（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+turn signal,turn_signal,turn signal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+umbrella,umbrella,umbrella（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,5
+water reservoir,water_reservoir,water reservoir（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+water tank,water_tank,water tank（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+whiteboard,whiteboard,whiteboard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+windowsill,windowsill,windowsill（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+wiring harness,wiring_harness,wiring harness（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wood,wood,wood（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+wooden frame,wooden_frame,wooden frame（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wooden stick,wooden_stick,wooden stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,9
+wooden structure,wooden_structure,wooden structure（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wool,wool,wool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+workstation,workstation,workstation（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+woven bag,woven_bag,woven bag（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+yam,yam,yam（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+yogurt,yogurt,yogurt（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1

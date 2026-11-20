@@ -1,0 +1,815 @@
+﻿original,normalized,jianzhi,guanglun
+abdomen,abdomen,2,0
+accessory,accessory,7,6
+acne,acne,8,0
+adapter,adapter,0,1
+air conditioner,air conditioner,0,1
+alarm,alarm,0,1
+almond,almond,0,1
+aloe vera,aloe vera,1,0
+alternator,alternator,0,1
+apple,apple,0,3
+appliance,appliance,2,0
+apron,apron,0,13
+armchair,armchair,0,1
+art supply,art supply,0,1
+ashtray,ashtray,0,6
+avocado,avocado,1,0
+back,back,2,0
+backpack,backpack,0,4
+badge,badge,0,14
+bag,bag,148,232
+bakery item,bakery item,0,1
+ball,ball,0,17
+balm,balm,1,0
+bamboo sticks,bamboo stick,0,1
+band,band,4,21
+bandage,bandage,1,2
+bar counter,bar counter,0,1
+barbell,barbell,0,58
+barbell plate,barbell plate,0,1
+barbell weight,barbell weight,0,1
+barbershop,barbershop,1,0
+barcode,barcode,1,0
+base,base,0,1
+baseboard,baseboard,2,1
+basin,basin,6,11
+basket,basket,0,17
+basketball,basketball,0,1
+bath product,bath product,0,1
+bathing product,bathing product,0,1
+bathrobe,bathrobe,0,2
+bathroom fixture,bathroom fixture,0,8
+bathroom item,bathroom item,0,3
+bathroom supply,bathroom supply,0,5
+bathroom surface,bathroom surface,0,1
+bathtub,bathtub,0,3
+battery,battery,0,19
+bead,bead,0,2
+bean,bean,2,1
+beard,beard,2,0
+beauty blender,beauty blender,0,1
+beauty cart items,beauty cart item,1,0
+beauty product,beauty product,2,0
+beauty supply,beauty supply,2,0
+beauty tool,beauty tool,3,0
+beauty tools,beauty tool,1,0
+bed,bed,2,1
+bed sheet,bed sheet,0,20
+bedding,bedding,9,42
+bedroom,bedroom,0,1
+bedroom item,bedroom item,0,1
+beer,beer,0,4
+beer container,beer container,0,1
+belt,belt,0,9
+bench,bench,0,53
+beverage,beverage,4,57
+beverage bottle,beverage bottle,0,2
+beverage container,beverage container,0,33
+beverage machine,beverage machine,1,0
+beverage supply,beverage supply,0,1
+bike,bike,0,11
+bill,bill,1,0
+bin,bin,1,12
+blanket,blanket,4,18
+blender,blender,0,1
+blender blade head,blender blade head,0,1
+block,block,4,20
+board,board,10,12
+board game,board game,0,6
+body wash,body wash,2,0
+body washes,body washes,1,0
+bolt,bolt,0,1
+book,book,544,34
+bookcase,bookcase,0,2
+books,book,2,0
+bookshelf,bookshelf,2,1
+bottle,bottle,109,526
+bottle cap,bottle cap,1,0
+bottle opener,bottle opener,0,7
+bowl,bowl,5,31
+box,box,580,617
+box base,box base,0,1
+boxes,box,1,0
+brace,brace,0,1
+bracket,bracket,1,0
+bread,bread,1,54
+brush,brush,24,0
+brush head,brush head,0,1
+bubble wrap,bubble wrap,0,8
+bucket,bucket,4,6
+buckle,buckle,1,1
+bulb,bulb,0,1
+cabinet,cabinet,29,16
+cabinet items,cabinet item,1,0
+cable,cable,2,134
+cable tie,cable tie,0,1
+cage,cage,0,1
+cake,cake,0,1
+camera,camera,0,1
+can,can,2,49
+candy,candy,0,16
+car starter motor,car starter motor,0,1
+card,card,0,30
+card holder,card holder,0,5
+cardboard,cardboard,1,37
+cardboard box,cardboard box,0,2
+cardboard pieces,cardboard piece,0,1
+cardstock,cardstock,0,1
+care solution,care solution,4,0
+cargo,cargo,0,7
+carpet,carpet,0,3
+carrot,carrot,0,3
+cart,cart,17,8
+carton,carton,0,3
+case,case,0,1
+casing,casing,0,1
+cat litter,cat litter,0,1
+cement,cement,1,0
+certificate,certificate,1,0
+chair,chair,11,331
+chair cover,chair cover,0,1
+charger,charger,0,6
+chess piece,chess piece,1,2
+chess pieces,chess piece,2,14
+chopstick,chopstick,0,2
+chopsticks,chopsticks,0,5
+circuit board,circuit board,0,3
+circular object,circular object,0,1
+cleaner,cleaner,0,1
+cleaning agent,cleaning agent,0,2
+cleaning product,cleaning product,0,1
+cleaning supplies,cleaning supply,0,1
+cleaning supply,cleaning supply,0,4
+cleaning tool,cleaning tool,0,2
+client hair,client hair,1,0
+clip,clip,2,33
+clipper,clipper,1,0
+clock,clock,1,0
+cloth,cloth,28,80
+clothes,clothing,19,35
+clothing,clothing,16,134
+clutter,clutter,0,17
+coaster,coaster,0,10
+coffee,coffee,13,5
+coffee equipment,coffee equipment,0,2
+coffee ingredient,coffee ingredient,0,1
+coffee machine,coffee machine,1,1
+coffee supply,coffee supply,1,0
+coil,coil,1,0
+cola,cola,0,4
+colander,colander,0,2
+colored pencils,colored pencil,0,1
+comb,comb,1,0
+comedone,comedone,1,0
+comedones,comedone,2,0
+compact,compact,0,1
+component,component,0,3
+compressor,compressor,0,8
+computer,computer,0,3
+computer host,computer host,0,1
+computer tower,computer tower,0,1
+condiment,condiment,0,3
+conditioner,conditioner,1,0
+cone,cone,0,1
+connector,connector,1,3
+contact lens,contact lens,0,1
+container,container,17,35
+control panel,control panel,0,1
+cookware,cookware,2,6
+cordyceps,cordyceps,1,0
+corn kernels,corn kernel,0,1
+corner guard,corner guard,0,4
+correction fluid,correction fluid,0,7
+cosmetic,cosmetic,20,11
+cosmetics,cosmetics,174,121
+cotton pad,cotton pad,1,0
+cotton roll,cotton roll,3,0
+cotton swab,cotton swab,1,7
+cotton swab box,cotton swab box,0,2
+cotton swab product,cotton swab product,0,1
+counter,counter,51,58
+countertop,countertop,0,15
+countertop item,countertop item,0,1
+cover,cover,1,0
+crate,crate,0,4
+crayon,crayon,1,0
+cream,cream,41,3
+crumb,crumb,0,1
+cucumber,cucumber,1,1
+cup,cup,62,354
+cup holder,cup holder,8,0
+cup supply,cup supply,0,1
+cupping jar,cupping jar,2,0
+cupping tool,cupping tool,1,0
+cushion,cushion,2,13
+customer,customer,4,0
+customer abdomen,customer abdomen,13,0
+customer arm,customer arm,5,0
+customer back,customer back,37,0
+customer body,customer body,5,0
+customer calf,customer calf,1,0
+customer face,customer face,22,0
+customer hair,customer hair,43,0
+customer hand,customer hand,1,0
+customer head,customer head,15,0
+customer left arm,customer left arm,2,0
+customer leg,customer leg,5,0
+customer leg muscles,customer leg muscle,1,0
+customer legs,customer leg,15,0
+customer lower back,customer lower back,1,0
+customer muscles,customer muscle,1,0
+customer scalp,customer scalp,2,0
+cutlery,cutlery,0,20
+cutter,cutter,0,1
+cylinder,cylinder,0,2
+cylinder head,cylinder head,0,2
+cylindrical object,cylindrical object,0,5
+daily necessity,daily necessity,1,1
+dairy product,dairy product,0,1
+data cable,data cable,0,1
+debris,debris,2,7
+decoration,decoration,1,0
+decorative lines,decorative lines,1,0
+delivery items,delivery item,0,1
+dental supply,dental supply,1,0
+desk,desk,5,21
+desk item,desk item,1,4
+desk supply,desk supply,0,1
+desktop,desktop,1,17
+desktop item,desktop item,0,3
+dessert,dessert,2,0
+detergent,detergent,1,10
+device,device,11,8
+diffuser,diffuser,0,1
+dish,dish,2,4
+dish soap,dish soap,0,1
+dishware,dishware,0,39
+dishwasher,dishwasher,0,1
+disinfection supply,disinfection supply,1,0
+display item,display item,1,0
+display stand,display stand,3,0
+disposable item,disposable item,0,1
+divider,divider,0,2
+document,document,2,3
+door,door,9,12
+door frame,door frame,2,0
+door handle,door handle,2,0
+door stopper,door stopper,1,0
+doormat,doormat,0,5
+drawer,drawer,3,5
+drawer contents,drawer contents,0,1
+dress,dress,1,0
+dresser,dresser,0,2
+dressing,dressing,2,0
+drink,drink,10,25
+dumbbell,dumbbell,0,58
+dummy,dummy,1,0
+dye,dye,28,0
+ear,ear,1,0
+ear canal,ear canal,1,0
+earplug,earplug,0,2
+earring,earring,0,3
+edge banding,edge banding,1,0
+egg,egg,0,5
+elliptical machine,elliptical machine,0,1
+engine,engine,0,1
+envelope,envelope,0,8
+equipment,equipment,3,34
+essence,essence,6,0
+eyebrow,eyebrow,3,0
+eyebrow pencil,eyebrow pencil,1,0
+eyebrows,eyebrow,1,0
+eyelash,eyelash,23,0
+eyeshadow,eyeshadow,1,0
+face,face,50,0
+facial cleanser,facial cleanser,3,2
+facial mask,facial mask,1,0
+facial skincare treatment,facial skincare treatment,1,0
+fake nail,fake nail,0,2
+fan,fan,0,2
+fastener,fastener,0,4
+faucet,faucet,1,0
+figurine,figurine,1,0
+file,file,0,1
+film,film,3,2
+filter,filter,3,1
+finger,finger,1,0
+fingernail,fingernail,3,0
+fire extinguisher,fire extinguisher,0,1
+first aid kit,first aid kit,0,2
+fitness chair,fitness chair,0,1
+fitness equipment,fitness equipment,0,9
+fitness gear,fitness gear,0,1
+flier,flier,0,9
+floor,floor,114,42
+floss,floss,0,2
+flower,flower,0,10
+flowerpot,flowerpot,0,2
+foam,foam,1,0
+foam net sleeve,foam net sleeve,0,1
+foil,foil,0,2
+folder,folder,0,9
+food,food,8,44
+footwear,footwear,0,1
+forehead,forehead,1,0
+fork,fork,0,1
+form,form,3,0
+foundation,foundation,2,0
+frame,frame,1,15
+fries,fries,0,2
+front desk,front desk,1,0
+fruit,fruit,20,2
+furniture,furniture,22,18
+game,game,0,2
+game accessory,game accessory,0,2
+game component,game component,0,12
+garbage,garbage,15,0
+gardening tool,gardening tool,0,1
+garlic,garlic,2,11
+garment,garment,0,2
+gasket,gasket,1,0
+gauze,gauze,2,0
+gel,gel,6,0
+generator,generator,0,4
+ginger,ginger,5,3
+glass,glass,10,12
+glasses,glasses,1,17
+glassware,glassware,0,1
+glove,glove,0,21
+glue,glue,2,5
+goods,goods,38,0
+gourd,gourd,1,0
+grain,grain,1,0
+granules,granule,1,3
+grid paper,grid paper,0,1
+grille,grille,1,1
+grinder,grinder,0,2
+grip strengthener,grip strengthener,0,2
+grocery,grocery,0,3
+grooming item,grooming item,0,1
+groove,groove,2,0
+hair,hair,1218,1
+hair accessory,hair accessory,0,3
+hair care products,hair care product,1,0
+hair clip,hair clip,1,0
+hair clipper,hair clipper,2,0
+hair dryer,hair dryer,0,15
+hair dye,hair dye,104,0
+hair extension,hair extension,10,0
+hair extension wefts,hair extension weft,1,0
+hair paper,hair paper,1,0
+hair product,hair product,1,0
+hair roller,hair roller,1,0
+hair rollers,hair roller,1,0
+hair sections,hair section,1,0
+hair tool,hair tool,1,0
+hairband,hairband,1,0
+hairdressing tool,hairdressing tool,7,0
+hairdressing tools,hairdressing tool,1,0
+hairpin,hairpin,7,1
+hand,hand,1,0
+hand sanitizer,hand sanitizer,0,2
+hand sanitizer bottle,hand sanitizer bottle,0,1
+handbags,handbags,1,0
+handkerchief,handkerchief,0,1
+handle,handle,0,37
+handrail,handrail,1,0
+hanger,hanger,0,50
+hardware,hardware,1,2
+harness,harness,0,1
+hat,hat,1,1
+head,head,4,0
+headband,headband,1,0
+headboard,headboard,0,1
+headphone,headphone,0,1
+headphones,headphones,0,1
+helmet,helmet,0,1
+herb,herb,3,5
+herbal goods,herbal goods,1,0
+hinge,hinge,4,0
+hoodie,hoodie,0,1
+hook,hook,0,2
+hose,hose,1,0
+household item,household item,0,3
+household supplies,household supply,0,1
+hula hoop,hula hoop,0,2
+humidifier,humidifier,0,1
+hygiene product,hygiene product,0,4
+ice,ice,3,1
+ice cream,ice cream,1,0
+information,information,1,0
+ingredient,ingredient,17,3
+ingredients,ingredients,2,0
+ink,ink,0,1
+ink cartridge,ink cartridge,0,3
+insole,insole,0,1
+iron stand,iron stand,0,1
+item,item,30,162
+items,item,18,20
+jar,jar,73,19
+jelly,jelly,0,4
+jewelry,jewelry,0,16
+jug,jug,1,1
+juice,juice,0,26
+juicer,juicer,2,0
+juicer part,juicer part,1,0
+jump rope,jump rope,0,8
+ketchup,ketchup,0,1
+kettle,kettle,2,18
+kettlebell,kettlebell,0,17
+key,key,0,1
+keyboard,keyboard,0,18
+keychain,keychain,0,1
+kit,kit,1,0
+kitchen item,kitchen item,0,5
+kitchen supply,kitchen supply,0,1
+kitchen tool,kitchen tool,0,13
+kitchen utensil,kitchen utensil,0,1
+kitchen work area,kitchen work area,1,0
+kitchenware,kitchenware,7,10
+knee pad,knee pad,0,1
+knife,knife,0,3
+knot,knot,0,1
+label,label,56,389
+lamp,lamp,0,1
+lamp holder accessories,lamp holder accessories,1,0
+lanyard,lanyard,0,11
+lead,lead,0,1
+leaf,leaf,1,0
+leaflet,leaflet,1,0
+leg,leg,3,0
+lemon,lemon,4,0
+lens,lens,0,1
+letter,letter,0,3
+lettuce,lettuce,1,0
+lid,lid,16,41
+light string,light string,0,2
+lighter,lighter,0,10
+lime,lime,2,0
+line,line,3,0
+lip gloss,lip gloss,8,1
+lipstick,lipstick,15,2
+liquid,liquid,2,12
+lock,lock,8,0
+locker,locker,0,4
+long black hair,long black hair,1,0
+long item,long item,0,1
+long items,long item,0,1
+long object,long object,0,1
+longan,longan,4,0
+lotion,lotion,7,0
+machine,machine,1,13
+magazine,magazine,0,57
+makeup,makeup,16,3
+makeup supply,makeup supply,0,2
+makeup tool,makeup tool,1,7
+mango,mango,14,0
+manicure tool,manicure tool,1,0
+mannequin hair,mannequin hair,3,0
+mannequin head hair,mannequin head hair,2,0
+marker,marker,0,24
+markers,marker,0,1
+mask,mask,32,9
+mat,mat,1,15
+mattress,mattress,1,0
+meal,meal,4,0
+measuring cups,measuring cup,1,0
+medicine,medicine,190,2
+medicine box,medicine box,9,0
+medicine container,medicine container,1,0
+medicine product,medicine product,2,0
+medicine products,medicine product,1,0
+merchandise,merchandise,0,1
+mesh,mesh,0,2
+metal tool,metal tool,0,1
+microwave,microwave,0,4
+milk,milk,0,11
+mirror,mirror,3,43
+miscellaneous items,miscellaneous item,0,4
+mixture,mixture,1,0
+model,model,1,0
+monitor,monitor,1,0
+mop,mop,0,2
+mop handle,mop handle,0,1
+motor,motor,0,6
+mouse,mouse,0,2
+mud,mud,1,0
+nail,nail,41,8
+nail piece,nail piece,1,0
+nail polish,nail polish,92,1
+nail tip,nail tip,1,0
+nail tips,nail tip,2,0
+napkin,napkin,0,2
+neck,neck,1,0
+necklace,necklace,0,3
+net,net,0,2
+nib,nib,0,1
+nightstand,nightstand,0,25
+noodle,noodle,0,14
+note,note,0,4
+notebook,notebook,5,7
+notepad,notepad,0,3
+nut,nut,1,13
+object,object,7,9
+objects,object,1,1
+office item,office item,0,1
+office supply,office supply,0,3
+ointment,ointment,6,0
+onion,onion,0,2
+orange,orange,2,3
+ornament,ornament,13,0
+package,package,24,204
+packaged item,packaged item,0,1
+packaging,packaging,0,1
+packing supply,packing supply,0,1
+pad,pad,1,2
+paint,paint,1,0
+painting,painting,1,2
+pajamas,pajamas,2,0
+palette,palette,0,3
+panel,panel,1,0
+pants,pants,0,1
+papaya,papaya,4,0
+paper,paper,21,399
+paper packaging,paper packaging,1,0
+paperclip,paperclip,0,7
+parcel,parcel,9,2
+part,part,5,78
+paste,paste,1,0
+pastry,pastry,2,12
+patch,patch,2,0
+pattern,pattern,1,0
+peach,peach,0,1
+peach gum,peach gum,1,0
+peanut,peanut,0,5
+pear,pear,1,0
+pedal,pedal,0,1
+peeler,peeler,0,2
+pen,pen,9,65
+pencil,pencil,6,1
+pencil case,pencil case,0,2
+pepper,pepper,0,2
+perm cotton,perm cotton,1,0
+perm rod,perm rod,6,0
+perm rods,perm rod,5,0
+perm supplies,perm supply,1,0
+perm tool,perm tool,1,0
+person's back,person's back,1,0
+personal care product,personal care product,1,0
+personal item,personal item,0,1
+phone,phone,0,2
+photo,photo,0,3
+picture,picture,0,3
+piece,piece,1,12
+pigment,pigment,1,0
+pill,pill,3,1
+pillow,pillow,0,22
+pimples,pimple,1,0
+placemat,placemat,0,82
+plant,plant,4,2
+plastic strips,plastic strip,1,0
+plastic wrap,plastic wrap,3,2
+plate,plate,2,7
+plug,plug,1,0
+polish,polish,10,1
+pot,pot,4,4
+potato,potato,0,6
+powder,powder,3,6
+power strip,power strip,2,0
+prescription,prescription,1,0
+price tags,price tags,1,0
+produce,produce,0,1
+product,product,46,15
+product display,product display,0,1
+products,product,10,0
+puff,puff,0,2
+pulp mold,pulp mold,2,1
+pump,pump,0,1
+puzzle,puzzle,0,2
+puzzle board,puzzle board,0,1
+quilt,quilt,0,1
+rack,rack,11,22
+racket,racket,0,2
+rail,rail,1,0
+railing,railing,15,3
+raw material,raw material,0,1
+recyclable,recyclable,0,3
+refill,refill,0,11
+reflector,reflector,0,7
+reflector assembly,reflector assembly,0,1
+reflector base,reflector base,0,1
+refrigerator,refrigerator,1,6
+registration books,registration book,1,0
+remote control,remote control,0,5
+rhinestone,rhinestone,1,0
+ribbon,ribbon,0,1
+rice,rice,0,1
+ring,ring,0,1
+rod,rod,60,1
+roll,roll,0,4
+roll mannequin hair strands,roll mannequin hair strand,1,0
+roller,roller,5,1
+room,room,0,4
+rope,rope,2,62
+round object,round object,0,1
+rubber band,rubber band,1,0
+ruler,ruler,0,7
+samples,sample,1,0
+sand,sand,3,0
+sandwich,sandwich,2,3
+sanitary pad,sanitary pad,3,2
+sanitary pads,sanitary pad,0,1
+sanitary product,sanitary product,0,1
+sauce,sauce,1,2
+sausage,sausage,0,5
+scalp,scalp,1,0
+scanner,scanner,0,4
+schoolbag,schoolbag,0,1
+scissors,scissors,1,20
+screen,screen,0,2
+screw,screw,1,1
+seal,seal,0,1
+seasoning,seasoning,0,4
+seat,seat,0,6
+seed,seed,0,1
+serum,serum,1,0
+shampoo,shampoo,8,15
+shampoo bed,shampoo bed,1,0
+shaved ice,shaved ice,1,0
+sheet,sheet,0,1
+shelf,shelf,48,52
+shelf board,shelf board,0,1
+shelf layer,shelf layer,0,1
+shirt,shirt,1,20
+shoe,shoe,0,176
+shoe cover,shoe cover,1,0
+shoebox,shoebox,0,1
+shoelace,shoelace,0,37
+shop,shop,2,0
+shower cap,shower cap,0,2
+shower gel,shower gel,0,4
+shower head,shower head,0,25
+showerhead,showerhead,0,12
+shuttlecock,shuttlecock,0,13
+sign,sign,1,12
+sink,sink,19,96
+skeleton,skeleton,0,1
+skewer,skewer,0,1
+skin,skin,1,0
+skin care product,skin care product,8,0
+skin care products,skin care product,1,0
+skincare container,skincare container,1,0
+skincare product,skincare product,15,0
+slide rail,slide rail,1,0
+slipper,slipper,0,1
+slippers,slippers,0,4
+slot,slot,1,0
+snack,snack,0,112
+sneaker laces,sneaker laces,0,1
+soap,soap,23,4
+soap dish,soap dish,0,1
+soap dispenser,soap dispenser,0,2
+sock,sock,0,4
+sofa,sofa,0,7
+solution,solution,1,0
+soymilk maker part,soymilk maker part,1,0
+speaker,speaker,1,1
+sponge,sponge,0,2
+spoon,spoon,0,4
+sports equipment,sports equipment,0,13
+sports gear,sports gear,0,1
+sportswear,sportswear,0,1
+spray,spray,0,4
+spray bottle,spray bottle,0,19
+spreadsheet,spreadsheet,1,0
+stain,stain,0,1
+stamp,stamp,0,1
+stand,stand,1,1
+staple,staple,0,1
+starter,starter,0,7
+starter motor,starter motor,0,1
+stationery,stationery,4,66
+steel wool balls,steel wool ball,0,1
+stem,stem,1,0
+stick,stick,0,5
+sticker,sticker,4,21
+sticks,stick,0,2
+stool,stool,15,10
+stopper,stopper,1,0
+storage cabinet items,storage cabinet item,1,0
+storage rack,storage rack,0,7
+stove,stove,0,5
+strainer,strainer,1,0
+strap,strap,0,30
+straw,straw,4,16
+strawberry,strawberry,2,0
+string,string,0,1
+strip,strip,6,5
+strip object,strip object,0,1
+strip-shaped object,strip-shaped object,0,1
+strips,strip,0,1
+structure,structure,0,3
+substance,substance,0,1
+sugar,sugar,1,1
+suitcase,suitcase,0,1
+sundries,sundries,3,1
+supplies,supply,2,0
+supply,supply,3,2
+support,support,0,2
+surface,surface,16,8
+t-shirt,t-shirt,0,2
+table,table,54,131
+table setting,table setting,0,1
+tablecloth,tablecloth,0,1
+tabletop,tabletop,1,1
+tableware,tableware,8,71
+tag,tag,32,11
+takeout,takeout,1,0
+tape,tape,0,73
+tape dispenser,tape dispenser,0,3
+tea,tea,0,10
+tea bag,tea bag,0,8
+tea set,tea set,0,2
+tea supplies,tea supply,0,1
+tea supply,tea supply,0,1
+telephone,telephone,0,1
+thermos,thermos,0,2
+thin sticks,thin stick,0,2
+thread,thread,37,0
+threads,threads,1,0
+tile,tile,2,1
+tissue,tissue,3,30
+tissue box,tissue box,0,1
+toilet,toilet,0,4
+toilet paper roll,toilet paper roll,0,1
+toilet roll,toilet roll,1,0
+toiletries,toiletries,15,43
+toiletry,toiletry,4,82
+tomato,tomato,0,8
+tong,tong,0,1
+tool,tool,10,4
+tools,tool,7,0
+toothbrush,toothbrush,26,3
+toothpaste,toothpaste,9,19
+toothpick,toothpick,0,2
+topping,topping,1,0
+towel,towel,251,214
+toy,toy,77,11
+transparent hemispherical covers,transparent hemispherical covers,0,1
+trash,trash,4,24
+trash can,trash can,0,1
+tray,tray,5,39
+treadmill,treadmill,0,58
+tube,tube,1,4
+tubular item,tubular item,0,1
+turn signal,turn signal,0,1
+umbrella,umbrella,0,2
+underwear,underwear,19,0
+utensil,utensil,7,9
+vacuum cleaner,vacuum cleaner,0,2
+vase,vase,0,3
+vegetable,vegetable,7,6
+vest,vest,0,2
+vial,vial,1,0
+waffle,waffle,1,0
+wall,wall,3,4
+wardrobe,wardrobe,0,1
+washing machine,washing machine,0,8
+waste,waste,1,3
+water,water,0,5
+water bottle,water bottle,0,2
+water container,water container,0,1
+water dispenser,water dispenser,1,1
+water reservoir,water reservoir,0,1
+water tank,water tank,0,1
+watermelon,watermelon,9,0
+weight plate,weight plate,0,59
+wet wipe,wet wipe,0,1
+wet wipes,wet wipe,0,12
+wheel,wheel,0,1
+whistle,whistle,0,10
+whiteboard,whiteboard,0,3
+wig,wig,44,1
+wig hair,wig hair,2,0
+wig model hair,wig model hair,1,0
+wig strands,wig strand,1,0
+window,window,1,1
+windowsill,windowsill,0,4
+wine,wine,1,0
+wire,wire,0,9
+wiring harness,wiring harness,0,1
+wok,wok,0,1
+wood,wood,1,0
+wooden frame,wooden frame,0,1
+wooden stick,wooden stick,0,2
+wooden sticks,wooden stick,0,7
+wooden structure,wooden structure,0,1
+wool,wool,0,2
+workspace,workspace,0,8
+workstation,workstation,0,1
+wrapper,wrapper,0,1
+wristband,wristband,0,6
+yam,yam,0,1
+yoga mat,yoga mat,0,3
+yogurt,yogurt,0,1

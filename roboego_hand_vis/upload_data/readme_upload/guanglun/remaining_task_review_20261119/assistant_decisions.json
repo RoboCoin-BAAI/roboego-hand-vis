@@ -1,0 +1,1316 @@
+{
+  "annotation_modified": false,
+  "records": [
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000003/9cd70a6ca1896ba4a665852460fcd52347b13c1beec5b3af92ba2147e9483ab4/annotation/episode_000000_structured.json",
+      "sha256": "bb1406ce5dcea9adf94188b228b25f500356684d8d4f1835cd0e811161fd7fc7",
+      "old_task_name": "Plating pastries from plastic boxes",
+      "proposed": "transfer pastry",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Both subtasks transfer pastries from boxes onto plates; opening boxes is auxiliary.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 15.4,
+          "text": "Open the left plastic box, take out the pastry, and put it into the plate."
+        },
+        {
+          "start_s": 15.4,
+          "end_s": 32.0,
+          "text": "Open the right plastic box, take out the pastry, and put it into the plate."
+        }
+      ],
+      "task_description": "The person takes the pastries out of the two plastic boxes and puts them into the plates separately to complete the plating."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000005/3a217af66d6b60bafe66101f25b7590646c73ba4993aef177c6eb2c3000f4001/annotation/episode_000000_structured.json",
+      "sha256": "fc59d8d5a558863acc1dc8ad31bc2a277a465b4b637df4b3910ccecfe046f34e",
+      "old_task_name": "Charging electronic devices and organizing desk items",
+      "proposed": "connect cable",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Three explicit cable connection stages last 34 seconds, followed by 5.6 seconds storing a wipe.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 13.0,
+          "text": "Pick up the mobile phone and plug in the charging cable"
+        },
+        {
+          "start_s": 13.0,
+          "end_s": 26.0,
+          "text": "Pick up the earphone case and plug in the charging cable"
+        },
+        {
+          "start_s": 26.0,
+          "end_s": 34.0,
+          "text": "Pick up the smart watch and plug in the charging cable"
+        },
+        {
+          "start_s": 34.0,
+          "end_s": 39.6,
+          "text": "Put the wet wipe into the drawer"
+        }
+      ],
+      "task_description": "The person connects the charging cable to the mobile phone, the earphone case, and the smart watch, and organizes the items on the desk."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/04212282393f8314519f3b85d5976d30cb36f33ed115943598d760b3d9d6238b/annotation/episode_000000_structured.json",
+      "sha256": "b9a6f90b104aff2e538530aba4c05565c3ed4910ecae1292123bea25f43e8d5f",
+      "old_task_name": "Organize scattered plastic bottles and markers",
+      "proposed": "organize bottle",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Bottle storage lasts 35.3 seconds versus 8.5 seconds for the marker.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 28.4,
+          "text": "Pick up the plastic bottle on the table and put it into the storage box"
+        },
+        {
+          "start_s": 28.4,
+          "end_s": 35.3,
+          "text": "Pick up the plastic bottle on the ground and put it into the storage box"
+        },
+        {
+          "start_s": 35.3,
+          "end_s": 43.8,
+          "text": "Pick up the marker on the ground and put it into the pen holder"
+        }
+      ],
+      "task_description": "The person collects the scattered plastic bottles and markers to complete the organization."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/3f5ccfd1c89891f029762458253d99bb04ce2b177ad0ee70f14a2d8274de6e67/annotation/episode_000000_structured.json",
+      "sha256": "67e7582aa0f70b956c469d158ed7227bad7b2810e9e688d347593cf3f66ef4c6",
+      "old_task_name": "Brew coffee and clean countertop",
+      "proposed": "stir coffee",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Stirring coffee is the longest single operation (40 seconds); countertop cleanup is 27 seconds and supports preparation.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 16.0,
+          "text": "Pour the instant coffee powder into the cup."
+        },
+        {
+          "start_s": 16.0,
+          "end_s": 34.0,
+          "text": "Pour hot water into the cup to brew the coffee."
+        },
+        {
+          "start_s": 34.0,
+          "end_s": 74.0,
+          "text": "Stir the coffee in the cup with the spoon."
+        },
+        {
+          "start_s": 74.0,
+          "end_s": 101.0,
+          "text": "Wipe the countertop with the cloth."
+        }
+      ],
+      "task_description": "The person brews coffee and wipes the countertop to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/44c8f46dcdc491b569bd791b8600f3ce3e6828e347d60f9deccc45883aff645a/annotation/episode_000000_structured.json",
+      "sha256": "547a0b96db2814ac0eca2370e871ddceff072ec1a3acd06ec6f1859d3447ce27",
+      "old_task_name": "Clean dining table and store milk",
+      "proposed": "clean table",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "The stated table-cleaning task includes removing residue and wiping stains; milk storage is separate auxiliary work.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 19.0,
+          "text": "Put two cartons of milk in the refrigerator compartment"
+        },
+        {
+          "start_s": 19.0,
+          "end_s": 43.0,
+          "text": "Arrange the tableware and cups on the table into the tray"
+        },
+        {
+          "start_s": 43.0,
+          "end_s": 59.0,
+          "text": "Collect the food residue on the table and throw it into the trash can"
+        },
+        {
+          "start_s": 59.0,
+          "end_s": 89.8,
+          "text": "Wipe the stains on the table with a rag"
+        }
+      ],
+      "task_description": "The person puts the milk in the refrigerator and clears the dishes and trash from the dining table to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000006/6200fb51b59bcf89c3dc0cc7861634f9297840cb13a2bf64e60cb8165f4a7af1/annotation/episode_000000_structured.json",
+      "sha256": "66d09a03a4210721287dd266d879dcbf9cabacd00b6766a307c2559561c5616c",
+      "old_task_name": "Kitchen cleanup and organization",
+      "proposed": "clean countertop",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Countertop wiping lasts 81.9 seconds, longer than cloth washing or individual storage stages.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 18.9,
+          "text": "Place two boxes of milk on the refrigerator door shelf"
+        },
+        {
+          "start_s": 18.9,
+          "end_s": 56.0,
+          "text": "Put the transparent jar with oats into the upper cabinet"
+        },
+        {
+          "start_s": 56.0,
+          "end_s": 67.0,
+          "text": "Move two glasses to the countertop beside the sink"
+        },
+        {
+          "start_s": 67.0,
+          "end_s": 102.9,
+          "text": "Throw the plastic bottle and the plastic bag on the countertop into the cardboard box"
+        },
+        {
+          "start_s": 102.9,
+          "end_s": 184.8,
+          "text": "Wipe the kitchen countertop with a cloth"
+        },
+        {
+          "start_s": 184.8,
+          "end_s": 226.6,
+          "text": "Wash the cloth in the sink"
+        }
+      ],
+      "task_description": "The person organizes kitchen items and cleans the countertop to complete the kitchen cleanup."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000007/00113a5075f0f91cb3bf4c9b87ccd48020577f042d0f04eb7f81fc8b69f62cfe/annotation/episode_000000_structured.json",
+      "sha256": "4db13a773415f0279f4ba214d20b0abf2019c6e26557edd0147d0e317f631622",
+      "old_task_name": "Wash cup and items, wipe countertop",
+      "proposed": "wash cup",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Cup rinsing and scrubbing together dominate cup washing; separate item and countertop cleaning remain in subtasks.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 3.0,
+          "text": "Open the cup and take out the items inside"
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 9.0,
+          "text": "Rinse the inside of the cup with water"
+        },
+        {
+          "start_s": 9.0,
+          "end_s": 20.0,
+          "text": "Scrub the cup with a sponge"
+        },
+        {
+          "start_s": 20.0,
+          "end_s": 25.0,
+          "text": "Rinse the cup and pour out the water"
+        },
+        {
+          "start_s": 25.0,
+          "end_s": 38.0,
+          "text": "Clean the removed items with a sponge"
+        },
+        {
+          "start_s": 38.0,
+          "end_s": 43.0,
+          "text": "Put the items back into the cup and cover it"
+        },
+        {
+          "start_s": 43.0,
+          "end_s": 54.0,
+          "text": "Wipe the stains on the countertop with a cloth"
+        },
+        {
+          "start_s": 54.0,
+          "end_s": 56.4,
+          "text": "Put the cloth back on the shelf"
+        }
+      ],
+      "task_description": "The person washes the cups and items and wipes the countertop to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000007/056356e77b68ded9957a0181ac0e12ff0b1f6675158d1340f0ed63424562772e/annotation/episode_000000_structured.json",
+      "sha256": "cf75c971bbbd2ccd6d82e5b2f472ca4637a6fbaaf46484efdd0458b2791731cc",
+      "old_task_name": "Rinse cups and wipe countertop",
+      "proposed": "rinse cup",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Two explicit cup-rinsing stages total 54 seconds; countertop wiping is 14 seconds.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 24.0,
+          "text": "Pick up the stainless steel cup and rinse it in the sink"
+        },
+        {
+          "start_s": 24.0,
+          "end_s": 26.0,
+          "text": "Place the rinsed cup in the dish rack"
+        },
+        {
+          "start_s": 26.0,
+          "end_s": 56.0,
+          "text": "Pick up the other stainless steel cup and rinse it in the sink"
+        },
+        {
+          "start_s": 56.0,
+          "end_s": 60.0,
+          "text": "Place the rinsed cup in the dish rack"
+        },
+        {
+          "start_s": 60.0,
+          "end_s": 74.0,
+          "text": "Wipe the countertop with a cloth"
+        }
+      ],
+      "task_description": "The person rinses two stainless steel cups and places them in the drying rack, then wipes the countertop to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000007/d4ef27344e249116c960aa1e152edd6ec700f02caa8a46d138ae1b3ddc414722/annotation/episode_000000_structured.json",
+      "sha256": "2b9bceb7308cafc0848e3ab00a69582313645297081bf4ee54004a7671149e07",
+      "old_task_name": "Grind garlic and clean utensils",
+      "proposed": "grind garlic",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Garlic processing is the stated preparation task; rotating the grinder crushes garlic. Utensil cleaning is the cleanup stage.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 21.0,
+          "text": "Put the garlic clove into the manual meat grinder."
+        },
+        {
+          "start_s": 21.0,
+          "end_s": 91.0,
+          "text": "Cover the meat grinder with the lid and turn the handle to crush the garlic clove."
+        },
+        {
+          "start_s": 91.0,
+          "end_s": 112.0,
+          "text": "Open the meat grinder and pour the minced garlic into the plate."
+        },
+        {
+          "start_s": 112.0,
+          "end_s": 182.4,
+          "text": "Clean the meat grinder parts in the sink."
+        }
+      ],
+      "task_description": "The person grinds garlic cloves with a manual meat grinder and cleans the utensils to complete the preparation."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000008/74cf472a0311820de9c6710aea250734f95273e755d23b7b6d30513b6a1ee886/annotation/episode_000000_structured.json",
+      "sha256": "808d1a670f4f0fee29900665e935bc03ed5cf7d269c9f294cbe875595ecf791f",
+      "old_task_name": "Clean and organize the desktop",
+      "proposed": "organize item",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Item relocation and orderly placement occupy 30 seconds of 50 seconds; surface wiping is 11 seconds.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 9.0,
+          "text": "Throw the tissue paper and the paper cup on the table into the trash can"
+        },
+        {
+          "start_s": 9.0,
+          "end_s": 23.0,
+          "text": "Move the tissue box, the cup, the water bottle, and the plate to the right side of the table"
+        },
+        {
+          "start_s": 23.0,
+          "end_s": 34.0,
+          "text": "Wipe the table surface with the purple rag"
+        },
+        {
+          "start_s": 34.0,
+          "end_s": 50.0,
+          "text": "Arrange the items on the table neatly"
+        }
+      ],
+      "task_description": "The person clears the trash from the desktop and wipes the table to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/1681b6ab49e16e4a5a2106b6361a1734538c32a6bac061552faceb3da755edc3/annotation/episode_000000_structured.json",
+      "sha256": "f2a963e1c867d3ff53a0f1b73062380e0d1e8b7c41405aa7079c0bfa76e27b9d",
+      "old_task_name": "Retrieve cola, pour into cup, and clean table",
+      "proposed": "pour cola",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Pouring cola is the central beverage-handling operation; bottle opening/return and spill cleanup support it.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "text": "Open the refrigerator door and take out the cola bottle"
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 22.0,
+          "text": "Unscrew the bottle cap and pour the cola into the cup"
+        },
+        {
+          "start_s": 22.0,
+          "end_s": 36.0,
+          "text": "Tighten the bottle cap, put the cola bottle back into the refrigerator, and close the door"
+        },
+        {
+          "start_s": 36.0,
+          "end_s": 55.8,
+          "text": "Move the cup and wipe the table with a rag"
+        }
+      ],
+      "task_description": "The person takes the cola from the refrigerator, pours it into the cup, puts the cola back into the refrigerator, and wipes the table to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/2001d301f5a9fecc4e0806137cabbc20325355dbc81b6e57fcb1fb857c2b2255/annotation/episode_000000_structured.json",
+      "sha256": "78fc3dd8ef7af013d0131e71eb005baf0553d5ffa98c142a72222df0e7fe59c2",
+      "old_task_name": "Retrieve beverage and clean table",
+      "proposed": "pour beverage",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Pouring the retrieved beverage is the central manipulation; cap tightening and returning the bottle are auxiliary.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 5.0,
+          "text": "Open the refrigerator and take out the beverage bottle"
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 15.0,
+          "text": "Unscrew the bottle cap and pour the beverage into the glass"
+        },
+        {
+          "start_s": 15.0,
+          "end_s": 25.0,
+          "text": "Tighten the bottle cap and put the beverage bottle back into the refrigerator"
+        },
+        {
+          "start_s": 25.0,
+          "end_s": 32.0,
+          "text": "Place the glass on the dining table"
+        },
+        {
+          "start_s": 32.0,
+          "end_s": 37.8,
+          "text": "Wipe the tabletop with a rag"
+        }
+      ],
+      "task_description": "The person takes a drink from the refrigerator, pours it into a cup, and wipes the table to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/303ba82bc9e3efd975430e273a65403d6ae311b8069d1e344872398c625bce26/annotation/episode_000000_structured.json",
+      "sha256": "cc4cafb824b186de5146e7fcdff53fdf3d000e8c3f5c8046a5c506c6c85a2829",
+      "old_task_name": "Stocking cola bottles and cans on shelf",
+      "proposed": "organize bottle",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Repeated bottle stocking and final bottle alignment dominate can placement; shelf is destination.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 24.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 24.0,
+          "end_s": 40.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 40.0,
+          "end_s": 55.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 55.0,
+          "end_s": 71.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 71.0,
+          "end_s": 88.0,
+          "text": "Take two cola bottles from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 88.0,
+          "end_s": 103.0,
+          "text": "Take two cola cans from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 103.0,
+          "end_s": 117.0,
+          "text": "Take two cola cans from the red shopping basket and place them on the shelf"
+        },
+        {
+          "start_s": 117.0,
+          "end_s": 142.2,
+          "text": "Arrange the cola bottles on the shelf in a neat row"
+        }
+      ],
+      "task_description": "The person takes the cola bottles and cola cans out of the shopping basket and places them on the shelf to complete the stocking task."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/d4e3ad5aca69a23f20008bb306a0d0518353a0c503deca31d1a6f7476827ca97/annotation/episode_000000_structured.json",
+      "sha256": "d1399eafc5818ea018206e1ede9127c23c6cad4931f8e7274e1d5d3a3fa0f88e",
+      "old_task_name": "Pour liquid and clean countertop",
+      "proposed": "pour liquid",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Explicit transfer of liquid from glass to paper cup is the defining manipulation; retrieval and spill cleanup support transfer.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 14.0,
+          "text": "Open the refrigerator and take out the glass with liquid."
+        },
+        {
+          "start_s": 14.0,
+          "end_s": 28.0,
+          "text": "Place the glass on the countertop and take out the paper cup from the cabinet."
+        },
+        {
+          "start_s": 28.0,
+          "end_s": 38.0,
+          "text": "Pour the liquid from the glass into the paper cup."
+        },
+        {
+          "start_s": 38.0,
+          "end_s": 50.0,
+          "text": "Put the empty glass back into the refrigerator and close the refrigerator door."
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 58.0,
+          "text": "Move the paper cup with liquid to the other side of the countertop."
+        },
+        {
+          "start_s": 58.0,
+          "end_s": 70.4,
+          "text": "Wipe the countertop with a cloth to clean up the spilled liquid."
+        }
+      ],
+      "task_description": "The person pours the liquid from the glass cup into the paper cup and cleans the countertop."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/e77ddbf05b22b66b4aec596065e3bb24178c69e82963b98623b512a37c9050c0/annotation/episode_000000_structured.json",
+      "sha256": "f145f95e9d3adc689df978ee6c132ed265854676fb83273b9ad5c30aff83e9d9",
+      "old_task_name": "Pour green tea and clean countertop",
+      "proposed": "pour tea",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "The explicit beverage transfer is pouring green tea; retrieval, cap handling and return are preparatory steps.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 7.0,
+          "text": "Open the refrigerator door"
+        },
+        {
+          "start_s": 7.0,
+          "end_s": 16.0,
+          "text": "Take the green tea beverage out of the refrigerator"
+        },
+        {
+          "start_s": 16.0,
+          "end_s": 24.0,
+          "text": "Place the green tea beverage on the countertop and unscrew the bottle cap"
+        },
+        {
+          "start_s": 24.0,
+          "end_s": 34.0,
+          "text": "Pick up the paper cup and pour the green tea beverage into the cup"
+        },
+        {
+          "start_s": 34.0,
+          "end_s": 53.0,
+          "text": "Tighten the bottle cap and put the green tea beverage back into the refrigerator"
+        },
+        {
+          "start_s": 53.0,
+          "end_s": 58.0,
+          "text": "Close the refrigerator door"
+        },
+        {
+          "start_s": 58.0,
+          "end_s": 68.0,
+          "text": "Move the paper cup with green tea to the side of the sink"
+        },
+        {
+          "start_s": 68.0,
+          "end_s": 80.6,
+          "text": "Wipe the countertop with a rag"
+        }
+      ],
+      "task_description": "The person takes green tea from the refrigerator, pours it into a paper cup, puts the tea back into the refrigerator, and wipes the countertop to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/eab79509c6d95b95cc3ca8820e2f4e64b61d6dd3c7d4dc1cff50b3405b7892a7/annotation/episode_000000_structured.json",
+      "sha256": "633c21665d5f14c97f5c6aa13fe66781afcece902b6711a868ff1510773a7402",
+      "old_task_name": "Retrieve drink, pour into cup, and clean table",
+      "proposed": "pour beverage",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Explicit beverage transfer into a cup defines the task; moving containers and wiping are supporting stages.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 12.0,
+          "text": "Open the refrigerator door and take out the can"
+        },
+        {
+          "start_s": 12.0,
+          "end_s": 25.0,
+          "text": "Close the refrigerator door and place the can on the table"
+        },
+        {
+          "start_s": 25.0,
+          "end_s": 37.0,
+          "text": "Pick up the cup and place it on the table"
+        },
+        {
+          "start_s": 37.0,
+          "end_s": 51.0,
+          "text": "Pour the beverage from the can into the cup"
+        },
+        {
+          "start_s": 51.0,
+          "end_s": 67.0,
+          "text": "Put the can back in the refrigerator and close the door"
+        },
+        {
+          "start_s": 67.0,
+          "end_s": 80.0,
+          "text": "Place the cup on the adjacent table"
+        },
+        {
+          "start_s": 80.0,
+          "end_s": 96.0,
+          "text": "Wipe the table with a cloth"
+        }
+      ],
+      "task_description": "The person takes a can from the refrigerator, pours the drink into a cup, puts the can back in the refrigerator, and wipes the table to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000010/ec07fb375b88aab8c0f38c7c54c9f2cefdc5096ce977873af0a4d690c316c586/annotation/episode_000000_structured.json",
+      "sha256": "eaf891c48aa27dffe316e846a112b152b2f8898d60d65d67eb48b46e76dc402c",
+      "old_task_name": "Prepare salted cola and clean countertop",
+      "proposed": "add salt",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Adding salt with a spoon is the longest preparation action and creates the salted beverage; countertop wiping is cleanup.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 3.4,
+          "text": "Open the refrigerator and take out the cola bottle"
+        },
+        {
+          "start_s": 3.4,
+          "end_s": 11.4,
+          "text": "Unscrew the cap and pour the cola into the glass"
+        },
+        {
+          "start_s": 11.4,
+          "end_s": 18.4,
+          "text": "Screw on the cap and put the cola bottle back on the countertop"
+        },
+        {
+          "start_s": 18.4,
+          "end_s": 33.4,
+          "text": "Open the salt container and add salt to the glass with a spoon"
+        },
+        {
+          "start_s": 33.4,
+          "end_s": 39.0,
+          "text": "Put the cola bottle back in the refrigerator and close the door"
+        },
+        {
+          "start_s": 39.0,
+          "end_s": 51.2,
+          "text": "Wipe the countertop with a cloth to clean up the spilled liquid"
+        }
+      ],
+      "task_description": "The person takes cola from the refrigerator, pours it into a cup with salt, puts it back into the refrigerator, and cleans the countertop."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000011/2f30911805a6a916241da31d04e99fba0fef9521792837051c2443953a116b30/annotation/episode_000000_structured.json",
+      "sha256": "13e56f3747f2847578e77f89a44ce9f0e21696ab8035b53535194a8f660b7fda",
+      "old_task_name": "Load dishwasher and clean countertop",
+      "proposed": "load tableware",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Cup/cutlery/plate loading totals 121.8 seconds, more than 59 seconds collecting paper; dishwasher is the destination.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 7.4,
+          "text": "Open the dishwasher and pull out the upper rack"
+        },
+        {
+          "start_s": 7.4,
+          "end_s": 47.3,
+          "text": "Place the cup on the countertop into the upper rack of the dishwasher"
+        },
+        {
+          "start_s": 47.3,
+          "end_s": 55.4,
+          "text": "Push the upper rack back and pull out the lower rack"
+        },
+        {
+          "start_s": 55.4,
+          "end_s": 137.3,
+          "text": "Place the cutlery and plates on the countertop into the lower rack of the dishwasher"
+        },
+        {
+          "start_s": 137.3,
+          "end_s": 147.4,
+          "text": "Push the lower rack back and close the dishwasher door"
+        },
+        {
+          "start_s": 147.4,
+          "end_s": 158.9,
+          "text": "Press the button on the dishwasher to start the washing cycle"
+        },
+        {
+          "start_s": 158.9,
+          "end_s": 217.9,
+          "text": "Collect the paper scraps on the countertop and throw them into the trash bin"
+        }
+      ],
+      "task_description": "The person puts the tableware into the dishwasher and starts the cleaning cycle, then clears the paper scraps on the countertop to complete the cleaning."
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000059/a82353679d0dd2f2678e1771bb508ccdd5b2e59e6a9499ec74c36020e01c6381/annotation/episode_000000_structured.json",
+      "sha256": "91480940cac4c2f000e6636195f2e1b2d7509c8c768f48e32b311f8d51c7368d",
+      "old_task_name": "Organize tray and clean table",
+      "proposed": "clean table",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Wiping water stains (40 seconds) and clearing coffee grounds (39.2 seconds) jointly clean the table; coffee is residue, not an object being washed.",
+      "task_description": "The person organizes the tray and cleans the table to keep it tidy.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 16.0,
+          "arm": null,
+          "text": "Place the white circular pad into the compartment of the transparent tray",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "place"
+          ]
+        },
+        {
+          "start_s": 16.0,
+          "end_s": 25.0,
+          "arm": null,
+          "text": "Cover the transparent tray containing the pad with the transparent tray lid",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "cover"
+          ]
+        },
+        {
+          "start_s": 25.0,
+          "end_s": 65.0,
+          "arm": null,
+          "text": "Wipe the water stains on the table with the cloth",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "wipe"
+          ]
+        },
+        {
+          "start_s": 65.0,
+          "end_s": 104.2,
+          "arm": null,
+          "text": "Sweep the coffee grounds on the table into the transparent plastic box with the cloth",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "sweep"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000062/2b6aab68e098f3d8b7845e693246c79db22288d1fca96b0179dd3d5f47692418/annotation/episode_000000_structured.json",
+      "sha256": "6392b84ed40c0b65ccb878426589cb5c0a7fcbd2e2dbfd55313a3b755a8a82f2",
+      "old_task_name": "Prepare rice cooker and clean countertop",
+      "proposed": "transfer rice",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Pouring and sweeping rice grains into the cooker pot total 34 seconds; countertop wiping is 25.4 seconds. Rice is transferred, not cleaned.",
+      "task_description": "The person pours rice into the electric rice cooker and cleans water stains on the countertop to prepare for cooking.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 5.0,
+          "arm": null,
+          "text": "Pour the rice from the strainer into the inner pot of the rice cooker",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pour"
+          ]
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 34.0,
+          "arm": null,
+          "text": "Sweep the remaining rice grains in the strainer into the inner pot of the rice cooker",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "sweep"
+          ]
+        },
+        {
+          "start_s": 34.0,
+          "end_s": 59.4,
+          "arm": null,
+          "text": "Wipe the water stains on the countertop with a cloth",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "wipe"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000006/4e0cb6efb33143279df9563390869726/annotation/episode_000000_structured.json",
+      "sha256": "c51cdcb2095e1a175b63f85cf33bcc7b234af3825fa2716050dd83f2122052b4",
+      "old_task_name": "Attach hair extensions and braid hair",
+      "proposed": "braid hair",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "The 110-second principal subtask braids three hair strands; braid is the result, hair is the manipulated material.",
+      "task_description": "Attach hair extensions to the little girl and braid her hair.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 10.0,
+          "text": "Fix the hair extension to the hair on top of the little girl's head",
+          "arm": null,
+          "action": [
+            "fix"
+          ],
+          "object": "hair extension",
+          "destination": "hair",
+          "spatial_relation": "on top of",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 10.0,
+          "end_s": 50.0,
+          "text": "Divide the hair and hair extension into three strands and smooth them",
+          "arm": null,
+          "action": [
+            "divide",
+            "smooth"
+          ],
+          "object": "hair and hair extension",
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 50.0,
+          "end_s": 160.0,
+          "text": "Braid the three-strand braid from top to bottom",
+          "arm": null,
+          "action": [
+            "braid"
+          ],
+          "object": "three-strand braid",
+          "destination": null,
+          "spatial_relation": "from top to bottom",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 160.0,
+          "end_s": 179.5,
+          "text": "Secure and tidy the end of the braid",
+          "arm": null,
+          "action": [
+            "secure",
+            "tidy"
+          ],
+          "object": "end of the braid",
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        }
+      ]
+    },
+    {
+      "dataset": "jianzhi",
+      "path": "batch_0000013/abdff32f656f4774aff4926e20ba9380/annotation/episode_000000_structured.json",
+      "sha256": "e6d6386367fd750d2275e6d20114483f747ba971f6601233038633e89f38842d",
+      "old_task_name": "Organize hairdressing tools and clean hair clipper",
+      "proposed": "clean hair clipper",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "Three direct clipper/blade cleaning stages total 76.5 seconds plus blade/gasket wiping; other tool arrangement is auxiliary.",
+      "task_description": "Organize and put away the hairdressing tools on the workbench, then clean the hair clippings inside and outside the hair clipper and assemble it.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 3.0,
+          "text": "Wipe the clipper blade with a cloth and walk to the workbench",
+          "arm": null,
+          "action": [
+            "wipe",
+            "walk"
+          ],
+          "object": "clipper blade",
+          "destination": "workbench",
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 3.0,
+          "end_s": 12.0,
+          "text": "Reposition the storage box on the tool holder",
+          "arm": null,
+          "action": [
+            "reposition"
+          ],
+          "object": "storage box",
+          "destination": "tool holder",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 12.0,
+          "end_s": 35.0,
+          "text": "Put the scissors, combs and other tools in the tool rack back in place and arrange them neatly",
+          "arm": null,
+          "action": [
+            "put",
+            "arrange"
+          ],
+          "object": "scissors, combs and other tools",
+          "destination": "tool rack",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 35.0,
+          "end_s": 41.0,
+          "text": "Arrange the combs and hair clippers scattered on the table, and take out the cleaning brush",
+          "arm": null,
+          "action": [
+            "arrange",
+            "take_out"
+          ],
+          "object": "combs and hair clippers",
+          "destination": null,
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 41.0,
+          "end_s": 63.5,
+          "text": "Use the cleaning brush to clean the hair clippings on the outside of the hair clipper body",
+          "arm": null,
+          "action": [
+            "clean"
+          ],
+          "object": "hair clippings",
+          "destination": null,
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 63.5,
+          "end_s": 79.0,
+          "text": "Disassemble the blade of the hair clipper and place the blade on the table",
+          "arm": null,
+          "action": [
+            "disassemble",
+            "place"
+          ],
+          "object": "blade",
+          "destination": "table",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 79.0,
+          "end_s": 91.5,
+          "text": "Use the cleaning brush to clean the hair clippings inside the hair clipper body, and sweep the clippings to the ground",
+          "arm": null,
+          "action": [
+            "clean",
+            "sweep"
+          ],
+          "object": "hair clippings",
+          "destination": "ground",
+          "spatial_relation": "inside",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 91.5,
+          "end_s": 109.0,
+          "text": "Clean the blade fixing gasket and install it back to the clipper body",
+          "arm": null,
+          "action": [
+            "clean",
+            "install"
+          ],
+          "object": "blade fixing gasket",
+          "destination": "clipper body",
+          "spatial_relation": "to",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 109.0,
+          "end_s": 150.5,
+          "text": "Use the cleaning brush to clean the hair clippings in the gaps of the clipper blade",
+          "arm": null,
+          "action": [
+            "clean"
+          ],
+          "object": "hair clippings",
+          "destination": null,
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 150.5,
+          "end_s": 179.2,
+          "text": "Install the blade back to the hair clipper body and fasten it",
+          "arm": null,
+          "action": [
+            "install",
+            "fasten"
+          ],
+          "object": "blade",
+          "destination": "hair clipper body",
+          "spatial_relation": "to",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        }
+      ]
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/ac0cd2974ec4f4acbcbc9437bb0d7d671a9f8e5cc481e49007a288ffdd7a1796/annotation/episode_000000_structured.json",
+      "sha256": "b4a578819401be55dc1c5d82abd5e31d857af6b75a06093a18322650a798dccd",
+      "old_task_name": "Prepare and serve coffee",
+      "proposed": "stir coffee",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "The task description identifies the stirred liquid in the coffee cup as coffee; unify liquid and coffee references to the same main beverage target.",
+      "task_description": "The person adds syrup to the coffee, stirs it, and carries it to another table.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 5.0,
+          "arm": null,
+          "text": "Place the coffee cup and the stirrer on the table.",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "place"
+          ]
+        },
+        {
+          "start_s": 5.0,
+          "end_s": 14.0,
+          "arm": null,
+          "text": "Press the syrup bottle to add syrup into the coffee cup.",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "press"
+          ]
+        },
+        {
+          "start_s": 14.0,
+          "end_s": 33.0,
+          "arm": null,
+          "text": "Stir the liquid in the coffee cup with the stirrer.",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "stir"
+          ]
+        },
+        {
+          "start_s": 33.0,
+          "end_s": 36.0,
+          "arm": null,
+          "text": "Throw the used stirrer into the trash can.",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "throw"
+          ]
+        },
+        {
+          "start_s": 36.0,
+          "end_s": 44.0,
+          "arm": null,
+          "text": "Move the coffee cup to another round table.",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "move"
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "guanglun",
+      "path": "batch_0000063/ca52c36add418d2951c81aee61d7ebe117507e7ef97a7a7eec3d958736ce6cc6/annotation/episode_000000_structured.json",
+      "sha256": "77aff46d14cf92fb3c3ab5898672912c1d68883a15fda55c3a55b2dcd1e7138e",
+      "old_task_name": "Prepare and serve coffee",
+      "proposed": "stir coffee",
+      "status": "candidate",
+      "basis": "assistant_full_subtask_review",
+      "reason": "The task description identifies the stirred liquid in the coffee cup as coffee; unify liquid and coffee references to the same main beverage target.",
+      "task_description": "The person adds liquid to the coffee, stirs it, and carries it to the round table.",
+      "evidence": [
+        {
+          "start_s": 0.0,
+          "end_s": 7.0,
+          "arm": null,
+          "text": "Remove the stirrer from the cup and place it on the saucer",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "remove"
+          ]
+        },
+        {
+          "start_s": 7.0,
+          "end_s": 21.0,
+          "arm": null,
+          "text": "Pick up the cup, press the pump head, and add liquid to the cup",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 21.0,
+          "end_s": 55.0,
+          "arm": null,
+          "text": "Pick up the stirrer and stir the liquid in the cup",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 55.0,
+          "end_s": 58.0,
+          "arm": null,
+          "text": "Throw the stirrer into the trash can",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "throw"
+          ]
+        },
+        {
+          "start_s": 58.0,
+          "end_s": 72.4,
+          "arm": null,
+          "text": "Carry the cup to the round table and put it down",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "carry"
+          ]
+        }
+      ]
+    }
+  ]
+}

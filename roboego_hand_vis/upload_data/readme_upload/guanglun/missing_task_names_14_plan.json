@@ -1,0 +1,106 @@
+{
+  "root": "/share/project/liuyou/humancoin/data/guanglun_depth",
+  "scope": [
+    "task_name"
+  ],
+  "records": [
+    {
+      "path": "batch_0000018/90575ee32ceb37df47d81aacacec2ef4781b5dbba6e124af8fa2fe889f909aaa/annotation/episode_000000_structured.json",
+      "sha256": "ad43729ebd7faea85890622951e9b024daa605c20030e550c4fbeadec8ae27ad",
+      "task_name": "clean chair",
+      "reason": "Chairs receive 54 seconds of direct wiping versus 34 seconds for the bench; choose the principal target.",
+      "task_description": "The person wipes the exercise chairs and benches in the gym with a towel to complete the cleaning."
+    },
+    {
+      "path": "batch_0000020/e4e8c3bd9295c8e9fd3794d23487dbd55b0d74579172d9f0443e1c79ba29e92b/annotation/episode_000000_structured.json",
+      "sha256": "48f4cd821bb372a3f8e6ab13d3ed0ecd285387ca4a5e152bd0301c82976ceead",
+      "task_name": "sort shuttlecock",
+      "reason": "Sort sports items into distinct boxes; shuttlecocks receive the largest share of direct handling. Lids are auxiliary.",
+      "task_description": "The person sorts badminton shuttlecocks, discs, and table tennis rackets into storage boxes of different colors and covers the lids to complete the organization."
+    },
+    {
+      "path": "batch_0000023/a1d28be822ddd486ab3130401a28eecc63bea37055db7d54b636d762f7d6f83a/annotation/episode_000000_structured.json",
+      "sha256": "2d6254a02af5942646489c1039158be72be43a2f04fa76875e52becff7592352",
+      "task_name": "stack paper",
+      "reason": "Collect scattered papers into a stack and align the edges; table placement is auxiliary.",
+      "task_description": "The person collects the scattered papers into a stack and places it flat on the table."
+    },
+    {
+      "path": "batch_0000030/122b9a6d85d999914f16c9fa89e3e73042f5b2eb0f0897ef1cbce226873cfb49/annotation/episode_000000_structured.json",
+      "sha256": "c80470bf72748f32871149148dabce0425586fb95b4bfc8a546d6739856fd024",
+      "task_name": "transfer food",
+      "reason": "Use chopsticks to transfer food from a bag to a plate for 73 seconds; food is the target and chopsticks the tool.",
+      "task_description": "The person uses chopsticks to move food from the plastic bag to the plate to complete the portioning."
+    },
+    {
+      "path": "batch_0000037/d334c055ea719f0c71444ab90d58dca97b57d4c29308461f5ba8b30a6c7f2378/annotation/episode_000000_structured.json",
+      "sha256": "0c48d35a01ea7a5371933fa48c212cd6c148244ec133253da9f2e7b956454afb",
+      "task_name": "organize snack",
+      "reason": "Repeatedly take snack packages from the cart and arrange them on shelves; shelf is the destination.",
+      "task_description": "The person puts the snacks from the shopping cart onto the shelves in batches and completes the organization."
+    },
+    {
+      "path": "batch_0000049/77567cf3f5f3d26d72aae4d26f42f2d2c88761eaeccf51e0bb9f2bbc5f03b725/annotation/episode_000000_structured.json",
+      "sha256": "12b20789385b7b22add002f2d8b3cc73658e0e4b25f179681c9bdeaa45a09632",
+      "task_name": "organize paper",
+      "reason": "Organize papers for 98 seconds before filing them; the folder is the destination.",
+      "task_description": "The person organizes the documents on the desk and puts them into a folder to complete the filing."
+    },
+    {
+      "path": "batch_0000049/843b05ea955901336e69f830f96b74e66e14c9b0550f8248a76411008728d88c/annotation/episode_000000_structured.json",
+      "sha256": "6a668a6022b79ea9e248ee4cfc1ed00d0e2094fca8632d8ffede4506bfcb99cc",
+      "task_name": "organize paper",
+      "reason": "Organize papers for 33 seconds before placing them in a folder.",
+      "task_description": "The person organizes the documents on the desk and puts them into a folder to complete the storage."
+    },
+    {
+      "path": "batch_0000049/e01523f24b5825d5164a215454c414eded1aa672ccbda4058c9f63ebc6ff246a/annotation/episode_000000_structured.json",
+      "sha256": "3cbec15aa52b0f7526709cef8814d0714f8aa66444b032c8c687274a9bb2765c",
+      "task_name": "fold bed sheet",
+      "reason": "Three bed-sheet folding segments total 180.8 seconds, versus 62.9 seconds for one blanket.",
+      "task_description": "The person folds the blanket and the bed sheet on the bed neatly one by one and puts them into the storage box to complete the organization."
+    },
+    {
+      "path": "batch_0000050/fc5e56bdee1cede63626a145471ad00703e288236217cc71769641a5bdb46399/annotation/episode_000000_structured.json",
+      "sha256": "05355e0c253f5a113131304e6b644366b27fe826ae88f044f102c19b7b6a0b13",
+      "task_name": "stack paper",
+      "reason": "Gather and arrange papers into a stack for 58.6 seconds; opening and closing the drawer are auxiliary.",
+      "task_description": "The person organizes the scattered papers on the desktop and puts them into the drawer to complete the storage."
+    },
+    {
+      "path": "batch_0000064/7e9ddd373db1f557588ecd85925c0053bad911c0cfb4418103dcaba0a5d5c118/annotation/episode_000000_structured.json",
+      "sha256": "81a4ee49bc584ec1347e79845f261cc5f5089b94a01dad135112b1167c0f9e53",
+      "task_name": "organize item",
+      "reason": "Reposition multiple desktop items for 21.2 seconds; replacing the roller (11.4s) and surface cleaning (10.6s) are shorter stages. Mixed targets retained as item.",
+      "task_description": "The person replaces the roller of the lint remover to clean the desktop and rearranges the items on the table neatly."
+    },
+    {
+      "path": "batch_0000064/e57f558574c5f6ac91825b15f03a78cf95c55fba63883e09cf3d7622c4ad5245/annotation/episode_000000_structured.json",
+      "sha256": "8f32d16e9e2daefdbb520f1c62f57563045940c6d2263114a26ac66b8807beb4",
+      "task_name": "organize clothing",
+      "reason": "Organizing and hanging clothing lasts 36.8 seconds, versus 20 seconds replacing paper and 18 seconds cleaning clothing.",
+      "task_description": "The person replaces the sticky lint roller paper to clean clothes and organize the wardrobe."
+    },
+    {
+      "path": "batch_0000089/bbcd6561511e4d7fdff4ac2e737baf2f53b2760d705374ff2c4439590c88780b/annotation/episode_000000_structured.json",
+      "sha256": "f5bf1cd337611a1b4c2c3db702d5071709f48ce873f809c266d4cea2e7c9ba61",
+      "task_name": "tie bag",
+      "reason": "Tighten the bag opening and fasten it with a zip tie; cutting excess tie and basket placement support fastening.",
+      "task_description": "The person ties the bag tight and puts it into the basket to complete the packing."
+    },
+    {
+      "path": "batch_0000096/03ea7f861bf1dd1b81cf15841754d7d77221769c8ddf4ce00c3ce04d9f37372d/annotation/episode_000000_structured.json",
+      "sha256": "bd15cea951ceb8e3656c0fd5d7fc29cff3521463bbd75a5224d90c138fa648bd",
+      "task_name": "sort can",
+      "reason": "Sort cans and bottles by type/placement. Can-handling dominates the detailed segments; preserve sort rather than generalize to organize.",
+      "task_description": "The person sorts the scattered beer bottles and beer cans and places them on the shelf to complete the organization."
+    },
+    {
+      "path": "batch_0000096/c3500c3b75ef727dafef65b7efc45ff685dc495786da4ce38cab06da9a54dcc9/annotation/episode_000000_structured.json",
+      "sha256": "5d1da97521ed9b178640dc2b107a67eacce7b1855a54f1039fe70075e01b0efa",
+      "task_name": "organize can",
+      "reason": "Can placement takes 46 seconds versus 31 seconds for bottles; final adjustment is shared. Use can as principal object.",
+      "task_description": "The person places the soda can and the beer bottle on the shelf to complete the organization."
+    }
+  ]
+}

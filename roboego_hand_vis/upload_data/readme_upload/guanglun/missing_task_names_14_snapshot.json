@@ -1,0 +1,2254 @@
+{
+  "root": "/share/project/liuyou/humancoin/data/guanglun_depth",
+  "records": [
+    {
+      "path": "batch_0000018/90575ee32ceb37df47d81aacacec2ef4781b5dbba6e124af8fa2fe889f909aaa/annotation/episode_000000_structured.json",
+      "sha256": "ad43729ebd7faea85890622951e9b024daa605c20030e550c4fbeadec8ae27ad",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000018/689bb7f05a3bd3b36641c189049abb7b253fdf19e805bf2c0d7bcd0db651c47a/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000018/689bb7f05a3bd3b36641c189049abb7b253fdf19e805bf2c0d7bcd0db651c47a/converted/annotation/semantic_segments.json",
+          "sha256": "639d43a8c3f9d572b693f73a8cd8a0ac80746a06b9015e85d65d7db26312a7c0"
+        },
+        "timesteps_s": [
+          0.0,
+          3.0,
+          38.0,
+          57.0,
+          91.0,
+          101.6
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 3.0,
+            "arm": null,
+            "text": "Pick up the brown towel",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 3.0,
+            "end_s": 38.0,
+            "arm": null,
+            "text": "Wipe the black fitness chair with the towel",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "wipe"
+            ]
+          },
+          {
+            "start_s": 38.0,
+            "end_s": 57.0,
+            "arm": null,
+            "text": "Wipe the red fitness chair with the towel",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "wipe"
+            ]
+          },
+          {
+            "start_s": 57.0,
+            "end_s": 91.0,
+            "arm": null,
+            "text": "Wipe the black bench with the towel",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "wipe"
+            ]
+          },
+          {
+            "start_s": 91.0,
+            "end_s": 101.6,
+            "arm": null,
+            "text": "Put back the towel",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person wipes the exercise chairs and benches in the gym with a towel to complete the cleaning.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "pick",
+            "place",
+            "wipe"
+          ]
+        },
+        "scene_classification": {
+          "category": "public_space",
+          "area": "indoor_sports_venue",
+          "original_description": null
+        },
+        "common_task": null,
+        "common_task_name": "object_cleaning"
+      }
+    },
+    {
+      "path": "batch_0000020/e4e8c3bd9295c8e9fd3794d23487dbd55b0d74579172d9f0443e1c79ba29e92b/annotation/episode_000000_structured.json",
+      "sha256": "48f4cd821bb372a3f8e6ab13d3ed0ecd285387ca4a5e152bd0301c82976ceead",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000020/1d0621a6242e767a610a11114e1788bbeba0978379f4c75600b31e5ae886d9ba/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000020/1d0621a6242e767a610a11114e1788bbeba0978379f4c75600b31e5ae886d9ba/converted/annotation/semantic_segments.json",
+          "sha256": "6de4c9d8b6e44e1f9041668e4e82ae0c377a1fa8c4523c1443f30b733bd1e92b"
+        },
+        "timesteps_s": [
+          0.0,
+          20.0,
+          22.9,
+          24.8,
+          29.9,
+          36.8,
+          45.9,
+          56.0,
+          58.9,
+          61.9,
+          64.8,
+          66.9,
+          70.9,
+          73.9,
+          81.9,
+          92.8,
+          98.9,
+          106.9,
+          117.9,
+          124.0,
+          138.9,
+          142.9,
+          156.0,
+          157.9,
+          161.9,
+          164.8,
+          200.0,
+          206.9,
+          212.0,
+          213.9,
+          216.8,
+          220.0,
+          225.9,
+          232.0,
+          237.9
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 20.0,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 20.0,
+            "end_s": 22.9,
+            "arm": null,
+            "text": "Put the green disc into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 22.9,
+            "end_s": 24.8,
+            "arm": null,
+            "text": "Put the table tennis racket into the yellow storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 24.8,
+            "end_s": 29.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 29.9,
+            "end_s": 36.8,
+            "arm": null,
+            "text": "Put the red disc into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 36.8,
+            "end_s": 45.9,
+            "arm": null,
+            "text": "Put the table tennis racket into the yellow storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 45.9,
+            "end_s": 56.0,
+            "arm": null,
+            "text": "Put the blue and red discs into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 56.0,
+            "end_s": 58.9,
+            "arm": null,
+            "text": "Put the green and orange discs into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 58.9,
+            "end_s": 61.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 61.9,
+            "end_s": 64.8,
+            "arm": null,
+            "text": "Put the blue disc into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 64.8,
+            "end_s": 66.9,
+            "arm": null,
+            "text": "Put the yellow and red discs into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 66.9,
+            "end_s": 70.9,
+            "arm": null,
+            "text": "Put the blue and red discs into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 70.9,
+            "end_s": 73.9,
+            "arm": null,
+            "text": "Put the blue disc and the table tennis racket into the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 73.9,
+            "end_s": 81.9,
+            "arm": null,
+            "text": "Put the blue and red discs into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 81.9,
+            "end_s": 92.8,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 92.8,
+            "end_s": 98.9,
+            "arm": null,
+            "text": "Put the red disc into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 98.9,
+            "end_s": 106.9,
+            "arm": null,
+            "text": "Put the yellow disc and the table tennis racket into the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 106.9,
+            "end_s": 117.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 117.9,
+            "end_s": 124.0,
+            "arm": null,
+            "text": "Put the blue and red discs into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 124.0,
+            "end_s": 138.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 138.9,
+            "end_s": 142.9,
+            "arm": null,
+            "text": "Put the blue and orange discs into the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 142.9,
+            "end_s": 156.0,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 156.0,
+            "end_s": 157.9,
+            "arm": null,
+            "text": "Put the orange disc into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 157.9,
+            "end_s": 161.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 161.9,
+            "end_s": 164.8,
+            "arm": null,
+            "text": "Put the blue and red discs into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 164.8,
+            "end_s": 200.0,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 200.0,
+            "end_s": 206.9,
+            "arm": null,
+            "text": "Put the green and blue discs into the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 206.9,
+            "end_s": 212.0,
+            "arm": null,
+            "text": "Put the table tennis racket into the yellow storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 212.0,
+            "end_s": 213.9,
+            "arm": null,
+            "text": "Put the badminton shuttlecock into the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 213.9,
+            "end_s": 216.8,
+            "arm": null,
+            "text": "Put the blue disc into the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          },
+          {
+            "start_s": 216.8,
+            "end_s": 220.0,
+            "arm": null,
+            "text": "Cover the lid on the purple storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "cover"
+            ]
+          },
+          {
+            "start_s": 220.0,
+            "end_s": 225.9,
+            "arm": null,
+            "text": "Cover the lid on the green storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "cover"
+            ]
+          },
+          {
+            "start_s": 225.9,
+            "end_s": 232.0,
+            "arm": null,
+            "text": "Cover the lid on the white storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "cover"
+            ]
+          },
+          {
+            "start_s": 232.0,
+            "end_s": 237.9,
+            "arm": null,
+            "text": "Cover the lid on the yellow storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "cover"
+            ]
+          }
+        ],
+        "task_description": "The person sorts badminton shuttlecocks, discs, and table tennis rackets into storage boxes of different colors and covers the lids to complete the organization.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "cover",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "public_space",
+          "area": "indoor_sports_venue",
+          "original_description": null
+        },
+        "common_task": null,
+        "common_task_name": "object_organizing"
+      }
+    },
+    {
+      "path": "batch_0000023/a1d28be822ddd486ab3130401a28eecc63bea37055db7d54b636d762f7d6f83a/annotation/episode_000000_structured.json",
+      "sha256": "2d6254a02af5942646489c1039158be72be43a2f04fa76875e52becff7592352",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000023/79ecb0ace77ca13fab1b8bf2447405ea3daac4b9250ba2cda5cd0245f56811fb/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000023/79ecb0ace77ca13fab1b8bf2447405ea3daac4b9250ba2cda5cd0245f56811fb/converted/annotation/semantic_segments.json",
+          "sha256": "86353856ac40ffd9e4d2e2646e72308f3a340ac145976617fcf20172c3f14d7b"
+        },
+        "timesteps_s": [
+          0.0,
+          16.9,
+          36.9,
+          44.9
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 16.9,
+            "arm": null,
+            "text": "Collect the scattered papers on the table and arrange them into a stack",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "collect"
+            ]
+          },
+          {
+            "start_s": 16.9,
+            "end_s": 36.9,
+            "arm": null,
+            "text": "Hold the papers with both hands and bend them repeatedly to align the edges",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "hold"
+            ]
+          },
+          {
+            "start_s": 36.9,
+            "end_s": 44.9,
+            "arm": null,
+            "text": "Place the arranged papers flat on the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          }
+        ],
+        "task_description": "The person collects the scattered papers into a stack and places it flat on the table.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "collect",
+            "hold",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "professional_work",
+          "area": "office",
+          "original_description": null
+        },
+        "common_task": null,
+        "common_task_name": "object_organizing"
+      }
+    },
+    {
+      "path": "batch_0000030/122b9a6d85d999914f16c9fa89e3e73042f5b2eb0f0897ef1cbce226873cfb49/annotation/episode_000000_structured.json",
+      "sha256": "c80470bf72748f32871149148dabce0425586fb95b4bfc8a546d6739856fd024",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000030/291e237c72c489fe6968f1e2af2aebb8c9d65f610af8d96ebbf82306d053d0f9/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000030/291e237c72c489fe6968f1e2af2aebb8c9d65f610af8d96ebbf82306d053d0f9/converted/annotation/semantic_segments.json",
+          "sha256": "0af6803e723f2e6021b6314261954da947608eb4bf1f92d891ef675ee902c268"
+        },
+        "timesteps_s": [
+          0.0,
+          2.0,
+          75.0,
+          82.8
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 2.0,
+            "arm": null,
+            "text": "Pick up the chopsticks",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 2.0,
+            "end_s": 75.0,
+            "arm": null,
+            "text": "Use the chopsticks to move the food from the plastic bag to the plate",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "use"
+            ]
+          },
+          {
+            "start_s": 75.0,
+            "end_s": 82.8,
+            "arm": null,
+            "text": "Put down the chopsticks and tidy up the plastic bag",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person uses chopsticks to move food from the plastic bag to the plate to complete the portioning.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "pick",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "household",
+          "area": "kitchen",
+          "original_description": null
+        },
+        "common_task": null,
+        "common_task_name": "food_preparation"
+      }
+    },
+    {
+      "path": "batch_0000037/d334c055ea719f0c71444ab90d58dca97b57d4c29308461f5ba8b30a6c7f2378/annotation/episode_000000_structured.json",
+      "sha256": "0c48d35a01ea7a5371933fa48c212cd6c148244ec133253da9f2e7b956454afb",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000037/b44ff0911d46da35ee9336dc6c4f726eb5876201e8d935910fccb36c6a15a77b/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000037/b44ff0911d46da35ee9336dc6c4f726eb5876201e8d935910fccb36c6a15a77b/converted/annotation/semantic_segments.json",
+          "sha256": "54ab9bad4c3a356118ed5d45554bd639f740a2c36bc13008502057d9203fe78d"
+        },
+        "timesteps_s": [
+          0.0,
+          6.0,
+          11.0,
+          16.0,
+          22.0,
+          28.0,
+          34.0,
+          39.0,
+          46.0,
+          56.0
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 6.0,
+            "arm": null,
+            "text": "Pick up two packs of snacks from the shopping cart",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 6.0,
+            "end_s": 11.0,
+            "arm": null,
+            "text": "Place the two packs of snacks on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 11.0,
+            "end_s": 16.0,
+            "arm": null,
+            "text": "Pick up two packs of snacks from the shopping cart again",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 16.0,
+            "end_s": 22.0,
+            "arm": null,
+            "text": "Place the two packs of snacks on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 22.0,
+            "end_s": 28.0,
+            "arm": null,
+            "text": "Pick up two packs of snacks from the shopping cart for the third time",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 28.0,
+            "end_s": 34.0,
+            "arm": null,
+            "text": "Place the two packs of snacks on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 34.0,
+            "end_s": 39.0,
+            "arm": null,
+            "text": "Pick up two packs of snacks from the shopping cart for the fourth time",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pick"
+            ]
+          },
+          {
+            "start_s": 39.0,
+            "end_s": 46.0,
+            "arm": null,
+            "text": "Place the two packs of snacks on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 46.0,
+            "end_s": 56.0,
+            "arm": null,
+            "text": "Arrange the snacks on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "arrange"
+            ]
+          }
+        ],
+        "task_description": "The person puts the snacks from the shopping cart onto the shelves in batches and completes the organization.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "arrange",
+            "pick",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "commercial_service",
+          "area": "retail_store",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000049/77567cf3f5f3d26d72aae4d26f42f2d2c88761eaeccf51e0bb9f2bbc5f03b725/annotation/episode_000000_structured.json",
+      "sha256": "12b20789385b7b22add002f2d8b3cc73658e0e4b25f179681c9bdeaa45a09632",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000049/6a9e06b2b0d6ac6d7763ea3cc4a13c6238d3a627cb6e78c41d427e98800bb609/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000049/6a9e06b2b0d6ac6d7763ea3cc4a13c6238d3a627cb6e78c41d427e98800bb609/converted/annotation/semantic_segments.json",
+          "sha256": "39d1e38a2fbe8d83c61829e3410c431a1e87947b40b15a3a6b02143e0d76de6b"
+        },
+        "timesteps_s": [
+          0.0,
+          98.0,
+          118.2
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 98.0,
+            "arm": null,
+            "text": "Organize the papers on the desk",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "organize"
+            ]
+          },
+          {
+            "start_s": 98.0,
+            "end_s": 118.2,
+            "arm": null,
+            "text": "Put the organized papers into the folder",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person organizes the documents on the desk and puts them into a folder to complete the filing.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "organize",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "professional_work",
+          "area": "office",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000049/843b05ea955901336e69f830f96b74e66e14c9b0550f8248a76411008728d88c/annotation/episode_000000_structured.json",
+      "sha256": "6a668a6022b79ea9e248ee4cfc1ed00d0e2094fca8632d8ffede4506bfcb99cc",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000049/c0dde763ed6b2c42c70901bb67baea7c41fa50f291b6115f47e51e0faa85b58c/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000049/c0dde763ed6b2c42c70901bb67baea7c41fa50f291b6115f47e51e0faa85b58c/converted/annotation/semantic_segments.json",
+          "sha256": "4107e87ee5bc0a454824c74874f6871183361cc4ffee4e43fca5198cf4ab5cb1"
+        },
+        "timesteps_s": [
+          0.0,
+          33.0,
+          46.4
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 33.0,
+            "arm": null,
+            "text": "Organize the papers on the desk",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "organize"
+            ]
+          },
+          {
+            "start_s": 33.0,
+            "end_s": 46.4,
+            "arm": null,
+            "text": "Put the organized papers into the folder",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person organizes the documents on the desk and puts them into a folder to complete the storage.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "organize",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "professional_work",
+          "area": "conference_center",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000049/e01523f24b5825d5164a215454c414eded1aa672ccbda4058c9f63ebc6ff246a/annotation/episode_000000_structured.json",
+      "sha256": "3cbec15aa52b0f7526709cef8814d0714f8aa66444b032c8c687274a9bb2765c",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000049/f476816ca091a3724601bcef3b6a7fd90288487e3a3c6e61fe9e869f808a0185/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000049/f476816ca091a3724601bcef3b6a7fd90288487e3a3c6e61fe9e869f808a0185/converted/annotation/semantic_segments.json",
+          "sha256": "7d2fa458ed50cc4ea36084f9cad8c62634ebe8ee2d4ef1783698e8b0fcdbfde4"
+        },
+        "timesteps_s": [
+          0.0,
+          62.9,
+          120.8,
+          185.9,
+          243.7
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 62.9,
+            "arm": null,
+            "text": "Fold the beige blanket at the foot of the bed neatly and place it in the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "fold"
+            ]
+          },
+          {
+            "start_s": 62.9,
+            "end_s": 120.8,
+            "arm": null,
+            "text": "Fold the light blue bed sheet neatly and place it in the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "fold"
+            ]
+          },
+          {
+            "start_s": 120.8,
+            "end_s": 185.9,
+            "arm": null,
+            "text": "Fold the beige bed sheet with patterns neatly and place it in the storage box",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "fold"
+            ]
+          },
+          {
+            "start_s": 185.9,
+            "end_s": 243.7,
+            "arm": null,
+            "text": "Fold the pink plaid bed sheet neatly and place it in the storage box, then cover the box with the lid",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "fold"
+            ]
+          }
+        ],
+        "task_description": "The person folds the blanket and the bed sheet on the bed neatly one by one and puts them into the storage box to complete the organization.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "fold"
+          ]
+        },
+        "scene_classification": {
+          "category": "household",
+          "area": "bedroom",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000050/fc5e56bdee1cede63626a145471ad00703e288236217cc71769641a5bdb46399/annotation/episode_000000_structured.json",
+      "sha256": "05355e0c253f5a113131304e6b644366b27fe826ae88f044f102c19b7b6a0b13",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000050/cd050e784fde194fd4d865b6f7a7de2cf59edfe9782bedf14a741767ed29506e/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000050/cd050e784fde194fd4d865b6f7a7de2cf59edfe9782bedf14a741767ed29506e/converted/annotation/semantic_segments.json",
+          "sha256": "94bd6b3d5b5028c1f8c23114dab29036c16b0369145be83f0b6447fbc0acbc5e"
+        },
+        "timesteps_s": [
+          0.0,
+          2.4,
+          61.0,
+          64.4
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 2.4,
+            "arm": null,
+            "text": "Pull open the drawer under the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "pull"
+            ]
+          },
+          {
+            "start_s": 2.4,
+            "end_s": 61.0,
+            "arm": null,
+            "text": "Collect the scattered papers on the table and arrange them into a stack",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "collect"
+            ]
+          },
+          {
+            "start_s": 61.0,
+            "end_s": 64.4,
+            "arm": null,
+            "text": "Put the organized papers into the drawer and close it",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person organizes the scattered papers on the desktop and puts them into the drawer to complete the storage.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "collect",
+            "pull",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "professional_work",
+          "area": "office",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000064/7e9ddd373db1f557588ecd85925c0053bad911c0cfb4418103dcaba0a5d5c118/annotation/episode_000000_structured.json",
+      "sha256": "81a4ee49bc584ec1347e79845f261cc5f5089b94a01dad135112b1167c0f9e53",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000064/1cd94bc10e85704b1218218df9d8cbeebef214de5948d735562f7eaa4de22d80/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000064/1cd94bc10e85704b1218218df9d8cbeebef214de5948d735562f7eaa4de22d80/converted/annotation/semantic_segments.json",
+          "sha256": "924734ea1e924379b75ef6f51936de78521b712ace44d73d61868b1b97ccef15"
+        },
+        "timesteps_s": [
+          0.0,
+          6.4,
+          11.4,
+          22.0,
+          26.0,
+          28.4,
+          31.0,
+          33.4,
+          38.0,
+          41.0,
+          43.2
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 6.4,
+            "arm": null,
+            "text": "Remove the lint roller from the handle and throw it into the trash can",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "remove"
+            ]
+          },
+          {
+            "start_s": 6.4,
+            "end_s": 11.4,
+            "arm": null,
+            "text": "Attach the new lint roller to the handle",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "attach"
+            ]
+          },
+          {
+            "start_s": 11.4,
+            "end_s": 22.0,
+            "arm": null,
+            "text": "Clean the dust on the table with the lint roller",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "clean"
+            ]
+          },
+          {
+            "start_s": 22.0,
+            "end_s": 26.0,
+            "arm": null,
+            "text": "Move the ashtray to the left side of the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 26.0,
+            "end_s": 28.4,
+            "arm": null,
+            "text": "Move the pen holder next to the ashtray",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 28.4,
+            "end_s": 31.0,
+            "arm": null,
+            "text": "Move the red perfume bottle to the back of the table",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 31.0,
+            "end_s": 33.4,
+            "arm": null,
+            "text": "Move the blue bottle next to the perfume bottle",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 33.4,
+            "end_s": 38.0,
+            "arm": null,
+            "text": "Move the pink bottle next to the blue bottle",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 38.0,
+            "end_s": 41.0,
+            "arm": null,
+            "text": "Move the yellow comb next to the bottles",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          },
+          {
+            "start_s": 41.0,
+            "end_s": 43.2,
+            "arm": null,
+            "text": "Move the lint roller next to the comb",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "move"
+            ]
+          }
+        ],
+        "task_description": "The person replaces the roller of the lint remover to clean the desktop and rearranges the items on the table neatly.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "attach",
+            "clean",
+            "arrange",
+            "remove"
+          ]
+        },
+        "scene_classification": {
+          "category": "household",
+          "area": "study_room",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000064/e57f558574c5f6ac91825b15f03a78cf95c55fba63883e09cf3d7622c4ad5245/annotation/episode_000000_structured.json",
+      "sha256": "8f32d16e9e2daefdbb520f1c62f57563045940c6d2263114a26ac66b8807beb4",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000064/70946bc4b766c831a2dd8c2f6045a4a38074f27adaa921e5dbdd1b876add223a/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000064/70946bc4b766c831a2dd8c2f6045a4a38074f27adaa921e5dbdd1b876add223a/converted/annotation/semantic_segments.json",
+          "sha256": "ae13fb81d56cd1674a3b693d521165728ac5c9f9ec497a88658bb92da10d325c"
+        },
+        "timesteps_s": [
+          0.0,
+          20.0,
+          38.0,
+          74.8
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 20.0,
+            "arm": null,
+            "text": "Replace the lint roller paper and discard the old paper",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "replace"
+            ]
+          },
+          {
+            "start_s": 20.0,
+            "end_s": 38.0,
+            "arm": null,
+            "text": "Clean the red clothes in the closet with the lint roller",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "clean"
+            ]
+          },
+          {
+            "start_s": 38.0,
+            "end_s": 74.8,
+            "arm": null,
+            "text": "Organize the clothes in the closet and hang them up",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "organize"
+            ]
+          }
+        ],
+        "task_description": "The person replaces the sticky lint roller paper to clean clothes and organize the wardrobe.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "clean",
+            "organize",
+            "replace"
+          ]
+        },
+        "scene_classification": {
+          "category": "household",
+          "area": "bedroom",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000089/bbcd6561511e4d7fdff4ac2e737baf2f53b2760d705374ff2c4439590c88780b/annotation/episode_000000_structured.json",
+      "sha256": "f5bf1cd337611a1b4c2c3db702d5071709f48ce873f809c266d4cea2e7c9ba61",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000089/7e868b3fd97ddfd5275797fc25b3c72061b8c9e7dfc57113f8fc16a4aea0a047/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000089/7e868b3fd97ddfd5275797fc25b3c72061b8c9e7dfc57113f8fc16a4aea0a047/converted/annotation/semantic_segments.json",
+          "sha256": "19cd1dc9505abdf09c1267acce5e5c3e5e91070b094140750f866134d3184e97"
+        },
+        "timesteps_s": [
+          0.0,
+          23.0,
+          45.0,
+          58.0,
+          65.6
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 23.0,
+            "arm": null,
+            "text": "Arrange and tighten the bag opening",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "arrange"
+            ]
+          },
+          {
+            "start_s": 23.0,
+            "end_s": 45.0,
+            "arm": null,
+            "text": "Fasten the bag opening with a zip tie",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "fasten"
+            ]
+          },
+          {
+            "start_s": 45.0,
+            "end_s": 58.0,
+            "arm": null,
+            "text": "Cut off the excess zip tie",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "cut"
+            ]
+          },
+          {
+            "start_s": 58.0,
+            "end_s": 65.6,
+            "arm": null,
+            "text": "Put the bag into the basket",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "put"
+            ]
+          }
+        ],
+        "task_description": "The person ties the bag tight and puts it into the basket to complete the packing.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "arrange",
+            "cut",
+            "tie",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "commercial_service",
+          "area": "logistics_facility",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000096/03ea7f861bf1dd1b81cf15841754d7d77221769c8ddf4ce00c3ce04d9f37372d/annotation/episode_000000_structured.json",
+      "sha256": "bd15cea951ceb8e3656c0fd5d7fc29cff3521463bbd75a5224d90c138fa648bd",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000096/4268e5a0fab5d857f3e595f77e44e3312abd75e7c08f9547c8728b53cc1d1110/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000096/4268e5a0fab5d857f3e595f77e44e3312abd75e7c08f9547c8728b53cc1d1110/converted/annotation/semantic_segments.json",
+          "sha256": "ce0ac383016e72ecb82fb919995b14ba58fb076be6abe8922f12fcdf54f12fb6"
+        },
+        "timesteps_s": [
+          0.0,
+          7.0,
+          16.0,
+          23.0,
+          30.0,
+          37.0,
+          46.0,
+          53.0,
+          59.0,
+          66.0,
+          77.0,
+          88.0
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 7.0,
+            "arm": null,
+            "text": "Place two green beer bottles on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 7.0,
+            "end_s": 16.0,
+            "arm": null,
+            "text": "Place two green beer bottles on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 16.0,
+            "end_s": 23.0,
+            "arm": null,
+            "text": "Place two silver beer cans on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 23.0,
+            "end_s": 30.0,
+            "arm": null,
+            "text": "Place two silver beer cans on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 30.0,
+            "end_s": 37.0,
+            "arm": null,
+            "text": "Place two green beer cans in the middle of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 37.0,
+            "end_s": 46.0,
+            "arm": null,
+            "text": "Place two green beer cans in the middle of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 46.0,
+            "end_s": 53.0,
+            "arm": null,
+            "text": "Place two green beer cans in the middle of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 53.0,
+            "end_s": 59.0,
+            "arm": null,
+            "text": "Place two silver beer cans on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 59.0,
+            "end_s": 66.0,
+            "arm": null,
+            "text": "Place two silver beer cans on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 66.0,
+            "end_s": 77.0,
+            "arm": null,
+            "text": "Place two green beer bottles on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 77.0,
+            "end_s": 88.0,
+            "arm": null,
+            "text": "Arrange the silver beer cans and green beer cans on the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "arrange"
+            ]
+          }
+        ],
+        "task_description": "The person sorts the scattered beer bottles and beer cans and places them on the shelf to complete the organization.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "sort",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "commercial_service",
+          "area": "retail_store",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    },
+    {
+      "path": "batch_0000096/c3500c3b75ef727dafef65b7efc45ff685dc495786da4ce38cab06da9a54dcc9/annotation/episode_000000_structured.json",
+      "sha256": "5d1da97521ed9b178640dc2b107a67eacce7b1855a54f1039fe70075e01b0efa",
+      "annotation": {
+        "schema_version": "1.0",
+        "episode_dir": "/home/guanglun_work/batch_0000096/3cc534bf9610cbd1117d9e5d5ed729e3b6476badbbaa395825ffd8370e960638/converted/data/chunk-000/episode_000000",
+        "source": {
+          "file": "/home/guanglun_work/batch_0000096/3cc534bf9610cbd1117d9e5d5ed729e3b6476badbbaa395825ffd8370e960638/converted/annotation/semantic_segments.json",
+          "sha256": "b01596378fd88ac82cc477c3b1cfda66ab3a0079ebd5b68abe54904608260fff"
+        },
+        "timesteps_s": [
+          0.0,
+          18.0,
+          46.0,
+          77.0,
+          87.0
+        ],
+        "finish_reason": null,
+        "objects": [],
+        "scene": null,
+        "subtask": [
+          {
+            "start_s": 0.0,
+            "end_s": 18.0,
+            "arm": null,
+            "text": "Place the silver soda can and the green soda can on the left side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 18.0,
+            "end_s": 46.0,
+            "arm": null,
+            "text": "Place the remaining silver soda can and the green soda can on the left side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 46.0,
+            "end_s": 77.0,
+            "arm": null,
+            "text": "Place the green glass beer bottle on the right side of the shelf",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "place"
+            ]
+          },
+          {
+            "start_s": 77.0,
+            "end_s": 87.0,
+            "arm": null,
+            "text": "Adjust the soda cans and beer bottles on the shelf to make them neat",
+            "object": null,
+            "destination": null,
+            "spatial_relation": null,
+            "contribution": null,
+            "progress": null,
+            "hands_visible": null,
+            "hands_wearing": null,
+            "action": [
+              "adjust"
+            ]
+          }
+        ],
+        "task_description": "The person places the soda can and the beer bottle on the shelf to complete the organization.",
+        "key_events": [],
+        "state_changes": [],
+        "tasks": [],
+        "scene_graph": [],
+        "recovery": [],
+        "instruction_variants": [],
+        "data_issues": [],
+        "viewpoint": null,
+        "performance_review": null,
+        "actions": {
+          "vocabulary": [
+            "adjust",
+            "place"
+          ]
+        },
+        "scene_classification": {
+          "category": "household",
+          "area": "storage_room",
+          "original_description": null
+        },
+        "common_task": null
+      }
+    }
+  ]
+}

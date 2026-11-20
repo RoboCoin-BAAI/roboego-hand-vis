@@ -1,0 +1,586 @@
+[
+  {
+    "path": "batch_0000002/0112e6a482d542d8d437ca38b0ed7485702659f3be7a79f05b96b6c7c0a70a59/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person matches the shoes on the floor and organizes them on the shoe rack to complete the storage.",
+    "original_description": "A household area for organizing and storing shoes on a rack",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000002/20d9fcebe455a6394fc6374a8b5d39d3b43a530bde8471adb74b117867bb0a3e/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and puts them back on the rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000002/3827c211d2a03c9a6286bc23da0939123514e1ecc9c31dd7a1dc88b41ddfac04/annotation/episode_000000_structured.json",
+    "category": "commercial_service",
+    "area": "restaurant",
+    "task_description": "The person pours the orange liquid into the glass and carries the tray to another table to complete the drink distribution.",
+    "original_description": "A food service area for pouring drinks into glasses and serving them on a tray",
+    "reason": "User location correction: commercial_service/food_service_area -> commercial_service/restaurant"
+  },
+  {
+    "path": "batch_0000002/40150317746c8ef60ab326305c485882362fe0cf6dd1e51ccf842df64de90a1e/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes makeup tools from the drawer and the jar and arranges them on the table to prepare for makeup application.",
+    "original_description": "A personal grooming area for organizing makeup tools and cosmetics",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000002/7511a906919086c45a254d889297c1de6d92c1ba1375d44d8fb4ed69b3dfb61f/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes cosmetics out of the drawer and storage box, opens them, and places them on the windowsill to prepare for makeup application.",
+    "original_description": "A vanity area for organizing and preparing makeup items on a windowsill",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000002/83ba75c429b61f349f04bf25a71f6222c21f400ea421d4bb7b40cfeb55a1655a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes cosmetics from the drawer and storage box, places them on the dressing table, and opens them in order to prepare for makeup application.",
+    "original_description": "A dressing area for retrieving and opening cosmetics in preparation for makeup.",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000002/adfe2c226f393af277efd6052f682e1bb1859465377f98eb8d5ef725911bc120/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes cosmetics from the drawer and the storage box and places them on the table to prepare for makeup.",
+    "original_description": "A personal grooming area for organizing and preparing cosmetics",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000002/bef61bb333348c092480c192c560b246947acc6826355e0d9f51af625e45403c/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes cosmetics from the drawer and the box, opens them, places them on the table, and prepares to apply makeup.",
+    "original_description": "A vanity area for organizing and preparing cosmetics for makeup application",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000002/cf3a8ec45a398110b02ade2b55b814278579e83b85403221f7abaada1ba4f917/annotation/episode_000000_structured.json",
+    "category": "commercial_service",
+    "area": "restaurant",
+    "task_description": "The person puts the cup on the tray, pours yellow liquid into it, and carries it to another table to complete the drink distribution.",
+    "original_description": "A beverage service area for preparing and distributing drinks",
+    "reason": "User location correction: commercial_service/food_service_area -> commercial_service/restaurant"
+  },
+  {
+    "path": "batch_0000004/0cef0a837c1c7e0f95fe951587857ea3bcd8e62101d1641d50b7c5933da863d9/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person installs the weight plates and barbell clamps onto the barbell rod to complete the barbell assembly.",
+    "original_description": "A home gym or living area for assembling a barbell",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000007/6917a84ecd5c5bd170be4887c383d28da2d330fbc3d96c405fee0f4cd4a5e42e/annotation/episode_000000_structured.json",
+    "category": "commercial_service",
+    "area": "restaurant",
+    "task_description": "The person wipes the tray and moves the cup to the center of the tray, then carries the tray to the bar counter to complete the arrangement.",
+    "original_description": "A service area where a tray is cleaned and a cup is arranged for delivery to a bar counter.",
+    "reason": "User location correction: commercial_service/food_service_area -> commercial_service/restaurant"
+  },
+  {
+    "path": "batch_0000012/046e5ae677d6f59d3c3e1baebd8234f6cea4f0b5bf49577797a0d43a0aabd7cf/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person cleans two eyeshadow palettes with cotton swabs and tissues to complete the cleaning.",
+    "original_description": "A personal care area for cleaning makeup products",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000012/28ac07388ddb09d73ec3f675a3a5ac81d9d24b9e66b9f9c0ed902131248f88e3/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person organizes the items on the desk and wipes the shoes before putting them into the shoe cabinet to complete the cleaning and storage.",
+    "original_description": "A household area for organizing personal items on a desk and cleaning shoes before storage.",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000012/a8c559bee242c1eea6ace5b98d6f1104b593864353b5f2b4f2ea2ec43230669b/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person wipes the shoes and puts them back on the shoe rack, then picks up the pen from the floor and places it in the drawer to complete the tidying.",
+    "original_description": "A household area for cleaning shoes and organizing small items into a drawer",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000012/d94f8a397d551ae6254509026322fdce44e304706cde82cfbe4a128566f0906c/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person wipes two dumbbells and the tabletop with a towel to complete the cleaning.",
+    "original_description": "A household cleaning area for wiping exercise equipment and surfaces",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000012/e00650c679ddabf662a4a835ffe1af663e1943298f4f47b5456df970c34ac7ce/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person cleans the eyeshadow palette, blush palette, and contour palette with cotton swabs and tissues to complete the makeup palette cleaning.",
+    "original_description": "A household area for cleaning makeup palettes with cotton swabs and tissues",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000012/faad8960ae3756167523589e09271c96e3e7662ab4005e04648a00a5f3c20001/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person uses cotton swabs and tissues to clean the eyeshadow palette and blush palette to complete the cleaning of cosmetics.",
+    "original_description": "A household area for cleaning cosmetic palettes with cotton swabs and tissues",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000013/f605544872c826fe8784ccbd5012264d0d8500a61be1ccb6e1e1618443248651/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person organizes the items in the room and wipes the floor to complete the cleaning.",
+    "original_description": "A household area for organizing exercise equipment and cleaning the floor",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000016/069bcbad36c2a9b01d4ea192101b6a1ef7d1d0e90d10378240abdc7eec2ab59f/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person unties multiple necklaces and hangs them on the jewelry rack to complete the storage.",
+    "original_description": "A household area for organizing and storing personal jewelry",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000016/ded5af3b4f3546995eef35c4f395dba532cdf7c585839b13172900dcd6acc7b6/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person unties the necklace and bracelet on the table one by one and hangs them on the jewelry rack to complete the jewelry organization.",
+    "original_description": "A household area for organizing necklaces and bracelets on a jewelry stand",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000017/4b1f8fd7c7031716de417798b2328fcbc4d5275bb1125cc11fab430bbd4c49dd/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person pours cat food and water into two orange double-compartment bowls separately and places them on the floor to feed the pet.",
+    "original_description": "A domestic area for preparing and serving cat food and water",
+    "reason": "User location correction: household/pet_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000017/7d99315e9d4c38b5ce18f7e6a6f692332b600d8c38377e193423dfbefa569b3a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person pours cat food and water into two orange double-compartment bowls separately and places them on the ground to feed the pet.",
+    "original_description": "A domestic area for preparing pet meals using a table, drawer, and floor.",
+    "reason": "User location correction: household/pet_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000017/de7653c8e5ac15c37eb6f579bd3f8b5eb34c9593b05571f2518839482aeac342/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person untangles the necklace and organizes the jewelry into the jewelry box.",
+    "original_description": "A household area for organizing personal accessories",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000018/1d0b10fe6446c427bd3cd03f8b37b4a54b6c075f30f6af57f627270465b54d71/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person puts the necklace and earrings into the jewelry box to complete the jewelry storage.",
+    "original_description": "A household area for storing personal accessories like necklaces and earrings.",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000018/3cbacb7e3c6a9e21d9159be1b7a0b1ae3035d0164efb241ae22a0130aa83369d/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes the necklace from the jewelry box and places it on the table, then puts it back into the jewelry box to complete the organization.",
+    "original_description": "A household area for organizing personal accessories like necklaces in a jewelry box",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000018/9296ee8d3e58f2490528f2a94f0a8ac53d5ae89498d2f7f07f4e5f5770b869fd/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person sorts the jewelry on the table into the jewelry box to complete the organization.",
+    "original_description": "A table area for organizing personal accessories",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000018/c4617a8904b854943cd0851c59c2f6329ca9bd3058da8d1ca18296142a004fc1/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes the jewelry out of the jewelry box, organizes it, and puts it back into the box to complete the storage.",
+    "original_description": "A dressing table area for organizing and storing personal accessories",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000018/fd380f4ec4680bd33487c8f7e9e27a8a6490f68da456b9af8fbd63d01ffea36f/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes the jewelry out of the jewelry box, places it on the table, and then puts it back into the box to complete the organization.",
+    "original_description": "A household area for organizing personal accessories like necklaces and bracelets",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000019/2fb6382a72bb5d207cdea352a02127ba1bf9e55655b102d8cb02e1440562a039/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person places lip glazes of various colors into the storage rack in sequence to complete the organization.",
+    "original_description": "A household area for organizing cosmetic products into a storage rack",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000019/335b27c2e5174b77ec2aba90fb254fd207de6c8a0e28b6f127f1b3e79d6e0158/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person opens multiple lipsticks one by one and cleans the surface of each lipstick to complete the cleaning process.",
+    "original_description": "A personal care area for cleaning cosmetic products",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000019/734127ade9c4033c9ed6da0eeeaf574874f452752e0d3c7ba050b5a996310b34/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person cleans the cat litter box and adds new cat litter to complete the cleaning.",
+    "original_description": "A household area for cleaning a pet's litter box and disposing of waste",
+    "reason": "User location correction: household/pet_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000019/e14a30abf42e168be605604d02e459bbb60b9a1be7a548979f860938856ea530/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person takes out multiple lipsticks one by one and wipes the outer shells with tissues and alcohol swabs to complete the cleaning.",
+    "original_description": "A household cleaning area for sanitizing cosmetic items",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000020/00b28e4717b884a566f627ddedc8f1f894fae4796fd465007d2a2b0a63a1e822/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person sorts the table tennis racket, colored discs, and badminton shuttlecocks into the storage box to complete the organization.",
+    "original_description": "A household area for organizing and storing sports equipment like rackets, discs, and shuttlecocks in boxes.",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000020/10bf50c639edae1f7b0da3df544686095054a9ebca1906a5531b6659df5a8b00/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person sorts badminton shuttlecocks, colorful discs, table tennis rackets, and red and blue discs into a storage box to complete the organization.",
+    "original_description": "A household area for sorting and storing sports equipment like shuttlecocks, rackets, and discs in boxes.",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000020/2ba38ef0b6383609766458b2595571e963d5b49647c66a9d374cc9f2df6c3941/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person sorts various pieces of jewelry into the jewelry box to complete the organization.",
+    "original_description": "A personal storage area for organizing and storing jewelry items in a box.",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000020/5d8e0696166b6dc3479e5bd8fb83ef0e1834f226666de03e31d8971e48167071/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person sorts the disc, the table tennis racket, and the badminton shuttlecock on the table into storage boxes of different colors and covers them with lids to complete the organization.",
+    "original_description": "A household area for organizing and storing sports equipment in labeled boxes",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000020/9a53144787926377e9ba7a81a3026d9123b57e080a6ec5048f00288fbad3b79a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person sorts the jewelry on the table into the jewelry box to complete the organization.",
+    "original_description": "A household area for organizing personal accessories",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000020/c11663a02ff2186b99481237dbc5b7ff83bb0396ed39eebe8b12b2b7d3daaf22/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person puts various types of jewelry into the jewelry box to complete the organization.",
+    "original_description": "A personal storage area for organizing and storing jewelry items",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000021/f4806380fc17a465eefb88b95520abb8c40f201e54bcd019701694f9a784c493/annotation/episode_000000_structured.json",
+    "category": "commercial_service",
+    "area": "restaurant",
+    "task_description": "The person wipes the bar counter surface with a cloth to complete the cleaning.",
+    "original_description": null,
+    "reason": "User location correction: commercial_service/food_service_area -> commercial_service/restaurant"
+  },
+  {
+    "path": "batch_0000023/d2f506132b13df111344303f231894c64d692abd744c3e7f1504744ccb69ef5a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person puts various pieces of jewelry into the jewelry box to complete the organization.",
+    "original_description": "A household area for organizing personal accessories",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000024/82e93b7973ba07590d4f0a46d08103f670959b44841c85a36aa46c6fea682b34/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000025/f27e40be4b8b3617e331f93099bbca3660342dd40b42426584fc455c91a56cd5/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person folds and rolls up multiple fitness straps one by one and puts them into a storage box to complete the organization.",
+    "original_description": "A household area for organizing and storing fitness equipment",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000026/fe79f1f17fbaa0bf09bd85212a845dca9973df1af7bc39b0767e5263231acc22/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person untangles the necklace, straightens it out, and places it together with the ring and earrings into the jewelry box to complete the organization.",
+    "original_description": "A household area for organizing and storing personal accessories like necklaces, rings, and earrings.",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000027/c1bdb8fce76ec14cfb4f96383dbfa1067ed0e6e00cd86699e5a73dd839e38afb/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the table tennis racket into the storage bag and places it in the storage box to complete the organization.",
+    "original_description": "A household area for organizing and storing table tennis equipment",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000028/8130c55cf5a159604ffec8ade3766b9d7d0729f9917a210911c2611dff523a9a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person replaces the battery of the toy car and puts the plush toy into a container.",
+    "original_description": "A household area for maintaining a toy car and organizing toys",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000029/72f5691b1bcc7463035869b9a503364cffa3b6dc25c7d7aa246bc37df1a2bd77/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person replaces the batteries of the toy car and organizes the items on the desk.",
+    "original_description": "A household area for maintaining a toy car and organizing storage boxes on a desk",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000030/9535897cf034a1531b06ef586e59c98295a531d9a955f3ba6536fb8b526a8786/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person places multiple pairs of sneakers from the floor onto the shoe rack in sequence to complete the organization.",
+    "original_description": "A household area for organizing shoes on a rack",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000031/b1998c235e1cb6bf0fc4863a57e498e2fd489dd323cd93e93d5f30f1a0e9ad0a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "bedroom",
+    "task_description": "The person uses cotton swabs and tissues to clean the powder compact case to complete the cleaning.",
+    "original_description": "A personal care area for cleaning makeup compacts with cotton swabs and tissues",
+    "reason": "User location correction: household/dressing_area -> household/bedroom"
+  },
+  {
+    "path": "batch_0000032/1c42096d3fefb29c295f336255007dca66fc17e09df85db1155112e4a557d696/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the toys on the floor into a plastic bag to complete the tidying.",
+    "original_description": "A household area for tidying up scattered toys by placing them into a storage bag",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000032/282365650f2a8f8b277c775f2f8d82dfd0d9e8cbb7083888fe03db79cbf043b7/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the puzzle pieces and the instruction manual back into the puzzle box and closes the lid to complete the storage.",
+    "original_description": "A household area for storing a jigsaw puzzle set",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000032/3de9a6ad5d91f5f16d684c381f7b7f89463a906eee275989cf3b4eab54a3b268/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person collects the puzzle pieces, puts them into the box, and closes the lid to complete the storage.",
+    "original_description": "A household area for organizing and storing a jigsaw puzzle",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000032/578d76dacdeb4cc7b226ab7e8e5ea135e8022fcb31c3d74863d8e37769dd5763/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the puzzle pieces into the box and covers it with the lid to complete the storage.",
+    "original_description": "A household area for storing puzzle pieces in a box",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000032/71943daf7b07eac4ba4830f3912dfede4268189868b167933e03e224686fa194/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the puzzle pieces and the instruction manual into the puzzle box and closes the lid to complete the storage.",
+    "original_description": "A household area for organizing and storing a jigsaw puzzle set",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000032/c1c775bc04140c36dfcbe2199f6de5643c26e93fea38d48e732529294d355302/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the toys and plush toys scattered on the floor into the storage box to complete the organization.",
+    "original_description": "A household area for organizing scattered toys and plush toys into a storage box",
+    "reason": "User location correction: household/home_recreation_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000035/2e135d74be5e833a71f8dff9106fa32db8e4fad76b1c27eb110ca7c3c725b673/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person takes the shoes to the table, changes the shoelaces, and puts them back on the shoe rack to complete the shoelace replacement.",
+    "original_description": "A household area for replacing shoelaces on shoes using a table and shoe rack",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000035/3a310c4032ede7c58b10075b5cfe79d83b5043b6f6c479b4a3f2d099812d917b/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person replaces the shoelaces of the shoes to complete the shoe organization.",
+    "original_description": "A household area for organizing footwear and replacing shoelaces",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000035/3c6f19ddd38c0292bb88ef13c2439c29d7fa852f04745650c7c33b9d9c7b80c4/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person replaces the shoelaces and puts the shoes back on the shoe rack to complete the organization.",
+    "original_description": "A household area for replacing shoe laces and organizing footwear on a rack",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000035/97e99a9ef2914b6d827bc1d5c9ef826bf3b497d1064a95f9a238a1374d648238/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person replaces the old shoelaces with new ones to complete the shoe organization.",
+    "original_description": "A household area for replacing shoelaces and organizing shoes on a rack",
+    "reason": "User location correction: household/shoe_care_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/1210c35f4f20b38814943bab6d669dab4023b145b4acc9995550f2ef1a3df5ac/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the rack to complete the organization.",
+    "original_description": "A home workout area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/135d0d481904220ff3143a329f23707a89e9ff053bbdab24a01dcec89f97da48/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the ground one by one and puts them back on the rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/1ba23acd43e6c56692788256512c1443a2ee1753e1f760563e4c6b5affc2f742/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the ground one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/1f8895baf5ae14e50d3b300f66185f8e022c9c06b54c3b3b617cdb3fbd212d6c/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts the dumbbell on the floor into the storage rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells into a storage rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/353e73328edaddf18d88fc028a401334cc8cfb1f9efbf5bb80532c57e15f472f/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and puts them on the rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/3bcc6bc01251d60d4c65069201abedb07ae57fc7712b5f08fc614ee44ca3a85c/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/6ccad0c7150088bec20e08cd8150b279c5abe419ffab0786dff1a6039332663a/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/5ffc9fc727c5e3196515450ae0ffd298bfc806ba249987765cbd6ab2566549cb/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells from the floor to a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/7c6aae6489712d8b503b6ab4363c37f6bc2e30684b46648480a2a1e07a7ba8e9/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts dumbbells of different colors into the storage rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells into a storage rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/80ee9f213dd2a2aa43ac6574e2c80fb15980661cb13ec387db7da609ecda1976/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one, places them on the dumbbell rack, and completes the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/89a7e29dc2dde24fb6468040f5121f059d60cc8f1a6e0e7fcd4b71c17b7c71cd/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person sorts the dumbbells on the floor by color and places them into the dumbbell racks on both sides to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells into racks",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/93e0d360b6c67947b72f3fc4579a06cd3195fea1ce9aa2309d532baa9b471c03/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person puts dumbbells of various colors into the storage slot of the fitness bench to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells on a bench",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/da6ac979193ea273e3aa82b425b0f4b3c04bfc55e65e2a7b6c48442c0a45250b/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/dea3c6f53ab11a377df0b7a9b2e8692ca873fecc56bad4b33db115a321f24c8d/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the rack to complete the organization.",
+    "original_description": "A home gym area for organizing dumbbells onto a rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  },
+  {
+    "path": "batch_0000038/f1bc9f1d0320574501e01a8bc889f99c298b8ddacf6535274e5dff5435ed0cac/annotation/episode_000000_structured.json",
+    "category": "household",
+    "area": "living_room",
+    "task_description": "The person picks up the dumbbells on the floor one by one and places them on the dumbbell rack to complete the organization.",
+    "original_description": "A home fitness area for organizing dumbbells onto a storage rack",
+    "reason": "User location correction: household/home_fitness_area -> household/living_room"
+  }
+]

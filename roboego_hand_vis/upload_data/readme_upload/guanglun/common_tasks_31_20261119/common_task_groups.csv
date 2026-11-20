@@ -1,0 +1,904 @@
+﻿common_task_name,jianzhi,guanglun,fine_task_names,has_unmapped_noun
+add_food,0,1,add salt,False
+adjust_barbell_weight,0,1,adjust barbell weight,True
+adjust_beauty_tool,1,0,adjust rod,False
+align_toy,1,0,align block,False
+apply_bandage,0,1,apply bandage,True
+apply_beauty_tool,1,0,apply roller,False
+apply_body,1,0,apply face,False
+apply_cosmetics,119,0,apply care solution | apply cosmetics | apply cream | apply essence | apply eyeshadow | apply foundation | apply glue | apply liquid | apply lotion | apply makeup | apply mask | apply mixture | apply perm lotion | apply product | apply serum | apply skin care product | apply solution,False
+apply_decoration,1,0,apply rhinestone,False
+apply_dressing,1,0,apply dressing,True
+apply_food,0,1,apply sauce,False
+apply_gel,1,0,apply gel,True
+apply_glue,0,5,apply glue,True
+apply_hair,6,0,apply eyelash | apply hair,False
+apply_hair_dye,138,0,apply dye | apply hair dye,False
+apply_item,2,0,apply hair product | apply product,False
+apply_medicine,6,0,apply ointment,False
+apply_mud,1,0,apply mud,True
+apply_nail,3,9,apply fake nail | apply nail,False
+apply_nail_polish,50,3,apply gel | apply liquid | apply nail polish | apply paint | apply polish,False
+apply_packaging,1,7,apply plastic wrap | apply tape,False
+apply_pigment,1,0,apply pigment,True
+apply_powder,0,1,apply powder,True
+apply_substance,0,1,apply substance,True
+arrange_appliance,0,1,arrange kettle,False
+arrange_armchair,0,1,arrange armchair,True
+arrange_badge,0,2,arrange badge,True
+arrange_bandage,1,0,arrange bandage,True
+arrange_beauty_tool,1,2,arrange makeup tool,False
+arrange_block,1,0,arrange block,True
+arrange_board,1,2,arrange board,True
+arrange_cake,0,1,arrange cake,True
+arrange_cart,0,3,arrange cart,True
+arrange_chair_cover,0,1,arrange chair cover,True
+arrange_cleaning_agent,0,3,arrange detergent,False
+arrange_clothing,0,13,arrange glove | arrange shirt | arrange shoe | arrange sock,False
+arrange_component,0,4,arrange frame,False
+arrange_container,5,28,arrange beer container | arrange beverage bottle | arrange beverage container | arrange cotton swab box | arrange jar | arrange lid | arrange medicine container | arrange pencil case | arrange tube,False
+arrange_cosmetics,5,2,arrange facial cleanser | arrange lipstick | arrange lotion | arrange makeup,False
+arrange_decoration,9,0,arrange figurine | arrange ornament,False
+arrange_flowerpot,0,1,arrange flowerpot,True
+arrange_food,2,17,arrange apple | arrange jelly | arrange pastry | arrange sandwich | arrange sauce | arrange sausage | arrange tea bag | arrange waffle,False
+arrange_fries,0,1,arrange fries,True
+arrange_furniture,1,20,arrange bed | arrange furniture | arrange sofa | arrange stool,False
+arrange_game_accessory,0,1,arrange game accessory,True
+arrange_hair,22,0,arrange eyelash | arrange hair | arrange wig,False
+arrange_hanger,0,10,arrange hanger,True
+arrange_item,14,15,arrange cotton swab product | arrange cylindrical object | arrange goods | arrange kit | arrange kitchen supply | arrange piece | arrange product display | arrange strip object | arrange tubular item,False
+arrange_ketchup,0,1,arrange ketchup,True
+arrange_kitchenware,0,3,arrange kitchen tool,False
+arrange_letter,0,1,arrange letter,True
+arrange_lighter,0,2,arrange lighter,True
+arrange_mask,1,2,arrange mask,False
+arrange_mat,0,9,arrange mat,True
+arrange_medicine,1,0,arrange herbal goods,False
+arrange_mirror,0,1,arrange mirror,False
+arrange_model,1,0,arrange model,True
+arrange_pad,0,1,arrange pad,True
+arrange_panel,1,0,arrange panel,True
+arrange_paper_material,0,1,arrange notebook,False
+arrange_peeler,0,1,arrange peeler,True
+arrange_plant,3,1,arrange plant,True
+arrange_plastic_strip,1,0,arrange plastic strip,True
+arrange_sand,2,0,arrange sand,True
+arrange_sign,0,1,arrange sign,True
+arrange_slippers,0,2,arrange slippers,True
+arrange_sports_equipment,0,1,arrange kettlebell,False
+arrange_stationery,1,8,arrange card holder | arrange correction fluid | arrange ruler | arrange sticker,False
+arrange_strip,1,0,arrange strip,True
+arrange_table_setting,0,1,arrange table setting,True
+arrange_tableware,3,7,arrange bowl | arrange cutlery | arrange glass | arrange plate | arrange straw | arrange tea set,False
+arrange_textile,0,10,arrange bed sheet,False
+arrange_tile,2,0,arrange tile,True
+arrange_toiletries,2,2,arrange body washes | arrange toothbrush,False
+arrange_tool,0,1,arrange scissors,False
+arrange_toy,0,5,arrange board game,False
+arrange_whiteboard,0,1,arrange whiteboard,True
+arrange_wooden_stick,0,2,arrange wooden stick,True
+arrange_yam,0,1,arrange yam,True
+arrange_yogurt,0,1,arrange yogurt,True
+assemble_alternator,0,1,assemble alternator,True
+assemble_appliance,0,15,assemble blender | assemble coffee machine | assemble compressor | assemble fan | assemble grinder | assemble motor,False
+assemble_badge,0,2,assemble badge,True
+assemble_base,0,1,assemble base,True
+assemble_beverage,1,0,assemble drink,False
+assemble_block,1,3,assemble block,True
+assemble_body,0,1,assemble blender blade head,False
+assemble_box_base,0,1,assemble box base,True
+assemble_car_starter_motor,0,1,assemble car starter motor,True
+assemble_cart,0,1,assemble cart,True
+assemble_casing,0,1,assemble casing,True
+assemble_circuit_board,0,1,assemble circuit board,True
+assemble_component,7,95,assemble bracket | assemble cable | assemble component | assemble door handle | assemble frame | assemble hardware | assemble lock | assemble part | assemble plug | assemble reflector | assemble reflector assembly | assemble reflector base | assemble starter | assemble starter motor | assemble wire,False
+assemble_container,1,14,assemble box | assemble cardboard box | assemble handbags,False
+assemble_door_frame,2,0,assemble door frame,False
+assemble_electronic_device,0,2,assemble computer,False
+assemble_flower,0,7,assemble flower,True
+assemble_food,2,2,assemble sandwich | assemble shaved ice,False
+assemble_furniture,5,63,assemble cabinet | assemble drawer | assemble rack | assemble shelf | assemble storage rack | assemble table,False
+assemble_generator,0,1,assemble generator,True
+assemble_harness,0,1,assemble harness,True
+assemble_headband,1,0,assemble headband,True
+assemble_iron_stand,0,1,assemble iron stand,True
+assemble_item,0,8,assemble device | assemble equipment | assemble long object | assemble product,False
+assemble_lamp,0,1,assemble lamp,True
+assemble_paper_material,0,12,assemble cardboard | assemble paper,False
+assemble_pedal,0,1,assemble pedal,True
+assemble_puzzle_board,0,1,assemble puzzle board,True
+assemble_sports_equipment,0,44,assemble barbell,False
+assemble_stand,1,0,assemble stand,True
+assemble_stationery,0,12,assemble marker | assemble pen,False
+assemble_strip,0,1,assemble strip,True
+assemble_structure,0,3,assemble structure,True
+assemble_support,0,2,assemble support,True
+assemble_toy,1,0,assemble block,False
+assemble_turn_signal,0,1,assemble turn signal,True
+assemble_wiring_harness,0,1,assemble wiring harness,True
+assemble_wooden_frame,0,1,assemble wooden frame,True
+assemble_wooden_structure,0,1,assemble wooden structure,True
+attach_beauty_tool,5,0,attach cupping tool | attach hairpin | attach perm paper | attach rod,False
+attach_component,4,2,attach connector | attach edge banding | attach gasket | attach hinge | attach slide rail,False
+attach_container,1,0,attach bag,False
+attach_corner_guard,0,4,attach corner guard,True
+attach_decoration,1,0,attach decoration,False
+attach_foot_pad,0,1,attach foot pad,True
+attach_hair,31,0,attach eyelash | attach eyelash extension | attach hair | attach hair extension,False
+attach_item,0,1,attach piece,False
+attach_paper_material,0,3,attach paper,False
+attach_sports_equipment,0,15,attach weight plate,False
+attach_stationery,2,2,attach label | attach tag,False
+bend_stick,1,0,bend stick,True
+bind_cardstock,0,1,bind cardstock,True
+bind_component,1,1,bind cable | bind hose,False
+bind_container,0,2,bind bag,False
+bind_paper_material,0,15,bind paper,False
+bind_rope,0,1,bind rope,True
+braid_hair,25,0,braid hair | braid hair extension weft | braid mannequin hair | braid wig | braid wig hair | braid wig model hair | braid wig strand,False
+brush_hair,44,0,brush hair | brush wig,False
+button_clothing,0,1,button shirt,False
+cap_container,2,0,cap bottle | cap jar,False
+carry_container,13,0,carry tray,False
+carry_tableware,2,0,carry cup,False
+check_clock,1,0,check clock,True
+check_clothing,0,1,check clothing,False
+check_container,2,4,check bag | check bottle | check box,False
+check_cosmetics,2,0,check cosmetics,False
+check_food,0,2,check seasoning | check snack,False
+check_furniture,0,1,check sofa,False
+check_information,1,0,check information,True
+check_item,1,1,check goods | check item,False
+check_mask,0,1,check mask,False
+check_medicine,7,0,check medicine,False
+check_paper_material,7,0,check bill | check book | check certificate | check data form | check document | check prescription,False
+check_spreadsheet,1,0,check spreadsheet,True
+check_toiletries,0,1,check soap,False
+chop_food,1,0,chop ginger,False
+clean_acne,2,0,clean acne,True
+clean_appliance,14,42,clean appliance | clean beverage machine | clean clipper | clean coffee machine | clean elliptical machine | clean fan | clean hair clipper | clean juicer | clean kettle | clean machine | clean microwave | clean refrigerator | clean stove | clean washing machine | clean water dispenser,False
+clean_ashtray,0,6,clean ashtray,True
+clean_barbershop,1,0,clean barbershop,True
+clean_bathroom_fixture,0,8,clean bathroom fixture,False
+clean_bathroom_surface,0,1,clean bathroom surface,True
+clean_bathtub,0,3,clean bathtub,False
+clean_beauty_tool,21,0,clean beauty tool | clean brush | clean comb | clean cupping jar | clean eyebrow pencil | clean hair roller | clean hairdressing tool | clean hairpin | clean manicure tool | clean rod | clean roller,False
+clean_beverage,1,1,clean coffee | clean wine,False
+clean_bike,0,11,clean bike,True
+clean_block,1,0,clean block,True
+clean_board,2,8,clean board,True
+clean_body,47,25,clean back | clean chin | clean customer | clean ear | clean ear canal | clean face | clean finger | clean hand | clean shower head | clean skin,False
+clean_carpet,0,3,clean carpet,True
+clean_cart,12,2,clean cart,True
+clean_cat_litter,0,1,clean cat litter,True
+clean_cement,1,0,clean cement,True
+clean_cleaning_agent,1,0,clean detergent,False
+clean_cleaning_tool,0,1,clean mop,False
+clean_clip,0,1,clean clip,True
+clean_clothing,4,107,clean clothing | clean glasses | clean shirt | clean shoe | clean underwear,False
+clean_colander,0,1,clean colander,True
+clean_compact,0,1,clean compact,True
+clean_component,5,41,clean baseboard | clean filter | clean frame | clean handle | clean juicer part | clean part | clean rod | clean soymilk maker part,False
+clean_contact_lens,0,1,clean contact lens,True
+clean_container,368,71,clean bag | clean basin | clean basket | clean bin | clean bottle | clean bottle cap | clean box | clean bucket | clean can | clean container | clean jar | clean jug | clean lid | clean mask | clean medicine bottle | clean medicine box | clean skincare container | clean spray bottle | clean trash can | clean tray | clean tube,False
+clean_control_panel,0,1,clean control panel,True
+clean_cosmetics,57,2,clean cosmetics | clean facial cleanser | clean lip gloss | clean lipstick | clean lotion | clean makeup | clean skin care product,False
+clean_crumb,0,1,clean crumb,True
+clean_cylinder,0,1,clean cylinder,True
+clean_decoration,4,3,clean ornament | clean painting | clean vase,False
+clean_display_stand,3,0,clean display stand,True
+clean_door,6,12,clean door,False
+clean_doormat,0,4,clean doormat,True
+clean_dresser,0,2,clean dresser,True
+clean_dressing,1,0,clean dressing,True
+clean_electronic_device,2,27,clean computer | clean keyboard | clean monitor | clean mouse | clean phone | clean remote control | clean speaker,False
+clean_faucet,2,0,clean faucet,False
+clean_fire_extinguisher,0,1,clean fire extinguisher,True
+clean_floor,120,46,clean floor,False
+clean_flowerpot,0,1,clean flowerpot,True
+clean_foam,1,0,clean foam,True
+clean_foil,0,1,clean foil,True
+clean_food,1,0,clean fungus,False
+clean_footwear,0,1,clean footwear,True
+clean_furniture,254,410,clean bar counter | clean bed | clean bench | clean bookcase | clean bookshelf | clean cabinet | clean chair | clean counter | clean countertop | clean desk | clean desktop | clean drawer | clean fitness chair | clean furniture | clean glass | clean headboard | clean nightstand | clean rack | clean shampoo bed | clean shelf | clean sofa | clean stool | clean table | clean tabletop,False
+clean_glass,0,1,clean glass,False
+clean_grille,1,1,clean grille,True
+clean_hair,4,0,clean eyelash | clean hair,False
+clean_hair_accessory,0,1,clean hair accessory,True
+clean_handrail,1,0,clean handrail,False
+clean_hanger,1,0,clean hanger,True
+clean_helmet,0,1,clean helmet,True
+clean_humidifier,0,1,clean humidifier,True
+clean_insole,0,2,clean insole,True
+clean_instrument,1,0,clean instrument,True
+clean_item,61,42,clean beauty cart item | clean device | clean display item | clean equipment | clean goods | clean item | clean product | clean supply | clean surface,False
+clean_kitchenware,6,1,clean kitchenware | clean pot | clean thermos | clean utensil,False
+clean_leaf,1,0,clean leaf,True
+clean_locker,0,4,clean locker,True
+clean_mask,2,0,clean mask,False
+clean_mat,0,5,clean mat,True
+clean_medicine,26,0,clean medicine,False
+clean_mirror,3,43,clean mirror,False
+clean_packaging,4,0,clean package,False
+clean_pad,0,1,clean pad,True
+clean_palette,0,3,clean palette,True
+clean_paper_material,25,7,clean book | clean paper,False
+clean_pimple,1,0,clean pimple,True
+clean_plant,1,0,clean plant,True
+clean_railing,15,3,clean railing,False
+clean_rod,2,0,clean rod,True
+clean_safe,0,1,clean safe,True
+clean_scanner,0,4,clean scanner,True
+clean_screen,0,2,clean screen,True
+clean_seat,0,6,clean seat,True
+clean_shelf_board,0,1,clean shelf board,True
+clean_shelf_layer,0,1,clean shelf layer,True
+clean_showerhead,0,13,clean showerhead,False
+clean_sign,1,1,clean sign,True
+clean_sink,20,97,clean sink,False
+clean_sports_equipment,0,111,clean ball | clean barbell | clean basketball | clean dumbbell | clean fitness equipment | clean kettlebell | clean treadmill | clean yoga mat,False
+clean_spray,0,1,clean spray,True
+clean_stain,0,1,clean stain,True
+clean_stationery,3,1,clean pen | clean tape dispenser,False
+clean_tableware,25,21,clean bowl | clean cup | clean dishware | clean plate | clean soap dish,False
+clean_telephone,0,1,clean telephone,True
+clean_textile,7,24,clean bed sheet | clean cloth | clean cushion | clean rag | clean towel,False
+clean_tile,0,1,clean tile,True
+clean_toilet,0,4,clean toilet,False
+clean_toilet_seat_cover,1,0,clean toilet seat cover,True
+clean_toiletries,28,1,clean air conditioner | clean hair care product | clean sanitary pad | clean shampoo | clean soap | clean toiletries | clean toothbrush | clean toothpaste,False
+clean_tool,7,14,clean scissors | clean tool,False
+clean_toy,10,1,clean toy,False
+clean_wall,3,4,clean wall,False
+clean_waste,0,3,clean debris,False
+clean_whiteboard,0,1,clean whiteboard,True
+clean_window,1,1,clean window,False
+clean_windowsill,0,4,clean windowsill,True
+close_container,0,1,close jug,False
+coil_component,0,28,coil cable,False
+coil_rope,0,30,coil rope,True
+collect_bamboo_stick,0,1,collect bamboo stick,True
+collect_block,0,2,collect block,True
+collect_cleaning_tool,0,1,collect steel wool ball,False
+collect_clothing,0,4,collect clothing,False
+collect_container,0,25,collect bag | collect bottle | collect box | collect bucket | collect can | collect carton | collect container,False
+collect_food,3,12,collect food | collect fruit | collect grain | collect ice | collect pepper | collect snack,False
+collect_hair,2,0,collect hair,False
+collect_item,3,1,collect goods | collect item | collect piece | collect product,False
+collect_packaging,1,5,collect package | collect parcel | collect wrapper,False
+collect_paper_material,1,35,collect book | collect card | collect paper,False
+collect_sign,0,1,collect sign,True
+collect_skewer,0,1,collect skewer,True
+collect_sports_equipment,0,6,collect ball | collect shuttlecock,False
+collect_spray,0,1,collect spray,True
+collect_stick,0,3,collect stick,True
+collect_tableware,0,11,collect bowl | collect cup | collect straw | collect tableware,False
+collect_textile,0,1,collect towel,False
+collect_thin_stick,0,2,collect thin stick,True
+collect_toiletries,1,1,collect tissue | collect toothbrush,False
+collect_toothpick,0,1,collect toothpick,True
+collect_toy,1,0,collect chess piece,False
+collect_waste,2,5,collect garbage | collect trash | collect waste,False
+collect_wooden_stick,0,2,collect wooden stick,True
+collect_wool,0,2,collect wool,True
+comb_hair,13,0,comb hair | comb wig,False
+connect_beauty_tool,1,0,connect rod,False
+connect_component,1,7,connect cable | connect wire,False
+connect_electronic_device,0,3,connect charger | connect phone,False
+cover_container,1,4,cover bin | cover box | cover jar,False
+cover_furniture,1,4,cover bed | cover chair | cover sofa | cover table,False
+cover_mattress,1,0,cover mattress,True
+cover_paper_material,0,1,cover book,False
+cover_tableware,0,3,cover bowl,False
+crush_food,2,1,crush garlic | crush ice,False
+curl_hair,5,0,curl hair | curl wig hair,False
+cut_board,7,0,cut board,True
+cut_cable_tie,0,1,cut cable tie,True
+cut_carrot,0,2,cut carrot,True
+cut_component,0,2,cut part | cut strap,False
+cut_container,1,3,cut bag | cut tray,False
+cut_decoration,1,0,cut decorative lines,False
+cut_food,46,12,cut fruit | cut ginger | cut herb | cut ingredient | cut lemon | cut lime | cut mango | cut orange | cut papaya | cut pear | cut pepper | cut potato | cut sausage | cut tomato | cut vegetable | cut watermelon,False
+cut_hair,870,0,cut hair,False
+cut_line,1,0,cut line,True
+cut_packaging,0,3,cut bubble wrap | cut tape,False
+cut_paper_material,0,3,cut document | cut paper,False
+cut_peach,0,1,cut peach,True
+cut_pulp_mold,1,0,cut pulp mold,True
+cut_rope,0,1,cut rope,True
+cut_staple,0,1,cut staple,True
+cut_strip,3,0,cut strip,True
+cut_tableware,5,0,cut cup | cut cup holder,False
+cut_textile,1,0,cut cloth,False
+dice_carrot,0,1,dice carrot,True
+dice_food,9,3,dice cucumber | dice mango | dice potato | dice vegetable | dice watermelon,False
+disassemble_appliance,0,4,disassemble compressor,False
+disassemble_body,0,1,disassemble cylinder head,False
+disassemble_casing,0,1,disassemble casing,True
+disassemble_component,0,1,disassemble starter,False
+disassemble_computer_tower,0,1,disassemble computer tower,True
+disassemble_container,0,9,disassemble box,False
+disassemble_engine,0,1,disassemble engine,True
+disassemble_generator,0,3,disassemble generator,True
+discard_container,0,2,discard bottle,False
+discard_paper_material,0,19,discard paper,False
+discard_peel,1,0,discard peel,True
+discard_tableware,0,1,discard cup,False
+discard_waste,2,13,discard debris | discard trash | discard waste,False
+dispense_liquid,0,1,dispense liquid,False
+divide_fries,0,1,divide fries,True
+divide_liquid,0,1,divide liquid,False
+divide_paper_material,0,1,divide paper,False
+draw_body,1,0,draw eyebrow,False
+draw_item,1,0,draw item,False
+draw_paper_material,0,1,draw card,False
+draw_whiteboard,0,1,draw whiteboard,True
+drill_door,1,0,drill door,False
+dry_container,0,1,dry container,False
+dry_hair,96,1,dry hair | dry wig,False
+dry_tableware,1,3,dry cup | dry tableware,False
+dye_hair,3,0,dye hair,False
+erase_paper_material,0,1,erase paper,False
+file_nail,5,0,file nail,False
+fill_appliance,0,7,fill kettle,False
+fill_container,7,57,fill bottle | fill box | fill container | fill jar | fill spray bottle | fill tissue box | fill tray,False
+fill_diffuser,0,1,fill diffuser,True
+fill_flowerpot,0,1,fill flowerpot,True
+fill_furniture,0,1,fill cabinet,False
+fill_kitchenware,1,0,fill pot,False
+fill_paper_material,3,0,fill form | fill registration book,False
+fill_soap_dispenser,0,1,fill soap dispenser,True
+fill_spray,0,1,fill spray,True
+fill_stationery,0,9,fill pen,False
+fill_tableware,8,10,fill bowl | fill cup | fill plate,False
+flatten_container,0,1,flatten cardboard box,False
+fold_clothing,10,43,fold apron | fold clothing | fold dress | fold garment | fold glove | fold shirt | fold sock | fold t-shirt | fold vest | fold wristband,False
+fold_container,8,62,fold bag | fold box | fold shower cap,False
+fold_furniture,0,2,fold chair,False
+fold_handkerchief,0,1,fold handkerchief,True
+fold_hoodie,0,1,fold hoodie,True
+fold_lanyard,0,1,fold lanyard,True
+fold_mask,1,0,fold mask,False
+fold_mat,0,2,fold mat,True
+fold_packaging,0,3,fold bubble wrap,False
+fold_pad,1,0,fold pad,True
+fold_paper_material,0,29,fold cardboard | fold envelope | fold grid paper | fold paper,False
+fold_sign,0,1,fold sign,True
+fold_sports_equipment,0,1,fold mat,False
+fold_sportswear,0,1,fold sportswear,True
+fold_textile,230,210,fold bed sheet | fold blanket | fold cloth | fold gauze | fold napkin | fold quilt | fold tablecloth | fold towel,False
+fold_toiletries,1,5,fold tissue,False
+fold_umbrella,0,1,fold umbrella,True
+fold_woven_bag,0,1,fold woven bag,True
+grind_food,0,1,grind garlic,False
+grind_nail,2,0,grind nail,False
+hang_bathrobe,0,1,hang bathrobe,True
+hang_beauty_tool,1,0,hang brush,False
+hang_cleaning_tool,0,1,hang mop,False
+hang_clothing,6,30,hang apron | hang belt | hang clothing | hang glasses | hang necklace | hang shirt | hang underwear,False
+hang_component,0,3,hang cable,False
+hang_container,0,6,hang bag,False
+hang_cosmetics,8,0,hang cosmetics,False
+hang_food,0,7,hang seasoning | hang snack,False
+hang_glassware,0,1,hang glassware,True
+hang_hanger,0,23,hang hanger,True
+hang_item,2,5,hang accessory | hang item | hang product,False
+hang_key,0,1,hang key,True
+hang_keychain,0,1,hang keychain,True
+hang_kitchenware,0,12,hang bottle opener | hang kitchen tool | hang kitchen utensil | hang kitchenware | hang utensil,False
+hang_merchandise,0,1,hang merchandise,True
+hang_mop_handle,0,1,hang mop handle,True
+hang_packaging,2,1,hang package,False
+hang_rope,0,4,hang rope,True
+hang_sports_equipment,0,4,hang band | hang hula hoop | hang weight plate,False
+hang_stationery,0,7,hang correction fluid | hang tag,False
+hang_tableware,0,6,hang cup | hang spoon,False
+hang_textile,0,23,hang bed sheet | hang cloth | hang towel,False
+hang_toiletries,6,0,hang toothbrush,False
+hang_tool,1,9,hang knife | hang scissors | hang tool,False
+heat_beauty_tool,1,0,heat cupping jar,False
+inflate_sports_equipment,0,11,inflate basketball,False
+insert_circuit_board,0,1,insert circuit board,True
+insert_component,0,8,insert battery | insert cable | insert connector | insert ink cartridge | insert wire,False
+insert_container,0,4,insert bag | insert bottle | insert tube,False
+insert_divider,0,1,insert divider,True
+insert_electronic_device,0,1,insert charger,False
+insert_fastener,0,1,insert fastener,True
+insert_paper_material,0,5,insert card | insert paper,False
+insert_photo,0,2,insert photo,True
+insert_stationery,0,1,insert tag,False
+insert_strip,1,0,insert strip,True
+insert_tableware,0,8,insert chopsticks | insert cup | insert straw,False
+insert_textile,0,6,insert blanket | insert pillow,False
+inspect_furniture,0,1,inspect chair,False
+install_alarm,0,1,install alarm,True
+install_appliance,0,1,install fan,False
+install_board,0,1,install board,True
+install_body,0,2,install cylinder head | install shower head,False
+install_clip,0,2,install clip,True
+install_component,18,5,install baseboard | install battery | install buckle | install door handle | install door stopper | install hinge | install ink cartridge | install lamp holder accessories | install lock | install part | install power strip | install rail | install stopper,False
+install_container,0,2,install bottle | install case,False
+install_door,1,0,install door,False
+install_fastener,0,2,install fastener,True
+install_foil,0,1,install foil,True
+install_furniture,0,3,install rack | install shelf,False
+install_lens,0,1,install lens,True
+install_line,2,0,install line,True
+install_net,0,2,install net,True
+install_nib,0,1,install nib,True
+install_packaging,0,11,install tape,False
+install_paper_material,0,4,install paper,False
+install_sports_equipment,0,41,install barbell | install weight plate,False
+install_stationery,0,4,install label | install tape dispenser,False
+install_tableware,1,1,install barbell plate | install plate,False
+install_textile,0,1,install cushion,False
+install_water_reservoir,0,1,install water reservoir,True
+install_water_tank,0,1,install water tank,True
+iron_clothing,3,2,iron jacket | iron pajama top | iron pants | iron shirt,False
+load_appliance,0,5,load dishwasher | load washing machine,False
+load_cargo,0,2,load cargo,True
+load_component,0,2,load cable,False
+load_container,0,8,load bottle | load box | load bucket,False
+load_food,0,4,load food,False
+load_packaging,0,6,load package | load tape,False
+load_paper_material,0,1,load paper,False
+load_staple,0,1,load staple,True
+load_stationery,0,1,load tape dispenser,False
+load_tableware,0,8,load bowl | load cup | load tableware,False
+load_textile,1,0,load towel,False
+load_toiletries,0,1,load tissue,False
+massage_body,363,0,massage abdomen | massage arm | massage back | massage back muscle | massage body | massage calf | massage customer | massage eyes | massage face | massage finger | massage hair | massage hand | massage head | massage left arm | massage leg | massage leg muscle | massage lower back | massage muscle | massage neck | massage scalp | massage shoulders | massage skin | massage spine | massage upper arm | massage waist,False
+move_container,2,11,move bottle | move box,False
+open_container,0,13,open bag | open box,False
+open_packaging,0,1,open package,False
+open_paper_material,0,1,open paper,False
+operate_electronic_device,5,0,operate cash register | operate computer | operate mouse,False
+organize_adapter,0,1,organize adapter,True
+organize_appliance,1,17,organize hair dryer | organize kettle | organize refrigerator | organize vacuum cleaner,False
+organize_badge,0,2,organize badge,True
+organize_band,3,19,organize band,True
+organize_beauty_tool,55,8,organize beauty tool | organize brush | organize clip | organize foam roller | organize hair clip | organize hair tool | organize hairband | organize hairdressing tool | organize hairpin | organize makeup tool | organize nail drill | organize perm rod | organize perm supply | organize perm tool | organize rod | organize roller,False
+organize_beverage,3,103,organize beer | organize beverage | organize coffee | organize cola | organize drink | organize juice | organize milk | organize tea | organize water,False
+organize_block,1,7,organize block,True
+organize_brush,3,0,organize brush,True
+organize_cargo,0,5,organize cargo,True
+organize_cart,5,3,organize cart,True
+organize_cleaning_agent,0,7,organize detergent,False
+organize_cleaning_tool,0,2,organize sponge,False
+organize_clip,1,11,organize clip,True
+organize_clothing,13,242,organize clothing | organize earring | organize glasses | organize glove | organize hat | organize jewelry | organize necklace | organize shoe | organize slipper | organize sock | organize underwear | organize wristband,False
+organize_coffee_equipment,0,2,organize coffee equipment,True
+organize_component,0,97,organize cable | organize frame | organize ink cartridge | organize part | organize strap,False
+organize_condiment,0,3,organize condiment,True
+organize_container,357,826,organize bag | organize basin | organize basket | organize beverage container | organize bottle | organize box | organize bucket | organize can | organize carton | organize container | organize cotton swab box | organize jar | organize lid | organize medicine box | organize spray bottle | organize tray | organize tube | organize vial | organize water bottle | organize water container,False
+organize_cosmetics,169,140,organize balm | organize beauty product | organize cosmetics | organize cream | organize facial cleanser | organize facial mask | organize lip gloss | organize lipstick | organize makeup | organize mask | organize skin care product,False
+organize_data_cable,0,1,organize data cable,True
+organize_decoration,1,1,organize painting | organize vase,False
+organize_divider,0,1,organize divider,True
+organize_doormat,0,1,organize doormat,True
+organize_drawer_contents,0,1,organize drawer contents,True
+organize_electronic_device,0,4,organize charger | organize headphones | organize remote control,False
+organize_fitness_gear,0,1,organize fitness gear,True
+organize_floss,0,2,organize floss,True
+organize_food,20,208,organize bread | organize candy | organize coffee ingredient | organize food | organize fruit | organize herb | organize ingredient | organize ingredients | organize jelly | organize noodle | organize nut | organize pastry | organize rice | organize sandwich | organize sauce | organize sausage | organize seasoning | organize snack | organize sugar | organize tea bag,False
+organize_furniture,16,310,organize bookshelf | organize cabinet | organize chair | organize counter | organize countertop | organize desk | organize desktop | organize drawer | organize front desk | organize furniture | organize glass | organize nightstand | organize rack | organize shelf | organize table | organize wardrobe,False
+organize_gardening_tool,0,1,organize gardening tool,True
+organize_granule,0,1,organize granule,True
+organize_grocery,0,3,organize grocery,True
+organize_hair,8,0,organize hair | organize wig,False
+organize_hair_accessory,0,2,organize hair accessory,True
+organize_hand_sanitizer,0,2,organize hand sanitizer,True
+organize_hanger,0,17,organize hanger,True
+organize_item,533,413,organize accessory | organize art supply | organize bath product | organize bathing product | organize bathroom item | organize bathroom supply | organize beauty supply | organize bedroom item | organize beverage supply | organize cabinet item | organize clutter | organize countertop item | organize cup supply | organize daily necessity | organize dairy product | organize delivery item | organize dental supply | organize desk item | organize desk supply | organize desktop item | organize device | organize disinfection supply | organize disposable item | organize equipment | organize goods | organize grooming item | organize household item | organize household supply | organize item | organize kitchen item | organize long item | organize makeup supply | organize miscellaneous item | organize office item | organize office supply | organize packing supply | organize personal item | organize product | organize sample | organize sanitary product | organize storage cabinet item | organize strip-shaped object | organize sundries | organize supply | organize tea supply | origanize_some_object,False
+organize_kitchenware,0,30,organize bottle opener | organize cookware | organize kitchen tool | organize kitchenware | organize pot | organize utensil,False
+organize_knee_pad,0,1,organize knee pad,True
+organize_knot,0,1,organize knot,True
+organize_lanyard,0,2,organize lanyard,True
+organize_light_string,0,2,organize light string,True
+organize_lighter,0,2,organize lighter,True
+organize_mask,1,4,organize mask,False
+organize_mat,0,1,organize mat,True
+organize_medicine,155,3,organize medicinal material | organize medicine | organize medicine product | organize pill,False
+organize_metal_tool,0,1,organize metal tool,True
+organize_nail,2,0,organize nail | organize nail tip,False
+organize_nail_polish,49,0,organize nail polish,False
+organize_notepad,0,1,organize notepad,True
+organize_packaging,24,99,organize bubble wrap | organize package | organize paper packaging | organize parcel | organize plastic wrap | organize tape,False
+organize_paper_material,508,287,organize book | organize card | organize document | organize leaflet | organize magazine | organize notebook | organize paper,False
+organize_patch,1,0,organize patch,True
+organize_peeler,0,1,organize peeler,True
+organize_powder,3,0,organize powder,True
+organize_produce,0,1,organize produce,True
+organize_puff,0,1,organize puff,True
+organize_pump,0,1,organize pump,True
+organize_refill,0,6,organize refill,True
+organize_ribbon,0,1,organize ribbon,True
+organize_rod,3,0,organize rod,True
+organize_roll,0,4,organize roll,True
+organize_rope,0,11,organize rope,True
+organize_shoebox,0,1,organize shoebox,True
+organize_sign,0,5,organize sign,True
+organize_slippers,0,1,organize slippers,True
+organize_sports_equipment,0,82,organize ball | organize dumbbell | organize fitness equipment | organize jump rope | organize kettlebell | organize racket | organize shuttlecock | organize sports equipment | organize weight plate | organize whistle | organize yoga mat,False
+organize_spray,0,1,organize spray,True
+organize_stationery,28,145,organize clip | organize colored pencil | organize crayon | organize folder | organize label | organize marker | organize paperclip | organize pen | organize pencil | organize ruler | organize stationery | organize sticker | organize tag,False
+organize_stick,0,4,organize stick,True
+organize_strip,0,1,organize strip,True
+organize_tableware,19,354,organize bowl | organize chopstick | organize chopsticks | organize coaster | organize cup | organize cup holder | organize cutlery | organize dish | organize dishware | organize fork | organize glass | organize placemat | organize spoon | organize straw | organize tableware,False
+organize_textile,19,105,organize bedding | organize blanket | organize cloth | organize cushion | organize gauze | organize pillow | organize pillowcase | organize sheet | organize towel,False
+organize_toilet_paper_roll,0,1,organize toilet paper roll,True
+organize_toiletries,60,204,organize body wash | organize conditioner | organize cotton pad | organize cotton roll | organize cotton swab | organize dish soap | organize hygiene product | organize pad | organize personal care product | organize sanitary pad | organize shampoo | organize shower gel | organize soap | organize tissue | organize toiletries | organize toothbrush | organize toothpaste | organize wet wipe,False
+organize_tool,9,4,organize cutter | organize file | organize tool,False
+organize_toothpick,0,1,organize toothpick,True
+organize_toy,64,38,organize block | organize board game | organize chess piece | organize game | organize game component | organize toy,False
+organize_transparent_hemispherical_covers,0,1,organize transparent hemispherical covers,True
+organize_umbrella,0,2,organize umbrella,True
+organize_waste,0,2,organize debris,False
+organize_wooden_stick,0,5,organize wooden stick,True
+organize_workstation,0,1,organize workstation,True
+pack_appliance,0,4,pack hair dryer,False
+pack_badge,0,8,pack badge,True
+pack_bead,0,1,pack bead,True
+pack_beverage,17,3,pack coffee | pack drink | pack tea,False
+pack_brace,0,1,pack brace,True
+pack_cardboard_piece,0,1,pack cardboard piece,True
+pack_clothing,0,15,pack clothing | pack wristband,False
+pack_component,0,19,pack cable | pack hardware | pack part | pack strap,False
+pack_container,166,163,pack backpack | pack bag | pack bottle | pack box | pack can | pack container | pack jar | pack schoolbag | pack shower cap | pack tube,False
+pack_corn_kernel,0,1,pack corn kernel,True
+pack_cosmetics,2,0,pack cream | pack lip gloss,False
+pack_cylinder,0,1,pack cylinder,True
+pack_electronic_device,0,2,pack camera | pack headphone,False
+pack_first_aid_kit,0,2,pack first aid kit,True
+pack_foam_net_sleeve,0,1,pack foam net sleeve,True
+pack_food,13,27,pack bread | pack dessert | pack food | pack fruit | pack herb | pack ingredient | pack meal | pack nut | pack orange | pack peanut | pack seed | pack snack | pack strawberry | pack takeout,False
+pack_glass,0,1,pack glass,False
+pack_granule,1,2,pack granule,True
+pack_grip_strengthener,0,2,pack grip strengthener,True
+pack_item,4,15,pack accessory | pack circular object | pack coffee supply | pack cylindrical object | pack equipment | pack goods | pack item | pack long item | pack piece | pack product | pack round object,False
+pack_lanyard,0,8,pack lanyard,True
+pack_letter,0,1,pack letter,True
+pack_lighter,0,1,pack lighter,True
+pack_medicine,8,0,pack medicine,False
+pack_mesh,0,2,pack mesh,True
+pack_nail,0,2,pack nail,False
+pack_nail_polish,14,0,pack nail polish,False
+pack_packaging,2,8,pack bubble wrap | pack package,False
+pack_paper_material,0,28,pack card | pack envelope | pack paper,False
+pack_rope,0,6,pack rope,True
+pack_sign,0,3,pack sign,True
+pack_sports_equipment,0,2,pack ball | pack shuttlecock,False
+pack_sports_gear,0,1,pack sports gear,True
+pack_stand,0,1,pack stand,True
+pack_stationery,1,6,pack card holder | pack label | pack pencil | pack tag,False
+pack_strip,0,1,pack strip,True
+pack_tableware,2,15,pack bowl | pack chopsticks | pack cup | pack glass | pack straw,False
+pack_textile,0,14,pack bedding | pack cloth | pack quilt | pack towel,False
+pack_toiletries,0,3,pack tissue | pack toiletries,False
+pack_tool,0,1,pack knife,False
+pack_toy,3,4,pack puzzle | pack toy,False
+paint_nail,2,0,paint nail,False
+pair_tableware,0,8,pair cup | pair dishware,False
+peel_food,17,20,peel avocado | peel egg | peel fruit | peel garlic | peel longan | peel mango | peel nut | peel onion | peel orange | peel peanut | peel watermelon,False
+peel_stationery,1,0,peel label,False
+peel_strip,1,0,peel strip,True
+perm_hair,22,0,perm hair | perm mannequin head hair,False
+pick_packaging,0,1,pick package,False
+place_beauty_tool,1,0,place hair paper,False
+place_beverage,0,1,place tea,False
+place_clothing,1,0,place glove,False
+place_container,2,2,place bottle | place box | place tray,False
+place_food,1,1,place bread | place food,False
+place_item,1,0,place product,False
+place_medicine,2,0,place medicine | place medicine product,False
+place_paper_material,1,1,place paper,False
+place_price_tags,1,0,place price tags,True
+place_tableware,4,1,place cup | place plate,False
+place_textile,1,0,place cloth,False
+place_umbrella,0,2,place umbrella,True
+plug_electronic_device,0,1,plug charger,False
+polish_container,1,0,polish lid,False
+polish_furniture,0,1,polish bench,False
+polish_nail,31,0,polish fingernail | polish nail | polish nail piece | polish nail tip,False
+polish_sink,0,1,polish sink,False
+pour_beverage,4,50,pour beverage | pour cola | pour drink | pour juice | pour liquid | pour milk | pour tea | pour water,False
+pour_cleaner,0,1,pour cleaner,True
+pour_container,0,8,pour bag | pour bottle | pour box,False
+pour_food,3,4,pour ingredient | pour liquid | pour snack | pour tea bag | pour topping,False
+pour_item,0,2,pour item,False
+pour_liquid,0,8,pour liquid,False
+pour_plant,0,1,pour plant,True
+pour_powder,0,4,pour powder,True
+pour_tableware,0,18,pour bowl | pour cup | pour straw,False
+pour_toiletries,0,3,pour liquid,False
+press_button,1,0,press button,True
+press_mat,0,1,press mat,True
+press_nail,1,0,press nail,False
+press_stationery,1,0,press label,False
+punch_paper_material,0,13,punch paper,False
+rearrange_container,0,1,rearrange beverage container,False
+rearrange_kitchenware,0,1,rearrange cookware,False
+reassemble_component,0,1,reassemble starter,False
+reassemble_computer_host,0,1,reassemble computer host,True
+reassemble_sports_equipment,0,1,reassemble barbell,False
+reassemble_stationery,0,2,reassemble pen,False
+remove_acne,6,0,remove acne,True
+remove_appliance,0,1,remove kettle,False
+remove_beauty_tool,17,0,remove clip | remove hair roller | remove rod | remove rubber band,False
+remove_beverage,0,3,remove beverage | remove drink,False
+remove_comedone,3,0,remove comedone,True
+remove_container,3,13,remove bag | remove bottle | remove box,False
+remove_cosmetics,2,0,remove cosmetics | remove mask,False
+remove_decoration,1,0,remove ornament,False
+remove_electronic_device,0,1,remove remote control,False
+remove_food,3,8,remove bread | remove food | remove ice | remove jelly | remove nut | remove snack | remove strawberry,False
+remove_glue,1,0,remove glue,True
+remove_hair,1,1,remove hair,False
+remove_impurities,1,0,remove impurities,True
+remove_item,0,1,remove item,False
+remove_kitchenware,0,1,remove thermos,False
+remove_nail_polish,1,0,remove nail polish,False
+remove_packaging,1,3,remove film | remove package | remove tape,False
+remove_paper_material,3,0,remove book,False
+remove_sports_equipment,0,8,remove weight plate,False
+remove_stationery,0,46,remove label,False
+remove_stem,1,0,remove stem,True
+remove_suitcase,0,1,remove suitcase,True
+remove_tableware,0,1,remove cup,False
+remove_textile,4,0,remove bedding | remove pillow,False
+remove_toiletries,0,5,remove toothpaste,False
+repair_hair,1,0,repair eyelash,False
+replace_beverage,0,1,replace milk,False
+replace_body,0,1,replace brush head,False
+replace_bulb,0,1,replace bulb,True
+replace_clothing,0,13,replace shoelace,False
+replace_component,0,17,replace battery | replace wheel,False
+replace_container,0,5,replace bag,False
+replace_decoration,0,1,replace painting,False
+replace_ink,0,1,replace ink,True
+replace_lead,0,1,replace lead,True
+replace_mat,0,1,replace mat,True
+replace_packaging,0,31,replace tape,False
+replace_paper_material,0,1,replace paper,False
+replace_picture,0,3,replace picture,True
+replace_refill,0,2,replace refill,True
+replace_sneaker_laces,0,1,replace sneaker laces,True
+replace_sports_equipment,0,1,replace weight plate,False
+replace_toiletries,0,2,replace tissue,False
+restock_container,0,1,restock beverage bottle,False
+restock_packaging,0,1,restock item in blue packaging,False
+rinse_clip,0,1,rinse clip,True
+rinse_component,1,1,rinse filter | rinse part,False
+rinse_container,0,1,rinse lid,False
+rinse_floor,1,0,rinse floor,False
+rinse_food,1,1,rinse ingredient | rinse vegetable,False
+rinse_hair,14,0,rinse hair,False
+rinse_rubber_bands,1,0,rinse rubber bands,True
+rinse_tableware,2,8,rinse cup | rinse glass,False
+rinse_tong,0,1,rinse tong,True
+roll_beauty_tool,24,0,roll perm rod | roll rod,False
+roll_body,4,0,roll back | roll lower back | roll waist,False
+roll_clothing,1,0,roll pants,False
+roll_hair,59,0,roll hair | roll hair section | roll wig,False
+roll_paper_material,1,0,roll paper,False
+roll_sports_equipment,0,2,roll yoga mat,False
+roll_textile,0,4,roll napkin | roll towel,False
+scan_barcode,1,0,scan barcode,True
+scan_container,1,15,scan box,False
+scan_packaging,1,29,scan package | scan parcel,False
+scan_stationery,0,4,scan label,False
+scoop_almond,0,1,scoop almond,True
+scoop_beverage,1,0,scoop drink,False
+scoop_food,3,4,scoop candy | scoop ice | scoop ice cream | scoop ingredients,False
+scoop_powder,0,1,scoop powder,True
+scrape_aloe_vera,1,0,scrape aloe vera,True
+scrape_body,28,0,scrape back | scrape customer | scrape face | scrape forehead | scrape head | scrape leg | scrape neck | scrape scalp,False
+scrape_food,2,0,scrape ice,False
+scrape_gel,1,0,scrape gel,True
+scrape_sand,3,0,scrape sand,True
+screw_board,1,0,screw board,True
+screw_component,1,0,screw screw,False
+screw_container,0,1,screw lid,False
+screw_pump,0,1,screw pump,True
+seal_container,1,88,seal bag | seal box | seal jar,False
+seal_paper_material,0,20,seal cardboard | seal envelope,False
+secure_beauty_tool,1,0,secure roller,False
+secure_container,0,9,secure bag | secure box,False
+secure_hair,2,0,secure hair,False
+secure_rope,0,1,secure rope,True
+separate_food,1,1,separate ingredient | separate snack,False
+separate_hair,1,0,separate hair,False
+separate_tableware,1,1,separate bowl | separate cup holder,False
+sew_clothing,1,4,sew clothing | sew hat | sew pants | sew shirt,False
+sew_textile,0,1,sew cloth,False
+shake_container,0,2,shake bottle,False
+shave_body,1,0,shave neck,False
+shave_hair,2,0,shave beard | shave hair,False
+slice_food,12,14,slice apple | slice banana | slice cucumber | slice fruit | slice ginger | slice gourd | slice lemon | slice lime | slice sausage | slice tomato | slice vegetable,False
+sort_appliance,0,1,sort beauty blender,False
+sort_band,0,1,sort band,True
+sort_beauty_tool,13,3,sort brush | sort clip | sort hairpin | sort perm rod | sort rod | sort roller,False
+sort_beverage,0,3,sort beverage | sort drink | sort tea,False
+sort_block,0,2,sort block,True
+sort_board,1,0,sort board,True
+sort_circuit_board,0,1,sort circuit board,True
+sort_cleaning_tool,1,0,sort brush,False
+sort_clip,0,9,sort clip,True
+sort_clothing,1,5,sort clothing | sort earring | sort glove | sort sock | sort underwear,False
+sort_component,1,2,sort cable | sort coil | sort hardware,False
+sort_container,3,73,sort bag | sort beverage container | sort bottle | sort box | sort can | sort cardboard box | sort container | sort jar | sort lid | sort pencil case,False
+sort_cosmetics,1,1,sort cosmetics | sort cream,False
+sort_earplug,0,2,sort earplug,True
+sort_food,1,20,sort bean | sort bread | sort candy | sort food | sort fruit | sort jelly | sort pastry | sort snack | sort tea bag,False
+sort_game_accessory,0,1,sort game accessory,True
+sort_hair,1,0,sort hair,False
+sort_hanger,0,1,sort hanger,True
+sort_item,2,20,sort accessory | sort bakery item | sort item | sort office supply | sort packaged item | sort raw material,False
+sort_kitchenware,0,3,sort bottle opener | sort kitchen tool | sort utensil,False
+sort_letter,0,1,sort letter,True
+sort_lighter,0,5,sort lighter,True
+sort_mask,0,2,sort mask,False
+sort_nail,1,0,sort nail,False
+sort_note,0,2,sort note,True
+sort_notepad,0,1,sort notepad,True
+sort_packaging,0,61,sort package | sort packaging,False
+sort_paper_material,8,30,sort book | sort card | sort cardboard | sort document | sort flier | sort notebook | sort paper,False
+sort_puff,0,1,sort puff,True
+sort_recyclable,0,3,sort recyclable,True
+sort_refill,0,3,sort refill,True
+sort_ring,0,1,sort ring,True
+sort_rod,1,0,sort rod,True
+sort_sports_equipment,0,9,sort shuttlecock | sort sports equipment,False
+sort_stationery,3,27,sort clip | sort folder | sort label | sort paperclip | sort pen | sort pencil | sort stationery,False
+sort_strip,0,1,sort strip,True
+sort_tableware,1,28,sort chopstick | sort coaster | sort cup | sort cutlery | sort straw | sort tableware,False
+sort_toiletries,2,3,sort soap | sort toiletries | sort toothbrush,False
+sort_toy,4,3,sort chess piece | sort game component | sort toy,False
+spray_body,1,0,spray customer,False
+spread_textile,0,4,spread bed sheet | spread quilt,False
+stack_beauty_tool,1,0,stack rod,False
+stack_block,0,5,stack block,True
+stack_clothing,3,1,stack garment | stack underwear,False
+stack_cone,0,1,stack cone,True
+stack_container,96,131,stack bag | stack basin | stack basket | stack box | stack can | stack container | stack cup lid | stack lid | stack medicine box | stack tray,False
+stack_crate,0,4,stack crate,True
+stack_food,1,0,stack food,False
+stack_item,0,1,stack item,False
+stack_mask,1,0,stack mask,False
+stack_medicine,1,0,stack medicine,False
+stack_note,0,2,stack note,True
+stack_notepad,0,1,stack notepad,True
+stack_packaging,2,10,stack package,False
+stack_paper_material,21,47,stack book | stack card | stack envelope | stack flier | stack notebook | stack paper,False
+stack_pulp_mold,1,1,stack pulp mold,True
+stack_shoe_cover,1,0,stack shoe cover,True
+stack_soap_dispenser,0,1,stack soap dispenser,True
+stack_stationery,0,2,stack ruler,False
+stack_tableware,6,115,stack bowl | stack coaster | stack cup | stack cup holder | stack dishware | stack placemat | stack plate | stack tableware,False
+stack_textile,9,26,stack blanket | stack cloth | stack towel,False
+stack_toiletries,4,5,stack hygiene product | stack soap | stack tissue | stack toilet roll | stack wet wipe,False
+stamp_paper_material,0,1,stamp paper,False
+staple_paper_material,0,24,staple paper,False
+stick_beauty_tool,1,0,stick hairpin,False
+stick_container,0,1,stick box,False
+stick_hair,5,0,stick eyelash,False
+stick_hook,0,2,stick hook,True
+stick_item,0,1,stick item,False
+stick_nail,1,0,stick nail tip,False
+stick_packaging,0,19,stick film | stick tape,False
+stick_paper_material,0,11,stick card | stick paper,False
+stick_patch,1,0,stick patch,True
+stick_pattern,1,0,stick pattern,True
+stick_photo,0,1,stick photo,True
+stick_stamp,0,1,stick stamp,True
+stick_stationery,76,346,stick label | stick sticker | stick tag,False
+stick_strip,0,1,stick strip,True
+stir_beverage,3,14,stir coffee | stir drink | stir liquid,False
+stir_cosmetics,5,0,stir cream | stir mask | stir paste,False
+stir_food,4,2,stir egg | stir food | stir ingredient | stir ingredients | stir potato,False
+stir_hair_dye,1,0,stir hair dye,False
+stir_tableware,0,1,stir cup,False
+store_container,0,1,store bottle,False
+straighten_beauty_tool,1,0,straighten perm rod,False
+straighten_hair,47,0,straighten hair | straighten wig,False
+style_hair,9,0,style hair | style wig,False
+sweep_furniture,0,1,sweep sofa,False
+sweep_hair,12,0,sweep hair,False
+sweep_paper_material,1,10,sweep paper,False
+sweep_waste,19,14,sweep debris | sweep garbage | sweep trash | sweep waste,False
+tap_body,1,0,tap back,False
+tattoo_body,2,0,tattoo eyebrow,False
+tear_packaging,3,1,tear film | tear plastic wrap | tear tape,False
+tear_seal,0,1,tear seal,True
+tear_stationery,0,8,tear label,False
+test_stationery,0,1,test marker,False
+thread_bead,0,1,thread bead,True
+thread_clothing,0,23,thread shoe | thread shoelace,False
+thread_component,0,6,thread part | thread wire,False
+thread_container,0,1,thread box,False
+thread_fastener,0,1,thread fastener,True
+thread_lanyard,0,1,thread lanyard,True
+thread_rope,0,2,thread rope,True
+thread_sports_equipment,0,3,thread whistle,False
+thread_string,0,1,thread string,True
+throw_waste,0,2,throw trash,False
+tie_bathrobe,0,1,tie bathrobe,True
+tie_clothing,0,3,tie shoe | tie shoelace,False
+tie_container,0,24,tie bag,False
+tie_hair,2,0,tie hair,False
+tie_shopping_cart,0,1,tie shopping cart,True
+tighten_component,0,2,tighten bolt | tighten screw,False
+tighten_container,0,4,tighten bag | tighten jar | tighten lid,False
+transfer_container,1,1,transfer box,False
+transfer_food,0,3,transfer food | transfer pastry | transfer rice,False
+transfer_french_fries,0,1,transfer french fries,True
+transport_container,5,0,transport tray,False
+trim_body,3,0,trim eyebrow,False
+trim_clothing,5,0,trim clothing | trim pajamas | trim underwear,False
+trim_component,0,7,trim part,False
+trim_door,3,0,trim door,False
+trim_flower,0,3,trim flower,True
+trim_groove,2,0,trim groove,True
+trim_hair,44,0,trim beard | trim hair | trim long black hair | trim wig,False
+trim_item,0,1,trim piece,False
+trim_nail,13,0,trim fingernail | trim nail,False
+trim_skeleton,0,1,trim skeleton,True
+trim_slot,1,0,trim slot,True
+trim_textile,45,3,trim blanket | trim cloth | trim thread | trim threads | trim towel,False
+trim_wood,1,0,trim wood,True
+tuck_textile,0,2,tuck bed sheet,False
+unfold_beauty_tool,1,0,unfold ear cover,False
+unfold_cage,0,1,unfold cage,True
+unfold_container,0,1,unfold basket,False
+unfold_mat,0,15,unfold mat,True
+unfold_textile,0,1,unfold towel,False
+untangle_band,1,0,untangle band,True
+unwrap_container,0,1,unwrap box,False
+unwrap_food,1,0,unwrap orange,False
+unwrap_slippers,0,1,unwrap slippers,True
+vacuum_waste,0,1,vacuum debris,False
+wash_appliance,2,0,wash juicer | wash kettle,False
+wash_beauty_tool,3,0,wash brush | wash perm rod | wash roller,False
+wash_board,0,1,wash board,True
+wash_body,2,0,wash customer | wash face,False
+wash_brush,1,0,wash brush,True
+wash_cleaning_tool,0,1,wash sponge,False
+wash_clip,0,1,wash clip,True
+wash_clothing,18,7,wash clothing,False
+wash_colander,0,1,wash colander,True
+wash_component,4,0,wash filter | wash part,False
+wash_container,8,6,wash bag | wash basin | wash bin | wash bottle | wash box | wash bucket | wash container,False
+wash_cover,1,0,wash cover,True
+wash_dummy,1,0,wash dummy,True
+wash_food,7,1,wash bean | wash cordyceps | wash ingredient | wash lemon | wash lettuce | wash peach gum | wash potato,False
+wash_furniture,1,0,wash glass,False
+wash_hair,134,0,wash hair | wash mannequin head hair | wash wig,False
+wash_kitchenware,14,2,wash cookware | wash kitchenware | wash pot | wash strainer | wash utensil | wash wok,False
+wash_mat,1,0,wash mat,True
+wash_paper_material,1,0,wash paper,False
+wash_tableware,26,21,wash bowl | wash cup | wash dish | wash glass | wash measuring cup | wash spoon | wash tableware,False
+wash_textile,24,5,wash cloth | wash rag | wash towel,False
+wash_tool,1,0,wash tool,False
+water_plant,1,3,water plant,True
+wet_hair,2,0,wet hair,False
+whip_cosmetics,1,0,whip cream,False
+wind_component,0,4,wind cable,False
+wind_hair,1,0,wind hair,False
+wind_rope,2,0,wind rope,True
+wrap_bandage,0,1,wrap bandage,True
+wrap_beauty_tool,3,0,wrap grinding pen | wrap perm cotton | wrap perm rod,False
+wrap_body,2,0,wrap head,False
+wrap_component,3,5,wrap cable | wrap connector | wrap power strip | wrap strap,False
+wrap_container,0,19,wrap bag | wrap box | wrap glass,False
+wrap_hair,11,0,wrap hair,False
+wrap_item,1,3,wrap device | wrap item,False
+wrap_paper_material,0,3,wrap cardboard | wrap notebook,False
+wrap_rope,0,6,wrap rope,True
+wrap_sports_equipment,0,3,wrap jump rope | wrap whistle,False
+wrap_strip,0,1,wrap strip,True
+wrap_tableware,0,18,wrap bowl | wrap cup | wrap glass,False
+wrap_textile,0,1,wrap towel,False
+wring_textile,6,0,wring cloth | wring towel,False
+write_paper_material,13,6,write book | write document | write form | write notebook | write paper,False
+write_spreadsheet,1,0,write spreadsheet,True
+write_stationery,1,0,write tag,False

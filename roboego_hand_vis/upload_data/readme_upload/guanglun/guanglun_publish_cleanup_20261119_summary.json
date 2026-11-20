@@ -1,0 +1,11 @@
+{
+  "samples": 4338,
+  "errors": 0,
+  "removed_files": 2441,
+  "removed_locks": 2429,
+  "removed_upload_logs": 3,
+  "removed_temporary_directories": 3,
+  "removed_bytes": 201293913,
+  "changed_samples": 2429,
+  "backup_created": false
+}

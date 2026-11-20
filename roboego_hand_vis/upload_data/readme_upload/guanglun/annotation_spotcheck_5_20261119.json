@@ -1,0 +1,1948 @@
+[
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000070/3e57fe08bd6540ecb9e9b87c62c1c34b/annotation/episode_000000_structured.json",
+    "annotation": {
+      "schema_version": "1.0",
+      "episode_dir": "/home/jianzhi/batch_0000070/3e57fe08bd6540ecb9e9b87c62c1c34b",
+      "source": {
+        "file": "/home/jianzhi/batch_0000070/3e57fe08bd6540ecb9e9b87c62c1c34b/meta/annotations.json",
+        "sha256": "91a0890f161fd65a269803aafa67100c0ac5410495335e2c4cb4e60a51d4984c"
+      },
+      "timesteps_s": [],
+      "finish_reason": "stop",
+      "objects": [
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        },
+        {
+          "name": "basket",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        },
+        {
+          "name": "shelf",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        }
+      ],
+      "scene": "Wiping and stocking medicine boxes in a pharmacy retail environment.",
+      "subtask": [
+        {
+          "start_s": 0.0,
+          "end_s": 6.0,
+          "text": "Wipe the medicine box and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 6.0,
+          "end_s": 46.0,
+          "text": "Take the medicine box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "take",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 46.0,
+          "end_s": 95.0,
+          "text": "Take the medicine box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "take",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 95.0,
+          "end_s": 138.0,
+          "text": "Take the medicine box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "take",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 138.0,
+          "end_s": 179.5,
+          "text": "Take the medicine box from the shopping basket and wipe it",
+          "arm": null,
+          "action": [
+            "take",
+            "wipe"
+          ],
+          "object": "box",
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=None"
+        }
+      ],
+      "task_description": "Wipe the medicine box in hand and place it in the shopping basket, then take out the medicine boxes from the shopping basket one by one, wipe them and place them in the corresponding positions on the shelf.",
+      "tasks": [
+        {
+          "start_s": 0.0,
+          "end_s": 6.0,
+          "task": "Store the medicine box",
+          "objects": [],
+          "outcome": "success",
+          "success_predicate": "Source-labelled success; no visual verification.",
+          "completed_at_s": null,
+          "note": "Outcome is derived from supplied annotation flags."
+        },
+        {
+          "start_s": 6.0,
+          "end_s": 179.5,
+          "task": "Organize the medicine boxes",
+          "objects": [],
+          "outcome": "unclear",
+          "success_predicate": "Source-labelled success; no visual verification.",
+          "completed_at_s": null,
+          "note": "Outcome is derived from supplied annotation flags."
+        }
+      ],
+      "key_events": [],
+      "state_changes": [],
+      "scene_graph": [],
+      "recovery": [],
+      "instruction_variants": [],
+      "data_issues": [],
+      "viewpoint": null,
+      "performance_review": null,
+      "task_name": "wipe box",
+      "actions": {
+        "vocabulary": [
+          "wipe",
+          "place",
+          "pick"
+        ]
+      },
+      "scene_classification": {
+        "category": "commercial_service",
+        "area": "retail_store",
+        "original_description": "Wiping and stocking medicine boxes in a pharmacy retail environment."
+      },
+      "annotation_provenance": {
+        "mode": "existing_jianzhi_text_only",
+        "episode_index": 0,
+        "source_sst": "business/retail_business/pharmacy/daily_work",
+        "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+        "missing_information": "Unknown visual fields remain null; no video was inspected."
+      }
+    }
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000037/fd9bf750b47a47e9bd381aa3bdd7b2e5/annotation/episode_000000_structured.json",
+    "annotation": {
+      "schema_version": "1.0",
+      "episode_dir": "/home/jianzhi/batch_0000037/fd9bf750b47a47e9bd381aa3bdd7b2e5",
+      "source": {
+        "file": "/home/jianzhi/batch_0000037/fd9bf750b47a47e9bd381aa3bdd7b2e5/meta/annotations.json",
+        "sha256": "d90b49dd3bc462caf6636f3b293e9de6dfa9e73dc052deb69ce17aeb76ab7786"
+      },
+      "timesteps_s": [],
+      "finish_reason": "stop",
+      "objects": [
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [
+              "black-edged",
+              "green-edged",
+              "red-edged"
+            ],
+            "additional": {}
+          },
+          "original_attributes": [
+            "black-edged",
+            "green-edged",
+            "red-edged"
+          ]
+        },
+        {
+          "name": "shelf",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        }
+      ],
+      "scene": "Stacking and arranging packaging boxes onto a shelf.",
+      "subtask": [
+        {
+          "start_s": 5.0,
+          "end_s": 16.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 16.5,
+          "end_s": 23.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 23.5,
+          "end_s": 29.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 29.5,
+          "end_s": 34.5,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 35.0,
+          "end_s": 41.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 42.0,
+          "end_s": 47.5,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 48.0,
+          "end_s": 54.5,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 55.0,
+          "end_s": 65.5,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 66.0,
+          "end_s": 73.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 73.5,
+          "end_s": 79.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 79.5,
+          "end_s": 86.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 86.5,
+          "end_s": 93.5,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 94.0,
+          "end_s": 103.0,
+          "text": "Take two black-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 103.5,
+          "end_s": 110.0,
+          "text": "Take two green-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 110.5,
+          "end_s": 117.0,
+          "text": "Take two green-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 117.5,
+          "end_s": 123.5,
+          "text": "Take two green-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 124.0,
+          "end_s": 130.0,
+          "text": "Take two green-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 130.5,
+          "end_s": 137.0,
+          "text": "Take two green-edged packaging boxes from the carton, place them on the shelf and align them",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 137.5,
+          "end_s": 142.0,
+          "text": "Take the red-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 142.5,
+          "end_s": 147.0,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 147.5,
+          "end_s": 151.5,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 152.0,
+          "end_s": 156.0,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 156.5,
+          "end_s": 160.0,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 160.5,
+          "end_s": 164.0,
+          "text": "Take the red-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 164.5,
+          "end_s": 168.0,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 168.5,
+          "end_s": 172.5,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 173.0,
+          "end_s": 177.5,
+          "text": "Take the green-edged packaging box from the carton, place it on the shelf and align it",
+          "arm": null,
+          "action": [
+            "take",
+            "place",
+            "align"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 178.0,
+          "end_s": 179.3,
+          "text": "Take the green-edged packaging box from the carton and prepare to place it on the shelf",
+          "arm": null,
+          "action": [
+            "take",
+            "prepare",
+            "place"
+          ],
+          "object": "boxes",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=None"
+        }
+      ],
+      "task_description": "Walk to the carton, stack the packaging boxes from the carton onto the shelf one by one, and arrange them neatly by type.",
+      "tasks": [
+        {
+          "start_s": 5.0,
+          "end_s": 179.3,
+          "task": "Place the boxes",
+          "objects": [],
+          "outcome": "unclear",
+          "success_predicate": "Source-labelled success; no visual verification.",
+          "completed_at_s": null,
+          "note": "Outcome is derived from supplied annotation flags."
+        }
+      ],
+      "key_events": [],
+      "state_changes": [],
+      "scene_graph": [],
+      "recovery": [],
+      "instruction_variants": [],
+      "data_issues": [],
+      "viewpoint": null,
+      "performance_review": null,
+      "task_name": "stack box",
+      "actions": {
+        "vocabulary": [
+          "pick",
+          "stack",
+          "align",
+          "prepare"
+        ]
+      },
+      "scene_classification": {
+        "category": "commercial_service",
+        "area": "retail_store",
+        "original_description": "Stacking and arranging packaging boxes onto a shelf."
+      },
+      "annotation_provenance": {
+        "mode": "existing_jianzhi_text_only",
+        "episode_index": 0,
+        "source_sst": "business/beauty_personal_care/beauty_salon/daily_work",
+        "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+        "missing_information": "Unknown visual fields remain null; no video was inspected."
+      }
+    }
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/batch_0000064/f8ce4e045f5848e788fb4f38f0e1f265/annotation/episode_000000_structured.json",
+    "annotation": {
+      "schema_version": "1.0",
+      "episode_dir": "/home/jianzhi/batch_0000064/f8ce4e045f5848e788fb4f38f0e1f265",
+      "source": {
+        "file": "/home/jianzhi/batch_0000064/f8ce4e045f5848e788fb4f38f0e1f265/meta/annotations.json",
+        "sha256": "87ac6d34f3805bdd569ffde9d2c73879b8ae0e08ce0b65e80cb6725f1f917370"
+      },
+      "timesteps_s": [],
+      "finish_reason": "stop",
+      "objects": [
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": "white",
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": [
+            "white"
+          ]
+        },
+        {
+          "name": "shelf",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        },
+        {
+          "name": "basket",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": "gold",
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": [
+            "golden"
+          ]
+        },
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": "pink",
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": [
+            "pink"
+          ]
+        },
+        {
+          "name": "box",
+          "location": null,
+          "attributes": {
+            "color": "orange",
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": [
+            "orange"
+          ]
+        },
+        {
+          "name": "ground",
+          "location": null,
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "original_attributes": []
+        }
+      ],
+      "scene": "Organizing and wiping product boxes on a retail shelf in a beauty shop.",
+      "subtask": [
+        {
+          "start_s": 0.0,
+          "end_s": 3.0,
+          "text": "Straighten the tilted white box on the shelf",
+          "arm": null,
+          "action": [
+            "straighten"
+          ],
+          "object": "box",
+          "destination": null,
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 3.5,
+          "end_s": 8.5,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 8.5,
+          "end_s": 16.5,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 17.0,
+          "end_s": 23.5,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 24.0,
+          "end_s": 30.0,
+          "text": "Pick up the golden box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 30.5,
+          "end_s": 37.0,
+          "text": "Pick up the golden box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 37.5,
+          "end_s": 43.0,
+          "text": "Pick up the golden box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 45.0,
+          "end_s": 47.0,
+          "text": "Remove the pink boxes from the shelf and place them in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 47.5,
+          "end_s": 50.0,
+          "text": "Remove the pink boxes from the shelf and place them in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 52.0,
+          "end_s": 54.0,
+          "text": "Remove the orange box from the shelf and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 54.5,
+          "end_s": 57.0,
+          "text": "Remove the orange box from the shelf and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 58.0,
+          "end_s": 63.0,
+          "text": "Remove the white boxes from the shelf and place them in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 64.0,
+          "end_s": 66.0,
+          "text": "Remove the orange box from the shelf and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 67.0,
+          "end_s": 73.0,
+          "text": "Remove the white boxes from the shelf and place them in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 75.0,
+          "end_s": 84.0,
+          "text": "Wipe the middle area of the shelf, move the products aside and put them back",
+          "arm": null,
+          "action": [
+            "wipe",
+            "move",
+            "put_back"
+          ],
+          "object": "shelf",
+          "destination": null,
+          "spatial_relation": "aside",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 85.0,
+          "end_s": 92.5,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 93.0,
+          "end_s": 99.0,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 99.5,
+          "end_s": 106.0,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 106.5,
+          "end_s": 111.0,
+          "text": "Pick up the white box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 111.5,
+          "end_s": 117.0,
+          "text": "Pick up the pink box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 117.5,
+          "end_s": 123.5,
+          "text": "Pick up the pink box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 124.0,
+          "end_s": 128.0,
+          "text": "Pick up the pink box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 128.5,
+          "end_s": 137.5,
+          "text": "Pick up the pink box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 138.0,
+          "end_s": 146.0,
+          "text": "Pick up the pink box from the shopping basket, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 147.0,
+          "end_s": 150.0,
+          "text": "Remove the orange box from the shelf and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 151.0,
+          "end_s": 153.0,
+          "text": "Remove the orange box from the shelf and place it in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 153.5,
+          "end_s": 157.0,
+          "text": "Remove the orange boxes from the shelf and place them in the shopping basket",
+          "arm": null,
+          "action": [
+            "remove",
+            "place"
+          ],
+          "object": "box",
+          "destination": "basket",
+          "spatial_relation": "in",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 157.0,
+          "end_s": 165.0,
+          "text": "Pick up the white box from the shelf, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 166.0,
+          "end_s": 171.0,
+          "text": "Wipe the right area of the shelf",
+          "arm": null,
+          "action": [
+            "wipe"
+          ],
+          "object": "shelf",
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        },
+        {
+          "start_s": 172.0,
+          "end_s": 179.5,
+          "text": "Pick up the fallen orange box from the ground, wipe it and place it on the shelf",
+          "arm": null,
+          "action": [
+            "pick_up",
+            "wipe",
+            "place"
+          ],
+          "object": "box",
+          "destination": "shelf",
+          "spatial_relation": "on",
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "notes": "Structured from source text; source is_success=True"
+        }
+      ],
+      "task_description": "Organize the shelf, wipe the shelf layers and product boxes, then place the boxes neatly on the shelf.",
+      "tasks": [
+        {
+          "start_s": 0.0,
+          "end_s": 179.5,
+          "task": "Organize the shelf",
+          "objects": [],
+          "outcome": "success",
+          "success_predicate": "Source-labelled success; no visual verification.",
+          "completed_at_s": null,
+          "note": "Outcome is derived from supplied annotation flags."
+        }
+      ],
+      "key_events": [],
+      "state_changes": [],
+      "scene_graph": [],
+      "recovery": [],
+      "instruction_variants": [],
+      "data_issues": [],
+      "viewpoint": null,
+      "performance_review": null,
+      "task_name": "organize box",
+      "actions": {
+        "vocabulary": [
+          "straighten",
+          "pick",
+          "wipe",
+          "place",
+          "remove",
+          "move"
+        ]
+      },
+      "scene_classification": {
+        "category": "commercial_service",
+        "area": "beauty_salon",
+        "original_description": "Organizing and wiping product boxes on a retail shelf in a beauty shop."
+      },
+      "annotation_provenance": {
+        "mode": "existing_jianzhi_text_only",
+        "episode_index": 0,
+        "source_sst": "business/retail_business/beauty_shop/daily_work",
+        "segment_policy": "original leaf segments, text, time boundaries and success flags retained",
+        "missing_information": "Unknown visual fields remain null; no video was inspected."
+      }
+    }
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/batch_0000046/a238dd56c2ae611ba2f5bd0c311f5c0c8a419a57493d89ef45079effd78b87a4/annotation/episode_000000_structured.json",
+    "annotation": {
+      "schema_version": "1.0",
+      "episode_dir": "/home/guanglun_work/batch_0000046/68069ce1f937da150cbb3cd66935afe4d0aea627e5ccd1affd172b557a7582ce/converted/data/chunk-000/episode_000000",
+      "source": {
+        "file": "/home/guanglun_work/batch_0000046/68069ce1f937da150cbb3cd66935afe4d0aea627e5ccd1affd172b557a7582ce/converted/annotation/semantic_segments.json",
+        "sha256": "f3eb8bf5224266cc0332be819d83916f843aec321488126f791e455a71b29289"
+      },
+      "timesteps_s": [
+        0.0,
+        8.4,
+        18.4,
+        31.4,
+        41.4,
+        52.4,
+        60.2
+      ],
+      "finish_reason": null,
+      "objects": [
+        {
+          "name": "box",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": "floor",
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": "floor",
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": "floor",
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": "table",
+          "original_attributes": []
+        },
+        {
+          "name": "box",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": "table",
+          "original_attributes": []
+        },
+        {
+          "name": "cabinet",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": null,
+          "original_attributes": []
+        }
+      ],
+      "scene": "A household storage area for organizing and storing board game boxes in a cabinet",
+      "subtask": [
+        {
+          "start_s": 0.0,
+          "end_s": 8.4,
+          "arm": null,
+          "text": "Pick up the chess box on the floor and put it in the cabinet",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 8.4,
+          "end_s": 18.4,
+          "arm": null,
+          "text": "Pick up the checkers box on the floor and put it in the cabinet",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 18.4,
+          "end_s": 31.4,
+          "arm": null,
+          "text": "Pick up the snakes and ladders box on the floor and put it in the cabinet",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 31.4,
+          "end_s": 41.4,
+          "arm": null,
+          "text": "Pick up the puzzle chess box on the table and put it in the cabinet",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 41.4,
+          "end_s": 52.4,
+          "arm": null,
+          "text": "Pick up the tic-tac-toe box on the table and put it in the cabinet",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 52.4,
+          "end_s": 60.2,
+          "arm": null,
+          "text": "Close the cabinet door",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "close"
+          ]
+        }
+      ],
+      "task_description": "The person picks up the multiple chess boxes on the floor one by one, puts them into the cabinet, and closes the cabinet door to complete the organization.",
+      "key_events": [],
+      "state_changes": [],
+      "tasks": [],
+      "scene_graph": [],
+      "recovery": [],
+      "instruction_variants": [],
+      "data_issues": [],
+      "viewpoint": null,
+      "performance_review": null,
+      "actions": {
+        "vocabulary": [
+          "close",
+          "pick"
+        ]
+      },
+      "scene_classification": {
+        "category": "household",
+        "area": "storage_room",
+        "original_description": "A household storage area for organizing and storing board game boxes in a cabinet"
+      },
+      "task_name": "organize box",
+      "scene_inference": {
+        "basis": "task_inferred",
+        "evidence": "picks up the multiple chess boxes... puts them into the cabinet... complete the organization"
+      },
+      "annotation_enrichment": {
+        "version": 2,
+        "timestamp_utc": "2026-11-04T18:56:08.535456+00:00",
+        "evidence": "existing_annotation_text_only",
+        "input_sha256": "0eb3b94a63a7ff4b6e6fdb6654b94eafff51e7a6728c9e15bcabbc69b72cc6c6"
+      },
+      "common_task": "organize game"
+    }
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/batch_0000094/a8470ee9d79314dc8427506ab61ee6fae0dcb8e11bd594aeec320801d1dec221/annotation/episode_000000_structured.json",
+    "annotation": {
+      "schema_version": "1.0",
+      "episode_dir": "/home/guanglun_work/batch_0000094/22a99d572a30633e3c53af66b1327a0e04cd14f634967214c2bc420b79d5fcf0/converted/data/chunk-000/episode_000000",
+      "source": {
+        "file": "/home/guanglun_work/batch_0000094/22a99d572a30633e3c53af66b1327a0e04cd14f634967214c2bc420b79d5fcf0/converted/annotation/semantic_segments.json",
+        "sha256": "c264f7f0e32de968ed001d047f428ff70ad3a71a6a90cb9745f4cde0e2b27f8b"
+      },
+      "timesteps_s": [
+        0.0,
+        2.0,
+        36.0,
+        74.0,
+        77.8
+      ],
+      "finish_reason": null,
+      "objects": [
+        {
+          "name": "sponge",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": null,
+          "original_attributes": []
+        },
+        {
+          "name": "tray",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": null,
+          "original_attributes": []
+        },
+        {
+          "name": "counter",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": null,
+          "original_attributes": []
+        },
+        {
+          "name": "mirror",
+          "attributes": {
+            "color": null,
+            "material": null,
+            "shape": null,
+            "unclassified": [],
+            "additional": {}
+          },
+          "location": null,
+          "original_attributes": []
+        }
+      ],
+      "scene": "A bathroom area for cleaning the sink and mirror",
+      "subtask": [
+        {
+          "start_s": 0.0,
+          "end_s": 2.0,
+          "arm": null,
+          "text": "Pick up the sponge from the tray",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "pick"
+          ]
+        },
+        {
+          "start_s": 2.0,
+          "end_s": 36.0,
+          "arm": null,
+          "text": "Wipe the sink countertop with the sponge",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "wipe"
+          ]
+        },
+        {
+          "start_s": 36.0,
+          "end_s": 74.0,
+          "arm": null,
+          "text": "Wipe the mirror with the sponge",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "wipe"
+          ]
+        },
+        {
+          "start_s": 74.0,
+          "end_s": 77.8,
+          "arm": null,
+          "text": "Put the sponge back in the tray",
+          "object": null,
+          "destination": null,
+          "spatial_relation": null,
+          "contribution": null,
+          "progress": null,
+          "hands_visible": null,
+          "hands_wearing": null,
+          "action": [
+            "put"
+          ]
+        }
+      ],
+      "task_description": "The person wipes the sink and the mirror with a sponge to complete the cleaning.",
+      "key_events": [],
+      "state_changes": [],
+      "tasks": [],
+      "scene_graph": [],
+      "recovery": [],
+      "instruction_variants": [],
+      "data_issues": [],
+      "viewpoint": null,
+      "performance_review": null,
+      "actions": {
+        "vocabulary": [
+          "pick",
+          "place",
+          "wipe"
+        ]
+      },
+      "scene_classification": {
+        "category": "household",
+        "area": "bathroom",
+        "original_description": "A bathroom area for cleaning the sink and mirror"
+      },
+      "task_name": "wipe counter",
+      "scene_inference": {
+        "basis": "task_inferred",
+        "evidence": "wipes the sink and the mirror"
+      },
+      "annotation_enrichment": {
+        "version": 2,
+        "timestamp_utc": "2026-11-04T21:11:28.455301+00:00",
+        "evidence": "existing_annotation_text_only",
+        "input_sha256": "5a9a24c5e43f3248f8817e0bfe5e137b6798988e70d1fd15f199af032426cf1a"
+      },
+      "common_task": "clean building surface"
+    }
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "samples": 4461,
+  "dataset_groups": 340,
+  "file_count_excludes_readme": true,
+  "file_count_distribution": {
+    "29": 1970,
+    "30": 2484,
+    "31": 3,
+    "33": 4
+  },
+  "readme_count_mismatches": 0,
+  "structure_variants": 8,
+  "common_files": 29,
+  "auxiliary_files": {
+    "..reencode-chunk-000-episode_000000.publish.lock": 2491
+  },
+  "variants": [
+    {
+      "samples": 2484,
+      "file_count": 30,
+      "extra": [],
+      "missing": []
+    },
+    {
+      "samples": 1970,
+      "file_count": 29,
+      "extra": [],
+      "missing": [
+        "..reencode-chunk-000-episode_000000.publish.lock"
+      ]
+    },
+    {
+      "samples": 2,
+      "file_count": 31,
+      "extra": [
+        "videos/chunk-000/observation.images.depth_head_left_rectified/logs/ks3util.log"
+      ],
+      "missing": []
+    },
+    {
+      "samples": 1,
+      "file_count": 31,
+      "extra": [
+        "videos/chunk-000/observation.images.head_left_rectified/logs/ks3util.log"
+      ],
+      "missing": []
+    },
+    {
+      "samples": 1,
+      "file_count": 33,
+      "extra": [
+        ".reencode-7vuipm8l/depth_hevc12.ffmpeg.log",
+        ".reencode-7vuipm8l/depth_hevc12.mp4",
+        ".reencode-7vuipm8l/valid_mask_ffv1.mkv"
+      ],
+      "missing": []
+    },
+    {
+      "samples": 1,
+      "file_count": 33,
+      "extra": [
+        ".reencode-vxsjkbtj/depth_hevc12.ffmpeg.log",
+        ".reencode-vxsjkbtj/depth_hevc12.mp4",
+        ".reencode-vxsjkbtj/valid_mask_ffv1.mkv"
+      ],
+      "missing": []
+    },
+    {
+      "samples": 1,
+      "file_count": 33,
+      "extra": [
+        ".reencode-gswvii_v/depth_hevc12.ffmpeg.log",
+        ".reencode-gswvii_v/depth_hevc12.mp4",
+        ".reencode-gswvii_v/valid_mask_ffv1.mkv"
+      ],
+      "missing": []
+    },
+    {
+      "samples": 1,
+      "file_count": 33,
+      "extra": [
+        ".reencode-64hck99n/depth_hevc12.ffmpeg.log",
+        ".reencode-64hck99n/depth_hevc12.mp4",
+        ".reencode-64hck99n/valid_mask_ffv1.mkv"
+      ],
+      "missing": []
+    }
+  ]
+}

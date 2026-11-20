@@ -1,0 +1,1039 @@
+{
+  "version": 3,
+  "format": "common_task_name = verb_category in snake_case; task_name remains unchanged",
+  "categories": {
+    "furniture": {
+      "zh": "家具",
+      "definition": "桌椅床柜、书架、货架等家具及其台面；不包含门窗墙地等建筑构件。",
+      "heads": [
+        "table",
+        "desk",
+        "chair",
+        "stool",
+        "bench",
+        "bed",
+        "cabinet",
+        "cupboard",
+        "wardrobe",
+        "bookshelf",
+        "bookcase",
+        "shelf",
+        "rack",
+        "nightstand",
+        "drawer",
+        "sofa",
+        "counter",
+        "countertop",
+        "desktop",
+        "tabletop",
+        "workbench",
+        "furniture"
+      ],
+      "exact": [
+        "front desk",
+        "headboard"
+      ]
+    },
+    "container": {
+      "zh": "容器",
+      "definition": "瓶罐盒箱篮桶等盛装、收纳物及容器盖；餐具优先归餐具，明确包装袋归包装用品。",
+      "heads": [
+        "bottle",
+        "jar",
+        "box",
+        "carton",
+        "basket",
+        "bucket",
+        "basin",
+        "bin",
+        "can",
+        "jug",
+        "container",
+        "vial",
+        "tube",
+        "case",
+        "canister",
+        "sack",
+        "pouch",
+        "tray",
+        "lid",
+        "cap"
+      ],
+      "exact": [
+        "bag",
+        "handbag",
+        "handbags",
+        "backpack",
+        "schoolbag",
+        "bottle cap",
+        "cup lid",
+        "medicine container"
+      ]
+    },
+    "packaging": {
+      "zh": "包装用品",
+      "definition": "明确用于包装的袋、膜、包装纸、封箱带与包装件；普通盒箱仍归容器。",
+      "heads": [
+        "package",
+        "packaging",
+        "parcel",
+        "packet",
+        "film",
+        "wrapper"
+      ],
+      "exact": [
+        "bubble wrap",
+        "cling film",
+        "foam packaging",
+        "meal bag",
+        "packaging bag",
+        "packaging tape",
+        "packing bag",
+        "packing tape",
+        "paper bag",
+        "paper packaging",
+        "plastic bag",
+        "plastic wrap",
+        "takeout bag",
+        "tape",
+        "wrapping film",
+        "wrapping paper"
+      ]
+    },
+    "tableware": {
+      "zh": "餐具",
+      "definition": "饮食器皿和进食餐具，不把烹饪机器、一般收纳托盘或工作用刀自动算餐具。",
+      "heads": [
+        "cup",
+        "mug",
+        "bowl",
+        "plate",
+        "dish",
+        "saucer",
+        "fork",
+        "spoon",
+        "tableware",
+        "dishware",
+        "cutlery"
+      ],
+      "exact": [
+        "butter knife",
+        "chopstick",
+        "chopsticks",
+        "coaster",
+        "cup holder",
+        "dinner knife",
+        "glass",
+        "placemat",
+        "serving tray",
+        "straw",
+        "table knife",
+        "tea set",
+        "tea tray"
+      ]
+    },
+    "kitchenware": {
+      "zh": "厨具",
+      "definition": "烹饪、过滤、备料用具；电动厨房机器归电器及机器。",
+      "heads": [
+        "pot",
+        "pan",
+        "wok",
+        "ladle",
+        "spatula",
+        "strainer",
+        "sieve",
+        "cookware",
+        "kitchenware"
+      ],
+      "exact": [
+        "bottle opener",
+        "chopping board",
+        "cooking utensil",
+        "cutting board",
+        "food mold",
+        "kitchen knife",
+        "kitchen tool",
+        "kitchen utensil",
+        "tea strainer",
+        "thermos",
+        "utensil"
+      ]
+    },
+    "textile": {
+      "zh": "家用纺织品",
+      "definition": "毛巾、抹布、床品等非服装织物；纸巾、橡胶垫和塑料膜不据外形归纺织品。",
+      "heads": [
+        "towel",
+        "cloth",
+        "rag",
+        "fabric",
+        "textile",
+        "blanket",
+        "quilt",
+        "sheet",
+        "bedsheet",
+        "bedding",
+        "pillow",
+        "pillowcase",
+        "cushion",
+        "curtain",
+        "gauze",
+        "duvet",
+        "bedspread",
+        "washcloth"
+      ],
+      "exact": [
+        "bed linen",
+        "cotton fabric",
+        "cotton thread",
+        "fabric strip",
+        "napkin",
+        "tablecloth",
+        "thread",
+        "threads",
+        "yarn"
+      ]
+    },
+    "clothing": {
+      "zh": "衣物",
+      "definition": "衣服、裤子、内衣、睡衣及穿戴服饰；床品为纺织品，美发固定发夹为美容工具。",
+      "heads": [
+        "clothing",
+        "clothes",
+        "garment",
+        "shirt",
+        "t-shirt",
+        "dress",
+        "skirt",
+        "pants",
+        "trousers",
+        "shorts",
+        "jeans",
+        "underwear",
+        "pajamas",
+        "jacket",
+        "coat",
+        "vest",
+        "sweater",
+        "sock",
+        "hat",
+        "glove",
+        "scarf",
+        "belt",
+        "apron",
+        "shoe",
+        "slipper",
+        "sneaker"
+      ],
+      "exact": [
+        "bracelet",
+        "earring",
+        "eyeglasses",
+        "glasses",
+        "jewellery",
+        "jewelry",
+        "necklace",
+        "pajama pants",
+        "pajama top",
+        "shoe lace",
+        "shoelace",
+        "sunglasses",
+        "wristband"
+      ]
+    },
+    "stationery": {
+      "zh": "文具",
+      "definition": "书写、测量、装订、文件收纳文具；书籍、文件、普通纸张归纸质资料。",
+      "heads": [
+        "pen",
+        "pencil",
+        "marker",
+        "eraser",
+        "ruler",
+        "folder",
+        "stapler",
+        "crayon",
+        "stationery",
+        "paperclip",
+        "sticker",
+        "label",
+        "tag"
+      ],
+      "exact": [
+        "binder clip",
+        "card holder",
+        "correction fluid",
+        "file folder",
+        "glue stick",
+        "notebook cover",
+        "paper clip",
+        "register",
+        "tape dispenser"
+      ]
+    },
+    "paper_material": {
+      "zh": "纸质资料",
+      "definition": "书、纸张、纸本文件、卡片、传单等；电子表格或信息不因名称就当纸本。",
+      "heads": [
+        "book",
+        "notebook",
+        "paper",
+        "document",
+        "card",
+        "leaflet",
+        "flier",
+        "flyer",
+        "newspaper",
+        "magazine",
+        "envelope"
+      ],
+      "exact": [
+        "bill",
+        "cardboard",
+        "certificate",
+        "data form",
+        "form",
+        "paper material",
+        "paper sheet",
+        "paperboard",
+        "prescription",
+        "registration book"
+      ]
+    },
+    "cosmetics": {
+      "zh": "化妆品及护肤品",
+      "definition": "护肤和彩妆制剂；日常洗护、染发剂、指甲油另分。不把未明胶水、药膏或工业涂料自动当化妆品。",
+      "heads": [
+        "cosmetics",
+        "cosmetic",
+        "cream",
+        "essence",
+        "lotion",
+        "serum",
+        "foundation",
+        "eyeshadow",
+        "lipstick",
+        "balm",
+        "makeup"
+      ],
+      "exact": [
+        "skin care product",
+        "skincare product",
+        "skin-care product",
+        "facial mask",
+        "face mask",
+        "facial cleanser",
+        "lip gloss",
+        "care solution",
+        "beauty product",
+        "cosmetic product",
+        "perm lotion"
+      ]
+    },
+    "toiletries": {
+      "zh": "日常洗护用品",
+      "definition": "日常洗护与个人卫生消耗品，药用处理制剂归药品；美容造型制剂不笼统套入洗护。",
+      "heads": [
+        "shampoo",
+        "conditioner",
+        "toothpaste",
+        "toothbrush",
+        "soap",
+        "toiletries",
+        "toiletry"
+      ],
+      "exact": [
+        "body wash",
+        "body washes",
+        "hand wash",
+        "hand soap",
+        "mouthwash",
+        "shower gel",
+        "tissue",
+        "toilet roll",
+        "toilet paper",
+        "cotton pad",
+        "cotton swab",
+        "cotton roll",
+        "sanitary pad",
+        "wet wipe",
+        "wet wipes",
+        "paper towel",
+        "personal care product",
+        "hygiene product",
+        "hair care product"
+      ]
+    },
+    "hair_dye": {
+      "zh": "染发剂",
+      "definition": "有明确染发用途的染发膏、染发液；用途不明的 dye 不强行归类。",
+      "heads": [],
+      "exact": [
+        "hair dye",
+        "hair color",
+        "hair dye cream",
+        "hair coloring agent"
+      ]
+    },
+    "nail_polish": {
+      "zh": "指甲油",
+      "definition": "用于指甲/甲片着色的指甲油和甲油胶；未明 polish 或工业漆需上下文。",
+      "heads": [],
+      "exact": [
+        "nail polish",
+        "gel polish",
+        "nail gel",
+        "gel nail polish"
+      ]
+    },
+    "beauty_tool": {
+      "zh": "美容美发工具",
+      "definition": "梳、发夹、卷杠、美甲工具等美容操作工具；化学制剂另分，明确电器归电器。",
+      "heads": [
+        "comb",
+        "hairpin",
+        "hairband",
+        "hairclip",
+        "roller"
+      ],
+      "exact": [
+        "beauty tool",
+        "cupping jar",
+        "cupping tool",
+        "curling iron accessory",
+        "curling rod",
+        "cuticle pusher",
+        "ear cover",
+        "eyebrow pencil",
+        "eyelash curler",
+        "grinding pen",
+        "hair brush",
+        "hair clip",
+        "hair extension tool",
+        "hair paper",
+        "hair roller",
+        "hair tie",
+        "hair tool",
+        "hairband",
+        "hairdressing tool",
+        "makeup brush",
+        "makeup tool",
+        "manicure tool",
+        "nail drill",
+        "perm cotton",
+        "perm paper",
+        "perm rod",
+        "perm supply",
+        "perm tool"
+      ]
+    },
+    "cleaning_tool": {
+      "zh": "清洁工具",
+      "definition": "扫帚、拖把、清洁刷等去污工具；纺织抹布仍归纺织品，不因用途重复入类。",
+      "heads": [
+        "broom",
+        "mop",
+        "dustpan",
+        "squeegee"
+      ],
+      "exact": [
+        "cleaning brush",
+        "scrub brush",
+        "cleaning sponge",
+        "sponge",
+        "steel wool",
+        "steel wool ball",
+        "scouring pad",
+        "lint roller",
+        "lint remover",
+        "cleaning tool"
+      ]
+    },
+    "cleaning_agent": {
+      "zh": "清洁剂",
+      "definition": "去污、洗涤、清洁和表面消毒用制剂；未知液体、溶液不自动归此类。",
+      "heads": [
+        "detergent",
+        "cleanser",
+        "disinfectant"
+      ],
+      "exact": [
+        "cleaning agent",
+        "cleaning liquid",
+        "cleaning solution",
+        "washing powder",
+        "laundry detergent",
+        "dishwashing liquid",
+        "disinfection solution"
+      ]
+    },
+    "medicine": {
+      "zh": "药品及药材",
+      "definition": "药片、药膏、药剂和药材；药盒药瓶是容器，不等同内容药品。",
+      "heads": [
+        "medicine",
+        "pill",
+        "tablet",
+        "ointment"
+      ],
+      "exact": [
+        "medicinal material",
+        "herbal medicine",
+        "medicine product",
+        "drug",
+        "medical ointment",
+        "herbal goods"
+      ]
+    },
+    "food": {
+      "zh": "食品及食材",
+      "definition": "水果蔬菜、粮食、调料与熟食等实体食材；即饮液体归饮品。",
+      "heads": [
+        "food",
+        "fruit",
+        "vegetable",
+        "ingredient",
+        "ingredients",
+        "rice",
+        "grain",
+        "bean",
+        "nut",
+        "seed",
+        "sugar",
+        "salt",
+        "bread",
+        "sandwich",
+        "pastry",
+        "dessert",
+        "meal",
+        "noodle",
+        "soup",
+        "porridge",
+        "snack",
+        "candy",
+        "garlic",
+        "ginger",
+        "lemon",
+        "lime",
+        "mango",
+        "watermelon",
+        "papaya",
+        "orange",
+        "apple",
+        "pear",
+        "banana",
+        "grape",
+        "onion",
+        "cucumber",
+        "lettuce",
+        "strawberry",
+        "longan",
+        "avocado",
+        "meat",
+        "chicken",
+        "egg",
+        "waffle",
+        "sauce",
+        "seasoning",
+        "topping",
+        "pulp",
+        "gourd",
+        "peanut",
+        "jelly",
+        "fudge",
+        "dough",
+        "stew"
+      ],
+      "exact": [
+        "coffee powder",
+        "cordyceps",
+        "corn",
+        "fungus",
+        "herb",
+        "ice",
+        "ice cream",
+        "longan flesh",
+        "milk powder",
+        "peach gum",
+        "pepper",
+        "potato",
+        "red bean",
+        "sausage",
+        "shaved ice",
+        "sweet soup",
+        "takeout",
+        "tea bag",
+        "tea leaf",
+        "tea leaves",
+        "tomato"
+      ]
+    },
+    "beverage": {
+      "zh": "饮品",
+      "definition": "水、茶、咖啡、牛奶、果汁等饮用液体；对应瓶罐仍按容器，不将未明液体当饮品。",
+      "heads": [
+        "drink",
+        "beverage",
+        "water",
+        "tea",
+        "coffee",
+        "milk",
+        "juice",
+        "cola",
+        "soda",
+        "beer",
+        "wine",
+        "milkshake"
+      ],
+      "exact": [
+        "milk tea",
+        "green tea",
+        "black tea",
+        "mineral water",
+        "soymilk"
+      ]
+    },
+    "electronic_device": {
+      "zh": "电子设备",
+      "definition": "手机、计算机和音视频及外设；厨房、清洁和美发电器归电器。",
+      "heads": [
+        "phone",
+        "computer",
+        "monitor",
+        "speaker",
+        "keyboard",
+        "mouse",
+        "tablet",
+        "television",
+        "camera",
+        "earphone",
+        "headphone",
+        "earphones",
+        "headphones",
+        "watch"
+      ],
+      "exact": [
+        "cash register",
+        "cellphone",
+        "charger",
+        "earphone case",
+        "electronic device",
+        "mobile phone",
+        "power bank",
+        "remote control",
+        "smart watch"
+      ]
+    },
+    "appliance": {
+      "zh": "电器及机器",
+      "definition": "厨房、清洁、美发等家用/服务机器及一般电器；明确手持维修工具仍归工具，机器零件另分。",
+      "heads": [
+        "appliance",
+        "machine",
+        "microwave",
+        "juicer",
+        "blender",
+        "dryer",
+        "kettle",
+        "fan",
+        "refrigerator",
+        "cooker",
+        "oven",
+        "dishwasher",
+        "stove",
+        "heater",
+        "grinder"
+      ],
+      "exact": [
+        "beauty device",
+        "beauty instrument",
+        "clipper",
+        "coffee maker",
+        "compressor",
+        "electric motor",
+        "food processor",
+        "hair clipper",
+        "hair straightener",
+        "ice maker",
+        "motor",
+        "nail lamp",
+        "soymilk maker",
+        "vacuum cleaner",
+        "water dispenser"
+      ]
+    },
+    "tool": {
+      "zh": "通用工具",
+      "definition": "维修、加工手工具及电动手工具；有明确美容、清洁、烹饪用途的专用工具优先专类。",
+      "heads": [
+        "screwdriver",
+        "plier",
+        "pliers",
+        "wrench",
+        "spanner",
+        "hammer",
+        "drill",
+        "saw",
+        "knife",
+        "scissors",
+        "cutter",
+        "file"
+      ],
+      "exact": [
+        "tool",
+        "power tool",
+        "electric drill",
+        "angle grinder",
+        "nail gun",
+        "tape measure",
+        "soldering iron"
+      ]
+    },
+    "component": {
+      "zh": "零部件",
+      "definition": "螺丝、垫片、支架、铰链、导轨等装配件；原材料板材、沙土不自动算零件。",
+      "heads": [
+        "part",
+        "component",
+        "screw",
+        "bolt",
+        "nutbolt",
+        "gasket",
+        "bracket",
+        "hinge",
+        "rail",
+        "connector",
+        "joint",
+        "wheel",
+        "bearing",
+        "filter",
+        "buckle",
+        "plug",
+        "lock",
+        "stopper"
+      ],
+      "exact": [
+        "baseboard",
+        "battery",
+        "cable",
+        "clipper blade",
+        "coil",
+        "cord",
+        "door handle",
+        "door stopper",
+        "edge banding",
+        "filter cloth",
+        "frame",
+        "handle",
+        "hardware",
+        "hose",
+        "ink cartridge",
+        "lamp holder accessories",
+        "light strip",
+        "motor part",
+        "packing strip",
+        "pipe joint",
+        "power strip",
+        "pressing strip",
+        "pump head",
+        "reflector",
+        "reflector assembly",
+        "reflector base",
+        "slide rail",
+        "starter",
+        "starter motor",
+        "strap",
+        "wire"
+      ]
+    },
+    "sports_equipment": {
+      "zh": "运动用品",
+      "definition": "运动用球、球拍、哑铃、训练垫和器械；一般玩具球需上下文，不仅凭 ball 判运动器材。",
+      "heads": [
+        "basketball",
+        "football",
+        "volleyball",
+        "badminton",
+        "shuttlecock",
+        "racket",
+        "dumbbell",
+        "barbell",
+        "treadmill"
+      ],
+      "exact": [
+        "badminton racket",
+        "ball",
+        "exercise mat",
+        "fitness equipment",
+        "hula hoop",
+        "jump rope",
+        "kettlebell",
+        "resistance band",
+        "skipping rope",
+        "sports equipment",
+        "table tennis ball",
+        "table tennis racket",
+        "tennis ball",
+        "weight bench",
+        "weight plate",
+        "whistle",
+        "yoga mat"
+      ]
+    },
+    "toy": {
+      "zh": "玩具及游戏用品",
+      "definition": "积木、棋类、桌游、玩偶等游戏用品；建筑 block 与展示 figurine 需结合语境。",
+      "heads": [
+        "toy",
+        "game",
+        "doll",
+        "puzzle"
+      ],
+      "exact": [
+        "building block",
+        "chess piece",
+        "game component",
+        "board game",
+        "plush toy",
+        "toy car",
+        "model toy"
+      ]
+    },
+    "decoration": {
+      "zh": "装饰用品",
+      "definition": "装饰画、摆件、花瓶、装饰贴等陈设用品；生活植物本身不直接当装饰品。",
+      "heads": [
+        "ornament",
+        "decoration",
+        "figurine",
+        "vase",
+        "painting",
+        "sculpture"
+      ],
+      "exact": [
+        "decorative sticker",
+        "decorative lines",
+        "wall decor",
+        "photo frame",
+        "picture frame",
+        "rhinestone",
+        "decorative pattern"
+      ]
+    },
+    "body": {
+      "zh": "身体及部位",
+      "definition": "人体及身体部位；头发、假发和指甲有独立类。按摩的任何身体部位按用户要求统一 body。",
+      "heads": [
+        "body",
+        "customer",
+        "person",
+        "client",
+        "face",
+        "head",
+        "back",
+        "arm",
+        "leg",
+        "hand",
+        "foot",
+        "finger",
+        "toe",
+        "abdomen",
+        "neck",
+        "shoulder",
+        "shoulders",
+        "calf",
+        "thigh",
+        "waist",
+        "muscle",
+        "skin",
+        "spine",
+        "forehead",
+        "cheek",
+        "chin",
+        "scalp",
+        "ear",
+        "eye",
+        "eyes",
+        "eyebrow",
+        "nose",
+        "lip",
+        "chest",
+        "buttock"
+      ],
+      "exact": [
+        "ear canal",
+        "upper arm",
+        "lower back",
+        "left arm",
+        "back muscle",
+        "leg muscle"
+      ]
+    },
+    "hair": {
+      "zh": "头发及假发",
+      "definition": "头发、假发及接发发束；头发用药剂、工具不归毛发本体。",
+      "heads": [
+        "hair",
+        "wig",
+        "beard"
+      ],
+      "exact": [
+        "eyelash",
+        "eyelash extension",
+        "hair extension",
+        "hair extension weft",
+        "hair section",
+        "hair strand",
+        "mannequin hair",
+        "mannequin head hair",
+        "wig model hair",
+        "wig strand"
+      ]
+    },
+    "nail": {
+      "zh": "指甲及甲片",
+      "definition": "天然指甲与人工甲片、甲贴片；指甲油为制剂，美甲工具另分。",
+      "heads": [
+        "nail",
+        "fingernail",
+        "toenail"
+      ],
+      "exact": [
+        "nail tip",
+        "nail piece",
+        "nail plate",
+        "artificial nail",
+        "false nail"
+      ]
+    },
+    "waste": {
+      "zh": "废弃物",
+      "definition": "明确废弃的垃圾、碎纸、落发和废包装；普通纸、头发和包装不能不看状态就当垃圾。",
+      "heads": [
+        "trash",
+        "garbage",
+        "waste",
+        "debris"
+      ],
+      "exact": [
+        "paper scrap",
+        "paper scraps",
+        "hair clipping",
+        "hair clippings",
+        "food waste",
+        "coffee grounds",
+        "waste packaging",
+        "shredded paper"
+      ]
+    },
+    "item": {
+      "zh": "未细分物品",
+      "definition": "原名只写 item/object/product/surface 等而未确定具体类型；已知但目录未覆盖的词另列缺口，不静默塞入此类。",
+      "heads": [],
+      "exact": [
+        "accessory",
+        "article",
+        "articles",
+        "beauty cart item",
+        "beauty supply",
+        "cabinet item",
+        "clutter",
+        "daily item",
+        "daily necessity",
+        "desk item",
+        "device",
+        "equipment",
+        "goods",
+        "item",
+        "items",
+        "kit",
+        "material",
+        "miscellaneous item",
+        "object",
+        "objects",
+        "personal item",
+        "piece",
+        "product",
+        "product display",
+        "products",
+        "sample",
+        "storage cabinet item",
+        "stuff",
+        "sundries",
+        "supplies",
+        "supply",
+        "surface",
+        "things"
+      ]
+    }
+  },
+  "precedence": "Contextual exception, exact phrase, then unambiguous noun head. Multiple matching heads or no match are needs_category.",
+  "unmapped_policy": "Retain the original fine object concept as an independent category and keep verb+noun in common preview; distinguish retained_fine from the 31 merged main classes.",
+  "user_fallback_label": "origanize_some_object",
+  "standalone_categories": {
+    "floor": {
+      "zh": "地面"
+    },
+    "ground": {
+      "zh": "地面（ground）"
+    },
+    "sink": {
+      "zh": "水槽"
+    },
+    "mirror": {
+      "zh": "镜子"
+    },
+    "door": {
+      "zh": "门"
+    },
+    "wall": {
+      "zh": "墙面"
+    },
+    "window": {
+      "zh": "窗户"
+    },
+    "ceiling": {
+      "zh": "天花板"
+    },
+    "railing": {
+      "zh": "栏杆"
+    },
+    "handrail": {
+      "zh": "扶手"
+    },
+    "faucet": {
+      "zh": "水龙头"
+    },
+    "showerhead": {
+      "zh": "淋浴喷头"
+    },
+    "bathroom fixture": {
+      "zh": "卫浴设施"
+    },
+    "toilet": {
+      "zh": "马桶"
+    },
+    "bathtub": {
+      "zh": "浴缸"
+    },
+    "washstand": {
+      "zh": "洗手台"
+    },
+    "door frame": {
+      "zh": "门框"
+    },
+    "mask": {
+      "zh": "mask（用途未明确）"
+    },
+    "glass": {
+      "zh": "玻璃制品（用途未明确）"
+    },
+    "liquid": {
+      "zh": "液体（用途未明确）"
+    }
+  },
+  "standalone_policy": "Retain separate object concepts for fixtures/surfaces and truly ambiguous mask/glass/liquid; do not force a main class.",
+  "generic_noun_rule": "After specific category rules, map remaining item/object/product/goods/supply/material/article/thing families to item; ignore shape and location qualifiers only in common_task_name.",
+  "user_fallback_common_name": "organize_item"
+}

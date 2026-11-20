@@ -1,0 +1,3007 @@
+[
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/l1_retail_store_organize_task_1600x1300_30fps_2views/l1_retail_store_organize_medicine_4910d35fae744756b6e6bfad60c66111",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 147,
+            "max": 804
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              0,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 456,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 167,
+            "max": 678
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              7,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 911,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 194,
+            "max": 628
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              7,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 10.75
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/l1_beverage_shop_cut_task_1600x1300_30fps_2views/l1_beverage_shop_cut_watermelon_5a049c7110cf47f78226f59e544bd613",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 219,
+            "max": 1113
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              0,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 2689,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 145,
+            "max": 832
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              6,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 5378,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 190,
+            "max": 1116
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              6,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 6.57
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/l1_retail_store_clean_task_1600x1300_30fps_2views/l1_retail_store_sweep_garbage_4687fb4ea47d44589e6084e6bac5cb5a",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 160,
+            "max": 2988
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              1,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 2442,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 229,
+            "max": 1202
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              7,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 4884,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 196,
+            "max": 3105
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              7,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 6.52
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/l1_retail_store_cut_task_1600x1300_30fps_2views/l1_retail_store_trim_pajamas_076f78d9e0db437db86c33460b7c3f49",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 166,
+            "max": 966
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              0,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 2695,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 123,
+            "max": 3315
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              6,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 5390,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 178,
+            "max": 1117
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              6,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 5.09
+  },
+  {
+    "dataset": "jianzhi",
+    "path": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish/publish/l1_retail_store_organize_task_1600x1300_30fps_2views/l1_retail_store_organize_tag_5082c60d2869436789e91e0dcc09c566",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 168,
+            "max": 1750
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              0,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 1547,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 0,
+            "max": 3999
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              6,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 3093,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_mano": {
+            "shape": [
+              157
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1300,
+              1600
+            ],
+            "dtype": "torch.uint16",
+            "min": 151,
+            "max": 1559
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1300,
+              1600
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.imu": {
+            "shape": [
+              7,
+              6
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.relative_head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 6.64
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/publish/l1_beverage_shop_organize_task_1920x1456_30fps_2views/l1_beverage_shop_stack_pulp_mold_7cb9ace473162e1b25c6dcf28639151f9ff80397553211f4d343a7f1d90024d5",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 127,
+            "max": 3537
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 4653,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 201,
+            "max": 3358
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 9306,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 314,
+            "max": 2428
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 1.31
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/publish/l1_kitchen_organize_task_1920x1456_30fps_2views/l1_kitchen_organize_food_872538ce4b57a4035ab33aee1ee31c43a1603287ae8f6d44d0d526d18b23adf9",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 96,
+            "max": 1284
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 978,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 187,
+            "max": 1110
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 1956,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 160,
+            "max": 1200
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 1.32
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/publish/l1_office_organize_task_1920x1456_30fps_2views/l1_office_organize_paper_0b18af2faa8bb5751186a9c8d1b5979620946f89e89457186aad1d7d61951f2e",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 184,
+            "max": 1205
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 1353,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 146,
+            "max": 1060
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 2705,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 300,
+            "max": 1351
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 1.16
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/publish/l1_logistics_facility_attach_task_1920x1456_25fps_2views/l1_logistics_facility_stick_label_8e0b03593e01fb31f28cc94d9a251b165dc5546f84319125c082e21becd21a29",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 183,
+            "max": 978
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 999,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 189,
+            "max": 929
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 1997,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 293,
+            "max": 2851
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 1.54
+  },
+  {
+    "dataset": "guanglun",
+    "path": "/share/project/liuyou/humancoin/data/guanglun_depth/publish/l1_retail_store_organize_task_1920x1456_25fps_2views/l1_retail_store_hang_correction_fluid_601ece14b32ecd76f7b65c8c1e5aadca48e976495ee08adb93c2ff5669ad6777",
+    "status": "done",
+    "frames": [
+      {
+        "index": 0,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 69,
+            "max": 2670
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 2285,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 152,
+            "max": 573
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      },
+      {
+        "index": 4570,
+        "streams": {
+          "eye_gaze_predict": {
+            "shape": [
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_hand": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_lower_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.bad_frame_pose_upper_body": {
+            "shape": [
+              1
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.body_pose": {
+            "shape": [
+              154
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_left_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_points": {
+            "shape": [
+              63
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.hand_right_quaternions": {
+            "shape": [
+              84
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.head_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.depth_head_left_rectified": {
+            "shape": [
+              1,
+              1456,
+              1920
+            ],
+            "dtype": "torch.uint16",
+            "min": 247,
+            "max": 518
+          },
+          "observation.images.head_left_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.images.head_right_rectified": {
+            "shape": [
+              3,
+              1456,
+              1920
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.lower_body_pose": {
+            "shape": [
+              56
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.right_eye_camera_pose": {
+            "shape": [
+              7
+            ],
+            "dtype": "torch.float32"
+          },
+          "observation.upper_body_pose": {
+            "shape": [
+              98
+            ],
+            "dtype": "torch.float32"
+          }
+        }
+      }
+    ],
+    "seconds": 1.69
+  }
+]

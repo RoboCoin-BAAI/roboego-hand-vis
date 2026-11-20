@@ -1,0 +1,840 @@
+﻿noun,category,category_zh,rule,jianzhi,guanglun
+abdomen,body,身体及部位,explicit_user_massage_group,41,0
+accessory,item,未细分物品,exact_noun,7,6
+acne,acne,acne（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,8,0
+adapter,adapter,adapter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+air conditioner,toiletries,日常洗护用品,specific_noun_head,0,1
+alarm,alarm,alarm（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+almond,almond,almond（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+aloe vera,aloe_vera,aloe vera（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+alternator,alternator,alternator（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+apple,food,食品及食材,specific_noun_head,0,3
+appliance,appliance,电器及机器,specific_noun_head,2,0
+apron,clothing,衣物,specific_noun_head,0,13
+arm,body,身体及部位,explicit_user_massage_group,11,0
+armchair,armchair,armchair（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+art supply,item,未细分物品,generic_noun_family_item,0,1
+ashtray,ashtray,ashtray（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,6
+avocado,food,食品及食材,specific_noun_head,1,0
+back,body,身体及部位,explicit_user_massage_group,82,0
+back,body,身体及部位,specific_noun_head,8,0
+back muscle,body,身体及部位,explicit_user_massage_group,1,0
+backpack,container,容器,exact_noun,0,4
+badge,badge,badge（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,14
+bag,container,容器,exact_noun,153,236
+bakery item,item,未细分物品,generic_noun_family_item,0,1
+ball,sports_equipment,运动用品,exact_noun,0,17
+balm,cosmetics,化妆品及护肤品,specific_noun_head,1,0
+bamboo stick,bamboo_stick,bamboo stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+banana,food,食品及食材,specific_noun_head,0,1
+band,band,band（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,20
+band,sports_equipment,运动用品,context_fitness_item,0,1
+bandage,bandage,bandage（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,2
+bar counter,furniture,家具,specific_noun_head,0,1
+barbell,sports_equipment,运动用品,specific_noun_head,0,58
+barbell plate,tableware,餐具,specific_noun_head,0,1
+barbell weight,barbell_weight,barbell weight（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+barbershop,barbershop,barbershop（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+barcode,barcode,barcode（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+base,base,base（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+baseboard,component,零部件,exact_noun,2,1
+basin,container,容器,specific_noun_head,7,11
+basket,container,容器,specific_noun_head,0,17
+basketball,sports_equipment,运动用品,specific_noun_head,0,12
+bath product,item,未细分物品,generic_noun_family_item,0,1
+bathing product,item,未细分物品,generic_noun_family_item,0,1
+bathrobe,bathrobe,bathrobe（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+bathroom fixture,bathroom fixture,卫浴设施,user_retained_independent_category,0,8
+bathroom item,item,未细分物品,generic_noun_family_item,0,3
+bathroom supply,item,未细分物品,generic_noun_family_item,0,5
+bathroom surface,bathroom_surface,bathroom surface（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+bathtub,bathtub,浴缸,user_retained_independent_category,0,3
+battery,component,零部件,exact_noun,0,19
+bead,bead,bead（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+bean,food,食品及食材,specific_noun_head,2,1
+beard,hair,头发及假发,specific_noun_head,3,0
+beauty blender,appliance,电器及机器,specific_noun_head,0,1
+beauty cart item,item,未细分物品,exact_noun,1,0
+beauty product,cosmetics,化妆品及护肤品,exact_noun,2,0
+beauty supply,item,未细分物品,exact_noun,2,0
+beauty tool,beauty_tool,美容美发工具,exact_noun,4,0
+bed,furniture,家具,specific_noun_head,2,1
+bed sheet,textile,家用纺织品,specific_noun_head,0,24
+bedding,textile,家用纺织品,specific_noun_head,9,42
+bedroom item,item,未细分物品,generic_noun_family_item,0,1
+beer,beverage,饮品,specific_noun_head,0,4
+beer container,container,容器,specific_noun_head,0,1
+belt,clothing,衣物,specific_noun_head,0,9
+bench,furniture,家具,specific_noun_head,0,53
+beverage,beverage,饮品,specific_noun_head,4,60
+beverage bottle,container,容器,specific_noun_head,0,2
+beverage container,container,容器,specific_noun_head,0,33
+beverage machine,appliance,电器及机器,specific_noun_head,1,0
+beverage supply,item,未细分物品,generic_noun_family_item,0,1
+bike,bike,bike（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,11
+bill,paper_material,纸质资料,exact_noun,1,0
+bin,container,容器,specific_noun_head,1,12
+blanket,textile,家用纺织品,specific_noun_head,4,18
+blender,appliance,电器及机器,specific_noun_head,0,1
+blender blade head,body,身体及部位,specific_noun_head,0,1
+block,block,block（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,19
+block,toy,玩具及游戏用品,context_play_block,2,1
+board,board,board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,12,12
+board game,toy,玩具及游戏用品,exact_noun,0,6
+body,body,身体及部位,explicit_user_massage_group,12,0
+body wash,toiletries,日常洗护用品,exact_noun,2,0
+body washes,toiletries,日常洗护用品,exact_noun,1,0
+bolt,component,零部件,specific_noun_head,0,1
+book,paper_material,纸质资料,specific_noun_head,552,35
+bookcase,furniture,家具,specific_noun_head,0,2
+bookshelf,furniture,家具,specific_noun_head,2,1
+bottle,container,容器,specific_noun_head,112,540
+bottle cap,container,容器,exact_noun,1,0
+bottle opener,kitchenware,厨具,exact_noun,0,7
+bowl,tableware,餐具,specific_noun_head,5,31
+box,container,容器,specific_noun_head,617,632
+box base,box_base,box base（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+brace,brace,brace（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+bracket,component,零部件,specific_noun_head,1,0
+bread,food,食品及食材,specific_noun_head,2,54
+brush,beauty_tool,美容美发工具,context_beauty_tool,19,0
+brush,brush,brush（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,4,0
+brush,cleaning_tool,清洁工具,context_cleaning_brush,1,0
+brush head,body,身体及部位,specific_noun_head,0,1
+bubble wrap,packaging,包装用品,exact_noun,0,8
+bucket,container,容器,specific_noun_head,5,6
+buckle,component,零部件,specific_noun_head,1,1
+bulb,bulb,bulb（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+button,button,button（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+cabinet,furniture,家具,specific_noun_head,32,17
+cabinet item,item,未细分物品,exact_noun,1,0
+cable,component,零部件,exact_noun,2,135
+cable tie,cable_tie,cable tie（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cage,cage,cage（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cake,cake,cake（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+calf,body,身体及部位,explicit_user_massage_group,5,0
+camera,electronic_device,电子设备,specific_noun_head,0,1
+can,container,容器,specific_noun_head,2,51
+candy,food,食品及食材,specific_noun_head,0,16
+car starter motor,car_starter_motor,car starter motor（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+card,paper_material,纸质资料,specific_noun_head,0,32
+card holder,stationery,文具,exact_noun,0,5
+cardboard,paper_material,纸质资料,exact_noun,1,37
+cardboard box,container,容器,specific_noun_head,0,3
+cardboard piece,cardboard_piece,cardboard piece（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cardstock,cardstock,cardstock（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+care solution,cosmetics,化妆品及护肤品,exact_noun,4,0
+cargo,cargo,cargo（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,7
+carpet,carpet,carpet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+carrot,carrot,carrot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+cart,cart,cart（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,17,9
+carton,container,容器,specific_noun_head,0,3
+case,container,容器,specific_noun_head,0,1
+cash register,electronic_device,电子设备,exact_noun,1,0
+casing,casing,casing（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+cat litter,cat_litter,cat litter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cement,cement,cement（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+certificate,paper_material,纸质资料,exact_noun,1,0
+chair,furniture,家具,specific_noun_head,12,333
+chair cover,chair_cover,chair cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+charger,electronic_device,电子设备,exact_noun,0,6
+chess piece,toy,玩具及游戏用品,exact_noun,3,17
+chin,body,身体及部位,specific_noun_head,1,0
+chopstick,tableware,餐具,exact_noun,0,2
+chopsticks,tableware,餐具,exact_noun,0,5
+circuit board,circuit_board,circuit board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+circular object,item,未细分物品,generic_noun_family_item,0,1
+cleaner,cleaner,cleaner（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+clip,beauty_tool,美容美发工具,context_beauty_tool,1,3
+clip,clip,clip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,25
+clip,stationery,文具,context_paper_fastener,0,5
+clipper,appliance,电器及机器,exact_noun,1,0
+clock,clock,clock（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+cloth,textile,家用纺织品,specific_noun_head,29,82
+clothing,clothing,衣物,specific_noun_head,35,174
+clutter,item,未细分物品,exact_noun,0,17
+coaster,tableware,餐具,exact_noun,0,10
+coffee,beverage,饮品,specific_noun_head,13,19
+coffee equipment,coffee_equipment,coffee equipment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+coffee ingredient,food,食品及食材,specific_noun_head,0,1
+coffee machine,appliance,电器及机器,specific_noun_head,1,2
+coffee supply,item,未细分物品,generic_noun_family_item,1,0
+coil,component,零部件,exact_noun,1,0
+cola,beverage,饮品,specific_noun_head,0,5
+colander,colander,colander（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+colored pencil,stationery,文具,specific_noun_head,0,1
+comb,beauty_tool,美容美发工具,specific_noun_head,1,0
+comedone,comedone,comedone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+compact,compact,compact（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+component,component,零部件,specific_noun_head,0,3
+compressor,appliance,电器及机器,exact_noun,0,8
+computer,electronic_device,电子设备,specific_noun_head,1,3
+computer host,computer_host,computer host（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+computer tower,computer_tower,computer tower（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+condiment,condiment,condiment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+conditioner,toiletries,日常洗护用品,specific_noun_head,1,0
+cone,cone,cone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+connector,component,零部件,specific_noun_head,1,3
+contact lens,contact_lens,contact lens（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+container,container,容器,specific_noun_head,17,35
+control panel,control_panel,control panel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cookware,kitchenware,厨具,specific_noun_head,2,6
+cordyceps,food,食品及食材,exact_noun,1,0
+corn kernel,corn_kernel,corn kernel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+corner guard,corner_guard,corner guard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+correction fluid,stationery,文具,exact_noun,0,7
+cosmetics,cosmetics,化妆品及护肤品,specific_noun_head,195,133
+cotton pad,toiletries,日常洗护用品,exact_noun,1,0
+cotton roll,toiletries,日常洗护用品,exact_noun,2,0
+cotton swab,toiletries,日常洗护用品,exact_noun,1,7
+cotton swab box,container,容器,specific_noun_head,0,2
+cotton swab product,item,未细分物品,generic_noun_family_item,0,1
+counter,furniture,家具,specific_noun_head,54,58
+countertop,furniture,家具,specific_noun_head,0,18
+countertop item,item,未细分物品,generic_noun_family_item,0,1
+cover,cover,cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+crate,crate,crate（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+crayon,stationery,文具,specific_noun_head,1,0
+cream,cosmetics,化妆品及护肤品,specific_noun_head,43,3
+crumb,crumb,crumb（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+cucumber,food,食品及食材,specific_noun_head,1,1
+cup,tableware,餐具,specific_noun_head,70,359
+cup holder,tableware,餐具,exact_noun,9,0
+cup lid,container,容器,exact_noun,0,1
+cup supply,item,未细分物品,generic_noun_family_item,0,1
+cupping jar,beauty_tool,美容美发工具,exact_noun,3,0
+cupping tool,beauty_tool,美容美发工具,exact_noun,1,0
+cushion,textile,家用纺织品,specific_noun_head,2,13
+customer,body,身体及部位,explicit_user_massage_group,3,0
+customer,body,身体及部位,specific_noun_head,4,0
+cutlery,tableware,餐具,specific_noun_head,0,20
+cutter,tool,通用工具,specific_noun_head,0,1
+cylinder,cylinder,cylinder（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+cylinder head,body,身体及部位,specific_noun_head,0,2
+cylindrical object,item,未细分物品,generic_noun_family_item,0,5
+daily necessity,item,未细分物品,exact_noun,1,1
+dairy product,item,未细分物品,generic_noun_family_item,0,1
+data cable,data_cable,data cable（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+data form,paper_material,纸质资料,exact_noun,1,0
+debris,waste,废弃物,specific_noun_head,2,8
+decoration,decoration,装饰用品,specific_noun_head,1,0
+decorative lines,decoration,装饰用品,exact_noun,1,0
+delivery item,item,未细分物品,generic_noun_family_item,0,1
+dental supply,item,未细分物品,generic_noun_family_item,1,0
+desk,furniture,家具,specific_noun_head,5,22
+desk item,item,未细分物品,exact_noun,1,4
+desk supply,item,未细分物品,generic_noun_family_item,0,1
+desktop,furniture,家具,specific_noun_head,1,23
+desktop item,item,未细分物品,generic_noun_family_item,0,3
+dessert,food,食品及食材,specific_noun_head,2,0
+detergent,cleaning_agent,清洁剂,specific_noun_head,1,10
+device,item,未细分物品,exact_noun,11,8
+diffuser,diffuser,diffuser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+dish,tableware,餐具,specific_noun_head,2,4
+dish soap,toiletries,日常洗护用品,specific_noun_head,0,1
+dishware,tableware,餐具,specific_noun_head,0,39
+dishwasher,appliance,电器及机器,specific_noun_head,0,1
+disinfection supply,item,未细分物品,generic_noun_family_item,1,0
+display item,item,未细分物品,generic_noun_family_item,1,0
+display stand,display_stand,display stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+disposable item,item,未细分物品,generic_noun_family_item,0,1
+divider,divider,divider（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+document,paper_material,纸质资料,specific_noun_head,3,4
+door,door,门,user_retained_independent_category,11,12
+door frame,door frame,门框,user_retained_independent_category,2,0
+door handle,component,零部件,exact_noun,2,0
+door stopper,component,零部件,exact_noun,1,0
+doormat,doormat,doormat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,5
+drawer,furniture,家具,specific_noun_head,3,5
+drawer contents,drawer_contents,drawer contents（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+dress,clothing,衣物,specific_noun_head,1,0
+dresser,dresser,dresser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+dressing,dressing,dressing（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+drink,beverage,饮品,specific_noun_head,11,25
+dumbbell,sports_equipment,运动用品,specific_noun_head,0,58
+dummy,dummy,dummy（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+dye,hair_dye,染发剂,context_hair_coloring,31,0
+ear,body,身体及部位,specific_noun_head,3,0
+ear canal,body,身体及部位,exact_noun,1,0
+ear cover,beauty_tool,美容美发工具,exact_noun,1,0
+earplug,earplug,earplug（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+earring,clothing,衣物,exact_noun,0,3
+edge banding,component,零部件,exact_noun,1,0
+egg,food,食品及食材,specific_noun_head,0,5
+elliptical machine,appliance,电器及机器,specific_noun_head,0,1
+engine,engine,engine（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+envelope,paper_material,纸质资料,specific_noun_head,0,8
+equipment,item,未细分物品,exact_noun,3,34
+essence,cosmetics,化妆品及护肤品,specific_noun_head,6,0
+eyebrow,body,身体及部位,specific_noun_head,6,0
+eyebrow pencil,beauty_tool,美容美发工具,exact_noun,1,0
+eyelash,hair,头发及假发,exact_noun,24,0
+eyelash extension,hair,头发及假发,exact_noun,1,0
+eyes,body,身体及部位,explicit_user_massage_group,2,0
+eyeshadow,cosmetics,化妆品及护肤品,specific_noun_head,1,0
+face,body,身体及部位,explicit_user_massage_group,122,0
+face,body,身体及部位,specific_noun_head,54,0
+facial cleanser,cosmetics,化妆品及护肤品,exact_noun,3,2
+facial mask,cosmetics,化妆品及护肤品,exact_noun,1,0
+fake nail,nail,指甲及甲片,specific_noun_head,0,3
+fan,appliance,电器及机器,specific_noun_head,1,2
+fastener,fastener,fastener（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+faucet,faucet,水龙头,user_retained_independent_category,2,0
+figurine,decoration,装饰用品,specific_noun_head,1,0
+file,tool,通用工具,specific_noun_head,0,1
+film,packaging,包装用品,specific_noun_head,3,2
+filter,component,零部件,specific_noun_head,3,1
+finger,body,身体及部位,explicit_user_massage_group,1,0
+finger,body,身体及部位,specific_noun_head,1,0
+fingernail,nail,指甲及甲片,specific_noun_head,3,0
+fire extinguisher,fire_extinguisher,fire extinguisher（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+first aid kit,first_aid_kit,first aid kit（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+fitness chair,furniture,家具,specific_noun_head,0,1
+fitness equipment,sports_equipment,运动用品,exact_noun,0,9
+fitness gear,fitness_gear,fitness gear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+flier,paper_material,纸质资料,specific_noun_head,0,9
+floor,floor,地面,user_retained_independent_category,121,46
+floss,floss,floss（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+flower,flower,flower（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,10
+flowerpot,flowerpot,flowerpot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+foam,foam,foam（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+foam net sleeve,foam_net_sleeve,foam net sleeve（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+foam roller,beauty_tool,美容美发工具,specific_noun_head,0,1
+foil,foil,foil（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+folder,stationery,文具,specific_noun_head,0,9
+food,food,食品及食材,specific_noun_head,9,47
+foot pad,foot_pad,foot pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+footwear,footwear,footwear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+forehead,body,身体及部位,specific_noun_head,1,0
+fork,tableware,餐具,specific_noun_head,0,1
+form,paper_material,纸质资料,exact_noun,3,0
+foundation,cosmetics,化妆品及护肤品,specific_noun_head,2,0
+frame,component,零部件,exact_noun,1,15
+french fries,french_fries,french fries（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+fries,fries,fries（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+front desk,furniture,家具,exact_noun,1,0
+fruit,food,食品及食材,specific_noun_head,20,2
+fungus,food,食品及食材,exact_noun,1,0
+furniture,furniture,家具,specific_noun_head,22,18
+game,toy,玩具及游戏用品,specific_noun_head,0,2
+game accessory,game_accessory,game accessory（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+game component,toy,玩具及游戏用品,exact_noun,0,12
+garbage,waste,废弃物,specific_noun_head,15,0
+gardening tool,gardening_tool,gardening tool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+garlic,food,食品及食材,specific_noun_head,2,13
+garment,clothing,衣物,specific_noun_head,0,2
+gasket,component,零部件,specific_noun_head,1,0
+gauze,textile,家用纺织品,specific_noun_head,2,0
+gel,gel,gel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+gel,nail_polish,指甲油,context_nail_coloring,5,0
+generator,generator,generator（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+ginger,food,食品及食材,specific_noun_head,6,4
+glass,container,容器,context_glass_container,0,1
+glass,furniture,家具,context_glass_furniture_surface,8,1
+glass,glass,玻璃制品（用途未明确）,retained_ambiguous_glass,0,2
+glass,tableware,餐具,context_drinking_glass,5,8
+glasses,clothing,衣物,exact_noun,1,19
+glassware,glassware,glassware（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+glove,clothing,衣物,specific_noun_head,2,21
+glue,cosmetics,化妆品及护肤品,context_beauty_material,1,0
+glue,glue,glue（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,5
+goods,item,未细分物品,exact_noun,39,0
+gourd,food,食品及食材,specific_noun_head,1,0
+grain,food,食品及食材,specific_noun_head,1,0
+granule,granule,granule（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,3
+grid paper,paper_material,纸质资料,specific_noun_head,0,1
+grille,grille,grille（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,1
+grinder,appliance,电器及机器,specific_noun_head,0,2
+grinding pen,beauty_tool,美容美发工具,exact_noun,1,0
+grip strengthener,grip_strengthener,grip strengthener（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+grocery,grocery,grocery（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+grooming item,item,未细分物品,generic_noun_family_item,0,1
+groove,groove,groove（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+hair,body,身体及部位,explicit_user_massage_group,1,0
+hair,hair,头发及假发,specific_noun_head,1391,1
+hair accessory,hair_accessory,hair accessory（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+hair care product,toiletries,日常洗护用品,exact_noun,1,0
+hair clip,beauty_tool,美容美发工具,exact_noun,1,0
+hair clipper,appliance,电器及机器,exact_noun,3,0
+hair dryer,appliance,电器及机器,specific_noun_head,0,16
+hair dye,hair_dye,染发剂,exact_noun,108,0
+hair extension,hair,头发及假发,exact_noun,10,0
+hair extension weft,hair,头发及假发,exact_noun,1,0
+hair paper,beauty_tool,美容美发工具,exact_noun,1,0
+hair product,item,未细分物品,generic_noun_family_item,1,0
+hair roller,beauty_tool,美容美发工具,exact_noun,2,0
+hair section,hair,头发及假发,exact_noun,1,0
+hair tool,beauty_tool,美容美发工具,exact_noun,1,0
+hairband,beauty_tool,美容美发工具,exact_noun,1,0
+hairdressing tool,beauty_tool,美容美发工具,exact_noun,8,0
+hairpin,beauty_tool,美容美发工具,specific_noun_head,7,1
+hand,body,身体及部位,explicit_user_massage_group,1,0
+hand,body,身体及部位,specific_noun_head,1,0
+hand sanitizer,hand_sanitizer,hand sanitizer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+handbags,container,容器,exact_noun,1,0
+handkerchief,handkerchief,handkerchief（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+handle,component,零部件,exact_noun,0,37
+handrail,handrail,扶手,user_retained_independent_category,1,0
+hanger,hanger,hanger（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,51
+hardware,component,零部件,exact_noun,1,2
+harness,harness,harness（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hat,clothing,衣物,specific_noun_head,1,1
+head,body,身体及部位,explicit_user_massage_group,30,0
+head,body,身体及部位,specific_noun_head,5,0
+headband,headband,headband（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+headboard,furniture,家具,exact_noun,0,1
+headphone,electronic_device,电子设备,specific_noun_head,0,1
+headphones,electronic_device,电子设备,specific_noun_head,0,1
+helmet,helmet,helmet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+herb,food,食品及食材,exact_noun,3,5
+herbal goods,medicine,药品及药材,exact_noun,1,0
+hinge,component,零部件,specific_noun_head,4,0
+hoodie,hoodie,hoodie（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hook,hook,hook（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+hose,component,零部件,exact_noun,1,0
+household item,item,未细分物品,generic_noun_family_item,0,3
+household supply,item,未细分物品,generic_noun_family_item,0,1
+hula hoop,sports_equipment,运动用品,exact_noun,0,2
+humidifier,humidifier,humidifier（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+hygiene product,toiletries,日常洗护用品,exact_noun,0,4
+ice,food,食品及食材,exact_noun,9,1
+ice cream,food,食品及食材,exact_noun,1,0
+impurities,impurities,impurities（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+information,information,information（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+ingredient,food,食品及食材,specific_noun_head,17,3
+ingredients,food,食品及食材,specific_noun_head,4,0
+ink,ink,ink（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+ink cartridge,component,零部件,exact_noun,0,4
+insole,insole,insole（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+instrument,instrument,instrument（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+iron stand,iron_stand,iron stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+item,item,未细分物品,exact_noun,56,194
+item in blue packaging,packaging,包装用品,specific_noun_head,0,1
+jacket,clothing,衣物,specific_noun_head,0,1
+jar,container,容器,specific_noun_head,77,19
+jelly,food,食品及食材,specific_noun_head,0,4
+jewelry,clothing,衣物,exact_noun,0,16
+jug,container,容器,specific_noun_head,1,1
+juice,beverage,饮品,specific_noun_head,0,26
+juicer,appliance,电器及机器,specific_noun_head,2,0
+juicer part,component,零部件,specific_noun_head,1,0
+jump rope,sports_equipment,运动用品,exact_noun,0,8
+ketchup,ketchup,ketchup（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+kettle,appliance,电器及机器,specific_noun_head,2,18
+kettlebell,sports_equipment,运动用品,exact_noun,0,17
+key,key,key（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+keyboard,electronic_device,电子设备,specific_noun_head,0,18
+keychain,keychain,keychain（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+kit,item,未细分物品,exact_noun,1,0
+kitchen item,item,未细分物品,generic_noun_family_item,0,5
+kitchen supply,item,未细分物品,generic_noun_family_item,0,1
+kitchen tool,kitchenware,厨具,exact_noun,0,13
+kitchen utensil,kitchenware,厨具,exact_noun,0,1
+kitchenware,kitchenware,厨具,specific_noun_head,7,10
+knee pad,knee_pad,knee pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+knife,tool,通用工具,specific_noun_head,0,3
+knot,knot,knot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+label,stationery,文具,specific_noun_head,59,393
+lamp,lamp,lamp（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+lamp holder accessories,component,零部件,exact_noun,1,0
+lanyard,lanyard,lanyard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,12
+lead,lead,lead（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+leaf,leaf,leaf（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+leaflet,paper_material,纸质资料,specific_noun_head,1,0
+left arm,body,身体及部位,explicit_user_massage_group,2,0
+leg,body,身体及部位,explicit_user_massage_group,33,0
+leg,body,身体及部位,specific_noun_head,2,0
+leg muscle,body,身体及部位,explicit_user_massage_group,1,0
+lemon,food,食品及食材,specific_noun_head,5,0
+lens,lens,lens（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+letter,letter,letter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+lettuce,food,食品及食材,specific_noun_head,1,0
+lid,container,容器,specific_noun_head,19,41
+light string,light_string,light string（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+lighter,lighter,lighter（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,10
+lime,food,食品及食材,specific_noun_head,3,0
+line,line,line（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,0
+lip gloss,cosmetics,化妆品及护肤品,exact_noun,8,1
+lipstick,cosmetics,化妆品及护肤品,specific_noun_head,15,2
+liquid,beverage,饮品,context_beverage_material,0,2
+liquid,beverage,饮品,context_beverage_service,1,3
+liquid,cosmetics,化妆品及护肤品,context_facial_skincare,2,0
+liquid,food,食品及食材,context_food_material,0,1
+liquid,food,食品及食材,context_soup,1,0
+liquid,liquid,液体（用途未明确）,retained_ambiguous_liquid,0,10
+liquid,nail_polish,指甲油,context_nail_coating,0,1
+liquid,toiletries,日常洗护用品,context_soap_refill,0,3
+lock,component,零部件,specific_noun_head,8,0
+locker,locker,locker（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+long black hair,hair,头发及假发,specific_noun_head,1,0
+long item,item,未细分物品,generic_noun_family_item,0,2
+long object,item,未细分物品,generic_noun_family_item,0,1
+longan,food,食品及食材,specific_noun_head,5,0
+lotion,cosmetics,化妆品及护肤品,specific_noun_head,9,0
+lower back,body,身体及部位,exact_noun,1,0
+lower back,body,身体及部位,explicit_user_massage_group,1,0
+machine,appliance,电器及机器,specific_noun_head,1,13
+magazine,paper_material,纸质资料,specific_noun_head,0,57
+makeup,cosmetics,化妆品及护肤品,specific_noun_head,16,3
+makeup supply,item,未细分物品,generic_noun_family_item,0,2
+makeup tool,beauty_tool,美容美发工具,exact_noun,1,7
+mango,food,食品及食材,specific_noun_head,16,0
+manicure tool,beauty_tool,美容美发工具,exact_noun,1,0
+mannequin hair,hair,头发及假发,exact_noun,3,0
+mannequin head hair,hair,头发及假发,exact_noun,2,0
+marker,stationery,文具,specific_noun_head,0,25
+mask,container,容器,context_clean_mask_packaging,1,0
+mask,cosmetics,化妆品及护肤品,context_facial_mask,6,1
+mask,cosmetics,化妆品及护肤品,context_facial_skincare,21,0
+mask,mask,mask（用途未明确）,retained_ambiguous_mask,6,9
+mat,mat,mat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,34
+mat,sports_equipment,运动用品,context_fitness_item,0,1
+mattress,mattress,mattress（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+meal,food,食品及食材,specific_noun_head,4,0
+measuring cup,tableware,餐具,specific_noun_head,1,0
+medicinal material,medicine,药品及药材,exact_noun,1,0
+medicine,medicine,药品及药材,specific_noun_head,192,2
+medicine bottle,container,容器,specific_noun_head,1,0
+medicine box,container,容器,specific_noun_head,10,0
+medicine container,container,容器,exact_noun,1,0
+medicine product,medicine,药品及药材,exact_noun,3,0
+merchandise,merchandise,merchandise（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+mesh,mesh,mesh（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+metal tool,metal_tool,metal tool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+microwave,appliance,电器及机器,specific_noun_head,1,5
+milk,beverage,饮品,specific_noun_head,0,11
+mirror,mirror,镜子,user_retained_independent_category,3,44
+miscellaneous item,item,未细分物品,exact_noun,0,4
+mixture,cosmetics,化妆品及护肤品,context_facial_skincare,1,0
+model,model,model（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+monitor,electronic_device,电子设备,specific_noun_head,1,0
+mop,cleaning_tool,清洁工具,specific_noun_head,0,2
+mop handle,mop_handle,mop handle（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+motor,appliance,电器及机器,exact_noun,0,6
+mouse,electronic_device,电子设备,specific_noun_head,3,2
+mud,mud,mud（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+muscle,body,身体及部位,explicit_user_massage_group,1,0
+nail,nail,指甲及甲片,specific_noun_head,54,8
+nail drill,beauty_tool,美容美发工具,exact_noun,1,0
+nail piece,nail,指甲及甲片,exact_noun,1,0
+nail polish,nail_polish,指甲油,exact_noun,98,1
+nail tip,nail,指甲及甲片,exact_noun,3,0
+napkin,textile,家用纺织品,exact_noun,0,3
+neck,body,身体及部位,explicit_user_massage_group,2,0
+neck,body,身体及部位,specific_noun_head,2,0
+necklace,clothing,衣物,exact_noun,0,3
+net,net,net（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+nib,nib,nib（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+nightstand,furniture,家具,specific_noun_head,0,25
+noodle,food,食品及食材,specific_noun_head,0,14
+note,note,note（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+notebook,paper_material,纸质资料,specific_noun_head,5,7
+notepad,notepad,notepad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+nut,food,食品及食材,specific_noun_head,1,13
+office item,item,未细分物品,generic_noun_family_item,0,1
+office supply,item,未细分物品,generic_noun_family_item,0,3
+ointment,medicine,药品及药材,specific_noun_head,6,0
+onion,food,食品及食材,specific_noun_head,0,3
+orange,food,食品及食材,specific_noun_head,2,3
+ornament,decoration,装饰用品,specific_noun_head,13,0
+package,packaging,包装用品,specific_noun_head,25,208
+packaged item,item,未细分物品,generic_noun_family_item,0,1
+packaging,packaging,包装用品,specific_noun_head,0,1
+packing supply,item,未细分物品,generic_noun_family_item,0,1
+pad,pad,pad（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,2
+pad,toiletries,日常洗护用品,context_personal_hygiene,0,1
+paint,nail_polish,指甲油,context_nail_coloring,1,0
+painting,decoration,装饰用品,specific_noun_head,1,2
+pajama top,clothing,衣物,exact_noun,1,0
+pajamas,clothing,衣物,specific_noun_head,2,0
+palette,palette,palette（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+panel,panel,panel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+pants,clothing,衣物,specific_noun_head,3,1
+papaya,food,食品及食材,specific_noun_head,4,0
+paper,paper_material,纸质资料,specific_noun_head,23,431
+paper packaging,packaging,包装用品,exact_noun,1,0
+paperclip,stationery,文具,specific_noun_head,0,7
+parcel,packaging,包装用品,specific_noun_head,9,2
+part,component,零部件,specific_noun_head,5,78
+paste,cosmetics,化妆品及护肤品,context_beauty_material,2,0
+pastry,food,食品及食材,specific_noun_head,2,13
+patch,patch,patch（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+pattern,pattern,pattern（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+peach,peach,peach（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+peach gum,food,食品及食材,exact_noun,1,0
+peanut,food,食品及食材,specific_noun_head,0,5
+pear,food,食品及食材,specific_noun_head,1,0
+pedal,pedal,pedal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+peel,peel,peel（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+peeler,peeler,peeler（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+pen,stationery,文具,specific_noun_head,10,71
+pencil,stationery,文具,specific_noun_head,6,1
+pencil case,container,容器,specific_noun_head,0,2
+pepper,food,食品及食材,exact_noun,0,2
+perm cotton,beauty_tool,美容美发工具,exact_noun,1,0
+perm lotion,cosmetics,化妆品及护肤品,exact_noun,1,0
+perm paper,beauty_tool,美容美发工具,exact_noun,1,0
+perm rod,beauty_tool,美容美发工具,exact_noun,27,0
+perm supply,beauty_tool,美容美发工具,exact_noun,1,0
+perm tool,beauty_tool,美容美发工具,exact_noun,1,0
+personal care product,toiletries,日常洗护用品,exact_noun,1,0
+personal item,item,未细分物品,exact_noun,0,1
+phone,electronic_device,电子设备,specific_noun_head,0,2
+photo,photo,photo（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+picture,picture,picture（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+piece,item,未细分物品,exact_noun,1,12
+pigment,pigment,pigment（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+pill,medicine,药品及药材,specific_noun_head,3,1
+pillow,textile,家用纺织品,specific_noun_head,1,26
+pillowcase,textile,家用纺织品,specific_noun_head,0,1
+pimple,pimple,pimple（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+placemat,tableware,餐具,exact_noun,0,82
+plant,plant,plant（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,5,5
+plastic strip,plastic_strip,plastic strip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+plastic wrap,packaging,包装用品,exact_noun,3,2
+plate,tableware,餐具,specific_noun_head,2,9
+plug,component,零部件,specific_noun_head,1,0
+polish,nail_polish,指甲油,context_nail_coloring,10,1
+pot,kitchenware,厨具,specific_noun_head,4,4
+potato,food,食品及食材,exact_noun,0,6
+powder,powder,powder（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,3,6
+power strip,component,零部件,exact_noun,2,0
+prescription,paper_material,纸质资料,exact_noun,1,0
+price tags,price_tags,price tags（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+produce,produce,produce（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+product,cosmetics,化妆品及护肤品,context_facial_skincare,4,0
+product,item,未细分物品,exact_noun,54,15
+product display,item,未细分物品,exact_noun,0,1
+puff,puff,puff（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+pulp mold,pulp_mold,pulp mold（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,1
+pump,pump,pump（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+puzzle,toy,玩具及游戏用品,specific_noun_head,0,2
+puzzle board,puzzle_board,puzzle board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+quilt,textile,家用纺织品,specific_noun_head,0,7
+rack,furniture,家具,specific_noun_head,11,22
+racket,sports_equipment,运动用品,specific_noun_head,0,2
+rag,textile,家用纺织品,specific_noun_head,3,0
+rail,component,零部件,specific_noun_head,1,0
+railing,railing,栏杆,user_retained_independent_category,15,3
+raw material,item,未细分物品,generic_noun_family_item,0,1
+recyclable,recyclable,recyclable（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+refill,refill,refill（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,11
+reflector,component,零部件,exact_noun,0,7
+reflector assembly,component,零部件,exact_noun,0,1
+reflector base,component,零部件,exact_noun,0,1
+refrigerator,appliance,电器及机器,specific_noun_head,1,6
+registration book,paper_material,纸质资料,exact_noun,1,0
+remote control,electronic_device,电子设备,exact_noun,0,6
+rhinestone,decoration,装饰用品,exact_noun,1,0
+ribbon,ribbon,ribbon（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+rice,food,食品及食材,specific_noun_head,0,2
+ring,ring,ring（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+rod,beauty_tool,美容美发工具,context_beauty_tool,59,0
+rod,component,零部件,context_hardware,0,1
+rod,rod,rod（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,6,0
+roll,roll,roll（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+roller,beauty_tool,美容美发工具,context_beauty_tool,5,0
+roller,beauty_tool,美容美发工具,specific_noun_head,1,1
+rope,rope,rope（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,62
+round object,item,未细分物品,generic_noun_family_item,0,1
+rubber band,beauty_tool,美容美发工具,context_beauty_tool,1,0
+rubber bands,rubber_bands,rubber bands（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+ruler,stationery,文具,specific_noun_head,0,7
+safe,safe,safe（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+salt,food,食品及食材,specific_noun_head,0,1
+sample,item,未细分物品,exact_noun,1,0
+sand,sand,sand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,5,0
+sandwich,food,食品及食材,specific_noun_head,2,3
+sanitary pad,toiletries,日常洗护用品,exact_noun,4,3
+sanitary product,item,未细分物品,generic_noun_family_item,0,1
+sauce,food,食品及食材,specific_noun_head,1,3
+sausage,food,食品及食材,exact_noun,0,5
+scalp,body,身体及部位,explicit_user_massage_group,6,0
+scalp,body,身体及部位,specific_noun_head,1,0
+scanner,scanner,scanner（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+schoolbag,container,容器,exact_noun,0,1
+scissors,tool,通用工具,specific_noun_head,1,20
+screen,screen,screen（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+screw,component,零部件,specific_noun_head,1,1
+seal,seal,seal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+seasoning,food,食品及食材,specific_noun_head,0,4
+seat,seat,seat（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,6
+seed,food,食品及食材,specific_noun_head,0,1
+serum,cosmetics,化妆品及护肤品,specific_noun_head,1,0
+shampoo,toiletries,日常洗护用品,specific_noun_head,8,15
+shampoo bed,furniture,家具,specific_noun_head,1,0
+shaved ice,food,食品及食材,exact_noun,1,0
+sheet,textile,家用纺织品,specific_noun_head,0,2
+shelf,furniture,家具,specific_noun_head,50,54
+shelf board,shelf_board,shelf board（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shelf layer,shelf_layer,shelf layer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shirt,clothing,衣物,specific_noun_head,1,21
+shoe,clothing,衣物,specific_noun_head,0,178
+shoe cover,shoe_cover,shoe cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+shoebox,shoebox,shoebox（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shoelace,clothing,衣物,exact_noun,0,37
+shopping cart,shopping_cart,shopping cart（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+shoulders,body,身体及部位,explicit_user_massage_group,1,0
+shower cap,container,容器,specific_noun_head,0,2
+shower gel,toiletries,日常洗护用品,exact_noun,0,4
+shower head,body,身体及部位,specific_noun_head,0,26
+showerhead,showerhead,淋浴喷头,user_retained_independent_category,0,13
+shuttlecock,sports_equipment,运动用品,specific_noun_head,0,14
+sign,sign,sign（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,12
+sink,sink,水槽,user_retained_independent_category,20,98
+skeleton,skeleton,skeleton（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+skewer,skewer,skewer（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+skin,body,身体及部位,explicit_user_massage_group,1,0
+skin,body,身体及部位,specific_noun_head,1,0
+skin care product,cosmetics,化妆品及护肤品,exact_noun,25,0
+skincare container,container,容器,specific_noun_head,1,0
+slide rail,component,零部件,exact_noun,1,0
+slipper,clothing,衣物,specific_noun_head,0,1
+slippers,slippers,slippers（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+slot,slot,slot（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+snack,food,食品及食材,specific_noun_head,0,113
+sneaker laces,sneaker_laces,sneaker laces（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+soap,toiletries,日常洗护用品,specific_noun_head,23,4
+soap dish,tableware,餐具,specific_noun_head,0,1
+soap dispenser,soap_dispenser,soap dispenser（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+sock,clothing,衣物,specific_noun_head,0,4
+sofa,furniture,家具,specific_noun_head,0,7
+solution,cosmetics,化妆品及护肤品,context_facial_skincare,1,0
+some object,item,未细分物品,user_fallback_generic_common,416,162
+soymilk maker part,component,零部件,specific_noun_head,1,0
+speaker,electronic_device,电子设备,specific_noun_head,1,1
+spine,body,身体及部位,explicit_user_massage_group,1,0
+sponge,cleaning_tool,清洁工具,exact_noun,0,3
+spoon,tableware,餐具,specific_noun_head,0,4
+sports equipment,sports_equipment,运动用品,exact_noun,0,13
+sports gear,sports_gear,sports gear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sportswear,sportswear,sportswear（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+spray,spray,spray（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+spray bottle,container,容器,specific_noun_head,0,21
+spreadsheet,spreadsheet,spreadsheet（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,0
+stain,stain,stain（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+stamp,stamp,stamp（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+stand,stand,stand（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,1
+staple,staple,staple（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+starter,component,零部件,exact_noun,0,7
+starter motor,component,零部件,exact_noun,0,1
+stationery,stationery,文具,specific_noun_head,4,66
+steel wool ball,cleaning_tool,清洁工具,exact_noun,0,1
+stem,stem,stem（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+stick,stick,stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,7
+sticker,stationery,文具,specific_noun_head,4,21
+stool,furniture,家具,specific_noun_head,15,10
+stopper,component,零部件,specific_noun_head,1,0
+storage cabinet item,item,未细分物品,exact_noun,1,0
+storage rack,furniture,家具,specific_noun_head,0,7
+stove,appliance,电器及机器,specific_noun_head,0,5
+strainer,kitchenware,厨具,specific_noun_head,1,0
+strap,component,零部件,exact_noun,0,31
+straw,tableware,餐具,exact_noun,4,18
+strawberry,food,食品及食材,specific_noun_head,2,0
+string,string,string（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+strip,strip,strip（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,6,6
+strip object,item,未细分物品,generic_noun_family_item,0,1
+strip-shaped object,item,未细分物品,generic_noun_family_item,0,1
+structure,structure,structure（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+substance,substance,substance（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sugar,food,食品及食材,specific_noun_head,1,1
+suitcase,suitcase,suitcase（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+sundries,item,未细分物品,exact_noun,3,1
+supply,item,未细分物品,exact_noun,5,2
+support,support,support（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+surface,item,未细分物品,exact_noun,16,8
+t-shirt,clothing,衣物,specific_noun_head,0,2
+table,furniture,家具,specific_noun_head,57,135
+table setting,table_setting,table setting（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+tablecloth,textile,家用纺织品,exact_noun,0,1
+tabletop,furniture,家具,specific_noun_head,2,1
+tableware,tableware,餐具,specific_noun_head,8,72
+tag,stationery,文具,specific_noun_head,32,11
+takeout,food,食品及食材,exact_noun,1,0
+tape,packaging,包装用品,exact_noun,0,75
+tape dispenser,stationery,文具,exact_noun,1,3
+tea,beverage,饮品,specific_noun_head,0,13
+tea bag,food,食品及食材,exact_noun,0,9
+tea set,tableware,餐具,exact_noun,0,2
+tea supply,item,未细分物品,generic_noun_family_item,0,2
+telephone,telephone,telephone（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+thermos,kitchenware,厨具,exact_noun,0,2
+thin stick,thin_stick,thin stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+thread,textile,家用纺织品,exact_noun,37,0
+threads,textile,家用纺织品,exact_noun,1,0
+tile,tile,tile（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,2,1
+tissue,toiletries,日常洗护用品,exact_noun,4,31
+tissue box,container,容器,specific_noun_head,0,1
+toilet,toilet,马桶,user_retained_independent_category,0,4
+toilet paper roll,toilet_paper_roll,toilet paper roll（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+toilet roll,toiletries,日常洗护用品,exact_noun,1,0
+toilet seat cover,toilet_seat_cover,toilet seat cover（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+toiletries,toiletries,日常洗护用品,specific_noun_head,19,127
+tomato,food,食品及食材,exact_noun,0,8
+tong,tong,tong（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+tool,tool,通用工具,exact_noun,17,4
+toothbrush,toiletries,日常洗护用品,specific_noun_head,26,3
+toothpaste,toiletries,日常洗护用品,specific_noun_head,9,19
+toothpick,toothpick,toothpick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+topping,food,食品及食材,specific_noun_head,1,0
+towel,textile,家用纺织品,specific_noun_head,259,222
+toy,toy,玩具及游戏用品,specific_noun_head,79,11
+transparent hemispherical covers,transparent_hemispherical_covers,transparent hemispherical covers（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+trash,waste,废弃物,specific_noun_head,4,29
+trash can,container,容器,specific_noun_head,0,1
+tray,container,容器,specific_noun_head,25,39
+treadmill,sports_equipment,运动用品,specific_noun_head,0,58
+tube,container,容器,specific_noun_head,2,4
+tubular item,item,未细分物品,generic_noun_family_item,0,1
+turn signal,turn_signal,turn signal（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+umbrella,umbrella,umbrella（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,5
+underwear,clothing,衣物,specific_noun_head,19,0
+upper arm,body,身体及部位,explicit_user_massage_group,1,0
+utensil,kitchenware,厨具,exact_noun,7,9
+vacuum cleaner,appliance,电器及机器,exact_noun,0,2
+vase,decoration,装饰用品,specific_noun_head,0,3
+vegetable,food,食品及食材,specific_noun_head,7,6
+vest,clothing,衣物,specific_noun_head,0,2
+vial,container,容器,specific_noun_head,1,0
+waffle,food,食品及食材,specific_noun_head,1,0
+waist,body,身体及部位,explicit_user_massage_group,1,0
+waist,body,身体及部位,specific_noun_head,1,0
+wall,wall,墙面,user_retained_independent_category,3,4
+wardrobe,furniture,家具,specific_noun_head,0,1
+washing machine,appliance,电器及机器,specific_noun_head,0,8
+waste,waste,废弃物,specific_noun_head,2,3
+water,beverage,饮品,specific_noun_head,0,11
+water bottle,container,容器,specific_noun_head,0,2
+water container,container,容器,specific_noun_head,0,1
+water dispenser,appliance,电器及机器,exact_noun,1,1
+water reservoir,water_reservoir,water reservoir（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+water tank,water_tank,water tank（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+watermelon,food,食品及食材,specific_noun_head,10,0
+weight plate,sports_equipment,运动用品,exact_noun,0,59
+wet wipe,toiletries,日常洗护用品,exact_noun,0,13
+wheel,component,零部件,specific_noun_head,0,1
+whistle,sports_equipment,运动用品,exact_noun,0,11
+whiteboard,whiteboard,whiteboard（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,3
+wig,hair,头发及假发,specific_noun_head,56,1
+wig hair,hair,头发及假发,specific_noun_head,4,0
+wig model hair,hair,头发及假发,exact_noun,1,0
+wig strand,hair,头发及假发,exact_noun,1,0
+window,window,窗户,user_retained_independent_category,1,1
+windowsill,windowsill,windowsill（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,4
+wine,beverage,饮品,specific_noun_head,1,0
+wire,component,零部件,exact_noun,0,9
+wiring harness,wiring_harness,wiring harness（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wok,kitchenware,厨具,specific_noun_head,0,1
+wood,wood,wood（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,1,0
+wooden frame,wooden_frame,wooden frame（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wooden stick,wooden_stick,wooden stick（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,9
+wooden structure,wooden_structure,wooden structure（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wool,wool,wool（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,2
+workstation,workstation,workstation（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+woven bag,woven_bag,woven bag（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+wrapper,packaging,包装用品,specific_noun_head,0,1
+wristband,clothing,衣物,exact_noun,0,6
+yam,yam,yam（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1
+yoga mat,sports_equipment,运动用品,exact_noun,0,5
+yogurt,yogurt,yogurt（保留细类）,retained_original_type:catalog_gap_or_ambiguous_noun,0,1

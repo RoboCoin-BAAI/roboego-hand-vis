@@ -1,0 +1,1889 @@
+﻿task_name,samples,jianzhi,guanglun,old_names
+add salt,1,0,1,Prepare salted cola and clean countertop
+adjust barbell weight,1,0,1,Adjust barbell weight
+adjust rod,1,1,0,straighten and connect perm rods
+align block,1,1,0,Store colored pencils and building blocks
+apply bandage,1,0,1,apply bandage
+apply care solution,4,4,0,apply care solution
+apply cosmetics,17,17,0,Apply facial skincare treatment | apply cosmetic | apply cosmetics
+apply cream,40,40,0,Apply cream to mannequin hair | apply cream
+apply dressing,1,1,0,apply dressing
+apply dye,31,31,0,Dye customer hair and store towels | Dye mannequin hair and clean tools | Trim and dye wig | apply dye
+apply essence,6,6,0,apply essence
+apply eyelash,3,3,0,apply eyelash
+apply eyeshadow,1,1,0,apply eyeshadow
+apply face,1,1,0,apply face
+apply fake nail,3,0,3,Applying and curing fake nails | apply fake nail
+apply foundation,2,2,0,apply foundation
+apply gel,6,6,0,apply gel
+apply glue,6,1,5,apply glue
+apply hair,3,3,0,apply hair
+apply hair dye,107,107,0,Apply hair dye to customer hair | Dye customer hair and wipe stains | apply hair dye | apply hair dye and cut hair
+apply hair product,1,1,0,apply hair product
+apply liquid,3,2,1,apply liquid
+apply lotion,7,7,0,Secure perm rollers for customer | apply lotion
+apply makeup,9,9,0,apply makeup
+apply mask,21,21,0,apply facial mask and massage forehead | apply mask
+apply mixture,1,1,0,apply mixture
+apply mud,1,1,0,apply mud
+apply nail,9,3,6,apply nail | paint nail pieces
+apply nail polish,35,34,1,Apply nail polish and organize manicure tools | apply nail polish
+apply ointment,6,6,0,apply ointment
+apply paint,1,1,0,apply paint
+apply perm lotion,1,1,0,Store hair dryer and apply perm lotion
+apply pigment,1,1,0,apply pigment
+apply plastic wrap,1,1,0,apply plastic wrap
+apply polish,11,10,1,apply polish
+apply powder,1,0,1,apply powder
+apply product,5,5,0,Apply product and comb hair | apply product | apply products
+apply rhinestone,1,1,0,apply rhinestone
+apply roller,1,1,0,Apply hair rollers to mannequin head
+apply sauce,1,0,1,Seasoning cucumber slices with sauce
+apply serum,1,1,0,apply serum
+apply skin care product,1,1,0,apply skincare product
+apply solution,1,1,0,apply solution
+apply substance,1,0,1,apply substance
+apply tape,7,0,7,Replace tape roll and apply tape to wooden board | apply tape
+arrange apple,1,0,1,arrange apple
+arrange armchair,1,0,1,arrange armchair
+arrange badge,2,0,2,arrange badge
+arrange bandage,1,1,0,arrange bandage
+arrange bed,1,0,1,arrange bed
+arrange bed sheet,10,0,10,arrange bed sheet
+arrange beer container,1,0,1,arrange beer container
+arrange beverage bottle,1,0,1,arrange beverage bottle
+arrange beverage container,21,0,21,arrange beverage container
+arrange block,1,1,0,arrange block
+arrange board,3,1,2,arrange board
+arrange board game,5,0,5,arrange board game
+arrange body washes,1,1,0,arrange body washes
+arrange bowl,1,0,1,arrange bowl
+arrange cake,1,0,1,arrange cake
+arrange card holder,3,0,3,arrange card holder
+arrange cart,3,0,3,arrange cart
+arrange chair cover,1,0,1,arrange chair cover
+arrange correction fluid,1,0,1,arrange correction fluid
+arrange cotton swab box,1,0,1,arrange cotton swab box
+arrange cotton swab product,1,0,1,arrange cotton swab product
+arrange cutlery,2,0,2,arrange cutlery
+arrange cylindrical object,1,0,1,arrange cylindrical object
+arrange detergent,3,0,3,arrange detergent
+arrange eyelash,1,1,0,arrange eyelash
+arrange facial cleanser,1,0,1,arrange facial cleanser
+arrange figurine,1,1,0,arrange figurine
+arrange flowerpot,1,0,1,arrange flowerpot
+arrange frame,4,0,4,arrange frame
+arrange fries,1,0,1,arrange fries
+arrange furniture,9,1,8,arrange furniture
+arrange game accessory,1,0,1,arrange game accessory
+arrange glass,3,3,0,arrange glass
+arrange glove,1,0,1,arrange glove
+arrange goods,13,13,0,arrange goods
+arrange hair,15,15,0,arrange hair
+arrange hanger,10,0,10,arrange hanger
+arrange herbal goods,1,1,0,arrange herbal goods
+arrange jar,5,3,2,arrange jar
+arrange jelly,1,0,1,arrange jelly
+arrange ketchup,1,0,1,arrange ketchup
+arrange kettle,1,0,1,arrange kettle
+arrange kettlebell,1,0,1,arrange kettlebell
+arrange kit,1,1,0,arrange kit
+arrange kitchen supply,1,0,1,arrange kitchen supply
+arrange kitchen tool,3,0,3,arrange kitchen tool
+arrange letter,1,0,1,arrange letter
+arrange lid,1,1,0,arrange lid
+arrange lighter,2,0,2,arrange lighter
+arrange lipstick,1,1,0,arrange lipstick
+arrange lotion,1,1,0,Organize lotion on shelf
+arrange makeup,4,3,1,arrange makeup
+arrange makeup tool,3,1,2,arrange makeup tool
+arrange mask,3,1,2,arrange mask
+arrange mat,9,0,9,arrange mat
+arrange medicine container,1,1,0,arrange medicine container
+arrange mirror,1,0,1,arrange mirror
+arrange model,1,1,0,arrange model
+arrange notebook,1,0,1,arrange notebook
+arrange ornament,8,8,0,arrange ornament
+arrange pad,1,0,1,arrange pad
+arrange panel,1,1,0,arrange panel
+arrange pastry,11,1,10,arrange pastry
+arrange peeler,1,0,1,arrange peeler
+arrange pencil case,1,0,1,arrange pencil case
+arrange piece,9,0,9,arrange piece
+arrange plant,4,3,1,arrange plant
+arrange plastic strip,1,1,0,arrange plastic strips
+arrange plate,1,0,1,arrange plate
+arrange product display,1,0,1,arrange product display
+arrange ruler,4,0,4,arrange ruler
+arrange sand,2,2,0,arrange sand
+arrange sandwich,1,0,1,arrange sandwich
+arrange sauce,1,0,1,arrange sauce
+arrange sausage,1,0,1,arrange sausage
+arrange scissors,1,0,1,arrange scissors
+arrange shirt,2,0,2,arrange shirt
+arrange shoe,9,0,9,arrange shoe
+arrange sign,1,0,1,arrange sign
+arrange slippers,2,0,2,arrange slippers
+arrange sock,1,0,1,arrange sock
+arrange sofa,1,0,1,arrange sofa
+arrange sticker,1,1,0,arrange sticker
+arrange stool,10,0,10,arrange stool
+arrange straw,1,0,1,arrange straw
+arrange strip,1,1,0,arrange strip
+arrange strip object,1,0,1,arrange strip object
+arrange table setting,1,0,1,arrange table setting
+arrange tea bag,2,0,2,arrange tea bag
+arrange tea set,2,0,2,arrange tea set
+arrange tile,2,2,0,arrange tile
+arrange toothbrush,3,1,2,arrange toothbrush
+arrange tube,1,0,1,arrange tube
+arrange tubular item,1,0,1,arrange tubular item
+arrange waffle,1,1,0,arrange waffle
+arrange whiteboard,1,0,1,arrange whiteboard
+arrange wig,6,6,0,arrange wig
+arrange wooden stick,2,0,2,arrange wooden stick | arrange wooden sticks
+arrange yam,1,0,1,arrange yam
+arrange yogurt,1,0,1,arrange yogurt
+assemble alternator,1,0,1,assemble alternator
+assemble badge,2,0,2,assemble badge
+assemble barbell,44,0,44,assemble barbell
+assemble base,1,0,1,assemble base
+assemble blender,1,0,1,assemble blender
+assemble blender blade head,1,0,1,assemble blender blade head
+assemble block,5,2,3,assemble block
+assemble box,13,0,13,assemble box
+assemble box base,1,0,1,assemble box base
+assemble bracket,1,1,0,assemble bracket
+assemble cabinet,2,2,0,assemble cabinet
+assemble cable,9,0,9,assemble cable
+assemble car starter motor,1,0,1,assemble car starter motor
+assemble cardboard,11,0,11,assemble cardboard
+assemble cardboard box,1,0,1,assemble cardboard box
+assemble cart,1,0,1,assemble cart
+assemble casing,1,0,1,assemble casing
+assemble circuit board,1,0,1,assemble circuit board
+assemble coffee machine,1,0,1,Make coffee
+assemble component,3,0,3,assemble component
+assemble compressor,4,0,4,assemble compressor
+assemble computer,2,0,2,assemble computer
+assemble device,3,0,3,assemble device
+assemble door frame,2,2,0,assemble door frame
+assemble door handle,1,1,0,assemble door handle
+assemble drawer,2,2,0,assemble drawer
+assemble drink,1,1,0,assemble drink
+assemble equipment,1,0,1,assemble equipment
+assemble fan,1,0,1,assemble fan
+assemble flower,7,0,7,assemble flower
+assemble frame,9,1,8,assemble frame
+assemble generator,1,0,1,assemble generator
+assemble grinder,2,0,2,assemble grinder
+assemble handbags,1,1,0,Assemble handbags
+assemble hardware,1,1,0,assemble hardware
+assemble harness,1,0,1,assemble harness
+assemble headband,1,1,0,assemble headband
+assemble iron stand,1,0,1,assemble iron stand
+assemble lamp,1,0,1,assemble lamp
+assemble lock,2,2,0,assemble lock
+assemble long object,1,0,1,assemble long object
+assemble marker,1,0,1,assemble marker
+assemble motor,6,0,6,assemble motor
+assemble paper,1,0,1,assemble paper
+assemble part,59,0,59,assemble part
+assemble pedal,1,0,1,assemble pedal
+assemble pen,11,0,11,assemble pen
+assemble plug,1,1,0,assemble plug
+assemble product,3,0,3,assemble product
+assemble puzzle board,1,0,1,assemble puzzle board
+assemble rack,21,1,20,assemble rack
+assemble reflector,7,0,7,assemble reflector
+assemble reflector assembly,1,0,1,assemble reflector assembly
+assemble reflector base,1,0,1,assemble reflector base
+assemble sandwich,3,1,2,assemble sandwich
+assemble shaved ice,1,1,0,assemble shaved ice
+assemble shelf,32,0,32,assemble shelf
+assemble stand,1,1,0,assemble stand
+assemble starter,5,0,5,assemble starter
+assemble starter motor,1,0,1,assemble starter motor
+assemble storage rack,7,0,7,assemble storage rack
+assemble strip,1,0,1,assemble strip
+assemble structure,3,0,3,assemble structure
+assemble support,2,0,2,assemble support
+assemble table,4,0,4,assemble table
+assemble turn signal,1,0,1,assemble turn signal
+assemble wire,1,0,1,assemble wire
+assemble wiring harness,1,0,1,assemble wiring harness
+assemble wooden frame,1,0,1,assemble wooden frame
+assemble wooden structure,1,0,1,assemble wooden structure
+attach bag,1,1,0,attach bag
+attach connector,2,0,2,attach connector
+attach corner guard,4,0,4,attach corner guard
+attach cupping tool,1,1,0,attach cupping tool
+attach decoration,1,1,0,attach decoration
+attach edge banding,1,1,0,attach edge banding
+attach eyelash,13,13,0,attach eyelash
+attach eyelash extension,1,1,0,perform eyelash extensions
+attach foot pad,1,0,1,Attach foot pad to chair leg
+attach gasket,1,1,0,attach gasket
+attach hair,7,7,0,attach hair
+attach hair extension,10,10,0,attach hair extension
+attach hairpin,2,2,0,attach hairpin
+attach hinge,1,1,0,attach hinge
+attach label,3,1,2,attach label | label medicine boxes
+attach paper,3,0,3,attach paper
+attach perm paper,1,1,0,Prepare mannequin head with perm paper
+attach piece,1,0,1,attach piece
+attach rod,1,1,0,attach rod
+attach slide rail,1,1,0,attach slide rail
+attach tag,1,1,0,attach tag
+attach weight plate,15,0,15,attach weight plate
+bend stick,1,1,0,Bend and adjust sticks
+bind bag,2,0,2,bind bag
+bind cable,1,0,1,bind cable
+bind cardstock,1,0,1,bind cardstock
+bind hose,1,1,0,bind hose
+bind paper,15,0,15,Loading staples and binding papers | bind paper
+bind rope,1,0,1,bind rope
+braid hair,14,14,0,Attach hair extensions and braid hair | Braid and comb customer hair | Braid hair on mannequin head | Braid hair on wig mannequin | Braid hair with extensions | attach and braid hair extensions | braid hair | braid hair on wig head model | braid hair on wig model | practice braiding hair
+braid hair extension weft,1,1,0,Braid hair extension wefts
+braid mannequin hair,3,3,0,Braid mannequin hair
+braid wig,2,2,0,Comb and braid wig | Tie and braid wig
+braid wig hair,3,3,0,Braid wig hair | Braid wig hair and secure with hair tie | Braid wig hair on wig head model
+braid wig model hair,1,1,0,Braid wig model hair
+braid wig strand,1,1,0,Braid wig strands
+brush hair,35,35,0,brush hair
+brush wig,9,9,0,brush wig
+button shirt,1,0,1,button shirt
+cap bottle,1,1,0,cap bottle
+cap jar,1,1,0,cap jar
+carry cup,2,2,0,Transport cups and return tray | carry cups to table and return tray
+carry tray,13,13,0,Move cups and return tray | Serve cup and return tray | Serve cup to guest table | Serve cups on tray | Serve cups to seating area | Serve drinks on tray | Transport cup and tray | Transport cup on tray | Transport cups on tray to table | deliver cups and return tray | serve cups and return tray | serve drinks and return tray
+check bag,1,0,1,check bag
+check bill,1,1,0,check bill
+check book,1,1,0,check book
+check bottle,1,0,1,check bottle
+check box,4,2,2,check box
+check certificate,1,1,0,check certificate
+check clock,1,1,0,check clock
+check clothing,1,0,1,Selecting and examining clothing
+check cosmetics,2,2,0,check cosmetic | check cosmetics
+check data form,1,1,0,Browse and query business data forms
+check document,2,2,0,check document
+check goods,1,1,0,check goods
+check information,1,1,0,check information
+check item,1,0,1,check item
+check mask,1,0,1,Selecting a mask package from a shelf
+check medicine,7,7,0,check medicine
+check prescription,1,1,0,check prescription
+check seasoning,1,0,1,check seasoning
+check snack,1,0,1,check snack
+check soap,1,0,1,check soap
+check sofa,1,0,1,check sofa
+check spreadsheet,1,1,0,check spreadsheet
+chop ginger,1,1,0,Store and chop ginger
+clean acne,2,2,0,clean acne
+clean air conditioner,1,0,1,wipe air conditioner
+clean appliance,2,2,0,clean appliance | wipe appliance
+clean ashtray,6,0,6,clean ashtray | wipe ashtray
+clean back,1,1,0,wipe back
+clean bag,7,7,0,Organize skincare products on shelf | Wipe and bag canned products | Wipe bags and assemble mop | wipe bag
+clean ball,1,0,1,wipe ball
+clean bar counter,1,0,1,wipe bar counter
+clean barbell,3,0,3,wipe barbell
+clean barbershop,1,1,0,clean barbershop
+clean baseboard,1,0,1,wipe baseboard
+clean basin,9,4,5,Wash basins and wipe countertop | clean basin | scrub basin | wipe basin
+clean basket,1,0,1,clean basket
+clean basketball,1,0,1,wipe basketball
+clean bathroom fixture,8,0,8,clean bathroom fixture | wipe bathroom fixture
+clean bathroom surface,1,0,1,clean bathroom surface
+clean bathtub,3,0,3,wipe bathtub
+clean beauty cart item,1,1,0,clean beauty cart items
+clean beauty tool,3,3,0,wipe beauty tool
+clean bed,1,1,0,wipe bed
+clean bed sheet,1,0,1,clean bed sheet
+clean bench,52,0,52,clean bench | wipe bench
+clean beverage machine,1,1,0,clean beverage machine
+clean bike,11,0,11,wipe bike
+clean bin,11,0,11,clean bin | wipe bin
+clean block,1,1,0,wipe block
+clean board,10,2,8,wipe board
+clean book,25,25,0,Organize and wipe books | Wipe books and register information | clean book | wipe book
+clean bookcase,2,0,2,wipe bookcase
+clean bookshelf,2,2,0,wipe bookshelf
+clean bottle,86,67,19,Organize goods and clean surfaces | Wipe bottles and organize salon items | clean bottle | wipe bottle
+clean bottle cap,1,1,0,wipe bottle cap
+clean bowl,2,2,0,clean bowl | wipe bowl
+clean box,197,193,4,Clean floor and store boxes | Organize medicine boxes on shelves | Wipe and arrange skin care products | Wipe and place medicine boxes | Wipe and place skincare boxes | Wipe and stack document bags and boxes | Wipe shelf and arrange packaging boxes | clean box | wipe and store medicine boxes | wipe box
+clean brush,2,2,0,wipe brush
+clean bucket,5,4,1,Rinse bucket and stir ingredients | clean bucket | wipe bucket
+clean cabinet,45,30,15,Clean bottles and appliances | Organize items and clean display cabinet | Wipe display cabinet and reception desk | clean cabinet | wipe cabinet
+clean can,1,1,0,wipe can
+clean carpet,3,0,3,clean carpet
+clean cart,14,12,2,"Move trays to countertop, clean cart, and reposition it | clean cart | wipe cart"
+clean cat litter,1,0,1,clean cat litter
+clean cement,1,1,0,clean cement
+clean chair,71,12,59,wipe cabinet and chair | wipe chair
+clean chin,1,1,0,Clean facial acne and apply skin care products
+clean clip,1,0,1,clean clip
+clean clipper,1,1,0,clean clipper
+clean cloth,22,0,22,wipe cloth
+clean clothing,15,2,13,clean clothes | scrub clothes | scrub clothing
+clean coffee,1,0,1,clean coffee
+clean coffee machine,2,1,1,clean coffee machine
+clean colander,1,0,1,clean colander
+clean comb,1,1,0,wipe comb
+clean compact,1,0,1,clean compact
+clean computer,1,0,1,wipe computer
+clean contact lens,1,0,1,clean contact lens
+clean container,13,9,4,clean container | wipe container
+clean control panel,1,0,1,wipe control panel
+clean cosmetics,41,41,0,wipe cosmetic | wipe cosmetics
+clean counter,107,51,56,Clean store counters and display cabinet | Wipe and tidy tabletops | Wipe counter and straighten sign | clean counter | wipe counter
+clean countertop,15,0,15,Clean shredded paper and powder from countertop | Kitchen cleanup and organization | Pour water and wipe countertop | clean countertop | wipe countertop
+clean crumb,1,0,1,clean crumb
+clean cup,39,23,16,Clean and assemble juicer parts | clean cup | wipe cup
+clean cupping jar,2,2,0,clean cupping jar | wipe cupping jar
+clean cushion,3,2,1,wipe cushion
+clean customer,1,1,0,clean customer
+clean cylinder,1,0,1,wipe cylinder
+clean debris,3,0,3,clean debris
+clean desk,18,4,14,Clean desk waste and wipe surface | clean desk | wipe desk
+clean desktop,18,0,18,Clean desktop by clearing clutter and wiping | Clean desktop by removing debris and wiping surface | Clean desktop by removing paper scraps and wiping surface | Clean desktop trash and wipe surface | Clean desktop waste and wipe surface | Clean shredded paper scraps and wipe desktop | clean desktop | wipe desktop
+clean detergent,1,1,0,wipe detergent
+clean device,14,10,4,clean device | wipe device
+clean dishware,1,0,1,wipe dishware
+clean display item,1,1,0,wipe display item
+clean display stand,3,3,0,wipe display stand
+clean door,18,6,12,wipe door
+clean doormat,4,0,4,clean doormat | wipe doormat
+clean drawer,4,1,3,wipe drawer
+clean dresser,2,0,2,wipe dresser
+clean dressing,1,1,0,wipe dressing
+clean dumbbell,29,0,29,wipe dumbbell
+clean ear,3,3,0,Clean customer ear and organize nursing supplies | Clean ears and comb hair | clean ear
+clean ear canal,1,1,0,clean ear canal
+clean elliptical machine,1,0,1,wipe elliptical machine
+clean equipment,31,2,29,clean equipment | wipe equipment
+clean eyebrow pencil,1,1,0,wipe eyebrow pencil
+clean eyelash,1,1,0,clean eyelash
+clean face,37,37,0,Clean face and apply face cream | Cleanse customer face and retrieve remote control | clean face | wipe face
+clean facial cleanser,1,1,0,wipe facial cleanser
+clean fan,1,1,0,"Wipe fan, tables, chairs and floor"
+clean faucet,2,2,0,Clean cups and sink area | scrub faucet
+clean filter,2,2,0,clean filter
+clean finger,1,1,0,clean finger
+clean fire extinguisher,1,0,1,wipe fire extinguisher
+clean fitness chair,1,0,1,wipe fitness chair
+clean fitness equipment,6,0,6,wipe fitness equipment
+clean floor,166,120,46,"Bathroom floor cleaning and mat placement | Clean store and replace garbage bag | Mop floor and store packaging bags | Mop floor, wipe packing boxes, and sweep floor | Mop the floor | Mop ward floor and open door | Place items and sweep floor | Place product boxes and clean floor | Sweep and dispose of floor trash | Vacuuming the floor | clean floor | mop hospital floor | sweep floor | wipe floor"
+clean flowerpot,1,0,1,Water flowers and clean flowerpots
+clean foam,1,1,0,wipe foam
+clean foil,1,0,1,wipe foil
+clean footwear,1,0,1,wipe footwear
+clean frame,1,0,1,wipe frame
+clean fungus,1,1,0,Wash fungus and clean sink
+clean furniture,29,21,8,wipe furniture
+clean glass,8,7,1,wipe glass
+clean glasses,13,1,12,Clean and store glasses | clean glasses | wipe glasses
+clean goods,2,2,0,clean goods | wipe goods
+clean grille,2,1,1,clean grille | wipe grille
+clean hair,3,3,0,clean hair | wipe hair
+clean hair accessory,1,0,1,clean hair accessory
+clean hair care product,1,1,0,wipe hair care products
+clean hair clipper,3,3,0,Organize hairdressing tools and clean hair clipper | clean hair clipper
+clean hair roller,1,1,0,clean hair roller
+clean hairdressing tool,3,3,0,clean hairdressing tool
+clean hairpin,1,1,0,wipe hairpin
+clean hand,1,1,0,wipe hand
+clean handle,37,0,37,wipe handle
+clean handrail,1,1,0,wipe handrail
+clean hanger,1,1,0,Wipe hangers and trim underwear threads
+clean headboard,1,0,1,wipe headboard
+clean helmet,1,0,1,wipe helmet
+clean humidifier,1,0,1,clean humidifier
+clean insole,2,0,2,Clean insoles and organize shoes and desk clutter | wipe insole
+clean instrument,1,1,0,Make bed and clean instrument
+clean item,17,16,1,wipe item | wipe object
+clean jar,59,59,0,Make beauty bed and clean utensils | place boxes and wipe glass jars | store skin care products and clean items | wipe jar
+clean jug,1,1,0,wipe jug
+clean juicer,1,1,0,clean juicer
+clean juicer part,1,1,0,clean juicer part
+clean kettle,9,1,8,clean kettle | wipe kettle
+clean kettlebell,12,0,12,wipe kettlebell
+clean keyboard,18,0,18,clean keyboard | wipe keyboard
+clean kitchenware,4,4,0,clean kitchenware
+clean leaf,1,1,0,wipe leaf
+clean lid,13,13,0,Wipe cup lids and play music | Wipe cup lids and store tableware | check jar label and wipe lids | wipe lid
+clean lip gloss,1,1,0,wipe lip gloss
+clean lipstick,10,8,2,clean lipstick | wipe lipstick
+clean locker,4,0,4,wipe locker
+clean lotion,1,1,0,wipe lotion
+clean machine,14,1,13,wipe machine
+clean makeup,2,2,0,wipe makeup
+clean manicure tool,1,1,0,clean manicure tool
+clean mask,3,3,0,wipe mask
+clean mat,5,0,5,Lay anti-slip mats and clean floor | Organize cabinet items and clean draining mat | wipe mat
+clean medicine,26,26,0,wipe medicine
+clean medicine bottle,1,1,0,Wipe and arrange medicine bottles
+clean medicine box,2,2,0,Clean and organize medicine boxes | wipe medicine box
+clean microwave,6,1,5,Clean countertop and microwave | Wipe microwave and disinfection cabinet | wipe microwave
+clean mirror,46,3,43,Clean bathroom mirror and sink | clean mirror | wipe mirror
+clean monitor,1,1,0,wipe monitor
+clean mop,1,0,1,wipe mop
+clean mouse,2,0,2,clean mouse
+clean nightstand,17,0,17,wipe nightstand
+clean ornament,4,4,0,wipe ornament
+clean package,4,4,0,wipe package
+clean pad,1,0,1,Clean basketball hoop and dispose of trash
+clean painting,1,0,1,wipe painting
+clean palette,3,0,3,clean palette
+clean paper,7,0,7,clean paper | wipe paper
+clean part,2,1,1,clean part
+clean pen,3,2,1,clean pen | wipe pen
+clean phone,1,0,1,wipe phone
+clean pimple,1,1,0,clean pimples
+clean plant,1,1,0,wipe plant
+clean plate,3,0,3,wipe plate
+clean pot,1,1,0,clean pot
+clean product,11,11,0,wipe product | wipe products
+clean rack,10,9,1,wipe rack
+clean rag,2,2,0,"Clean kitchen equipment and tidy up | Wash rags and bucket, adjust cooker, stir ingredients"
+clean railing,18,15,3,wipe railing
+clean refrigerator,4,0,4,clean refrigerator | wipe refrigerator
+clean remote control,4,0,4,wipe remote control
+clean rod,8,7,1,clean rod | wipe rod
+clean roller,1,1,0,clean roller
+clean safe,1,0,1,"Clean table and safe, collect water bottles"
+clean sanitary pad,2,2,0,wipe sanitary pad
+clean scanner,4,0,4,clean scanner | wipe scanner
+clean scissors,15,1,14,clean scissors | wipe scissors
+clean screen,2,0,2,wipe screen
+clean seat,6,0,6,wipe seat
+clean shampoo,3,3,0,wipe shampoo
+clean shampoo bed,1,1,0,wipe shampoo bed
+clean shelf,59,42,17,Clean display cabinet and organize flyers | Clean shelf and sweep trash | Organize and clean shelves and counters | Wipe shelves and organize beverage boxes | clean shelf | wipe shelf
+clean shelf board,1,0,1,wipe shelf board
+clean shelf layer,1,0,1,wipe shelf layer
+clean shirt,2,0,2,clean shirt
+clean shoe,80,0,80,Organize desk items and store cleaned shoes | Tidying shoes and pen | clean shoe | wipe shoe
+clean shower head,25,0,25,Clean and reinstall shower head | Clean shower head | clean shower head
+clean showerhead,13,0,13,Clean and reinstall showerhead | clean showerhead
+clean sign,2,1,1,wipe sign
+clean sink,117,20,97,Clean sink and dry cloth | Clean sink and mirror | clean sink | clean sink and rinse drain filter | wipe sink
+clean skin,1,1,0,clean skin
+clean skin care product,3,3,0,Wipe and arrange skincare products | wipe skin care product | wipe skincare product
+clean skincare container,1,1,0,wipe skincare container
+clean soap,8,8,0,wipe soap
+clean soap dish,1,0,1,wipe soap dish
+clean sofa,3,0,3,clean sofa | wipe sofa
+clean soymilk maker part,1,1,0,clean soymilk maker part
+clean speaker,2,1,1,wipe speaker
+clean spray,1,0,1,wipe spray
+clean spray bottle,12,0,12,Wipe and organize spray bottles | wipe spray bottle
+clean stain,1,0,1,wipe stain
+clean stool,15,15,0,wipe stool
+clean stove,5,0,5,clean stove | wipe stove
+clean supply,2,2,0,wipe supply
+clean surface,24,16,8,wipe surface
+clean table,182,56,126,Clean coffee table and arrange sofa throw pillows | Clean dining table and store milk | Organize items and clean table | Organize tray and clean table | Store packet and clean table | Wipe table and operate mobile phone | Wipe tables and arrange throw pillows | clean table | wipe table
+clean tabletop,3,2,1,Wipe reading table and return chairs | wipe tabletop
+clean tape dispenser,1,1,0,Store cup lids and clean counter
+clean telephone,1,0,1,wipe telephone
+clean thermos,1,0,1,clean thermos
+clean tile,1,0,1,wipe tile
+clean toilet,4,0,4,clean toilet
+clean toilet seat cover,1,1,0,Scrub shoe and toilet seat cover
+clean toiletries,3,3,0,wipe toiletries | wipe toiletry
+clean tool,6,6,0,clean tool | wipe tool
+clean toothbrush,9,9,0,wipe toothbrush
+clean toothpaste,2,2,0,wipe toothpaste
+clean towel,3,3,0,Wipe faucet and wash towels | clean towel | wash towels and wipe desk
+clean toy,11,10,1,clean toy | wipe toy
+clean trash can,1,0,1,wipe trash can
+clean tray,16,3,13,Clean tray and wash customer hair | clean tray | wipe tray
+clean treadmill,58,0,58,clean treadmill | wipe treadmill
+clean tube,1,1,0,Wipe goods and store baskets
+clean underwear,1,1,0,wipe underwear
+clean utensil,1,1,0,wipe utensil
+clean vase,2,0,2,clean vase | wipe vase
+clean wall,7,3,4,clean wall | wipe wall
+clean washing machine,4,0,4,clean washing machine | wipe washing machine
+clean water dispenser,2,1,1,clean water dispenser | wipe water dispenser
+clean whiteboard,1,0,1,wipe whiteboard
+clean window,2,1,1,wipe window
+clean windowsill,4,0,4,wipe windowsill
+clean wine,1,1,0,wipe wine
+clean yoga mat,1,0,1,wipe yoga mat
+close jug,1,0,1,close jug
+coil cable,28,0,28,coil cable
+coil rope,30,0,30,coil rope
+collect bag,1,0,1,collect bag
+collect ball,2,0,2,collect ball
+collect bamboo stick,1,0,1,collect bamboo sticks
+collect block,2,0,2,collect block
+collect book,1,1,0,collect book
+collect bottle,7,0,7,collect bottle
+collect bowl,2,0,2,collect bowl
+collect box,13,0,13,collect box
+collect bucket,1,0,1,collect bucket
+collect can,1,0,1,collect can
+collect card,2,0,2,Desktop cleanup and organization | Organize scattered items into baskets
+collect carton,1,0,1,collect carton
+collect chess piece,1,1,0,collect chess pieces
+collect clothing,4,0,4,collect clothes | collect clothing
+collect container,1,0,1,collect container
+collect cup,2,0,2,collect cup
+collect food,3,0,3,collect food
+collect fruit,1,0,1,collect fruit
+collect garbage,1,1,0,collect garbage
+collect goods,1,1,0,collect goods
+collect grain,1,1,0,collect grain
+collect hair,2,2,0,collect hair
+collect ice,2,2,0,collect ice | prepare shaved ice and clean utensils
+collect item,1,0,1,collect object
+collect package,4,0,4,collect package
+collect paper,33,0,33,Clean desk and stack trays | Clean up shredded paper and organize workspace | Clean up shredded paper and organize workstation | Clear paper scraps and stack trays | Load dishwasher and clean countertop | collect paper | organize workspace
+collect parcel,1,1,0,collect parcel
+collect pepper,1,0,1,collect pepper
+collect piece,1,1,0,collect piece
+collect product,1,1,0,collect product
+collect shuttlecock,4,0,4,collect shuttlecock
+collect sign,1,0,1,collect sign
+collect skewer,1,0,1,collect skewer
+collect snack,7,0,7,collect snack
+collect spray,1,0,1,collect spray
+collect steel wool ball,1,0,1,collect steel wool balls
+collect stick,3,0,3,collect stick | collect sticks
+collect straw,6,0,6,collect straw
+collect tableware,1,0,1,collect tableware
+collect thin stick,2,0,2,collect thin sticks
+collect tissue,1,0,1,Clean table and stack trays
+collect toothbrush,1,1,0,collect toothbrush
+collect toothpick,1,0,1,collect toothpick
+collect towel,1,0,1,collect towel
+collect trash,5,1,4,Organize plates and clean countertop | collect trash
+collect waste,1,0,1,collect waste
+collect wooden stick,2,0,2,collect wooden sticks
+collect wool,2,0,2,collect wool
+collect wrapper,1,0,1,collect wrapper
+comb hair,12,12,0,Comb and prepare hair for haircut | Comb customer hair | Comb customer hair and remove glove | Comb hair and apply eye mask | Comb hair and arrange towel | Comb hair to spread dye | Curl and comb customer hair | Practice perm sectioning on wig head | Style mannequin hair and relocate phone | comb hair and massage head | dye customer hair and wash hands | provide hair and facial care
+comb wig,1,1,0,Prepare wig and barber chair
+connect cable,7,1,6,Charging electronic devices and organizing desk items | connect cable
+connect charger,2,0,2,connect charger
+connect phone,1,0,1,connect phone
+connect rod,1,1,0,connect rod
+connect wire,1,0,1,connect wire
+cover bed,1,1,0,cover bed
+cover bin,1,1,0,cover bin
+cover book,1,0,1,cover book
+cover bowl,3,0,3,cover bowl
+cover box,3,0,3,cover box
+cover chair,1,0,1,cover chair
+cover jar,1,0,1,cover jar
+cover mattress,1,1,0,cover mattress
+cover sofa,1,0,1,cover sofa
+cover table,2,0,2,cover table
+crush garlic,1,0,1,Mincing garlic with mortar and pestle
+crush ice,2,2,0,crush ice in cup | prepare drink with crushed ice
+curl hair,4,4,0,curl client hair | curl customer hair | curl customer hair with curling iron | curl hair on mannequin head
+curl wig hair,1,1,0,curl wig hair
+cut bag,3,0,3,cut bag
+cut board,7,7,0,Cut board and store electric cutter | Cut wooden board with angle grinder | cut board
+cut bubble wrap,2,0,2,cut bubble wrap
+cut cable tie,1,0,1,cut cable tie
+cut carrot,2,0,2,cut carrot
+cut cloth,1,1,0,cut cloth
+cut cup,1,1,0,cut cup
+cut cup holder,4,4,0,cut cup holder
+cut decorative lines,1,1,0,Cut decorative lines
+cut document,1,0,1,Shred documents with a manual paper shredder
+cut fruit,5,5,0,cut fruit
+cut ginger,8,5,3,"Cut ginger, store in jar, and clean countertop | cut ginger"
+cut hair,870,870,0,Cut customer hair and clean clippings | Cut customer hair and open shop door | Cut customer hair and place tools on cart | cut customer hair | cut customer hair and clean clippings | cut hair | cut hair with clipper
+cut herb,1,1,0,cut herb
+cut ingredient,8,7,1,cut ingredient
+cut lemon,1,1,0,Organize materials and slice lemon
+cut lime,1,1,0,cut limes and prepare drink
+cut line,1,1,0,cut line
+cut mango,6,6,0,cut mango
+cut orange,1,1,0,cut orange
+cut papaya,4,4,0,cut papaya
+cut paper,2,0,2,Shred paper in batches | cut paper
+cut part,1,0,1,cut part
+cut peach,1,0,1,cut peach
+cut pear,1,1,0,cut pear
+cut pepper,1,0,1,cut pepper
+cut potato,2,0,2,cut potato
+cut pulp mold,1,1,0,cut pulp mold
+cut rope,1,0,1,cut rope
+cut sausage,1,0,1,cut sausage
+cut staple,1,0,1,Cut staples and reseal cardboard box
+cut strap,1,0,1,Cut packing straps and reseal cardboard box
+cut strip,3,3,0,cut strip
+cut tape,1,0,1,cut tape
+cut tomato,1,0,1,cut tomato
+cut tray,1,1,0,cut tray
+cut vegetable,10,7,3,cut vegetable
+cut watermelon,7,7,0,cut watermelon
+dice carrot,1,0,1,dice carrot
+dice cucumber,1,1,0,dice cucumber
+dice mango,6,6,0,dice mango
+dice potato,2,0,2,dice potato
+dice vegetable,1,0,1,dice vegetable
+dice watermelon,2,2,0,Prepare diced watermelon | dice watermelon
+disassemble box,9,0,9,disassemble box
+disassemble casing,1,0,1,Disassemble computer case and remove internal components
+disassemble compressor,4,0,4,disassemble compressor
+disassemble computer tower,1,0,1,disassemble computer tower
+disassemble cylinder head,1,0,1,disassemble cylinder head
+disassemble engine,1,0,1,disassemble engine
+disassemble generator,3,0,3,disassemble generator
+disassemble starter,1,0,1,disassemble starter
+discard bottle,2,0,2,Clean up trash and organize pen | discard bottle
+discard cup,1,0,1,discard cup
+discard debris,1,1,0,discard debris
+discard paper,19,0,19,Clean up desk by disposing of paper and stacking trays | Clean up paper scraps and organize pens | Clean up paper scraps and organize stationery | Clean up paper scraps and stationery | Clean up torn paper and organize stationery | Organize plates and clean countertop | Organize workspace by clearing chair and pushing it under table | discard paper | organize workspace
+discard peel,1,1,0,Peel grapes and adjust tripod
+discard trash,11,0,11,Clean countertop and dispose of trash | Clean table and organize dishes | Organize plates and dispose of countertop trash | discard trash
+discard waste,3,1,2,discard waste | massage face and prepare aloe vera gel
+dispense liquid,1,0,1,dispense liquid
+divide fries,1,0,1,divide fries
+divide liquid,1,0,1,Distribute liquid from large bottle to three small bottles
+divide paper,1,0,1,divide paper
+draw card,1,0,1,draw card
+draw eyebrow,1,1,0,draw eyebrows
+draw item,1,1,0,draw object
+draw whiteboard,1,0,1,draw whiteboard
+drill door,1,1,0,Drill door frame and replace drill bit
+dry container,1,0,1,dry container
+dry cup,3,1,2,dry cup
+dry hair,95,95,0,Blow dry hair and tidy mannequin wig | Wash and blow dry customer hair | dry customer hair and store tools | dry hair
+dry tableware,1,0,1,dry tableware
+dry wig,2,1,1,dry wig
+dye hair,3,3,0,Dye customer hair | dye customer hair
+erase paper,1,0,1,erase paper
+file nail,5,5,0,File customer fingernails | File customer nails | File fingernails | file fingernails | prepare artificial nails
+fill bottle,30,2,28,Refill hand sanitizer bottle | fill bottle
+fill bowl,4,0,4,fill bowl
+fill box,13,0,13,fill box
+fill cabinet,1,0,1,fill cabinet
+fill container,1,0,1,fill container
+fill cup,13,7,6,fill cup
+fill diffuser,1,0,1,fill diffuser
+fill flowerpot,1,0,1,fill flowerpot
+fill form,2,2,0,fill form
+fill jar,10,5,5,fill jar
+fill kettle,7,0,7,fill kettle
+fill pen,9,0,9,Prepare dip pen for writing | Refill fountain pen with ink | Refill pen with ink | fill pen
+fill plate,1,1,0,fill plate
+fill pot,1,1,0,fill pot
+fill registration book,1,1,0,fill registration books
+fill soap dispenser,1,0,1,fill soap dispenser
+fill spray,1,0,1,fill spray
+fill spray bottle,8,0,8,fill spray bottle
+fill tissue box,1,0,1,fill tissue box
+fill tray,1,0,1,fill tray
+flatten cardboard box,1,0,1,Unpack and flatten cardboard boxes
+fold apron,9,0,9,fold apron
+fold bag,26,8,18,fold bag
+fold bed sheet,6,0,6,fold bed sheet
+fold blanket,10,3,7,fold blanket
+fold box,43,0,43,fold box
+fold bubble wrap,3,0,3,fold bubble wrap
+fold cardboard,6,0,6,fold cardboard
+fold chair,2,0,2,fold chair
+fold cloth,35,7,28,fold cloth | organize cleaning supply
+fold clothing,21,8,13,fold clothes | fold clothing
+fold dress,1,1,0,fold dress
+fold envelope,1,0,1,fold envelope
+fold garment,1,0,1,fold garment
+fold gauze,1,1,0,fold gauze
+fold glove,6,0,6,fold glove
+fold grid paper,1,0,1,fold grid paper
+fold handkerchief,1,0,1,fold handkerchief
+fold hoodie,1,0,1,fold hoodie
+fold lanyard,1,0,1,Sort and store whistle and lanyard
+fold mask,1,1,0,fold mask
+fold mat,3,0,3,Organize fitness equipment and clean the room | Organize room items and wipe floor | fold mat
+fold napkin,2,0,2,fold napkin
+fold pad,1,1,0,fold pad
+fold paper,21,0,21,fold paper
+fold quilt,5,0,5,Make bed and arrange notebook | Make bed and fold quilt | Make the bed and organize wall decor | Make the bed and straighten picture frame | Tidy bed and straighten photo frame
+fold shirt,9,1,8,fold shirt
+fold shower cap,1,0,1,fold shower cap
+fold sign,1,0,1,fold sign
+fold sock,1,0,1,fold sock
+fold sportswear,1,0,1,fold sportswear
+fold t-shirt,2,0,2,fold t-shirt
+fold tablecloth,1,0,1,fold tablecloth
+fold tissue,6,1,5,fold tissue
+fold towel,380,219,161,Fold towel and wash boy's hair | Fold towels and clean towel rack | Fold towels and discard trash | Fold towels and heat food | Make bed and fold towels | Sort and arrange scouring pads and towels in a tray | Store skincare products and fold towels | Sweep floor and fold towels | fold towel | organize cleaning supplies
+fold umbrella,1,0,1,fold umbrella
+fold vest,2,0,2,fold vest
+fold woven bag,1,0,1,Secure and store white woven bags
+fold wristband,1,0,1,fold wristband
+grind garlic,1,0,1,Grind garlic and clean utensils
+grind nail,2,2,0,perform manicure | perform manicure on fingernails
+hang accessory,1,1,0,hang accessory
+hang apron,4,0,4,hang apron
+hang bag,6,0,6,hang bag
+hang band,1,0,1,hang band
+hang bathrobe,1,0,1,hang bathrobe
+hang bed sheet,2,0,2,hang bed sheet
+hang belt,9,0,9,hang belt
+hang bottle opener,3,0,3,hang bottle opener
+hang brush,1,1,0,hang brush
+hang cable,3,0,3,hang cable
+hang cloth,6,0,6,hang cloth
+hang clothing,8,1,7,Replace lint roller paper and organize wardrobe | Replace lint roller refill and clean wardrobe clothes | hang clothes | hang clothing
+hang correction fluid,6,0,6,hang correction fluid
+hang cosmetics,8,8,0,hang cosmetic | hang cosmetics
+hang cup,4,0,4,hang cup
+hang glasses,2,0,2,hang glasses
+hang glassware,1,0,1,hang glassware
+hang hanger,23,0,23,Organize hangers into wardrobe | hang hanger
+hang hula hoop,2,0,2,hang hula hoop
+hang item,5,0,5,hang item | hang object
+hang key,1,0,1,hang key
+hang keychain,1,0,1,hang keychain
+hang kitchen tool,4,0,4,hang kitchen tool
+hang kitchen utensil,1,0,1,hang kitchen utensil
+hang kitchenware,1,0,1,hang kitchenware
+hang knife,2,0,2,hang knife
+hang merchandise,1,0,1,hang merchandise
+hang mop,1,0,1,hang mop
+hang mop handle,1,0,1,hang mop handle
+hang necklace,2,0,2,hang necklace
+hang package,3,2,1,hang package
+hang product,1,1,0,hang products
+hang rope,4,0,4,hang rope
+hang scissors,5,0,5,hang scissors
+hang seasoning,1,0,1,hang seasoning
+hang shirt,6,0,6,hang shirt
+hang snack,6,0,6,hang snack
+hang spoon,2,0,2,hang spoon
+hang tag,1,0,1,hang tag
+hang tool,3,1,2,hang tool
+hang toothbrush,6,6,0,hang toothbrush
+hang towel,15,0,15,hang towel
+hang underwear,5,5,0,hang underwear
+hang utensil,3,0,3,hang utensil
+hang weight plate,1,0,1,hang weight plate
+heat cupping jar,1,1,0,Perform fire cupping on customer abdomen
+inflate basketball,11,0,11,Inflate and check basketball | Inflate basketball with air pump | Inflate basketball with pump | Inflate deflated basketballs | Inflate flat basketballs with a pump | Inflate multiple basketballs | Inflate multiple basketballs with a pump
+insert bag,1,0,1,insert bag
+insert battery,1,0,1,insert battery
+insert blanket,1,0,1,insert blanket
+insert bottle,2,0,2,insert bottle
+insert cable,2,0,2,insert cable
+insert card,2,0,2,insert card
+insert charger,1,0,1,insert charger
+insert chopsticks,1,0,1,insert chopsticks
+insert circuit board,1,0,1,insert circuit board
+insert connector,1,0,1,insert connector
+insert cup,3,0,3,insert cup
+insert divider,1,0,1,insert divider
+insert fastener,1,0,1,insert fastener
+insert ink cartridge,2,0,2,Assemble pens and store in cup | insert ink cartridge
+insert paper,3,0,3,insert paper
+insert photo,2,0,2,insert photo
+insert pillow,5,0,5,insert pillow
+insert straw,4,0,4,Prepare straw for drinking | insert straw
+insert strip,1,1,0,insert strip
+insert tag,1,0,1,insert tag
+insert tube,1,0,1,insert tube
+insert wire,2,0,2,insert wire
+inspect chair,1,0,1,Inspect chair structure by flipping
+install alarm,1,0,1,install alarm
+install barbell,10,0,10,install barbell
+install barbell plate,1,0,1,install barbell plate
+install baseboard,2,2,0,install baseboard
+install battery,2,0,2,install battery
+install board,1,0,1,install board
+install bottle,1,0,1,install bottle
+install buckle,2,1,1,install buckle
+install case,1,0,1,install case
+install clip,2,0,2,install clip
+install cushion,1,0,1,install cushion
+install cylinder head,1,0,1,install cylinder head
+install door,1,1,0,install door
+install door handle,1,1,0,install door handle
+install door stopper,1,1,0,install door stopper
+install fan,1,0,1,install fan
+install fastener,2,0,2,install fastener
+install foil,1,0,1,install foil
+install hinge,3,3,0,install hinge
+install ink cartridge,1,0,1,install ink cartridge
+install label,2,0,2,install label
+install lamp holder accessories,1,1,0,install lamp holder accessories
+install lens,1,0,1,install lens
+install line,2,2,0,install line
+install lock,6,6,0,install lock
+install net,2,0,2,install net
+install nib,1,0,1,install nib
+install paper,4,0,4,install paper
+install part,1,0,1,install part
+install plate,1,1,0,install plate
+install power strip,1,1,0,install power strip
+install rack,1,0,1,install rack
+install rail,1,1,0,install rail
+install shelf,2,0,2,install shelf
+install shower head,1,0,1,install shower head
+install stopper,1,1,0,install stopper
+install tape,11,0,11,Replace tape and seal cardboard box | install tape
+install tape dispenser,2,0,2,install tape dispenser
+install water reservoir,1,0,1,install water reservoir
+install water tank,1,0,1,install water tank
+install weight plate,31,0,31,install weight plate
+iron jacket,1,0,1,Iron and fold suit jacket
+iron pajama top,1,1,0,iron pajama top
+iron pants,2,2,0,Iron pajama top and pants | iron pajamas
+iron shirt,1,0,1,Iron and fold a black T-shirt
+load bottle,2,0,2,load bottle
+load bowl,1,0,1,load bowl
+load box,3,0,3,load box
+load bucket,3,0,3,load bucket
+load cable,2,0,2,load cable
+load cargo,2,0,2,load cargo
+load cup,6,0,6,load cup
+load dishwasher,1,0,1,load dishwasher
+load food,4,0,4,load food
+load package,3,0,3,load package
+load paper,1,0,1,load paper
+load staple,1,0,1,load staple
+load tableware,1,0,1,Load dishwasher and clean countertop
+load tape,3,0,3,load tape
+load tape dispenser,1,0,1,load tape dispenser
+load tissue,1,0,1,load tissue
+load towel,1,1,0,load towel
+load washing machine,4,0,4,load washing machine
+massage abdomen,41,41,0,Apply essential oil and knead abdomen | Apply essential oil and roll abdomen | Massage abdomen and apply hot compress | Massage abdomen and apply plastic wrap | Massage abdomen and arrange cover cloth | Massage abdomen and tidy clothes | Massage customer abdomen | Massage customer abdomen and adjust air conditioner | Massage customer abdomen and apply essential oil | Massage customer abdomen and replenish oil | Massage customer abdomen and straighten clothes | Massage customer abdomen with essential oil | Massage customer abdomen with oil | Massage customer abdomen with physiotherapy device | Perform abdominal massage | Perform abdominal massage with essential oil | Perform abdominal massage with oil | massage abdomen | massage customer abdomen | perform abdominal massage
+massage arm,11,11,0,Massage client arm neck and back | Massage customer arm | Massage customer arm and leg | Massage customer shoulder and arm | Perform arm massage | massage customer arm | massage customer arm with roller
+massage back,82,82,0,Apply essential oil and massage back | Massage back and braid hair | Massage back with roller | Massage back with rolling stick | Massage customer back | Massage customer back and arms | Massage customer back and head | Massage customer back and organize cart | Massage customer back and shoulders | Massage customer back and waist | Massage customer back with cushion assistance | Massage customer back with essential oil | Massage customer back with oil | Massage customer back with rolling stick and essential oil | Organize beauty tools and perform essential oil back massage | Perform back massage | Perform back rolling massage | Perform customer massage | Perform essential oil back massage | give back massage | give back massage and apply essential oil | give essential oil back massage | massage back with roller | massage customer and apply essential oil | massage customer back | massage customer back and adjust towel | massage customer back and head | massage customer back with tendon rolling stick | massage person's back | perform back massage | perform back rolling massage | perform back tendon rolling massage | roll and massage customer back
+massage back muscle,1,1,0,Massage customer and arrange hair
+massage body,12,12,0,Massage customer body | Massage head and comb hair | Perform body massage | massage customer arm and leg | massage customer body | massage customer head and face | massage customer shoulders and back | massage customer shoulders and neck | massage head and comb hair
+massage calf,5,5,0,Massage customer buttocks and calf | Massage customer calves and adjust equipment | Perform calf massage | Perform calf massage with probes | massage customer calf
+massage customer,3,3,0,Perform percussive massage | Perform scraping massage treatment | Perform shoulder and neck massage
+massage eyes,2,2,0,Massage eyes and apply eye drops | Perform eye care treatment
+massage face,122,122,0,Apply eye mask and massage face | Give facial massage | Give facial massage and apply skin care products | Give facial massage and clean hands | Give facial massage and organize beauty supplies | Massage customer face | Massage customer face and apply skin care products | Massage customer face and apply skincare product | Massage face and apply care solution | Massage face and apply skin care products | Massage face and clean hands | Massage face and organize beauty supplies | Massage face and store skin care products | Massage face and wash hands | Massage face with beauty bar | Massage face with beauty device | Perform facial care massage | Perform facial care procedure | Perform facial massage | Perform facial massage and apply skin care products | Perform facial massage and skin care | Perform facial massage for customer | Perform facial treatment | Provide facial care treatment | Provide facial massage care | disinfect hands and massage face | give facial massage | massage and care customer face | massage customer face | massage customer face and apply cream | massage customer face and apply skincare products | massage customer face and neck | massage face with gua sha board | perform facial and neck massage | perform facial beauty device treatment | perform facial care treatment | perform facial massage | perform facial massage and skincare | perform facial massage care | perform facial massage treatment | provide facial care | provide facial care and neck massage
+massage finger,1,1,0,Massage customer shoulder and hand
+massage hair,1,1,0,Massage and comb hair
+massage hand,1,1,0,Massage customer hand
+massage head,30,30,0,Comb hair and massage head | Give head massage | Massage customer head | Massage customer head and adjust beauty instrument | Massage customer head and adjust eye patch | Massage customer head with moxibustion pot | Massage customer head with tendon stick | Massage head and apply facial essence | Perform head massage | Wipe face and massage head | give head massage | massage customer head | massage customer head and adjust eye mask | massage customer head and ears | massage head with scraping plates | perform head massage
+massage left arm,2,2,0,Massage customer left arm | massage customer left arm
+massage leg,33,33,0,Massage and scrape customer legs | Massage customer leg | Massage customer legs | Massage customer legs and buttocks | Massage customer legs with essential oil | Massage customer legs with hands and massage hammer | Massage customer legs with massage hammer | Massage customer on massage bed | Massage leg | Massage person back and legs | Perform calf scraping and massage | Perform leg care with body shaping instrument | Perform leg physiotherapy | massage customer leg | massage customer legs | massage leg with beauty instrument | massage leg with physiotherapy instrument
+massage leg muscle,1,1,0,massage customer leg muscles
+massage lower back,1,1,0,Massage customer lower back
+massage muscle,1,1,0,Massage customer muscles
+massage neck,2,2,0,Massage customer head neck and shoulders | massage customer neck and shoulders
+massage scalp,6,6,0,Apply scalp care essence and massage scalp | Massage and treat customer hair | Massage customer head and arrange hair | Massage customer scalp | massage customer scalp | massage scalp and perform hair hydrotherapy
+massage shoulders,1,1,0,Massage customer shoulders and head
+massage skin,1,1,0,Provide facial care
+massage spine,1,1,0,Massage customer head and neck
+massage upper arm,1,1,0,Massage customer head and arm
+massage waist,1,1,0,Massage customer and adjust clothing
+move bottle,2,0,2,Move water bottles from wooden table to small table | Transport water bottles from cabinet to cart
+move box,11,2,9,Move cardboard box from pallet to conveyor belt | Move cardboard box from pallet to table | Move cardboard boxes from shelf and handcart to table | Move cardboard boxes to hand truck | Stocking goods from cart to shelf | Transport cardboard boxes from cart to table | Transport cardboard boxes to trolley | Wipe storage cart and place boxes on beauty bed | move boxes | organize room
+open bag,1,0,1,open bag
+open box,12,0,12,open box
+open package,1,0,1,open package
+open paper,1,0,1,open paper
+operate cash register,1,1,0,cook pear chunks and clean worktable
+operate computer,1,1,0,Deliver medicines and print documents
+operate mouse,3,3,0,browse business data entries using mouse | handle pharmacy purchase settlement | process pharmacy transaction
+organize accessory,10,5,5,organize accessory
+organize adapter,1,0,1,organize adapter
+organize art supply,1,0,1,organize art supply
+organize badge,2,0,2,organize badge
+organize bag,79,13,66,Move bags and boxes | Tie woven bag and organize cardboard box | arrange bag | organize bag | store boxes and transfer mask bags
+organize ball,13,0,13,arrange ball | organize ball
+organize balm,1,1,0,organize balm
+organize band,22,3,19,organize band
+organize basin,6,0,6,organize basin
+organize basket,3,0,3,organize basket
+organize bath product,1,0,1,organize bath product
+organize bathing product,1,0,1,organize bathing product
+organize bathroom item,3,0,3,organize bathroom item
+organize bathroom supply,5,0,5,organize bathroom supply
+organize beauty product,2,2,0,organize beauty product
+organize beauty supply,2,2,0,organize beauty supply
+organize beauty tool,1,1,0,organize beauty tools
+organize bedding,47,6,41,arrange bedding | organize bedding
+organize bedroom item,1,0,1,organize bedroom item
+organize beer,4,0,4,arrange beer | organize beer
+organize beverage,56,2,54,arrange beverage | organize beverage
+organize beverage container,6,0,6,organize beverage container
+organize beverage supply,1,0,1,organize beverage supply
+organize blanket,8,0,8,arrange blanket | organize blanket
+organize block,9,1,8,Store scattered items and arrange chairs | organize block
+organize board game,1,0,1,organize board game
+organize body wash,2,2,0,organize body wash
+organize book,528,496,32,Arrange books on bookshelf | Arrange sand table and organize books | Clean and organize bookshelf | arrange book | organize book | organize books
+organize bookshelf,1,0,1,organize bookshelf
+organize bottle,477,39,438,Organize bottles onto shelf | Organize scattered plastic bottles and markers | Place medicines on shelf and into basket | Stocking cola bottles and cans on shelf | arrange bottle | organize bottle | organize cleaning agent | organize cleaning product
+organize bottle opener,3,0,3,arrange bottle opener
+organize bowl,2,0,2,organize bowl
+organize box,484,284,200,"Clean floor and organize gift boxes | Clean floor and stock shelves with boxes | Clean shelf, sweep floor, and store boxes | Mop floor and organize shelf goods | Mop floor and store boxes on shelf | Move boxes and discard trash | Organize cotton swab box and cotton ball jar on shelves | Organize packaging boxes and clean floor | Pass dustpan and place boxes on shelf | Place box, mop floor, and store boxes | Place boxes on bed and hand car | Place boxes on shelf and enter bathroom | Place boxes on shelf and mop floor | Place skincare products and sweep floor | Selecting and returning drinks | Stack mask boxes and place product boxes | Store boxes into carton and place goods on shelf | Store cotton rolls and place boxes | Store nail polish bottles and place boxes | Store packaging boxes and clean store floor | Sweep floor, store boxes, and mop floor | arrange box | clean and organize product boxes | organize box | organize skin care products and cotton rolls | place skincare products and adjust air conditioner | store boxes and bottles | store boxes and place goods"
+organize bread,52,1,51,arrange bread | organize bread
+organize brush,14,14,0,arrange brush | organize brush
+organize bubble wrap,1,0,1,organize bubble wrap
+organize bucket,1,0,1,organize bucket
+organize cabinet,1,0,1,Roll up and store cartoon floor mats
+organize cabinet item,1,1,0,organize cabinet items
+organize cable,71,0,71,organize cable
+organize can,47,0,47,arrange can | organize can
+organize candy,10,0,10,arrange candy | organize candy
+organize card,12,0,12,arrange card | organize card
+organize cargo,5,0,5,organize cargo
+organize cart,8,5,3,organize cart
+organize carton,2,0,2,organize carton
+organize chair,270,0,270,arrange chair | organize chair
+organize charger,2,0,2,organize charger
+organize chess piece,18,2,16,Set up Chinese chess game | arrange chess piece | arrange chess pieces
+organize chopstick,1,0,1,organize chopstick
+organize chopsticks,3,0,3,organize chopsticks
+organize clip,14,1,13,arrange clip | organize clip
+organize cloth,17,3,14,arrange cloth | organize cloth
+organize clothing,118,4,114,arrange clothes | organize clothes | organize clothing
+organize clutter,17,0,17,organize clutter
+organize coaster,8,0,8,arrange coaster
+organize coffee,2,0,2,organize coffee
+organize coffee equipment,2,0,2,organize coffee equipment
+organize coffee ingredient,1,0,1,arrange coffee ingredient
+organize cola,4,0,4,arrange cola
+organize colored pencil,1,0,1,organize colored pencils
+organize condiment,3,0,3,organize condiment
+organize conditioner,1,1,0,organize conditioner
+organize container,27,5,22,arrange container | organize container
+organize cookware,5,0,5,organize cookware
+organize cosmetics,258,125,133,Organize cosmetics and makeup brushes | arrange cosmetic | arrange cosmetics | organize cosmetic | organize cosmetics
+organize cotton pad,1,1,0,organize cotton pad
+organize cotton roll,2,2,0,arrange cotton roll
+organize cotton swab,8,1,7,arrange cotton swab | organize cotton swab
+organize cotton swab box,1,0,1,organize cotton swab box
+organize counter,5,3,2,arrange counter | organize counter
+organize countertop,3,0,3,organize countertop
+organize countertop item,1,0,1,organize countertop item
+organize crayon,1,1,0,organize crayon
+organize cream,2,0,2,arrange cream
+organize cup,164,12,152,arrange cup | organize cup
+organize cup holder,1,1,0,organize cup holder
+organize cup supply,1,0,1,organize cup supply
+organize cushion,11,0,11,arrange cushion | organize cushion
+organize cutlery,2,0,2,organize cutlery
+organize cutter,1,0,1,organize cutter
+organize daily necessity,2,1,1,organize daily necessity
+organize dairy product,1,0,1,organize dairy product
+organize data cable,1,0,1,organize data cable
+organize debris,2,0,2,organize debris
+organize delivery item,1,0,1,organize delivery items
+organize dental supply,1,1,0,organize dental supply
+organize desk,9,1,8,organize desk
+organize desk item,5,1,4,organize desk item
+organize desk supply,1,0,1,organize desk supply
+organize desktop,6,1,5,organize desktop
+organize desktop item,3,0,3,organize desktop item
+organize detergent,7,0,7,organize detergent
+organize device,1,0,1,organize device
+organize dish,2,0,2,organize dish
+organize dish soap,1,0,1,organize dish soap
+organize dishware,36,0,36,arrange dishware | organize dishware
+organize disinfection supply,1,1,0,organize disinfection supply
+organize disposable item,1,0,1,organize disposable item
+organize divider,1,0,1,organize divider
+organize document,1,0,1,organize document
+organize doormat,1,0,1,organize doormat
+organize drawer,2,0,2,organize drawer
+organize drawer contents,1,0,1,organize drawer contents
+organize drink,23,1,22,arrange drink | organize drink
+organize dumbbell,29,0,29,arrange dumbbell | organize dumbbell
+organize earring,1,0,1,organize earring
+organize equipment,4,1,3,arrange equipment | organize equipment
+organize facial cleanser,3,2,1,organize facial cleanser
+organize facial mask,1,1,0,organize facial mask
+organize file,1,0,1,organize file
+organize fitness equipment,3,0,3,arrange fitness equipment | organize fitness equipment
+organize fitness gear,1,0,1,organize fitness gear
+organize floss,2,0,2,organize floss
+organize foam roller,1,0,1,Organize foam rollers and medicine balls on a rack
+organize folder,6,0,6,arrange folder | organize folder
+organize food,33,3,30,arrange food | organize food
+organize fork,1,0,1,organize fork
+organize frame,2,0,2,organize frame
+organize front desk,1,1,0,organize front desk
+organize fruit,5,5,0,arrange fruit | organize fruit
+organize furniture,2,0,2,organize furniture
+organize game,2,0,2,organize game
+organize game component,10,0,10,arrange game component | organize game component
+organize gardening tool,1,0,1,organize gardening tool
+organize gauze,1,1,0,organize gauze
+organize glass,2,0,2,organize glass
+organize glasses,5,0,5,organize glasses
+organize glove,14,1,13,organize glove | organize gloves and check phone
+organize goods,19,19,0,Store toothpaste and prepare shopping basket | organize goods
+organize granule,1,0,1,organize granules
+organize grocery,3,0,3,organize grocery
+organize grooming item,1,0,1,organize grooming item
+organize hair,6,6,0,organize hair
+organize hair accessory,2,0,2,organize hair accessory
+organize hair clip,1,1,0,organize hair clip
+organize hair dryer,12,0,12,Organize hair dryer into storage bag and drawer | organize hair dryer
+organize hair tool,1,1,0,organize hair tool
+organize hairband,1,1,0,organize hairband
+organize hairdressing tool,5,5,0,organize hairdressing tool | organize hairdressing tools
+organize hairpin,3,2,1,organize hairpin
+organize hand sanitizer,2,0,2,organize hand sanitizer
+organize hanger,17,0,17,organize hanger
+organize hat,1,0,1,organize hat
+organize headphones,1,0,1,organize headphones
+organize herb,1,1,0,arrange herb
+organize household item,3,0,3,organize household item
+organize household supply,1,0,1,organize household supplies
+organize hygiene product,3,0,3,arrange hygiene product | organize hygiene product
+organize ingredient,6,5,1,organize ingredient
+organize ingredients,1,1,0,organize ingredients
+organize ink cartridge,1,0,1,organize ink cartridge
+organize item,196,38,158,Clean and organize the desktop | arrange item | arrange items | arrange object | organize item | organize items | organize object | organize objects
+organize jar,9,5,4,Place medicines on pharmacy shelf | organize jar
+organize jelly,1,0,1,organize jelly
+organize jewelry,16,0,16,organize jewelry
+organize juice,1,0,1,organize juice
+organize jump rope,7,0,7,organize jump rope
+organize kettle,1,0,1,organize kettle
+organize kettlebell,4,0,4,organize kettlebell
+organize kitchen item,5,0,5,organize kitchen item
+organize kitchen tool,5,0,5,organize kitchen tool
+organize kitchenware,9,0,9,organize kitchenware
+organize knee pad,1,0,1,organize knee pad
+organize knot,1,0,1,organize knot
+organize label,5,1,4,arrange label | organize label
+organize lanyard,2,0,2,organize lanyard
+organize leaflet,1,1,0,organize leaflet
+organize lid,10,2,8,organize lid
+organize light string,2,0,2,organize light string
+organize lighter,2,0,2,organize lighter
+organize lip gloss,7,6,1,organize lip gloss
+organize lipstick,6,6,0,organize lipstick
+organize long item,1,0,1,organize long items
+organize magazine,57,0,57,organize magazine
+organize makeup,4,2,2,organize makeup
+organize makeup supply,2,0,2,organize makeup supply
+organize makeup tool,5,0,5,organize makeup tool
+organize marker,23,0,23,arrange marker | organize marker | organize markers
+organize mask,9,4,5,organize mask | store facial masks and nail polish
+organize mat,1,0,1,organize mat
+organize medicinal material,1,1,0,Stock medicinal materials on shelf
+organize medicine,151,149,2,Store medicines in carton | arrange medicine | organize medicine
+organize medicine box,6,6,0,arrange medicine box | organize medicine box
+organize medicine product,2,2,0,arrange medicine product
+organize metal tool,1,0,1,organize metal tool
+organize milk,9,0,9,arrange milk | organize milk
+organize miscellaneous item,4,0,4,organize miscellaneous items
+organize nail,1,1,0,organize nail
+organize nail drill,1,1,0,Store tools and wipe cuticle pusher
+organize nail polish,49,49,0,"Place cotton rolls, boxes, and nail polishes | Place nail polishes and boxes | arrange nail polish | organize nail polish | place nail polishes and boxes | store nail polish and stack product boxes"
+organize nail tip,1,1,0,organize nail tips
+organize necklace,1,0,1,organize necklace
+organize nightstand,8,0,8,organize nightstand
+organize noodle,14,0,14,arrange noodle | organize noodle
+organize notebook,2,0,2,organize notebook
+organize notepad,1,0,1,organize notepad
+organize nut,5,0,5,arrange nut | organize nut
+organize office item,1,0,1,organize office item
+organize office supply,2,0,2,organize office supply
+organize package,107,15,92,Organize express packages on shelf | Organize packages and clean table | arrange package | organize package
+organize packing supply,1,0,1,organize packing supply
+organize pad,1,0,1,organize pad
+organize painting,1,1,0,organize painting
+organize paper,194,11,183,arrange paper | organize paper
+organize paper packaging,1,1,0,organize paper packaging
+organize paperclip,1,0,1,organize paperclip
+organize parcel,9,7,2,arrange parcel | organize parcel
+organize part,1,0,1,organize part
+organize pastry,1,1,0,organize pastry
+organize patch,1,1,0,organize patch
+organize peeler,1,0,1,organize peeler
+organize pen,51,8,43,Organize desk supplies into storage box | arrange pen | organize pen | store pens and pick up origami ornament
+organize pencil,3,2,1,arrange pencil | organize pencil
+organize perm rod,3,3,0,organize perm rod
+organize perm supply,1,1,0,organize perm supplies
+organize perm tool,1,1,0,organize perm tool
+organize personal care product,1,1,0,organize personal care product
+organize personal item,1,0,1,organize personal item
+organize pill,4,3,1,organize pill
+organize pillow,21,0,21,Arrange pillows and check television | Arrange pillows and operate television | Make the bed | Make the bed and arrange pillows | arrange pillow
+organize pillowcase,1,0,1,Make bed and arrange photo frame
+organize placemat,78,0,78,arrange placemat | organize placemat
+organize plastic wrap,3,1,2,organize plastic wrap
+organize pot,4,0,4,organize pot
+organize powder,3,3,0,arrange powder | organize powder
+organize produce,1,0,1,organize produce
+organize product,50,39,11,arrange product | organize product | organize products
+organize puff,1,0,1,organize puff
+organize pump,1,0,1,organize pump
+organize rack,1,1,0,organize rack
+organize racket,2,0,2,organize racket
+organize refill,6,0,6,organize refill
+organize refrigerator,3,1,2,organize refrigerator
+organize remote control,1,0,1,organize remote control
+organize ribbon,1,0,1,organize ribbon
+organize rice,1,0,1,organize rice
+organize rod,28,28,0,arrange rod | organize rod
+organize roll,4,0,4,arrange roll | organize roll
+organize roller,2,2,0,organize roller
+organize rope,11,0,11,organize rope
+organize ruler,1,0,1,organize ruler
+organize sample,1,1,0,arrange samples
+organize sandwich,1,1,0,organize sandwich
+organize sanitary pad,5,2,3,Store sanitary pads and organize paper bags | organize sanitary pad | organize sanitary pads
+organize sanitary product,1,0,1,organize sanitary product
+organize sauce,2,1,1,organize sauce
+organize sausage,2,0,2,organize sausage
+organize seasoning,2,0,2,organize seasoning
+organize shampoo,20,5,15,organize shampoo
+organize sheet,2,0,2,Make bed and arrange picture frames | arrange sheet
+organize shelf,11,8,3,organize shelf
+organize shoe,87,0,87,organize shoe
+organize shoebox,1,0,1,organize shoebox
+organize shower gel,4,0,4,arrange shower gel | organize shower gel
+organize shuttlecock,8,0,8,organize shuttlecock
+organize sign,5,0,5,organize sign
+organize skin care product,21,21,0,arrange skincare product | organize skin care product | organize skin care products | organize skincare product
+organize slipper,1,0,1,organize slipper
+organize slippers,1,0,1,organize slippers
+organize snack,84,0,84,arrange snack | organize snack
+organize soap,14,12,2,arrange soap | organize soap
+organize sock,1,0,1,organize sock
+organize sponge,2,0,2,organize cleaning tool | organize sponge
+organize spoon,1,0,1,organize spoon
+organize sports equipment,5,0,5,organize sports equipment
+organize spray,1,0,1,organize spray
+organize spray bottle,1,0,1,organize spray bottle
+organize stationery,62,4,58,arrange stationery | organize stationery
+organize stick,4,0,4,organize stick | organize sticks
+organize sticker,1,1,0,organize sticker
+organize storage cabinet item,1,1,0,Organize storage cabinet items
+organize strap,22,0,22,organize strap
+organize straw,7,2,5,organize straw
+organize strip,1,0,1,organize strips
+organize strip-shaped object,1,0,1,organize strip-shaped object
+organize sugar,2,1,1,organize sugar
+organize sundries,4,3,1,organize sundries
+organize supply,5,3,2,organize supplies | organize supply
+organize table,4,1,3,arrange table | organize table
+organize tableware,66,4,62,arrange tableware | organize tableware
+organize tag,17,11,6,arrange tag | organize tag
+organize tape,2,0,2,organize tape
+organize tea,2,0,2,organize tea
+organize tea bag,4,0,4,organize tea bag
+organize tea supply,2,0,2,organize tea supplies | organize tea supply
+organize tissue,19,2,17,arrange tissue | move tissues and place nail polish | organize tissue
+organize toilet paper roll,1,0,1,organize toilet paper roll
+organize toiletries,140,16,124,Organize bathroom toiletries and towels | Organize toiletries and clean sink countertop | arrange toiletries | arrange toiletry | organize toiletries | organize toiletry
+organize tool,11,9,2,arrange tool | organize tool | organize tools
+organize toothbrush,9,8,1,organize toothbrush
+organize toothpaste,21,7,14,arrange toothpaste | organize toothpaste
+organize toothpick,1,0,1,organize toothpick
+organize towel,16,9,7,Store towels and boxes on shelf | arrange towel | organize towel
+organize toy,70,62,8,Clean ornaments and organize toys | arrange toy | organize toy
+organize transparent hemispherical covers,1,0,1,organize transparent hemispherical covers
+organize tray,18,1,17,arrange tray | organize tray
+organize tube,2,1,1,organize tube
+organize umbrella,2,0,2,Store umbrellas and organize cleaning tools | organize umbrella
+organize underwear,8,8,0,organize underwear
+organize utensil,4,0,4,arrange utensil | organize utensil
+organize vacuum cleaner,2,0,2,organize vacuum cleaner
+organize vase,1,0,1,organize vase
+organize vial,1,1,0,organize vial
+organize wardrobe,1,0,1,organize wardrobe
+organize water,5,0,5,arrange water | organize water
+organize water bottle,2,0,2,organize water bottle
+organize water container,1,0,1,organize water container
+organize weight plate,3,0,3,organize weight plate
+organize wet wipe,12,0,12,arrange wet wipes | organize wet wipes
+organize whistle,6,0,6,Organize whistles and lanyards on a tray | organize whistle
+organize wig,2,2,0,organize wig
+organize wooden stick,5,0,5,organize wooden stick | organize wooden sticks
+organize workstation,1,0,1,organize workstation
+organize wristband,2,0,2,organize wristband
+organize yoga mat,2,0,2,organize yoga mat
+origanize_some_object,578,416,162,"Adjust door and unpack accessory box | Adjust grill and prepare meat | Apply eye patches and perform head massage | Apply nail polish and decorate nails | Apply nail polish and trim nails | Apply neck mask and massage customer | Apply neck patch and massage customer | Apply skin care products and massage customer | Assemble board bracket and organize light strip accessories | Assemble bottle and sweep floor | Assemble juicer and clean workspace | Bake and deliver bread | Bake and deliver bread portions | Bake and serve bread | Bake and transport bread portions | Bake bread and deliver trays | Bake bread and desserts | Bake decorate and serve bread | Bathroom tidying | Braid and smooth hair on wig head model | Braid hair and organize wig | Braid hair and store boxes | Brew tea and clean table | Brew tea and clean workspace | Brewing tea and cleaning the tea set | Browse and select clothes on a rack | Check and arrange medicine inventory | Clean and arrange drink bottles | Clean and arrange objects | Clean and organize beauty shop | Clean and organize desktop | Clean and organize hair clippers | Clean and organize retail store | Clean and organize salon equipment and storage | Clean and organize salon supplies | Clean and organize workspace | Clean and stock retail shelf | Clean and tidy shoes | Clean and tidy the salon room | Clean balcony and organize tools | Clean barber tools and organize sink items | Clean barbershop and hairdressing tools | Clean bathroom mirror and shelf | Clean boxes, store bags and make beauty bed | Clean bucket, wash utensils, and weigh powder | Clean chair and wash customer hair | Clean coffee machine and clear table clutter | Clean counter and wash bottles | Clean desktop and floor by disposing of bottle and organizing pens | Clean desktop and organize items into drawer | Clean desktop trash and stack paper cups | Clean displays and boil beans | Clean face and trim eyebrows | Clean hair dryer and wash cloths | Clean juicer accessories and cutting board | Clean juicer accessories and sink | Clean juicer, wipe counter, and prepare fruits | Clean kettle and wipe tabletop | Clean kitchen equipment and portion sweet soup | Clean kitchen tools and assemble juicer | Clean kitchenware and organize restaurant workspace | Clean kitchenware and weigh tea leaves | Clean measuring cups and wipe front desk | Clean pot, process beans, prepare drink | Clean room floor with vacuum cleaner and store it | Clean salon and organize equipment | Clean salon and wash customer hair | Clean shampoo bed and organize tool cart | Clean shelf and boxes and wash customer hair | Clean shop and sweep floor | Clean shop floor and prepare ingredients | Clean storage shelf and shampoo area facilities | Clean trash can and fold towel | Clean tray and prepare beauty paste | Clean up desktop trash and restock paper cups | Clean up floor debris and organize stationery | Clean up shredded paper and pens | Clean up trash and organize pencil | Clean up trash and tidy furniture | Clean utensils and prepare beans | Clean utensils and prepare ice | Clean utensils and prepare ingredients | Clear and clean table items | Comb hair and apply essential oil for head care | Comb hair and massage head | Cook and filter food | Cook dessert and add ingredients | Cook dessert and clean kitchenware | Cook ingredients, clean counter, and operate cash register | Cut and wash customer hair | Cut watermelon and stir ingredients | Deliver and return express parcels | Dispense liquid and clean table | Distribute parcels and check phone | Divide liquid into small bottles and clean table | Draw curtains and open window | Drill door frame slots for lock installation | Drill holes and mill square hole on board | Drill lock groove on wooden door | Drill lock holes in wooden door | Drying plate and cleaning countertop trash | Dye customer hair and organize tools | Enter product information and organize shelf | Enter sphygmomanometer product information and arrange medicines | Enter toll information into system | Fill disinfection register and wipe trolley | Fill in register and check computer records | Fill registration book and arrange flowers | Fill registration form and enter information | Fill spray bottle and clean table | Fill watering cans and clean table | Fix counter pressing strip and wipe floor | Fix ice machine, wash rag, and wipe table | Fix perm rods | Fold cloths and make hospital bed | Fold paper, punch holes, and clean up scraps | Grind seasoning using spice bottles | Handling and storing a black mat | Heat bread in microwave | Heat packaged food in microwave | Heat packaged food in microwave and serve on plate | Inflate multiple deflated basketballs | Input toll information into computer system | Install and clean non-slip mats | Install nail tips and apply nail polish | Kitchen cleaning and organization | Kitchen cleanup and organization | Kitchen countertop cleanup and organization | Lay anti-slip mats and clean floor | Lay anti-slip mats and wipe bathroom floor | Lay floor mats and clean bathroom floor | Lay non-slip mats and wipe bathroom floor | Load dishwasher and clean countertop | Make and disinfect hospital beds | Make bed and arrange photo frames | Make bed and arrange picture frames | Make bed and straighten picture frame | Make beds and clean bottles | Make the bed and organize toys | Mash ingredients and place cutting board | Massage and clean customer face | Massage arm and apply facial essence | Massage customer and pick up items | Massage customer arms and move treatment cart | Massage customer back and adjust towel | Massage customer back and apply oil | Massage customer back and head | Massage customer back and replenish essential oil | Massage customer face and prepare eye patch | Massage customer face and store beauty supplies | Massage customer head and apply essential oil | Massage customer head and apply facial skincare | Massage customer head and face | Massage customer head and shoulders | Massage customer legs and apply essential oil | Massage customer neck and shoulders | Massage customer shoulders and arrange hair | Massage customer shoulders and back | Massage customer shoulders and head | Massage customer shoulders and neck | Massage face and apply facial mask | Massage face and prepare mask supplies | Massage face and trim eyebrows | Massage head and apply skin care products | Massage head model and post diagram | Measure elderly blood pressure | Mix detergent into soap bottle and clean countertop | Mop floor and place boxes | Mop floor and place boxes on counter | Move bedding and clean bedside cabinet | Move tray, wipe cart, and push cart to position | Organize and bind papers, then clean desk debris | Organize and clean beauty salon workspace | Organize and clean shelf | Organize and store small items in a box | Organize bathroom sink and clean up packaging | Organize bathroom sink and dispose of trash | Organize bathroom towels and toiletries and clean trash | Organize bedroom items and charge phone | Organize black sticks into a blue cup | Organize books and record information | Organize bowls and wipe countertop | Organize cabinet, process oranges, and clean countertop | Organize candy wrapper and fold cardboard box | Organize containers and open material packaging | Organize cosmetics and fill forms | Organize cosmetics store shelves and products | Organize countertop, prepare drinks, and wash eggs | Organize cups and prepare dessert | Organize dishes and clean countertop | Organize hair dryer and sweep hair clippings | Organize items into storage box and clean table | Organize labels and boxes into trays | Organize medicines and clean shelf | Organize medicines and wipe shelves | Organize nail polish and store boxes | Organize package and clean table | Organize packaging bags and cotton swabs | Organize packet and clean table | Organize pens and stack cardboard boxes | Organize plates and clear packaging waste | Organize restaurant supplies and wipe counters | Organize shoe box and clean up shredded paper | Organize shoe boxes into cabinet and clean up paper scraps | Organize shoe boxes into cabinet and clean up waste paper | Organize sink counter and hang towels | Organize storage shelf and assemble shower head | Organize sundries and sort straws | Organize tabletop tools and clean countertop | Organize tableware and clean dining area | Organize trash and wipe tables | Organize tray and clean table surface | Organize washstand and hang towels | Pack food delivery and clean workspace | Pack goods and prepare drinks | Pack items into box and clean table | Pack items, organize sundries, and repair chair | Pack meals and process orders | Pack skin care products and wash hands | Pack skincare products and fold clothes | Pack takeaway drink and clean utensils | Package drinks and clean kitchenware | Packaging small items and cleaning the table | Packing rackets and cleaning table | Paint and cure nail pieces | Perform back scraping and massage | Perform facial and hair care | Perform facial beauty care | Perform facial care | Perform facial care and massage | Perform facial care and organize beauty supplies | Perform facial massage and apply eye mask | Perform facial massage and clean face | Perform facial scraping and massage | Perform facial skin care | Perm hair and remove perm rods | Place anti-slip mats and clean bathroom floor | Place boxes and mop floor | Pour water and organize cart | Pour water and wipe table | Pre-meeting preparation with office supplies and cups | Prepare and cook drink | Prepare and pack drinks for delivery | Prepare and pack milk tea orders | Prepare and package watermelon iced drink | Prepare and serve coffee | Prepare and serve coffee with soda water | Prepare and serve drinks | Prepare chicken and clean kitchen | Prepare dessert and ingredients | Prepare drink and clean kitchen utensils | Prepare food ingredients | Prepare fruit and label storage jar | Prepare fruits and cook ingredients | Prepare ice dessert | Prepare infant formula | Prepare ingredients and clean kitchenware | Prepare ingredients and clean workspace | Prepare instant noodles | Prepare lemon tea and clean utensils | Prepare melon pieces | Prepare milk tea drinks and clean tools | Prepare milk tea ingredients and fruit | Prepare pear soup and canned fruit | Prepare porridge and eggs | Prepare sauce and clean kitchen equipment | Prepare shop equipment and wash tableware | Prepare soup and tea ingredients | Prepare spray bottles and clean table | Prepare supplies and perform facial treatment | Prepare tea and clean table | Prepare tea and clean workspace | Prepare tea drink | Prepare watermelon and wash kitchenware | Process and deliver food order | Process and test medical samples | Process customer order and prepare dragon fruit juice | Process customer order and weigh food | Process customer payment and organize counter | Process door frame | Process medicine documents and enter data | Process medicines and greet customers | Process order and prepare drinks | Process orders and prepare food | Process parcels and mark shelf layers | Process payment and pack drinks | Process receipts and wash glass | Process takeout order and prepare meal | Process watermelon and mango | Provide back massage service | Provide customer hair care | Provide facial care | Provide facial care and trim towel threads | Provide facial massage and clean tools | Provide facial skincare and massage | Provide head care | Put milk in refrigerator and clean kitchen countertop | Refill and clean fountain pen | Refill hand soap and clean countertop | Refill jar and clean countertop | Refill pen and clean desk | Refill soap dispenser and clean countertop | Refill soap dispenser and clean sink | Remove and apply hair rollers | Remove label and dispose of cardboard box | Repair nail gun and install skirting line | Replace lint roller paper and organize desk items | Replace toy car battery and store plush toy | Rinse dry hair and organize products | Roll customer hair and wash hands | Roll perm rods on mannequin head | Roll up and store floor mats | Scoop taro balls and check ingredients | Scrub fabrics and wipe table | Seal drinks and pack takeout orders | Section and fix hair pieces | Select face puffs and arrange misplaced goods | Selecting beverages from supermarket shelves | Selecting snacks and moving a cardboard box | Selecting stationery products from a shelf | Serve cups on tray | Shave customer face and manage towels | Sort and deliver express packages | Sort and organize lettered items into colored baskets | Sort and recycle cardboard boxes and plastic bottles | Sort and store tape and glue sticks | Sort drawer items into storage boxes | Sort items into storage box and wipe table | Sort longans, check beans, filter tea, and clean tea set | Sort nuts, check food doneness, and arrange seats | Sort perm rods and rinse customer hair | Sort rosebuds and clean workspace | Spray perm lotion and prepare hair dryer | Spread anti-slip mats and wipe floor | Stack and store cups and trays, then clean up tissues | Stack boxes on pallet and wipe table | Steam dessert, clean workspace, and cook porridge | Stir ingredients and wash measuring cup | Stock shelf, clean floor, and wash towel | Stock soy sauce and vinegar bottles on shelf | Store beads and clean table | Store books and wipe furniture | Store boxes and sweep garbage | Store chair and deliver parcels | Store container and wipe countertops | Store containers and portion cooked food | Store food and portion desserts | Store gasket and clean table | Store haircut tools and clean barber chairs | Store meal bags and prepare stew | Store milk and clean countertop | Store package and clean table | Store packet and clean table | Store seasonings and clean countertops | Store towels and boxes and wipe cart | Straighten and blow-dry customer hair | Straighten and cap bottles on conveyor | Straighten hair and store tools | Sweep floor and clean pharmacy | Sweep floor and organize skin care products | Sweep floor and organize trolley | Sweep floor and prepare ingredients | Sweep floor and replace trash bag | Sweep floor, make bed and arrange items | Sweep garbage and mop floor | Sweep garbage and place cleaning tools | Sweep hair clippings and tidy floor wire | Tattoo customer eyebrows | Tidy beauty bed and perform facial care | Tidy bed and massage back | Tidy bed, wipe bottles, store skin care products | Tidy bedroom bed and nightstand | Tidy entrance and subpackage drinks | Tidy up dining room by clearing trash and pushing chairs | Transfer liquid between bottles and clean sink | Transfer mouthwash and clean desk | Treat customer leg with beauty device | Treat face with beauty infusion device | Trim and wash customer hair | Trim customer hair and organize tools | Unfold anti-slip mats and clean bathroom floor | Unfold anti-slip mats and clean floor | Unfold anti-slip mats and wipe bathroom floor | Unfold anti-slip mats and wipe floor | Unfold mats and wipe floor | Unfold non-slip mats and wipe bathroom floor | Unfold non-slip mats and wipe floor | View assembly instructions | Wash and cut watermelon | Wash containers and wipe countertop | Wash containers, wipe counter, transfer ice cubes | Wash fabrics and wipe tabletop | Wash filter basin and fill insulation bucket | Wash glasses and clean sink | Wash hair and apply facial mask | Wash kitchen utensils and organize countertop | Wash rag and organize countertop | Wash rag and wipe equipment | Wash tableware and clean surfaces | Wash towel and shave customer | Water potted plants and clean table | Weave and comb wig | Wipe and hang beauty products | Wipe and organize books and toys | Wipe and organize medicines on shelf | Wipe and pack paper bags and organize store items | Wipe and place cosmetics on shelf | Wipe bottles and stack boxes | Wipe boxes and clean floor | Wipe cosmetics display shelf and place storage box | Wipe counter and display cabinet | Wipe customer face and clean room | Wipe furniture and level sand | Wipe instruments, faucet, and food processor | Wipe makeup brushes and organize storage basket | Wipe medicines and arrange price tags | Wipe objects and sort building blocks and pencils | Wipe shelf, organize towels, and arrange gift box | Wipe skin care containers and shelf | Wipe skincare bottles and massage customer hair | Wipe skincare products and tidy bed | Wipe table and arrange chairs | Wipe table and push chairs | Wrap towel and shave customer face | Write bibliography and organize books | Write price tags and process cashier information | apply contour and draw eyebrows | apply hair dye and cut hair | apply hair dye cream to wig | arrange cosmetics and select oral care products | arrange cosmetics and wash towel | arrange goods and sweep store floor | arrange items on table and place box on bed | arrange medicines and wipe shelf | arrange skin care products and sweep floor | bake and deliver bread | care customer forehead | clean and organize beauty salon | clean blender and package drinks | clean container and retrieve cup | clean ear and massage head | clean floor and place boxes | clean room | clean shop | clean sink and prepare ingredients | comb hair and complete perm rolling | comb hair and massage head | dice mango and cook food | discard waste and clean tables | discard waste cups and wipe tabletops | dry hair and trim eyebrows | extract facial acne | fill in registration book | fold towels and clean towel | fold towels and organize beauty cart | fold towels and pack boxes | fold towels and prepare beauty bed | fold towels and remove phone case | gather cowpeas and organize tissues | heat peaches, sort red beans, and portion sweet soup | inspect charger and cushion | make drink and prepare ingredients | make iced drink | mark points on back | massage and scrape customer back | massage back and apply care products | massage back and prepare alcohol | massage customer arm and back | massage customer back and adjust covering | massage customer face and neck | massage customer shoulder and neck | massage face and apply foundation | massage head and apply facial mask | operate computer system | organize cleaning agent | organize cleaning supply | organize cleaning tool | organize containers and clean surfaces | organize cosmetics and apply nail polish | organize cotton roll | organize workspace | pack sugar and prepare takeout meal | paint nail art on customer fingernails | perform daily shop tasks | perform eyebrow tattooing | perform facial care | perform facial care for customer | perform facial massage and treatment | perform facial scraping and massage | perform manicure | perform moxibustion care | perform perm rod rolling | perform perm rolling | perform perm rolling on wig | portion pack and deliver dessert | prepare and deliver milk tea drinks | prepare and graft eyelashes | prepare and heat food | prepare and pack milk tea | prepare and serve drinks | prepare avocado milkshake | prepare beauty agent | prepare beauty materials | prepare drink and clean equipment | prepare drink order and ingredients | prepare drinks and clean workspace | prepare essential oil and massage abdomen | prepare hair dye mixture | prepare hospital bed | prepare ingredients and clean cookware | prepare ingredients and clean microwave | prepare ingredients and clean tableware | prepare ingredients and record order | prepare mangoes and clean workspace | prepare meal and process receipt | prepare meal boxes and clean shop equipment | prepare milk tea and clean counter | prepare pears and clean juicer | prepare scallions and cucumbers | prepare stew and portion food | prepare sweet soup | prepare waffles and pack meal boxes | process and dispense medicines | shave customer face | splice green perm rods | store boxes and nail polish | store cut fruit and peel new fruit | store toothpaste and wipe shelves | store toys and level sand | trim stray hair and clean clippings | unpack light strip and repair power strip | wash and install wig | wipe beauty instrument and cart items"
+pack accessory,1,0,1,pack accessory
+pack backpack,4,0,4,pack backpack
+pack badge,8,0,8,pack badge
+pack bag,197,118,79,Organize plates and clean countertop | Organize plates and clean countertop trash | pack bag
+pack ball,1,0,1,pack ball
+pack bead,1,0,1,pack bead
+pack bedding,1,0,1,pack bedding
+pack bottle,8,3,5,pack bottle
+pack bowl,1,0,1,pack bowl
+pack box,107,43,64,pack box
+pack brace,1,0,1,pack brace
+pack bread,1,0,1,pack bread
+pack bubble wrap,2,0,2,pack bubble wrap
+pack cable,4,0,4,pack cable
+pack camera,1,0,1,pack camera
+pack can,1,0,1,pack can
+pack card,6,0,6,pack card
+pack card holder,2,0,2,pack card holder
+pack cardboard piece,1,0,1,pack cardboard pieces
+pack chopsticks,1,0,1,pack chopsticks
+pack circular object,1,0,1,pack circular object
+pack cloth,5,0,5,pack cloth
+pack clothing,12,0,12,Fold clothing and pack into backpack | pack clothes | pack clothing
+pack coffee,15,13,2,pack coffee
+pack coffee supply,1,1,0,pack coffee supply
+pack container,2,0,2,pack container
+pack corn kernel,1,0,1,pack corn kernels
+pack cream,1,1,0,pack cream
+pack cup,11,1,10,pack cup
+pack cylinder,1,0,1,pack cylinder
+pack cylindrical object,4,0,4,pack cylindrical object
+pack dessert,2,2,0,pack dessert
+pack drink,4,4,0,pack drink
+pack envelope,4,0,4,pack envelope
+pack equipment,1,0,1,pack equipment
+pack first aid kit,2,0,2,pack first aid kit
+pack foam net sleeve,1,0,1,pack foam net sleeve
+pack food,8,4,4,pack food
+pack fruit,1,0,1,pack fruit
+pack glass,4,0,4,pack glass
+pack goods,3,3,0,pack goods
+pack granule,3,1,2,pack granules
+pack grip strengthener,2,0,2,pack grip strengthener
+pack hair dryer,4,0,4,pack hair dryer
+pack hardware,1,0,1,pack hardware
+pack headphone,1,0,1,pack headphone
+pack herb,6,1,5,pack herb
+pack ingredient,1,0,1,pack ingredient
+pack item,4,0,4,pack item | pack items
+pack jar,7,2,5,pack jar
+pack knife,1,0,1,pack knife
+pack label,3,0,3,pack label
+pack lanyard,8,0,8,pack lanyard
+pack letter,1,0,1,pack letter
+pack lighter,1,0,1,pack lighter
+pack lip gloss,1,1,0,pack lip gloss
+pack long item,1,0,1,pack long item
+pack meal,4,4,0,pack meal
+pack medicine,8,8,0,pack medicine
+pack mesh,2,0,2,pack mesh
+pack nail,2,0,2,pack nail
+pack nail polish,14,14,0,pack nail polish
+pack nut,7,0,7,pack nut
+pack orange,2,0,2,pack orange
+pack package,8,2,6,pack package
+pack paper,18,0,18,pack paper
+pack part,7,0,7,pack part
+pack peanut,4,0,4,pack peanut
+pack pencil,1,1,0,pack pencil
+pack piece,1,0,1,pack piece
+pack product,1,0,1,pack product
+pack puzzle,2,0,2,pack puzzle
+pack quilt,1,0,1,pack quilt
+pack rope,6,0,6,pack rope
+pack round object,1,0,1,pack round object
+pack schoolbag,1,0,1,pack schoolbag
+pack seed,1,0,1,pack seed
+pack shower cap,1,0,1,pack shower cap
+pack shuttlecock,1,0,1,pack shuttlecock
+pack sign,3,0,3,pack sign
+pack snack,1,0,1,pack snack
+pack sports gear,1,0,1,pack sports gear
+pack stand,1,0,1,pack stand
+pack strap,7,0,7,pack strap
+pack straw,1,1,0,pack straw
+pack strawberry,1,1,0,pack strawberry
+pack strip,1,0,1,pack strip
+pack tag,1,0,1,pack tag
+pack takeout,1,1,0,pack takeout
+pack tea,1,0,1,pack tea
+pack tissue,2,0,2,pack tissue
+pack toiletries,1,0,1,pack toiletry
+pack towel,7,0,7,pack towel
+pack toy,5,3,2,pack toy
+pack tube,1,0,1,pack tube
+pack wristband,3,0,3,pack wristband
+paint nail,2,2,0,Paint and place nail pieces | Paint nail plates
+pair cup,7,0,7,pair cup
+pair dishware,1,0,1,pair dishware
+peel avocado,1,1,0,peel avocado
+peel egg,4,0,4,peel egg
+peel fruit,3,3,0,peel fruit
+peel garlic,13,2,11,peel garlic
+peel label,1,1,0,peel label
+peel longan,5,5,0,Organize stove area and prepare longan | peel longan
+peel mango,4,4,0,Organize cloth and peel mango | pack diced mango and peel mangoes | peel mango
+peel nut,1,1,0,peel nut
+peel onion,3,0,3,Peel onions and clean countertop | peel onion
+peel orange,1,0,1,peel orange
+peel peanut,1,0,1,peel peanut
+peel strip,1,1,0,peel strip
+peel watermelon,1,1,0,peel watermelon
+perm hair,21,21,0,Perform perm rolling operation | Perm and style mannequin hair | Perm customer hair | Prepare and perm customer hair | Roll hair for perm | Roll hair for wig head model | Roll hair on mannequin head | Roll hair on practice mannequin | Roll hair on practice mannequin head | apply perm lotion and curl hair | perm customer hair with rods | perm hair on wig head model | perm roll mannequin hair strands | section and perm hair
+perm mannequin head hair,1,1,0,Perm mannequin head hair
+pick package,1,0,1,Selecting sunflower seeds from shelf
+place bottle,2,0,2,Retrieve drink and clean countertop | Retrieve water bottle and glass from refrigerator
+place box,1,1,0,place package box on shelf
+place bread,1,1,0,serve baked bread
+place cloth,1,1,0,Clean stool and sieve and install filter cloths
+place cup,4,4,0,Place paper cups on tray and tables | Serve cups to tables | Serve cups using tray | Serve water cup and return tray
+place food,1,0,1,Heat packaged food in microwave and serve on plate
+place glove,1,1,0,prepare hair dye
+place hair paper,1,1,0,place hair paper
+place medicine,1,1,0,place medicine on shelf
+place medicine product,1,1,0,place medicine products
+place paper,2,1,1,Clean up torn paper and pen | set perm rods on wig mannequin
+place plate,1,0,1,Distribute and weigh hay portions
+place price tags,1,1,0,place price tags
+place product,1,1,0,Place traditional Chinese medicine products on shelf
+place tea,1,0,1,Make tea and clean table
+place tray,1,1,0,Bake and decorate bread
+place umbrella,2,0,2,Tidy umbrellas and clean floor
+plug charger,1,0,1,plug charger
+polish bench,1,0,1,polish bench
+polish fingernail,2,2,0,polish fingernail
+polish lid,1,1,0,polish lid
+polish nail,27,27,0,Polish nail plates and operate phone | polish nail
+polish nail piece,1,1,0,polish nail piece
+polish nail tip,1,1,0,polish nail tips
+polish sink,1,0,1,polish sink
+pour bag,1,0,1,pour bag
+pour beverage,5,2,3,"Prepare a beverage for drinking | Retrieve beverage and clean table | Retrieve drink, pour into cup, and clean table | pour beverage"
+pour bottle,4,0,4,pour bottle
+pour bowl,1,0,1,pour bowl
+pour box,3,0,3,Unpack cardboard box from woven bag | pour box
+pour cleaner,1,0,1,pour cleaner
+pour cola,1,0,1,"Retrieve cola, pour into cup, and clean table"
+pour cup,16,0,16,pour cup
+pour drink,3,2,1,pour drink
+pour ingredient,1,1,0,pour ingredient
+pour item,2,0,2,pour item
+pour juice,25,0,25,pour juice
+pour liquid,18,1,17,Decanting liquid into small bottles | Mixing liquids from small bottles into a large bottle | Pour liquid and clean countertop | Prepare and serve drinks | Refill soap dispenser and clean sink countertop | Refill soap dispenser and wipe sink | Serve drinks on a tray | organize kitchen work area | pour liquid
+pour milk,1,0,1,pour milk
+pour plant,1,0,1,pour plant
+pour powder,4,0,4,pour powder
+pour snack,1,0,1,pour snack
+pour straw,1,0,1,pour straw
+pour tea,8,0,8,Pour green tea and clean countertop | Serve tea to the round table | pour tea
+pour tea bag,2,0,2,Brewing tea | pour tea bag
+pour topping,1,1,0,pour topping
+pour water,6,0,6,Boil water and pour into cup | Pour water and tidy table | Pour water from teapot into glass | Pour water into cups and clean table | Pour water into cups and wipe countertop | Prepare a glass of water
+press button,1,1,0,Maintain pipe joint and prepare tea
+press label,1,1,0,Label container lids and clean counter
+press mat,1,0,1,Lay anti-slip mats and clean bathroom floor
+press nail,1,1,0,perform manicure and paint nails
+punch paper,13,0,13,punch paper
+rearrange beverage container,1,0,1,rearrange beverage container
+rearrange cookware,1,0,1,rearrange cookware
+reassemble barbell,1,0,1,reassemble barbell
+reassemble computer host,1,0,1,reassemble computer host
+reassemble pen,2,0,2,reassemble pen
+reassemble starter,1,0,1,reassemble starter
+remove acne,6,6,0,remove acne
+remove bag,2,0,2,remove bag
+remove bedding,3,3,0,remove bedding
+remove beverage,2,0,2,remove beverage
+remove book,3,3,0,remove book
+remove bottle,9,0,9,remove bottle
+remove box,5,3,2,Restock laundry products on shelf | remove box
+remove bread,1,0,1,remove bread
+remove clip,1,1,0,remove clip
+remove comedone,3,3,0,remove comedone | remove comedones
+remove cosmetics,1,1,0,remove cosmetics
+remove cup,1,0,1,remove cup
+remove drink,1,0,1,remove drink
+remove film,1,1,0,remove film
+remove food,3,0,3,Heat packaged food in microwave | remove food
+remove glue,1,1,0,remove glue
+remove hair,2,1,1,remove hair
+remove hair roller,1,1,0,remove hair rollers
+remove ice,2,2,0,remove ice
+remove impurities,1,1,0,Shred ingredients and wash hands
+remove item,1,0,1,remove item
+remove jelly,1,0,1,remove jelly
+remove kettle,1,0,1,remove kettle
+remove label,46,0,46,"Move box, remove label, and dispose of waste | Remove labels from water bottles and organize them | remove label"
+remove mask,1,1,0,remove mask
+remove nail polish,1,1,0,Store nail polishes and packaging boxes
+remove nut,1,0,1,remove nut
+remove ornament,1,1,0,remove ornament
+remove package,1,0,1,remove package
+remove pillow,1,1,0,fold cloth and change bed bedding
+remove remote control,1,0,1,Retrieve remote control from storage box
+remove rod,14,14,0,remove rod
+remove rubber band,1,1,0,remove rubber band
+remove snack,2,0,2,remove snack
+remove stem,1,1,0,remove stem
+remove strawberry,1,1,0,remove strawberry
+remove suitcase,1,0,1,remove suitcase
+remove tape,2,0,2,remove tape
+remove thermos,1,0,1,remove thermos
+remove toothpaste,5,0,5,remove toothpaste
+remove weight plate,8,0,8,remove weight plate
+repair eyelash,1,1,0,Repair eyelashes and clean eye area
+replace bag,5,0,5,replace bag
+replace battery,16,0,16,replace battery
+replace brush head,1,0,1,replace brush head
+replace bulb,1,0,1,replace bulb
+replace ink,1,0,1,replace ink
+replace lead,1,0,1,replace lead
+replace mat,1,0,1,replace mat
+replace milk,1,0,1,replace milk
+replace painting,1,0,1,replace painting
+replace paper,1,0,1,replace paper
+replace picture,3,0,3,replace picture
+replace refill,2,0,2,replace refill
+replace shoelace,13,0,13,replace shoelace
+replace sneaker laces,1,0,1,Replace sneaker laces
+replace tape,31,0,31,replace tape
+replace tissue,2,0,2,replace tissue
+replace weight plate,1,0,1,replace weight plate
+replace wheel,1,0,1,replace wheel
+restock beverage bottle,1,0,1,Restock beverage bottle
+restock item in blue packaging,1,0,1,Restock blue packaged items onto shelf
+rinse clip,1,0,1,rinse clip
+rinse cup,7,1,6,Rinse cups and wipe countertop | rinse cup
+rinse filter,1,0,1,rinse filter
+rinse floor,1,1,0,rinse floor
+rinse glass,3,1,2,Wash glasses and arrange teacups | rinse glass
+rinse hair,14,14,0,Rinse customer hair and prepare instrument | rinse hair | shave stray hair and wash hair
+rinse ingredient,1,1,0,rinse ingredient
+rinse lid,1,0,1,rinse lid
+rinse part,1,1,0,rinse part
+rinse rubber bands,1,1,0,Organize shelf and wash rubber bands
+rinse tong,1,0,1,rinse tong
+rinse vegetable,1,0,1,rinse vegetable
+roll back,2,2,0,Roll customer back and tidy clothes | Roll customer back with rolling stick
+roll hair,57,57,0,Comb and roll wig hair | Practice hair rolling on mannequin | Practice hair sectioning on mannequin | Practice perm rod rolling | Practice perm rod rolling on mannequin head | Practice perm rolling | Practice perm rolling on mannequin | Practice perm rolling on mannequin head | Practice perm rolling on wig hair | Practice perm rolling on wig head | Practice perm rolling on wig head model | Practice perm rolling on wig mannequin | Practice rolling perm rods | Prepare and roll hair onto perm rod | Roll and fix hair on mannequin | Roll and fix hair sections | Roll and secure hair strands | Roll and secure perm rods | Roll hair and operate mobile phone | Roll hair on wig head model | Roll hair onto perm rods | Roll hair rods on mannequin head | Roll hair sections onto perm rods | Roll mannequin hair sections with perm paper | Roll perm on wig mannequin | Roll wig hair for perming | Section and perm hair on wig head model | Section and perm wig hair pieces | Section and roll hair for perm | Section and wrap hair for perm | Section hair strands and roll perm rods | Set hair with perm rods on mannequin | Set perm rods on mannequin hair | fix perm rods on hair | perm hair and rinse customer | practice hair rolling | practice perm rod rolling | practice perm rolling on wig mannequin | practice rolling hair | roll hair for perm | roll hair on perm rods | roll hair onto perm rod | roll hair onto perm rods | roll hair with perm rods | roll perm rods on mannequin head | roll perm rods on wig head
+roll hair section,1,1,0,Roll hair sections
+roll lower back,1,1,0,Roll lower back with rolling stick
+roll napkin,1,0,1,Rolling and arranging napkins in rings
+roll pants,1,1,0,Roll up pants and massage calf
+roll paper,1,1,0,practice perming on wig head model
+roll perm rod,20,20,0,Roll perm rod | Roll perm rod on wig mannequin head | Roll perm rods | Roll perm rods for customer | Roll perm rods on hair | Roll perm rods on head model | Roll perm rods on mannequin hair | Roll perm rods on practice mannequin | Roll perm rods on wig head | Roll perm rods on wig mannequin | Set perm rods on mannequin head | Set perm rods on practice mannequin | Set perm rods on wig head | roll perm rods
+roll rod,4,4,0,Roll perm rods on mannequin head | comb and roll hair sections
+roll towel,3,0,3,Roll and store towels in a basket | Rolling and organizing towels | Tidying towels by rolling and storing them in a basket
+roll waist,1,1,0,Roll customer waist and apply essential oil
+roll wig,1,1,0,Practice perming a wig
+roll yoga mat,2,0,2,Organize fitness equipment and clean the room | Roll and strap yoga mats for storage
+scan barcode,1,1,0,scan barcode
+scan box,16,1,15,scan box
+scan label,4,0,4,scan label
+scan package,29,0,29,scan package
+scan parcel,1,1,0,scan parcel
+scoop almond,1,0,1,scoop almond
+scoop candy,3,0,3,scoop candy
+scoop drink,1,1,0,Prepare drink and check customer nails
+scoop ice,2,1,1,Scoop and crush ice | scoop ice
+scoop ice cream,1,1,0,scoop ice cream
+scoop ingredients,1,1,0,Pack takeaway and portion ingredients
+scoop powder,1,0,1,scoop powder
+scrape aloe vera,1,1,0,scrape aloe vera
+scrape back,4,4,0,scrape and massage back | scrape back | scrape customer back
+scrape customer,1,1,0,scrape customer
+scrape face,15,15,0,Perform facial care and massage | Scrape face and tidy towel | scrape face
+scrape forehead,1,1,0,scrape forehead
+scrape gel,1,1,0,Massage face and extract aloe vera gel
+scrape head,3,3,0,Scrape customer head and prepare ointment | scrape head
+scrape ice,2,2,0,Crush and scrape ice | Crush and smooth ice
+scrape leg,2,2,0,scrape leg
+scrape neck,1,1,0,scrape neck
+scrape sand,3,3,0,Flatten sand surface and place miniatures | Organize toys and level sand surface | scrape sand
+scrape scalp,1,1,0,scrape scalp
+screw board,1,1,0,screw board
+screw lid,1,0,1,screw lid
+screw pump,1,0,1,Assemble pump heads on bottles and clean workspace
+screw screw,1,1,0,screw screw
+seal bag,5,0,5,seal bag
+seal box,82,0,82,seal box
+seal cardboard,19,0,19,seal cardboard
+seal envelope,1,0,1,seal envelope
+seal jar,2,1,1,seal jar
+secure bag,8,0,8,secure bag
+secure box,1,0,1,secure box
+secure hair,2,2,0,secure hair
+secure roller,1,1,0,secure roller
+secure rope,1,0,1,secure rope
+separate bowl,1,0,1,separate bowl
+separate cup holder,1,1,0,separate cup holder
+separate hair,1,1,0,separate hair
+separate ingredient,1,1,0,separate ingredient
+separate snack,1,0,1,separate snack
+sew cloth,1,0,1,sew cloth
+sew clothing,2,0,2,sew clothes | sew clothing
+sew hat,1,1,0,sew hat
+sew pants,1,0,1,sew pants
+sew shirt,1,0,1,sew shirt
+shake bottle,2,0,2,Prepare baby formula | Prepare baby milk formula
+shave beard,1,1,0,shave customer face
+shave hair,1,1,0,Shave face and wash hair
+shave neck,1,1,0,Shave customer face and neck
+slice apple,2,0,2,slice apple
+slice banana,1,0,1,Prepare banana slices and clean countertop
+slice cucumber,1,0,1,slice cucumber
+slice fruit,6,6,0,slice fruit
+slice ginger,1,0,1,slice ginger
+slice gourd,1,1,0,slice gourd
+slice lemon,3,3,0,slice lemon
+slice lime,2,2,0,slice lime
+slice sausage,1,0,1,slice sausage
+slice tomato,7,0,7,slice tomato
+slice vegetable,1,0,1,slice vegetable
+sort accessory,1,1,0,sort accessory
+sort bag,7,0,7,sort bag
+sort bakery item,1,0,1,sort bakery item
+sort band,1,0,1,sort band
+sort bean,1,0,1,sort bean
+sort beauty blender,1,0,1,sort beauty blender
+sort beverage,1,0,1,sort beverage
+sort beverage container,5,0,5,sort beverage container
+sort block,2,0,2,sort block
+sort board,1,1,0,sort board
+sort book,5,5,0,sort book
+sort bottle,11,0,11,sort bottle
+sort bottle opener,1,0,1,sort bottle opener
+sort box,44,2,42,sort box
+sort bread,1,0,1,sort bread
+sort brush,5,5,0,sort brush
+sort cable,1,0,1,sort cable
+sort can,2,0,2,sort can
+sort candy,3,0,3,sort candy
+sort card,7,0,7,sort card
+sort cardboard,1,1,0,sort cardboard
+sort cardboard box,1,0,1,sort cardboard box
+sort chess piece,1,0,1,sort chess pieces
+sort chopstick,1,0,1,sort chopstick
+sort circuit board,1,0,1,sort circuit board
+sort clip,15,0,15,sort clip
+sort clothing,1,0,1,sort clothing
+sort coaster,1,0,1,sort coaster
+sort coil,1,1,0,sort coil
+sort container,1,0,1,sort container
+sort cosmetics,1,1,0,sort cosmetics
+sort cream,1,0,1,sort cream
+sort cup,4,0,4,sort cup
+sort cutlery,16,0,16,sort cutlery
+sort document,2,0,2,sort document
+sort drink,1,0,1,sort drink
+sort earplug,2,0,2,sort earplug
+sort earring,2,0,2,sort earring
+sort flier,5,0,5,sort flier
+sort folder,3,0,3,sort folder
+sort food,1,0,1,sort food
+sort fruit,1,1,0,sort fruit
+sort game accessory,1,0,1,sort game accessory
+sort game component,2,0,2,sort game component
+sort glove,1,0,1,sort glove
+sort hair,1,1,0,sort hair
+sort hairpin,1,1,0,sort hairpin
+sort hanger,1,0,1,sort hanger
+sort hardware,1,0,1,sort hardware
+sort item,17,1,16,sort item | sort items | sort objects
+sort jar,1,1,0,sort jar
+sort jelly,1,0,1,sort jelly
+sort kitchen tool,1,0,1,sort kitchen tool
+sort label,1,0,1,sort label
+sort letter,1,0,1,sort letter
+sort lid,3,0,3,sort lid
+sort lighter,5,0,5,sort lighter
+sort mask,2,0,2,sort mask
+sort nail,1,1,0,sort nail
+sort note,2,0,2,sort note
+sort notebook,1,0,1,sort notebook
+sort notepad,1,0,1,sort notepad
+sort office supply,1,0,1,sort office supply
+sort package,60,0,60,Sort and organize packages on a blue tray | Sort and stack packages onto numbered trays | sort package
+sort packaged item,1,0,1,sort packaged item
+sort packaging,1,0,1,sort packaging
+sort paper,17,2,15,sort paper
+sort paperclip,6,0,6,sort paperclip
+sort pastry,2,0,2,sort pastry
+sort pen,5,0,5,sort pen
+sort pencil,3,3,0,sort pencil
+sort pencil case,1,0,1,sort pencil case
+sort perm rod,1,1,0,sort perm rod
+sort puff,1,0,1,sort puff
+sort raw material,1,0,1,sort raw material
+sort recyclable,3,0,3,sort recyclable
+sort refill,3,0,3,sort refill
+sort ring,1,0,1,sort ring
+sort rod,8,8,0,sort rod
+sort roller,1,0,1,sort roller
+sort shuttlecock,1,0,1,
+sort snack,10,0,10,sort snack
+sort soap,2,1,1,sort soap
+sort sock,1,0,1,sort sock
+sort sports equipment,8,0,8,sort sports equipment
+sort stationery,8,0,8,sort stationery
+sort straw,2,1,1,Sort black and white straws into cups | sort straw
+sort strip,1,0,1,sort strip
+sort tableware,5,0,5,sort tableware
+sort tea,1,0,1,sort tea
+sort tea bag,1,0,1,sort tea bag
+sort toiletries,2,0,2,sort toiletry
+sort toothbrush,1,1,0,sort toothbrush
+sort toy,4,4,0,Sort and place toys on shelf | sort toy
+sort underwear,1,1,0,sort underwear
+sort utensil,1,0,1,sort utensil
+spray customer,1,1,0,spray customer
+spread bed sheet,3,0,3,Make massage bed | organize bedroom
+spread quilt,1,0,1,organize room
+stack bag,9,5,4,stack bag
+stack basin,1,1,0,stack basin
+stack basket,12,0,12,stack basket
+stack blanket,2,0,2,stack blanket
+stack block,5,0,5,stack block
+stack book,21,19,2,stack book
+stack bowl,11,0,11,stack bowl
+stack box,162,84,78,"Tidy room by organizing pens, stacking boxes, and clearing waste | stack box"
+stack can,1,1,0,stack can
+stack card,1,0,1,stack card
+stack cloth,2,0,2,stack cloth
+stack coaster,1,0,1,stack coaster
+stack cone,1,0,1,stack cone
+stack container,2,0,2,stack container
+stack crate,4,0,4,stack crate
+stack cup,96,3,93,Clean desk and sort paper cups | Clean up tableware and stack paper cups | Desktop cleanup and waste sorting | stack cup
+stack cup holder,3,3,0,Wash glass and organize cup holders | stack cup holder
+stack cup lid,1,0,1,Clean desktop and organize paper cups
+stack dishware,1,0,1,stack dishware
+stack envelope,2,0,2,stack envelope
+stack flier,4,0,4,stack flier
+stack food,1,1,0,stack food
+stack garment,1,0,1,stack garment
+stack hygiene product,1,0,1,stack hygiene product
+stack item,1,0,1,stack item
+stack lid,28,2,26,stack lid
+stack mask,1,1,0,stack mask
+stack medicine,1,1,0,stack medicine
+stack medicine box,2,2,0,stack medicine box
+stack note,2,0,2,stack note
+stack notebook,1,0,1,stack notebook
+stack notepad,1,0,1,stack notepad
+stack package,12,2,10,stack package
+stack paper,39,2,37,stack paper
+stack placemat,4,0,4,stack placemat
+stack plate,4,0,4,Stack plates and collect paper scraps | stack plate
+stack pulp mold,2,1,1,stack pulp mold
+stack rod,1,1,0,stack rod
+stack ruler,2,0,2,stack ruler
+stack shoe cover,1,1,0,stack shoe cover
+stack soap,2,2,0,stack soap
+stack soap dispenser,1,0,1,stack soap dispenser
+stack tableware,1,0,1,stack tableware
+stack tissue,4,1,3,stack tissue
+stack toilet roll,1,1,0,stack toilet roll
+stack towel,31,9,22,stack towel
+stack tray,9,1,8,stack tray
+stack underwear,3,3,0,stack underwear
+stack wet wipe,1,0,1,stack wet wipe
+stamp paper,1,0,1,stamp paper
+staple paper,24,0,24,Staple papers and organize in pen holder | Stapling and organizing papers | staple paper
+stick box,1,0,1,stick box
+stick card,1,0,1,stick card
+stick eyelash,5,5,0,stick eyelash
+stick film,2,0,2,stick film
+stick hairpin,1,1,0,stick hairpin
+stick hook,2,0,2,stick hook
+stick item,1,0,1,stick object
+stick label,378,55,323,Label and organize medicine boxes | Labeling and organizing cardboard boxes | Labeling spice jars | stick label
+stick nail tip,1,1,0,stick nail tip
+stick paper,10,0,10,stick paper
+stick patch,1,1,0,stick patch
+stick pattern,1,1,0,stick pattern
+stick photo,1,0,1,stick photo
+stick stamp,1,0,1,stick stamp
+stick sticker,23,2,21,stick sticker
+stick strip,1,0,1,stick strip
+stick tag,21,19,2,stick tag
+stick tape,17,0,17,stick tape
+stir coffee,14,0,14,Brew coffee and clean countertop | Prepare and serve coffee | Prepare and serve coffee with syrup | Stir and serve coffee | Stir coffee and carry to table
+stir cream,1,1,0,stir cream
+stir cup,1,0,1,stir cup
+stir drink,2,2,0,stir drink
+stir egg,1,0,1,stir egg
+stir food,1,1,0,stir food and tidy front desk
+stir hair dye,1,1,0,Mix hair dye
+stir ingredient,1,1,0,stir ingredient
+stir ingredients,2,2,0,prepare ingredients and refill drinks | stir ingredients
+stir liquid,1,1,0,"Stir liquid, clean countertop, and move measuring cup"
+stir mask,2,2,0,stir mask
+stir paste,2,2,0,prepare for facial care | stir paste
+stir potato,1,0,1,stir potato
+store bottle,1,0,1,Store water bottle in refrigerator
+straighten hair,43,43,0,Section and straighten hair | Section and straighten mannequin hair | Straighten and section hair | Straighten and section mannequin hair | Straighten and style customer hair | Straighten customer hair | Straighten hair on wig mannequin | cut and style hair | straighten and section hair | straighten and style customer hair | straighten customer hair | straighten hair
+straighten perm rod,1,1,0,"Wipe ears, organize perm rods, and wash hair"
+straighten wig,4,4,0,Straighten and style wig | Straighten wig and store hair straightener | Straighten wig on mannequin head | organize wig and interact with customer
+style hair,7,7,0,Perm hair on mannequin head | Perm hair on wig mannequin | Perm hair on wig model | Perm hair strands on practice mannequin | style hair | style hair with wax
+style wig,2,2,0,Organize and straighten wig strands | Style wig on mannequin head
+sweep debris,3,1,2,sweep debris
+sweep garbage,14,14,0,sweep garbage
+sweep hair,12,12,0,sweep hair
+sweep paper,11,1,10,sweep paper
+sweep sofa,1,0,1,sweep sofa
+sweep trash,15,3,12,sweep trash
+sweep waste,1,1,0,sweep waste
+tap back,1,1,0,tap back with massage hammer
+tattoo eyebrow,2,2,0,Tattoo and clean eyebrows | perform eyebrow tattooing
+tear film,2,2,0,tear film
+tear label,8,0,8,tear label
+tear plastic wrap,1,1,0,tear plastic wrap
+tear seal,1,0,1,tear seal
+tear tape,1,0,1,tear tape
+test marker,1,0,1,test marker
+thread bead,1,0,1,thread bead
+thread box,1,0,1,thread box
+thread fastener,1,0,1,thread fastener
+thread lanyard,1,0,1,thread lanyard
+thread part,1,0,1,thread part
+thread rope,2,0,2,thread rope
+thread shoe,1,0,1,thread shoe
+thread shoelace,22,0,22,thread shoelace
+thread string,1,0,1,thread string
+thread whistle,3,0,3,thread whistle
+thread wire,5,0,5,thread wire
+throw trash,2,0,2,throw trash
+tie bag,24,0,24,tie bag
+tie bathrobe,1,0,1,tie bathrobe
+tie hair,2,2,0,tie hair
+tie shoe,1,0,1,tie shoe
+tie shoelace,2,0,2,tie shoelace
+tie shopping cart,1,0,1,Securing shopping cart with ropes
+tighten bag,1,0,1,tighten bag
+tighten bolt,1,0,1,tighten bolt
+tighten jar,1,0,1,tighten jar
+tighten lid,2,0,2,tighten lid
+tighten screw,1,0,1,tighten screw
+transfer box,2,1,1,Transfer boxes to table | Transfer cardboard box from pallet to conveyor belt
+transfer food,1,0,1,
+transfer french fries,1,0,1,Portioning french fries with chopsticks
+transfer pastry,1,0,1,Plating pastries from plastic boxes
+transfer rice,1,0,1,Prepare rice cooker and clean countertop
+transport tray,5,5,0,Deliver cup on tray | Deliver cups to guest table | Deliver water cup to table
+trim beard,2,2,0,trim beard
+trim blanket,1,1,0,trim blanket
+trim cloth,2,0,2,trim cloth
+trim clothing,2,2,0,trim clothes | trim clothing
+trim door,3,3,0,Machine lock hole on door frame | trim door
+trim eyebrow,3,3,0,trim eyebrow
+trim fingernail,1,1,0,trim fingernail
+trim flower,3,0,3,trim flower
+trim groove,2,2,0,trim groove
+trim hair,14,14,0,Cut and blow dry customer hair | trim and rinse hair | trim customer hair | trim hair
+trim long black hair,1,1,0,trim long black hair
+trim nail,12,12,0,Perform customer manicure treatment | trim nail
+trim pajamas,2,2,0,trim pajamas
+trim part,7,0,7,trim part
+trim piece,1,0,1,trim piece
+trim skeleton,1,0,1,trim skeleton
+trim slot,1,1,0,trim slot
+trim thread,37,37,0,trim thread
+trim threads,1,1,0,trim threads
+trim towel,7,6,1,trim towel
+trim underwear,1,1,0,trim underwear
+trim wig,27,27,0,Trim wig and take item | Trim wig model and wash child hair | trim wig
+trim wood,1,1,0,trim wood
+tuck bed sheet,2,0,2,tuck bed sheet
+unfold basket,1,0,1,unfold basket
+unfold cage,1,0,1,unfold cage
+unfold ear cover,1,1,0,Wash towels and organize ear covers
+unfold mat,15,0,15,Lay anti-slip mats and clean bathroom floor | Lay anti-slip mats and clean floor | Lay anti-slip mats and wipe bathroom floor | Place non-slip mats and clean bathroom floor | Unfold anti-slip mats and clean floor
+unfold towel,1,0,1,unfold towel
+untangle band,1,1,0,untangle band
+unwrap box,1,0,1,unwrap box
+unwrap orange,1,1,0,unwrap orange
+unwrap slippers,1,0,1,unwrap slippers
+vacuum debris,1,0,1,Vacuuming the room floor
+wash bag,1,1,0,wash bag
+wash basin,2,2,0,wash basin
+wash bean,2,2,0,wash bean
+wash bin,1,0,1,wash bin
+wash board,1,0,1,wash board
+wash bottle,4,0,4,wash bottle
+wash bowl,4,3,1,wash bowl
+wash box,1,1,0,wash tableware and rags
+wash brush,2,2,0,wash brush
+wash bucket,1,1,0,wash bucket
+wash clip,1,0,1,wash clip
+wash cloth,17,15,2,wash cloth
+wash clothing,25,18,7,wash clothes | wash clothing
+wash colander,1,0,1,wash colander
+wash container,4,3,1,wash container
+wash cookware,2,2,0,wash cookware
+wash cordyceps,1,1,0,wash cordyceps
+wash cover,1,1,0,wash cover
+wash cup,30,15,15,"Wash cup and items, wipe countertop | Wash measuring cups and clean kitchen | wash cup"
+wash customer,1,1,0,wash customer
+wash dish,4,2,2,wash dish
+wash dummy,1,1,0,wash dummy
+wash face,1,1,0,wash face
+wash filter,1,1,0,wash filter
+wash glass,3,2,1,Clean bar counter and wash glasses | Clean display case and wash dishes | wash glass
+wash hair,132,132,0,Assemble spray bottle and wash customer hair | wash customer hair | wash hair
+wash ingredient,1,1,0,wash ingredient
+wash juicer,1,1,0,wash juicer
+wash kettle,1,1,0,wash kettle
+wash kitchenware,3,3,0,wash kitchenware
+wash lemon,1,1,0,wash lemon
+wash lettuce,1,1,0,wash lettuce
+wash mannequin head hair,1,1,0,Wash mannequin head hair
+wash mat,1,1,0,wash mat
+wash measuring cup,1,1,0,wash measuring cups
+wash paper,1,1,0,wash paper
+wash part,3,3,0,wash part
+wash peach gum,1,1,0,wash peach gum
+wash perm rod,1,1,0,wash perm rod
+wash pot,2,2,0,wash pot
+wash potato,1,0,1,wash potato
+wash rag,1,1,0,wash rags and close ice maker lid
+wash roller,1,1,0,wash roller
+wash sponge,1,0,1,wash sponge
+wash spoon,1,0,1,wash spoon
+wash strainer,1,1,0,wash strainer
+wash tableware,5,4,1,wash tableware
+wash tool,1,1,0,wash tool
+wash towel,11,8,3,wash towel
+wash utensil,7,6,1,wash utensil
+wash wig,1,1,0,wash wig
+wash wok,1,0,1,wash wok
+water plant,4,1,3,Water plant and clean balcony floor | Water potted plants | Water potted plants and wipe table | Watering plants and wiping table
+wet hair,2,2,0,wet hair
+whip cream,1,1,0,whip cream and organize straws
+wind cable,4,0,4,wind cable
+wind hair,1,1,0,wind hair
+wind rope,2,2,0,wind rope
+wrap bag,1,0,1,wrap bag
+wrap bandage,1,0,1,wrap bandage
+wrap bowl,3,0,3,wrap bowl
+wrap box,17,0,17,wrap box
+wrap cable,5,1,4,wrap cable
+wrap cardboard,1,0,1,wrap cardboard
+wrap connector,1,1,0,wrap connector
+wrap cup,14,0,14,wrap cup
+wrap device,1,1,0,wrap device
+wrap glass,2,0,2,wrap glass
+wrap grinding pen,1,1,0,Wrap grinding pen and store tools
+wrap hair,11,11,0,Section hair strands and secure with curling rods | wrap hair | wrap mannequin hair for perming
+wrap head,2,2,0,wrap head
+wrap item,3,0,3,wrap item | wrap object
+wrap jump rope,1,0,1,wrap jump rope
+wrap notebook,2,0,2,wrap notebook
+wrap perm cotton,1,1,0,wrap perm cotton
+wrap perm rod,1,1,0,Wrap and secure perm rods on mannequin
+wrap power strip,1,1,0,wrap power strip
+wrap rope,6,0,6,wrap rope
+wrap strap,1,0,1,wrap strap
+wrap strip,1,0,1,wrap strip
+wrap towel,1,0,1,Fold and wrap towels in plastic sheet
+wrap whistle,2,0,2,wrap whistle
+wring cloth,2,2,0,wring cloth
+wring towel,4,4,0,wring towel
+write book,2,2,0,Organize books and record information | Wipe books and register information
+write document,1,1,0,Enter document information into computer system
+write form,1,1,0,write form
+write notebook,5,5,0,write notebook
+write paper,10,4,6,Move paper and complete record with marker | Writing on paper and organizing pens | Writing practice with pen and paper | write paper
+write spreadsheet,1,1,0,Enter data into spreadsheet
+write tag,1,1,0,write tag

@@ -1,0 +1,26 @@
+{
+  "root": "/share/project/liuyou/humancoin/data/jianzhi/wait_for_publish",
+  "batch_start": 1,
+  "batch_end": 71,
+  "completed_unique": 7078,
+  "info_updated": 7078,
+  "relocated_entries": 42468,
+  "unresolved_errors": [],
+  "backup_root": "/share/project/liuyou/humancoin/data/jianzhi/stereo_depth_backup_20261118",
+  "reports": [
+    "/share/project/liuyou/humancoin/data/jianzhi/stereo_depth_apply_15_71_20261118.jsonl",
+    "/share/project/liuyou/humancoin/data/jianzhi/stereo_depth_apply_20261118.jsonl",
+    "/share/project/liuyou/humancoin/data/jianzhi/stereo_depth_apply_40_71_20261118.jsonl",
+    "/share/project/liuyou/humancoin/data/jianzhi/stereo_depth_apply_finish_20261118.jsonl"
+  ],
+  "repeated_attempts_prevented": 2225,
+  "readme_modified": false,
+  "stats_modified": false,
+  "retained_media_probed": false,
+  "verification": {
+    "method": "per_sample_post_write_idempotence_check",
+    "verified_samples": 7078,
+    "pending_changes": 0,
+    "redundant_read_only_rescan_stopped": true
+  }
+}

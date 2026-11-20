@@ -1,0 +1,27 @@
+{
+  "summary": {
+    "mode": "apply",
+    "total": 2,
+    "checked": 2,
+    "changed": 2,
+    "unchanged": 0,
+    "errors": [],
+    "verified": 2,
+    "only_category_area_changed": true,
+    "report_dir": "/share/project/liuyou/humancoin/data/guanglun_scene_cleaning_20261118/badminton_corrections_v5"
+  },
+  "files": [
+    {
+      "path": "batch_0000017/3c5e1d46e5ac519394720cf0f2ff539f72a7f015156517ccb5ddef7dc2b21a73/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "2cbbaadcf8428f1aa8884e5e4f01b4f82727e4ecd9b6102529df23510f6a93ef",
+      "after_sha256": "a1ec52c5716315d234d07f7a9331b29ee6ad716a89add7b022111de9b80b96da"
+    },
+    {
+      "path": "batch_0000025/9eaed6fb20df5ac5d124de8c3e6062436a8db250fc3d476526fc6e15f8547e7b/annotation/episode_000000_structured.json",
+      "changed": true,
+      "before_sha256": "98399922f3b1ec426895f5f25888a16e929424fd2b943e782a134d0a4a4f1f75",
+      "after_sha256": "02de39e11ea7a275c6c8a58b7b5a6765d6c4a9210a16266cebcad25810252bea"
+    }
+  ]
+}

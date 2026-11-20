@@ -1,0 +1,2551 @@
+{
+  "source": "D:\\data\\annotation_statistics\\理想\\HumanCOIN_Object.xlsx",
+  "policy": "reference_not_closed_enum",
+  "count": 636,
+  "entries": [
+    {
+      "name": "box",
+      "name_zh": "盒子"
+    },
+    {
+      "name": "bottle",
+      "name_zh": "瓶子"
+    },
+    {
+      "name": "rack",
+      "name_zh": "置物架"
+    },
+    {
+      "name": "paper",
+      "name_zh": "纸张"
+    },
+    {
+      "name": "pen",
+      "name_zh": "笔"
+    },
+    {
+      "name": "cloth",
+      "name_zh": "布料"
+    },
+    {
+      "name": "cup",
+      "name_zh": "杯子"
+    },
+    {
+      "name": "bag",
+      "name_zh": "袋子"
+    },
+    {
+      "name": "tray",
+      "name_zh": "托盘"
+    },
+    {
+      "name": "cabinet",
+      "name_zh": "柜子"
+    },
+    {
+      "name": "towel",
+      "name_zh": "毛巾"
+    },
+    {
+      "name": "card",
+      "name_zh": "卡片"
+    },
+    {
+      "name": "book",
+      "name_zh": "书籍"
+    },
+    {
+      "name": "table",
+      "name_zh": "桌子"
+    },
+    {
+      "name": "plate",
+      "name_zh": "盘子"
+    },
+    {
+      "name": "cable",
+      "name_zh": "线缆"
+    },
+    {
+      "name": "bowl",
+      "name_zh": "碗"
+    },
+    {
+      "name": "keyboard",
+      "name_zh": "键盘"
+    },
+    {
+      "name": "bin",
+      "name_zh": "垃圾桶"
+    },
+    {
+      "name": "lid",
+      "name_zh": "盖子"
+    },
+    {
+      "name": "basket",
+      "name_zh": "篮子"
+    },
+    {
+      "name": "mouse",
+      "name_zh": "鼠标"
+    },
+    {
+      "name": "shirt",
+      "name_zh": "衬衫"
+    },
+    {
+      "name": "folder",
+      "name_zh": "文件夹"
+    },
+    {
+      "name": "package",
+      "name_zh": "包裹"
+    },
+    {
+      "name": "pad",
+      "name_zh": "垫子"
+    },
+    {
+      "name": "brush",
+      "name_zh": "刷子"
+    },
+    {
+      "name": "tissue",
+      "name_zh": "纸巾"
+    },
+    {
+      "name": "tape",
+      "name_zh": "胶带"
+    },
+    {
+      "name": "part",
+      "name_zh": "零件"
+    },
+    {
+      "name": "spoon",
+      "name_zh": "勺子"
+    },
+    {
+      "name": "scissors",
+      "name_zh": "剪刀"
+    },
+    {
+      "name": "eraser",
+      "name_zh": "橡皮擦"
+    },
+    {
+      "name": "sponge",
+      "name_zh": "海绵"
+    },
+    {
+      "name": "pliers",
+      "name_zh": "钳子"
+    },
+    {
+      "name": "can",
+      "name_zh": "罐头罐"
+    },
+    {
+      "name": "pot",
+      "name_zh": "锅"
+    },
+    {
+      "name": "comb",
+      "name_zh": "梳子"
+    },
+    {
+      "name": "chair",
+      "name_zh": "椅子"
+    },
+    {
+      "name": "screwdriver",
+      "name_zh": "螺丝刀"
+    },
+    {
+      "name": "monitor",
+      "name_zh": "显示器"
+    },
+    {
+      "name": "stapler",
+      "name_zh": "订书机"
+    },
+    {
+      "name": "rope",
+      "name_zh": "绳子"
+    },
+    {
+      "name": "drawer",
+      "name_zh": "抽屉"
+    },
+    {
+      "name": "vase",
+      "name_zh": "花瓶"
+    },
+    {
+      "name": "object",
+      "name_zh": "物体"
+    },
+    {
+      "name": "whiteboard",
+      "name_zh": "白板"
+    },
+    {
+      "name": "chopsticks",
+      "name_zh": "筷子"
+    },
+    {
+      "name": "glasses",
+      "name_zh": "眼镜"
+    },
+    {
+      "name": "label",
+      "name_zh": "标签"
+    },
+    {
+      "name": "kettle",
+      "name_zh": "水壶"
+    },
+    {
+      "name": "shoe",
+      "name_zh": "鞋子"
+    },
+    {
+      "name": "dustpan",
+      "name_zh": "簸箕"
+    },
+    {
+      "name": "clip",
+      "name_zh": "夹子"
+    },
+    {
+      "name": "screw",
+      "name_zh": "螺丝"
+    },
+    {
+      "name": "nut",
+      "name_zh": "螺母"
+    },
+    {
+      "name": "roll",
+      "name_zh": "卷筒"
+    },
+    {
+      "name": "cart",
+      "name_zh": "手推车"
+    },
+    {
+      "name": "container",
+      "name_zh": "容器"
+    },
+    {
+      "name": "flower",
+      "name_zh": "花朵"
+    },
+    {
+      "name": "cable tie",
+      "name_zh": "扎带"
+    },
+    {
+      "name": "snack",
+      "name_zh": "零食"
+    },
+    {
+      "name": "candy",
+      "name_zh": "糖果"
+    },
+    {
+      "name": "sink",
+      "name_zh": "水槽"
+    },
+    {
+      "name": "detergent",
+      "name_zh": "清洁剂"
+    },
+    {
+      "name": "refrigerator",
+      "name_zh": "冰箱"
+    },
+    {
+      "name": "jar",
+      "name_zh": "罐子"
+    },
+    {
+      "name": "rod",
+      "name_zh": "杆件"
+    },
+    {
+      "name": "hanger",
+      "name_zh": "衣架"
+    },
+    {
+      "name": "knife",
+      "name_zh": "刀具"
+    },
+    {
+      "name": "mirror",
+      "name_zh": "镜子"
+    },
+    {
+      "name": "hook",
+      "name_zh": "挂钩"
+    },
+    {
+      "name": "stamp",
+      "name_zh": "印章"
+    },
+    {
+      "name": "wrench",
+      "name_zh": "扳手"
+    },
+    {
+      "name": "board",
+      "name_zh": "板材"
+    },
+    {
+      "name": "band",
+      "name_zh": "带子"
+    },
+    {
+      "name": "frame",
+      "name_zh": "框架"
+    },
+    {
+      "name": "clipboard",
+      "name_zh": "写字板夹"
+    },
+    {
+      "name": "pillow",
+      "name_zh": "枕头"
+    },
+    {
+      "name": "note",
+      "name_zh": "便条"
+    },
+    {
+      "name": "wall",
+      "name_zh": "墙面"
+    },
+    {
+      "name": "bed",
+      "name_zh": "床"
+    },
+    {
+      "name": "pants",
+      "name_zh": "裤子"
+    },
+    {
+      "name": "cosmetics",
+      "name_zh": "化妆品"
+    },
+    {
+      "name": "handle",
+      "name_zh": "把手"
+    },
+    {
+      "name": "keycap",
+      "name_zh": "键帽"
+    },
+    {
+      "name": "faucet",
+      "name_zh": "水龙头"
+    },
+    {
+      "name": "caliper",
+      "name_zh": "游标卡尺"
+    },
+    {
+      "name": "base",
+      "name_zh": "底座"
+    },
+    {
+      "name": "bucket",
+      "name_zh": "水桶"
+    },
+    {
+      "name": "washing machine",
+      "name_zh": "洗衣机"
+    },
+    {
+      "name": "necklace",
+      "name_zh": "项链"
+    },
+    {
+      "name": "basin",
+      "name_zh": "盆"
+    },
+    {
+      "name": "bread",
+      "name_zh": "面包"
+    },
+    {
+      "name": "curtain",
+      "name_zh": "窗帘"
+    },
+    {
+      "name": "door",
+      "name_zh": "门"
+    },
+    {
+      "name": "earring",
+      "name_zh": "耳环"
+    },
+    {
+      "name": "battery",
+      "name_zh": "电池"
+    },
+    {
+      "name": "squeegee",
+      "name_zh": "刮水器"
+    },
+    {
+      "name": "blanket",
+      "name_zh": "毯子"
+    },
+    {
+      "name": "weight plate",
+      "name_zh": "杠铃片"
+    },
+    {
+      "name": "lipstick",
+      "name_zh": "口红"
+    },
+    {
+      "name": "dumbbell",
+      "name_zh": "哑铃"
+    },
+    {
+      "name": "trash",
+      "name_zh": "垃圾"
+    },
+    {
+      "name": "ink",
+      "name_zh": "墨水"
+    },
+    {
+      "name": "plant",
+      "name_zh": "植物"
+    },
+    {
+      "name": "block",
+      "name_zh": "积木块"
+    },
+    {
+      "name": "remote control",
+      "name_zh": "遥控器"
+    },
+    {
+      "name": "ball",
+      "name_zh": "球"
+    },
+    {
+      "name": "water",
+      "name_zh": "水"
+    },
+    {
+      "name": "ring",
+      "name_zh": "戒指"
+    },
+    {
+      "name": "envelope",
+      "name_zh": "信封"
+    },
+    {
+      "name": "tube",
+      "name_zh": "管子"
+    },
+    {
+      "name": "drink",
+      "name_zh": "饮料"
+    },
+    {
+      "name": "fork",
+      "name_zh": "叉子"
+    },
+    {
+      "name": "bed sheet",
+      "name_zh": "床单"
+    },
+    {
+      "name": "vacuum cleaner",
+      "name_zh": "吸尘器"
+    },
+    {
+      "name": "ashtray",
+      "name_zh": "烟灰缸"
+    },
+    {
+      "name": "glue",
+      "name_zh": "胶水"
+    },
+    {
+      "name": "food",
+      "name_zh": "食物"
+    },
+    {
+      "name": "bench",
+      "name_zh": "长凳"
+    },
+    {
+      "name": "broom",
+      "name_zh": "扫帚"
+    },
+    {
+      "name": "pump",
+      "name_zh": "泵"
+    },
+    {
+      "name": "piece",
+      "name_zh": "小块"
+    },
+    {
+      "name": "beverage",
+      "name_zh": "饮品"
+    },
+    {
+      "name": "strap",
+      "name_zh": "绑带"
+    },
+    {
+      "name": "straw",
+      "name_zh": "吸管"
+    },
+    {
+      "name": "powder",
+      "name_zh": "粉末"
+    },
+    {
+      "name": "scoop",
+      "name_zh": "舀勺"
+    },
+    {
+      "name": "bracelet",
+      "name_zh": "手链"
+    },
+    {
+      "name": "refill",
+      "name_zh": "替换芯"
+    },
+    {
+      "name": "cylinder",
+      "name_zh": "圆柱体"
+    },
+    {
+      "name": "debris",
+      "name_zh": "碎屑"
+    },
+    {
+      "name": "bracket",
+      "name_zh": "支架"
+    },
+    {
+      "name": "bubble wrap",
+      "name_zh": "气泡膜"
+    },
+    {
+      "name": "tape dispenser",
+      "name_zh": "胶带切割器"
+    },
+    {
+      "name": "cat litter",
+      "name_zh": "猫砂"
+    },
+    {
+      "name": "barrel",
+      "name_zh": "桶"
+    },
+    {
+      "name": "liquid",
+      "name_zh": "液体"
+    },
+    {
+      "name": "fan",
+      "name_zh": "风扇"
+    },
+    {
+      "name": "belt",
+      "name_zh": "皮带"
+    },
+    {
+      "name": "potato",
+      "name_zh": "土豆"
+    },
+    {
+      "name": "charger",
+      "name_zh": "充电器"
+    },
+    {
+      "name": "device",
+      "name_zh": "设备"
+    },
+    {
+      "name": "plastic wrap",
+      "name_zh": "保鲜膜"
+    },
+    {
+      "name": "mask",
+      "name_zh": "口罩"
+    },
+    {
+      "name": "dropper",
+      "name_zh": "滴管"
+    },
+    {
+      "name": "soap",
+      "name_zh": "肥皂"
+    },
+    {
+      "name": "dishwasher",
+      "name_zh": "洗碗机"
+    },
+    {
+      "name": "flashlight",
+      "name_zh": "手电筒"
+    },
+    {
+      "name": "treadmill",
+      "name_zh": "跑步机"
+    },
+    {
+      "name": "mop",
+      "name_zh": "拖把"
+    },
+    {
+      "name": "pillowcase",
+      "name_zh": "枕套"
+    },
+    {
+      "name": "key",
+      "name_zh": "钥匙"
+    },
+    {
+      "name": "scanner",
+      "name_zh": "扫描仪"
+    },
+    {
+      "name": "circuit board",
+      "name_zh": "电路板"
+    },
+    {
+      "name": "pill",
+      "name_zh": "药片"
+    },
+    {
+      "name": "hand sanitizer",
+      "name_zh": "免洗洗手液"
+    },
+    {
+      "name": "tong",
+      "name_zh": "夹钳"
+    },
+    {
+      "name": "toy",
+      "name_zh": "玩具"
+    },
+    {
+      "name": "kit",
+      "name_zh": "套件"
+    },
+    {
+      "name": "microwave",
+      "name_zh": "微波炉"
+    },
+    {
+      "name": "toothpaste",
+      "name_zh": "牙膏"
+    },
+    {
+      "name": "glove",
+      "name_zh": "手套"
+    },
+    {
+      "name": "tablet",
+      "name_zh": "平板电脑"
+    },
+    {
+      "name": "hair",
+      "name_zh": "头发"
+    },
+    {
+      "name": "gripper",
+      "name_zh": "夹持器"
+    },
+    {
+      "name": "lint roller",
+      "name_zh": "粘毛滚筒"
+    },
+    {
+      "name": "cushion",
+      "name_zh": "靠垫"
+    },
+    {
+      "name": "toiletries",
+      "name_zh": "洗漱用品"
+    },
+    {
+      "name": "tweezers",
+      "name_zh": "镊子"
+    },
+    {
+      "name": "nail clipper",
+      "name_zh": "指甲剪"
+    },
+    {
+      "name": "equipment",
+      "name_zh": "器材"
+    },
+    {
+      "name": "shoelace",
+      "name_zh": "鞋带"
+    },
+    {
+      "name": "lamp",
+      "name_zh": "台灯"
+    },
+    {
+      "name": "pan",
+      "name_zh": "平底锅"
+    },
+    {
+      "name": "laptop",
+      "name_zh": "笔记本电脑"
+    },
+    {
+      "name": "machine",
+      "name_zh": "机器"
+    },
+    {
+      "name": "polish",
+      "name_zh": "抛光剂"
+    },
+    {
+      "name": "hole punch",
+      "name_zh": "打孔器"
+    },
+    {
+      "name": "cutlery",
+      "name_zh": "餐具"
+    },
+    {
+      "name": "sofa",
+      "name_zh": "沙发"
+    },
+    {
+      "name": "lanyard",
+      "name_zh": "挂绳"
+    },
+    {
+      "name": "lighter",
+      "name_zh": "打火机"
+    },
+    {
+      "name": "hard drive",
+      "name_zh": "硬盘"
+    },
+    {
+      "name": "noodle",
+      "name_zh": "面条"
+    },
+    {
+      "name": "strainer",
+      "name_zh": "滤网"
+    },
+    {
+      "name": "casing",
+      "name_zh": "外壳"
+    },
+    {
+      "name": "cotton swab",
+      "name_zh": "棉签"
+    },
+    {
+      "name": "power strip",
+      "name_zh": "插线板"
+    },
+    {
+      "name": "umbrella",
+      "name_zh": "雨伞"
+    },
+    {
+      "name": "disc",
+      "name_zh": "圆盘"
+    },
+    {
+      "name": "socket",
+      "name_zh": "插座"
+    },
+    {
+      "name": "hat",
+      "name_zh": "帽子"
+    },
+    {
+      "name": "staple",
+      "name_zh": "订书钉"
+    },
+    {
+      "name": "shower head",
+      "name_zh": "花洒喷头"
+    },
+    {
+      "name": "power bank",
+      "name_zh": "充电宝"
+    },
+    {
+      "name": "bar",
+      "name_zh": "条状物"
+    },
+    {
+      "name": "crumb",
+      "name_zh": "碎屑颗粒"
+    },
+    {
+      "name": "water dispenser",
+      "name_zh": "饮水机"
+    },
+    {
+      "name": "peeler",
+      "name_zh": "削皮器"
+    },
+    {
+      "name": "mattress",
+      "name_zh": "床垫"
+    },
+    {
+      "name": "connector",
+      "name_zh": "连接器"
+    },
+    {
+      "name": "shampoo",
+      "name_zh": "洗发水"
+    },
+    {
+      "name": "tie",
+      "name_zh": "领带"
+    },
+    {
+      "name": "housing",
+      "name_zh": "壳体"
+    },
+    {
+      "name": "sign",
+      "name_zh": "标牌"
+    },
+    {
+      "name": "robotic arm",
+      "name_zh": "机械臂"
+    },
+    {
+      "name": "chart",
+      "name_zh": "图表"
+    },
+    {
+      "name": "shuttlecock",
+      "name_zh": "羽毛球"
+    },
+    {
+      "name": "palette",
+      "name_zh": "调色盘"
+    },
+    {
+      "name": "stationery",
+      "name_zh": "文具"
+    },
+    {
+      "name": "ladle",
+      "name_zh": "汤勺"
+    },
+    {
+      "name": "lip gloss",
+      "name_zh": "唇彩"
+    },
+    {
+      "name": "hose",
+      "name_zh": "软管"
+    },
+    {
+      "name": "calendar",
+      "name_zh": "日历"
+    },
+    {
+      "name": "file",
+      "name_zh": "文件"
+    },
+    {
+      "name": "power supply",
+      "name_zh": "电源"
+    },
+    {
+      "name": "module",
+      "name_zh": "模块"
+    },
+    {
+      "name": "railing",
+      "name_zh": "栏杆"
+    },
+    {
+      "name": "coat",
+      "name_zh": "外套"
+    },
+    {
+      "name": "printer",
+      "name_zh": "打印机"
+    },
+    {
+      "name": "suitcase",
+      "name_zh": "行李箱"
+    },
+    {
+      "name": "barbell",
+      "name_zh": "杠铃"
+    },
+    {
+      "name": "kettlebell",
+      "name_zh": "壶铃"
+    },
+    {
+      "name": "apron",
+      "name_zh": "围裙"
+    },
+    {
+      "name": "floor",
+      "name_zh": "地板"
+    },
+    {
+      "name": "ketchup",
+      "name_zh": "番茄酱"
+    },
+    {
+      "name": "nail",
+      "name_zh": "钉子"
+    },
+    {
+      "name": "headphones",
+      "name_zh": "耳机"
+    },
+    {
+      "name": "needle",
+      "name_zh": "针"
+    },
+    {
+      "name": "nozzle",
+      "name_zh": "喷嘴"
+    },
+    {
+      "name": "shell",
+      "name_zh": "外壳"
+    },
+    {
+      "name": "scale",
+      "name_zh": "秤"
+    },
+    {
+      "name": "garbage",
+      "name_zh": "垃圾"
+    },
+    {
+      "name": "waste",
+      "name_zh": "废弃物"
+    },
+    {
+      "name": "racket",
+      "name_zh": "球拍"
+    },
+    {
+      "name": "leaf",
+      "name_zh": "叶片"
+    },
+    {
+      "name": "spatula",
+      "name_zh": "锅铲"
+    },
+    {
+      "name": "jacket",
+      "name_zh": "夹克"
+    },
+    {
+      "name": "juice",
+      "name_zh": "果汁"
+    },
+    {
+      "name": "watch",
+      "name_zh": "手表"
+    },
+    {
+      "name": "sleeve",
+      "name_zh": "袖子"
+    },
+    {
+      "name": "spray",
+      "name_zh": "喷雾剂"
+    },
+    {
+      "name": "post",
+      "name_zh": "柱子"
+    },
+    {
+      "name": "tag",
+      "name_zh": "吊牌"
+    },
+    {
+      "name": "grinder",
+      "name_zh": "研磨机"
+    },
+    {
+      "name": "hammer",
+      "name_zh": "锤子"
+    },
+    {
+      "name": "bike",
+      "name_zh": "自行车"
+    },
+    {
+      "name": "stove",
+      "name_zh": "炉灶"
+    },
+    {
+      "name": "terminal",
+      "name_zh": "端子"
+    },
+    {
+      "name": "baseboard",
+      "name_zh": "踢脚板"
+    },
+    {
+      "name": "yogurt",
+      "name_zh": "酸奶"
+    },
+    {
+      "name": "washer",
+      "name_zh": "垫圈"
+    },
+    {
+      "name": "egg",
+      "name_zh": "鸡蛋"
+    },
+    {
+      "name": "windowsill",
+      "name_zh": "窗台"
+    },
+    {
+      "name": "stirrer",
+      "name_zh": "搅拌棒"
+    },
+    {
+      "name": "pitcher",
+      "name_zh": "水罐"
+    },
+    {
+      "name": "pastry",
+      "name_zh": "糕点"
+    },
+    {
+      "name": "ruler",
+      "name_zh": "尺子"
+    },
+    {
+      "name": "tableware",
+      "name_zh": "餐具"
+    },
+    {
+      "name": "milk",
+      "name_zh": "牛奶"
+    },
+    {
+      "name": "hoodie",
+      "name_zh": "连帽衫"
+    },
+    {
+      "name": "floss",
+      "name_zh": "牙线"
+    },
+    {
+      "name": "funnel",
+      "name_zh": "漏斗"
+    },
+    {
+      "name": "whistle",
+      "name_zh": "哨子"
+    },
+    {
+      "name": "accessory",
+      "name_zh": "配件"
+    },
+    {
+      "name": "ginger",
+      "name_zh": "生姜"
+    },
+    {
+      "name": "orange",
+      "name_zh": "橙子"
+    },
+    {
+      "name": "filter",
+      "name_zh": "过滤器"
+    },
+    {
+      "name": "fastener",
+      "name_zh": "紧固件"
+    },
+    {
+      "name": "collar",
+      "name_zh": "衣领"
+    },
+    {
+      "name": "film",
+      "name_zh": "薄膜"
+    },
+    {
+      "name": "vest",
+      "name_zh": "背心"
+    },
+    {
+      "name": "scraper",
+      "name_zh": "刮刀"
+    },
+    {
+      "name": "chessboard",
+      "name_zh": "棋盘"
+    },
+    {
+      "name": "computer",
+      "name_zh": "电脑"
+    },
+    {
+      "name": "dress",
+      "name_zh": "连衣裙"
+    },
+    {
+      "name": "model",
+      "name_zh": "模型"
+    },
+    {
+      "name": "tomato",
+      "name_zh": "番茄"
+    },
+    {
+      "name": "counter",
+      "name_zh": "台面"
+    },
+    {
+      "name": "sausage",
+      "name_zh": "香肠"
+    },
+    {
+      "name": "paperclip",
+      "name_zh": "回形针"
+    },
+    {
+      "name": "jewelry",
+      "name_zh": "首饰"
+    },
+    {
+      "name": "coffee machine",
+      "name_zh": "咖啡机"
+    },
+    {
+      "name": "lead",
+      "name_zh": "引线"
+    },
+    {
+      "name": "cube",
+      "name_zh": "立方体"
+    },
+    {
+      "name": "stopper",
+      "name_zh": "塞子"
+    },
+    {
+      "name": "garlic",
+      "name_zh": "大蒜"
+    },
+    {
+      "name": "almond",
+      "name_zh": "杏仁"
+    },
+    {
+      "name": "newspaper",
+      "name_zh": "报纸"
+    },
+    {
+      "name": "cuticle pusher",
+      "name_zh": "死皮推棒"
+    },
+    {
+      "name": "puff",
+      "name_zh": "粉扑"
+    },
+    {
+      "name": "letter",
+      "name_zh": "信件"
+    },
+    {
+      "name": "grain",
+      "name_zh": "谷物"
+    },
+    {
+      "name": "pipe",
+      "name_zh": "管道"
+    },
+    {
+      "name": "roller",
+      "name_zh": "滚轮"
+    },
+    {
+      "name": "chassis",
+      "name_zh": "底盘"
+    },
+    {
+      "name": "cucumber",
+      "name_zh": "黄瓜"
+    },
+    {
+      "name": "cutter",
+      "name_zh": "切割器"
+    },
+    {
+      "name": "lemon slice",
+      "name_zh": "柠檬片"
+    },
+    {
+      "name": "jigger",
+      "name_zh": "量酒器"
+    },
+    {
+      "name": "mint sprig",
+      "name_zh": "薄荷枝"
+    },
+    {
+      "name": "basketball",
+      "name_zh": "篮球"
+    },
+    {
+      "name": "sweatshirt",
+      "name_zh": "卫衣"
+    },
+    {
+      "name": "residue",
+      "name_zh": "残留物"
+    },
+    {
+      "name": "core",
+      "name_zh": "芯体"
+    },
+    {
+      "name": "switch",
+      "name_zh": "开关"
+    },
+    {
+      "name": "petal",
+      "name_zh": "花瓣"
+    },
+    {
+      "name": "token",
+      "name_zh": "代币"
+    },
+    {
+      "name": "spring",
+      "name_zh": "弹簧"
+    },
+    {
+      "name": "colander",
+      "name_zh": "滤水篮"
+    },
+    {
+      "name": "wok",
+      "name_zh": "炒锅"
+    },
+    {
+      "name": "seal",
+      "name_zh": "密封件"
+    },
+    {
+      "name": "eyeliner",
+      "name_zh": "眼线笔"
+    },
+    {
+      "name": "foil",
+      "name_zh": "锡箔纸"
+    },
+    {
+      "name": "pepper",
+      "name_zh": "辣椒"
+    },
+    {
+      "name": "headband",
+      "name_zh": "头带"
+    },
+    {
+      "name": "motor",
+      "name_zh": "电机"
+    },
+    {
+      "name": "bathrobe",
+      "name_zh": "浴袍"
+    },
+    {
+      "name": "wallet",
+      "name_zh": "钱包"
+    },
+    {
+      "name": "shovel",
+      "name_zh": "铲子"
+    },
+    {
+      "name": "showerhead",
+      "name_zh": "花洒"
+    },
+    {
+      "name": "coffee",
+      "name_zh": "咖啡"
+    },
+    {
+      "name": "generator",
+      "name_zh": "发电机"
+    },
+    {
+      "name": "lotion",
+      "name_zh": "乳液"
+    },
+    {
+      "name": "seed",
+      "name_zh": "种子"
+    },
+    {
+      "name": "cream",
+      "name_zh": "面霜"
+    },
+    {
+      "name": "cone",
+      "name_zh": "锥体"
+    },
+    {
+      "name": "anvil",
+      "name_zh": "铁砧"
+    },
+    {
+      "name": "first aid kit",
+      "name_zh": "急救箱"
+    },
+    {
+      "name": "flier",
+      "name_zh": "传单"
+    },
+    {
+      "name": "sweater",
+      "name_zh": "毛衣"
+    },
+    {
+      "name": "pulley",
+      "name_zh": "滑轮"
+    },
+    {
+      "name": "light string",
+      "name_zh": "灯串"
+    },
+    {
+      "name": "cake",
+      "name_zh": "蛋糕"
+    },
+    {
+      "name": "blender",
+      "name_zh": "搅拌机"
+    },
+    {
+      "name": "peanut",
+      "name_zh": "花生"
+    },
+    {
+      "name": "rotor",
+      "name_zh": "转子"
+    },
+    {
+      "name": "teapot",
+      "name_zh": "茶壶"
+    },
+    {
+      "name": "banknote",
+      "name_zh": "纸币"
+    },
+    {
+      "name": "herb",
+      "name_zh": "香草"
+    },
+    {
+      "name": "hub",
+      "name_zh": "轮毂"
+    },
+    {
+      "name": "eggshell",
+      "name_zh": "蛋壳"
+    },
+    {
+      "name": "blush",
+      "name_zh": "腮红"
+    },
+    {
+      "name": "divider",
+      "name_zh": "分隔板"
+    },
+    {
+      "name": "coil",
+      "name_zh": "线圈"
+    },
+    {
+      "name": "toothpick",
+      "name_zh": "牙签"
+    },
+    {
+      "name": "paintbrush",
+      "name_zh": "画笔"
+    },
+    {
+      "name": "bean",
+      "name_zh": "豆子"
+    },
+    {
+      "name": "croissant",
+      "name_zh": "牛角包"
+    },
+    {
+      "name": "fruit",
+      "name_zh": "水果"
+    },
+    {
+      "name": "cleaning agent",
+      "name_zh": "清洁剂"
+    },
+    {
+      "name": "nib",
+      "name_zh": "笔尖"
+    },
+    {
+      "name": "notepad",
+      "name_zh": "记事本"
+    },
+    {
+      "name": "portafilter",
+      "name_zh": "咖啡粉碗手柄"
+    },
+    {
+      "name": "scalpel",
+      "name_zh": "手术刀"
+    },
+    {
+      "name": "sock",
+      "name_zh": "袜子"
+    },
+    {
+      "name": "locker",
+      "name_zh": "储物柜"
+    },
+    {
+      "name": "gel",
+      "name_zh": "凝胶"
+    },
+    {
+      "name": "adapter",
+      "name_zh": "适配器"
+    },
+    {
+      "name": "brooch",
+      "name_zh": "胸针"
+    },
+    {
+      "name": "carrot",
+      "name_zh": "胡萝卜"
+    },
+    {
+      "name": "reflector",
+      "name_zh": "反光板"
+    },
+    {
+      "name": "tamper",
+      "name_zh": "压粉器"
+    },
+    {
+      "name": "lens",
+      "name_zh": "镜头"
+    },
+    {
+      "name": "net",
+      "name_zh": "网"
+    },
+    {
+      "name": "onion",
+      "name_zh": "洋葱"
+    },
+    {
+      "name": "cleaning supplies",
+      "name_zh": "清洁用品"
+    },
+    {
+      "name": "dust",
+      "name_zh": "灰尘"
+    },
+    {
+      "name": "electric drill",
+      "name_zh": "电钻"
+    },
+    {
+      "name": "menu",
+      "name_zh": "菜单"
+    },
+    {
+      "name": "router",
+      "name_zh": "路由器"
+    },
+    {
+      "name": "spool",
+      "name_zh": "线轴"
+    },
+    {
+      "name": "peg",
+      "name_zh": "木钉"
+    },
+    {
+      "name": "filler",
+      "name_zh": "填充料"
+    },
+    {
+      "name": "turntable",
+      "name_zh": "转盘"
+    },
+    {
+      "name": "steamer",
+      "name_zh": "蒸汽机"
+    },
+    {
+      "name": "toilet",
+      "name_zh": "马桶"
+    },
+    {
+      "name": "conditioner",
+      "name_zh": "护发素"
+    },
+    {
+      "name": "nipple",
+      "name_zh": "奶嘴"
+    },
+    {
+      "name": "dispenser",
+      "name_zh": "分配器"
+    },
+    {
+      "name": "keychain",
+      "name_zh": "钥匙扣"
+    },
+    {
+      "name": "plug",
+      "name_zh": "插头"
+    },
+    {
+      "name": "chalk",
+      "name_zh": "粉笔"
+    },
+    {
+      "name": "compressor",
+      "name_zh": "压缩机"
+    },
+    {
+      "name": "engine",
+      "name_zh": "发动机"
+    },
+    {
+      "name": "headboard",
+      "name_zh": "床头板"
+    },
+    {
+      "name": "paint",
+      "name_zh": "颜料"
+    },
+    {
+      "name": "stuffing",
+      "name_zh": "填充物"
+    },
+    {
+      "name": "wristband",
+      "name_zh": "腕带"
+    },
+    {
+      "name": "cpu",
+      "name_zh": "处理器"
+    },
+    {
+      "name": "oil",
+      "name_zh": "油"
+    },
+    {
+      "name": "usb drive",
+      "name_zh": "U盘"
+    },
+    {
+      "name": "lace",
+      "name_zh": "花边"
+    },
+    {
+      "name": "coin",
+      "name_zh": "硬币"
+    },
+    {
+      "name": "lock",
+      "name_zh": "锁"
+    },
+    {
+      "name": "apple",
+      "name_zh": "苹果"
+    },
+    {
+      "name": "buckle",
+      "name_zh": "搭扣"
+    },
+    {
+      "name": "pin",
+      "name_zh": "销钉"
+    },
+    {
+      "name": "starter",
+      "name_zh": "启动器"
+    },
+    {
+      "name": "medicine",
+      "name_zh": "药品"
+    },
+    {
+      "name": "clove",
+      "name_zh": "丁香"
+    },
+    {
+      "name": "pedal",
+      "name_zh": "踏板"
+    },
+    {
+      "name": "express waybill",
+      "name_zh": "快递面单"
+    },
+    {
+      "name": "granules",
+      "name_zh": "颗粒物"
+    },
+    {
+      "name": "handcart",
+      "name_zh": "手推货车"
+    },
+    {
+      "name": "hay",
+      "name_zh": "干草"
+    },
+    {
+      "name": "matchbox",
+      "name_zh": "火柴盒"
+    },
+    {
+      "name": "ribbon",
+      "name_zh": "丝带"
+    },
+    {
+      "name": "rose",
+      "name_zh": "玫瑰"
+    },
+    {
+      "name": "gear",
+      "name_zh": "齿轮"
+    },
+    {
+      "name": "photo",
+      "name_zh": "照片"
+    },
+    {
+      "name": "alarm",
+      "name_zh": "闹钟"
+    },
+    {
+      "name": "tea",
+      "name_zh": "茶叶"
+    },
+    {
+      "name": "mouthwash",
+      "name_zh": "漱口水"
+    },
+    {
+      "name": "eyeshadow",
+      "name_zh": "眼影"
+    },
+    {
+      "name": "bangle",
+      "name_zh": "手镯"
+    },
+    {
+      "name": "handkerchief",
+      "name_zh": "手帕"
+    },
+    {
+      "name": "vegetable",
+      "name_zh": "蔬菜"
+    },
+    {
+      "name": "ornament",
+      "name_zh": "装饰品"
+    },
+    {
+      "name": "picture",
+      "name_zh": "图片"
+    },
+    {
+      "name": "rice",
+      "name_zh": "米饭"
+    },
+    {
+      "name": "chain",
+      "name_zh": "链条"
+    },
+    {
+      "name": "utensil",
+      "name_zh": "器具"
+    },
+    {
+      "name": "bead",
+      "name_zh": "珠子"
+    },
+    {
+      "name": "fries",
+      "name_zh": "薯条"
+    },
+    {
+      "name": "map",
+      "name_zh": "地图"
+    },
+    {
+      "name": "ingredient",
+      "name_zh": "食材"
+    },
+    {
+      "name": "insole",
+      "name_zh": "鞋垫"
+    },
+    {
+      "name": "iron",
+      "name_zh": "熨斗"
+    },
+    {
+      "name": "main unit",
+      "name_zh": "主机"
+    },
+    {
+      "name": "cage",
+      "name_zh": "笼子"
+    },
+    {
+      "name": "shredder",
+      "name_zh": "碎纸机"
+    },
+    {
+      "name": "sauce",
+      "name_zh": "酱料"
+    },
+    {
+      "name": "appliance",
+      "name_zh": "电器"
+    },
+    {
+      "name": "bandage",
+      "name_zh": "绷带"
+    },
+    {
+      "name": "butter",
+      "name_zh": "黄油"
+    },
+    {
+      "name": "cabbage",
+      "name_zh": "卷心菜"
+    },
+    {
+      "name": "compass",
+      "name_zh": "指南针"
+    },
+    {
+      "name": "stator",
+      "name_zh": "定子"
+    },
+    {
+      "name": "tile",
+      "name_zh": "瓷砖"
+    },
+    {
+      "name": "timer",
+      "name_zh": "计时器"
+    },
+    {
+      "name": "pegs",
+      "name_zh": "木钉"
+    },
+    {
+      "name": "facial cleanser",
+      "name_zh": "洗面奶"
+    },
+    {
+      "name": "hula hoop",
+      "name_zh": "呼啦圈"
+    },
+    {
+      "name": "lip balm",
+      "name_zh": "润唇膏"
+    },
+    {
+      "name": "mascara",
+      "name_zh": "睫毛膏"
+    },
+    {
+      "name": "skirt",
+      "name_zh": "裙子"
+    },
+    {
+      "name": "mushroom",
+      "name_zh": "蘑菇"
+    },
+    {
+      "name": "diffuser",
+      "name_zh": "扩散器"
+    },
+    {
+      "name": "cooler",
+      "name_zh": "冷却器"
+    },
+    {
+      "name": "crossbar",
+      "name_zh": "横杆"
+    },
+    {
+      "name": "grille",
+      "name_zh": "格栅"
+    },
+    {
+      "name": "bulb",
+      "name_zh": "灯泡"
+    },
+    {
+      "name": "oven",
+      "name_zh": "烤箱"
+    },
+    {
+      "name": "support",
+      "name_zh": "支撑件"
+    },
+    {
+      "name": "whisk",
+      "name_zh": "打蛋器"
+    },
+    {
+      "name": "bathtub",
+      "name_zh": "浴缸"
+    },
+    {
+      "name": "camisole",
+      "name_zh": "吊带背心"
+    },
+    {
+      "name": "cardigan",
+      "name_zh": "开衫"
+    },
+    {
+      "name": "flowerpot",
+      "name_zh": "花盆"
+    },
+    {
+      "name": "gasket",
+      "name_zh": "密封垫片"
+    },
+    {
+      "name": "hairband",
+      "name_zh": "发带"
+    },
+    {
+      "name": "hairpin",
+      "name_zh": "发夹"
+    },
+    {
+      "name": "humidifier",
+      "name_zh": "加湿器"
+    },
+    {
+      "name": "jelly",
+      "name_zh": "果冻"
+    },
+    {
+      "name": "knot",
+      "name_zh": "绳结"
+    },
+    {
+      "name": "latch",
+      "name_zh": "门闩"
+    },
+    {
+      "name": "disk",
+      "name_zh": "磁盘"
+    },
+    {
+      "name": "schoolbag",
+      "name_zh": "书包"
+    },
+    {
+      "name": "sepal",
+      "name_zh": "花萼"
+    },
+    {
+      "name": "spinner",
+      "name_zh": "旋转器"
+    },
+    {
+      "name": "sportswear",
+      "name_zh": "运动服"
+    },
+    {
+      "name": "wool",
+      "name_zh": "羊毛"
+    },
+    {
+      "name": "sterilizer",
+      "name_zh": "消毒器"
+    },
+    {
+      "name": "track",
+      "name_zh": "轨道"
+    },
+    {
+      "name": "tripod",
+      "name_zh": "三脚架"
+    },
+    {
+      "name": "window",
+      "name_zh": "窗户"
+    },
+    {
+      "name": "stepper",
+      "name_zh": "踏步机"
+    },
+    {
+      "name": "pendant",
+      "name_zh": "吊坠"
+    },
+    {
+      "name": "diaper",
+      "name_zh": "尿布"
+    },
+    {
+      "name": "grip strengthener",
+      "name_zh": "握力器"
+    },
+    {
+      "name": "backrest",
+      "name_zh": "靠背"
+    },
+    {
+      "name": "badge",
+      "name_zh": "徽章"
+    },
+    {
+      "name": "banana",
+      "name_zh": "香蕉"
+    },
+    {
+      "name": "bookend",
+      "name_zh": "书立"
+    },
+    {
+      "name": "button",
+      "name_zh": "纽扣"
+    },
+    {
+      "name": "clothespin",
+      "name_zh": "晾衣夹"
+    },
+    {
+      "name": "decoration",
+      "name_zh": "装饰物"
+    },
+    {
+      "name": "painting",
+      "name_zh": "绘画作品"
+    },
+    {
+      "name": "duster",
+      "name_zh": "除尘掸"
+    },
+    {
+      "name": "filling",
+      "name_zh": "馅料"
+    },
+    {
+      "name": "receipt",
+      "name_zh": "收据"
+    },
+    {
+      "name": "wheel",
+      "name_zh": "轮子"
+    },
+    {
+      "name": "brace",
+      "name_zh": "撑杆"
+    },
+    {
+      "name": "yam",
+      "name_zh": "山药"
+    },
+    {
+      "name": "album",
+      "name_zh": "相册"
+    },
+    {
+      "name": "balloon",
+      "name_zh": "气球"
+    },
+    {
+      "name": "camera",
+      "name_zh": "相机"
+    },
+    {
+      "name": "cardstock",
+      "name_zh": "卡纸"
+    },
+    {
+      "name": "care solution",
+      "name_zh": "护理液"
+    },
+    {
+      "name": "cigarette butt",
+      "name_zh": "烟头"
+    },
+    {
+      "name": "corn kernels",
+      "name_zh": "玉米粒"
+    },
+    {
+      "name": "correction fluid",
+      "name_zh": "修正液"
+    },
+    {
+      "name": "daliyuan pie",
+      "name_zh": "达利园派"
+    },
+    {
+      "name": "earplug",
+      "name_zh": "耳塞"
+    },
+    {
+      "name": "electric griddle",
+      "name_zh": "电饼铛"
+    },
+    {
+      "name": "express delivery slip",
+      "name_zh": "快递单"
+    },
+    {
+      "name": "fire extinguisher",
+      "name_zh": "灭火器"
+    },
+    {
+      "name": "grinding trough",
+      "name_zh": "研磨槽"
+    },
+    {
+      "name": "lampshade",
+      "name_zh": "灯罩"
+    },
+    {
+      "name": "mortar",
+      "name_zh": "研钵"
+    },
+    {
+      "name": "pestle",
+      "name_zh": "研杵"
+    },
+    {
+      "name": "pillar",
+      "name_zh": "立柱"
+    },
+    {
+      "name": "radish",
+      "name_zh": "萝卜"
+    },
+    {
+      "name": "scarf",
+      "name_zh": "围巾"
+    },
+    {
+      "name": "slips",
+      "name_zh": "纸条"
+    },
+    {
+      "name": "syrup",
+      "name_zh": "糖浆"
+    },
+    {
+      "name": "television",
+      "name_zh": "电视机"
+    },
+    {
+      "name": "thermometer",
+      "name_zh": "温度计"
+    },
+    {
+      "name": "vanity",
+      "name_zh": "梳妆台"
+    },
+    {
+      "name": "washbasin",
+      "name_zh": "洗脸盆"
+    },
+    {
+      "name": "zucchini",
+      "name_zh": "西葫芦"
+    },
+    {
+      "name": "makeup",
+      "name_zh": "化妆品"
+    },
+    {
+      "name": "blood lancet",
+      "name_zh": "采血针"
+    },
+    {
+      "name": "comedone extractor",
+      "name_zh": "粉刺针"
+    },
+    {
+      "name": "concealer",
+      "name_zh": "遮瑕膏"
+    },
+    {
+      "name": "perfume",
+      "name_zh": "香水"
+    },
+    {
+      "name": "scoreboard",
+      "name_zh": "记分牌"
+    },
+    {
+      "name": "sunscreen",
+      "name_zh": "防晒霜"
+    },
+    {
+      "name": "wig",
+      "name_zh": "假发"
+    },
+    {
+      "name": "adhesive backing",
+      "name_zh": "背胶"
+    },
+    {
+      "name": "blower",
+      "name_zh": "吹风机"
+    },
+    {
+      "name": "air column",
+      "name_zh": "气柱袋"
+    },
+    {
+      "name": "clock",
+      "name_zh": "时钟"
+    },
+    {
+      "name": "armchair",
+      "name_zh": "扶手椅"
+    },
+    {
+      "name": "backboard",
+      "name_zh": "背板"
+    },
+    {
+      "name": "skewer",
+      "name_zh": "竹签"
+    },
+    {
+      "name": "barrier",
+      "name_zh": "隔离栏"
+    },
+    {
+      "name": "bedding",
+      "name_zh": "床上用品"
+    },
+    {
+      "name": "bell",
+      "name_zh": "铃铛"
+    },
+    {
+      "name": "bitter melon",
+      "name_zh": "苦瓜"
+    },
+    {
+      "name": "blueprint",
+      "name_zh": "蓝图"
+    },
+    {
+      "name": "bow",
+      "name_zh": "蝴蝶结"
+    },
+    {
+      "name": "bubble mailer",
+      "name_zh": "气泡快递袋"
+    },
+    {
+      "name": "calyx",
+      "name_zh": "花萼"
+    },
+    {
+      "name": "cauliflower",
+      "name_zh": "花椰菜"
+    },
+    {
+      "name": "cereal",
+      "name_zh": "谷物早餐"
+    },
+    {
+      "name": "chicken essence seasoning",
+      "name_zh": "鸡精调味料"
+    },
+    {
+      "name": "chicken-flavor essence",
+      "name_zh": "鸡味精"
+    },
+    {
+      "name": "chive",
+      "name_zh": "韭菜"
+    },
+    {
+      "name": "cola",
+      "name_zh": "可乐"
+    },
+    {
+      "name": "corkboard",
+      "name_zh": "软木公告板"
+    },
+    {
+      "name": "corner guard",
+      "name_zh": "护角"
+    },
+    {
+      "name": "date slices",
+      "name_zh": "枣片"
+    },
+    {
+      "name": "dice",
+      "name_zh": "骰子"
+    },
+    {
+      "name": "dishcloth",
+      "name_zh": "洗碗布"
+    },
+    {
+      "name": "doormat",
+      "name_zh": "门垫"
+    },
+    {
+      "name": "dummy",
+      "name_zh": "假人模型"
+    },
+    {
+      "name": "expander",
+      "name_zh": "扩胸器"
+    },
+    {
+      "name": "eyelash",
+      "name_zh": "睫毛"
+    },
+    {
+      "name": "fragrance sachet",
+      "name_zh": "香包"
+    },
+    {
+      "name": "freezer",
+      "name_zh": "冷冻柜"
+    },
+    {
+      "name": "french press body",
+      "name_zh": "法压壶壶身"
+    },
+    {
+      "name": "game controller",
+      "name_zh": "游戏手柄"
+    },
+    {
+      "name": "gauze",
+      "name_zh": "纱布"
+    },
+    {
+      "name": "globe",
+      "name_zh": "地球仪"
+    },
+    {
+      "name": "goggles",
+      "name_zh": "护目镜"
+    },
+    {
+      "name": "gourd",
+      "name_zh": "葫芦"
+    },
+    {
+      "name": "graffiti",
+      "name_zh": "涂鸦"
+    },
+    {
+      "name": "ham",
+      "name_zh": "火腿"
+    },
+    {
+      "name": "hardboard",
+      "name_zh": "硬纸板"
+    },
+    {
+      "name": "headset",
+      "name_zh": "头戴式耳机"
+    },
+    {
+      "name": "helmet",
+      "name_zh": "头盔"
+    },
+    {
+      "name": "hotels",
+      "name_zh": "酒店（场所）"
+    },
+    {
+      "name": "hygrometer",
+      "name_zh": "湿度计"
+    },
+    {
+      "name": "i o shield",
+      "name_zh": "主板I/O挡板"
+    },
+    {
+      "name": "ice maker",
+      "name_zh": "制冰机"
+    },
+    {
+      "name": "induction cooker",
+      "name_zh": "电磁炉"
+    },
+    {
+      "name": "inner layer",
+      "name_zh": "内层材料"
+    },
+    {
+      "name": "insecticide aerosol",
+      "name_zh": "杀虫喷雾剂"
+    },
+    {
+      "name": "keyhole",
+      "name_zh": "锁孔"
+    },
+    {
+      "name": "keypad",
+      "name_zh": "数字键盘"
+    },
+    {
+      "name": "lettuce",
+      "name_zh": "生菜"
+    },
+    {
+      "name": "line",
+      "name_zh": "线条"
+    },
+    {
+      "name": "linen",
+      "name_zh": "亚麻织物"
+    },
+    {
+      "name": "lotus root",
+      "name_zh": "莲藕"
+    },
+    {
+      "name": "luffa",
+      "name_zh": "丝瓜"
+    },
+    {
+      "name": "grid",
+      "name_zh": "网格"
+    },
+    {
+      "name": "mold",
+      "name_zh": "模具"
+    },
+    {
+      "name": "microphone",
+      "name_zh": "麦克风"
+    },
+    {
+      "name": "microscope",
+      "name_zh": "显微镜"
+    },
+    {
+      "name": "monosodium glutamate",
+      "name_zh": "味精"
+    },
+    {
+      "name": "mosquito repellent",
+      "name_zh": "驱蚊剂"
+    },
+    {
+      "name": "nba special issue",
+      "name_zh": "NBA特刊"
+    },
+    {
+      "name": "oat toast",
+      "name_zh": "燕麦吐司"
+    },
+    {
+      "name": "parcel",
+      "name_zh": "包裹"
+    },
+    {
+      "name": "peach",
+      "name_zh": "桃子"
+    },
+    {
+      "name": "pickled mustard tuber slices",
+      "name_zh": "榨菜片"
+    },
+    {
+      "name": "pigment",
+      "name_zh": "颜料"
+    },
+    {
+      "name": "hole",
+      "name_zh": "孔洞"
+    },
+    {
+      "name": "houses",
+      "name_zh": "房屋（场所）"
+    },
+    {
+      "name": "skeleton",
+      "name_zh": "骨架"
+    },
+    {
+      "name": "pulp mold",
+      "name_zh": "纸浆模具"
+    },
+    {
+      "name": "raisin",
+      "name_zh": "葡萄干"
+    },
+    {
+      "name": "sachima",
+      "name_zh": "沙琪玛"
+    },
+    {
+      "name": "safe",
+      "name_zh": "保险柜"
+    },
+    {
+      "name": "salt",
+      "name_zh": "盐"
+    },
+    {
+      "name": "sensor",
+      "name_zh": "传感器"
+    },
+    {
+      "name": "guide",
+      "name_zh": "导向件"
+    },
+    {
+      "name": "shoebox",
+      "name_zh": "鞋盒"
+    },
+    {
+      "name": "skimmer",
+      "name_zh": "漏勺"
+    },
+    {
+      "name": "soap dispenser",
+      "name_zh": "皂液器"
+    },
+    {
+      "name": "soybean paste",
+      "name_zh": "豆瓣酱"
+    },
+    {
+      "name": "speaker",
+      "name_zh": "扬声器"
+    },
+    {
+      "name": "spork",
+      "name_zh": "勺叉两用餐具"
+    },
+    {
+      "name": "stain",
+      "name_zh": "污渍"
+    },
+    {
+      "name": "kitchenware",
+      "name_zh": "厨具"
+    },
+    {
+      "name": "story",
+      "name_zh": "故事文本"
+    },
+    {
+      "name": "suction head",
+      "name_zh": "吸头"
+    },
+    {
+      "name": "sugar-free pickled mustard tubers",
+      "name_zh": "无糖榨菜"
+    },
+    {
+      "name": "suit",
+      "name_zh": "西装"
+    },
+    {
+      "name": "syringe",
+      "name_zh": "注射器"
+    },
+    {
+      "name": "tail",
+      "name_zh": "尾部"
+    },
+    {
+      "name": "test instrument",
+      "name_zh": "测试仪器"
+    },
+    {
+      "name": "thermostat",
+      "name_zh": "恒温器"
+    },
+    {
+      "name": "thumbtack",
+      "name_zh": "图钉"
+    },
+    {
+      "name": "transformer",
+      "name_zh": "变压器"
+    },
+    {
+      "name": "velcro",
+      "name_zh": "魔术贴"
+    },
+    {
+      "name": "vinegar",
+      "name_zh": "醋"
+    },
+    {
+      "name": "body wash samples",
+      "name_zh": "沐浴露试用装"
+    },
+    {
+      "name": "mannequin head",
+      "name_zh": "假人头模"
+    },
+    {
+      "name": "pacifier",
+      "name_zh": "安抚奶嘴"
+    },
+    {
+      "name": "baby supplies",
+      "name_zh": "婴儿用品"
+    },
+    {
+      "name": "shaving",
+      "name_zh": "剃须用品"
+    }
+  ]
+}
