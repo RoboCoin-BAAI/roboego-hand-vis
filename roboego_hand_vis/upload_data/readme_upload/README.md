@@ -54,6 +54,19 @@ python -m roboego_hand_vis.upload_data.readme_upload.check_load --dataset /path/
 python -m roboego_hand_vis.upload_data.readme_upload.gen_readme --dataset /path/to/dataset --force
 ```
 
+### L1 多任务数据集
+
+L1 发布结构为 `dataset_name/unique_task_name/{meta,data,videos,annotation,calibrations}`。将 `--dataset` 指向 **dataset_name 层级**，即可在该层生成一份上传用 `README.md`；原有根目录直接包含 `meta/info.json` 的单样本方式继续支持。
+
+```bash
+python -m roboego_hand_vis.upload_data.readme_upload.gen_readme \
+  --dataset /path/to/publish/l1_living_room_cover_task_1920x1456_30fps_2views --force
+```
+
+名称使用 `dataset_name`，默认 repo_id 为 `HumanCOIN/<dataset_name>`。场景、级别、示例任务描述及公共传感器、存储、标注、标定说明取目录名排序后的第一个任务。任务数量按 `unique_task_name` 子目录数统计，帧数、时长、文件数和体积汇总所有任务。动作与物品取去重并集，物品只显示名称；不累计各传感器的样本数，不显示 L1 质量标记、EEG、EMG。文件统计包含每个任务的 `meta/readme.json`，不包含数据集根目录的 `README.md`。
+
+加载示例逐个将子任务目录传给 `HumanCOINDataset`，不把多任务集合根目录当作单条 recording。生成卡片不会修改子任务元数据或上传文件。
+
 ## 3. 上传
 
 凭据使用 `HF_TOKEN` / `MODELSCOPE_TOKEN` 环境变量或平台已有登录缓存；魔搭也支持 `MS_TOKEN`。不要把 Token 写进 YAML 或版本库。需要时可在 Bash 中隐藏输入：
@@ -89,7 +102,7 @@ python -m roboego_hand_vis.upload_data.readme_upload.upload2hub --hub ms --folde
 
 默认排除 `.git`、缓存、`backup`、`.env` 等，不上传软链接。新 HF 仓库可用 `--create-repo --private` 保持私有。
 
-**权限与平台适配：** HF 上传前设置 Auto。魔搭创建、上传时设置 Gated Auto，上传前后回读验证，未生效则报错。HF 上传完整 README；魔搭用临时副本去掉 `gated` 和 `extra_gated_*`，保留许可证、通用元数据与正文。本地 README 不变，大文件优先硬链接暂存，临时目录自动清理。HF 表单不代表魔搭支持相同字段。上传后验证失败时文件可能已在远端，不会自行删除。
+**权限与平台适配**：HF 上传前设置自动审批。魔搭新建仓库默认公开，上传已有仓库前会将其设为公开。HF 上传完整 README。魔搭使用临时 README 副本，去掉 `gated` 和 `extra_gated_*`，保留许可证、通用元数据和正文。大文件优先用硬链接暂存，临时目录会自动清理。
 
 ## 4. 删除远端仓库
 

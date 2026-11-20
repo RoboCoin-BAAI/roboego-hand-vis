@@ -36,19 +36,6 @@ def make_client(hub: str, token=None):
     raise ValueError(f'Unsupported hub: {hub}')
 
 
-def verify_modelscope_gating(client, repo_id, attempts=3):
-    """Fail closed unless server detail confirms automatic application access."""
-    for attempt in range(attempts):
-        detail = client.get_dataset(repo_id)
-        if (isinstance(detail, dict) and detail.get('gated') is True
-                and detail.get('gated_mode') == 'auto'
-                and detail.get('visibility', 'gated') == 'gated'):
-            return
-        if attempt + 1 < attempts:
-            time.sleep(attempt + 1)
-    raise RuntimeError('ModelScope did not confirm gated auto access; upload is not marked successful. Check repository access settings.')
-
-
 def modelscope_readme(content):
     """Remove only HF gating keys from YAML front matter; preserve body verbatim."""
     match = re.match(r'\A(\ufeff?)---[ \t]*\r?\n(.*?)\r?\n---[ \t]*(?:\r?\n|$)', content, re.S)
@@ -123,6 +110,8 @@ def _upload_folder(client, *, hub, folder, repo_id, files, token=None,
         raise ValueError('No files selected')
     if max_workers < 1 or max_retries < 1:
         raise ValueError('Worker and attempt counts must be positive')
+    if hub == 'modelscope' and private:
+        raise ValueError('--private is only supported for Hugging Face')
     if create_repo:
         # Do not turn permission/network errors into a missing-repository result.
         exists = client.repo_exists(repo_id=repo_id, repo_type='dataset', **({'token': token} if hub == 'huggingface' else {}))
@@ -132,15 +121,13 @@ def _upload_folder(client, *, hub, folder, repo_id, files, token=None,
                 kwargs.update(private=private, exist_ok=True)
             else:
                 kwargs.pop('token')
-                kwargs.update(visibility='private', gated_mode=True, license='CC-BY-NC-4.0')
+                kwargs.update(visibility='public', license='cc-by-nc-4.0')
             client.create_repo(**kwargs)
     if hub == 'huggingface':
         client.update_repo_settings(repo_id=repo_id, repo_type='dataset', token=token, gated='auto')
     elif hub == 'modelscope':
-        # modelscope-hub >=0.7.1 maps this to visibility=gated, gated_mode=auto.
         client.update_repo_settings(repo_id=repo_id, repo_type='dataset',
-                                    visibility='private', gated_mode=True, license='CC-BY-NC-4.0')
-        verify_modelscope_gating(client, repo_id)
+                                    visibility='public', license='cc-by-nc-4.0')
     kwargs = dict(repo_id=repo_id, repo_type='dataset', folder_path=str(folder),
                   token=token, commit_message=message,
                   allow_patterns=[glob.escape(p) for p in files])
@@ -156,8 +143,6 @@ def _upload_folder(client, *, hub, folder, repo_id, files, token=None,
                 raise
             time.sleep(min(2 ** attempt, 8))
         else:
-            if hub == 'modelscope':
-                verify_modelscope_gating(client, repo_id)
             return result
 
 
@@ -219,42 +204,47 @@ def parser_with_config(argv):
     args.hub = ALIASES.get(args.hub, args.hub)
     if args.hub not in ('huggingface', 'modelscope'):
         parser.error('Unsupported hub')
+    if args.hub == 'modelscope' and args.private:
+        parser.error('--private is only supported for Hugging Face')
     return args
 
 
 def main(argv=None):
     try:
         args = parser_with_config(argv)
-        # Validate the full local batch before any network operations.
         plans = []
+        repos = set()
         for name in args.folders:
             folder = Path(name).expanduser().resolve()
             repo = repo_id_for(folder, args.namespace, args.repo_id)
-            files = plan_files(folder, args.readme_only, args.allow, args.ignore)
-            if any(p[1] == repo for p in plans):
+            if repo in repos:
                 raise ValueError(f'Multiple folders target the same repository: {repo}')
-            plans.append((folder, repo, files))
-        for folder, repo, files in plans:
-            size = sum((folder / p).stat().st_size for p in files)
-            print(json.dumps(dict(hub=args.hub, folder=str(folder), repo_id=repo,
-                                  files=len(files), bytes=size, create_repo=args.create_repo,
-                                  new_repo_private=args.private,
-                                  gated='auto', visibility='gated' if args.hub == 'modelscope' else ('private' if args.private else 'public')), ensure_ascii=False))
-            if args.dry_run:
-                for path in files:
-                    print(f'  {path}')
-        if args.dry_run:
-            return 0
-        token = get_token(args.hub, args.token)
-        client = make_client(args.hub, token=token)
+            repos.add(repo)
+            plans.append((folder, repo))
+        token = None if args.dry_run else get_token(args.hub, args.token)
+        client = None if args.dry_run else make_client(args.hub, token=token)
         failures = 0
-        for folder, repo, files in plans:
+        for folder, repo in plans:
             try:
+                print(f'Preparing: {args.hub} {repo}', file=sys.stderr, flush=True)
+                files = plan_files(folder, args.readme_only, args.allow, args.ignore)
+                summary = dict(hub=args.hub, folder=str(folder), repo_id=repo,
+                               files=len(files), create_repo=args.create_repo,
+                               new_repo_private=args.private,
+                               gated=False if args.hub == 'modelscope' else 'auto',
+                               visibility='private' if args.private else 'public')
+                if args.dry_run:
+                    summary['bytes'] = sum((folder / path).stat().st_size for path in files)
+                print(json.dumps(summary, ensure_ascii=False), flush=True)
+                if args.dry_run:
+                    for path in files:
+                        print(f'  {path}')
+                    continue
                 upload_folder(client, hub=args.hub, folder=folder, repo_id=repo,
                               files=files, token=token, create_repo=args.create_repo,
                               private=args.private, message=args.message,
                               max_workers=args.max_workers, max_retries=args.max_retries)
-                print(f'Uploaded: {args.hub} {repo}')
+                print(f'Uploaded: {args.hub} {repo}', flush=True)
             except Exception as exc:
                 print(f'Upload failed: {repo}: {describe_error(exc, token)}', file=sys.stderr)
                 print('Check credentials and organization write permission for HTTP 401/403; check the reported validation details for HTTP 400/422.', file=sys.stderr)

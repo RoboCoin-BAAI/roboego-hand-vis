@@ -105,24 +105,25 @@ class UploadTests(unittest.TestCase):
         self.assertNotIn('delete_patterns', kwargs)
         self.assertEqual(kwargs['allow_patterns'], ['README.md'])
 
-    def test_ms_create_private(self):
+    def test_ms_create_public(self):
         c = Mock()
         c.get_dataset.return_value = {'visibility':'gated', 'gated':True, 'gated_mode':'auto'}
         c.repo_exists.return_value = False
         upload.upload_folder(c, hub='modelscope', folder=self.root,
                              repo_id='HumanCOIN/session', files=['README.md'],
-                             token='dummy', create_repo=True, private=True)
-        c.create_repo.assert_called_once_with(repo_id='HumanCOIN/session', repo_type='dataset', visibility='private', gated_mode=True, license='CC-BY-NC-4.0')
+                             token='dummy', create_repo=True)
+        c.create_repo.assert_called_once_with(repo_id='HumanCOIN/session', repo_type='dataset', visibility='public', license='cc-by-nc-4.0')
         self.assertEqual(c.upload_folder.call_args.kwargs['max_workers'], 8)
-        c.update_repo_settings.assert_called_once_with(repo_id='HumanCOIN/session', repo_type='dataset', visibility='private', gated_mode=True, license='CC-BY-NC-4.0')
+        c.update_repo_settings.assert_called_once_with(repo_id='HumanCOIN/session', repo_type='dataset', visibility='public', license='cc-by-nc-4.0')
 
-    def test_ms_gating_applied_before_upload_and_failure_stops(self):
+    def test_ms_public_settings_applied_before_upload_and_failure_stops(self):
         c = Mock()
         c.get_dataset.return_value = {'visibility':'gated', 'gated':True, 'gated_mode':'auto'}
         upload.upload_folder(c, hub='modelscope', folder=self.root,
                              repo_id='HumanCOIN/session', files=['README.md'])
         names = [call[0] for call in c.mock_calls]
         self.assertLess(names.index('update_repo_settings'), names.index('upload_folder'))
+        c.update_repo_settings.assert_called_once_with(repo_id='HumanCOIN/session', repo_type='dataset', visibility='public', license='cc-by-nc-4.0')
         self.assertNotIn('token', c.upload_folder.call_args.kwargs)
         c.reset_mock()
         c.update_repo_settings.side_effect = PermissionError()
@@ -132,11 +133,11 @@ class UploadTests(unittest.TestCase):
         c.upload_folder.assert_not_called()
 
     @unittest.skipUnless(importlib.util.find_spec("modelscope_hub"), "modelscope-hub is not installed")
-    def test_actual_ms_sdk_gating_payload_is_auto(self):
+    def test_actual_ms_sdk_public_settings_payload(self):
         from modelscope_hub import HubApi
         from modelscope_hub.constants import RepoType
-        payload = HubApi._repo_settings_payload(RepoType.DATASET, {'visibility':'private','gated_mode':True})
-        self.assertEqual(payload, {'visibility':'gated','gated_mode':'auto'})
+        payload = HubApi._repo_settings_payload(RepoType.DATASET, {'visibility':'public'})
+        self.assertEqual(payload, {'visibility':'public'})
         import inspect
         c = Mock()
         c.get_dataset.return_value = {'visibility':'gated', 'gated':True, 'gated_mode':'auto'}
@@ -144,29 +145,6 @@ class UploadTests(unittest.TestCase):
                              repo_id='HumanCOIN/session', files=['README.md'], create_repo=True)
         inspect.signature(HubApi.repo_exists).bind(None, **c.repo_exists.call_args.kwargs)
         inspect.signature(HubApi.upload_folder).bind(None, **c.upload_folder.call_args.kwargs)
-
-    def test_ms_public_state_prevents_upload(self):
-        c = Mock()
-        c.get_dataset.return_value = {'gated':False, 'visibility':'public'}
-        with patch.object(upload.time, 'sleep'), self.assertRaises(RuntimeError):
-            upload.upload_folder(c, hub='modelscope', folder=self.root,
-                                 repo_id='HumanCOIN/session', files=['README.md'])
-        c.upload_folder.assert_not_called()
-
-    def test_ms_post_upload_gate_loss_is_failure_without_reupload(self):
-        c = Mock()
-        c.get_dataset.side_effect = [{'gated':True, 'gated_mode':'auto'},
-                                    {'gated':False}, {'gated':False}, {'gated':False}]
-        with patch.object(upload.time, 'sleep'), self.assertRaises(RuntimeError):
-            upload.upload_folder(c, hub='modelscope', folder=self.root,
-                                 repo_id='HumanCOIN/session', files=['README.md'])
-        c.upload_folder.assert_called_once()
-
-    def test_ms_manual_mode_is_rejected(self):
-        c = Mock()
-        c.get_dataset.return_value = {'gated':True, 'gated_mode':'manual'}
-        with patch.object(upload.time, 'sleep'), self.assertRaises(RuntimeError):
-            upload.verify_modelscope_gating(c, 'HumanCOIN/session')
 
     def test_hf_create_public(self):
         c = Mock()

@@ -39,7 +39,7 @@ class ReadmeTests(unittest.TestCase):
         self.project = {'license':'cc-by-nc-4.0','authors':['Author One','Author Two'],
                         'citation':{'title':'HumanCOIN','year':2026}}
         self.save()
-        (self.root/'meta/tasks.jsonl').write_text(json.dumps({'task_index':0,'task':'做三明治'},ensure_ascii=False)+'\n')
+        (self.root/'meta/tasks.jsonl').write_text(json.dumps({'task_index':0,'task':'做三明治'},ensure_ascii=False)+'\n', encoding='utf-8')
 
     def save(self):
         for name,data in [('readme',self.description),('info',self.info)]:
@@ -135,7 +135,8 @@ class ReadmeTests(unittest.TestCase):
         text = gen_readme.render_readme(self.root,self.project)
         self.assertIn('Indoor / Household / Dining area',text)
         self.assertIn('**Atomic actions:** grasp, retract hand',text)
-        self.assertIn('| plate | material: wood |',text)
+        self.assertIn('| plate |',text)
+        self.assertNotIn('material: wood',text)
         self.assertIn('| Duration | 37.53 s |',text)
         self.assertIn('| Data format | HumanCOIN-LeRobot |',text)
         self.assertNotIn('null',text)
